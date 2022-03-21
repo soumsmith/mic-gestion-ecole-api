@@ -37,3 +37,15 @@ nb-configuration.xml
 
 # Local environment
 .env
+
+#quarkus
+mvnw
+mvnw.cmd
+
+
+#docker
+.dockerignore
+.jvm
+.native-micro
+.legacy-jar
+README.md
