@@ -1,7 +1,8 @@
 package com.vieecoles.ressource;
 
-import com.vieecoles.entities.matiere;
+import com.vieecoles.dao.entities.matiere;
 import com.vieecoles.services.matiereService;
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -9,7 +10,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
-
+@Tag(name = "Matiere", description = "Matiere ressources")
 @Path("/matiere")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -26,9 +27,17 @@ public class matiereRessource {
     public matiere get(@PathParam("id") Long id) {
         return matService.findById(id);
     }
+
+    @GET
+    @Path("ecole/{tenant}")
+    public List<matiere> get(@PathParam("tenant") String  tenant) {
+        return matService.ListeMatiereParEcole(tenant) ;
+    }
+
     @POST
     @Transactional
     public Response create(matiere mat) {
+        System.out.println("mon Test"+mat.toString());
         return matService.creatematiere(mat);
     }
 

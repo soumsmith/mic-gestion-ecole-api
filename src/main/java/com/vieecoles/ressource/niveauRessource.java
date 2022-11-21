@@ -1,6 +1,6 @@
 package com.vieecoles.ressource;
 
-import com.vieecoles.entities.niveau;
+import com.vieecoles.dao.entities.Niveau;
 import com.vieecoles.services.niveauService;
 
 import javax.inject.Inject;
@@ -17,18 +17,27 @@ public class niveauRessource {
     @Inject
    niveauService nivService ;
     @GET
-    public List<niveau> list() {
+    public List<Niveau> list() {
         return nivService.getListNIveau();
     }
 
     @GET
     @Path("/{id}")
-    public niveau get(@PathParam("id") Long id) {
+    public Niveau get(@PathParam("id") Long id) {
         return nivService.findById(id);
     }
+
+    @GET
+    @Path("ecole/{code}")
+    public List<Niveau> getNiveauByEcole(@PathParam("code") String code) {
+        return nivService.findNiveauByEcole(code) ;
+    }
+
+
+
     @POST
     @Transactional
-    public Response create(niveau niv) {
+    public Response create(Niveau niv) {
         return nivService.createniveau(niv);
     }
 
@@ -36,7 +45,7 @@ public class niveauRessource {
     @PUT
     @Path("/{id}")
     @Transactional
-    public niveau update(@PathParam("id") Long id, niveau niv) {
+    public Niveau update(@PathParam("id") Long id, Niveau niv) {
     return  nivService.updateNiveau(id,niv);
     }
     @DELETE
@@ -48,7 +57,7 @@ public class niveauRessource {
 
     @GET
     @Path("/search/{niveaulibelle}")
-    public List<niveau> search(@PathParam("niveaulibelle") String niveaulibelle) {
+    public List<Niveau> search(@PathParam("niveaulibelle") String niveaulibelle) {
         return nivService.search(niveaulibelle);
     }
 

@@ -1,7 +1,7 @@
 package com.vieecoles.ressource;
 
 
-import com.vieecoles.entities.zone;
+import com.vieecoles.dao.entities.Zone;
 
 import com.vieecoles.services.zoneService;
 
@@ -19,18 +19,18 @@ public class zoneRessource {
     @Inject
     zoneService zonService ;
     @GET
-    public List<zone> list() {
+    public List<Zone> list() {
         return zonService.getListzone();
     }
 
     @GET
     @Path("/{id}")
-    public zone get(@PathParam("id") Long id) {
+    public Zone get(@PathParam("id") Long id) {
         return zonService.findById(id);
     }
     @POST
     @Transactional
-    public Response create(zone zon) {
+    public Response create(Zone zon) {
         return zonService.createzone(zon);
     }
 
@@ -38,7 +38,7 @@ public class zoneRessource {
     @PUT
     @Path("/{id}")
     @Transactional
-    public zone update(@PathParam("id") Long id, zone zon) {
+    public Zone update(@PathParam("id") Long id, Zone zon) {
     return  zonService.updatezone(id,zon);
     }
 
@@ -51,7 +51,7 @@ public class zoneRessource {
 
     @GET
     @Path("/search/{libelle}")
-    public List<zone> search(@PathParam("libelle") String libelle) {
+    public List<Zone> search(@PathParam("libelle") String libelle) {
         return zonService.search(libelle);
     }
 

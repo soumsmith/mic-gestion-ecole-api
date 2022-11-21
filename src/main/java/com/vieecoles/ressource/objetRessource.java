@@ -1,8 +1,8 @@
 package com.vieecoles.ressource;
 
 import com.vieecoles.dto.objetDto;
-import com.vieecoles.entities.objet;
-import com.vieecoles.entities.type_objet;
+import com.vieecoles.dao.entities.objet;
+import com.vieecoles.dao.entities.type_objet;
 import com.vieecoles.services.objetService;
 
 import javax.inject.Inject;

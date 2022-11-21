@@ -1,6 +1,6 @@
 package com.vieecoles.ressource;
 
-import com.vieecoles.entities.fonction;
+import com.vieecoles.dao.entities.fonction;
 import com.vieecoles.services.fonctionService;
 
 import javax.inject.Inject;
@@ -25,6 +25,18 @@ public class fonctionRessource {
     @Path("/{id}")
     public fonction get(@PathParam("id") Long id) {
         return matService.findById(id);
+    }
+
+    @GET
+    @Path("sans-fondateur/{libelle}")
+    public List<fonction> get(@PathParam("libelle") String libelle) {
+        return matService.findFonctionWithoutFondateur(libelle);
+    }
+
+    @GET
+    @Path("fondateur/{libelle}")
+    public fonction getFonf(@PathParam("libelle") String libelle) {
+        return matService.getFoncID(libelle) ;
     }
     @POST
     @Transactional

@@ -1,7 +1,7 @@
 package com.vieecoles.ressource.operations;
 
-import com.vieecoles.entities.niveau;
-import com.vieecoles.entities.operations.classe;
+import com.vieecoles.dao.entities.Niveau;
+import com.vieecoles.dao.entities.operations.classe;
 import com.vieecoles.services.operations.classeService;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
@@ -12,7 +12,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
-@Tag(name = "Mes Operations", description = "mes Operations")
+@Tag(name = "Classe", description = "classe ressources")
 @Path("/classe")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -28,9 +28,9 @@ public class classeRessource {
     }
 
     @GET
-
-    public List<classe> list() {
-        return matService.findAllclasse();
+    @Path("ecole/{tenant}")
+    public List<classe> listTenant(@PathParam("tenant") String  tenant) {
+        return matService.findAllclasse(tenant);
     }
 
 
@@ -46,7 +46,7 @@ public class classeRessource {
     @Transactional
     public Response create(  @FormParam("classe_code") String classe_code, @FormParam("classe_libelle") String classe_libelle ,
                              @FormParam("niveau_id") Long niveau_id) {
-        niveau typObj= em.getReference(niveau.class,niveau_id);
+        Niveau typObj= em.getReference(Niveau.class,niveau_id);
 
         classe obj = new classe();
 
@@ -63,7 +63,7 @@ public class classeRessource {
     @Transactional
     public int update(@FormParam("classe_id") Long classe_id,@FormParam("classe_code") String classe_code, @FormParam("classe_libelle") String classe_libelle ,
                       @FormParam("niveau_id") Long niveau_id) {
-        niveau  typObj= em.getReference(niveau.class,niveau_id);
+        Niveau typObj= em.getReference(Niveau.class,niveau_id);
 
         classe obj = new classe();
         obj.setClasselibelle(classe_libelle);

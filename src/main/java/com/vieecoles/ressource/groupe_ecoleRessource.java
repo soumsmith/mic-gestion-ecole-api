@@ -1,7 +1,7 @@
 package com.vieecoles.ressource;
 
 
-import com.vieecoles.entities.groupe_ecole;
+import com.vieecoles.dao.entities.groupe_ecole;
 
 import com.vieecoles.services.groupe_ecoleService;
 

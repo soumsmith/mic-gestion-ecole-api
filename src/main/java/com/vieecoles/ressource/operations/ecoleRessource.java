@@ -1,11 +1,11 @@
 package com.vieecoles.ressource.operations;
 
 import com.vieecoles.dto.ecoleDto;
-import com.vieecoles.entities.cycle;
-import com.vieecoles.entities.groupe_ecole;
-import com.vieecoles.entities.operations.ecole;
-import com.vieecoles.entities.operations.quartier;
-import com.vieecoles.entities.zone;
+import com.vieecoles.dao.entities.cycle;
+import com.vieecoles.dao.entities.groupe_ecole;
+import com.vieecoles.dao.entities.operations.ecole;
+import com.vieecoles.dao.entities.operations.quartier;
+import com.vieecoles.dao.entities.Zone;
 import com.vieecoles.services.operations.ecoleService;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
@@ -15,6 +15,7 @@ import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,6 +77,15 @@ public class ecoleRessource {
     }
 
     @POST
+    @Path("/{creerEcole}")
+    public Response CreerEcole(ecole myEcole) {
+        myEcole.persist();
+        return Response.created(URI.create("/ecole/" + myEcole)).build();
+    }
+
+
+
+    @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Transactional
@@ -89,7 +99,7 @@ public class ecoleRessource {
                              @FormParam("ecole_cycle") Long ecole_cycle ) {
 
         groupe_ecole groupe_ecole= em.getReference(groupe_ecole.class,ecole_groupe);
-        zone zone= em.getReference(zone.class,ecole_zone);
+        Zone zone= em.getReference(Zone.class,ecole_zone);
         quartier quartier= em.getReference(quartier.class,ecole_quartier);
         cycle cycle= em.getReference(cycle.class,ecole_cycle);
         ArrayList<cycle> al1=new ArrayList<cycle>();
@@ -124,7 +134,7 @@ public class ecoleRessource {
             @FormParam("ecole_groupe") Long ecole_groupe
     ) {
         groupe_ecole groupe_ecole= em.getReference(groupe_ecole.class,ecole_groupe);
-        zone zone= em.getReference(zone.class,ecole_zone);
+        Zone zone= em.getReference(Zone.class,ecole_zone);
         quartier quartier= em.getReference(quartier.class,ecole_quartier);
 
         ecole obj = new ecole();

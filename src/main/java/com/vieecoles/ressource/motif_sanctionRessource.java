@@ -1,6 +1,6 @@
 package com.vieecoles.ressource;
 
-import com.vieecoles.entities.motif_sanction;
+import com.vieecoles.dao.entities.motif_sanction;
 import com.vieecoles.services.motif_sanctionService;
 
 import javax.inject.Inject;

@@ -1,0 +1,85 @@
+package com.vieecoles.dao.entities;
+
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "matiere")
+@Data
+@EqualsAndHashCode(callSuper = false)
+public class matiere extends PanacheEntityBase {
+    @Id @GeneratedValue
+    private Long  matiereid ;
+    private  String matierecode;
+    private  String matierelibelle;
+    private Long  matierecoefficien ;
+    @Transient
+    private Double moyenne;
+    @Transient
+    private String rang;
+    @Transient
+    private String  coef ;
+    @Transient
+    private String appreciation;
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "categorie_matiere_categorie_matiereid")
+    private com.vieecoles.dao.entities.categorie_matiere categorie_matiere ;
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tenant_tenantid")
+    private com.vieecoles.dao.entities.tenant tenant ;
+
+    public Long getMatiereid() {
+        return matiereid;
+    }
+
+    public void setMatiereid(Long matiereid) {
+        this.matiereid = matiereid;
+    }
+
+    public String getMatierecode() {
+        return matierecode;
+    }
+
+    public void setMatierecode(String matierecode) {
+        this.matierecode = matierecode;
+    }
+
+    public String getMatierelibelle() {
+        return matierelibelle;
+    }
+
+    public void setMatierelibelle(String matierelibelle) {
+        this.matierelibelle = matierelibelle;
+    }
+
+    public Long getMatierecoefficien() {
+        return matierecoefficien;
+    }
+
+    public void setMatierecoefficien(Long matierecoefficien) {
+        this.matierecoefficien = matierecoefficien;
+    }
+
+    public com.vieecoles.dao.entities.categorie_matiere getCategorie_matiere() {
+        return categorie_matiere;
+    }
+
+    public void setCategorie_matiere(com.vieecoles.dao.entities.categorie_matiere categorie_matiere) {
+        this.categorie_matiere = categorie_matiere;
+    }
+
+    public com.vieecoles.dao.entities.tenant getTenant() {
+        return tenant;
+    }
+
+    public void setTenant(com.vieecoles.dao.entities.tenant tenant) {
+        this.tenant = tenant;
+    }
+}

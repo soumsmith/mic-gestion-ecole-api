@@ -1,6 +1,6 @@
 package com.vieecoles.ressource;
 
-import com.vieecoles.entities.cycle;
+import com.vieecoles.dao.entities.cycle;
 import com.vieecoles.services.cycleService;
 
 import javax.inject.Inject;

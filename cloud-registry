@@ -1,0 +1,26 @@
+--- change project
+  $ gcloud config set project fair-splice-361010
+
+--- list region
+  $ gcloud compute zones list
+
+--- list repositories
+  gcloud artifacts repositories list
+
+--- configure repo auth
+  gcloud auth configure-docker europe-west1-docker.pkg.dev
+
+--- tag container
+  docker tag urbis-api:latest europe-west1-docker.pkg.dev/fair-splice-361010/vie-ecole-docker-repo/example:latest
+
+--- build with tag
+  docker build -f src/main/docker/Dockerfile.jvm -t europe-west1-docker.pkg.dev/fair-splice-361010/vie-ecole-docker-repo/example:202209201329 .
+  docker build -f src/main/docker/Dockerfile.jvm -t europe-west1-docker.pkg.dev/fair-splice-361010/vie-ecole-docker-repo/vie-ecole-api:202210211723 .
+--- push image to artifact registry
+  docker push europe-west1-docker.pkg.dev/fair-splice-361010/vie-ecole-docker-repo/example:latest
+  docker push europe-west1-docker.pkg.dev/fair-splice-361010/vie-ecole-docker-repo/example:202209201329
+  docker push europe-west1-docker.pkg.dev/fair-splice-361010/vie-ecole-docker-repo/vie-ecole-api:202210211723
+
+
+--- pull from artifact registry
+  docker pull europe-west1-docker.pkg.dev/fair-splice-361010/vie-ecole-docker-repo/example:latest

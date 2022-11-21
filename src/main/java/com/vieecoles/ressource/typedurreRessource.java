@@ -1,7 +1,7 @@
 package com.vieecoles.ressource;
 
 
-import com.vieecoles.entities.typedurre;
+import com.vieecoles.dao.entities.typedurre;
 import com.vieecoles.services.typedurreService;
 
 import javax.inject.Inject;
