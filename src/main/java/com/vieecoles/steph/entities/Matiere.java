@@ -1,0 +1,44 @@
+package com.vieecoles.ressource.steph.entities;
+
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "matiere")
+@Data
+@EqualsAndHashCode(callSuper = false)
+public class Matiere extends PanacheEntityBase {
+
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
+	@Column(name = "matiereid")
+    private Long  id ;
+	@Column(name = "matierecode")
+    private  String code;
+	@Column(name = "matierelibelle")
+    private  String libelle;
+
+	private Integer pec;
+	@ManyToOne
+	@JoinColumn(name = "niveau_enseign_id")
+	private NiveauEnseignement niveauEnseignement;
+    @Transient
+    private Double moyenne;
+    @Transient
+    private String rang;
+    @Transient
+    private String  coef ;
+    @Transient
+    private String appreciation;
+    @ManyToOne
+    @JoinColumn(name = "matiereparent_id")
+    private Matiere matiereParent;
+
+    @ManyToOne
+    @JoinColumn(name = "categorie_matiere_categorie_matiereid")
+    private CategorieMatiere categorie;
+
+}
