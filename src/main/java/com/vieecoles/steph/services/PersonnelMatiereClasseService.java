@@ -1,15 +1,23 @@
-package com.vieecoles.ressource.steph.services;
+package com.vieecoles.steph.services;
 
-import com.vieecoles.entities.Ecole;
-import com.vieecoles.entities.PersonnelMatiereClasse;
-import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
-
-import javax.enterprise.context.ApplicationScoped;
-import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.enterprise.context.ApplicationScoped;
+import javax.transaction.Transactional;
+
+import org.hibernate.internal.build.AllowSysOut;
+
+import com.vieecoles.steph.entities.PersonnelMatiereClasse;
+import com.vieecoles.steph.dto.ProfEducDto;
+import com.vieecoles.steph.entities.Ecole;
+import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
+/*
+ * REMPLACER ANNEE
+ * voir aussi methode save
+ */
 
 @ApplicationScoped
 public class PersonnelMatiereClasseService implements PanacheRepositoryBase<PersonnelMatiereClasse, Long> {
@@ -36,7 +44,7 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 	// modifier l annee avec le parametre quand disponible
 	public List<PersonnelMatiereClasse> findByBranche(long brancheId, long annee) {
 		logger.info(String.format("find by Branche id :: %s", brancheId));
-		return PersonnelMatiereClasse.find("classe.branche.id = ?1 and annee.id = ?2", brancheId, getAnneeScolaire)
+		return PersonnelMatiereClasse.find("classe.branche.id = ?1 and annee.id = ?2 and matiere is not null", brancheId, getAnneeScolaire)
 				.list();
 	}
 
@@ -61,9 +69,33 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 		return pmc;
 	}
 
+
 	public List<PersonnelMatiereClasse> findByProfesseur(long profId, long annee) {
 		logger.info(String.format("find by Prof id :: %s and annee :: %s", profId, getAnneeScolaire));
-		return PersonnelMatiereClasse.find("matiere.id = ?1 and personnel.id = ?2", profId, getAnneeScolaire).list();
+		return PersonnelMatiereClasse.find("personnel.id = ?1 and annee.id = ?2 and matiere is not null", profId, getAnneeScolaire).list();
+	}
+	
+	public List<PersonnelMatiereClasse> findByProfesseurAndClasse(long profId, long classe, long annee) {
+		logger.info(String.format("find by Prof id :: %s and annee :: %s", profId, getAnneeScolaire));
+		return PersonnelMatiereClasse.find("personnel.id = ?1 and annee.id = ?2 and classe.id = ?3 and matiere is not null", profId, getAnneeScolaire, classe).list();
+	}
+	
+	public List<PersonnelMatiereClasse> findListByClasse(int annee, long classe) {
+		return PersonnelMatiereClasse.find("annee.id = ?1 and classe.id =?2 and matiere is not null",
+				getAnneeScolaire, classe).list();
+	}
+	
+// Attention ne pas utiliser pour determiner les matieres enseignees par un professeur
+	public List<PersonnelMatiereClasse> findListByFonction(int annee, long ecole, int fonctionId) {
+		return PersonnelMatiereClasse
+				.find("annee.id = ?1 and classe.ecole.id=?2 and personnel.fonction.id =?3 and matiere is null",
+						getAnneeScolaire, ecole, fonctionId)
+				.list();
+	}
+	// Attention ne pas utiliser pour determiner les matieres enseignees par un professeur
+	public List<PersonnelMatiereClasse> findListByPersonnel(int annee, long ecole, long classe) {
+		return PersonnelMatiereClasse.find("annee.id = ?1 and classe.ecole.id=?2 and classe.id =?3 and matiere is null",
+				getAnneeScolaire, ecole, classe).list();
 	}
 
 	@Transactional
@@ -80,14 +112,77 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 		persMatClasse.setDateCreation(new Date());
 		if (getIfExist(persMatClasse) != null && getIfExist(persMatClasse).size() != 0)
 			throw new RuntimeException("Enregistrement existant déjà");
-
-		persMatClasse.persist();
+		else if(getByMatiereAndClasseDispo(persMatClasse).size()> 0) {
+			List<PersonnelMatiereClasse> psList = getByMatiereAndClasseDispo(persMatClasse);
+			PersonnelMatiereClasse.update("personnel.id = ?1 where id = ?2",persMatClasse.getPersonnel().getId(), psList.get(0).getId());
+		} else
+			persMatClasse.persist();
 	}
+
+	@Transactional
+	public void saveForEducAndProf(PersonnelMatiereClasse persMatClasse) {
+		logger.info("persist persMatClasse ...");
+		List<PersonnelMatiereClasse> profOrEduclist;
+		ProfEducDto profEducDto = new ProfEducDto();
+		Ecole ecole;
+		Boolean flat = true;
+		// A supprimer lorsque le credential contenant l ecole sera disponible
+		// Par defaut pour tout enregistrement on set l ecole id à 1
+		if (persMatClasse.getPersonnel() != null && persMatClasse.getPersonnel().getEcole() == null) {
+			ecole = new Ecole();
+			ecole.setId(1);
+			persMatClasse.getPersonnel().setEcole(ecole);
+		}
+		persMatClasse.setDateCreation(new Date());
+		profEducDto.setClasse(persMatClasse.getClasse());
+		profOrEduclist = getIfExistProfOrEduc(persMatClasse);
+		System.out.println("PersonnelMatiereClasseService.saveForEducAndProf() "+profOrEduclist.size());
+		if (profOrEduclist != null && profOrEduclist.size() != 0) {
+			for(PersonnelMatiereClasse profOrEduc : profOrEduclist) {
+				System.out.println("PersonnelMatiereClasseService.saveForEducAndProf() "+profOrEduc.getPersonnel().getFonction().getCode()+" - "+persMatClasse.getPersonnel().getFonction().getCode());
+				if(profOrEduc.getPersonnel().getFonction().getCode().equals(persMatClasse.getPersonnel().getFonction().getCode())) {
+					flat = false;
+					if(persMatClasse.getPersonnel().getId() == 0)
+						profOrEduc.delete();
+					else {
+						// penser à creer et  mettre à jour le champ date_update
+						PersonnelMatiereClasse.update("personnel.id = ?1 where id = ?2", persMatClasse.getPersonnel().getId(),profOrEduc.getId());
+					}
+				}
+					
+			}
+			if(flat)
+				persMatClasse.persist();
+		}else {
+			System.out.println(persMatClasse);
+			persMatClasse.persist();
+		} 
+		
+	}
+	
+	public List<PersonnelMatiereClasse> getListProfOrEducByAnneeAndClasse(long annee, long classe) {
+		return PersonnelMatiereClasse.find("classe.id = ?1  and annee.id= ?2 and matiere.id is null", classe, annee).list();
+	}
+	
 
 	public List<PersonnelMatiereClasse> getIfExist(PersonnelMatiereClasse persMatClasse) {
 		return PersonnelMatiereClasse.find("classe.id = ?1 and personnel.id =?2 and matiere.id =?3 and annee.id= ?4",
 				persMatClasse.getClasse().getId(), persMatClasse.getPersonnel().getId(),
 				persMatClasse.getMatiere().getId(), persMatClasse.getAnnee().getId()).list();
+	}
+	
+	public List<PersonnelMatiereClasse> getByMatiereAndClasseDispo(PersonnelMatiereClasse persMatClasse) {
+		return PersonnelMatiereClasse.find("classe.id = ?1 and matiere.id =?2 and annee.id= ?3",
+				persMatClasse.getClasse().getId(), 
+				persMatClasse.getMatiere().getId(), persMatClasse.getAnnee().getId()).list();
+	}
+
+	public List<PersonnelMatiereClasse> getIfExistProfOrEduc(PersonnelMatiereClasse persMatClasse) {
+		
+			System.out.println("candidat pour supression");
+			return PersonnelMatiereClasse.find("classe.id = ?1 and matiere.id is null and annee.id= ?2",
+					persMatClasse.getClasse().getId(), persMatClasse.getAnnee().getId()).list();
+		
 	}
 
 	@Transactional

@@ -1,39 +1,43 @@
 package com.vieecoles.dto;
 
-import com.vieecoles.dao.entities.Filiere;
-import com.vieecoles.dao.entities.Niveau;
-import com.vieecoles.dao.entities.Serie;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
-import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+public class connexionDto extends PanacheEntityBase{
 
-public class BrancheDto extends PanacheEntityBase{
+	private String email ;
+	private  String motdePasse ;
+	private  Long  profilid ;
+	private  Long  ecoleid ;
 
-	private long id;
-	private String libelle;
-
-	public long getId() {
-		return id;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
-	public String getLibelle() {
-		return libelle;
+	public String getMotdePasse() {
+		return motdePasse;
 	}
 
-	public void setLibelle(String libelle) {
-		this.libelle = libelle;
+	public void setMotdePasse(String motdePasse) {
+		this.motdePasse = motdePasse;
 	}
 
-	public BrancheDto(long id, String libelle) {
-		this.id = id;
-		this.libelle = libelle;
+	public Long getProfilid() {
+		return profilid;
+	}
+
+	public void setProfilid(Long profilid) {
+		this.profilid = profilid;
+	}
+
+	public Long getEcoleid() {
+		return ecoleid;
+	}
+
+	public void setEcoleid(Long ecoleid) {
+		this.ecoleid = ecoleid;
 	}
 }

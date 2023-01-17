@@ -1,29 +1,34 @@
 package com.vieecoles.dto;
 
 
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
-
 import java.time.LocalDate;
 
 
-public class personnelDto  {
+public class personnelConnexionDto {
 
     private Long  personnelid ;
-   private  String personnelcode;
+
     private  String personnelnom;
     private  String personnelprenom;
-    private LocalDate personneldatenaissance;
-    private  String personnel_lieunaissance;
-    private  Long identifiant_type_personnel ;
-    private  Long identifiant_personnelStatut ;
-    private  Long identifiant_fonction ;
 
-    public Long getIdentifiant_fonction() {
-        return identifiant_fonction;
+    public personnelConnexionDto(Long personnelid, String personnelnom, String personnelprenom) {
+        this.personnelid = personnelid;
+        this.personnelnom = personnelnom;
+        this.personnelprenom = personnelprenom;
     }
 
-    public void setIdentifiant_fonction(Long identifiant_fonction) {
-        this.identifiant_fonction = identifiant_fonction;
+    public personnelConnexionDto() {
+    }
+
+    @Override
+    public String toString() {
+        return "personnelConnexionDto{" +
+                "personnelid=" + personnelid +
+
+                ", personnelnom='" + personnelnom + '\'' +
+                ", personnelprenom='" + personnelprenom + '\'' +
+
+                '}';
     }
 
     public Long getPersonnelid() {
@@ -34,13 +39,7 @@ public class personnelDto  {
         this.personnelid = personnelid;
     }
 
-    public String getPersonnelcode() {
-        return personnelcode;
-    }
 
-    public void setPersonnelcode(String personnelcode) {
-        this.personnelcode = personnelcode;
-    }
 
     public String getPersonnelnom() {
         return personnelnom;
@@ -58,35 +57,5 @@ public class personnelDto  {
         this.personnelprenom = personnelprenom;
     }
 
-    public LocalDate getPersonneldatenaissance() {
-        return personneldatenaissance;
-    }
 
-    public void setPersonneldatenaissance(LocalDate personneldatenaissance) {
-        this.personneldatenaissance = personneldatenaissance;
-    }
-
-    public String getPersonnel_lieunaissance() {
-        return personnel_lieunaissance;
-    }
-
-    public void setPersonnel_lieunaissance(String personnel_lieunaissance) {
-        this.personnel_lieunaissance = personnel_lieunaissance;
-    }
-
-    public Long getIdentifiant_type_personnel() {
-        return identifiant_type_personnel;
-    }
-
-    public void setIdentifiant_type_personnel(Long identifiant_type_personnel) {
-        this.identifiant_type_personnel = identifiant_type_personnel;
-    }
-
-    public Long getIdentifiant_personnelStatut() {
-        return identifiant_personnelStatut;
-    }
-
-    public void setIdentifiant_personnelStatut(Long identifiant_personnelStatut) {
-        this.identifiant_personnelStatut = identifiant_personnelStatut;
-    }
 }

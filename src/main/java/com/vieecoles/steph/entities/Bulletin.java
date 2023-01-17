@@ -1,4 +1,4 @@
-package com.vieecoles.entities;
+package com.vieecoles.steph.entities;
 
 import java.util.Date;
 import java.util.UUID;
@@ -93,5 +93,7 @@ public class Bulletin extends PanacheEntityBase{
 	@Column(name = "code_qr")
 	private String codeQr;
 	private String statut;
+	private String rang;
+	
 	
 }

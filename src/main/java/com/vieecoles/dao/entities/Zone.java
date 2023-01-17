@@ -2,11 +2,9 @@ package com.vieecoles.dao.entities;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
-import javax.lang.model.element.Name;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 @Entity(name = "zone")
 public class Zone extends PanacheEntityBase {

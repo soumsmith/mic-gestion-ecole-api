@@ -1,113 +1,657 @@
-package com.vieecoles.services.operations;
+package com.vieecoles.services.connexion;
 
-import com.vieecoles.dto.ecoleDto;
 import com.vieecoles.dao.entities.operations.ecole;
+import com.vieecoles.dao.entities.operations.sous_attent_personn;
+import com.vieecoles.dao.entities.profil;
+import com.vieecoles.dao.entities.utilisateur;
+import com.vieecoles.dao.entities.utilisateur_has_personnel;
+import com.vieecoles.dto.*;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Response;
 import java.net.URI;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 
 @ApplicationScoped
-public class ecoleService implements PanacheRepositoryBase<ecole, Long> {
+public class connexionService implements PanacheRepositoryBase<utilisateur_has_personnel, Long> {
     @Inject
     EntityManager em;
-    @Inject ecoleDto ecoleDto;
-    public  List<ecole> findAllecole(){
-
-
-         return   em.createQuery("select distinct o from ecole o   join o.cycles c join c.ecole ecole where  c.cycleid=1").getResultList();
-    }
-
-    public  List<ecoleDto> findAllecoleDto(){
-
-        TypedQuery<ecoleDto> q = em.createQuery( "SELECT new com.vieecoles.dto.ecoleDto(o.ecolecode,o.ecoleclibelle,o.ecolearreteecreation,z.zonelibelle,q.quartierlibelle,g.groupe_ecolelibelle ,c.cyclelibelle) from ecole o join  o.quartier q join   o.zone z join  o.groupe_ecole g join o.cycles c join c.ecole ecole",
-                ecoleDto.class);
-
-        List<ecoleDto> listEcoleDto = q.getResultList();
-
-        return  listEcoleDto;
-    }
-
-
-
-
-    public  List<ecole> findAllecoleAndCycle(){
-        return  em.createQuery("select o from ecole o join fetch o.quartier join fetch o.zone join fetch o.groupe_ecole join fetch o.cycles ").getResultList() ;
-    }
-
-    public  List<ecole> findAllecolebyCycle(Long id_cyle){
-        return  em.createQuery("select o from ecole o join fetch o.quartier join fetch o.zone join fetch o.groupe_ecole join fetch o.cycles c where c.cycleid=:id_cyle ")
-                .setParameter("id_cyle",id_cyle)
-                .getResultList() ;
-
-    }
-
-
-
-    public  List<ecole> findByIdTypegroupe_ecole(Long idniv){
-
-        return    em.createQuery("select o from ecole o join fetch o.groupe_ecole h where h.groupe_ecoleeid =:idniv")
-                .setParameter("idniv",idniv)
-                .getResultList();
-
-    }
-
-
-    public  List<ecole> findByIdTypezone(Long idniv){
-
-        return    em.createQuery("select o from ecole o join fetch o.zone h where h.zoneid =:idniv")
-                .setParameter("idniv",idniv)
-                .getResultList();
-
-    }
-
-    public  List<ecole> findByIdTypequartier(Long idniv){
-
-        return    em.createQuery("select o from ecole o join fetch o.quartier h where h.quartierid =:idniv")
-                .setParameter("idniv",idniv)
-                .getResultList();
-
-    }
 
 
 
     public  ecole  findByIDecole(Long idpobj){
         return ecole.find("ecoleid",idpobj).singleResult();
+    } 
+    @Transactional
+    public String affecterProfilFondateur(Long personnelid,LocalDate Datefin, Long idEcole, Long ProfilId  ){
+        utilisateur_has_personnelDto utilisatPersonDto = new utilisateur_has_personnelDto() ;
+        utilisateur_has_personnel myutilisateurPerson =  new utilisateur_has_personnel() ;
+        String messageRetour = null ;
+        String emailUtilisateur= getEmailSouscripteur(personnelid);
+        System.out.print("emailUtilisateurParPersonnel "+emailUtilisateur);
+        List<String> profilNonCreer = new ArrayList<>();
+        utilisateur myutilisateur2 = new utilisateur() ;
+        myutilisateur2 = verifiEmailUtilisateur(emailUtilisateur) ;
+        System.out.print("myutilisateurObjectParEmail "+myutilisateur2.toString());
+        Long idUser = getIdUser(personnelid) ;
+       
+        myutilisateurPerson= veriCompteUtilisateurEcole(personnelid ,idEcole, ProfilId);
+
+        if(myutilisateurPerson!=null) {
+            messageRetour = "Ce utilisateur à déjà un compte pour cette ecole";
+            if(!messageRetour.equals("Compte créé avec succès!")){
+                profil myProfil= new profil();
+                myProfil= profil.findById(ProfilId) ;
+                profilNonCreer.add(myProfil.getProfil_libelle()) ;
+            }
+        } else {
+          //  myutilisateur1= checkPassword(emailUtilisateur,motDepasse ) ;
+           // System.out.println("myutilisateur1 "+myutilisateur1);
+            if(myutilisateur2!=null) {
+                utilisatPersonDto.setProfilid(ProfilId);
+                utilisatPersonDto.setPersonnel_personnelid(personnelid);
+                utilisatPersonDto.setEcole_ecoleid(idEcole);
+                utilisatPersonDto.setUtilisateurid(idUser);
+                utilisatPersonDto.setUtilisateur_has_person_date_debut(LocalDate.now());
+                utilisatPersonDto.setUtilisateur_has_person_date_fin(Datefin);
+                affeterUtilisateurProfil(utilisatPersonDto) ;
+                messageRetour = "Compte créé avec succès!";
+                if(!messageRetour.equals("Compte créé avec succès!")){
+                    profil myProfil= new profil();
+                    myProfil= profil.findById(ProfilId) ;
+                    profilNonCreer.add(myProfil.getProfil_libelle()) ;
+                }
+
+            }  else {
+                messageRetour = "Aucun compte n'existe pour ces paramètres de connexion!";
+            }
+
+        }
+
+
+        return  messageRetour ;
     }
 
 
 
 
-   public Response create(ecole obj) {
 
-       obj.persist();
-       return Response.created(URI.create("/ecole/" + obj)).build();
-   }
 
-   public  int updateecole(ecole obj){
+    public String affecterProfilUtilisateur( AffecterProfilUtilisateurDto myUtilisaDto ){
 
-       if(obj == null) {
-           throw new NotFoundException();
+        utilisateur_has_personnelDto utilisatPersonDto = new utilisateur_has_personnelDto() ;
+        utilisateur_has_personnel myutilisateurPerson =  new utilisateur_has_personnel() ;
+        String messageRetour = null ;
+        String emailUtilisateur= getEmailSouscripteur(myUtilisaDto.getPersonnel_personnelid());
+        System.out.print("emailUtilisateurParPersonnel "+emailUtilisateur);
+        List<String> profilNonCreer = new ArrayList<>();
+
+        utilisateur myutilisateur2 = new utilisateur() ;
+        myutilisateur2 = verifiEmailUtilisateur(emailUtilisateur) ;
+        System.out.print("myutilisateurObjectParEmail "+myutilisateur2.toString());
+        Long idUser = getIdUser(myUtilisaDto.getPersonnel_personnelid()) ;
+
+        for (int i = 0; i < myUtilisaDto.getListProfil().size(); i++){
+            System.out.println("Profil***--"+myUtilisaDto.getListProfil().get(i).getProfilid());
+            myutilisateurPerson= veriCompteUtilisateurEcole(myUtilisaDto.getPersonnel_personnelid() ,myUtilisaDto.getEcole_ecoleid(), myUtilisaDto.getListProfil().get(i).getProfilid());
+
+            if(myutilisateurPerson!=null) {
+                messageRetour = "Ce utilisateur à déjà un compte pour cette ecole";
+                if(!messageRetour.equals("Compte créé avec succès!")){
+                    profil myProfil= new profil();
+                    myProfil= profil.findById(myUtilisaDto.getListProfil().get(i).getProfilid()) ;
+                    profilNonCreer.add(myProfil.getProfil_libelle()) ;
+                }
+            } else {
+              //  myutilisateur1= checkPassword(emailUtilisateur,motDepasse ) ;
+               // System.out.println("myutilisateur1 "+myutilisateur1);
+                if(myutilisateur2!=null) {
+                    utilisatPersonDto.setProfilid(myUtilisaDto.getListProfil().get(i).getProfilid());
+                    utilisatPersonDto.setPersonnel_personnelid(myUtilisaDto.getPersonnel_personnelid());
+                    utilisatPersonDto.setEcole_ecoleid(myUtilisaDto.getEcole_ecoleid());
+                    utilisatPersonDto.setUtilisateurid(idUser);
+                    utilisatPersonDto.setUtilisateur_has_person_date_debut(LocalDate.now());
+                    utilisatPersonDto.setUtilisateur_has_person_date_fin(myUtilisaDto.getUtilisateur_has_person_date_fin());
+                    affeterUtilisateurProfil(utilisatPersonDto) ;
+                    messageRetour = "Compte créé avec succès!";
+                    if(!messageRetour.equals("Compte créé avec succès!")){
+                        profil myProfil= new profil();
+                        myProfil= profil.findById(myUtilisaDto.getListProfil().get(i)) ;
+                        profilNonCreer.add(myProfil.getProfil_libelle()) ;
+                    }
+
+                }  else {
+                    messageRetour = "Aucun compte n'existe pour ces paramètres de connexion!";
+                }
+
+            }
+
+        }
+
+        if(profilNonCreer.size()>0){
+            String mess="Les profils suivants ont été déjà affectés!";
+            messageRetour = String.join(", ", profilNonCreer);
+            messageRetour= mess+" "+ messageRetour ;
+        }
+
+        return  messageRetour ;
+    }
+
+@Transactional
+  public personnelConnexionDto infosUtilisateurConnecte(String email){
+
+    Long idUtilisateur ,IdPersonnel ;
+      personnelConnexionDto  myPersoDto = new personnelConnexionDto() ;
+      System.out.println("ENTREEEEEE ");
+
+      idUtilisateur =   getIdUtilisateur(email);
+      System.out.println("idUtilisateur "+idUtilisateur);
+
+          IdPersonnel = getIDpersonnel(idUtilisateur) ;
+
+          System.out.println("IdPersonnel "+IdPersonnel);
+          myPersoDto = getInfoPersonn(IdPersonnel) ;
+
+          System.out.println("myPersoDto "+myPersoDto);
+
+    return myPersoDto;
+
+}
+
+    @Transactional
+    public CandidatConnexionDto infosCandidatConnecte(String email){
+        Long idUtilisateur ,IdPersonnel ;
+        CandidatConnexionDto  myPersoDto = new CandidatConnexionDto() ;
+        System.out.println("ENTREEEEEE ");
+        idUtilisateur =   getIdUtilisateur(email);
+        System.out.println("idUtilisateur "+idUtilisateur);
+        IdPersonnel = getIDpersonnelSouscrip(email) ;
+        System.out.println("IdPersonnel "+IdPersonnel);
+        myPersoDto = getInfoPersonnCandidat(IdPersonnel) ;
+        System.out.println("myPersoDto "+myPersoDto);
+        return myPersoDto;
+    }
+
+
+    public long getIdUser(Long idPersonnel){
+        Long idSouscrip = getIdSouscripteur(idPersonnel) ;
+        Long idUser = getIdUtilisateurBySouscripteur(idSouscrip) ;
+        return  idUser ;
+    }
+
+
+    @Transactional
+    public long  getIdSouscripteur(Long idPersonnel){
+        Long idSouscripteur = null;
+        try {
+            idSouscripteur= (Long) em.createQuery("select o.sous_attent_personn.sous_attent_personnid from personnel  o  where  o.personnelid =:idPersonnel ")
+                    .setParameter("idPersonnel",idPersonnel)
+                    .getSingleResult();
+        } catch (Exception e) {
+            idSouscripteur = 0L;
+        }
+        return idSouscripteur ;
+    }
+
+    @Transactional
+    public String  getEmailSouscripteur(Long idPersonnel){
+        String emailSouscripteur = null;
+        try {
+            emailSouscripteur= (String) em.createQuery("select o.sous_attent_personn.sous_attent_personn_email from personnel  o  where  o.personnelid =:idPersonnel ")
+                    .setParameter("idPersonnel",idPersonnel)
+                    .getSingleResult();
+        } catch (Exception e) {
+            emailSouscripteur = null;
+        }
+        return emailSouscripteur ;
+    }
+
+
+
+    @Transactional
+    public long  getIdUtilisateurBySouscripteur(Long idSouscripteur){
+        Long idUtilisateur = null;
+        try {
+            idUtilisateur= (Long) em.createQuery("select o.utilisateurid from utilisateur  o  where  o.sous_attent_personn_sous_attent_personnid =:idSouscripteur ")
+                    .setParameter("idSouscripteur",idSouscripteur)
+                    .getSingleResult();
+        } catch (Exception e) {
+            idUtilisateur = 0L;
+        }
+        return idUtilisateur ;
+    }
+
+
+
+
+@Transactional
+  public long  getIdUtilisateur(String email){
+        Long IdUtilisateur = null;
+      try {
+          IdUtilisateur= (Long) em.createQuery("select o.utilisateurid from utilisateur  o  where  o.utilisateu_email =:email ")
+                  .setParameter("email",email)
+                  .getSingleResult();
+      } catch (Exception e) {
+          IdUtilisateur = 0L;
+      }
+     return IdUtilisateur ;
        }
-       int q = em.createQuery("update ecole e set  e.quartier=:quartier, e.zone=:zone, e.groupe_ecole=:groupe_ecole, e.ecolecode =:code , e.ecoleclibelle  =:libelle," +
-                       " e.ecolearreteecreation=: arreteCreation, e.recoiaffecteetat =:recoiaffecteetat  where e.ecoleid  =: ecoleid")
 
-               .setParameter("code",obj.getEcolecode())
-               .setParameter("libelle",obj.getEcoleclibelle())
-               .setParameter("arreteCreation",obj.getEcolearreteecreation())
-               .setParameter("quartier",obj.getQuartier())
-               .setParameter("zone",obj.getZone())
-               .setParameter("groupe_ecole",obj.getGroupe_ecole())
-               .setParameter("recoiaffecteetat",obj.isRecoiaffecteetat()).executeUpdate();
-       return  q;
-   }
+    @Transactional
+    public long  getIDpersonnel(Long  idUtilisateur){
+        Long IdPersonnel = null;
+        try {
+            IdPersonnel= (Long) em.createQuery("select distinct  o.personnel_personnelid from utilisateur_has_personnel  o  where  o.utilisateur.utilisateurid =:idUtilisateur ")
+                    .setParameter("idUtilisateur",idUtilisateur)
+                    .getSingleResult();
+        } catch (Exception e) {
+            IdPersonnel = null;
+        }
+        return IdPersonnel ;
+    }
+
+    @Transactional
+    public long  getIDpersonnelSouscrip(String  email){
+        Long IdPersonnel = null;
+        try {
+            IdPersonnel= (Long) em.createQuery("select distinct  o.sous_attent_personnid from sous_attent_personn  o  where  o.sous_attent_personn_email =: email ")
+                    .setParameter("email",email)
+                    .getSingleResult();
+        } catch (Exception e) {
+            IdPersonnel = null;
+        }
+        return IdPersonnel ;
+    }
+
+
+
+    @Transactional
+    public personnelConnexionDto  getInfoPersonn(Long  idPersonnel){
+        personnelConnexionDto  myPersoDto = new personnelConnexionDto() ;
+        try {
+            myPersoDto= (personnelConnexionDto) em.createQuery("select  new com.vieecoles.dto.personnelConnexionDto(o.personnelid,o.personnelnom,o.personnelprenom) from personnel  o  where  o.personnelid=:idPersonnel",personnelConnexionDto.class)
+                    .setParameter("idPersonnel",idPersonnel)
+                    .getSingleResult();
+        } catch (Exception e) {
+            myPersoDto = null;
+        }
+        return myPersoDto ;
+    }
+
+    @Transactional
+    public CandidatConnexionDto getInfoPersonnCandidat(Long  idPersonnel){
+        CandidatConnexionDto  myPersoDto = new CandidatConnexionDto() ;
+        try {
+            myPersoDto= (CandidatConnexionDto) em.createQuery("select  new com.vieecoles.dto.CandidatConnexionDto(o.sous_attent_personnid,o.sous_attent_personn_nom,o.sous_attent_personn_prenom,o.sous_attent_personn_email,'1') from sous_attent_personn  o  where  o.sous_attent_personnid =:idPersonnel",CandidatConnexionDto.class)
+                    .setParameter("idPersonnel",idPersonnel)
+                    .getSingleResult();
+        } catch (Exception e) {
+            myPersoDto = null;
+        }
+        return myPersoDto ;
+    }
+
+
+
+    public String CreerCompteUtilisateur(String emailUtilisateur , String motDepasse, utilisateur_has_personnelDto myUtilisaDto ){
+         utilisateur myutilisateur1 = new utilisateur() ;
+         utilisateur_has_personnelDto utilisatPersonDto = new utilisateur_has_personnelDto() ;
+         utilisateur_has_personnel myutilisateurPerson =  new utilisateur_has_personnel() ;
+         String messageRetour = null ;
+         List<String> profilNonCreer = new ArrayList<>();
+
+         utilisateur myutilisateur2 = new utilisateur() ;
+         myutilisateur2 = verifiEmailUtilisateur(emailUtilisateur) ;
+         System.out.print("UserBy Email "+myutilisateur2.toString());
+
+         if(myutilisateur2!=null) {
+             messageRetour = "Cette adresse email est déjà associée à un compte!";
+         } else {
+
+             for (int i = 0; i < myUtilisaDto.getListProfil().size(); i++){
+                 myutilisateurPerson= veriCompteUtilisateurEcole(myUtilisaDto.getPersonnel_personnelid() ,myUtilisaDto.getEcole_ecoleid(), myUtilisaDto.getListProfil().get(i));
+
+                 if(myutilisateurPerson!=null) {
+                     messageRetour = "Ce utilisateur à déjà un compte pour cette ecole";
+                     if(!messageRetour.equals("Compte créé avec succès!")){
+                         profil myProfil= new profil();
+                         myProfil= profil.findById(myUtilisaDto.getListProfil().get(i)) ;
+                         profilNonCreer.add(myProfil.getProfil_libelle()) ;
+                     }
+                 } else {
+                     myutilisateur1= creerUtilisateur(motDepasse ,emailUtilisateur) ;
+
+                     utilisatPersonDto.setProfilid(myUtilisaDto.getListProfil().get(i));
+                     utilisatPersonDto.setPersonnel_personnelid(myUtilisaDto.getPersonnel_personnelid());
+                     utilisatPersonDto.setEcole_ecoleid(myUtilisaDto.getEcole_ecoleid());
+                     utilisatPersonDto.setUtilisateurid(myutilisateur1.getUtilisateurid());
+                     utilisatPersonDto.setUtilisateur_has_person_date_debut(myUtilisaDto.getUtilisateur_has_person_date_debut());
+                     utilisatPersonDto.setUtilisateur_has_person_date_fin(myUtilisaDto.getUtilisateur_has_person_date_fin());
+                     affeterUtilisateurProfil(utilisatPersonDto) ;
+                     messageRetour = "Compte créé avec succès!";
+                     if(!messageRetour.equals("Compte créé avec succès!")){
+                         profil myProfil= new profil();
+                         myProfil= profil.findById(myUtilisaDto.getListProfil().get(i)) ;
+                         profilNonCreer.add(myProfil.getProfil_libelle()) ;
+                     }
+
+
+                 }
+
+             }
+
+             if(profilNonCreer.size()>0){
+                 String mess="Les profils suivants ont été déjà affectés!";
+                 messageRetour = String.join(", ", profilNonCreer);
+                 messageRetour= mess+" "+ messageRetour ;
+             }
+         }
+
+        return  messageRetour ;
+     }
+     public String seConnecterAdmin(String email,String motdePasse,Long Profilid ){
+        String messageRetour = null;
+         utilisateur myutilisateur2 = new utilisateur() ;
+         myutilisateur2 = verifiEmailUtilisateur(email) ;
+
+                            if(myutilisateur2!=null){
+                                utilisateur_has_personnel myUtiliPers= new utilisateur_has_personnel() ;
+                                myUtiliPers = getUtilisateurPersonnAdmin(email,Profilid) ;
+                                LocalDate dateFin ;
+                                LocalDate dateDuJour= LocalDate.now() ;
+                                String profilUtilsateur ;
+
+                                if(myUtiliPers!=null) {
+                                              dateFin =  myUtiliPers.getUtilisateur_has_person_date_fin() ;
+                                            int val = dateFin.compareTo(dateDuJour) ;
+                                            int active = myUtiliPers.getUtilisateur_has_person_active() ;
+                                            System.out.print("valDiff "+val);
+
+                                            if(val<0){
+                                                messageRetour="Ce compte a expiré!";
+                                            }
+                                            else if (active==0) {
+                                                messageRetour="Ce profil a été désactivé pour ce compte pour cette ecole!";
+                                            } else  {
+                                                utilisateur myUtilis= new utilisateur() ;
+                                                myUtilis= checkPassword(email,motdePasse);
+                                                if(myUtilis != null){
+                                                    profilUtilsateur= myUtiliPers.getProfil().getProfil_libelle() ;
+                                                    messageRetour=profilUtilsateur ;
+                                                } else {
+                                                    messageRetour="Login ou mot de passe incorrect!";
+                                                }
+
+                                            }
+                                } else {
+                                    messageRetour="Profil  incorrect!";
+                                }
+                            } else {
+                                messageRetour="cette adresse n'est associée à aucun compte!";
+                            }
+       return  messageRetour ;
+     }
+     public String seConnecter(String email,String motdePasse,Long Profilid,Long Ecoleid ){
+        String messageRetour = null;
+         utilisateur myutilisateur2 = new utilisateur() ;
+         myutilisateur2 = verifiEmailUtilisateur(email) ;
+
+                            if(myutilisateur2!=null){
+                                utilisateur_has_personnel myUtiliPers= new utilisateur_has_personnel() ;
+                                myUtiliPers = getUtilisateurPersonn(email,Profilid,Ecoleid) ;
+                                LocalDate dateFin ;
+                                LocalDate dateDuJour= LocalDate.now() ;
+                                String profilUtilsateur ;
+
+                                if(myUtiliPers!=null) {
+                                              dateFin =  myUtiliPers.getUtilisateur_has_person_date_fin() ;
+                                            int val = dateFin.compareTo(dateDuJour) ;
+                                            int active = myUtiliPers.getUtilisateur_has_person_active() ;
+                                            System.out.print("valDiff "+val);
+
+                                            if(val<0){
+                                                messageRetour="Ce compte a expiré!";
+                                            }
+                                            else if (active==0) {
+                                                messageRetour="Ce profil a été désactivé pour ce compte pour cette ecole!";
+                                            } else  {
+                                                utilisateur myUtilis= new utilisateur() ;
+                                                myUtilis= checkPassword(email,motdePasse);
+                                                if(myUtilis != null){
+                                                    profilUtilsateur= myUtiliPers.getProfil().getProfil_libelle() ;
+                                                    messageRetour=profilUtilsateur ;
+                                                } else {
+                                                    messageRetour="Login ou mot de passe incorrect!";
+                                                }
+
+                                            }
+                                } else {
+                                    messageRetour="Profil ou code école incorrect!";
+                                }
+                            } else {
+                                messageRetour="cette adresse n'est associée à aucun compte!";
+                            }
+
+       return  messageRetour ;
+     }
+
+     public  utilisateur_has_personnel getUtilisateurPersonn(String email ,Long Profilid,Long Ecoleid){
+         utilisateur myutilisateur2 = new utilisateur() ;
+         myutilisateur2 = verifiEmailUtilisateur(email) ;
+
+         try {
+             return (utilisateur_has_personnel) em.createQuery("select o from utilisateur_has_personnel  o  where  o.ecole_ecoleid =:codeEcole and o.utilisateur.utilisateurid =:utilisateurId and o.profil.profilid=:profilId")
+                     .setParameter("utilisateurId",myutilisateur2.getUtilisateurid())
+                     .setParameter("codeEcole",Ecoleid)
+                     .setParameter("profilId",Profilid)
+                     .getSingleResult();
+         } catch (Exception e) {
+             return  null;
+         }
+
+     }
+
+     public  utilisateur_has_personnel getUtilisateurPersonnAdmin(String email ,Long Profilid){
+        utilisateur myutilisateur2 = new utilisateur() ;
+        myutilisateur2 = verifiEmailUtilisateur(email) ;
+
+        try {
+            return (utilisateur_has_personnel) em.createQuery("select o from utilisateur_has_personnel  o  where   o.utilisateur.utilisateurid =:utilisateurId and o.profil.profilid=:profilId")
+                    .setParameter("utilisateurId",myutilisateur2.getUtilisateurid())
+                    .setParameter("profilId",Profilid)
+                    .getSingleResult();
+        } catch (Exception e) {
+            return  null;
+        }
+
+    }
+
+
+
+   /*  public  List<utilisateur_has_personnel> getListcompteUtilisateur(){
+
+         TypedQuery<InscriptionAvaliderDto> q = em.createQuery( "SELECT new com.vieecoles.projection.compteUtilisateurSelect() from utilisateur_has_personnel o join o.profil p  where e.ecoleid=:idecole " +
+                         " and  o.inscriptions_status=: Status  and o.inscriptions_processus=: processus",
+                 InscriptionAvaliderDto.class);
+         List<InscriptionAvaliderDto> listInscriptionAvaliderDto = q.setParameter("idecole" ,idecole)
+                 .setParameter("Status" ,Status).setParameter("processus",processus).
+                 getResultList();
+         return  listInscriptionAvaliderDto;
+     }*/
+
+
+     @Transactional
+     public utilisateur   creerUtilisateur(String motPasse , String email ){
+         utilisateur myutilisateur1 = new utilisateur() ;
+         myutilisateur1= verifiEmailUtilisateur(email) ;
+
+         if(myutilisateur1 == null ) {
+             utilisateur myutilisateur = new utilisateur() ;
+             myutilisateur.setUtilisateur_mot_de_passe(motPasse);
+             myutilisateur.setUtilisateu_email(email);
+             myutilisateur.persist();
+             return  myutilisateur ;
+         } else {
+             return  myutilisateur1 ;
+         }
+       }
+
+    @Transactional
+    public utilisateur_has_personnel   affeterUtilisateurProfil (utilisateur_has_personnelDto utiPersonDto)
+    {
+
+        utilisateur_has_personnel myUtilisaPerso =new utilisateur_has_personnel() ;
+        utilisateur myutilisateur1 ;
+        profil myProfil = new profil() ;
+        myutilisateur1= utilisateur.findById(utiPersonDto.getUtilisateurid()) ;
+        myProfil = profil.findById(utiPersonDto.getProfilid()) ;
+        myUtilisaPerso.setProfil(myProfil);
+        myUtilisaPerso.setEcole_ecoleid(utiPersonDto.getEcole_ecoleid());
+        myUtilisaPerso.setPersonnel_personnelid(utiPersonDto.getPersonnel_personnelid());
+        myUtilisaPerso.setUtilisateur(myutilisateur1);
+        myUtilisaPerso.setUtilisateur_has_person_date_debut(utiPersonDto.getUtilisateur_has_person_date_debut());
+        myUtilisaPerso.setUtilisateur_has_person_date_fin(utiPersonDto.getUtilisateur_has_person_date_fin());
+        myUtilisaPerso.setUtilisateur_has_person_active(1);
+        myUtilisaPerso.setUtilisateur_has_person_date_creation(LocalDate.now());
+        myUtilisaPerso.persist();
+       return  myUtilisaPerso ;
+    }
+     @Transactional
+    public String deSactiverProfilUtilisateur(Long personnelId, Long  ecoleId, Long profilId ,int active){
+        utilisateur_has_personnel myUtilis =new utilisateur_has_personnel() ;
+      String messageRetour = null ;
+        myUtilis=  veriCompteUtilisateurEcole(personnelId,ecoleId,profilId) ;
+
+        if( myUtilis!=null ){
+            myUtilis.setUtilisateur_has_person_active(active);
+            messageRetour ="Compte désactiver avec succès!" ;
+        } else {
+            messageRetour ="Compte inexistant avec ces paramètres!" ;
+        }
+
+        return  messageRetour ;
+    }
+
+    @Transactional
+    public String deSactiverProfilEcole( Long  ecoleId, Long profilId, int active){
+        utilisateur_has_personnel myUtilis =new utilisateur_has_personnel() ;
+        String messageRetour = null ;
+         int q = em.createQuery("update utilisateur_has_personnel e set  e.utilisateur_has_person_active=:activier  where e.ecole_ecoleid=:ecoleId and e.profil.profilid=:profilId ")
+
+                .setParameter("activier",active)
+                .setParameter("ecoleId",ecoleId)
+                .setParameter("profilId",profilId).executeUpdate() ;
+
+        if(q>0){
+            messageRetour="Profil désactivé avec succès !";
+        } else {
+            messageRetour="Aucun compte trouvé pour ce profil!";
+        }
+
+        return  messageRetour;
+
+
+    }
+
+
+
+    @Transactional
+ public String modifierInfosCompte(Long utilisateurPersonnId,Long ecoleId,Long  personnelId , Long profilId,LocalDate dateDebut,LocalDate dateFin){
+        String messageRetour= null ;
+       utilisateur_has_personnel myUtilPer= new utilisateur_has_personnel() ;
+        utilisateur_has_personnel myUtilPer2 = new utilisateur_has_personnel() ;
+       myUtilPer =  veriCompteUtilisateurEcole(personnelId,ecoleId,profilId);
+       if(myUtilPer!=null){
+           messageRetour="Cet utilisateur a déjà ce profil!";
+       } else {
+           profil myProfil= new profil() ;
+           myProfil = profil.findById(profilId) ;
+           myUtilPer2 = utilisateur_has_personnel.findById(utilisateurPersonnId) ;
+           myUtilPer2.setProfil(myProfil);
+           myUtilPer2.setUtilisateur_has_person_modif(LocalDate.now());
+           myUtilPer2.setUtilisateur_has_person_date_debut(dateDebut);
+           myUtilPer2.setUtilisateur_has_person_date_fin(dateFin);
+           messageRetour="Profil modifié avec succès!";
+       }
+
+        return messageRetour ;
+ }
+
+
+
+@Transactional
+    public String modifierMotPasse(String emailUtilisateur,String motdePasse ,String nouveauMotPasse){
+        utilisateur myUtilisateur = new utilisateur() ;
+        utilisateur myUtilisateur2 = new utilisateur() ;
+        String messageRetour= null ;
+        myUtilisateur = checkPassword(emailUtilisateur ,motdePasse ) ;
+
+        if(myUtilisateur!= null) {
+            myUtilisateur2 = utilisateur.findById(myUtilisateur.getUtilisateurid()) ;
+            System.out.print("myUtilisateur2MotPasse "+myUtilisateur2);
+            myUtilisateur2.setUtilisateur_mot_de_passe(nouveauMotPasse);
+            myUtilisateur2.setUtilisateu_email(myUtilisateur.getUtilisateu_email());
+            System.out.print("myUtilisateur211MotPasse "+myUtilisateur2);
+            messageRetour ="mot de passe modifié!" ;
+        } else {
+            messageRetour ="Les paramètres de connexion sont incorrects!" ;
+        }
+    return  messageRetour;
+
+    }
+
+
+
+    public utilisateur checkPassword(String emailUtilisateur,String motdePasse){
+        try {
+            return (utilisateur) em.createQuery("select o from utilisateur o where o.utilisateu_email =:email and o.utilisateur_mot_de_passe=:motPasse")
+                    .setParameter("email",emailUtilisateur)
+                    .setParameter("motPasse",motdePasse)
+                    .getSingleResult();
+        } catch (Exception e) {
+            return  null;
+        }
+    }
+
+
+     public utilisateur verifiEmailUtilisateur(String emailUtilisateur){
+         try {
+             return (utilisateur) em.createQuery("select o from utilisateur o where o.utilisateu_email =:email")
+                     .setParameter("email",emailUtilisateur)
+                     .getSingleResult();
+         } catch (Exception e) {
+             return  null;
+         }
+
+     }
+
+     public  utilisateur_has_personnel veriCompteUtilisateurEcole(Long personnelId , Long codeEcole,Long profilId){
+
+         try {
+             return (utilisateur_has_personnel) em.createQuery("select o from utilisateur_has_personnel  o  where  o.ecole_ecoleid =:codeEcole and o.personnel_personnelid =:personnelId and o.profil.profilid=:profilId")
+                     .setParameter("personnelId",personnelId)
+                     .setParameter("codeEcole",codeEcole)
+                     .setParameter("profilId",profilId)
+                      .getSingleResult();
+         } catch (Exception e) {
+             return  null;
+         }
+
+
+
+     }
+
+
+
 
     public void  deletclasse(long ecoleID){
         ecole obj1 = ecole.findById(ecoleID);

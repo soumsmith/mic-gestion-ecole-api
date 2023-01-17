@@ -1,7 +1,6 @@
 package com.vieecoles.dao.entities.operations;
 
-import com.vieecoles.dao.entities.Annee_scolaire;
-import com.vieecoles.entities.*;
+import com.vieecoles.dao.entities.Annee_Scolaire;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
 import javax.persistence.*;
@@ -27,7 +26,7 @@ public class personnel_matiere_classe extends PanacheEntityBase {
     private personnel personnel ;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "annee_scolaire_annee_scolaireid")
-    private Annee_scolaire annee_scolaire ;
+    private Annee_Scolaire annee_scolaire ;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tenant_tenantid")
     private com.vieecoles.dao.entities.tenant tenant ;
@@ -65,11 +64,11 @@ public class personnel_matiere_classe extends PanacheEntityBase {
         this.personnel = personnel;
     }
 
-    public Annee_scolaire getAnnee_scolaire() {
+    public Annee_Scolaire getAnnee_scolaire() {
         return annee_scolaire;
     }
 
-    public void setAnnee_scolaire(Annee_scolaire annee_scolaire) {
+    public void setAnnee_scolaire(Annee_Scolaire annee_scolaire) {
         this.annee_scolaire = annee_scolaire;
     }
 

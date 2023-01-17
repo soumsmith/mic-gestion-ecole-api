@@ -1,7 +1,7 @@
 package com.vieecoles.services;
 
-import com.vieecoles.entities.domaine;
-import com.vieecoles.entities.zone;
+import com.vieecoles.dao.entities.domaine;
+import com.vieecoles.dao.entities.Zone;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -11,22 +11,22 @@ import java.net.URI;
 import java.util.List;
 
 @ApplicationScoped
-public class zoneService implements PanacheRepositoryBase<zone, Long> {
+public class zoneService implements PanacheRepositoryBase<Zone, Long> {
 
-   public List<zone> getListzone(){
-       return  zone.listAll();
+   public List<Zone> getListzone(){
+       return  Zone.listAll();
    }
-   public  zone findById(Long zoneId){
+   public Zone findById(Long zoneId){
        return domaine.findById(zoneId);
    }
 
-   public Response createzone(zone zon) {
+   public Response createzone(Zone zon) {
        zon.persist();
        return Response.created(URI.create("/zone/" + zon.getZonecode())).build();
    }
 
-   public  zone updatezone(long zoneId, zone zon){
-       zone entity = zone.findById(zoneId);
+   public Zone updatezone(long zoneId, Zone zon){
+       Zone entity = Zone.findById(zoneId);
        if(entity == null) {
            throw new NotFoundException();
        }
@@ -36,19 +36,19 @@ public class zoneService implements PanacheRepositoryBase<zone, Long> {
    }
 
     public void  deletezone(long zonId){
-        zone entity = zone.findById(zonId);
+        Zone entity = Zone.findById(zonId);
         if(entity == null) {
             throw new NotFoundException();
         }
         entity.delete();
     }
 
-   public  List<zone> search(String Libelle){
-       return  zone.find("zonelibelle",Libelle).list() ;
+   public  List<Zone> search(String Libelle){
+       return  Zone.find("zonelibelle",Libelle).list() ;
    }
 
     public  long count(){
-        return  zone.count();
+        return  Zone.count();
     }
 
 

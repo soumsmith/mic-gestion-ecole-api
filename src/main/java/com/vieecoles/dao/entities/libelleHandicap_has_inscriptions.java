@@ -7,7 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class libellehandicap_inscriptions extends PanacheEntityBase {
+public class libelleHandicap_has_inscriptions extends PanacheEntityBase {
     @Id @GeneratedValue
   private  Long  libelleHandicap_libelleHandicapid ;
   private  Long  inscriptions_inscriptionsid ;

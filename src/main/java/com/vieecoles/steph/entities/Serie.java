@@ -1,4 +1,4 @@
-package com.vieecoles.ressource.steph.entities;
+package com.vieecoles.steph.entities;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Data;

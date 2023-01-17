@@ -2,38 +2,18 @@ package com.vieecoles.dto;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.*;
 import java.time.LocalDate;
 
-@Entity
-public class panier_personnelDto extends PanacheEntityBase {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long  idpanier_personnel_id ;
-   private  String personnelcode;
-    private  LocalDate  panier_personnel_date_creation;
-    private  LocalDate  panier_personnel_date_modifier;
 
+@ApplicationScoped
+public class panier_personnelDto {
+    private  LocalDate  panier_personnel_date_creation;
     private Long identifiant_ecole ;
     private Long identifiant_personnel;
 
 
-
-    public Long getIdpanier_personnel_id() {
-        return idpanier_personnel_id;
-    }
-
-    public void setIdpanier_personnel_id(Long idpanier_personnel_id) {
-        this.idpanier_personnel_id = idpanier_personnel_id;
-    }
-
-    public String getPersonnelcode() {
-        return personnelcode;
-    }
-
-    public void setPersonnelcode(String personnelcode) {
-        this.personnelcode = personnelcode;
-    }
 
     public LocalDate getPanier_personnel_date_creation() {
         return panier_personnel_date_creation;
@@ -43,13 +23,6 @@ public class panier_personnelDto extends PanacheEntityBase {
         this.panier_personnel_date_creation = panier_personnel_date_creation;
     }
 
-    public LocalDate getPanier_personnel_date_modifier() {
-        return panier_personnel_date_modifier;
-    }
-
-    public void setPanier_personnel_date_modifier(LocalDate panier_personnel_date_modifier) {
-        this.panier_personnel_date_modifier = panier_personnel_date_modifier;
-    }
 
 
 
@@ -67,5 +40,17 @@ public class panier_personnelDto extends PanacheEntityBase {
 
     public void setIdentifiant_personnel(Long identifiant_personnel) {
         this.identifiant_personnel = identifiant_personnel;
+    }
+
+    public panier_personnelDto() {
+    }
+
+    @Override
+    public String toString() {
+        return "panier_personnelDto{" +
+                "panier_personnel_date_creation=" + panier_personnel_date_creation +
+                ", identifiant_ecole=" + identifiant_ecole +
+                ", identifiant_personnel=" + identifiant_personnel +
+                '}';
     }
 }

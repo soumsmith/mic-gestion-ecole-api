@@ -1,6 +1,5 @@
 package com.vieecoles.dto;
 
-import com.vieecoles.dao.entities.Branche;
 import com.vieecoles.dao.entities.operations.Inscriptions;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -33,12 +32,20 @@ public class InscriptionAvaliderDto {
     public InscriptionAvaliderDto() {
     }
 
-    public InscriptionAvaliderDto(Long idEleveInscrit, Long   inscriptionsidEleve,String nomEleve, String prenomEleve, String matriculeEleve,
+    public InscriptionAvaliderDto(Long idEleveInscrit,
+                                  Long   inscriptionsidEleve,
+                                  String nomEleve,
+                                  String prenomEleve,
+                                  String matriculeEleve,
                                   LocalDate date_naissanceEleve,
-                                  String sexeEleve, String contactEleve,
+                                  String sexeEleve,
+                                  String contactEleve,
                                   Inscriptions.statusEleve inscriptions_statut_eleve,
                                   Inscriptions.status inscriptions_status,
-                                  Inscriptions.typeOperation inscriptions_type,Inscriptions.processus inscriptions_processus ,Long brancheid ,String brancheLibelle) {
+                                  Inscriptions.typeOperation inscriptions_type,
+                                  Inscriptions.processus inscriptions_processus ,
+                                  Long brancheid
+                              ,String brancheLibelle) {
         this.idEleveInscrit = idEleveInscrit ;
         this.inscriptionsidEleve= inscriptionsidEleve ;
         NomEleve = nomEleve;

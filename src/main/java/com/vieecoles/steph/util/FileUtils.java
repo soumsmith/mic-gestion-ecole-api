@@ -1,12 +1,8 @@
-package com.vieecoles.util;
+package com.vieecoles.steph.util;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import org.apache.commons.io.IOUtils;
+
+import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
@@ -18,8 +14,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-
-import org.apache.commons.io.IOUtils;
 
 /**
  * Commonly used file utility methods.
@@ -39,10 +33,10 @@ public class FileUtils {
         }
         final String[] units = new String[] {"B", "KB", "MB", "GB", "TB"};
         int digitGroups = (int)(Math.log10(size) / Math.log10(1024));
-        return new DecimalFormat("#,##0.#").format(size / Math.pow(1024, digitGroups)) 
+        return new DecimalFormat("#,##0.#").format(size / Math.pow(1024, digitGroups))
           + " " + units[digitGroups];
     }
-    
+
     /**
      *  Get file extension such as "txt","png","pdf"
      * @param file
@@ -51,12 +45,12 @@ public class FileUtils {
     public static String getFileExtension(File file){
      String fileName = file.getName();
         if(fileName.lastIndexOf('.') != -1 && fileName.lastIndexOf('.') != 0){
-         return fileName.substring(fileName.lastIndexOf('.')+1); 
+         return fileName.substring(fileName.lastIndexOf('.')+1);
         }else{
          return "File don't have extension";
         }
     }
-    
+
     /**
      * Check for file extension
      * @param file
@@ -66,7 +60,7 @@ public class FileUtils {
     public static boolean hasExtension(String file, String extension) {
         return file.endsWith(extension);
     }
-    
+
     /**
      * get last modified given file date
      * @param file
@@ -75,7 +69,7 @@ public class FileUtils {
     public static long getLastModifiedDate(File file){
      return file.lastModified();
     }
-    
+
    /**
     * check if a file exists in Java
     * @param file
@@ -84,7 +78,7 @@ public class FileUtils {
     public static boolean checkFileExist(File file){
      return file.exists();
     }
-    
+
     /**
      * Converts InputStream to a String
      * @param in
@@ -100,7 +94,7 @@ public class FileUtils {
         }
         return result.toString(StandardCharsets.UTF_8.name());
     }
-    
+
     /**
      * Reads content of a file to a String
      * @param path
@@ -110,7 +104,7 @@ public class FileUtils {
     public String readFileAsString(Path path) throws IOException {
         return new String(Files.readAllBytes(path));
     }
-    
+
     /**
      * getCurrentWorkingDirectoryPath
      * @return
@@ -131,7 +125,7 @@ public class FileUtils {
 
         return tmpDirName;
     }
-    
+
     /**
      * Returns the path to the system temporary directory.
      *
@@ -140,7 +134,7 @@ public class FileUtils {
     public static String getTempDirectoryPath() {
         return System.getProperty("java.io.tmpdir");
     }
-    
+
     /**
      * Returns the path to the user's home directory.
      *
@@ -151,8 +145,8 @@ public class FileUtils {
     public static String getUserDirectoryPath() {
         return System.getProperty("user.home");
     }
-    
-    
+
+
     /**
      * Returns a {@link File} representing the user's home directory.
      *
@@ -163,7 +157,7 @@ public class FileUtils {
     public static File getUserDirectory() {
         return new File(getUserDirectoryPath());
     }
-    
+
     /**
      * Converts a Collection containing java.io.File instanced into array
      * representation. This is to account for the difference between
@@ -196,7 +190,7 @@ public class FileUtils {
             return "";
         }
     }
-    
+
     /**
      * Compares the contents of two files to determine if they are equal or not.
      * <p>
@@ -243,7 +237,7 @@ public class FileUtils {
             return IOUtils.contentEquals(input1, input2);
         }
     }
-    
+
     /**
      * Compares the contents of two files to determine if they are equal or not.
      * <p>
@@ -292,7 +286,7 @@ public class FileUtils {
             return IOUtils.contentEqualsIgnoreEOL(input1, input2);
         }
     }
-    
+
     /**
      * Returns the path only (without file name).
      *
@@ -319,7 +313,7 @@ public class FileUtils {
         }
         return null;
     }
-    
+
     /**
      * Tests if the specified <code>File</code> is newer than the specified
      * <code>Date</code>.
@@ -370,11 +364,11 @@ public class FileUtils {
     public static String join(String file, String ext) {
         return file + '/' + ext;
     }
-    
+
 
  /**
   * Check if a directory exists
-  * 
+  *
   * @param dir
   *            the directory to check
   * @return {@code true} if the {@code dir} exists on the file system
@@ -388,8 +382,8 @@ public class FileUtils {
  }
 
  /**
-  * A wrapper for {@link java.io.File#renameTo(File)}
-  * 
+  * A wrapper for {@link File#renameTo(File)}
+  *
   * @param oldf
   *            the original filename
   * @param newf
@@ -401,9 +395,9 @@ public class FileUtils {
  }
 
  /**
-  * A wrapper for {@link java.io.File#renameTo(File)} which creates new File
+  * A wrapper for {@link File#renameTo(File)} which creates new File
   * handles for both args.
-  * 
+  *
   * @param oldf
   *            the original filename
   * @param newf
@@ -416,8 +410,8 @@ public class FileUtils {
 
  /**
   * Creates {@code dir} if it doesn't yet exist. A wrapper for
-  * {@link java.io.File#mkdir()}
-  * 
+  * {@link File#mkdir()}
+  *
   * @param dir
   *            the directory to create
   * @return {@code true} if the operation was successful
@@ -429,8 +423,8 @@ public class FileUtils {
 
  /**
   * Creates all {@code dir}s in the path as needed. A wrapper for
-  * {@link java.io.File#mkdirs()}
-  * 
+  * {@link File#mkdirs()}
+  *
   * @param dir
   *            the path to create
   * @return {@code true} if the operation was successful
@@ -442,9 +436,9 @@ public class FileUtils {
 
  /**
   * Returns the current timestamp in format {@code yyyyMMddHHmmssSSS}
-  * 
+  *
   * @return the current timestamp
-  * @see java.text.SimpleDateFormat
+  * @see SimpleDateFormat
   */
  public static String getTimeStamp() {
   return new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
@@ -452,7 +446,7 @@ public class FileUtils {
 
  /**
   * Get a list of directory contents
-  * 
+  *
   * @param d
   *            the directory to list
   * @return a list of directory contents
@@ -463,7 +457,7 @@ public class FileUtils {
 
  /**
   * Gets a recursive list of directory contents
-  * 
+  *
   * @param d
   *            the directory to interrogate
   * @param depth
@@ -513,6 +507,6 @@ public class FileUtils {
      }
      return path.delete();
    }
-   
+
 
 }

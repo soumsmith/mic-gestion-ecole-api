@@ -28,6 +28,13 @@ public class zoneRessource {
     public Zone get(@PathParam("id") Long id) {
         return zonService.findById(id);
     }
+
+    @GET
+    @Path("/soumm-test")
+    public String get() {
+        return "soumTestok";
+    }
+
     @POST
     @Transactional
     public Response create(Zone zon) {

@@ -1,5 +1,6 @@
 package com.vieecoles.dao.entities;
 
+import com.vieecoles.steph.entities.CategorieMatiere;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -28,7 +29,7 @@ public class matiere extends PanacheEntityBase {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "categorie_matiere_categorie_matiereid")
-    private com.vieecoles.dao.entities.categorie_matiere categorie_matiere ;
+    private CategorieMatiere categorie_matiere ;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -67,11 +68,11 @@ public class matiere extends PanacheEntityBase {
         this.matierecoefficien = matierecoefficien;
     }
 
-    public com.vieecoles.dao.entities.categorie_matiere getCategorie_matiere() {
+    public CategorieMatiere getCategorie_matiere() {
         return categorie_matiere;
     }
 
-    public void setCategorie_matiere(com.vieecoles.dao.entities.categorie_matiere categorie_matiere) {
+    public void setCategorie_matiere(CategorieMatiere categorie_matiere) {
         this.categorie_matiere = categorie_matiere;
     }
 

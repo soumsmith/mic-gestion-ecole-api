@@ -2,17 +2,20 @@ package com.vieecoles.dao.entities;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "profil")
 public class profil extends PanacheEntityBase {
-    @Id @GeneratedValue
-    private Long  profilid ;
-    private  String profilcode;
-    private  String profil_libelle;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+ private  Long   profilid ;
+  private  String  profilcode ;
+ private  String   profil_libelle ;
 
+
+    public profil() {
+    }
 
     public Long getProfilid() {
         return profilid;
@@ -37,4 +40,14 @@ public class profil extends PanacheEntityBase {
     public void setProfil_libelle(String profil_libelle) {
         this.profil_libelle = profil_libelle;
     }
+
+    @Override
+    public String toString() {
+        return "profil [profilid=" + profilid + ", profilcode=" + profilcode + ", profil_libelle=" + profil_libelle
+                + "]";
+    }
+
+  
+
+
 }

@@ -1,6 +1,6 @@
-package com.vieecoles.ressource.steph.services;
+package com.vieecoles.steph.services;
 
-import com.vieecoles.entities.Niveau;
+import com.vieecoles.steph.entities.Niveau;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.enterprise.context.RequestScoped;

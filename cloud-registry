@@ -15,7 +15,11 @@
 
 --- build with tag
   docker build -f src/main/docker/Dockerfile.jvm -t europe-west1-docker.pkg.dev/fair-splice-361010/vie-ecole-docker-repo/example:202209201329 .
-  docker build -f src/main/docker/Dockerfile.jvm -t europe-west1-docker.pkg.dev/fair-splice-361010/vie-ecole-docker-repo/vie-ecole-api:202210211723 .
+  docker build -f src/main/docker/Dockerfile.jvm -t europe-west1-docker.pkg.dev/fair-splice-361010/vie-ecole-docker-repo/vie-ecole-api:202212211620 .
+
+
+
+
 --- push image to artifact registry
   docker push europe-west1-docker.pkg.dev/fair-splice-361010/vie-ecole-docker-repo/example:latest
   docker push europe-west1-docker.pkg.dev/fair-splice-361010/vie-ecole-docker-repo/example:202209201329

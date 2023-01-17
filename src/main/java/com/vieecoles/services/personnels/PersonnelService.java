@@ -1,13 +1,10 @@
-package com.vieecoles.services.eleves;
+package com.vieecoles.services.personnels;
 
+import com.vieecoles.dao.entities.*;
 import com.vieecoles.dto.EleveDto;
-import com.vieecoles.dto.InscriptionDto;
-import com.vieecoles.entities.Libellehandicap;
-import com.vieecoles.entities.Parent;
-import com.vieecoles.entities.cycle;
-import com.vieecoles.entities.operations.Inscriptions;
-import com.vieecoles.entities.operations.eleve;
-import com.vieecoles.entities.tenant;
+import com.vieecoles.dto.personnelDto;
+import com.vieecoles.dao.entities.operations.eleve;
+import com.vieecoles.dao.entities.operations.personnel;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -15,66 +12,111 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import javax.ws.rs.NotFoundException;
-import javax.ws.rs.core.Response;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 @ApplicationScoped
-public class EleveService implements PanacheRepositoryBase<eleve, Long> {
+public class PersonnelService implements PanacheRepositoryBase<personnel, Long> {
     @Inject
     EntityManager em;
 
-    @Inject
-    InscriptionService inscriptionService ;
-   public List<eleve> getListcycle(){
-       return  eleve.listAll();
-   }
-   public  eleve findById(Long cycleId){
-       return eleve.findById(cycleId);
-   }
 @Transactional
-   public eleve   CreerUnEleve(EleveDto eleveDto) {
+   public String   CreerPersonnel(personnelDto personnelDto) {
+    type_personnel mytype_personnel= new type_personnel() ;
+    personnel_status mypersonnel_status = new personnel_status() ;
+    personnel myPersonel = new personnel() ;
+   fonction myFonction= new fonction() ;
+    myFonction= fonction.findById(personnelDto.getIdentifiant_fonction()) ;
+    mytype_personnel = type_personnel.findById(personnelDto.getIdentifiant_type_personnel()) ;
 
-      System.out.println("TestSoum "+eleveDto.getIdTenant());
-   tenant mytenant = (tenant) em.createQuery("select o from tenant o where   o.tenantid=:tenant ")
-                       .setParameter("tenant",eleveDto.getIdTenant())
-                               .getSingleResult() ;
-     System.out.println("tenant "+mytenant.toString());
+    mypersonnel_status= personnel_status.findById(personnelDto.getIdentifiant_personnelStatut()) ;
 
-       List<Parent> parentsList= new ArrayList<>() ;
-      // System.out.println( "Longueur"+ eleveDto.getParentList().size());
-       for(int i = 0 ; i < eleveDto.getParentList().size() ; i++)
-       {
-           Parent myParent;
-           myParent= Parent.findById(eleveDto.getParentList().get(i)) ;
-           parentsList.add(myParent) ;
-       }
-
-       eleve myElev = new eleve() ;
-
-       myElev.setEleveprenom(eleveDto.getEleveprenom());
-       myElev.setElevenom(eleveDto.getElevenom());
-       myElev.setElevecode(getElevCode(eleveDto.getIdTenant()));
-       myElev.setElevelieu_naissance(eleveDto.getElevelieu_naissance());
-       myElev.setEleveadresse(eleveDto.getEleveadresse());
-       myElev.setElevecellulaire(eleveDto.getElevecellulaire());
-       myElev.setElevedate_naissance(eleveDto.getElevedate_naissance());
-       myElev.setElevedate_etabli_extrait_naiss(eleveDto.getElevedate_etabli_extrait_naiss());
-       myElev.setElevelieu_etabliss_etrait_naissance(eleveDto.getElevelieu_etabliss_etrait_naissance());
-        myElev.setTenant(mytenant);
-       myElev.setParents(parentsList);
-       myElev.setEleveSexe(eleveDto.getEleveSexe());
-       myElev.setElevematricule_national(eleveDto.getElevematricule_national());
-       myElev.persist();
-
-      /// public void run() {
-
-       System.out.println("Moustt"+myElev.toString());
-    return myElev ;
-
+   // myPersonel.setPersonnel_status(mypersonnel_status);
+    myPersonel.setFonction(myFonction);
+   // myPersonel.setType_personnel(mytype_personnel);
+    myPersonel.setPersonnel_lieunaissance(personnelDto.getPersonnel_lieunaissance());
+    myPersonel.setPersonnelcode(personnelDto.getPersonnelcode());
+    myPersonel.setPersonnelnom(personnelDto.getPersonnelnom());
+    myPersonel.setPersonnelprenom(personnelDto.getPersonnelprenom());
+    myPersonel.setPersonneldatenaissance(personnelDto.getPersonneldatenaissance());
+    myPersonel.persist();
+      return  myPersonel.getPersonnelcode() ;
           }
+
+
+          public  List<personnel> getPersonnels(String tenant ){
+              /*TypedQuery<personnel> q = (TypedQuery<personnel>) em.createQuery("select o from personnel  o join  o. p join o.tenant t join o.type_personnel join  o.fonction f " +
+                      "where  t.tenantid=:tenant ");
+              List<personnel> personnelSelect = q.setParameter("tenant",tenant).
+                      getResultList();*/
+              return null    ;
+          }
+
+    public  List<personnel> getPersonnels2(String LibelleFonctopn ,String tenant ){
+        /*TypedQuery<personnel> q = (TypedQuery<personnel>) em.createQuery("select o from personnel  o join  o.personnel_status p join o.tenant t join o.type_personnel join  o.fonction f " +
+                "where f.fonctionlibelle=:fonction and t.tenantid=:tenant ");
+        List<personnel> personnelSelect = q.setParameter("fonction",LibelleFonctopn).setParameter("tenant",tenant).
+                getResultList();*/
+        return null ;
+    }
+
+
+
+    public  List<personnel> getAllPersonnels(){
+    return personnel.listAll() ;
+    }
+
+
+
+
+    public  personnel getPersonnelsByID(Long identifiantPersonnel){
+        return   personnel.findById(identifiantPersonnel) ;
+    }
+
+
+    @Transactional
+    public personnel   modifierPersonnel(personnelDto personnelDto) {
+        type_personnel mytype_personnel= new type_personnel() ;
+        personnel_status mypersonnel_status = new personnel_status() ;
+        personnel myPersonel = new personnel() ;
+        mytype_personnel = type_personnel.findById(personnelDto.getIdentifiant_type_personnel()) ;
+        mypersonnel_status= personnel_status.findById(personnelDto.getIdentifiant_personnelStatut()) ;
+       fonction myFonction = fonction.findById(personnelDto.getIdentifiant_fonction());
+        myPersonel = personnel.findById(personnelDto.getPersonnelid()) ;
+
+        myPersonel.setFonction(myFonction);
+        myPersonel.setPersonnel_lieunaissance(personnelDto.getPersonnel_lieunaissance());
+        myPersonel.setPersonnelcode(personnelDto.getPersonnelcode());
+        myPersonel.setPersonnelnom(personnelDto.getPersonnelnom());
+        myPersonel.setPersonnelprenom(personnelDto.getPersonnelprenom());
+        myPersonel.setPersonneldatenaissance(personnelDto.getPersonneldatenaissance());
+
+        return  myPersonel ;
+    }
+
+    @Transactional
+    public void    deletePersonnel(Long identifiantPersonnel) {
+
+        personnel myPersonel = new personnel() ;
+        myPersonel = personnel.findById(identifiantPersonnel) ;
+
+        try{
+            myPersonel.delete();
+        }catch (Exception e) {
+
+        }
+
+    }
+
+
+
+
+
+
+
+
+
 
 
     public  String getElevCode(String tenant) {
@@ -82,9 +124,8 @@ public class EleveService implements PanacheRepositoryBase<eleve, Long> {
         int year = now.get(Calendar.YEAR);
         String yearInString = String.valueOf(year);
 
-        Long  maxrecor= (Long) em.createQuery("select max(o.eleveid)  from eleve o  where o.tenant.tenantid =: tenant")
-                .setParameter("tenant", tenant)
-                .getSingleResult();
+        Long  maxrecor= (Long) em.createQuery("select max(o.eleveid)  from eleve o ")
+                      .getSingleResult();
 
         System.out.println("maxrecor "+maxrecor);
 
@@ -110,7 +151,7 @@ public class EleveService implements PanacheRepositoryBase<eleve, Long> {
 
     }
 
-  
+
 
 
 
@@ -121,9 +162,8 @@ public class EleveService implements PanacheRepositoryBase<eleve, Long> {
        if(entity == null) {
            throw new NotFoundException();
        }
-       tenant mytenant = (tenant) em.createQuery("select o from tenant o where   o.tenantid=:tenant ")
-               .setParameter("tenant",elev.getIdTenant())
-               .getSingleResult() ;
+       tenant mytenant = (tenant) em.createQuery("select o from tenant o  ")
+                    .getSingleResult() ;
 
        List<Parent> parentsList= new ArrayList<>() ;
        // System.out.println( "Longueur"+ eleveDto.getParentList().size());
@@ -145,10 +185,9 @@ public class EleveService implements PanacheRepositoryBase<eleve, Long> {
        entity.setElevedate_naissance(elev.getElevedate_naissance());
        entity.setElevelieu_naissance(elev.getElevelieu_naissance());
        entity.setElevenom(elev.getElevenom());
-       entity.setTenant(mytenant);
-       entity.setEleveSexe(elev.getEleveSexe());
+         entity.setEleve_sexe(elev.getEleveSexe());
        entity.setParents(parentsList);
-       entity.setElevematricule_national(elev.getElevematricule_national());
+       entity.setEleve_matricule(elev.getElevematricule_national());
        entity.setEleveprenom(elev.getEleveprenom());
         return  entity;
    }

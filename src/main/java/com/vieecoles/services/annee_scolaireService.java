@@ -1,7 +1,6 @@
 package com.vieecoles.services;
 
-import com.vieecoles.entities.Niveau;
-import com.vieecoles.entities.operations.Inscriptions;
+import com.vieecoles.dao.entities.Annee_Scolaire;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -11,64 +10,71 @@ import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Response;
 import java.net.URI;
 import java.util.List;
+
 @ApplicationScoped
-public class niveauService implements PanacheRepositoryBase<Niveau, Long> {
+public class annee_scolaireService implements PanacheRepositoryBase<Annee_Scolaire, Long> {
     @Inject
     EntityManager em;
 
-   public List<Niveau> getListNIveau(){
-       return  Niveau.listAll();
+   public List<Annee_Scolaire> getListNIveau(){
+       return  Annee_Scolaire.listAll();
    }
 
 
-   public Niveau findById(Long niveauId){
-       return Niveau.findById(niveauId);
+   public Annee_Scolaire findById(Long niveauId){
+       return Annee_Scolaire.findById(niveauId);
    }
-    public  List<Niveau> findNiveauByEcole(String tenant){
+    public  List<Annee_Scolaire> findAnneScolaireByEcole(String tenant){
        try {
-           return    em.createQuery("select o from niveau o  where o.tenant_tenantid=:tenant  ")
-                   .setParameter("tenant", tenant)
-                   .getResultList();
+           return    em.createQuery("select o from Annee_Scolaire o  ")
+                              .getResultList();
        } catch (Exception e) {
            return  null ;
        }
 
-
-
-
-
 }
 
 
-   public Response createniveau(Niveau niv) {
+    public Annee_Scolaire findAnneScolaireVisibleByEcole(String tenant){
+        try {
+            return (Annee_Scolaire) em.createQuery("select o from Annee_Scolaire  o where o.annee_scolaire_visible=:param")
+                    .setParameter("param", "1")
+                    .getSingleResult();
+        } catch (Exception e) {
+            return  null ;
+        }
+
+    }
+
+   public Response createniveau(Annee_Scolaire niv) {
        niv.persist();
-       return Response.created(URI.create("/niveau/" + niv.getNiveauid())).build();
+       return Response.created(URI.create("/niveau/" + niv.getAnnee_scolaire_code())).build();
    }
 
-   public Niveau updateNiveau(long niveauId, Niveau niv){
-       Niveau entity = Niveau.findById(niveauId);
+   public Annee_Scolaire updateNiveau(long niveauId, Annee_Scolaire annee_scolaire){
+       Annee_Scolaire entity = Annee_Scolaire.findById(niveauId);
        if(entity == null) {
            throw new NotFoundException();
        }
-       entity.setNiveaucode(niv.getNiveaucode());
-       entity.setNiveaulibelle(niv.getNiveaulibelle());
+       entity.setAnnee_scolaire_code(annee_scolaire.getAnnee_scolaire_code());
+       entity.setAnnee_scolaire_libelle(annee_scolaire.getAnnee_scolaire_libelle());
        return  entity;
    }
 
     public void  deleteNiveau(long niveauId){
-        Niveau entity = Niveau.findById(niveauId);
+        Annee_Scolaire entity = Annee_Scolaire.findById(niveauId);
         if(entity == null) {
             throw new NotFoundException();
         }
         entity.delete();
     }
 
-   public  List<Niveau> search(String niveauLibelle){
-       return  Niveau.find("niveaulibelle",niveauLibelle).list() ;
+   public  List<Annee_Scolaire> search(String niveauLibelle){
+       return  Annee_Scolaire.find("niveaulibelle",niveauLibelle).list() ;
    }
 
     public  long count(){
-        return  Niveau.count();
+        return  Annee_Scolaire.count();
     }
 
 

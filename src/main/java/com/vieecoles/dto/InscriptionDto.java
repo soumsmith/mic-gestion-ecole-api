@@ -17,6 +17,10 @@ public class InscriptionDto {
     private  String   inscriptions_classe_actuelle ;
     private  String   inscriptions_redoublant ;
     private  String   inscriptions_boursier ;
+    private  String  inscriptions_code_interne ;
+    private  String  inscriptions_langue_vivante ;
+    private  String inscriptions_contact1 ;
+    private  String inscriptions_contact2 ;
     @Enumerated(EnumType.STRING)
     private Inscriptions.statusEleve inscriptions_statut_eleve ;
     @Enumerated(EnumType.STRING)
@@ -54,6 +58,38 @@ public class InscriptionDto {
 
     public void setInscriptions_boursier(String inscriptions_boursier) {
         this.inscriptions_boursier = inscriptions_boursier;
+    }
+
+    public String getInscriptions_contact1() {
+        return inscriptions_contact1;
+    }
+
+    public void setInscriptions_contact1(String inscriptions_contact1) {
+        this.inscriptions_contact1 = inscriptions_contact1;
+    }
+
+    public String getInscriptions_contact2() {
+        return inscriptions_contact2;
+    }
+
+    public void setInscriptions_contact2(String inscriptions_contact2) {
+        this.inscriptions_contact2 = inscriptions_contact2;
+    }
+
+    public String getInscriptions_code_interne() {
+        return inscriptions_code_interne;
+    }
+
+    public void setInscriptions_code_interne(String inscriptions_code_interne) {
+        this.inscriptions_code_interne = inscriptions_code_interne;
+    }
+
+    public String getInscriptions_langue_vivante() {
+        return inscriptions_langue_vivante;
+    }
+
+    public void setInscriptions_langue_vivante(String inscriptions_langue_vivante) {
+        this.inscriptions_langue_vivante = inscriptions_langue_vivante;
     }
 
     public Long getIdentifiantBranche() {

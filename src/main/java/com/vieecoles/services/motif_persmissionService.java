@@ -1,6 +1,6 @@
 package com.vieecoles.services;
 
-import com.vieecoles.entities.motif_permission;
+import com.vieecoles.dao.entities.motif_permission;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.enterprise.context.ApplicationScoped;

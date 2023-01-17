@@ -1,6 +1,6 @@
-package com.vieecoles.ressource.steph.ressources;
+package com.vieecoles.steph.ressources;
 
-import com.vieecoles.services.FiliereService;
+import com.vieecoles.steph.services.FiliereService;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 

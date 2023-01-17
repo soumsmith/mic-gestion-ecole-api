@@ -1,7 +1,7 @@
-package com.vieecoles.ressource.steph.services;
+package com.vieecoles.steph.services;
 
 import com.google.gson.Gson;
-import com.vieecoles.entities.Matiere;
+import com.vieecoles.steph.entities.Matiere;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -10,11 +10,11 @@ import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
+
 
 @ApplicationScoped
 public class MatiereService implements PanacheRepositoryBase<Matiere, Long>{
-	Logger logger = Logger.getLogger(Matiere.class.getName());
+	//Logger logger = Logger.getLogger(Matiere.class.getName());
 
 	public List<Matiere> getList() {
 		try {
@@ -28,7 +28,7 @@ public class MatiereService implements PanacheRepositoryBase<Matiere, Long>{
 	@Transactional
 	public Response create(Matiere ev) {
 		Gson gson = new Gson();
-		logger.info(gson.toJson(ev));
+		//logger.info(gson.toJson(ev));
 
 //		UUID uuid = UUID.randomUUID();
 //		ev.setCode(uuid.toString());

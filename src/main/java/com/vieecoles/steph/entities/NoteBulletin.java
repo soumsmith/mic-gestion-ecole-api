@@ -1,4 +1,4 @@
-package com.vieecoles.entities;
+package com.vieecoles.steph.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

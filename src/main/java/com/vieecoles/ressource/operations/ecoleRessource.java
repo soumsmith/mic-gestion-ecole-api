@@ -28,13 +28,13 @@ public class ecoleRessource {
     ecoleService matService ;
     @Inject
     EntityManager em;
-    @GET
+/*     @GET
     @Path("groupe/{groupe}")
     public List<ecole> list(@PathParam("groupe") Long groupe) {
         return matService.findByIdTypegroupe_ecole(groupe);
-    }
+    } */
 
-    @GET
+    /* @GET
     @Path("zone/{zone}")
     public List<ecole> listbyzone(@PathParam("zone") Long zone) {
         return matService.findByIdTypezone(zone);
@@ -49,7 +49,7 @@ public class ecoleRessource {
     @Path("cycle/{cycle}")
     public List<ecole> listbycycle(@PathParam("cycle") Long cycle) {
         return matService.findAllecolebyCycle(cycle);
-    }
+    } */
 
     @GET
         public List<ecole> list2() {
@@ -63,12 +63,12 @@ public class ecoleRessource {
         return matService.findAllecoleDto();
     }
 
-    @GET
+   /*  @GET
     @Path("cycle")
     public List<ecole> listCycle() {
         return matService.findAllecoleAndCycle();
     }
-
+ */
 
     @GET
     @Path("/{id}")
@@ -110,16 +110,13 @@ public class ecoleRessource {
         obj.setEcolecode(ecole_code);
         obj.setRecoiaffecteetat(recoiaffecteetat);
         obj.setEcolearreteecreation(arreteCreation);
-        obj.setGroupe_ecole(groupe_ecole);
-        obj.setQuartier(quartier);
-        obj.setCycles(al1);
-        obj.setZone(zone);
+        
 
 
         return matService.create(obj);
     }
 
-    @PUT
+/*     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Transactional
@@ -143,12 +140,10 @@ public class ecoleRessource {
         obj.setEcolecode(ecole_code);
         obj.setRecoiaffecteetat(recoiaffecteetat);
         obj.setEcolearreteecreation(arreteCreation);
-        obj.setGroupe_ecole(groupe_ecole);
-        obj.setQuartier(quartier);
-        obj.setZone(zone);
+       
     return matService.updateecole(obj);
 
-    }
+    } */
     @DELETE
     @Path("/{id}")
     @Transactional

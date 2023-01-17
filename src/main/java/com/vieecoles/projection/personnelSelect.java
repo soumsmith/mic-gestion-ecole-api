@@ -1,12 +1,10 @@
-package com.vieecoles.dto;
+package com.vieecoles.projection;
 
-
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
 import java.time.LocalDate;
 
 
-public class personnelDto  {
+public class personnelSelect {
 
     private Long  personnelid ;
    private  String personnelcode;
@@ -14,17 +12,11 @@ public class personnelDto  {
     private  String personnelprenom;
     private LocalDate personneldatenaissance;
     private  String personnel_lieunaissance;
-    private  Long identifiant_type_personnel ;
-    private  Long identifiant_personnelStatut ;
-    private  Long identifiant_fonction ;
+    private  String type_personnel_liblle ;
+    private  String personnelStatut_liblle ;
+    private  String fonction_liblle ;
 
-    public Long getIdentifiant_fonction() {
-        return identifiant_fonction;
-    }
 
-    public void setIdentifiant_fonction(Long identifiant_fonction) {
-        this.identifiant_fonction = identifiant_fonction;
-    }
 
     public Long getPersonnelid() {
         return personnelid;
@@ -74,19 +66,39 @@ public class personnelDto  {
         this.personnel_lieunaissance = personnel_lieunaissance;
     }
 
-    public Long getIdentifiant_type_personnel() {
-        return identifiant_type_personnel;
+    public String getType_personnel_liblle() {
+        return type_personnel_liblle;
     }
 
-    public void setIdentifiant_type_personnel(Long identifiant_type_personnel) {
-        this.identifiant_type_personnel = identifiant_type_personnel;
+    public void setType_personnel_liblle(String type_personnel_liblle) {
+        this.type_personnel_liblle = type_personnel_liblle;
     }
 
-    public Long getIdentifiant_personnelStatut() {
-        return identifiant_personnelStatut;
+    public String getPersonnelStatut_liblle() {
+        return personnelStatut_liblle;
     }
 
-    public void setIdentifiant_personnelStatut(Long identifiant_personnelStatut) {
-        this.identifiant_personnelStatut = identifiant_personnelStatut;
+    public void setPersonnelStatut_liblle(String personnelStatut_liblle) {
+        this.personnelStatut_liblle = personnelStatut_liblle;
+    }
+
+    public String getFonction_liblle() {
+        return fonction_liblle;
+    }
+
+    public void setFonction_liblle(String fonction_liblle) {
+        this.fonction_liblle = fonction_liblle;
+    }
+
+    public personnelSelect(Long personnelid, String personnelcode, String personnelnom, String personnelprenom, LocalDate personneldatenaissance, String personnel_lieunaissance, String type_personnel_liblle, String personnelStatut_liblle, String fonction_liblle) {
+        this.personnelid = personnelid;
+        this.personnelcode = personnelcode;
+        this.personnelnom = personnelnom;
+        this.personnelprenom = personnelprenom;
+        this.personneldatenaissance = personneldatenaissance;
+        this.personnel_lieunaissance = personnel_lieunaissance;
+        this.type_personnel_liblle = type_personnel_liblle;
+        this.personnelStatut_liblle = personnelStatut_liblle;
+        this.fonction_liblle = fonction_liblle;
     }
 }

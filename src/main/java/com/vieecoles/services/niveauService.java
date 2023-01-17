@@ -1,30 +1,50 @@
 package com.vieecoles.services;
 
-import com.vieecoles.entities.niveau;
+import com.vieecoles.dao.entities.Niveau;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Response;
 import java.net.URI;
 import java.util.List;
 @ApplicationScoped
-public class niveauService implements PanacheRepositoryBase<niveau, Long> {
+public class niveauService implements PanacheRepositoryBase<Niveau, Long> {
+    @Inject
+    EntityManager em;
 
-   public List<niveau> getListNIveau(){
-       return  niveau.listAll();
-   }
-   public  niveau findById(Long niveauId){
-       return niveau.findById(niveauId);
+   public List<Niveau> getListNIveau(){
+       return  Niveau.listAll();
    }
 
-   public Response createniveau(niveau niv) {
+
+   public Niveau findById(Long niveauId){
+       return Niveau.findById(niveauId);
+   }
+    public  List<Niveau> findNiveauByEcole(String tenant){
+       try {
+           return    em.createQuery("select o from niveau o ")
+                           .getResultList();
+       } catch (Exception e) {
+           return  null ;
+       }
+
+
+
+
+
+}
+
+
+   public Response createniveau(Niveau niv) {
        niv.persist();
        return Response.created(URI.create("/niveau/" + niv.getNiveauid())).build();
    }
 
-   public  niveau updateNiveau(long niveauId, niveau niv){
-       niveau entity = niveau.findById(niveauId);
+   public Niveau updateNiveau(long niveauId, Niveau niv){
+       Niveau entity = Niveau.findById(niveauId);
        if(entity == null) {
            throw new NotFoundException();
        }
@@ -34,19 +54,19 @@ public class niveauService implements PanacheRepositoryBase<niveau, Long> {
    }
 
     public void  deleteNiveau(long niveauId){
-        niveau entity = niveau.findById(niveauId);
+        Niveau entity = Niveau.findById(niveauId);
         if(entity == null) {
             throw new NotFoundException();
         }
         entity.delete();
     }
 
-   public  List<niveau> search(String niveauLibelle){
-       return  niveau.find("niveaulibelle",niveauLibelle).list() ;
+   public  List<Niveau> search(String niveauLibelle){
+       return  Niveau.find("niveaulibelle",niveauLibelle).list() ;
    }
 
     public  long count(){
-        return  niveau.count();
+        return  Niveau.count();
     }
 
 

@@ -1,15 +1,6 @@
 package com.vieecoles.dto;
 
-import com.vieecoles.dao.entities.Filiere;
-import com.vieecoles.dao.entities.Niveau;
-import com.vieecoles.dao.entities.Serie;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
-import lombok.Data;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 public class BrancheDto extends PanacheEntityBase{
 

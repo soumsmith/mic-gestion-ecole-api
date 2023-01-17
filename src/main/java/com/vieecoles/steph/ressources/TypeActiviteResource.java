@@ -1,6 +1,6 @@
-package com.vieecoles.ressource.steph.ressources;
+package com.vieecoles.steph.ressources;
 
-import com.vieecoles.services.TypeActiviteService;
+import com.vieecoles.steph.services.TypeActiviteService;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 import javax.inject.Inject;

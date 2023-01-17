@@ -1,67 +1,83 @@
 package com.vieecoles.dao.entities.operations;
 
-import com.vieecoles.dao.entities.Civilite;
-import com.vieecoles.dao.entities.domaine_formation;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-public class panier_personnel extends PanacheEntityBase {
+public class message_personnel extends PanacheEntityBase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long  idpanier_personnel_id ;
-   private  String personnelcode;
-    private  LocalDate  panier_personnel_date_creation;
-    private  LocalDate  panier_personnel_date_modifier;
-       @ManyToOne(fetch = FetchType.LAZY)
-       @JoinColumn(name = "ecole_ecoleid")
-    private com.vieecoles.dao.entities.operations.ecole ecole ;
+    private Long  message_personnel_id ;
+   private  String message_personnel_emetteur;
+    private  String message_personnel_sujet;
+    private  String message_personnel_message;
+    private  LocalDate message_personnel_date ;
+    private Long ecole_ecoleid ;
+    private Long administrateur_gain_idadministrateur_gain ;
+
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sous_attent_personn_sous_attent_personnid")
     private com.vieecoles.dao.entities.operations.sous_attent_personn sous_attent_personn ;
 
-
-    public Long getIdpanier_personnel_id() {
-        return idpanier_personnel_id;
+    public Long getMessage_personnel_id() {
+        return message_personnel_id;
     }
 
-    public void setIdpanier_personnel_id(Long idpanier_personnel_id) {
-        this.idpanier_personnel_id = idpanier_personnel_id;
+    public void setMessage_personnel_id(Long message_personnel_id) {
+        this.message_personnel_id = message_personnel_id;
     }
 
-    public String getPersonnelcode() {
-        return personnelcode;
+
+    public String getMessage_personnel_sujet() {
+        return message_personnel_sujet;
     }
 
-    public void setPersonnelcode(String personnelcode) {
-        this.personnelcode = personnelcode;
+    public void setMessage_personnel_sujet(String message_personnel_sujet) {
+        this.message_personnel_sujet = message_personnel_sujet;
     }
 
-    public LocalDate getPanier_personnel_date_creation() {
-        return panier_personnel_date_creation;
+    public String getMessage_personnel_message() {
+        return message_personnel_message;
     }
 
-    public void setPanier_personnel_date_creation(LocalDate panier_personnel_date_creation) {
-        this.panier_personnel_date_creation = panier_personnel_date_creation;
+    public void setMessage_personnel_message(String message_personnel_message) {
+        this.message_personnel_message = message_personnel_message;
     }
 
-    public LocalDate getPanier_personnel_date_modifier() {
-        return panier_personnel_date_modifier;
+    public LocalDate getMessage_personnel_date() {
+        return message_personnel_date;
     }
 
-    public void setPanier_personnel_date_modifier(LocalDate panier_personnel_date_modifier) {
-        this.panier_personnel_date_modifier = panier_personnel_date_modifier;
+    public Long getEcole_ecoleid() {
+        return ecole_ecoleid;
     }
 
-    public com.vieecoles.dao.entities.operations.ecole getEcole() {
-        return ecole;
+    public void setEcole_ecoleid(Long ecole_ecoleid) {
+        this.ecole_ecoleid = ecole_ecoleid;
     }
 
-    public void setEcole(com.vieecoles.dao.entities.operations.ecole ecole) {
-        this.ecole = ecole;
+    public Long getAdministrateur_gain_idadministrateur_gain() {
+        return administrateur_gain_idadministrateur_gain;
+    }
+
+    public void setAdministrateur_gain_idadministrateur_gain(Long administrateur_gain_idadministrateur_gain) {
+        this.administrateur_gain_idadministrateur_gain = administrateur_gain_idadministrateur_gain;
+    }
+
+    public void setMessage_personnel_date(LocalDate message_personnel_date) {
+        this.message_personnel_date = message_personnel_date;
+    }
+
+    public String getMessage_personnel_emetteur() {
+        return message_personnel_emetteur;
+    }
+
+    public void setMessage_personnel_emetteur(String message_personnel_emetteur) {
+        this.message_personnel_emetteur = message_personnel_emetteur;
     }
 
     public com.vieecoles.dao.entities.operations.sous_attent_personn getSous_attent_personn() {
@@ -70,5 +86,19 @@ public class panier_personnel extends PanacheEntityBase {
 
     public void setSous_attent_personn(com.vieecoles.dao.entities.operations.sous_attent_personn sous_attent_personn) {
         this.sous_attent_personn = sous_attent_personn;
+    }
+
+    @Override
+    public String toString() {
+        return "message_personnel{" +
+                "message_personnel_id=" + message_personnel_id +
+                ", message_personnel_emetteur='" + message_personnel_emetteur + '\'' +
+                ", message_personnel_sujet='" + message_personnel_sujet + '\'' +
+                ", message_personnel_message='" + message_personnel_message + '\'' +
+                ", message_personnel_date=" + message_personnel_date +
+                ", ecole_ecoleid=" + ecole_ecoleid +
+                ", administrateur_gain_idadministrateur_gain=" + administrateur_gain_idadministrateur_gain +
+                ", sous_attent_personn=" + sous_attent_personn +
+                '}';
     }
 }

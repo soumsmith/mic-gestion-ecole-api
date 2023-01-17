@@ -1,8 +1,8 @@
-package com.vieecoles.ressource.steph.services;
+package com.vieecoles.steph.services;
 
-import com.vieecoles.entities.Classe;
-import com.vieecoles.entities.Ecole;
-import com.vieecoles.entities.LangueVivante;
+import com.vieecoles.steph.entities.Classe;
+import com.vieecoles.steph.entities.Ecole;
+import com.vieecoles.steph.entities.LangueVivante;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -10,14 +10,14 @@ import javax.transaction.Transactional;
 import javax.ws.rs.core.Response;
 import java.net.URI;
 import java.util.List;
-import java.util.logging.Logger;
+
 
 @ApplicationScoped
 public class ClasseService implements PanacheRepositoryBase<Classe,Integer> {
-Logger logger = Logger.getLogger(ClasseService.class.getName());
+//Logger logger = Logger.getLogger(ClasseService.class.getName());
 	public List<Classe> getListClasse() {
 		try {
-			logger.info("........ in list <<<<>>>>>");
+		//	logger.info("........ in list <<<<>>>>>");
 			return Classe.listAll();
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -27,7 +27,7 @@ Logger logger = Logger.getLogger(ClasseService.class.getName());
 
 	public List<Classe> getListClasseAllFields() {
 		try {
-			logger.info("........ in list <<<<>>>>>");
+			//logger.info("........ in list <<<<>>>>>");
 			return populateNullFieldClasse(Classe.listAll());
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -36,17 +36,17 @@ Logger logger = Logger.getLogger(ClasseService.class.getName());
 	}
 
 	public Classe findById(long id) {
-		logger.info(String.format("find by id :: %s", id));
+		//logger.info(String.format("find by id :: %s", id));
 		return Classe.findById(id);
 	}
 
 	public List<Classe> findByBranche(long id) {
-		logger.info(String.format("find by Branche id :: %s", id));
+		//logger.info(String.format("find by Branche id :: %s", id));
 		return Classe.find("branche.id = ?1",id).list();
 	}
 	@Transactional
 	public Response save(Classe classe) {
-		logger.info("persist classe ...");
+	//logger.info("persist classe ...");
 		Ecole ecole;
 		// A supprimer lorsque le credential contenant l ecole sera disponible
 		// Par defaut pour tout enregistrement on set l ecole id à 1
@@ -61,7 +61,7 @@ Logger logger = Logger.getLogger(ClasseService.class.getName());
 
 	@Transactional
 	public Classe update(Classe classe) {
-		logger.info("updating classe ...");
+	//	logger.info("updating classe ...");
 		Classe cl = Classe.findById(classe.getId());
 		if(cl != null) {
 			cl.setAnnee(classe.getAnnee());
@@ -93,7 +93,7 @@ Logger logger = Logger.getLogger(ClasseService.class.getName());
 	@Transactional
 	public void delete(String id) {
 
-			logger.info("delete classe id "+id);
+			//logger.info("delete classe id "+id);
 			Classe classe = findById(Long.parseLong(id));
 			classe.delete();
 

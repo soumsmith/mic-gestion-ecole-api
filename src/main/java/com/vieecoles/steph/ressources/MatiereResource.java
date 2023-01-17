@@ -1,8 +1,8 @@
-package com.vieecoles.ressource.steph.ressources;
+package com.vieecoles.steph.ressources;
 
-import com.vieecoles.entities.Evaluation;
-import com.vieecoles.entities.Matiere;
-import com.vieecoles.services.MatiereService;
+import com.vieecoles.steph.entities.Evaluation;
+import com.vieecoles.steph.entities.Matiere;
+import com.vieecoles.steph.services.MatiereService;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import org.jboss.logging.Logger;
 
@@ -12,16 +12,16 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 @Path("/matiere")
+@Tag(name = "Matiere")
 public class MatiereResource {
 
 	@Inject
 	MatiereService matiereService;
 
-	Logger logger = Logger.getLogger(MatiereResource.class.getName());
+	//Logger logger = Logger.getLogger(MatiereResource.class.getName());
 
 	@GET
 	@Path("/list")
-	@Tag(name = "Matiere")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response list() {
 		return Response.ok().entity(matiereService.getList()).build();
@@ -29,7 +29,7 @@ public class MatiereResource {
 
 	@GET
 	@Path("/get-by-id")
-	@Tag(name = "Matiere")
+
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getById(@QueryParam("id") long id) {
 		return Response.ok().entity(matiereService.findById(id)).build();
@@ -39,7 +39,7 @@ public class MatiereResource {
 	@Path("/update-display")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	@Tag(name = "Matiere")
+
 	public Response updateAndDisplay(Matiere matiere) {
 
 		Matiere ev = matiereService.updateAndDisplay(matiere);
@@ -53,10 +53,10 @@ public class MatiereResource {
 	@Path("/save")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
-	@Tag(name = "Matiere")
+
 	public Response create(Matiere matiere) {
 		try {
-			logger.info("Saving ...");
+		//	logger.info("Saving ...");
 			matiereService.create(matiere);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -68,7 +68,7 @@ public class MatiereResource {
 	@DELETE
 	@Path("/delete/{id}")
 	@Produces(MediaType.TEXT_PLAIN)
-	@Tag(name = "Matiere")
+
 	public Response delete(@PathParam("id") String id) {
 		try {
 
@@ -85,10 +85,10 @@ public class MatiereResource {
 	    @Path("/saveAndDisplay")
 	    @Consumes(MediaType.APPLICATION_JSON)
 	    @Produces(MediaType.APPLICATION_JSON)
-	    @Tag(name = "Matiere")
+
 	    public Response createAndDisplay(Matiere matiere) {
 	    	try {
-	    		logger.info("Saving and display ...");
+	    	//	logger.info("Saving and display ...");
 	    		matiereService.create(matiere);
 	    	} catch(Exception e) {
 	    		 e.printStackTrace();

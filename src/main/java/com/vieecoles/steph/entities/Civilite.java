@@ -1,4 +1,4 @@
-package com.vieecoles.ressource.steph.entities;
+package com.vieecoles.steph.entities;
 
 public enum Civilite {
 

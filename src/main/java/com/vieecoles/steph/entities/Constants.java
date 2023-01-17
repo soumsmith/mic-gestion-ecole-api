@@ -1,4 +1,4 @@
-package com.vieecoles.ressource.steph.entities;
+package com.vieecoles.steph.entities;
 
 public class Constants {
 
@@ -9,5 +9,8 @@ public class Constants {
 	public static final String MANUEL = "MAN";
 
 	public static final String PENDING = "PEN";
+
+	public static final String MODIFIABLE = "UPDATABLE";
+	public static final String ARCHIVE = "ARCHIVE";
 
 }

@@ -1,10 +1,9 @@
 package com.vieecoles.dao.entities.operations;
 
-import com.vieecoles.dao.entities.Annee_scolaire;
-import com.vieecoles.dao.entities.Branche;
+import com.vieecoles.dao.entities.Annee_Scolaire;
 import com.vieecoles.dao.entities.Libellehandicap;
-import com.vieecoles.dao.entities.Niveau;
-import com.vieecoles.entities.*;
+
+import com.vieecoles.steph.entities.Branche;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -24,6 +23,10 @@ public class Inscriptions extends PanacheEntityBase {
    private  String   inscriptions_classe_actuelle ;
     private  String   inscriptions_redoublant ;
     private  String   inscriptions_boursier ;
+    private  String  inscriptions_code_interne ;
+    private  String  inscriptions_langue_vivante ;
+    private  String inscriptions_contact1 ;
+    private  String inscriptions_contact2 ;
     @Enumerated(EnumType.STRING)
     private  statusEleve   inscriptions_statut_eleve ;
     @Enumerated(EnumType.STRING)
@@ -33,7 +36,7 @@ public class Inscriptions extends PanacheEntityBase {
    private status inscriptions_status ;
    private LocalDate inscriptionsdate_creation ;
    private LocalDate inscriptionsdate_modification ;
-   private  String tenant_tenantid ;
+
     @Enumerated(EnumType.STRING)
    private processus inscriptions_processus ;
 
@@ -43,12 +46,7 @@ public class Inscriptions extends PanacheEntityBase {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "annee_scolaire_annee_scolaireid")
-    private Annee_scolaire annee_scolaire ;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "niveau_niveauid")
-    private Niveau myNiveau ;
-
+    private Annee_Scolaire annee_scolaire ;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -58,7 +56,7 @@ public class Inscriptions extends PanacheEntityBase {
     @JoinColumn(name = "Branche_id")
     private Branche branche;
     @ManyToMany
-    @JoinTable( name = "libellehandicap_inscriptions",
+    @JoinTable( name = "libelleHandicap_has_inscriptions",
             joinColumns = @JoinColumn( name = "inscriptions_inscriptionsid" ),
             inverseJoinColumns = @JoinColumn( name = "libelleHandicap_libelleHandicapid" ) )
     private List<Libellehandicap> libellehandicap = new ArrayList<>();
@@ -68,13 +66,29 @@ public class Inscriptions extends PanacheEntityBase {
         EN_COURS, TERMINE
     }
     public enum status{
-        VALIDEE, EN_ATTENTE
+        VALIDEE, EN_ATTENTE, REFUSEE
     }
     public enum statusEleve{
         AFFECTE, NON_AFFECTE
     }
     public enum typeOperation{
         INSCRIPTION, PREINSCRIPTION
+    }
+
+    public String getInscriptions_contact1() {
+        return inscriptions_contact1;
+    }
+
+    public void setInscriptions_contact1(String inscriptions_contact1) {
+        this.inscriptions_contact1 = inscriptions_contact1;
+    }
+
+    public String getInscriptions_contact2() {
+        return inscriptions_contact2;
+    }
+
+    public void setInscriptions_contact2(String inscriptions_contact2) {
+        this.inscriptions_contact2 = inscriptions_contact2;
     }
 
     public Branche getBranche() {
@@ -85,29 +99,11 @@ public class Inscriptions extends PanacheEntityBase {
         this.branche = branche;
     }
 
-    public String getTenant_tenantid() {
-        return tenant_tenantid;
-    }
-
-    public void setTenant_tenantid(String tenant_tenantid) {
-        this.tenant_tenantid = tenant_tenantid;
-    }
-
-    public Niveau getMyNiveau() {
-        return myNiveau;
-    }
-
-    public void setMyNiveau(Niveau myNiveau) {
-        this.myNiveau = myNiveau;
-    }
-
-
-
-    public Annee_scolaire getAnnee_scolaire() {
+    public Annee_Scolaire getAnnee_scolaire() {
         return annee_scolaire;
     }
 
-    public void setAnnee_scolaire(Annee_scolaire annee_scolaire) {
+    public void setAnnee_scolaire(Annee_Scolaire annee_scolaire) {
         this.annee_scolaire = annee_scolaire;
     }
 
@@ -260,6 +256,21 @@ public class Inscriptions extends PanacheEntityBase {
         this.eleve = eleve;
     }
 
+    public String getInscriptions_code_interne() {
+        return inscriptions_code_interne;
+    }
+
+    public void setInscriptions_code_interne(String inscriptions_code_interne) {
+        this.inscriptions_code_interne = inscriptions_code_interne;
+    }
+
+    public String getInscriptions_langue_vivante() {
+        return inscriptions_langue_vivante;
+    }
+
+    public void setInscriptions_langue_vivante(String inscriptions_langue_vivante) {
+        this.inscriptions_langue_vivante = inscriptions_langue_vivante;
+    }
 
     @Override
     public String toString() {

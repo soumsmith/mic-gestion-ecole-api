@@ -1,7 +1,8 @@
 package com.vieecoles.services.operations;
 
 import com.vieecoles.dto.ecoleDto;
-import com.vieecoles.entities.operations.ecole;
+import com.vieecoles.dao.entities.operations.ecole;
+import com.vieecoles.dto.ecoleDto2;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -35,9 +36,18 @@ public class ecoleService implements PanacheRepositoryBase<ecole, Long> {
         return  listEcoleDto;
     }
 
+    public  List<ecoleDto2> findAllecoleDto2(){
+
+        TypedQuery<ecoleDto2> q = em.createQuery( "SELECT new com.vieecoles.dto.ecoleDto2(o.ecoleid,o.ecolecode,o.ecoleclibelle) from ecole o ",
+                ecoleDto2.class);
+
+        List<ecoleDto2> listEcoleDto = q.getResultList();
+
+        return  listEcoleDto;
+    }
 
 
-
+/* 
     public  List<ecole> findAllecoleAndCycle(){
         return  em.createQuery("select o from ecole o join fetch o.quartier join fetch o.zone join fetch o.groupe_ecole join fetch o.cycles ").getResultList() ;
     }
@@ -74,7 +84,7 @@ public class ecoleService implements PanacheRepositoryBase<ecole, Long> {
                 .setParameter("idniv",idniv)
                 .getResultList();
 
-    }
+    } */
 
 
 
@@ -91,7 +101,7 @@ public class ecoleService implements PanacheRepositoryBase<ecole, Long> {
        return Response.created(URI.create("/ecole/" + obj)).build();
    }
 
-   public  int updateecole(ecole obj){
+  /*  public  int updateecole(ecole obj){
 
        if(obj == null) {
            throw new NotFoundException();
@@ -108,7 +118,7 @@ public class ecoleService implements PanacheRepositoryBase<ecole, Long> {
                .setParameter("recoiaffecteetat",obj.isRecoiaffecteetat()).executeUpdate();
        return  q;
    }
-
+ */
     public void  deletclasse(long ecoleID){
         ecole obj1 = ecole.findById(ecoleID);
 

@@ -1,7 +1,7 @@
-package com.vieecoles.ressource.steph.services;
+package com.vieecoles.steph.services;
 
 import com.google.gson.Gson;
-import com.vieecoles.entities.Evaluation;
+import com.vieecoles.steph.entities.Evaluation;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 import io.quarkus.panache.common.Parameters;
 

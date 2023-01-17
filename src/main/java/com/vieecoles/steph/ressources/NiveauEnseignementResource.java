@@ -1,7 +1,7 @@
-package com.vieecoles.ressource.steph.ressources;
+package com.vieecoles.steph.ressources;
 
-import com.vieecoles.entities.NiveauEnseignement;
-import com.vieecoles.services.NiveauEnseignementService;
+import com.vieecoles.steph.entities.NiveauEnseignement;
+import com.vieecoles.steph.services.NiveauEnseignementService;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 import javax.inject.Inject;

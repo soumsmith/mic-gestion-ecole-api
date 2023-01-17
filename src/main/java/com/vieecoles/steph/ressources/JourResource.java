@@ -1,7 +1,7 @@
-package com.vieecoles.ressource.steph.ressources;
+package com.vieecoles.steph.ressources;
 
-import com.vieecoles.entities.Jour;
-import com.vieecoles.services.JourService;
+import com.vieecoles.steph.entities.Jour;
+import com.vieecoles.steph.services.JourService;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 

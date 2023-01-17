@@ -1,6 +1,6 @@
 package com.vieecoles.services;
 
-import com.vieecoles.entities.typedurre;
+import com.vieecoles.dao.entities.typedurre;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.enterprise.context.ApplicationScoped;

@@ -1,6 +1,6 @@
 package com.vieecoles.ressource;
 
-import com.vieecoles.dao.entities.Annee_scolaire;
+import com.vieecoles.dao.entities.Annee_Scolaire;
 import com.vieecoles.services.annee_scolaireService;
 
 import javax.inject.Inject;
@@ -17,31 +17,31 @@ public class anne_scolaireRessource {
     @Inject
     annee_scolaireService anneeScolaireService ;
     @GET
-    public List<Annee_scolaire> list() {
+    public List<Annee_Scolaire> list() {
         return anneeScolaireService.getListNIveau();
     }
 
     @GET
     @Path("/{id}")
-    public Annee_scolaire get(@PathParam("id") Long id) {
+    public Annee_Scolaire get(@PathParam("id") Long id) {
         return anneeScolaireService.findById(id);
     }
 
     @GET
     @Path("ecole/{code}")
-    public List<Annee_scolaire> getAnneeScolaireByEcole(@PathParam("code") String code) {
+    public List<Annee_Scolaire> getAnneeScolaireByEcole(@PathParam("code") String code) {
         return anneeScolaireService.findAnneScolaireByEcole(code) ;
     }
 
     @GET
     @Path("ecole/visible/{code}")
-    public Annee_scolaire getAnneeScolaireVisibleEcole(@PathParam("code") String code) {
+    public Annee_Scolaire getAnneeScolaireVisibleEcole(@PathParam("code") String code) {
         return anneeScolaireService.findAnneScolaireVisibleByEcole(code) ;
     }
 
     @POST
     @Transactional
-    public Response create(Annee_scolaire niv) {
+    public Response create(Annee_Scolaire niv) {
         return anneeScolaireService.createniveau(niv);
     }
 
@@ -49,7 +49,7 @@ public class anne_scolaireRessource {
     @PUT
     @Path("/{id}")
     @Transactional
-    public Annee_scolaire update(@PathParam("id") Long id, Annee_scolaire niv) {
+    public Annee_Scolaire update(@PathParam("id") Long id, Annee_Scolaire niv) {
     return  anneeScolaireService.updateNiveau(id,niv);
     }
     @DELETE
@@ -61,7 +61,7 @@ public class anne_scolaireRessource {
 
     @GET
     @Path("/search/{niveaulibelle}")
-    public List<Annee_scolaire> search(@PathParam("niveaulibelle") String niveaulibelle) {
+    public List<Annee_Scolaire> search(@PathParam("niveaulibelle") String niveaulibelle) {
         return anneeScolaireService.search(niveaulibelle);
     }
 

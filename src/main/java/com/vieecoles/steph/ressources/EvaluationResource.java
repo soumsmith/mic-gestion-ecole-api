@@ -1,7 +1,7 @@
-package com.vieecoles.ressource.steph.ressources;
+package com.vieecoles.steph.ressources;
 
-import com.vieecoles.entities.Evaluation;
-import com.vieecoles.services.EvaluationService;
+import com.vieecoles.steph.entities.Evaluation;
+import com.vieecoles.steph.services.EvaluationService;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
@@ -10,7 +10,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
-import java.util.logging.Logger;
+
 
 @Path("/evaluations")
 public class EvaluationResource {
@@ -18,7 +18,7 @@ public class EvaluationResource {
 	@Inject
 	EvaluationService evaluationService;
 
-	Logger logger = Logger.getLogger(EvaluationResource.class.getName());
+	//Logger logger = Logger.getLogger(EvaluationResource.class.getName());
 
 	@GET
 	@Path("/list")
@@ -26,7 +26,7 @@ public class EvaluationResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Tag(name = "Evaluation")
 	public Response list() {
-		logger.info("--------> listAll ------>");
+	//	logger.info("--------> listAll ------>");
 		List<Evaluation> list = evaluationService.getList();
 		return Response.ok().entity(list).build();
 	}
@@ -37,7 +37,7 @@ public class EvaluationResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Tag(name = "Evaluation")
 	public Response getCountByClasseAndMatiere(@QueryParam("classeId") Long classeId,@QueryParam("matiereId") Long matiereId) {
-		logger.info("--------> get count ------>");
+		//logger.info("--------> get count ------>");
 
 		return Response.ok().entity(evaluationService.getCountByClasseAndMatiere(classeId, matiereId)).build();
 	}
@@ -73,7 +73,7 @@ public class EvaluationResource {
     public Evaluation get(@PathParam("id") long id) {
 		Evaluation ev = evaluationService.findById(id);
     	if(ev == null) {
-    		logger.info(String.format("Evaluation non trouvee [ id = %s ]",id));
+    		//logger.info(String.format("Evaluation non trouvee [ id = %s ]",id));
     		return new Evaluation();
     	} else {
     		return ev;
@@ -86,10 +86,10 @@ public class EvaluationResource {
     @Operation(description = "Obtenir l evaluation par son code", summary = "")
 	@Tag(name = "Evaluation")
     public Evaluation getByCode(@PathParam("code") String code) {
-		logger.info("EvaluationResource.getByCode()");
+		//logger.info("EvaluationResource.getByCode()");
 		Evaluation ev = evaluationService.findByCode(code);
     	if(ev == null) {
-    		logger.info(String.format("Evaluation non trouvee [ code = %s ]",code));
+    	//	logger.info(String.format("Evaluation non trouvee [ code = %s ]",code));
     		return new Evaluation();
     	} else {
     		return ev;
@@ -103,7 +103,7 @@ public class EvaluationResource {
     @Tag(name = "Evaluation")
     public Response create(Evaluation evaluation) {
     	try {
-    		logger.info("Saving ...");
+    		//logger.info("Saving ...");
     		evaluationService.create(evaluation);
     	} catch(Exception e) {
     		 e.printStackTrace();
@@ -119,7 +119,7 @@ public class EvaluationResource {
     @Tag(name = "Evaluation")
     public Response createAndDisplay(Evaluation evaluation) {
     	try {
-    		logger.info("Saving and display ...");
+    		//logger.info("Saving and display ...");
     		evaluationService.create(evaluation);
     	} catch(Exception e) {
     		 e.printStackTrace();

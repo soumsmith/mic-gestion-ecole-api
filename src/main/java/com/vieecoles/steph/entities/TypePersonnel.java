@@ -1,13 +1,13 @@
-package com.vieecoles.ressource.steph.entities;
-
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+package com.vieecoles.steph.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Entity
 @Table(name = "type_personnel")
@@ -19,7 +19,7 @@ public class TypePersonnel extends PanacheEntityBase{
 	@Column(name = "type_personnelid")
 	private int id;
 	@Column(name = "type_personnelcode")
-	private int code;
+	private String code;
 	@Column(name = "type_personnellibelle")
-	private int libelle;
+	private String libelle;
 }

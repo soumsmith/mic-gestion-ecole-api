@@ -1,4 +1,4 @@
-package com.vieecoles.resources;
+package com.vieecoles.steph.ressources;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -10,12 +10,13 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.vieecoles.steph.services.BulletinService;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import org.jboss.resteasy.annotations.Query;
 
-import com.vieecoles.dto.MoyenneEleveDto;
-import com.vieecoles.services.BulletinService;
+import com.vieecoles.steph.dto.MoyenneEleveDto;
+import com.vieecoles.steph.services.BulletinService;
 
 @Path("/bulletin")
 public class BulletinResource {

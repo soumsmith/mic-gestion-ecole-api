@@ -52,15 +52,24 @@ public class SouscriptionEcoleRessource {
         Inscriptions.status status1= Inscriptions.status.valueOf(status);
         return souscPersonnelService.listTousLesSouscrEcole(status1) ;
     }
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("allSouscriptionEcoles-fondateur/{idsouscrip}")
+    public List<souscriptionEcoleDto> getAllSouscriptionEcoleSParFondateur(@PathParam("idsouscrip") Long idsouscrip) {
+       // Inscriptions.status status1= Inscriptions.status.valueOf(status);
+        return souscPersonnelService.listTousLesSouscrEcoleParFondateur(idsouscrip);
+    }
+
 
     @PUT
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/valider-ecoles/")
-    @Transactional
+    
     public Response validerSouscription(souscriptionValidationDto sousValid) {
-
-        souscPersonnelService.validerSouscriptionEcole(sousValid);
+        souscPersonnelService.creerEtValiderEcole(sousValid) ;
+        //souscPersonnelService.validerSouscriptionEcole(sousValid);
         return   Response.ok(String.format("Inscription  %s mis à jour",sousValid.getStatuts())).build();
     }
 
@@ -69,9 +78,19 @@ public class SouscriptionEcoleRessource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
+    
+    @Path("creer-ecole-by-souscription/{idsouscrip}")
+    public void souscriptionEtablissementCreer(@PathParam("idsouscrip")Long idsouscrip){
+      souscPersonnelService.creerEcoleBySouscrip(idsouscrip) ;
+    }
+
+    
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     @Path("souscription-etablissement")
-    public String souscriptionEtablissement(@QueryParam("fonctionId") Long fonctionId ,@QueryParam("nom")String nom,@QueryParam("prenom") String prenom,@QueryParam("contact1") String contact1 ,@QueryParam("contact2")String contact2 ,List<sous_attent_ecoleDto> listsouscr ){
-     return   souscPersonnelService.creerSouscripEtablissement(fonctionId,nom,prenom ,contact1,contact2,listsouscr) ;
+    public String souscriptionEtablissement(@QueryParam("fonctionId") Long fonctionId ,@QueryParam("nom")String nom,@QueryParam("prenom") String prenom,@QueryParam("contact1") String contact1 ,@QueryParam("contact2")String contact2 ,@QueryParam("email")String email ,@QueryParam("passWord")String passWord ,List<sous_attent_ecoleDto> listsouscr ){
+     return   souscPersonnelService.creerSouscripEtablissement(fonctionId,nom,prenom ,contact1,contact2,email,passWord,listsouscr) ;
     }
 
 

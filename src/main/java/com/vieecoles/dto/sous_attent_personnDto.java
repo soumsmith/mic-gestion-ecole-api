@@ -18,6 +18,8 @@ public class sous_attent_personnDto  {
     private  String sous_attent_personn_diplome_recent ;
     private  Integer  sous_attent_personn_nbre_annee_experience ;
     private  String sous_attent_personn_lien_cv  ;
+    private String sous_attent_personn_login ;
+    private String sous_attent_personn_password ;
     private  String sous_attent_personncode ;
     Long identifiantdomaine_formation ;
 
@@ -93,6 +95,22 @@ public class sous_attent_personnDto  {
 
     public void setSous_attent_personn_prenom(String sous_attent_personn_prenom) {
         this.sous_attent_personn_prenom = sous_attent_personn_prenom;
+    }
+
+    public String getSous_attent_personn_login() {
+        return sous_attent_personn_login;
+    }
+
+    public void setSous_attent_personn_login(String sous_attent_personn_login) {
+        this.sous_attent_personn_login = sous_attent_personn_login;
+    }
+
+    public String getSous_attent_personn_password() {
+        return sous_attent_personn_password;
+    }
+
+    public void setSous_attent_personn_password(String sous_attent_personn_password) {
+        this.sous_attent_personn_password = sous_attent_personn_password;
     }
 
     public String getSous_attent_personn_email() {

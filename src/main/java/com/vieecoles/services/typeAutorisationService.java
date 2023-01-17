@@ -1,7 +1,7 @@
 package com.vieecoles.services;
 
-import com.vieecoles.entities.domaine;
-import com.vieecoles.entities.domaine_formation;
+import com.vieecoles.dao.entities.domaine_formation;
+import com.vieecoles.dao.entities.type_autorisation;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -11,27 +11,27 @@ import java.net.URI;
 import java.util.List;
 
 @ApplicationScoped
-public class domaineEtudeService implements PanacheRepositoryBase<domaine_formation, Long> {
+public class typeAutorisationService implements PanacheRepositoryBase<type_autorisation, Long> {
 
-   public List<domaine_formation> getListdomaine(){
-       return  domaine_formation.listAll();
+   public List<type_autorisation> getListTypeAutorisation(){
+       return  type_autorisation.listAll();
    }
-   public  domaine_formation findById(Long domaineId){
-       return domaine_formation.findById(domaineId);
-   }
-
-   public Response createdomaine(domaine_formation dom) {
-       dom.persist();
-       return Response.created(URI.create("/domaine/" + dom.getDomaine_formation_code())).build();
+   public  type_autorisation findById(Long id){
+       return type_autorisation.findById(id);
    }
 
-   public  domaine_formation updatedomaine(long domaineId, domaine_formation dom){
-       domaine_formation entity = domaine_formation.findById(domaineId);
+   public Response createTypeAutorisation(type_autorisation typAut) {
+       typAut.persist();
+       return Response.created(URI.create("/domaine/" + typAut.getType_autorisation_code())).build();
+   }
+
+   public  type_autorisation updatetypeAuto(long id, type_autorisation dom){
+       type_autorisation entity = domaine_formation.findById(id);
        if(entity == null) {
            throw new NotFoundException();
        }
-       entity.setDomaine_formation_code(dom.getDomaine_formation_code());
-       entity.setDomaine_formation_libelle(dom.getDomaine_formation_libelle());
+       /*entity.setDomaine_formation_code(dom.getDomaine_formation_code());
+       entity.setDomaine_formation_libelle(dom.getDomaine_formation_libelle());*/
        return  entity;
    }
 

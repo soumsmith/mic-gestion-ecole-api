@@ -1,6 +1,6 @@
 package com.vieecoles.services;
 
-import com.vieecoles.entities.pays;
+import com.vieecoles.dao.entities.pays;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.enterprise.context.ApplicationScoped;

@@ -1,4 +1,4 @@
-package com.vieecoles.entities;
+package com.vieecoles.steph.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,6 +28,9 @@ public class DetailBulletin extends PanacheEntityBase{
 	@Column(name = "moy_coef")
 	private String moyCoef;
 	private String appreciation;
+	private String  categorie;
+    private int  num_ordre;
+	private String nom_prenom_professeur ;
 	@ManyToOne
 	private Bulletin bulletin;
 }

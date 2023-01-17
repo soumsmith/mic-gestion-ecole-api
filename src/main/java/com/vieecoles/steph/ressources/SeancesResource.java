@@ -1,11 +1,11 @@
-package com.vieecoles.ressource.steph.ressources;
+package com.vieecoles.steph.ressources;
 
 import com.google.gson.Gson;
-import com.vieecoles.entities.Activite;
-import com.vieecoles.entities.Message;
-import com.vieecoles.entities.Seances;
-import com.vieecoles.services.SeanceService;
-import com.vieecoles.util.DateUtils;
+import com.vieecoles.steph.entities.Activite;
+import com.vieecoles.steph.entities.Message;
+import com.vieecoles.steph.entities.Seances;
+import com.vieecoles.steph.services.SeanceService;
+import com.vieecoles.steph.util.DateUtils;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 import javax.inject.Inject;

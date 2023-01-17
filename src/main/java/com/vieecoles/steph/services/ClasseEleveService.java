@@ -1,8 +1,8 @@
-package com.vieecoles.ressource.steph.services;
+package com.vieecoles.steph.services;
 
-import com.vieecoles.entities.Classe;
-import com.vieecoles.entities.ClasseEleve;
-import com.vieecoles.entities.Inscription;
+import com.vieecoles.steph.entities.Classe;
+import com.vieecoles.steph.entities.ClasseEleve;
+import com.vieecoles.steph.entities.Inscription;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -11,12 +11,12 @@ import javax.ws.rs.NotFoundException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Logger;
+
 
 @ApplicationScoped
 public class ClasseEleveService implements PanacheRepositoryBase<ClasseEleve, Long> {
 
-	Logger logger = Logger.getLogger(ClasseEleveService.class.getName());
+	//Logger logger = Logger.getLogger(ClasseEleveService.class.getName());
 
 	public List<ClasseEleve> findByid(Long id) {
 		return ClasseEleve.findById(id);
@@ -66,7 +66,7 @@ public class ClasseEleveService implements PanacheRepositoryBase<ClasseEleve, Lo
 
 	@Transactional
 	public void delete(long id) {
-		logger.info(String.format("Id to delete %s", id));
+		//logger.info(String.format("Id to delete %s", id));
 		ClasseEleve entity = ClasseEleve.findById(id);
 		if (entity == null) {
 			throw new NotFoundException();

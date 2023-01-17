@@ -1,14 +1,10 @@
 package com.vieecoles.services.souscription;
 
-import com.vieecoles.dao.entities.Civilite;
-import com.vieecoles.dao.entities.domaine_formation;
-import com.vieecoles.dao.entities.fonction;
-import com.vieecoles.dao.entities.niveau_etude;
-import com.vieecoles.dao.entities.operations.Inscriptions;
-import com.vieecoles.dao.entities.operations.ecole;
-import com.vieecoles.dao.entities.operations.personnel;
-import com.vieecoles.dto.*;
-import com.vieecoles.dao.entities.operations.sous_attent_personn;
+import com.vieecoles.dao.entities.operations.*;
+import com.vieecoles.dto.panier_personnelDto;
+import com.vieecoles.dto.souscriptionEcoleDto;
+import com.vieecoles.projection.emploi_du_temps_professeurSelect;
+import com.vieecoles.projection.panier_personnelSelect;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -16,212 +12,140 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
-import java.io.IOException;
-import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.util.Calendar;
+import java.time.LocalDate;
 import java.util.List;
 
 @ApplicationScoped
-public class SouscPersonnelService implements PanacheRepositoryBase<sous_attent_personn, Long> {
+public class PanierPersonnelService implements PanacheRepositoryBase<panier_personnel, Long> {
     @Inject
     EntityManager em;
-
-@Transactional
-   public String   CreerSousCriperson(sous_attent_personnDto souscriPersonn) throws IOException, SQLException {
-    sous_attent_personn  mysouscripPersonn1 = new sous_attent_personn() ;
-    mysouscripPersonn1= getSouscripByEmail(souscriPersonn.getSous_attent_personn_email()) ;
-    if (mysouscripPersonn1!=null) {
-        return  "EXISTE_DEJA !";
-    } else {
-
-        niveau_etude myNiveauEtude = new niveau_etude() ;
-        domaine_formation myDomaineFormation = new domaine_formation() ;
-        sous_attent_personn  mysouscripPersonn = new sous_attent_personn() ;
-        fonction myFonction = new fonction() ;
-        myNiveauEtude= niveau_etude.findById(souscriPersonn.getNiveau_etudeIdentifiant()) ;
-        myDomaineFormation = domaine_formation.findById(souscriPersonn.getIdentifiantdomaine_formation());
-        myFonction = fonction.findById(souscriPersonn.getFonctionidentifiant());
-        mysouscripPersonn.setFonction(myFonction);
-        mysouscripPersonn.setType_autorisation_idtype_autorisationid(souscriPersonn.getType_autorisation_idtype_autorisationid());
-        mysouscripPersonn.setNiveau_etude(myNiveauEtude);
-        mysouscripPersonn.setDomaine_formation(myDomaineFormation);
-        mysouscripPersonn.setSous_attent_personn_date_naissance(souscriPersonn.getSous_attent_personn_date_naissance());
-        mysouscripPersonn.setSous_attent_personn_diplome_recent(souscriPersonn.getSous_attent_personn_diplome_recent());
-        mysouscripPersonn.setSous_attent_personn_email(souscriPersonn.getSous_attent_personn_email());
-        mysouscripPersonn.setSous_attent_personn_lien_cv(souscriPersonn.getSous_attent_personn_lien_cv());
-        mysouscripPersonn.setSous_attent_personn_nom(souscriPersonn.getSous_attent_personn_nom());
-        mysouscripPersonn.setSous_attent_personn_prenom(souscriPersonn.getSous_attent_personn_prenom());
-        mysouscripPersonn.setSous_attent_personn_sexe(souscriPersonn.getSous_attent_personn_sexe());
-        mysouscripPersonn.setSous_attent_personn_contact(souscriPersonn.getSous_attent_personn_contact());
-        mysouscripPersonn.setSous_attent_personn_lien_autorisation(souscriPersonn.getSous_attent_personn_lien_autorisation());
-        mysouscripPersonn.setSous_attent_personn_lien_piece(souscriPersonn.getSous_attent_personn_lien_piece());
-        mysouscripPersonn.setSous_attent_personn_statut("EN ATTENTE");
-        mysouscripPersonn.setSous_attent_personn_date_creation(LocalDateTime.now());
-        mysouscripPersonn.setSous_attent_personn_nbre_annee_experience(souscriPersonn.getSous_attent_personn_nbre_annee_experience());
-        mysouscripPersonn.persist();
-
-        return  "Demande créée avec succes !";
+    @Transactional
+    public void validerPanier(Long identiPanier){
+        panier_personnel myPanier = new panier_personnel();
+        myPanier= panier_personnel.findById(identiPanier) ;
+        myPanier.setPanier_personnel_statut("VALIDEE");
     }
 
-          }
+   @Transactional
+  public String  creeerPanier(panier_personnelDto panier_person) {
+        panier_personnelSelect myPanier= new panier_personnelSelect() ;
+        String messageRetour ;
 
-   public  List<sous_attent_personn> findAllSouscriptionAvaliderDto(String status ){
-        TypedQuery<sous_attent_personn> q = (TypedQuery<sous_attent_personn>) em.createQuery( "SELECT  o from sous_attent_personn o join o.domaine_formation  d join o.niveau_etude n join o.fonction where o.sous_attent_personn_statut=:status  ");
-        List<sous_attent_personn> listSouscriptionAvaliderDto = q.setParameter("status" ,status)
-                .setParameter("status" ,status).
-                getResultList();
-        return  listSouscriptionAvaliderDto;
-    }
+         System.out.println("IdEcoleZZZZ"+panier_person.getIdentifiant_ecole());
+        System.out.println("idPersonnelZZZZZ"+panier_person.getIdentifiant_personnel());
+        System.out.println("myPanier1"+panier_person.toString());
 
-    public  List<personnel> findAllPersonneParEcole(Long idEcole ){
-        TypedQuery<personnel> q = (TypedQuery<personnel>) em.createQuery( "SELECT  o from personnel o join o.domaine_formation_domaine_formationid  d join o.niveau_etude n join o.fonction where o.ecole.ecoleid=:idEcole  ");
-        List<personnel> listSouscriptionAvaliderDto = q.setParameter("idEcole" ,idEcole).
-                getResultList();
-        return  listSouscriptionAvaliderDto;
-    }
+     //  myPanier = checkPanierPers(panier_person.getIdentifiant_ecole(), panier_person.getIdentifiant_personnel());
+       Long panierId = checkPanierPers2(panier_person.getIdentifiant_ecole(), panier_person.getIdentifiant_personnel());
 
-
-
-@Transactional
-    public String  recruterUnAgent(Long idEcole ,Long sous_attentId){
-    sous_attent_personn sous_attent = new sous_attent_personn() ;
-    sous_attent = sous_attent_personn.findById(sous_attentId) ;
-     personnel person = new personnel() ;
-        personnel person2 = new personnel() ;
-        ecole myecole= new ecole() ;
-    myecole= ecole.findById(idEcole) ;
-        niveau_etude myNive= new niveau_etude() ;
-        domaine_formation myDom = new domaine_formation();
-        person= verifExistancePersonnel(sous_attent.getSous_attent_personnid() ,idEcole) ;
-        sous_attent_personn  mysous= new sous_attent_personn() ;
-        String messageRetour  ;
-        if (person==null){
-            person2.setPersonnelnom(sous_attent.getSous_attent_personn_nom());
-            person2.setPersonnelprenom(sous_attent.getSous_attent_personn_prenom());
-            person2.setPersonnel_contact(sous_attent.getSous_attent_personn_contact());
-            person2.setPersonneldatenaissance(sous_attent.getSous_attent_personn_date_naissance());
-            person2.setSous_attent_personn(sous_attent);
-            person2.setFonction(sous_attent.getFonction());
-            person2.setEcole(myecole);
-            //Civilite mycivilite= Civilite.valueOf(sous_attent.getSous_attent_personn_sexe());
-            //person2.setCivilite(mycivilite);
-            person2.setDomaine_formation_domaine_formationid(sous_attent.getDomaine_formation());
-            person2.setNiveau_etude(sous_attent.getNiveau_etude());
-            person2.persist();
-            messageRetour ="ENREGISTREMENT EFFECTUE AVEC SUCCES";
-        } else {
-            messageRetour = "CE PERSONNEL EXISTE DEJA" ;
+        System.out.println("myPanier2Id "+ panierId );
+        if(panierId !=0L){
+            messageRetour="DEJA DANS LE PANIER" ;
+                   } else {
+            ecole myecole= new ecole() ;
+            sous_attent_personn myperson= new sous_attent_personn() ;
+            panier_personnel panier= new panier_personnel() ;
+            myecole = ecole.findById(1L) ;
+            System.out.println("id_ecoleoooo"+ myecole.toString());
+            myperson = sous_attent_personn.findById(panier_person.getIdentifiant_personnel()) ;
+            panier.setPanier_personnel_date_creation(LocalDate.now());
+            panier.setEcole(myecole);
+            panier.setPanier_personnel_statut(String.valueOf(Inscriptions.status.EN_ATTENTE));
+            panier.setSous_attent_personn(myperson);
+            panier.persist();
+            messageRetour="ENREGISTREMENT EFFECTUE AVEC SUCCES" ;
         }
 
-        return  messageRetour ;
-    }
-@Transactional
-    public personnel verifExistancePersonnel(Long idPerson , Long idEcole){
-    personnel mysous= new personnel() ;
-    try {
-        mysous= (personnel) em.createQuery(" select o from personnel o join o.sous_attent_personn s join o.ecole e where e.ecoleid  =:idEcole and s.sous_attent_personnid=: idPerson  "
-                        ,personnel.class )
-                .setParameter("idEcole",idEcole)
-                .setParameter("idPerson",idPerson)
-                .getSingleResult();
-    } catch (Exception e) {
-        mysous= null ;
-    }
-       return  mysous ;
-    }
+      return messageRetour ;
+  }
 
+    public  List<panier_personnelSelect> listpanierByEcole(Long ecoleId,String status){
 
-
-
-    public void validerSouscription(souscriptionValidationDto mysouscription){
-        sous_attent_personn  mysous= new sous_attent_personn() ;
-        mysous= (sous_attent_personn) em.createQuery(" select e from sous_attent_personn e   where e.sous_attent_personnid =:souscripId "
-                       ,sous_attent_personn.class )
-                .setParameter("souscripId",mysouscription.getIdsouscrip())
-                .getSingleResult();
-        mysous.setSous_attent_personn_date_traitement(LocalDateTime.now());
-        mysous.setSous_attent_personn_motifrefus(mysouscription.getMessageRefus());
-        mysous.setSous_attent_personn_statut(mysouscription.getStatuts());
+        List<panier_personnelSelect> mesPaniers ;
+        try {
+            mesPaniers= (List<panier_personnelSelect>) em.createQuery("SELECT new com.vieecoles.projection.panier_personnelSelect(o.idpanier_personnel_id ,o.panier_personnel_date_creation ,o.ecole.ecoleclibelle ,o.sous_attent_personn.sous_attent_personn_nom ,o.sous_attent_personn.sous_attent_personn_prenom ,o.sous_attent_personn.sous_attent_personnid,o.sous_attent_personn.sous_attent_personn_diplome_recent," +
+                            "o.sous_attent_personn.sous_attent_personn_contact,o.sous_attent_personn.sous_attent_personn_date_naissance,o.sous_attent_personn.sous_attent_personn_lien_piece," +
+                            "o.sous_attent_personn.sous_attent_personn_lien_autorisation,o.sous_attent_personn.domaine_formation.domaine_formation_libelle,o.sous_attent_personn.fonction.fonctionlibelle,o.sous_attent_personn.sous_attent_personn_email,o.sous_attent_personn.sous_attent_personn_nbre_annee_experience) from panier_personnel o join" +
+                            " o.ecole e join o.sous_attent_personn p where o.ecole.ecoleid=:ecoleId and o.panier_personnel_statut=:statusPanier ")
+                    .setParameter("ecoleId",ecoleId)
+                    .setParameter("statusPanier",status)
+                    .getResultList();
+        } catch (Exception e) {
+            mesPaniers=  null;
+        }
+        System.out.println("mesPaniersxx"+ mesPaniers);
+        return mesPaniers ;
     }
 
 
 
-    public  List<sous_attent_personn> getAllSouscriptionPersonnels(){
-    return sous_attent_personn.listAll() ;
+
+
+
+   // @Transactional
+    public  panier_personnelSelect checkPanierPers(Long ecoleId, Long idPersonnel){
+        panier_personnelSelect mesPaniers = new panier_personnelSelect()  ;
+        try {
+            mesPaniers= (panier_personnelSelect) em.createQuery("SELECT new com.vieecoles.projection.panier_personnelSelect(o.idpanier_personnel_id ,o.panier_personnel_date_creation ,o.ecole.ecoleclibelle ,o.sous_attent_personn.sous_attent_personn_nom ,o.sous_attent_personn.sous_attent_personn_prenom ,o.sous_attent_personn.sous_attent_personnid,o.sous_attent_personn.sous_attent_personn_diplome_recent," +
+                            "o.sous_attent_personn.sous_attent_personn_contact,o.sous_attent_personn.sous_attent_personn_date_naissance,o.sous_attent_personn.sous_attent_personn_lien_piece," +
+                            "o.sous_attent_personn.sous_attent_personn_lien_autorisation) from panier_personnel o join" +
+                            " o.ecole e join o.sous_attent_personn p where o.ecole.ecoleid=:ecoleId and o.sous_attent_personn.sous_attent_personnid=:idPersonnel ")
+                   .setParameter("ecoleId",ecoleId)
+                    .setParameter("idPersonnel",idPersonnel)
+                    .getSingleResult();
+                } catch (Exception e) {
+            mesPaniers=  null;
+        }
+        System.out.println("mesPaniersxx"+ mesPaniers);
+        return mesPaniers ;
     }
 
-    public  sous_attent_personn getSouscripByEmail(String email){
-     try {
-         return (sous_attent_personn) em.createQuery("select o from sous_attent_personn o where o.sous_attent_personn_email =:email")
-                 .setParameter("email",email)
-                 .getSingleResult();
-     } catch (Exception e) {
-         return  null;
-     }
+    public  Long checkPanierPers2(Long ecoleId, Long idPersonnel){
+       Long  panierId ;
+        try {
+        return     panierId= (Long) em.createQuery("SELECT o.idpanier_personnel_id from panier_personnel o join" +
+                            " o.ecole e join o.sous_attent_personn p where o.ecole.ecoleid=:ecoleId and o.sous_attent_personn.sous_attent_personnid=:idPersonnel ")
+                    .setParameter("ecoleId",ecoleId)
+                    .setParameter("idPersonnel",idPersonnel)
+                    .getSingleResult();
+        } catch (Exception e) {
+            return 0L;
+        }
 
-
-    }
-
-
-
-    public  sous_attent_personn getSouscPersonnelByID(Long identifiant){
-        return   sous_attent_personn.findById(identifiant) ;
     }
 
 
     @Transactional
-    public sous_attent_personn   modifierSousCriptionPersonnel(sous_attent_personnDto souscPersonn) {
-        niveau_etude  myNiveauEtude = new niveau_etude() ;
-        domaine_formation myDomaineFormation = new domaine_formation() ;
-        sous_attent_personn  mysouscripPersonn = new sous_attent_personn() ;
-
-        myNiveauEtude= niveau_etude.findById(souscPersonn.getNiveau_etudeIdentifiant()) ;
-        myDomaineFormation = domaine_formation.findById(souscPersonn.getIdentifiantdomaine_formation());
-
-        mysouscripPersonn.setNiveau_etude(myNiveauEtude);
-        mysouscripPersonn.setDomaine_formation(myDomaineFormation);
-        mysouscripPersonn.setSous_attent_personn_date_naissance(souscPersonn.getSous_attent_personn_date_naissance());
-        mysouscripPersonn.setSous_attent_personn_diplome_recent(souscPersonn.getSous_attent_personn_diplome_recent());
-        mysouscripPersonn.setSous_attent_personn_email(souscPersonn.getSous_attent_personn_email());
-        mysouscripPersonn.setSous_attent_personn_lien_cv(souscPersonn.getSous_attent_personn_lien_cv());
-        mysouscripPersonn.setSous_attent_personn_nom(souscPersonn.getSous_attent_personn_nom());
-        mysouscripPersonn.setSous_attent_personn_prenom(souscPersonn.getSous_attent_personn_prenom());
-        mysouscripPersonn.setSous_attent_personn_sexe(souscPersonn.getSous_attent_personn_sexe());
-        mysouscripPersonn.setSous_attent_personn_nbre_annee_experience(souscPersonn.getSous_attent_personn_nbre_annee_experience());
-        return  mysouscripPersonn ;
+    public  List<panier_personnel> getAllpanier(Long ecoleId){
+        List<panier_personnel> mesPaniers ;
+        try {
+           // System.out.println("entree1 "+id_ecole);
+            TypedQuery<panier_personnel> q = (TypedQuery<panier_personnel>) em.createQuery(" select o.idpanier_personnel_id ,  o.ecole.ecoleclibelle ,o.sous_attent_personn.sous_attent_personn_nom ,o.sous_attent_personn.sous_attent_personn_prenom , o.sous_attent_personn.fonction ,o.sous_attent_personn.sous_attent_personn_contact  from panier_personnel o" +
+                    " where o.ecole.ecoleid =:ecoleId" );
+            mesPaniers =q.setParameter("ecoleId",ecoleId).getResultList() ;
+            return mesPaniers;
+        } catch (Exception e) {
+            return  null;
+        }
     }
 
+
     @Transactional
-    public void    deleteSousCriptionPersonnel(Long identifiant) {
-        sous_attent_personn myPersonel = new sous_attent_personn() ;
-        myPersonel = sous_attent_personn.findById(identifiant) ;
+    public void    deletePanier(Long identifiant) {
+        panier_personnel panier = new panier_personnel() ;
+        panier = panier_personnel.findById(identifiant) ;
 
         try{
-            myPersonel.delete();
+            panier.delete();
         }catch (Exception e) {
 
         }
 
+
+
+
     }
 
-
-
-    public  String getSouscrCode(String tenant) {
-        Calendar now = Calendar.getInstance();
-        int year = now.get(Calendar.YEAR);
-        String yearInString = String.valueOf(year);
-
-        Long  maxrecor= (Long) em.createQuery("select max(o.sous_attent_personnid)  from sous_attent_personn o ")
-               .getSingleResult();
-
-        System.out.println("maxrecor "+maxrecor);
-
-        String eleveCode= "GAIN"+yearInString+ String.valueOf(maxrecor) ;
-        System.out.println("InscriptionCode "+eleveCode);
-
-        return eleveCode ;
-    }
 
 
 

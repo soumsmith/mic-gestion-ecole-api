@@ -4,101 +4,134 @@ package com.vieecoles.projection;
 import java.time.LocalDate;
 
 
-public class personnelSelect {
+public class compteUtilisateurSelect {
 
-    private Long  personnelid ;
-   private  String personnelcode;
-    private  String personnelnom;
-    private  String personnelprenom;
-    private LocalDate personneldatenaissance;
-    private  String personnel_lieunaissance;
-    private  String type_personnel_liblle ;
-    private  String personnelStatut_liblle ;
-    private  String fonction_liblle ;
+    private  Long   personnel_personnelid ;
+    private  Long   utilisateur_has_personid ;
+    private LocalDate utilisateur_has_person_date_creation ;
+    private LocalDate utilisateur_has_person_modif ;
+    private  int utilisateur_has_person_active ;
+    private LocalDate utilisateur_has_person_date_debut ;
+    private  LocalDate utilisateur_has_person_date_fin ;
+    private Long  ecole_ecoleid ;
+    private  String libelleEcole ;
+    private  String libelleProfiil ;
+    private  String nomPersonnel ;
+    private  String nomPrenomPersonnel ;
 
-
-
-    public Long getPersonnelid() {
-        return personnelid;
+    public compteUtilisateurSelect(LocalDate utilisateur_has_person_date_creation,
+                                   LocalDate utilisateur_has_person_modif,
+                                   int utilisateur_has_person_active,
+                                   LocalDate utilisateur_has_person_date_debut,
+                                   LocalDate utilisateur_has_person_date_fin,
+                                   String libelleEcole,
+                                   String libelleProfiil,
+                                   String nomPersonnel,
+                                   String nomPrenomPersonnel) {
+        this.utilisateur_has_person_date_creation = utilisateur_has_person_date_creation;
+        this.utilisateur_has_person_modif = utilisateur_has_person_modif;
+        this.utilisateur_has_person_active = utilisateur_has_person_active;
+        this.utilisateur_has_person_date_debut = utilisateur_has_person_date_debut;
+        this.utilisateur_has_person_date_fin = utilisateur_has_person_date_fin;
+        this.libelleEcole = libelleEcole;
+        this.libelleProfiil = libelleProfiil;
+        this.nomPersonnel = nomPersonnel;
+        this.nomPrenomPersonnel = nomPrenomPersonnel;
     }
 
-    public void setPersonnelid(Long personnelid) {
-        this.personnelid = personnelid;
+    public Long getPersonnel_personnelid() {
+        return personnel_personnelid;
     }
 
-    public String getPersonnelcode() {
-        return personnelcode;
+    public void setPersonnel_personnelid(Long personnel_personnelid) {
+        this.personnel_personnelid = personnel_personnelid;
     }
 
-    public void setPersonnelcode(String personnelcode) {
-        this.personnelcode = personnelcode;
+    public Long getUtilisateur_has_personid() {
+        return utilisateur_has_personid;
     }
 
-    public String getPersonnelnom() {
-        return personnelnom;
+    public void setUtilisateur_has_personid(Long utilisateur_has_personid) {
+        this.utilisateur_has_personid = utilisateur_has_personid;
     }
 
-    public void setPersonnelnom(String personnelnom) {
-        this.personnelnom = personnelnom;
+    public LocalDate getUtilisateur_has_person_date_creation() {
+        return utilisateur_has_person_date_creation;
     }
 
-    public String getPersonnelprenom() {
-        return personnelprenom;
+    public void setUtilisateur_has_person_date_creation(LocalDate utilisateur_has_person_date_creation) {
+        this.utilisateur_has_person_date_creation = utilisateur_has_person_date_creation;
     }
 
-    public void setPersonnelprenom(String personnelprenom) {
-        this.personnelprenom = personnelprenom;
+    public LocalDate getUtilisateur_has_person_modif() {
+        return utilisateur_has_person_modif;
     }
 
-    public LocalDate getPersonneldatenaissance() {
-        return personneldatenaissance;
+    public void setUtilisateur_has_person_modif(LocalDate utilisateur_has_person_modif) {
+        this.utilisateur_has_person_modif = utilisateur_has_person_modif;
     }
 
-    public void setPersonneldatenaissance(LocalDate personneldatenaissance) {
-        this.personneldatenaissance = personneldatenaissance;
+    public int getUtilisateur_has_person_active() {
+        return utilisateur_has_person_active;
     }
 
-    public String getPersonnel_lieunaissance() {
-        return personnel_lieunaissance;
+    public void setUtilisateur_has_person_active(int utilisateur_has_person_active) {
+        this.utilisateur_has_person_active = utilisateur_has_person_active;
     }
 
-    public void setPersonnel_lieunaissance(String personnel_lieunaissance) {
-        this.personnel_lieunaissance = personnel_lieunaissance;
+    public LocalDate getUtilisateur_has_person_date_debut() {
+        return utilisateur_has_person_date_debut;
     }
 
-    public String getType_personnel_liblle() {
-        return type_personnel_liblle;
+    public void setUtilisateur_has_person_date_debut(LocalDate utilisateur_has_person_date_debut) {
+        this.utilisateur_has_person_date_debut = utilisateur_has_person_date_debut;
     }
 
-    public void setType_personnel_liblle(String type_personnel_liblle) {
-        this.type_personnel_liblle = type_personnel_liblle;
+    public LocalDate getUtilisateur_has_person_date_fin() {
+        return utilisateur_has_person_date_fin;
     }
 
-    public String getPersonnelStatut_liblle() {
-        return personnelStatut_liblle;
+    public void setUtilisateur_has_person_date_fin(LocalDate utilisateur_has_person_date_fin) {
+        this.utilisateur_has_person_date_fin = utilisateur_has_person_date_fin;
     }
 
-    public void setPersonnelStatut_liblle(String personnelStatut_liblle) {
-        this.personnelStatut_liblle = personnelStatut_liblle;
+    public Long getEcole_ecoleid() {
+        return ecole_ecoleid;
     }
 
-    public String getFonction_liblle() {
-        return fonction_liblle;
+    public void setEcole_ecoleid(Long ecole_ecoleid) {
+        this.ecole_ecoleid = ecole_ecoleid;
     }
 
-    public void setFonction_liblle(String fonction_liblle) {
-        this.fonction_liblle = fonction_liblle;
+    public String getLibelleEcole() {
+        return libelleEcole;
     }
 
-    public personnelSelect(Long personnelid, String personnelcode, String personnelnom, String personnelprenom, LocalDate personneldatenaissance, String personnel_lieunaissance, String type_personnel_liblle, String personnelStatut_liblle, String fonction_liblle) {
-        this.personnelid = personnelid;
-        this.personnelcode = personnelcode;
-        this.personnelnom = personnelnom;
-        this.personnelprenom = personnelprenom;
-        this.personneldatenaissance = personneldatenaissance;
-        this.personnel_lieunaissance = personnel_lieunaissance;
-        this.type_personnel_liblle = type_personnel_liblle;
-        this.personnelStatut_liblle = personnelStatut_liblle;
-        this.fonction_liblle = fonction_liblle;
+    public void setLibelleEcole(String libelleEcole) {
+        this.libelleEcole = libelleEcole;
+    }
+
+    public String getLibelleProfiil() {
+        return libelleProfiil;
+    }
+
+    public void setLibelleProfiil(String libelleProfiil) {
+        this.libelleProfiil = libelleProfiil;
+    }
+
+    public String getNomPersonnel() {
+        return nomPersonnel;
+    }
+
+    public void setNomPersonnel(String nomPersonnel) {
+        this.nomPersonnel = nomPersonnel;
+    }
+
+    public String getNomPrenomPersonnel() {
+        return nomPrenomPersonnel;
+    }
+
+    public void setNomPrenomPersonnel(String nomPrenomPersonnel) {
+        this.nomPrenomPersonnel = nomPrenomPersonnel;
     }
 }

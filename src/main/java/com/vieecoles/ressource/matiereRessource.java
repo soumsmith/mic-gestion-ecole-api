@@ -10,8 +10,8 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
-@Tag(name = "Matiere", description = "Matiere ressources")
-@Path("/matiere")
+@Tag(name = "MatiereSoum", description = "Matiere ressources")
+@Path("/matieresoum")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class matiereRessource {

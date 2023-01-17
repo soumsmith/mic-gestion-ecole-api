@@ -1,5 +1,6 @@
 package com.vieecoles.dao.entities;
 
+import com.vieecoles.steph.entities.Branche;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -10,7 +11,7 @@ import javax.persistence.*;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Table(name = "Classe_Matiere")
-public class ClasseMatiere extends PanacheEntityBase{
+public class classeMatiere extends PanacheEntityBase{
 
 	@Id
 	private long id;

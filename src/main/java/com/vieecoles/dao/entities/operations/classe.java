@@ -1,9 +1,9 @@
 package com.vieecoles.dao.entities.operations;
 
-import com.vieecoles.dao.entities.Annee_scolaire;
-import com.vieecoles.dao.entities.Branche;
-import com.vieecoles.dao.entities.LangueVivante;
+import com.vieecoles.dao.entities.Annee_Scolaire;
 import com.vieecoles.dao.entities.Niveau;
+import com.vieecoles.steph.entities.Branche;
+import com.vieecoles.steph.entities.LangueVivante;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Data;
 
@@ -32,7 +32,7 @@ public class classe extends PanacheEntityBase {
     private Branche branche;
     @ManyToOne
     @JoinColumn(name = "annee_scolaire_annee_scolaireid")
-    private Annee_scolaire annee;
+    private Annee_Scolaire annee;
 
 
 
@@ -77,11 +77,11 @@ public class classe extends PanacheEntityBase {
         this.branche = branche;
     }
 
-    public Annee_scolaire getAnnee() {
+    public Annee_Scolaire getAnnee() {
         return annee;
     }
 
-    public void setAnnee(Annee_scolaire annee) {
+    public void setAnnee(Annee_Scolaire annee) {
         this.annee = annee;
     }
 

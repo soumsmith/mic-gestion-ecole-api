@@ -1,8 +1,8 @@
-package com.vieecoles.ressource.steph.services;
+package com.vieecoles.steph.services;
 
 import com.google.gson.Gson;
-import com.vieecoles.entities.Activite;
-import com.vieecoles.entities.Salle;
+import com.vieecoles.steph.entities.Activite;
+import com.vieecoles.steph.entities.Salle;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -13,7 +13,7 @@ import java.net.URI;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
+
 
 @ApplicationScoped
 public class SalleService implements PanacheRepositoryBase<Salle, Long> {
@@ -21,7 +21,7 @@ public class SalleService implements PanacheRepositoryBase<Salle, Long> {
 	@Inject
 	ActiviteService activiteService;
 
-	Logger logger = Logger.getLogger(SalleService.class.getName());
+	//Logger logger = Logger.getLogger(SalleService.class.getName());
 
 	public List<Salle> list() {
 		return Salle.findAll().list();
@@ -76,8 +76,8 @@ public class SalleService implements PanacheRepositoryBase<Salle, Long> {
 	@Transactional
 	public Response save(Salle salle) {
 		Gson gson = new Gson();
-		logger.info("persist activite ...");
-		logger.info(gson.toJson(salle));
+		//logger.info("persist activite ...");
+		//logger.info(gson.toJson(salle));
 
 		salle.persist();
 		return Response.created(URI.create("/salle/" + salle.getId())).build();
@@ -85,7 +85,7 @@ public class SalleService implements PanacheRepositoryBase<Salle, Long> {
 
 	@Transactional
 	public Salle update(Salle salle) {
-		logger.info("updating salle ...");
+		//logger.info("updating salle ...");
 		Salle sl = Salle.findById(salle.getId());
 		if (salle != null) {
 			sl.setCode(salle.getCode());
@@ -114,7 +114,7 @@ public class SalleService implements PanacheRepositoryBase<Salle, Long> {
 	@Transactional
 	public void delete(String id) {
 
-		logger.info("delete Salle id " + id);
+	//	logger.info("delete Salle id " + id);
 		Salle sl = findById(Long.parseLong(id));
 		if (isDeletable(id))
 			sl.delete();

@@ -1,33 +1,27 @@
-package com.vieecoles.entities.operations;
-
-import com.vieecoles.entities.*;
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+package com.vieecoles.projection;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
-@Entity
-public class personnel_matiere_classe extends PanacheEntityBase {
+public class personnel_matiere_classeSelect  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
    private  Long   Personnel_matiere_classeid ;
    private LocalDate  Personnel_matiere_classe_date_creation ;
+   private  String libelleMatiere ;
+    private  String libelleClasse ;
+    private String nomPersonnel ;
+    private  String prenomPersonnel ;
 
 
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "matiere_matiereid")
-    private matiere matiere ;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "classe_classeid")
-    private com.vieecoles.entities.operations.classe classe;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "personnel_personnelid")
-    private personnel personnel ;
+    public personnel_matiere_classeSelect(Long personnel_matiere_classeid, LocalDate personnel_matiere_classe_date_creation, String libelleMatiere, String libelleClasse, String nomPersonnel, String prenomPersonnel) {
+        Personnel_matiere_classeid = personnel_matiere_classeid;
+        Personnel_matiere_classe_date_creation = personnel_matiere_classe_date_creation;
+        this.libelleMatiere = libelleMatiere;
+        this.libelleClasse = libelleClasse;
+        this.nomPersonnel = nomPersonnel;
+        this.prenomPersonnel = prenomPersonnel;
+    }
 
     public Long getPersonnel_matiere_classeid() {
         return Personnel_matiere_classeid;
@@ -45,38 +39,35 @@ public class personnel_matiere_classe extends PanacheEntityBase {
         Personnel_matiere_classe_date_creation = personnel_matiere_classe_date_creation;
     }
 
-    public com.vieecoles.entities.operations.classe getClasse() {
-        return classe;
+    public String getLibelleMatiere() {
+        return libelleMatiere;
     }
 
-    public void setClasse(com.vieecoles.entities.operations.classe classe) {
-        this.classe = classe;
+    public void setLibelleMatiere(String libelleMatiere) {
+        this.libelleMatiere = libelleMatiere;
     }
 
-    public com.vieecoles.entities.matiere getMatiere() {
-        return matiere;
+    public String getLibelleClasse() {
+        return libelleClasse;
     }
 
-    public void setMatiere(com.vieecoles.entities.matiere matiere) {
-        this.matiere = matiere;
+    public void setLibelleClasse(String libelleClasse) {
+        this.libelleClasse = libelleClasse;
     }
 
-    public com.vieecoles.entities.operations.personnel getPersonnel() {
-        return personnel;
+    public String getNomPersonnel() {
+        return nomPersonnel;
     }
 
-    public void setPersonnel(com.vieecoles.entities.operations.personnel personnel) {
-        this.personnel = personnel;
+    public void setNomPersonnel(String nomPersonnel) {
+        this.nomPersonnel = nomPersonnel;
     }
 
-    @Override
-    public String toString() {
-        return "personnel_matiere_classe{" +
-                "Personnel_matiere_classeid=" + Personnel_matiere_classeid +
-                ", Personnel_matiere_classe_date_creation=" + Personnel_matiere_classe_date_creation +
-                ", classe=" + classe +
-                ", matiere=" + matiere +
-                ", personnel=" + personnel +
-                '}';
+    public String getPrenomPersonnel() {
+        return prenomPersonnel;
+    }
+
+    public void setPrenomPersonnel(String prenomPersonnel) {
+        this.prenomPersonnel = prenomPersonnel;
     }
 }

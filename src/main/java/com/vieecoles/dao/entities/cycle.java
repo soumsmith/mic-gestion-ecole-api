@@ -14,9 +14,7 @@ public class cycle extends PanacheEntityBase  {
     private  String cyclecode;
     private  String cyclelibelle;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tenant_tenantid")
-    private tenant tenant;
+
 
 
     @ManyToMany
@@ -25,13 +23,7 @@ public class cycle extends PanacheEntityBase  {
             inverseJoinColumns = @JoinColumn( name = "ecole_ecoleid" ) )
     private List<com.vieecoles.dao.entities.operations.ecole> ecole = new ArrayList<>();
 
-    public com.vieecoles.dao.entities.tenant getTenant() {
-        return tenant;
-}
 
-    public void setTenant(com.vieecoles.dao.entities.tenant tenant) {
-        this.tenant = tenant;
-    }
 
     public List<com.vieecoles.dao.entities.operations.ecole> getEcole() {
         return ecole;

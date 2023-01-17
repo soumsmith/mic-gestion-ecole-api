@@ -28,11 +28,7 @@ public class eleve extends PanacheEntityBase {
     private  String eleve_matricule ;
 
    // @JsonbTransient
-    @ManyToMany
-    @JoinTable( name = "eleve_classe",
-            joinColumns = @JoinColumn( name = "eleve_eleveid" ),
-            inverseJoinColumns = @JoinColumn( name = "classe_classeid" ) )
-    private List<classe> classe = new ArrayList<>();
+
 
 
    // @JsonbTransient
@@ -71,8 +67,7 @@ public class eleve extends PanacheEntityBase {
                 ", eleveadresse='" + eleveadresse + '\'' +
                 ", elevecellulaire='" + elevecellulaire + '\'' +
                 ", eleve_mail='" + eleve_mail + '\'' +
-                ", classe=" + classe +
-                ", parents=" + parents +
+                 ", parents=" + parents +
                 ", appel_numerique=" + appel_numerique +
                 '}';
     }
@@ -85,14 +80,6 @@ public class eleve extends PanacheEntityBase {
         this.eleve_sexe = eleve_sexe;
     }
 
-
-    public List<com.vieecoles.dao.entities.operations.classe> getClasse() {
-        return classe;
-    }
-
-    public void setClasse(List<com.vieecoles.dao.entities.operations.classe> classe) {
-        this.classe = classe;
-    }
 
     public List<com.vieecoles.dao.entities.operations.appel_numerique> getAppel_numerique() {
         return appel_numerique;

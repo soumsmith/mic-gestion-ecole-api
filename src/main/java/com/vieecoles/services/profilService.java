@@ -1,18 +1,23 @@
 package com.vieecoles.services;
 
-import com.vieecoles.entities.domaine;
-import com.vieecoles.entities.profil;
+import com.vieecoles.dao.entities.domaine;
+import com.vieecoles.dao.entities.profil;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Response;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 @ApplicationScoped
 public class profilService implements PanacheRepositoryBase<profil, Long> {
-
+    @Inject
+    EntityManager em;
    public List<profil> getListprofil(){
        return  profil.listAll();
    }
@@ -47,8 +52,26 @@ public class profilService implements PanacheRepositoryBase<profil, Long> {
        return  profil.find("profil_libelle",Libelle).list() ;
    }
 
+   public  profil getIdProfilAdmin(String Libelle){
+    return  profil.find("profil_libelle",Libelle).firstResult() ;
+}
+
+
     public  long count(){
         return  profil.count();
+    }
+
+    @Transactional
+    public List<profil>  getProfilForEcole(){
+        List<profil>  profilList = new ArrayList<>() ;
+        try {
+            profilList= (List<profil>) em.createQuery("select o from profil  o  where  o.profil_libelle not  in ('Fondateur','Admin')")
+                   // .setParameter("names",names)
+                    .getResultList();
+        } catch (Exception e) {
+            profilList = null;
+        }
+        return profilList ;
     }
 
 

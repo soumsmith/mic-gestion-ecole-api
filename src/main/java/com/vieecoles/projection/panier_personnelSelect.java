@@ -1,22 +1,70 @@
-package com.vieecoles.dto;
+package com.vieecoles.projection;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.time.LocalDate;
 
-@Entity
-public class panier_personnelDto extends PanacheEntityBase {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class panier_personnelSelect  {
     private Long  idpanier_personnel_id ;
-   private  String personnelcode;
-    private  LocalDate  panier_personnel_date_creation;
-    private  LocalDate  panier_personnel_date_modifier;
+      private  LocalDate  panier_personnel_date_creation;
+     private String libelleEcole ;
+    private  String nomPersonnel ;
+    private  String prenomPersonnel ;
+    private  Long idPersonnel ;
+    private  String diplome_recent;
+    private  String contact;
+    private  LocalDate dateNaissance;
+    private String lien_piece ;
+    private String lien_autorisation  ;
+    private String domaine_formation;
+    private String libelle_fonction;
+    private String email ;
+    private int  nombreAnneeExperience ;
 
-    private Long identifiant_ecole ;
-    private Long identifiant_personnel;
 
+    public String getDiplome_recent() {
+        return diplome_recent;
+    }
+
+    public void setDiplome_recent(String diplome_recent) {
+        this.diplome_recent = diplome_recent;
+    }
+
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
+
+    public LocalDate getDateNaissance() {
+        return dateNaissance;
+    }
+
+    public void setDateNaissance(LocalDate dateNaissance) {
+        this.dateNaissance = dateNaissance;
+    }
+
+    public String getLien_piece() {
+        return lien_piece;
+    }
+
+    public void setLien_piece(String lien_piece) {
+        this.lien_piece = lien_piece;
+    }
+
+    public String getLien_autorisation() {
+        return lien_autorisation;
+    }
+
+    public void setLien_autorisation(String lien_autorisation) {
+        this.lien_autorisation = lien_autorisation;
+    }
 
     public Long getIdpanier_personnel_id() {
         return idpanier_personnel_id;
@@ -24,14 +72,6 @@ public class panier_personnelDto extends PanacheEntityBase {
 
     public void setIdpanier_personnel_id(Long idpanier_personnel_id) {
         this.idpanier_personnel_id = idpanier_personnel_id;
-    }
-
-    public String getPersonnelcode() {
-        return personnelcode;
-    }
-
-    public void setPersonnelcode(String personnelcode) {
-        this.personnelcode = personnelcode;
     }
 
     public LocalDate getPanier_personnel_date_creation() {
@@ -42,44 +82,114 @@ public class panier_personnelDto extends PanacheEntityBase {
         this.panier_personnel_date_creation = panier_personnel_date_creation;
     }
 
-    public LocalDate getPanier_personnel_date_modifier() {
-        return panier_personnel_date_modifier;
+    public String getDomaine_formation() {
+        return domaine_formation;
     }
 
-    public void setPanier_personnel_date_modifier(LocalDate panier_personnel_date_modifier) {
-        this.panier_personnel_date_modifier = panier_personnel_date_modifier;
+    public void setDomaine_formation(String domaine_formation) {
+        this.domaine_formation = domaine_formation;
     }
 
-
-
-    public Long getIdentifiant_ecole() {
-        return identifiant_ecole;
+    public String getLibelle_fonction() {
+        return libelle_fonction;
     }
 
-    public void setIdentifiant_ecole(Long identifiant_ecole) {
-        this.identifiant_ecole = identifiant_ecole;
+    public void setLibelle_fonction(String libelle_fonction) {
+        this.libelle_fonction = libelle_fonction;
     }
 
-    public Long getIdentifiant_personnel() {
-        return identifiant_personnel;
+    public String getEmail() {
+        return email;
     }
 
-    public void setIdentifiant_personnel(Long identifiant_personnel) {
-        this.identifiant_personnel = identifiant_personnel;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public panier_personnelDto() {
+    public int getNombreAnneeExperience() {
+        return nombreAnneeExperience;
+    }
+
+    public void setNombreAnneeExperience(int nombreAnneeExperience) {
+        this.nombreAnneeExperience = nombreAnneeExperience;
+    }
+
+    public Long getIdPersonnel() {
+        return idPersonnel;
+    }
+
+    public void setIdPersonnel(Long idPersonnel) {
+        this.idPersonnel = idPersonnel;
+    }
+
+    public String getLibelleEcole() {
+        return libelleEcole;
+    }
+
+    public void setLibelleEcole(String libelleEcole) {
+        this.libelleEcole = libelleEcole;
+    }
+
+    public String getNomPersonnel() {
+        return nomPersonnel;
+    }
+
+    public void setNomPersonnel(String nomPersonnel) {
+        this.nomPersonnel = nomPersonnel;
+    }
+
+    public String getPrenomPersonnel() {
+        return prenomPersonnel;
+    }
+
+    public void setPrenomPersonnel(String prenomPersonnel) {
+        this.prenomPersonnel = prenomPersonnel;
+    }
+
+    public panier_personnelSelect(Long idpanier_personnel_id,
+                                  LocalDate panier_personnel_date_creation,
+                                  String libelleEcole,
+                                  String nomPersonnel,
+                                  String prenomPersonnel,
+                                  Long idPersonnel,
+                                  String diplome_recent,
+                                  String contact,
+                                  LocalDate dateNaissance,
+                                  String lien_piece,
+                                  String lien_autorisation ,
+                                  String domaine_formation,
+                                  String libelle_fonction,
+                                  String email,
+                                  int nombreAnneeExperience) {
+        this.idpanier_personnel_id = idpanier_personnel_id;
+        this.panier_personnel_date_creation = panier_personnel_date_creation;
+        this.libelleEcole = libelleEcole;
+        this.nomPersonnel = nomPersonnel;
+        this.prenomPersonnel = prenomPersonnel;
+        this.idPersonnel = idPersonnel ;
+        this.diplome_recent= diplome_recent ;
+        this.contact= contact;
+        this.dateNaissance= dateNaissance ;
+        this.lien_piece= lien_piece ;
+        this.lien_autorisation=lien_autorisation;
+        this.domaine_formation=domaine_formation;
+        this.libelle_fonction=libelle_fonction ;
+        this.email=email ;
+        this.nombreAnneeExperience=nombreAnneeExperience ;
+
+    }
+
+    public panier_personnelSelect() {
     }
 
     @Override
     public String toString() {
-        return "panier_personnelDto{" +
+        return "panier_personnelSelect{" +
                 "idpanier_personnel_id=" + idpanier_personnel_id +
-                ", personnelcode='" + personnelcode + '\'' +
                 ", panier_personnel_date_creation=" + panier_personnel_date_creation +
-                ", panier_personnel_date_modifier=" + panier_personnel_date_modifier +
-                ", identifiant_ecole=" + identifiant_ecole +
-                ", identifiant_personnel=" + identifiant_personnel +
+                ", libelleEcole='" + libelleEcole + '\'' +
+                ", nomPersonnel='" + nomPersonnel + '\'' +
+                ", prenomPersonnel='" + prenomPersonnel + '\'' +
                 '}';
     }
 }

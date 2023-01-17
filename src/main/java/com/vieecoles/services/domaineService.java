@@ -1,6 +1,6 @@
 package com.vieecoles.services;
 
-import com.vieecoles.entities.domaine;
+import com.vieecoles.dao.entities.domaine;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -45,6 +45,12 @@ public class domaineService implements PanacheRepositoryBase<domaine, Long> {
    public  List<domaine> search(String domLibelle){
        return  domaine.find("domainelibelle",domLibelle).list() ;
    }
+
+
+   public  domaine searchDomFon(String domLibelle){
+    return  domaine.find("domainelibelle",domLibelle).firstResult() ;
+}
+
 
     public  long count(){
         return  domaine.count();

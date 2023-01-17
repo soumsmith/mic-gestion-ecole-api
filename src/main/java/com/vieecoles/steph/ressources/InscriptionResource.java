@@ -1,7 +1,7 @@
-package com.vieecoles.ressource.steph.ressources;
+package com.vieecoles.steph.ressources;
 
-import com.vieecoles.entities.Inscription;
-import com.vieecoles.services.InscriptionService;
+import com.vieecoles.steph.entities.Inscription;
+import com.vieecoles.steph.services.InscriptionService;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 

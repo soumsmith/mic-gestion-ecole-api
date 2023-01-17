@@ -1,20 +1,23 @@
 package com.vieecoles.ressource.operations.souscription;
 
 import com.vieecoles.dao.entities.operations.personnel;
+import com.vieecoles.dto.CreerCompteUtilsateurDto;
 import com.vieecoles.dto.sous_attent_personnDto;
 import com.vieecoles.dto.souscriptionValidationDto;
+import com.vieecoles.dto.souscriptionValidationFondatDto;
 import com.vieecoles.dao.entities.operations.sous_attent_personn;
 import com.vieecoles.services.personnels.PersonnelService;
+import com.vieecoles.services.souscription.FileStorageService;
 import com.vieecoles.services.souscription.SouscPersonnelService;
+import org.apache.http.client.HttpClient;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
-
+import javax.servlet.http.HttpServletRequest;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.core.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,17 +34,23 @@ import org.apache.commons.io.IOUtils;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
-
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+//import org.springframework.http.MediaType.
 @Tag(name = "Souscription", description = "mes Souscriptions")
  @Path("/souscription-personnel")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class SouscriptionRessource {
-    private static String UPLOAD_DIR = "D:\\BrouillonsReactJS\\";
+    //private static String UPLOAD_DIR = "/data/";
+    private static String UPLOAD_DIR = "D:/BrouillonsReactJS/";
     @Inject
     SouscPersonnelService souscPersonnelService ;
     @Inject
     EntityManager em;
+    @Inject
+    FileStorageService fileStorageService ;
 
     @Inject
     PersonnelService personnelService ;
@@ -61,6 +70,13 @@ public class SouscriptionRessource {
     public List<personnel> personnelParEcole(@PathParam("idEcole") Long idEcole) {
     return souscPersonnelService.findAllPersonneParEcole(idEcole) ;
     }
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("personnelById/{idpersonnel}")
+    public sous_attent_personn personnelByIdPersonnel(@PathParam("idpersonnel") Long idpersonnel) {
+        return souscPersonnelService.findPersonnelById(idpersonnel) ;
+    }
 
 
 
@@ -72,6 +88,15 @@ public class SouscriptionRessource {
          return souscPersonnelService.findAllSouscriptionAvaliderDto(status) ;
      }
 
+     @GET
+     @Produces(MediaType.APPLICATION_JSON)
+     @Consumes(MediaType.APPLICATION_JSON)
+     @Path("attente-fondateur/{status}/{fonction}")
+     public List<sous_attent_personn> getAllSouscriptionAvaliderFondateur(@PathParam("status") String status,@PathParam("fonction") String fonction) {
+         return souscPersonnelService.findAllSouscriptionAvaliderDtoFondateur(status, fonction);
+     }
+
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -81,34 +106,96 @@ public class SouscriptionRessource {
     }
 
      @GET
-     @Produces(MediaType.MULTIPART_FORM_DATA)
+     @Produces("application/pdf")
      @Consumes(MediaType.APPLICATION_JSON)
      @Path("ouvrir-fichier/{path}")
-     public void   lireFichier(@PathParam("path") String path) throws IOException {
+     public Response lireFichier(@PathParam("path") String path) throws IOException {
          Desktop desktop = Desktop.getDesktop();
          File file = new File(UPLOAD_DIR+path);
          System.out.println("Path"+UPLOAD_DIR+path);
-         try {
-             if (file.exists()){
-       desktop.open(file);
-             } else {
-  System.out.println("Not file found");
-             }
-         } catch (Exception e) {
-             e.printStackTrace();
-         }
+
+
+     return souscPersonnelService.convertFileInp(UPLOAD_DIR+path) ;
+
+
 
      }
+
+
+
+
+    @GET
+    @Produces(MediaType.MULTIPART_FORM_DATA)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("ouvrir-fichierPDF_url/{path}")
+    public String lireFichier2(@PathParam("path") String path) throws IOException {
+        Desktop desktop = Desktop.getDesktop();
+        File file = new File(UPLOAD_DIR+path);
+        System.out.println("Path"+UPLOAD_DIR+path);
+        try {
+            if (file.exists()){
+                return UPLOAD_DIR+path ;
+            } else {
+                System.out.println("Not file found");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return path;
+    }
+    @GET
+   // @Produces(MediaType.MULTIPART_FORM_DATA)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("ouvrir-fichierDao/{path}")
+    public ResponseEntity<Resource> downloadFile2( @PathParam("path") String path, @Context HttpServletRequest request) {
+        // Load file as Resource
+ //  fileStorageService.setDirName(dirName);
+        Resource resource = fileStorageService.loadFileAsResource(path);
+
+        // Try to determine file's content type
+        String contentType = null;
+        try {
+            contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
+        } catch (IOException ex) {
+           // logger.info("Could not determine file type.");
+        }
+
+        // Fallback to the default content type if type could not be determined
+        if(contentType == null) {
+            contentType = "application/octet-stream";
+        }
+
+        return ResponseEntity.ok()
+                .contentType(org.springframework.http.MediaType.valueOf(contentType))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                .body(resource);
+}
+
+
+
 
 
     @POST
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Transactional
+    //@Transactional
     public String   CreerSouscription(sous_attent_personnDto  mySouscrip) throws IOException, SQLException {
-    return     souscPersonnelService.CreerSousCriperson(mySouscrip) ;
-
+   // return     souscPersonnelService.CreerSousCriperson(mySouscrip) ;
+       return     souscPersonnelService.CreerSouscripCompteUtilisateur(mySouscrip) ;
     }
+
+    @POST
+    @Produces(MediaType.TEXT_PLAIN)
+    @Consumes(MediaType.APPLICATION_JSON)
+    //@Transactional
+    @Path("compte-candidat")
+    public String   CreerCompteCandidat(CreerCompteUtilsateurDto mySouscrip) throws IOException, SQLException {
+        // return     souscPersonnelService.CreerSousCriperson(mySouscrip) ;
+        return     souscPersonnelService.creerCompteUtilisateur(mySouscrip);
+    }
+
+
 
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
@@ -187,12 +274,25 @@ public class SouscriptionRessource {
      @Produces(MediaType.TEXT_PLAIN)
      @Consumes(MediaType.APPLICATION_JSON)
      @Path("/valider-souscription-personnel/")
-     @Transactional
+     //@Transactional
      public Response validerSouscription(souscriptionValidationDto sousValid) {
 
          souscPersonnelService.validerSouscription(sousValid);
          return   Response.ok(String.format("Inscription  %s mis à jour",sousValid.getStatuts())).build();
      }
+
+     @PUT
+     @Produces(MediaType.TEXT_PLAIN)
+     @Consumes(MediaType.APPLICATION_JSON)
+     @Path("/valider-souscription-fondateur/")
+     //@Transactional
+     public Response validerSouscriptionFondateur(souscriptionValidationFondatDto sousValid) {
+
+         souscPersonnelService.valideCreerCompteFondateur(sousValid);
+         return   Response.ok(String.format("Inscription  %s mis à jour",sousValid.getStatuts())).build();
+     }
+
+
 
 
 

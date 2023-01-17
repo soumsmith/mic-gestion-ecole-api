@@ -1,7 +1,7 @@
 package com.vieecoles.services.personnels;
 
-import com.vieecoles.entities.operations.personnel_matiere_classe;
-import com.vieecoles.projection.personnel_matiere_classeSelect;
+import com.vieecoles.dao.entities.operations.personnel_matiere;
+import com.vieecoles.projection.personnel_matiereSelect;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -12,42 +12,42 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @ApplicationScoped
-public class PersonnelMatiereClasseService implements PanacheRepositoryBase<personnel_matiere_classe, Long> {
+public class PersonnelMatiereService implements PanacheRepositoryBase<personnel_matiere, Long> {
     @Inject
     EntityManager em;
 
 @Transactional
-   public Long   CreerPersonnelMatiereClasse(personnel_matiere_classe personnel_matiere_classe) {
+   public Long   CreerPersonnelMatiere(personnel_matiere personnel_matiere) {
     try {
-         personnel_matiere_classe.persist();
+        personnel_matiere.persist();
 
     } catch (Exception e) {
        return  null ;
     }
-    return personnel_matiere_classe.getPersonnel_matiere_classeid() ;
+    return personnel_matiere.getPersonnel_matiereid() ;
           }
 
-          public  List<personnel_matiere_classeSelect> getMatiereClasseByProfesseur(Long personnelId){
-        TypedQuery<personnel_matiere_classeSelect> q =   em.createQuery("select new com.vieecoles.projection.personnel_matiere_classeSelect(o.Personnel_matiere_classeid,o.Personnel_matiere_classe_date_creation,m.matierelibelle,c.classelibelle, p.personnelnom ,p.personnelprenom )  from personnel_matiere_classe o  join  o.personnel p join   o.matiere m join  o.classe c where  o.personnel.personnelid=:personnelId", personnel_matiere_classeSelect.class) ;
-        List<personnel_matiere_classeSelect> personnel_matiere_classeSelect = q.setParameter("personnelId",personnelId).getResultList();
-             return personnel_matiere_classeSelect ;
+          public  List<personnel_matiereSelect> getMatiereByProfesseur(Long personnelId){
+        TypedQuery<personnel_matiereSelect> q =   em.createQuery("select new com.vieecoles.projection.personnel_matiereSelect(o.personnel_matiereid,m.matierelibelle, p.personnelnom ,p.personnelprenom )  from personnel_matiere o  join  o.personnel p join   o.matiere m  where  o.personnel.personnelid=:personnelId", personnel_matiereSelect.class) ;
+        List<personnel_matiereSelect> personnel_matiereSelect = q.setParameter("personnelId",personnelId).getResultList();
+             return personnel_matiereSelect;
           }
 
 
-    public List<personnel_matiere_classeSelect> getAllListMatiereClasseProfesseur(){
-        TypedQuery<personnel_matiere_classeSelect> q =   em.createQuery("select new com.vieecoles.projection.personnel_matiere_classeSelect( o.Personnel_matiere_classeid,o.Personnel_matiere_classe_date_creation,m.matierelibelle,c.classelibelle, p.personnelnom ,p.personnelprenom )  from personnel_matiere_classe o  join  o.personnel p join   o.matiere m join  o.classe c", personnel_matiere_classeSelect.class) ;
-        List<personnel_matiere_classeSelect> mpersonnel_matiere_classeSelect = q.getResultList();
-        return mpersonnel_matiere_classeSelect ;
+    public List<personnel_matiereSelect> getAllListMatiereClasseProfesseur(){
+        TypedQuery<personnel_matiereSelect> q =   em.createQuery("select new com.vieecoles.projection.personnel_matiereSelect(o.personnel_matiereid,m.matierelibelle, p.personnelnom ,p.personnelprenom )  from personnel_matiere o  join  o.personnel p join   o.matiere m ", personnel_matiereSelect.class) ;
+        List<personnel_matiereSelect> personnel_matiereSelect = q.getResultList();
+        return personnel_matiereSelect;
     }
 
 
     @Transactional
-    public void    deleteLineMatiereClasseByProfesseur( Long idMatiereClasse) {
-        personnel_matiere_classe myPersoMatiereClasse = new personnel_matiere_classe() ;
-        myPersoMatiereClasse = personnel_matiere_classe.findById(idMatiereClasse) ;
+    public void    deleteLineMatiereByProfesseur( Long idMatiereClasse) {
+        personnel_matiere  myPersoMatiere = new personnel_matiere() ;
+        myPersoMatiere = personnel_matiere.findById(idMatiereClasse) ;
 
         try{
-            myPersoMatiereClasse.delete();
+            myPersoMatiere.delete();
         }catch (Exception e) {
 
         }

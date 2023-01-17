@@ -1,6 +1,6 @@
-package com.vieecoles.ressource.steph.services;
+package com.vieecoles.steph.services;
 
-import com.vieecoles.entities.Eleve;
+import com.vieecoles.steph.entities.Eleve;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.ws.rs.NotFoundException;

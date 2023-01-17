@@ -1,17 +1,25 @@
-package com.vieecoles.ressource.steph.entities;
+package com.vieecoles.steph.entities;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "matiere")
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class Matiere extends PanacheEntityBase {
-
+     
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
 	@Column(name = "matiereid")
@@ -20,11 +28,11 @@ public class Matiere extends PanacheEntityBase {
     private  String code;
 	@Column(name = "matierelibelle")
     private  String libelle;
-
+	
 	private Integer pec;
 	@ManyToOne
 	@JoinColumn(name = "niveau_enseign_id")
-	private NiveauEnseignement niveauEnseignement;
+	private NiveauEnseignement niveauEnseignement; 
     @Transient
     private Double moyenne;
     @Transient
@@ -33,9 +41,10 @@ public class Matiere extends PanacheEntityBase {
     private String  coef ;
     @Transient
     private String appreciation;
-    @ManyToOne
-    @JoinColumn(name = "matiereparent_id")
-    private Matiere matiereParent;
+//    @ManyToOne
+//    @JoinColumn(name = "matiereparent_id")
+    @Column(name = "matiereparent_id")
+    private String matiereParent;
 
     @ManyToOne
     @JoinColumn(name = "categorie_matiere_categorie_matiereid")

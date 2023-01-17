@@ -22,6 +22,13 @@ public class profilRessource {
     public List<profil> list() {
         return proService.getListprofil();
     }
+    @GET
+    @Path("profil-visible")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.TEXT_PLAIN)
+    public List<profil> listProfilVisible() {
+        return proService.getProfilForEcole() ;
+    }
 
     @GET
     @Path("/{id}")
@@ -53,6 +60,12 @@ public class profilRessource {
     @Path("/search/{libelle}")
     public List<profil> search(@PathParam("libelle") String libelle) {
         return proService.search(libelle);
+    }
+
+    @GET
+    @Path("/getIdAdminProfil/{libelle}")
+    public profil getIdAdminProfil(@PathParam("libelle") String libelle) {
+        return proService.getIdProfilAdmin(libelle) ;
     }
 
     @GET

@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Table(name = "eleve_classe")
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class ClasseEleve extends PanacheEntityBase{
+public class classeEleve extends PanacheEntityBase{
 
 	@Id
 	@Column(name = "eleve_classeid")
@@ -22,7 +22,7 @@ public class ClasseEleve extends PanacheEntityBase{
 //	private ClasseAnnee classeAnnee;
 	@ManyToOne
 	@JoinColumn(name = "annee_scolaire_annee_scolaireid")
-	private Annee_scolaire annee;
+	private Annee_Scolaire annee;
 
 	@ManyToOne
 	@JoinColumn(name = "classe_classeid")

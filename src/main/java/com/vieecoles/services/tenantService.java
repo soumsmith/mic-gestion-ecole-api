@@ -1,54 +1,61 @@
 package com.vieecoles.services;
 
-import com.vieecoles.entities.fonction;
-import com.vieecoles.entities.matiere;
+import com.vieecoles.dao.entities.tenant;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.NotFoundException;
-import javax.ws.rs.core.Response;
-import java.net.URI;
 import java.util.List;
 
 @ApplicationScoped
-public class fonctionService implements PanacheRepositoryBase<fonction, Long> {
 
-   public List<fonction> getListfonction(){
-       return  matiere.listAll();
-   }
-   public  fonction findById(Long Id){
-       return fonction.findById(Id);
+public class tenantService implements PanacheRepositoryBase<tenant, String> {
+
+   public List<tenant> getListTenat(){
+       return  tenant.listAll();
    }
 
-   public Response createfonction(fonction mat) {
-       mat.persist();
-       return Response.created(URI.create("/fonction/" + mat.getFonctioncode())).build();
+
+
+   public  tenant findById(Long Id){
+       return tenant.findById(Id);
    }
 
-   public  fonction updatefonction(long matId, fonction mat){
-       fonction entity = fonction.findById(matId);
+   public tenant createtenant (tenant mat) {
+       try {
+           mat.persist();
+           return mat  ;
+       } catch (Exception e) {
+           return null;
+       }
+
+   }
+
+   public  tenant updatetenant(  String tenantId ,tenant myTenat  ){
+       tenant entity = tenant.findById(tenantId);
        if(entity == null) {
            throw new NotFoundException();
        }
-       entity.setFonctioncode(mat.getFonctioncode());
-       entity.setFonctionlibelle(mat.getFonctionlibelle());
+       entity.setTenantid(tenantId);
+       entity.setTenantcode(myTenat.getTenantcode());
+       entity.setTenantlibelle(myTenat.getTenantlibelle());
         return  entity;
    }
 
-    public void  deletefonction(long matId){
-        fonction entity = fonction.findById(matId);
+    public void  deletetenant(String tenantId){
+        tenant entity = tenant.findById(tenantId);
         if(entity == null) {
             throw new NotFoundException();
         }
         entity.delete();
     }
 
-   public  List<fonction> search(String Libelle){
-       return  fonction.find("fonctionlibelle",Libelle).list() ;
+   public  List<tenant> search(String Libelle){
+       return  tenant.find("tenantlibelle",Libelle).list() ;
    }
 
     public  long count(){
-        return  fonction.count();
+        return  tenant.count();
     }
 
 

@@ -1,8 +1,8 @@
-package com.vieecoles.ressource.steph.ressources;
+package com.vieecoles.steph.ressources;
 
-import com.vieecoles.dto.MoyenneEleveDto;
-import com.vieecoles.entities.Notes;
-import com.vieecoles.services.NoteService;
+import com.vieecoles.steph.dto.MoyenneEleveDto;
+import com.vieecoles.steph.entities.Notes;
+import com.vieecoles.steph.services.NoteService;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
@@ -11,7 +11,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
-import java.util.logging.Logger;
+
 
 @Path("/notes")
 public class NotesResource {
@@ -19,7 +19,7 @@ public class NotesResource {
     @Inject
     NoteService noteService ;
 
-    Logger logger = Logger.getLogger(NotesResource.class.getName());
+  //  Logger logger = Logger.getLogger(NotesResource.class.getName());
 
 
     @GET
@@ -37,7 +37,7 @@ public class NotesResource {
     public Notes get(@PathParam("id") long id) {
     	Notes note = noteService.findById(id);
     	if(note == null) {
-    		logger.info("Note non trouvee avec id = "+id);
+    	//	logger.info("Note non trouvee avec id = "+id);
     		return new Notes();
     	} else {
     		return note;
@@ -50,7 +50,7 @@ public class NotesResource {
 	@Tag(name = "Notes")
     public List<Notes> getAboutEval(@PathParam("evaluation") String code) {
 
-    	logger.info("reçu!!!"+code);
+    //	logger.info("reçu!!!"+code);
     	return noteService.getNotesClasse(code);
     }
 
@@ -69,7 +69,7 @@ public class NotesResource {
     @Tag(name = "Classe")
     public Response create(Notes notes) {
     	try {
-    		logger.info("Saving ...");
+    	//	logger.info("Saving ...");
     		noteService.create(notes);
     	} catch(Exception e) {
     		 e.printStackTrace();
@@ -104,7 +104,7 @@ public class NotesResource {
     @Tag(name = "Notes")
     public Response createAndDisplay(Notes notes) {
     	try {
-    		logger.info("Saving and display ...");
+    	//	logger.info("Saving and display ...");
     		noteService.create(notes);
     	} catch(Exception e) {
     		 e.printStackTrace();
@@ -136,7 +136,7 @@ public class NotesResource {
     	try {
     	noteService.createMany(notes);
     	}catch(Exception ex) {
-    		logger.info("Erreur create many - Notes");
+    		//logger.info("Erreur create many - Notes");
     		ex.printStackTrace();
     		return Response.serverError().entity("Erreur create many - Notes").build();
     	}

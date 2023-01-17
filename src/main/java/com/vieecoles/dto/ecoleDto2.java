@@ -3,81 +3,41 @@ package com.vieecoles.dto;
 import javax.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
-public class ecoleDto {
-    String codeEcole ;
-    String libelleEcole;
-    String arretecreation ;
-    String zone ;
-    String quartier ;
-  String cycle ;
-    String groupe_ecole ;
+public class ecoleDto2 {
+    Long ecoleid ;
+    String ecolecode ;
+    String ecoleclibelle;
 
-    public ecoleDto(String codeEcole, String libelleEcole, String arretecreation, String zone, String quartier, String groupe_ecole,String cycle) {
-        this.codeEcole = codeEcole;
-        this.libelleEcole = libelleEcole;
-        this.arretecreation = arretecreation;
-        this.zone = zone;
-        this.quartier = quartier;
-              this.groupe_ecole = groupe_ecole;
-        this.cycle = cycle;
+    public ecoleDto2() {
     }
 
-    public ecoleDto() {
+    public ecoleDto2(Long ecoleid, String ecolecode, String ecoleclibelle) {
+        this.ecoleid = ecoleid;
+        this.ecolecode = ecolecode;
+        this.ecoleclibelle = ecoleclibelle;
     }
 
-    public String getGroupe_ecole() {
-        return groupe_ecole;
+    public Long getEcoleid() {
+        return ecoleid;
     }
 
-    public void setGroupe_ecole(String groupe_ecole) {
-        this.groupe_ecole = groupe_ecole;
+    public void setEcoleid(Long ecoleid) {
+        this.ecoleid = ecoleid;
     }
 
-    public String getCodeEcole() {
-        return codeEcole;
+    public String getEcolecode() {
+        return ecolecode;
     }
 
-    public void setCodeEcole(String codeEcole) {
-        this.codeEcole = codeEcole;
+    public void setEcolecode(String ecolecode) {
+        this.ecolecode = ecolecode;
     }
 
-    public String getLibelleEcole() {
-        return libelleEcole;
+    public String getEcoleclibelle() {
+        return ecoleclibelle;
     }
 
-    public void setLibelleEcole(String libelleEcole) {
-        this.libelleEcole = libelleEcole;
-    }
-
-    public String getArretecreation() {
-        return arretecreation;
-    }
-
-    public void setArretecreation(String arretecreation) {
-        this.arretecreation = arretecreation;
-    }
-
-    public String getZone() {
-        return zone;
-    }
-
-    public void setZone(String zone) {
-        this.zone = zone;
-    }
-
-    public String getQuartier() {
-        return quartier;
-    }
-
-    public void setQuartier(String quartier) {
-        this.quartier = quartier;
-    }
-
-    public String getCycle() {
-        return cycle;
-    }
-
-    public void setCycle(String cycle) {
-        this.cycle = cycle;
+    public void setEcoleclibelle(String ecoleclibelle) {
+        this.ecoleclibelle = ecoleclibelle;
     }
 }

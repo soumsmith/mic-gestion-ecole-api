@@ -1,4 +1,4 @@
-package com.vieecoles.ressource.steph.ressources;
+package com.vieecoles.steph.ressources;
 
 public class EleveResource {
 

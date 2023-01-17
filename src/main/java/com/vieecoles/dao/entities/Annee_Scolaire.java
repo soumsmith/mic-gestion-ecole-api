@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "annee_scolaire")
-public class AnneeScolaire extends PanacheEntityBase {
+public class Annee_Scolaire extends PanacheEntityBase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
  private  Long   annee_scolaireid ;
@@ -14,7 +14,7 @@ public class AnneeScolaire extends PanacheEntityBase {
  private  String   annee_scolaire_code ;
  private  String annee_scolaire_visible ;
 
-    public AnneeScolaire() {
+    public Annee_Scolaire() {
     }
 
     @Override

@@ -4,101 +4,112 @@ package com.vieecoles.projection;
 import java.time.LocalDate;
 
 
-public class personnelSelect {
+public class MessageSelect {
 
-    private Long  personnelid ;
-   private  String personnelcode;
-    private  String personnelnom;
-    private  String personnelprenom;
-    private LocalDate personneldatenaissance;
-    private  String personnel_lieunaissance;
-    private  String type_personnel_liblle ;
-    private  String personnelStatut_liblle ;
-    private  String fonction_liblle ;
+    private Long  message_personnel_id ;
+    private  String message_personnel_emetteur;
+    private  String message_personnel_sujet;
+    private  String message_personnel_message;
+    private  LocalDate message_personnel_date ;
+    private String sous_attent_personn_nom  ;
+    private String sous_attent_personn_prenom ;
+    private String fullName ;
 
-
-
-    public Long getPersonnelid() {
-        return personnelid;
+    public MessageSelect() {
     }
 
-    public void setPersonnelid(Long personnelid) {
-        this.personnelid = personnelid;
+    public MessageSelect(Long message_personnel_id,
+                         String message_personnel_emetteur,
+                         String message_personnel_sujet,
+                         String message_personnel_message,
+                         LocalDate message_personnel_date,
+                         String sous_attent_personn_nom,
+                         String sous_attent_personn_prenom,
+                         String fullName) {
+        this.message_personnel_id = message_personnel_id;
+        this.message_personnel_emetteur = message_personnel_emetteur;
+        this.message_personnel_sujet = message_personnel_sujet;
+        this.message_personnel_message = message_personnel_message;
+        this.message_personnel_date = message_personnel_date;
+        this.sous_attent_personn_nom = sous_attent_personn_nom;
+        this.sous_attent_personn_prenom = sous_attent_personn_prenom;
+        this.fullName=fullName;
     }
 
-    public String getPersonnelcode() {
-        return personnelcode;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setPersonnelcode(String personnelcode) {
-        this.personnelcode = personnelcode;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
-    public String getPersonnelnom() {
-        return personnelnom;
+    public Long getMessage_personnel_id() {
+        return message_personnel_id;
     }
 
-    public void setPersonnelnom(String personnelnom) {
-        this.personnelnom = personnelnom;
+    public void setMessage_personnel_id(Long message_personnel_id) {
+        this.message_personnel_id = message_personnel_id;
     }
 
-    public String getPersonnelprenom() {
-        return personnelprenom;
+    public String getMessage_personnel_emetteur() {
+        return message_personnel_emetteur;
     }
 
-    public void setPersonnelprenom(String personnelprenom) {
-        this.personnelprenom = personnelprenom;
+    public void setMessage_personnel_emetteur(String message_personnel_emetteur) {
+        this.message_personnel_emetteur = message_personnel_emetteur;
     }
 
-    public LocalDate getPersonneldatenaissance() {
-        return personneldatenaissance;
+    public String getMessage_personnel_sujet() {
+        return message_personnel_sujet;
     }
 
-    public void setPersonneldatenaissance(LocalDate personneldatenaissance) {
-        this.personneldatenaissance = personneldatenaissance;
+    public void setMessage_personnel_sujet(String message_personnel_sujet) {
+        this.message_personnel_sujet = message_personnel_sujet;
     }
 
-    public String getPersonnel_lieunaissance() {
-        return personnel_lieunaissance;
+    public String getMessage_personnel_message() {
+        return message_personnel_message;
     }
 
-    public void setPersonnel_lieunaissance(String personnel_lieunaissance) {
-        this.personnel_lieunaissance = personnel_lieunaissance;
+    public void setMessage_personnel_message(String message_personnel_message) {
+        this.message_personnel_message = message_personnel_message;
     }
 
-    public String getType_personnel_liblle() {
-        return type_personnel_liblle;
+    public LocalDate getMessage_personnel_date() {
+        return message_personnel_date;
     }
 
-    public void setType_personnel_liblle(String type_personnel_liblle) {
-        this.type_personnel_liblle = type_personnel_liblle;
+    public void setMessage_personnel_date(LocalDate message_personnel_date) {
+        this.message_personnel_date = message_personnel_date;
     }
 
-    public String getPersonnelStatut_liblle() {
-        return personnelStatut_liblle;
+    public String getSous_attent_personn_nom() {
+        return sous_attent_personn_nom;
     }
 
-    public void setPersonnelStatut_liblle(String personnelStatut_liblle) {
-        this.personnelStatut_liblle = personnelStatut_liblle;
+    public void setSous_attent_personn_nom(String sous_attent_personn_nom) {
+        this.sous_attent_personn_nom = sous_attent_personn_nom;
     }
 
-    public String getFonction_liblle() {
-        return fonction_liblle;
+    public String getSous_attent_personn_prenom() {
+        return sous_attent_personn_prenom;
     }
 
-    public void setFonction_liblle(String fonction_liblle) {
-        this.fonction_liblle = fonction_liblle;
+    public void setSous_attent_personn_prenom(String sous_attent_personn_prenom) {
+        this.sous_attent_personn_prenom = sous_attent_personn_prenom;
     }
 
-    public personnelSelect(Long personnelid, String personnelcode, String personnelnom, String personnelprenom, LocalDate personneldatenaissance, String personnel_lieunaissance, String type_personnel_liblle, String personnelStatut_liblle, String fonction_liblle) {
-        this.personnelid = personnelid;
-        this.personnelcode = personnelcode;
-        this.personnelnom = personnelnom;
-        this.personnelprenom = personnelprenom;
-        this.personneldatenaissance = personneldatenaissance;
-        this.personnel_lieunaissance = personnel_lieunaissance;
-        this.type_personnel_liblle = type_personnel_liblle;
-        this.personnelStatut_liblle = personnelStatut_liblle;
-        this.fonction_liblle = fonction_liblle;
+    @Override
+    public String toString() {
+        return "MessageSelect{" +
+                "message_personnel_id=" + message_personnel_id +
+                ", message_personnel_emetteur='" + message_personnel_emetteur + '\'' +
+                ", message_personnel_sujet='" + message_personnel_sujet + '\'' +
+                ", message_personnel_message='" + message_personnel_message + '\'' +
+                ", message_personnel_date=" + message_personnel_date +
+                ", sous_attent_personn_nom='" + sous_attent_personn_nom + '\'' +
+                ", sous_attent_personn_prenom='" + sous_attent_personn_prenom + '\'' +
+                '}';
     }
 }

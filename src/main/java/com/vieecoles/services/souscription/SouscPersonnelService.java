@@ -1,13 +1,20 @@
-package com.vieecoles.services.personnels;
+package com.vieecoles.services.souscription;
 
-import com.vieecoles.dto.EleveDto;
-import com.vieecoles.dto.ecoleDto;
-import com.vieecoles.dto.personnelDto;
-import com.vieecoles.entities.*;
-import com.vieecoles.entities.operations.eleve;
-import com.vieecoles.entities.operations.personnel;
-import com.vieecoles.projection.personnelSelect;
-import com.vieecoles.services.eleves.InscriptionService;
+import com.vieecoles.dao.entities.utilisateur;
+import com.vieecoles.dto.CreerCompteUtilsateurDto;
+import com.vieecoles.dto.sous_attent_personnDto;
+import com.vieecoles.dto.souscriptionValidationDto;
+import com.vieecoles.dto.souscriptionValidationFondatDto;
+import com.vieecoles.services.domaineFormationService;
+import com.vieecoles.services.domaineService;
+import com.vieecoles.services.profilService;
+import com.vieecoles.services.connexion.connexionService;
+import com.vieecoles.dao.entities.domaine_formation;
+import com.vieecoles.dao.entities.fonction;
+import com.vieecoles.dao.entities.niveau_etude;
+import com.vieecoles.dao.entities.operations.ecole;
+import com.vieecoles.dao.entities.operations.personnel;
+import com.vieecoles.dao.entities.operations.sous_attent_personn;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -15,85 +22,340 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
-import javax.ws.rs.NotFoundException;
-import java.util.ArrayList;
+import javax.ws.rs.core.Response;
+import java.io.*;
+import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Arrays;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.List;
 
 @ApplicationScoped
-public class PersonnelService implements PanacheRepositoryBase<personnel, Long> {
+public class SouscPersonnelService implements PanacheRepositoryBase<sous_attent_personn, Long> {
     @Inject
     EntityManager em;
+   
+    @Inject
+    connexionService conServ ;
+    @Inject
+    profilService profilServ ;
+
+    @Inject
+    domaineFormationService domServ ;
+    
+
+
 
 @Transactional
-   public String   CreerPersonnel(personnelDto personnelDto) {
-    type_personnel mytype_personnel= new type_personnel() ;
-    personnel_status mypersonnel_status = new personnel_status() ;
-    personnel myPersonel = new personnel() ;
-   fonction myFonction= new fonction() ;
-    myFonction= fonction.findById(personnelDto.getIdentifiant_fonction()) ;
-    mytype_personnel = type_personnel.findById(personnelDto.getIdentifiant_type_personnel()) ;
+   public String   CreerSousCriperson(sous_attent_personnDto souscriPersonn) throws IOException, SQLException {
+    sous_attent_personn  mysouscripPersonn1 = new sous_attent_personn() ;
+    mysouscripPersonn1= getSouscripByEmail(souscriPersonn.getSous_attent_personn_email()) ;
+    if (mysouscripPersonn1!=null) {
+        return  "EXISTE_DEJA !";
+    } else {
 
-    mypersonnel_status= personnel_status.findById(personnelDto.getIdentifiant_personnelStatut()) ;
+        niveau_etude myNiveauEtude = new niveau_etude() ;
+        domaine_formation myDomaineFormation = new domaine_formation() ;
+        sous_attent_personn  mysouscripPersonn = new sous_attent_personn() ;
+        fonction myFonction = new fonction() ;
+        myNiveauEtude= niveau_etude.findById(souscriPersonn.getNiveau_etudeIdentifiant()) ;
+        myDomaineFormation = domaine_formation.findById(souscriPersonn.getIdentifiantdomaine_formation());
+        myFonction = fonction.findById(souscriPersonn.getFonctionidentifiant());
+        mysouscripPersonn.setFonction(myFonction);
+        mysouscripPersonn.setType_autorisation_idtype_autorisationid(souscriPersonn.getType_autorisation_idtype_autorisationid());
+        mysouscripPersonn.setNiveau_etude(myNiveauEtude);
+        mysouscripPersonn.setDomaine_formation(myDomaineFormation);
+        mysouscripPersonn.setSous_attent_personn_date_naissance(souscriPersonn.getSous_attent_personn_date_naissance());
+        mysouscripPersonn.setSous_attent_personn_diplome_recent(souscriPersonn.getSous_attent_personn_diplome_recent());
+        mysouscripPersonn.setSous_attent_personn_email(souscriPersonn.getSous_attent_personn_email());
+        mysouscripPersonn.setSous_attent_personn_lien_cv(souscriPersonn.getSous_attent_personn_lien_cv());
+        mysouscripPersonn.setSous_attent_personn_nom(souscriPersonn.getSous_attent_personn_nom());
+        mysouscripPersonn.setSous_attent_personn_prenom(souscriPersonn.getSous_attent_personn_prenom());
+        mysouscripPersonn.setSous_attent_personn_sexe(souscriPersonn.getSous_attent_personn_sexe());
+        mysouscripPersonn.setSous_attent_personn_contact(souscriPersonn.getSous_attent_personn_contact());
+        mysouscripPersonn.setSous_attent_personn_lien_autorisation(souscriPersonn.getSous_attent_personn_lien_autorisation());
+        mysouscripPersonn.setSous_attent_personn_lien_piece(souscriPersonn.getSous_attent_personn_lien_piece());
+        mysouscripPersonn.setSous_attent_personn_statut("EN ATTENTE");
+        mysouscripPersonn.setSous_attent_personn_date_creation(LocalDateTime.now());
+        mysouscripPersonn.setSous_attent_personn_nbre_annee_experience(souscriPersonn.getSous_attent_personn_nbre_annee_experience());
+        mysouscripPersonn.persist();
+        return  "Demande créée avec succes !";
+    }
 
-    myPersonel.setPersonnel_status(mypersonnel_status);
-    myPersonel.setFonction(myFonction);
-    myPersonel.setType_personnel(mytype_personnel);
-    myPersonel.setPersonnel_lieunaissance(personnelDto.getPersonnel_lieunaissance());
-    myPersonel.setPersonnelcode(personnelDto.getPersonnelcode());
-    myPersonel.setPersonnelnom(personnelDto.getPersonnelnom());
-    myPersonel.setPersonnelprenom(personnelDto.getPersonnelprenom());
-    myPersonel.setPersonneldatenaissance(personnelDto.getPersonneldatenaissance());
-    myPersonel.persist();
-      return  myPersonel.getPersonnelcode() ;
+          }
+
+          public  String CreerSouscripCompteUtilisateur(sous_attent_personnDto souscriPersonn) throws SQLException, IOException {
+           String messageRetour= null;
+              messageRetour = CreerSousCriperson(souscriPersonn) ;
+
+              if (messageRetour.equals("Demande créée avec succes !")) {
+                  sous_attent_personn  mysouscripPersonn1 = new sous_attent_personn() ;
+                  mysouscripPersonn1= getSouscripByEmail(souscriPersonn.getSous_attent_personn_email()) ;
+                  Long idsouscripteur = mysouscripPersonn1.getSous_attent_personnid() ;
+                  CreerCompteUtilsateurDto creerCompte = new CreerCompteUtilsateurDto() ;
+                  creerCompte.setUtilisateur_mot_de_passe(souscriPersonn.getSous_attent_personn_password());
+                  creerCompte.setSous_attent_personn_sous_attent_personnid(idsouscripteur);
+                  creerCompte.setUtilisateu_email(souscriPersonn.getSous_attent_personn_email());
+                  messageRetour = creerCompteUtilisateur(creerCompte) ;
+
+              } else if (messageRetour.equals("EXISTE_DEJA !")){
+                  messageRetour ="EXISTE_DEJA !" ;
+              }
+
+    return  messageRetour ;
           }
 
 
-          public  List<personnelSelect> getPersonnels(){
-              TypedQuery<personnelSelect> q =   em.createQuery("select new com.vieecoles.projection.personnelSelect(o.personnelid, o.personnelcode, o.personnelnom, o.personnelprenom, o.personneldatenaissance, o.personnel_lieunaissance, t.type_personnellibelle, s.personnel_statulibelle, f.fonctionlibelle)  from personnel o  join  o.personnel_status s join   o.type_personnel t join  o.fonction f",personnelSelect.class) ;
-              List<personnelSelect> personnelSelect = q.getResultList();
-              return personnelSelect ;
+
+
+       @Transactional
+          public String  creerCompteUtilisateur(CreerCompteUtilsateurDto creerCompte){
+
+           utilisateur myNewInser = new utilisateur() ;
+           myNewInser.setUtilisateu_email(creerCompte.getUtilisateu_email());
+           myNewInser.setSous_attent_personn_sous_attent_personnid(creerCompte.getSous_attent_personn_sous_attent_personnid());
+           myNewInser.setUtilisateur_mot_de_passe(creerCompte.getUtilisateur_mot_de_passe());
+           myNewInser.persist();
+           return  "Demande créée avec succes !";
+
           }
 
-    public  List<personnel> getAllPersonnels(){
-    return personnel.listAll() ;
+   public  List<sous_attent_personn> findAllSouscriptionAvaliderDto(String status ){
+        TypedQuery<sous_attent_personn> q = (TypedQuery<sous_attent_personn>) em.createQuery( "SELECT  o from sous_attent_personn o join o.domaine_formation  d join o.niveau_etude n join o.fonction where o.sous_attent_personn_statut=:status  ");
+        List<sous_attent_personn> listSouscriptionAvaliderDto = q.setParameter("status" ,status)
+                .setParameter("status" ,status).
+                getResultList();
+        return  listSouscriptionAvaliderDto;
+    } 
+
+    public  List<sous_attent_personn> findAllSouscriptionAvaliderDtoFondateur(String status,String fonction ){
+        TypedQuery<sous_attent_personn> q = (TypedQuery<sous_attent_personn>) em.createQuery( "SELECT  o from sous_attent_personn o join o.domaine_formation  d join o.niveau_etude n join o.fonction f where o.sous_attent_personn_statut=:status and f.fonctionlibelle=:fonction  ");
+        List<sous_attent_personn> listSouscriptionAvaliderDto = q.setParameter("status" ,status)
+                .setParameter("status" ,status)
+                .setParameter("fonction" ,fonction).
+                getResultList();
+        return  listSouscriptionAvaliderDto;
+    }
+
+
+
+/*     public  List<sous_attent_personn> findAllSouscriptionAvaliderDto(String status ){
+        TypedQuery<sous_attent_personn> q = (TypedQuery<sous_attent_personn>) em.createQuery( "SELECT  o from sous_attent_personn o  where o.sous_attent_personn_statut=:status  ");
+        List<sous_attent_personn> listSouscriptionAvaliderDto = q.setParameter("status" ,status)
+                .setParameter("status" ,status).
+                getResultList();
+        return  listSouscriptionAvaliderDto;
+    } */
+
+
+
+
+    public  List<personnel> findAllPersonneParEcole(Long idEcole ){
+        TypedQuery<personnel> q = (TypedQuery<personnel>) em.createQuery( "SELECT  o from personnel o join o.domaine_formation_domaine_formationid  d join o.niveau_etude n join o.fonction where o.ecole.ecoleid=:idEcole  ");
+        List<personnel> listSouscriptionAvaliderDto = q.setParameter("idEcole" ,idEcole).
+                getResultList();
+        return  listSouscriptionAvaliderDto;
+    }
+
+    public  sous_attent_personn findPersonnelById(Long idPersonnel ){
+        TypedQuery<sous_attent_personn> q = (TypedQuery<sous_attent_personn>) em.createQuery( "SELECT  o from sous_attent_personn o  where o.sous_attent_personnid=:idPersonnel  ");
+        sous_attent_personn listSouscriptionAvaliderDto = q.setParameter("idPersonnel" ,idPersonnel)
+               .getSingleResult();
+
+        return  listSouscriptionAvaliderDto;
+    }
+
+   /*  public  sous_attent_personn findPersonnelById(Long idPersonnel ){
+        TypedQuery<sous_attent_personn> q = (TypedQuery<sous_attent_personn>) em.createQuery( "SELECT  o from sous_attent_personn o join o.domaine_formation  d join o.niveau_etude n join o.fonction where o.sous_attent_personnid=:idPersonnel  ");
+        sous_attent_personn listSouscriptionAvaliderDto = q.setParameter("idPersonnel" ,idPersonnel)
+               .getSingleResult();
+
+        return  listSouscriptionAvaliderDto;
+    } */
+
+     public String  valideCreerCompteFondateur(souscriptionValidationFondatDto mysouscription) {
+        String MessageRetour =null ;
+        // valider soucripValider
+        validerSouscriptionFond(mysouscription) ;
+        //recruter fondateur
+        personnel PersonnCreer = new personnel() ;
+        PersonnCreer =recruterUnFondateur(mysouscription.getIdEcole(), mysouscription.getIdsouscrip()) ;
+        //creer compte fondateur
+        MessageRetour= conServ.affecterProfilFondateur(PersonnCreer.getPersonnelid(), mysouscription.getDatefin(), mysouscription.getIdEcole(), mysouscription.getProfilId());
+      return MessageRetour ;
+     }
+
+     
+     @Transactional
+     public personnel  recruterUnFondateur(Long idEcole ,Long sous_attentId){
+       personnel PersonnCreer = new personnel() ;
+     sous_attent_personn sous_attent = new sous_attent_personn() ;
+     sous_attent = sous_attent_personn.findById(sous_attentId) ;
+      personnel person = new personnel() ;
+         personnel person2 = new personnel() ;
+         ecole myecole= new ecole() ;
+     myecole= ecole.findById(idEcole) ;
+         niveau_etude myNive= new niveau_etude() ;
+         domaine_formation myDom = new domaine_formation();
+         person= verifExistancePersonnel(sous_attent.getSous_attent_personnid() ,idEcole) ;
+         sous_attent_personn  mysous= new sous_attent_personn() ;
+         String messageRetour  ;
+         if (person==null){
+             person2.setPersonnelnom(sous_attent.getSous_attent_personn_nom());
+             person2.setPersonnelprenom(sous_attent.getSous_attent_personn_prenom());
+             person2.setPersonnel_contact(sous_attent.getSous_attent_personn_contact());
+             person2.setPersonneldatenaissance(sous_attent.getSous_attent_personn_date_naissance());
+             person2.setSous_attent_personn(sous_attent);
+             person2.setFonction(sous_attent.getFonction());
+             person2.setEcole(myecole);
+             //Civilite mycivilite= Civilite.valueOf(sous_attent.getSous_attent_personn_sexe());
+             //person2.setCivilite(mycivilite);
+             myDom= domServ.searchDomFon("Education");
+             person2.setDomaine_formation_domaine_formationid(sous_attent.getDomaine_formation());
+             person2.setNiveau_etude(sous_attent.getNiveau_etude());
+             person2.persist();
+             PersonnCreer= person2;
+             
+         } else {
+            PersonnCreer = null;
+         }
+ 
+         return  PersonnCreer ;
+     }
+
+@Transactional
+    public String  recruterUnAgent(Long idEcole ,Long sous_attentId){
+    sous_attent_personn sous_attent = new sous_attent_personn() ;
+    sous_attent = sous_attent_personn.findById(sous_attentId) ;
+     personnel person = new personnel() ;
+        personnel person2 = new personnel() ;
+        ecole myecole= new ecole() ;
+    myecole= ecole.findById(idEcole) ;
+        niveau_etude myNive= new niveau_etude() ;
+        domaine_formation myDom = new domaine_formation();
+        person= verifExistancePersonnel(sous_attent.getSous_attent_personnid() ,idEcole) ;
+        sous_attent_personn  mysous= new sous_attent_personn() ;
+        String messageRetour  ;
+        if (person==null){
+            person2.setPersonnelnom(sous_attent.getSous_attent_personn_nom());
+            person2.setPersonnelprenom(sous_attent.getSous_attent_personn_prenom());
+            person2.setPersonnel_contact(sous_attent.getSous_attent_personn_contact());
+            person2.setPersonneldatenaissance(sous_attent.getSous_attent_personn_date_naissance());
+            person2.setSous_attent_personn(sous_attent);
+            person2.setFonction(sous_attent.getFonction());
+            person2.setEcole(myecole);
+            //Civilite mycivilite= Civilite.valueOf(sous_attent.getSous_attent_personn_sexe());
+            //person2.setCivilite(mycivilite);
+            person2.setDomaine_formation_domaine_formationid(sous_attent.getDomaine_formation());
+            person2.setNiveau_etude(sous_attent.getNiveau_etude());
+            person2.persist();
+            messageRetour ="ENREGISTREMENT EFFECTUE AVEC SUCCES";
+        } else {
+            messageRetour = "CE PERSONNEL EXISTE DEJA" ;
+        }
+
+        return  messageRetour ;
+    }
+@Transactional
+    public personnel verifExistancePersonnel(Long idPerson , Long idEcole){
+    personnel mysous= new personnel() ;
+    try {
+        mysous= (personnel) em.createQuery(" select o from personnel o join o.sous_attent_personn s join o.ecole e where e.ecoleid  =:idEcole and s.sous_attent_personnid=: idPerson  "
+                        ,personnel.class )
+                .setParameter("idEcole",idEcole)
+                .setParameter("idPerson",idPerson)
+                .getSingleResult();
+    } catch (Exception e) {
+        mysous= null ;
+    }
+       return  mysous ;
+    }
+
+    @Transactional
+    public void validerSouscriptionFond(souscriptionValidationFondatDto mysouscription){
+        sous_attent_personn  mysous= new sous_attent_personn() ;
+        mysous= (sous_attent_personn) em.createQuery(" select e from sous_attent_personn e   where e.sous_attent_personnid =:souscripId "
+                       ,sous_attent_personn.class )
+                .setParameter("souscripId",mysouscription.getIdsouscrip())
+                .getSingleResult();
+        mysous.setSous_attent_personn_date_traitement(LocalDateTime.now());
+        mysous.setSous_attent_personn_motifrefus(mysouscription.getMessageRefus());
+        mysous.setSous_attent_personn_statut(mysouscription.getStatuts());
     }
 
 
 
 
-    public  personnel getPersonnelsByID(Long identifiantPersonnel){
-        return   personnel.findById(identifiantPersonnel) ;
+@Transactional
+    public void validerSouscription(souscriptionValidationDto mysouscription){
+        sous_attent_personn  mysous= new sous_attent_personn() ;
+        mysous= (sous_attent_personn) em.createQuery(" select e from sous_attent_personn e   where e.sous_attent_personnid =:souscripId "
+                       ,sous_attent_personn.class )
+                .setParameter("souscripId",mysouscription.getIdsouscrip())
+                .getSingleResult();
+        mysous.setSous_attent_personn_date_traitement(LocalDateTime.now());
+        mysous.setSous_attent_personn_motifrefus(mysouscription.getMessageRefus());
+        mysous.setSous_attent_personn_statut(mysouscription.getStatuts());
+    }
+
+
+
+
+
+    public  List<sous_attent_personn> getAllSouscriptionPersonnels(){
+    return sous_attent_personn.listAll() ;
+    }
+
+    public  sous_attent_personn getSouscripByEmail(String email){
+     try {
+         return (sous_attent_personn) em.createQuery("select o from sous_attent_personn o where o.sous_attent_personn_email =:email")
+                 .setParameter("email",email)
+                 .getSingleResult();
+     } catch (Exception e) {
+         return  null;
+     }
+
+
+    }
+
+
+
+    public  sous_attent_personn getSouscPersonnelByID(Long identifiant){
+        return   sous_attent_personn.findById(identifiant) ;
     }
 
 
     @Transactional
-    public personnel   modifierPersonnel(personnelDto personnelDto) {
-        type_personnel mytype_personnel= new type_personnel() ;
-        personnel_status mypersonnel_status = new personnel_status() ;
-        personnel myPersonel = new personnel() ;
-        mytype_personnel = type_personnel.findById(personnelDto.getIdentifiant_type_personnel()) ;
-        mypersonnel_status= personnel_status.findById(personnelDto.getIdentifiant_personnelStatut()) ;
-       fonction myFonction = fonction.findById(personnelDto.getIdentifiant_fonction());
-        myPersonel = personnel.findById(personnelDto.getPersonnelid()) ;
+    public sous_attent_personn   modifierSousCriptionPersonnel(sous_attent_personnDto souscPersonn) {
+        niveau_etude  myNiveauEtude = new niveau_etude() ;
+        domaine_formation myDomaineFormation = new domaine_formation() ;
+        sous_attent_personn  mysouscripPersonn = new sous_attent_personn() ;
 
-        myPersonel.setPersonnel_status(mypersonnel_status);
-        myPersonel.setType_personnel(mytype_personnel);
-        myPersonel.setFonction(myFonction);
-        myPersonel.setPersonnel_lieunaissance(personnelDto.getPersonnel_lieunaissance());
-        myPersonel.setPersonnelcode(personnelDto.getPersonnelcode());
-        myPersonel.setPersonnelnom(personnelDto.getPersonnelnom());
-        myPersonel.setPersonnelprenom(personnelDto.getPersonnelprenom());
-        myPersonel.setPersonneldatenaissance(personnelDto.getPersonneldatenaissance());
+        myNiveauEtude= niveau_etude.findById(souscPersonn.getNiveau_etudeIdentifiant()) ;
+        myDomaineFormation = domaine_formation.findById(souscPersonn.getIdentifiantdomaine_formation());
 
-        return  myPersonel ;
+        mysouscripPersonn.setNiveau_etude(myNiveauEtude);
+        mysouscripPersonn.setDomaine_formation(myDomaineFormation);
+        mysouscripPersonn.setSous_attent_personn_date_naissance(souscPersonn.getSous_attent_personn_date_naissance());
+        mysouscripPersonn.setSous_attent_personn_diplome_recent(souscPersonn.getSous_attent_personn_diplome_recent());
+        mysouscripPersonn.setSous_attent_personn_email(souscPersonn.getSous_attent_personn_email());
+        mysouscripPersonn.setSous_attent_personn_lien_cv(souscPersonn.getSous_attent_personn_lien_cv());
+        mysouscripPersonn.setSous_attent_personn_nom(souscPersonn.getSous_attent_personn_nom());
+        mysouscripPersonn.setSous_attent_personn_prenom(souscPersonn.getSous_attent_personn_prenom());
+        mysouscripPersonn.setSous_attent_personn_sexe(souscPersonn.getSous_attent_personn_sexe());
+        mysouscripPersonn.setSous_attent_personn_nbre_annee_experience(souscPersonn.getSous_attent_personn_nbre_annee_experience());
+        return  mysouscripPersonn ;
     }
 
     @Transactional
-    public void    deletePersonnel(Long identifiantPersonnel) {
-
-        personnel myPersonel = new personnel() ;
-        myPersonel = personnel.findById(identifiantPersonnel) ;
+    public void    deleteSousCriptionPersonnel(Long identifiant) {
+        sous_attent_personn myPersonel = new sous_attent_personn() ;
+        myPersonel = sous_attent_personn.findById(identifiant) ;
 
         try{
             myPersonel.delete();
@@ -105,22 +367,13 @@ public class PersonnelService implements PanacheRepositoryBase<personnel, Long> 
 
 
 
-
-
-
-
-
-
-
-
-    public  String getElevCode(String tenant) {
+    public  String getSouscrCode(String tenant) {
         Calendar now = Calendar.getInstance();
         int year = now.get(Calendar.YEAR);
         String yearInString = String.valueOf(year);
 
-        Long  maxrecor= (Long) em.createQuery("select max(o.eleveid)  from eleve o  where o.tenant.tenantid =: tenant")
-                .setParameter("tenant", tenant)
-                .getSingleResult();
+        Long  maxrecor= (Long) em.createQuery("select max(o.sous_attent_personnid)  from sous_attent_personn o ")
+               .getSingleResult();
 
         System.out.println("maxrecor "+maxrecor);
 
@@ -130,80 +383,42 @@ public class PersonnelService implements PanacheRepositoryBase<personnel, Long> 
         return eleveCode ;
     }
 
+    public Response convertFileInp(String path) throws IOException {
+        StringBuilder content = new StringBuilder();
+        // Create file object and specify file path
+        File file = new File(path);
+        byte[] arr = new byte[(int)file.length()];
 
+        final InputStream in = new ByteArrayInputStream(arr);
 
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
 
+        int data = in.read();
 
+        while (data >= 0) {
 
+            out.write((char) data);
 
+            data = in.read();
 
-
-    public  List<eleve> listEleve(){
-
-        return    em.createQuery("select o from eleve o join o.parents p")
-
-                .getResultList();
-
-    }
-
-  
-
-
-
-
-
-   public  eleve updatEeleve(EleveDto elev,Long EleveID){
-       eleve entity = eleve.findById(EleveID);
-       if(entity == null) {
-           throw new NotFoundException();
-       }
-       tenant mytenant = (tenant) em.createQuery("select o from tenant o where   o.tenantid=:tenant ")
-               .setParameter("tenant",elev.getIdTenant())
-               .getSingleResult() ;
-
-       List<Parent> parentsList= new ArrayList<>() ;
-       // System.out.println( "Longueur"+ eleveDto.getParentList().size());
-       for(int i = 0 ; i < elev.getParentList().size() ; i++)
-       {
-           Parent myParent;
-           myParent= Parent.findById(elev.getParentList().get(i)) ;
-           parentsList.add(myParent) ;
-
-       }
-
-       entity.setEleve_mail(elev.getEleve_mail());
-       entity.setEleveadresse(elev.getEleveadresse());
-       entity.setElevecode(elev.getElevecode());
-       entity.setEleve_numero_extrait_naiss(elev.getEleve_numero_extrait_naiss());
-       entity.setElevedate_etabli_extrait_naiss(elev.getElevedate_etabli_extrait_naiss());
-       entity.setElevelieu_etabliss_etrait_naissance(elev.getElevelieu_etabliss_etrait_naissance());
-       entity.setElevecellulaire(elev.getElevecellulaire());
-       entity.setElevedate_naissance(elev.getElevedate_naissance());
-       entity.setElevelieu_naissance(elev.getElevelieu_naissance());
-       entity.setElevenom(elev.getElevenom());
-       entity.setTenant(mytenant);
-       entity.setEleveSexe(elev.getEleveSexe());
-       entity.setParents(parentsList);
-       entity.setElevematricule_national(elev.getElevematricule_national());
-       entity.setEleveprenom(elev.getEleveprenom());
-        return  entity;
-   }
-
-    public void  deleteeleve(long zonId){
-        eleve entity = eleve.findById(zonId);
-        if(entity == null) {
-            throw new NotFoundException();
         }
-        entity.delete();
-    }
+        out.flush();
 
-   public  List<eleve> search(String Libelle){
-       return   em.createQuery("select o from objet o where  o.objetlibelle like CONCAT('%',:Libelle ,'%') ")
-               .setParameter("Libelle",Libelle).getResultList();
-   }
+        Response.ResponseBuilder builder = Response.ok(out.toByteArray());
 
-    public  long count(){
-        return  cycle.count();
+
+        builder.header("Content-Disposition", "attachment; filename=" + "Soum");
+        Response response = null;
+
+        response = builder.build();
+
+
+
+
+
+
+        return  response;
+
     }
 
 

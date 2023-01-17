@@ -1,6 +1,6 @@
-package com.vieecoles.ressource.steph.services;
+package com.vieecoles.steph.services;
 
-import com.vieecoles.entities.Periode;
+import com.vieecoles.steph.entities.Periode;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.util.ArrayList;

@@ -1,5 +1,8 @@
-package com.vieecoles.services;
+package com.vieecoles.steph.services;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -12,15 +15,16 @@ import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 
 import com.google.gson.Gson;
-import com.vieecoles.dto.MoyenneEleveDto;
-import com.vieecoles.entities.Bulletin;
-import com.vieecoles.entities.Constants;
-import com.vieecoles.entities.DetailBulletin;
-import com.vieecoles.entities.Inscription;
-import com.vieecoles.entities.Matiere;
-import com.vieecoles.entities.NoteBulletin;
-import com.vieecoles.entities.Notes;
-import com.vieecoles.util.CommonUtils;
+import com.vieecoles.steph.dto.MoyenneEleveDto;
+import com.vieecoles.steph.entities.AnneeScolaire;
+import com.vieecoles.steph.entities.Bulletin;
+import com.vieecoles.steph.entities.Constants;
+import com.vieecoles.steph.entities.DetailBulletin;
+import com.vieecoles.steph.entities.Inscription;
+import com.vieecoles.steph.entities.Matiere;
+import com.vieecoles.steph.entities.NoteBulletin;
+import com.vieecoles.steph.entities.Notes;
+import com.vieecoles.steph.util.CommonUtils;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 import io.quarkus.panache.common.Parameters;
@@ -33,6 +37,9 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 	
 	@Inject
 	InscriptionService inscriptionService;
+	
+	@Inject
+	ClasseEleveService classeEleveService;
 
 	Logger logger = Logger.getLogger(BulletinService.class.getName());
 	Gson g = new Gson();
@@ -96,7 +103,9 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 		Bulletin bulletin;
 		List<NoteBulletin> notesBulletin;
 		NoteBulletin noteBulletin;
-		
+		List<Double> moyGenElevesList = new ArrayList<Double>();
+		List<String> bulletinIdList = new ArrayList<String>();
+				
 		//logger.info(g.toJson(moyenneParEleve));
 
 		for (MoyenneEleveDto me : moyenneParEleve) {
@@ -104,22 +113,19 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 					String.format("%s  %s  %s ", me.getClasse().getLibelle(), me.getMoyenne(), me.getAppreciation()));
 			
 			Inscription infosInscriptionsEleve = inscriptionService.getByEleveAndAnnee(me.getEleve().getId(),Long.parseLong(annee));
+			//Collecter toutes les moyennes des élèves pour déterminer la moyenne max, min et avg
+			moyGenElevesList.add(me.getMoyenne());
 			
 			bulletin = new Bulletin();
 			bulletin = convert(me);
 				// Paramètres de la variable de session
-			bulletin.setAnneeId(1L);
-			bulletin.setAnneeLibelle("2021 - 2022");
+			bulletin.setAnneeId(Long.parseLong(annee));
+			AnneeScolaire anDb = AnneeScolaire.findById(Long.parseLong(annee));		
+			bulletin.setAnneeLibelle(anDb.getLibelle());
 			
 			// A la fin d'une annee scolaire
 //			bulletin.setMoyAn(null);
 //			bulletin.setRangAn(null);
-
-			//Mettre en place les fonctions permettant d obtenir les infos à set			
-//			bulletin.setMoyAvg(null);
-//			bulletin.setMoyMax(null);
-//			bulletin.setMoyMin(null);
-//			bulletin.setMoyGeneral(null);
 			
 			if (infosInscriptionsEleve != null) {
 				bulletin.setAffecte(infosInscriptionsEleve.getAfecte());
@@ -127,15 +133,21 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 				bulletin.setBoursier(infosInscriptionsEleve.getBoursier());
 			}
 			
-			
-			
-			Bulletin bltDb = Bulletin.find("matricule = :matricule and classeId = :classe and periodeId= :periode and anneeId= :annee", Parameters.with("matricule", bulletin.getMatricule()).and("classe", Long.parseLong(classe)).and("periode", Long.parseLong(periode) ).and("annee", Long.parseLong(annee))).singleResult();
+			Bulletin bltDb = null;
+			try {
+				bltDb = Bulletin.find("matricule = :matricule and classeId = :classe and periodeId= :periode and anneeId= :annee", Parameters.with("matricule", bulletin.getMatricule()).and("classe", Long.parseLong(classe)).and("periode", Long.parseLong(periode) ).and("annee", Long.parseLong(annee))).singleResult();
+			}catch (NoResultException e) {
+				logger.info("Aucun bulletin trouvé dans la bd");
+			}
 //			logger.info("bulletin find ::: %s "+ g.toJson(bltDb));
 			if (bltDb!= null && bltDb.getId() != null) {
 				bulletin.setId(bltDb.getId());
+				bulletinIdList.add(bltDb.getId());
 				update(bulletin);
-			}else
+			}else {
 				save(bulletin);
+				bulletinIdList.add(bulletin.getId());
+			}
 			
 			
 			Double moyCoef = (double) 0;
@@ -181,17 +193,42 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 				}
 				UUID idNoteBul;
 				for(Notes note : entry.getValue()) {
-					logger.info("--> Creation notes");
-					noteBulletin = new NoteBulletin();
-					idNoteBul = UUID.randomUUID();
-					noteBulletin.setId(idNoteBul.toString());
-					noteBulletin.setNote(note.getNote());
-					noteBulletin.setNoteSur(note.getEvaluation().getNoteSur());
-					noteBulletin.setDetailBulletin(flag);
-					noteBulletin.persist();
+					if(note.getEvaluation().getPec() == 1) {
+						logger.info(String.format("--> Creation notes %s/%s", note.getNote(), note.getEvaluation().getNoteSur()));
+						noteBulletin = new NoteBulletin();
+						idNoteBul = UUID.randomUUID();
+						noteBulletin.setId(idNoteBul.toString());
+						noteBulletin.setNote(note.getNote());
+						noteBulletin.setNoteSur(note.getEvaluation().getNoteSur());
+						noteBulletin.setDetailBulletin(flag);
+						noteBulletin.persist();
+					}
 				}
 			}
 		}
+		
+		Double maxMoy = Collections.max(moyGenElevesList);
+		Double minMoy = Collections.min(moyGenElevesList);
+		
+		Double sumMoy = moyGenElevesList.stream().mapToDouble(a -> a).sum();
+		
+		int effectif = classeEleveService.getCountByClasseAnnee(Long.parseLong(classe), Long.parseLong(annee));
+		
+		Double avgMoy = sumMoy/(moyGenElevesList.size() != 0 ? moyGenElevesList.size() : 1);
+		
+		logger.info(String.format("Max= %s , Min = %s, Sum = %s, Avg = %s, effectif %s", maxMoy, minMoy, sumMoy, avgMoy, effectif));
+		
+		// Mise à jour des bulletins
+		bulletin = new Bulletin();
+		for(String id : bulletinIdList) {
+			bulletin = Bulletin.findById(id);
+			bulletin.setMoyMax(String.valueOf(CommonUtils.roundDouble(maxMoy, 2)));
+			bulletin.setMoyMin(String.valueOf(CommonUtils.roundDouble(minMoy, 2)));
+			bulletin.setMoyAvg(String.valueOf(CommonUtils.roundDouble(avgMoy, 2)));
+			bulletin.setEffectif(String.valueOf(effectif));
+		}
+		
+		
 		return moyenneParEleve != null? moyenneParEleve.size() : 0;
 
 	}

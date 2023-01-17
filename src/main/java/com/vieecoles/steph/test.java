@@ -1,4 +1,4 @@
-package com.vieecoles.ressource.steph;
+package com.vieecoles.steph;
 
 public class test {
 }

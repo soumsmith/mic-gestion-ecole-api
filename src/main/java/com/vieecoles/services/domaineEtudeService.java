@@ -1,6 +1,6 @@
 package com.vieecoles.services;
 
-import com.vieecoles.entities.domaine;
+import com.vieecoles.dao.entities.domaine_formation;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -10,44 +10,44 @@ import java.net.URI;
 import java.util.List;
 
 @ApplicationScoped
-public class domaineService implements PanacheRepositoryBase<domaine, Long> {
+public class domaineEtudeService implements PanacheRepositoryBase<domaine_formation, Long> {
 
-   public List<domaine> getListdomaine(){
-       return  domaine.listAll();
+   public List<domaine_formation> getListdomaine(){
+       return  domaine_formation.listAll();
    }
-   public  domaine findById(Long domaineId){
-       return domaine.findById(domaineId);
+   public  domaine_formation findById(Long domaineId){
+       return domaine_formation.findById(domaineId);
    }
 
-   public Response createdomaine(domaine dom) {
+   public Response createdomaine(domaine_formation dom) {
        dom.persist();
-       return Response.created(URI.create("/domaine/" + dom.getDomainecode())).build();
+       return Response.created(URI.create("/domaine/" + dom.getDomaine_formation_code())).build();
    }
 
-   public  domaine updatedomaine(long domaineId, domaine dom){
-       domaine entity = domaine.findById(domaineId);
+   public  domaine_formation updatedomaine(long domaineId, domaine_formation dom){
+       domaine_formation entity = domaine_formation.findById(domaineId);
        if(entity == null) {
            throw new NotFoundException();
        }
-       entity.setDomainecode(dom.getDomainecode());
-       entity.setDomainelibelle(dom.getDomainelibelle());
+       entity.setDomaine_formation_code(dom.getDomaine_formation_code());
+       entity.setDomaine_formation_libelle(dom.getDomaine_formation_libelle());
        return  entity;
    }
 
     public void  deletedomaine(long domId){
-        domaine entity = domaine.findById(domId);
+        domaine_formation entity = domaine_formation.findById(domId);
         if(entity == null) {
             throw new NotFoundException();
         }
         entity.delete();
     }
 
-   public  List<domaine> search(String domLibelle){
-       return  domaine.find("domainelibelle",domLibelle).list() ;
+   public  List<domaine_formation> search(String domLibelle){
+       return  domaine_formation.find("domainelibelle",domLibelle).list() ;
    }
 
     public  long count(){
-        return  domaine.count();
+        return  domaine_formation.count();
     }
 
 

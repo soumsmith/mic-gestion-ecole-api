@@ -1,10 +1,12 @@
 package com.vieecoles.services;
 
-import com.vieecoles.entities.fonction;
-import com.vieecoles.entities.matiere;
+import com.vieecoles.dao.entities.fonction;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Response;
 import java.net.URI;
@@ -12,9 +14,10 @@ import java.util.List;
 
 @ApplicationScoped
 public class fonctionService implements PanacheRepositoryBase<fonction, Long> {
-
+    @Inject
+    EntityManager em;
    public List<fonction> getListfonction(){
-       return  matiere.listAll();
+       return  fonction.listAll();
    }
    public  fonction findById(Long Id){
        return fonction.findById(Id);
@@ -42,7 +45,9 @@ public class fonctionService implements PanacheRepositoryBase<fonction, Long> {
         }
         entity.delete();
     }
-
+    public  fonction getFoncID(String Libelle){
+        return (fonction) fonction.find("fonctionlibelle",Libelle).singleResult();
+    }
    public  List<fonction> search(String Libelle){
        return  fonction.find("fonctionlibelle",Libelle).list() ;
    }
@@ -50,6 +55,11 @@ public class fonctionService implements PanacheRepositoryBase<fonction, Long> {
     public  long count(){
         return  fonction.count();
     }
-
+    public  List<fonction> findFonctionWithoutFondateur(String libelle ){
+        TypedQuery<fonction> q = (TypedQuery<fonction>) em.createQuery( "SELECT  o from fonction o where o.fonctionlibelle not like :libelle ");
+        List<fonction> listfonction = q.setParameter("libelle" ,libelle).
+                               getResultList();
+        return  listfonction;
+    }
 
 }

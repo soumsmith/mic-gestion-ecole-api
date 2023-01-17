@@ -22,6 +22,7 @@ public class sous_attent_personn extends PanacheEntityBase {
     private  String sous_attent_personn_lien_cv  ;
     private  String sous_attent_personncode ;
     private  String sous_attent_personn_contact ;
+    private  String sous_attent_personn_contact2 ;
     private  String sous_attent_personn_lien_piece ;
     private  String sous_attent_personn_lien_autorisation ;
    private  String sous_attent_personn_statut ;
@@ -67,6 +68,14 @@ Long type_autorisation_idtype_autorisationid ;
 
     public LocalDate getSous_attent_personn_date_naissance() {
         return sous_attent_personn_date_naissance;
+    }
+
+    public String getSous_attent_personn_contact2() {
+        return sous_attent_personn_contact2;
+    }
+
+    public void setSous_attent_personn_contact2(String sous_attent_personn_contact2) {
+        this.sous_attent_personn_contact2 = sous_attent_personn_contact2;
     }
 
     public void setSous_attent_personn_date_naissance(LocalDate sous_attent_personn_date_naissance) {

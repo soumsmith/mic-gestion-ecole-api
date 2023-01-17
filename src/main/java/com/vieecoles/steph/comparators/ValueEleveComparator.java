@@ -1,6 +1,6 @@
-package com.vieecoles.ressource.steph.comparators;
+package com.vieecoles.steph.comparators;
 
-import com.vieecoles.dto.MoyenneEleveDto;
+import com.vieecoles.steph.dto.MoyenneEleveDto;
 
 import java.util.Comparator;
 import java.util.Map;

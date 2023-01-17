@@ -1,6 +1,6 @@
 package com.vieecoles.services;
 
-import com.vieecoles.entities.personnel_status;
+import com.vieecoles.dao.entities.personnel_status;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -28,9 +28,9 @@ public class personnel_statusService implements PanacheRepositoryBase<personnel_
        personnel_status entity = personnel_status.findById(matId);
        if(entity == null) {
            throw new NotFoundException();
-       }
+      }
        entity.setPersonnel_statuscode(mat.getPersonnel_statuscode());
-       entity.setPersonnel_statuslibelle(mat.getPersonnel_statuslibelle());
+       entity.setPersonnel_statulibelle(mat.getPersonnel_statulibelle());
         return  entity;
    }
 

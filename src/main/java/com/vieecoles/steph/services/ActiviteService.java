@@ -1,8 +1,8 @@
-package com.vieecoles.ressource.steph.services;
+package com.vieecoles.steph.services;
 
 import com.google.gson.Gson;
-import com.vieecoles.entities.Activite;
-import com.vieecoles.entities.Constants;
+import com.vieecoles.steph.entities.Activite;
+import com.vieecoles.steph.entities.Constants;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -14,15 +14,14 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Logger;
+
 
 @ApplicationScoped
 public class ActiviteService implements PanacheRepositoryBase<Activite, Integer> {
 
 	@Inject
     SalleService salleService;
-
-	Logger logger = Logger.getLogger(ActiviteService.class.getName());
+	//Logger logger = Logger.getLogger(ActiviteService.class.getName());
 
 	public List<Activite> getList() {
 		try {
@@ -42,13 +41,13 @@ public class ActiviteService implements PanacheRepositoryBase<Activite, Integer>
 	 * @return
 	 */
 	public List<Activite> getListByClasseAndJour(long anneeId, long classeId, int jourId) {
-		logger.info(String.format("Annee %s - classe %s - jour %s", anneeId, classeId, jourId));
+		//logger.info(String.format("Annee %s - classe %s - jour %s", anneeId, classeId, jourId));
 		return Activite.find("classe.id = ?1 and jour.id = ?2 and statut = ?3", classeId, jourId, Constants.ACTIF)
 				.list();
 	}
 
 	public List<Activite> getListByJour(long anneeId, int jourId) {
-		logger.info(String.format("Annee %s - classe %s - jour %s",1, anneeId, jourId));
+	//	logger.info(String.format("Annee %s - classe %s - jour %s",1, anneeId, jourId));
 		return Activite.find("jour.id = ?1 and statut = ?2", jourId, Constants.ACTIF)
 				.list();
 	}
@@ -85,15 +84,15 @@ public class ActiviteService implements PanacheRepositoryBase<Activite, Integer>
 	}
 
 	public Activite findById(long id) {
-		logger.info(String.format("find by id :: %s", id));
+		//logger.info(String.format("find by id :: %s", id));
 		return Activite.findById(id);
 	}
 
 	@Transactional
 	public Response save(Activite activite) {
 		Gson gson = new Gson();
-		logger.info("persist activite ...");
-		logger.info(gson.toJson(activite));
+		//logger.info("persist activite ...");
+		//logger.info(gson.toJson(activite));
 		activite.setDateCreation(new Date());
 		activite.setDateUpdate(new Date());
 		activite.setStatut(Constants.ACTIF);
@@ -103,7 +102,7 @@ public class ActiviteService implements PanacheRepositoryBase<Activite, Integer>
 
 	@Transactional
 	public Activite update(Activite activite) {
-		logger.info("updating classe ...");
+		//logger.info("updating classe ...");
 		Activite atv = Activite.findById(activite.getId());
 		if (atv != null) {
 			atv.setClasse(activite.getClasse());
@@ -146,7 +145,7 @@ public class ActiviteService implements PanacheRepositoryBase<Activite, Integer>
 	@Transactional
 	public void delete(String id) {
 
-		logger.info("delete activite id " + id);
+		//logger.info("delete activite id " + id);
 		Activite atv = findById(Long.parseLong(id));
 //			atv.delete();
 		if (atv != null && isDeletable(atv)) {

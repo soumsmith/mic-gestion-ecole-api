@@ -1,4 +1,4 @@
-package com.vieecoles.util;
+package com.vieecoles.steph.util;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -12,7 +12,7 @@ public class CommonUtils {
 	    bd = bd.setScale(places, RoundingMode.HALF_UP);
 	    return bd.doubleValue();
 	}
-	
+
 	public static BigDecimal roundBigDecimal(BigDecimal value, int places) {
 	    if (places < 0) throw new IllegalArgumentException();
 

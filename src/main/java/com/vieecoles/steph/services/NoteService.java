@@ -1,22 +1,35 @@
-package com.vieecoles.ressource.steph.services;
+package com.vieecoles.steph.services;
 
-import com.google.gson.Gson;
-import com.vieecoles.dto.MoyenneEleveDto;
-import com.vieecoles.entities.*;
-import com.vieecoles.util.CommonUtils;
-import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
-import io.quarkus.panache.common.Parameters;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Response;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.net.URI;
-import java.util.*;
-import java.util.logging.Logger;
+
+import com.google.gson.Gson;
+import com.vieecoles.steph.dto.MoyenneEleveDto;
+import com.vieecoles.steph.entities.Classe;
+import com.vieecoles.steph.entities.ClasseEleve;
+import com.vieecoles.steph.entities.ClasseMatiere;
+import com.vieecoles.steph.entities.Eleve;
+import com.vieecoles.steph.entities.Evaluation;
+import com.vieecoles.steph.entities.Matiere;
+import com.vieecoles.steph.entities.Notes;
+import com.vieecoles.steph.util.CommonUtils;
+
+import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
+import io.quarkus.panache.common.Parameters;
 
 @ApplicationScoped
 public class NoteService implements PanacheRepositoryBase<Notes, Long> {
@@ -28,7 +41,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 	ClasseService classeService;
 
 	@Inject
-    EvaluationService evaluationService;
+	EvaluationService evaluationService;
 
 	Logger logger = Logger.getLogger(NoteService.class.getName());
 
@@ -89,7 +102,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 
 	@Transactional
 	public void handleNotes(List<Notes> noteList) {
-//	    	Gson gson = new Gson();
+	    	Gson gson = new Gson();
 		for (Notes note : noteList) {
 			if (note.getId() == 0 && note.getStatut() != null && note.getStatut().equals("M")) {
 //	    			logger.info(gson.toJson(note));
@@ -98,7 +111,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 
 			}
 			if (note.getId() != 0 && note.getStatut() != null && note.getStatut().equals("M")) {
-//	    			logger.info(gson.toJson(note));
+	    			logger.info(gson.toJson(note));
 				logger.info("--> Maj de note ...");
 				update(note);
 			}
@@ -217,7 +230,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 						/*
 						 * Mettre a jour matiereTemp si la structure de Matiere évolue
 						 */
-
+						
 						matiereTemp = new Matiere();
 						matiereTemp.setId(note.getEvaluation().getMatiere().getId());
 						matiereTemp.setCode(note.getEvaluation().getMatiere().getCode());
@@ -232,7 +245,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 						/**
 						 * ***********************************************
 						 */
-
+						
 						notesMatiereGroup.put(matiereTemp, notesTemp);
 						logger.info(String.format("%s - %s - %s", entry.getKey().getMatricule(),
 								note.getEvaluation().getMatiere(), note.getNote()));
@@ -265,12 +278,12 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 
 		Double diviser;
 		Double somme;
-
+		
 		Gson g = new Gson();
-
+		
 //		System.out.println(g.toJson(moyEleve));
 		for (MoyenneEleveDto me : moyEleve) {
-
+			
 			for (Map.Entry<Matiere, List<Notes>> entry : me.getNotesMatiereMap().entrySet()) {
 				moyenne = 0.0;
 				noteList = new ArrayList<Double>();

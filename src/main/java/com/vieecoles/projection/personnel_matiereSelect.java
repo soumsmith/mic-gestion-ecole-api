@@ -1,25 +1,21 @@
-package com.vieecoles.entities.operations;
-
-import com.vieecoles.entities.matiere;
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+package com.vieecoles.projection;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
-@Entity
-public class personnel_matiere extends PanacheEntityBase {
+public class personnel_matiereSelect  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
    private  Long   personnel_matiereid ;
+    private String  libelleMatiere ;
+    private String  nomPersonnel;
+    private String  prenomPersonnel;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "matiere_matiereid")
-    private matiere matiere ;
-
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "personnel_personnelid")
-    private personnel personnel ;
+    public personnel_matiereSelect(Long personnel_matiereid, String libelleMatiere, String nomPersonnel, String prenomPersonnel) {
+        this.personnel_matiereid = personnel_matiereid;
+        this.libelleMatiere = libelleMatiere;
+        this.nomPersonnel = nomPersonnel;
+        this.prenomPersonnel = prenomPersonnel;
+    }
 
     public Long getPersonnel_matiereid() {
         return personnel_matiereid;
@@ -29,28 +25,37 @@ public class personnel_matiere extends PanacheEntityBase {
         this.personnel_matiereid = personnel_matiereid;
     }
 
-    public com.vieecoles.entities.matiere getMatiere() {
-        return matiere;
+    public String getLibelleMatiere() {
+        return libelleMatiere;
     }
 
-    public void setMatiere(com.vieecoles.entities.matiere matiere) {
-        this.matiere = matiere;
+    public void setLibelleMatiere(String libelleMatiere) {
+        this.libelleMatiere = libelleMatiere;
     }
 
-    public com.vieecoles.entities.operations.personnel getPersonnel() {
-        return personnel;
+    public String getNomPersonnel() {
+        return nomPersonnel;
     }
 
-    public void setPersonnel(com.vieecoles.entities.operations.personnel personnel) {
-        this.personnel = personnel;
+    public void setNomPersonnel(String nomPersonnel) {
+        this.nomPersonnel = nomPersonnel;
+    }
+
+    public String getPrenomPersonnel() {
+        return prenomPersonnel;
+    }
+
+    public void setPrenomPersonnel(String prenomPersonnel) {
+        this.prenomPersonnel = prenomPersonnel;
     }
 
     @Override
     public String toString() {
-        return "personnel_matiere{" +
+        return "personnel_matiereSelect{" +
                 "personnel_matiereid=" + personnel_matiereid +
-                ", matiere=" + matiere +
-                ", personnel=" + personnel +
+                ", libelleMatiere='" + libelleMatiere + '\'' +
+                ", nomPersonnel='" + nomPersonnel + '\'' +
+                ", prenomPersonnel='" + prenomPersonnel + '\'' +
                 '}';
     }
 }

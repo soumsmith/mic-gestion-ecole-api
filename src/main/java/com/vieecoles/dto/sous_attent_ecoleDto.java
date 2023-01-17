@@ -18,7 +18,12 @@ public class sous_attent_ecoleDto {
     private  Long  ville_villeid ;
     private  Long zone_zoneid  ;
     private Long fonctionid ;
+    private String sous_attent_personn_login ;
+    private String sous_attent_personn_password ;
+    private  String sous_attent_personn_email;
 
+
+    
     public Long getSousc_atten_etablissid() {
         return sousc_atten_etablissid;
     }
@@ -108,4 +113,47 @@ public class sous_attent_ecoleDto {
     public void setZone_zoneid(Long zone_zoneid) {
         this.zone_zoneid = zone_zoneid;
     }
+
+    /**
+     * @return String return the sous_attent_personn_login
+     */
+    public String getSous_attent_personn_login() {
+        return sous_attent_personn_login;
+    }
+
+    /**
+     * @param sous_attent_personn_login the sous_attent_personn_login to set
+     */
+    public void setSous_attent_personn_login(String sous_attent_personn_login) {
+        this.sous_attent_personn_login = sous_attent_personn_login;
+    }
+
+    /**
+     * @return String return the sous_attent_personn_password
+     */
+    public String getSous_attent_personn_password() {
+        return sous_attent_personn_password;
+    }
+
+    /**
+     * @param sous_attent_personn_password the sous_attent_personn_password to set
+     */
+    public void setSous_attent_personn_password(String sous_attent_personn_password) {
+        this.sous_attent_personn_password = sous_attent_personn_password;
+    }
+
+    /**
+     * @return String return the sous_attent_personn_email
+     */
+    public String getSous_attent_personn_email() {
+        return sous_attent_personn_email;
+    }
+
+    /**
+     * @param sous_attent_personn_email the sous_attent_personn_email to set
+     */
+    public void setSous_attent_personn_email(String sous_attent_personn_email) {
+        this.sous_attent_personn_email = sous_attent_personn_email;
+    }
+
 }

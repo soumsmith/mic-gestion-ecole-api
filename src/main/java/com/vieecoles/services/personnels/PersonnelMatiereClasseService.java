@@ -1,13 +1,12 @@
 package com.vieecoles.services.personnels;
 
-import com.vieecoles.dto.EleveDto;
-import com.vieecoles.dto.ecoleDto;
-import com.vieecoles.dto.personnelDto;
-import com.vieecoles.entities.*;
-import com.vieecoles.entities.operations.eleve;
-import com.vieecoles.entities.operations.personnel;
-import com.vieecoles.projection.personnelSelect;
-import com.vieecoles.services.eleves.InscriptionService;
+import com.vieecoles.dao.entities.Annee_Scolaire;
+import com.vieecoles.dao.entities.matiere;
+import com.vieecoles.dao.entities.operations.classe;
+import com.vieecoles.dao.entities.operations.personnel;
+import com.vieecoles.dao.entities.operations.personnel_matiere_classe;
+import com.vieecoles.dao.entities.tenant;
+import com.vieecoles.projection.personnel_matiere_classeSelect;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -15,196 +14,128 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
-import javax.ws.rs.NotFoundException;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 @ApplicationScoped
-public class PersonnelService implements PanacheRepositoryBase<personnel, Long> {
+public class PersonnelMatiereClasseService implements PanacheRepositoryBase<personnel_matiere_classe, Long> {
     @Inject
     EntityManager em;
 
 @Transactional
-   public String   CreerPersonnel(personnelDto personnelDto) {
-    type_personnel mytype_personnel= new type_personnel() ;
-    personnel_status mypersonnel_status = new personnel_status() ;
-    personnel myPersonel = new personnel() ;
-   fonction myFonction= new fonction() ;
-    myFonction= fonction.findById(personnelDto.getIdentifiant_fonction()) ;
-    mytype_personnel = type_personnel.findById(personnelDto.getIdentifiant_type_personnel()) ;
+   public Long   CreerPersonnelMatiereClasse(Long personnelId, Long classeId,Long MatiereId,Long anneeId,String tenantId) {
+            String   retourMess;
 
-    mypersonnel_status= personnel_status.findById(personnelDto.getIdentifiant_personnelStatut()) ;
+            retourMess=  checkpersonnel_matiere_classe(personnelId,classeId,MatiereId,anneeId,tenantId) ;
+                    if (retourMess.equals("EXISTE PAS"))
+                        {
+                                    personnel myPersonnel = new personnel() ;
+                                    myPersonnel= personnel.findById(personnelId);
+                                    classe myclasse=  new classe();
+                                    myclasse= classe.findById(classeId);
+                                    matiere mymatiere= new matiere();
+                                    mymatiere= matiere.findById(MatiereId);
+                                    Annee_Scolaire myanne = new Annee_Scolaire();
+                                    myanne= Annee_Scolaire.findById(anneeId);
+                                    tenant mytenant= new tenant();
+                                    mytenant =tenant.findById(tenantId);
+                                    personnel_matiere_classe mypersonclass= new personnel_matiere_classe();
+                                    mypersonclass.setMatiere(mymatiere);
+                                    mypersonclass.setPersonnel(myPersonnel);
+                                    mypersonclass.setClasse(myclasse);
+                                    mypersonclass.setTenant(mytenant);
+                                    mypersonclass.setAnnee_scolaire(myanne);
 
-    myPersonel.setPersonnel_status(mypersonnel_status);
-    myPersonel.setFonction(myFonction);
-    myPersonel.setType_personnel(mytype_personnel);
-    myPersonel.setPersonnel_lieunaissance(personnelDto.getPersonnel_lieunaissance());
-    myPersonel.setPersonnelcode(personnelDto.getPersonnelcode());
-    myPersonel.setPersonnelnom(personnelDto.getPersonnelnom());
-    myPersonel.setPersonnelprenom(personnelDto.getPersonnelprenom());
-    myPersonel.setPersonneldatenaissance(personnelDto.getPersonneldatenaissance());
-    myPersonel.persist();
-      return  myPersonel.getPersonnelcode() ;
-          }
+                                    mypersonclass.persist();
+                                    return mypersonclass.getPersonnel_matiere_classeid() ;
+                    } else  {
+                                return null;
+                    }
+
+     }
 
 
-          public  List<personnelSelect> getPersonnels(){
-              TypedQuery<personnelSelect> q =   em.createQuery("select new com.vieecoles.projection.personnelSelect(o.personnelid, o.personnelcode, o.personnelnom, o.personnelprenom, o.personneldatenaissance, o.personnel_lieunaissance, t.type_personnellibelle, s.personnel_statulibelle, f.fonctionlibelle)  from personnel o  join  o.personnel_status s join   o.type_personnel t join  o.fonction f",personnelSelect.class) ;
-              List<personnelSelect> personnelSelect = q.getResultList();
-              return personnelSelect ;
-          }
 
-    public  List<personnel> getAllPersonnels(){
-    return personnel.listAll() ;
+    @Transactional
+    public Long   ModifierPersonnelMatiereClasse(Long entityId, Long classeId,Long MatiereId) {
+
+    try {
+        String   retourMess;
+        personnel_matiere_classe mypersonclass= new personnel_matiere_classe();
+        mypersonclass = personnel_matiere_classe.findById(entityId);
+
+        classe myclasse=  new classe();
+        myclasse= classe.findById(classeId);
+        matiere mymatiere= new matiere();
+        mymatiere= matiere.findById(MatiereId);
+
+        mypersonclass.setMatiere(mymatiere);
+
+        mypersonclass.setClasse(myclasse);
+        return  mypersonclass.getPersonnel_matiere_classeid() ;
+    } catch (Exception e) {
+       return  null ;
     }
 
 
+    }
 
 
-    public  personnel getPersonnelsByID(Long identifiantPersonnel){
-        return   personnel.findById(identifiantPersonnel) ;
+    public List <personnel_matiere_classe> ListeParEcoleAnnee(String tenantId ,Long anneeScolaire){
+
+        TypedQuery<personnel_matiere_classe> q = (TypedQuery<personnel_matiere_classe>)
+                em.createQuery("select o from Personnel_matiere_classe o join o.personnel join o.tenant join o.classe join o.annee_scolaire" +
+                        " join o.matiere where o.tenant.tenantid =:idtenant and o.annee_scolaire.annee_scolaireid=:anneeId");
+        List<personnel_matiere_classe> personnelSelect = q.setParameter("idtenant",tenantId).setParameter("anneeId",anneeScolaire).
+                getResultList();
+        return personnelSelect ;
+    }
+
+
+     public String  checkpersonnel_matiere_classe(Long personnelId, Long classeId,Long MatiereId,Long anneeId,String tenantId){
+      try {
+          TypedQuery<personnel_matiere_classe> q = (TypedQuery<personnel_matiere_classe>)
+                  em.createQuery("select o from Personnel_matiere_classe o join o.personnel p join o.tenant t join o.classe c join o.annee_scolaire a" +
+                          " join o.matiere m where p.personnelid=: personnelId and t.tenantid=: tenantId and m.matiereid=:MatiereId and c.classeid=:classeId and a.annee_scolaireid=: anneeId  ");
+          personnel_matiere_classe personnelSelect = q.setParameter("personnelId",personnelId).setParameter("tenantId",tenantId).setParameter("MatiereId",MatiereId)
+                  .setParameter("classeId",classeId).setParameter("anneeId",anneeId).getSingleResult() ;
+
+          return "EXISTE" ;
+      } catch (Exception e){
+          return  "EXISTE PAS" ;
+      }
+
+     }
+
+
+
+
+          public  List<personnel_matiere_classeSelect> getMatiereClasseByProfesseur(Long personnelId){
+        TypedQuery<personnel_matiere_classeSelect> q =   em.createQuery("select new com.vieecoles.projection.personnel_matiere_classeSelect(o.Personnel_matiere_classeid,o.Personnel_matiere_classe_date_creation,m.matierelibelle,c.classelibelle, p.personnelnom ,p.personnelprenom )  from personnel_matiere_classe o  join  o.personnel p join   o.matiere m join  o.classe c where  o.personnel.personnelid=:personnelId", personnel_matiere_classeSelect.class) ;
+        List<personnel_matiere_classeSelect> personnel_matiere_classeSelect = q.setParameter("personnelId",personnelId).getResultList();
+             return personnel_matiere_classeSelect ;
+          }
+
+
+    public List<personnel_matiere_classeSelect> getAllListMatiereClasseProfesseur(){
+        TypedQuery<personnel_matiere_classeSelect> q =   em.createQuery("select new com.vieecoles.projection.personnel_matiere_classeSelect( o.Personnel_matiere_classeid,o.Personnel_matiere_classe_date_creation,m.matierelibelle,c.classelibelle, p.personnelnom ,p.personnelprenom )  from personnel_matiere_classe o  join  o.personnel p join   o.matiere m join  o.classe c", personnel_matiere_classeSelect.class) ;
+        List<personnel_matiere_classeSelect> mpersonnel_matiere_classeSelect = q.getResultList();
+        return mpersonnel_matiere_classeSelect ;
     }
 
 
     @Transactional
-    public personnel   modifierPersonnel(personnelDto personnelDto) {
-        type_personnel mytype_personnel= new type_personnel() ;
-        personnel_status mypersonnel_status = new personnel_status() ;
-        personnel myPersonel = new personnel() ;
-        mytype_personnel = type_personnel.findById(personnelDto.getIdentifiant_type_personnel()) ;
-        mypersonnel_status= personnel_status.findById(personnelDto.getIdentifiant_personnelStatut()) ;
-       fonction myFonction = fonction.findById(personnelDto.getIdentifiant_fonction());
-        myPersonel = personnel.findById(personnelDto.getPersonnelid()) ;
-
-        myPersonel.setPersonnel_status(mypersonnel_status);
-        myPersonel.setType_personnel(mytype_personnel);
-        myPersonel.setFonction(myFonction);
-        myPersonel.setPersonnel_lieunaissance(personnelDto.getPersonnel_lieunaissance());
-        myPersonel.setPersonnelcode(personnelDto.getPersonnelcode());
-        myPersonel.setPersonnelnom(personnelDto.getPersonnelnom());
-        myPersonel.setPersonnelprenom(personnelDto.getPersonnelprenom());
-        myPersonel.setPersonneldatenaissance(personnelDto.getPersonneldatenaissance());
-
-        return  myPersonel ;
-    }
-
-    @Transactional
-    public void    deletePersonnel(Long identifiantPersonnel) {
-
-        personnel myPersonel = new personnel() ;
-        myPersonel = personnel.findById(identifiantPersonnel) ;
+    public void    deleteLineMatiereClasseByProfesseur( Long idMatiereClasse) {
+        personnel_matiere_classe myPersoMatiereClasse = new personnel_matiere_classe() ;
+        myPersoMatiereClasse = personnel_matiere_classe.findById(idMatiereClasse) ;
 
         try{
-            myPersonel.delete();
+            myPersoMatiereClasse.delete();
         }catch (Exception e) {
 
         }
 
     }
 
-
-
-
-
-
-
-
-
-
-
-    public  String getElevCode(String tenant) {
-        Calendar now = Calendar.getInstance();
-        int year = now.get(Calendar.YEAR);
-        String yearInString = String.valueOf(year);
-
-        Long  maxrecor= (Long) em.createQuery("select max(o.eleveid)  from eleve o  where o.tenant.tenantid =: tenant")
-                .setParameter("tenant", tenant)
-                .getSingleResult();
-
-        System.out.println("maxrecor "+maxrecor);
-
-        String eleveCode= "GAIN"+yearInString+ String.valueOf(maxrecor) ;
-        System.out.println("InscriptionCode "+eleveCode);
-
-        return eleveCode ;
-    }
-
-
-
-
-
-
-
-
-
-    public  List<eleve> listEleve(){
-
-        return    em.createQuery("select o from eleve o join o.parents p")
-
-                .getResultList();
-
-    }
-
-  
-
-
-
-
-
-   public  eleve updatEeleve(EleveDto elev,Long EleveID){
-       eleve entity = eleve.findById(EleveID);
-       if(entity == null) {
-           throw new NotFoundException();
-       }
-       tenant mytenant = (tenant) em.createQuery("select o from tenant o where   o.tenantid=:tenant ")
-               .setParameter("tenant",elev.getIdTenant())
-               .getSingleResult() ;
-
-       List<Parent> parentsList= new ArrayList<>() ;
-       // System.out.println( "Longueur"+ eleveDto.getParentList().size());
-       for(int i = 0 ; i < elev.getParentList().size() ; i++)
-       {
-           Parent myParent;
-           myParent= Parent.findById(elev.getParentList().get(i)) ;
-           parentsList.add(myParent) ;
-
-       }
-
-       entity.setEleve_mail(elev.getEleve_mail());
-       entity.setEleveadresse(elev.getEleveadresse());
-       entity.setElevecode(elev.getElevecode());
-       entity.setEleve_numero_extrait_naiss(elev.getEleve_numero_extrait_naiss());
-       entity.setElevedate_etabli_extrait_naiss(elev.getElevedate_etabli_extrait_naiss());
-       entity.setElevelieu_etabliss_etrait_naissance(elev.getElevelieu_etabliss_etrait_naissance());
-       entity.setElevecellulaire(elev.getElevecellulaire());
-       entity.setElevedate_naissance(elev.getElevedate_naissance());
-       entity.setElevelieu_naissance(elev.getElevelieu_naissance());
-       entity.setElevenom(elev.getElevenom());
-       entity.setTenant(mytenant);
-       entity.setEleveSexe(elev.getEleveSexe());
-       entity.setParents(parentsList);
-       entity.setElevematricule_national(elev.getElevematricule_national());
-       entity.setEleveprenom(elev.getEleveprenom());
-        return  entity;
-   }
-
-    public void  deleteeleve(long zonId){
-        eleve entity = eleve.findById(zonId);
-        if(entity == null) {
-            throw new NotFoundException();
-        }
-        entity.delete();
-    }
-
-   public  List<eleve> search(String Libelle){
-       return   em.createQuery("select o from objet o where  o.objetlibelle like CONCAT('%',:Libelle ,'%') ")
-               .setParameter("Libelle",Libelle).getResultList();
-   }
-
-    public  long count(){
-        return  cycle.count();
-    }
 
 
 }

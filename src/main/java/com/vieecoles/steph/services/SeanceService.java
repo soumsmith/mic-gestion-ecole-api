@@ -1,7 +1,7 @@
-package com.vieecoles.ressource.steph.services;
+package com.vieecoles.steph.services;
 
-import com.vieecoles.entities.*;
-import com.vieecoles.util.DateUtils;
+import com.vieecoles.steph.entities.*;
+import com.vieecoles .steph.util.DateUtils;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -31,7 +31,7 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 	@Inject
 	PersonnelMatiereClasseService personnelMatiereClasseService;
 
-	Logger logger = Logger.getLogger(SeanceService.class.getName());
+	//Logger logger = Logger.getLogger(SeanceService.class.getName());
 
 	public List<Seances> getList() {
 		try {
@@ -51,32 +51,32 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 	 * @return
 	 */
 	public List<Seances> getListByClasseAndJour(long anneeId, long classeId, int jourId) {
-		logger.info(String.format("Annee %s - classe %s - jour %s", anneeId, classeId, jourId));
+		//logger.info(String.format("Annee %s - classe %s - jour %s", anneeId, classeId, jourId));
 		return Seances.find("classe.id = ?1 and jour.id = ?2", classeId, jourId).list();
 	}
 
 	public List<Seances> getListByClasseAndJourAndStatut(long anneeId, long classeId, int jourId, String statut) {
-		logger.info(String.format("Annee %s - classe %s - jour %s - statut %s", anneeId, classeId, jourId, statut));
+		//logger.info(String.format("Annee %s - classe %s - jour %s - statut %s", anneeId, classeId, jourId, statut));
 		return Seances.find("classe.id = ?1 and jour.id = ?2 and statut = ?3", classeId, jourId, statut).list();
 	}
 
 	public List<Seances> getListByClasseAndDateAndStatut(long anneeId, long classeId, Date date, String statut) {
-		logger.info(String.format("Annee %s - classe %s - date %s - statut %s", anneeId, classeId, date, statut));
+		//logger.info(String.format("Annee %s - classe %s - date %s - statut %s", anneeId, classeId, date, statut));
 		return Seances.find("classe.id = ?1 and dateSeance = ?2 and statut = ?3", classeId, date, statut).list();
 	}
 
 	public List<Seances> getListByDate(long anneeId, Date date) {
-		logger.info(String.format("Annee %s - date %s", anneeId, date));
+		//logger.info(String.format("Annee %s - date %s", anneeId, date));
 		return Seances.find("dateSeance = ?1", date).list();
 	}
 
 	public List<Seances> getListByDateAndProf(long anneeId, Date date, long profId) {
-		logger.info(String.format("Annee %s - date %s", anneeId, date));
+		//logger.info(String.format("Annee %s - date %s", anneeId, date));
 		return Seances.find("dateSeance = ?1 and professeur.id= ?2", date, profId).list();
 	}
 
 	public List<Seances> getListByStatut(long anneeId, String statut) {
-		logger.info(String.format("Annee %s - statut %s", anneeId, statut));
+		//logger.info(String.format("Annee %s - statut %s", anneeId, statut));
 		return Seances.find("statut = ?1", statut).list();
 	}
 
@@ -89,19 +89,19 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 	}
 
 	public List<Seances> getListByDateAndClasse(long anneeId, Date date, Long classeId) {
-		logger.info(String.format("Annee %s - date %s - classe %s", anneeId, date,classeId));
+		//logger.info(String.format("Annee %s - date %s - classe %s", anneeId, date,classeId));
 		return Seances.find("dateSeance = ?1 and classe.id = ?2", date, classeId).list();
 	}
 
 	public Seances findById(long id) {
-		logger.info(String.format("find by id :: %s", id));
+	//	logger.info(String.format("find by id :: %s", id));
 		return Seances.findById(id);
 	}
 
 	@Transactional
 	public Response save(Seances seances) {
 		// Gson gson = new Gson();
-		logger.info("persist seance ...");
+		//logger.info("persist seance ...");
 		// logger.info(gson.toJson(seances));
 		seances.setDateCreation(new Date());
 		seances.setDateUpdate(new Date());
@@ -112,7 +112,7 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 
 	@Transactional
 	public Seances update(Seances seances) {
-		logger.info("updating seance ...");
+		//logger.info("updating seance ...");
 		Seances seance = Seances.findById(seances.getId());
 		if (seance != null) {
 			seance.setClasse(seances.getClasse());
@@ -168,8 +168,8 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 		List<Long> blackIdsClasses = new ArrayList<Long>();
 		List<Message> messages = new ArrayList<Message>();
 		List<Seances> seancespersist = new ArrayList<Seances>();
-		logger.info("Persist seances automatic");
-		logger.info("Activites "+activites.size());
+	//	logger.info("Persist seances automatic");
+		//logger.info("Activites "+activites.size());
 		int cpteSeances = 0;
 		int cpteSeancesTot = 0;
 		for (Activite atv : activites) {
@@ -197,7 +197,7 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 					seance.setTypeActivite(atv.getTypeActivite());
 					seance.setActivite(atv);
 					seance.persist();
-					logger.info("-> id "+seance.getId());
+				//	logger.info("-> id "+seance.getId());
 					seancespersist.add(seance);
 					cpteSeances ++;
 				} else {
@@ -207,10 +207,10 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 			}
 		}
 		messages.add(new Message("info", "Ouverture des séances", String.format("l'opération a genéré %s séances sur %s ligne(s) prévue(s) par l emploi du temps.", cpteSeances,cpteSeancesTot)));
-		logger.info("Mise à jour statut");
+		//logger.info("Mise à jour statut");
 		Seances s = new Seances();
 		for(Seances sce : seancespersist) {
-			logger.info("-> "+sce.getId());
+			//logger.info("-> "+sce.getId());
 			s = findById(sce.getId());
 			s.setStatut(Constants.AUTOMATIQUE);
 		}
@@ -243,11 +243,11 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 	@Transactional
 	public void delete(String id) {
 
-		logger.info("...Delete seance id " + id);
+		//logger.info("...Delete seance id " + id);
 		Seances seance = findById(Long.parseLong(id));
 //			atv.delete();
 		if (seance != null && isDeletable(seance)) {
-			logger.info("Seance deleted");
+			//logger.info("Seance deleted");
 			seance.delete();
 		}
 

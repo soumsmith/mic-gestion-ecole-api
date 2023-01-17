@@ -1,49 +1,45 @@
 package com.vieecoles.services;
 
-import com.vieecoles.dto.objetDto;
-import com.vieecoles.entities.objet;
+import com.vieecoles.dao.entities.Libellehandicap;
+import com.vieecoles.dao.entities.objet;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.ws.rs.NotFoundException;
-import javax.ws.rs.core.Response;
-import java.net.URI;
 import java.util.List;
 
 
 @ApplicationScoped
-public class objetService implements PanacheRepositoryBase<objet, Long> {
+public class LibelleHandicapService implements PanacheRepositoryBase<Libellehandicap, Long> {
     @Inject
     EntityManager em;
 
-    public  List<objetDto> findAllobjet(){
-        return  em.createQuery("select o from objet o join fetch o.type_objet").getResultList() ;
-
+    public  List<Libellehandicap> findHandicap(){
+        return  em.createQuery("select o from Libellehandicap o ").getResultList() ;
     }
-    public  List<objet> findByIdTypeObjet(Long idtyp){
+    public  Libellehandicap findByIdLibelle(Long idtyp){
 
-        return    em.createQuery("select o from objet o join fetch o.type_objet h where h.type_objetid =:typeObj")
-                .setParameter("typeObj",idtyp)
-                .getResultList();
+        return    Libellehandicap.findById(idtyp);
 
-    }
-
-    public  objet  findByIDObjet(Long idpobj){
-        return objet.find("objetid",idpobj).singleResult();
     }
 
 
 
 
-   public Response create(objet obj) {
 
-       obj.persist();
-       return Response.created(URI.create("/objet/" + obj)).build();
+
+   public Libellehandicap create(Libellehandicap obj) {
+ try {
+     obj.persist();
+     return  obj ;
+ } catch (Exception e) {
+       return  null;
+   }
    }
 
-   public  int updateObjet(objet obj){
+   public  int updateObjet(Libellehandicap obj){
 
 
 
@@ -51,17 +47,17 @@ public class objetService implements PanacheRepositoryBase<objet, Long> {
            throw new NotFoundException();
        }
 
-       int q = em.createQuery("update objet e set e.type_objet=:typObj , e.objetcode=:codeObje," +
-                       "e.objetlibelle=:libelle where e.objetid=: objetId")
-               .setParameter("objetId",obj.getObjetid())
-               .setParameter("typObj",obj.getType_objet())
-               .setParameter("codeObje",obj.getObjetcode())
-               .setParameter("libelle",obj.getObjetlibelle()).executeUpdate();
+       int q = em.createQuery("update Libellehandicap e set e.libelleHandicapLibelle=: libelle, e.libelleHandicode=: codeHandica " +
+                       "where  e.libelleHandicapid=: idHandi" )
+               .setParameter("libelle",obj.getLibelleHandicapLibelle())
+               .setParameter("codeHandica",obj.getLibelleHandicode())
+               .setParameter("idHandi",obj.getLibelleHandicapid())
+               .executeUpdate();
        return  q;
    }
 
     public void  deletobjet(long objetID){
-        objet obj1 = objet.findById(objetID);
+        Libellehandicap obj1 = Libellehandicap.findById(objetID);
 
         if(obj1 == null) {
             throw new NotFoundException();
@@ -69,9 +65,9 @@ public class objetService implements PanacheRepositoryBase<objet, Long> {
         obj1.delete();
     }
 
-   public  List<objet> search(String Libelle){
+   public  List<Libellehandicap> search(String Libelle){
 
-       return   em.createQuery("select o from objet o where  o.objetlibelle like CONCAT('%',:Libelle ,'%') ")
+       return   em.createQuery("select o from Libellehandicap o where  o.libelleHandicapLibelle like CONCAT('%',:Libelle ,'%') ")
                 .setParameter("Libelle",Libelle).getResultList();
 
 

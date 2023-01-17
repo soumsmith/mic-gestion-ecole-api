@@ -1,8 +1,7 @@
 package com.vieecoles.dao.entities.operations;
 
-
 import com.vieecoles.dao.entities.*;
-import com.vieecoles.entities.*;
+
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
 import javax.persistence.*;
@@ -21,24 +20,30 @@ public class personnel extends PanacheEntityBase {
 
     private  String personnel_emprunte ;
     private  String  personnel_contact ;
+   private  Long personnel_status_personnel_statusid;
+   private  Long type_personnel_type_personnelid ;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ecole_ecoleid")
+    private com.vieecoles.dao.entities.operations.ecole ecole ;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tenant_tenantid")
-    private com.vieecoles.dao.entities.tenant tenant ;
+    @JoinColumn(name = "niveau_etude_niveau_etudeid")
+    private com.vieecoles.dao.entities.niveau_etude niveau_etude ;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "domaine_formation_domaine_formationid")
+    private com.vieecoles.dao.entities.domaine_formation domaine_formation_domaine_formationid ;
+
 
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "type_personnel_type_personnelid")
-    private com.vieecoles.dao.entities.type_personnel type_personnel;
-
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "personnel_status_personnel_statusid")
-    private com.vieecoles.dao.entities.personnel_status personnel_status;
-
+    @JoinColumn(name = "sous_attent_personn_sous_attent_personnid")
+    private com.vieecoles.dao.entities.operations.sous_attent_personn sous_attent_personn ;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fonction_fonctionid")
     private com.vieecoles.dao.entities.fonction fonction;
+
+
     @Transient
     @Enumerated(EnumType.STRING)
     private Civilite civilite;
@@ -48,6 +53,22 @@ public class personnel extends PanacheEntityBase {
 
     public void setFonction(com.vieecoles.dao.entities.fonction fonction) {
         this.fonction = fonction;
+    }
+
+    public com.vieecoles.dao.entities.niveau_etude getNiveau_etude() {
+        return niveau_etude;
+    }
+
+    public void setNiveau_etude(com.vieecoles.dao.entities.niveau_etude niveau_etude) {
+        this.niveau_etude = niveau_etude;
+    }
+
+    public domaine_formation getDomaine_formation_domaine_formationid() {
+        return domaine_formation_domaine_formationid;
+    }
+
+    public void setDomaine_formation_domaine_formationid(domaine_formation domaine_formation_domaine_formationid) {
+        this.domaine_formation_domaine_formationid = domaine_formation_domaine_formationid;
     }
 
     public Long getPersonnelid() {
@@ -68,6 +89,30 @@ public class personnel extends PanacheEntityBase {
 
     public String getPersonnelnom() {
         return personnelnom;
+    }
+
+    public Long getPersonnel_status_personnel_statusid() {
+        return personnel_status_personnel_statusid;
+    }
+
+    public void setPersonnel_status_personnel_statusid(Long personnel_status_personnel_statusid) {
+        this.personnel_status_personnel_statusid = personnel_status_personnel_statusid;
+    }
+
+    public Long getType_personnel_type_personnelid() {
+        return type_personnel_type_personnelid;
+    }
+
+    public void setType_personnel_type_personnelid(Long type_personnel_type_personnelid) {
+        this.type_personnel_type_personnelid = type_personnel_type_personnelid;
+    }
+
+    public Civilite getCivilite() {
+        return civilite;
+    }
+
+    public void setCivilite(Civilite civilite) {
+        this.civilite = civilite;
     }
 
     public void setPersonnelnom(String personnelnom) {
@@ -98,28 +143,20 @@ public class personnel extends PanacheEntityBase {
         this.personnel_lieunaissance = personnel_lieunaissance;
     }
 
-    public com.vieecoles.dao.entities.type_personnel getType_personnel() {
-        return type_personnel;
+    public com.vieecoles.dao.entities.operations.ecole getEcole() {
+        return ecole;
     }
 
-    public void setType_personnel(com.vieecoles.dao.entities.type_personnel type_personnel) {
-        this.type_personnel = type_personnel;
+    public void setEcole(com.vieecoles.dao.entities.operations.ecole ecole) {
+        this.ecole = ecole;
     }
 
-    public com.vieecoles.dao.entities.personnel_status getPersonnel_status() {
-        return personnel_status;
+    public com.vieecoles.dao.entities.operations.sous_attent_personn getSous_attent_personn() {
+        return sous_attent_personn;
     }
 
-    public void setPersonnel_status(com.vieecoles.dao.entities.personnel_status personnel_status) {
-        this.personnel_status = personnel_status;
-    }
-
-    public com.vieecoles.dao.entities.tenant getTenant() {
-        return tenant;
-    }
-
-    public void setTenant(com.vieecoles.dao.entities.tenant tenant) {
-        this.tenant = tenant;
+    public void setSous_attent_personn(com.vieecoles.dao.entities.operations.sous_attent_personn sous_attent_personn) {
+        this.sous_attent_personn = sous_attent_personn;
     }
 
     public String getPersonnel_emprunte() {

@@ -1,4 +1,4 @@
-package com.vieecoles.util;
+package com.vieecoles.steph.util;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -10,7 +10,7 @@ import java.util.Date;
 public class DateUtils {
 	/**
 	 * Obtenir la date a partir d une chaine de caractères sous le format yyyy-MM-dd
-	 * 
+	 *
 	 * @param date
 	 * @return
 	 */
