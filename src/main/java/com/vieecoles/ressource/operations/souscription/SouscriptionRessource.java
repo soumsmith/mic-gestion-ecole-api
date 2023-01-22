@@ -1,18 +1,20 @@
 package com.vieecoles.ressource.operations.souscription;
 
+import com.vieecoles.dao.entities.profil;
 import com.vieecoles.dao.entities.operations.personnel;
 import com.vieecoles.dto.CreerCompteUtilsateurDto;
 import com.vieecoles.dto.sous_attent_personnDto;
 import com.vieecoles.dto.souscriptionValidationDto;
 import com.vieecoles.dto.souscriptionValidationFondatDto;
 import com.vieecoles.dao.entities.operations.sous_attent_personn;
+import com.vieecoles.services.profilService;
 import com.vieecoles.services.personnels.PersonnelService;
 import com.vieecoles.services.souscription.FileStorageService;
 import com.vieecoles.services.souscription.SouscPersonnelService;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
-import javax.servlet.http.HttpServletRequest;
+// import javax.servlet.http.HttpServletRequest;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
@@ -51,6 +53,8 @@ public class SouscriptionRessource {
     EntityManager em;
     @Inject
     FileStorageService fileStorageService ;
+    @Inject
+    profilService  profilservice ;
 
     @Inject
     PersonnelService personnelService ;
@@ -144,7 +148,7 @@ public class SouscriptionRessource {
 
         return path;
     }
-    @GET
+/*     @GET
    // @Produces(MediaType.MULTIPART_FORM_DATA)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("ouvrir-fichierDao/{path}")
@@ -170,7 +174,7 @@ public class SouscriptionRessource {
                 .contentType(org.springframework.http.MediaType.valueOf(contentType))
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
                 .body(resource);
-}
+} */
 
 
 
@@ -286,10 +290,14 @@ public class SouscriptionRessource {
      @Consumes(MediaType.APPLICATION_JSON)
      @Path("/valider-souscription-fondateur/")
      //@Transactional
-     public Response validerSouscriptionFondateur(souscriptionValidationFondatDto sousValid) {
-
-         souscPersonnelService.valideCreerCompteFondateur(sousValid);
-         return   Response.ok(String.format("Inscription  %s mis à jour",sousValid.getStatuts())).build();
+     public String validerSouscriptionFondateur(souscriptionValidationFondatDto sousValid) {
+       Long profilId =null ;
+       profil myProfil= new profil() ;
+       myProfil = profilservice.getIdProfilAdmin("Fondateur");
+      profilId= myProfil.getProfilid() ;
+      sousValid.setProfilId(profilId);
+       return  souscPersonnelService.valideCreerCompteFondateur(sousValid);
+       /*   return   Response.ok(String.format("Inscription  %s mis à jour",sousValid.getStatuts())).build(); */
      }
 
 

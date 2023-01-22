@@ -4,6 +4,7 @@ import com.vieecoles.dao.entities.fonction;
 import com.vieecoles.dao.entities.utilisateur;
 import com.vieecoles.dao.entities.operations.*;
 import com.vieecoles.dto.CreerCompteUtilsateurDto;
+import com.vieecoles.dto.ecoleDto2;
 import com.vieecoles.dto.sous_attent_ecoleDto;
 import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
 import com.vieecoles.dao.entities.Zone;
@@ -14,6 +15,7 @@ import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -213,6 +215,20 @@ return  messageRetour ;
             return  null;
         }
     }
+
+    public  List<ecoleDto2> getAllEcoleBySouscripFondateur(Long idFondat){
+        TypedQuery<ecoleDto2> q = em.createQuery( "SELECT new com.vieecoles.dto.ecoleDto2(o.ecoleid,o.ecolecode,o.ecoleclibelle) from ecole o  where o.sousc_atten_etabliss_idSOUS_ATTENT_ETABLISSEMENT=:idFondat",
+        ecoleDto2.class);
+
+List<ecoleDto2> listEcoleDto = q.setParameter("idFondat", idFondat).
+                       getResultList();
+
+return  listEcoleDto;
+    }
+
+
+
+
 
     public void creerEtValiderEcole(souscriptionValidationDto mysouscription){
         validerSouscriptionEcole(mysouscription) ;

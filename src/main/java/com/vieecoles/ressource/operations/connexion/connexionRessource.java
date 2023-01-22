@@ -122,10 +122,10 @@ public class connexionRessource {
 
 
     @GET
-    @Path("checkPassword/{emailUtilisateur}/{motDepasse}")
+    @Path("/checkPassword")
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_JSON)
-    public String checkPassword(@PathParam("emailUtilisateur") String emailUtilisateur ,@PathParam("motDepasse") String motDepasse )
+    public String checkPassword(@QueryParam("emailUtilisateur") String emailUtilisateur ,@QueryParam("motDepasse") String motDepasse )
     {
         String messageRetour=null;
         utilisateur myUtilis = new utilisateur() ;

@@ -45,7 +45,7 @@ public class PanierPersonnelService implements PanacheRepositoryBase<panier_pers
             ecole myecole= new ecole() ;
             sous_attent_personn myperson= new sous_attent_personn() ;
             panier_personnel panier= new panier_personnel() ;
-            myecole = ecole.findById(1L) ;
+            myecole = ecole.findById(panier_person.getIdentifiant_ecole()) ;
             System.out.println("id_ecoleoooo"+ myecole.toString());
             myperson = sous_attent_personn.findById(panier_person.getIdentifiant_personnel()) ;
             panier.setPanier_personnel_date_creation(LocalDate.now());

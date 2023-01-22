@@ -50,7 +50,7 @@ public class domaineFormationService implements PanacheRepositoryBase<domaine_fo
 
 
    public  domaine_formation searchDomFon(String domLibelle){
-    return  domaine_formation.find("domainelibelle",domLibelle).firstResult() ;
+    return  domaine_formation.find("domaine_formation_libelle",domLibelle).firstResult() ;
 }
 
 

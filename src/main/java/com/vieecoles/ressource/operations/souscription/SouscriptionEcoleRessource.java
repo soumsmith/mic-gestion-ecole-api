@@ -1,9 +1,11 @@
 package com.vieecoles.ressource.operations.souscription;
 
+import com.vieecoles.dto.ecoleDto2;
 import com.vieecoles.dto.sous_attent_ecoleDto;
 import com.vieecoles.dto.souscriptionEcoleDto;
 import com.vieecoles.dto.souscriptionValidationDto;
 import com.vieecoles.dao.entities.operations.Inscriptions;
+import com.vieecoles.dao.entities.operations.ecole;
 import com.vieecoles.dao.entities.operations.sousc_atten_etabliss;
 import com.vieecoles.services.personnels.PersonnelService;
 import com.vieecoles.services.souscription.SousceecoleService;
@@ -44,6 +46,17 @@ public class SouscriptionEcoleRessource {
     public sousc_atten_etabliss getSouscriptionByEmail(@PathParam("emailEtablissement") String emailEtablissement) {
         return souscPersonnelService.getSouscripByEmail2(emailEtablissement) ;
     }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("demande-ecoles-fondateur/{idFondat}")
+    public List<ecoleDto2> getEcoleFondateur(@PathParam("idFondat") Long idFondat) {
+        return souscPersonnelService.getAllEcoleBySouscripFondateur(idFondat) ;
+    }
+
+
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -66,8 +79,7 @@ public class SouscriptionEcoleRessource {
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/valider-ecoles/")
-    
-    public Response validerSouscription(souscriptionValidationDto sousValid) {
+        public Response validerSouscription(souscriptionValidationDto sousValid) {
         souscPersonnelService.creerEtValiderEcole(sousValid) ;
         //souscPersonnelService.validerSouscriptionEcole(sousValid);
         return   Response.ok(String.format("Inscription  %s mis à jour",sousValid.getStatuts())).build();

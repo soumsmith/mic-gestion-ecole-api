@@ -50,8 +50,14 @@ public class domaineFormationRessource {
     @GET
     @Path("/search/{libelle}")
     public List<domaine_formation> search(@PathParam("libelle") String libelle) {
-        return domService.search(libelle);
+        return domService.search(libelle) ;
     }
+
+   /*  @GET
+    @Path("/searchFond/{libelle}")
+    public domaine_formation searchfon(@PathParam("libelle") String libelle) {
+        return domService.searchDomFon(libelle) ;
+    } */
 
     @GET
     @Path("/count")

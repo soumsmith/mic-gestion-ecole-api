@@ -134,7 +134,7 @@ public class SouscPersonnelService implements PanacheRepositoryBase<sous_attent_
     } 
 
     public  List<sous_attent_personn> findAllSouscriptionAvaliderDtoFondateur(String status,String fonction ){
-        TypedQuery<sous_attent_personn> q = (TypedQuery<sous_attent_personn>) em.createQuery( "SELECT  o from sous_attent_personn o join o.domaine_formation  d join o.niveau_etude n join o.fonction f where o.sous_attent_personn_statut=:status and f.fonctionlibelle=:fonction  ");
+        TypedQuery<sous_attent_personn> q = (TypedQuery<sous_attent_personn>) em.createQuery( "SELECT  o from sous_attent_personn o join o.fonction f where o.sous_attent_personn_statut=:status and f.fonctionlibelle=:fonction  ");
         List<sous_attent_personn> listSouscriptionAvaliderDto = q.setParameter("status" ,status)
                 .setParameter("status" ,status)
                 .setParameter("fonction" ,fonction).
@@ -185,7 +185,13 @@ public class SouscPersonnelService implements PanacheRepositoryBase<sous_attent_
         //recruter fondateur
         personnel PersonnCreer = new personnel() ;
         PersonnCreer =recruterUnFondateur(mysouscription.getIdEcole(), mysouscription.getIdsouscrip()) ;
+        System.out.print("PersonnCreer "+PersonnCreer.getPersonnelid());
         //creer compte fondateur
+        System.out.print("DateFin "+mysouscription.getDatefin());
+        System.out.print("IdEcole "+mysouscription.getIdEcole());
+        System.out.print("ProfilId "+mysouscription.getProfilId());
+
+
         MessageRetour= conServ.affecterProfilFondateur(PersonnCreer.getPersonnelid(), mysouscription.getDatefin(), mysouscription.getIdEcole(), mysouscription.getProfilId());
       return MessageRetour ;
      }
@@ -202,6 +208,11 @@ public class SouscPersonnelService implements PanacheRepositoryBase<sous_attent_
      myecole= ecole.findById(idEcole) ;
          niveau_etude myNive= new niveau_etude() ;
          domaine_formation myDom = new domaine_formation();
+
+        myDom = getDomFormation();
+        myNive= getNivauEtude() ;
+
+
          person= verifExistancePersonnel(sous_attent.getSous_attent_personnid() ,idEcole) ;
          sous_attent_personn  mysous= new sous_attent_personn() ;
          String messageRetour  ;
@@ -215,9 +226,9 @@ public class SouscPersonnelService implements PanacheRepositoryBase<sous_attent_
              person2.setEcole(myecole);
              //Civilite mycivilite= Civilite.valueOf(sous_attent.getSous_attent_personn_sexe());
              //person2.setCivilite(mycivilite);
-             myDom= domServ.searchDomFon("Education");
-             person2.setDomaine_formation_domaine_formationid(sous_attent.getDomaine_formation());
-             person2.setNiveau_etude(sous_attent.getNiveau_etude());
+
+             person2.setDomaine_formation_domaine_formationid(myDom);
+             person2.setNiveau_etude(myNive);
              person2.persist();
              PersonnCreer= person2;
              
@@ -226,6 +237,27 @@ public class SouscPersonnelService implements PanacheRepositoryBase<sous_attent_
          }
  
          return  PersonnCreer ;
+     }          
+    @Transactional
+     public domaine_formation getDomFormation(){
+        domaine_formation myDom= new domaine_formation();
+
+      return  myDom= (domaine_formation) em.createQuery("select e from domaine_formation e   where e.domaine_formation_libelle =:libelleFonf"
+        ,domaine_formation.class )
+ .setParameter("libelleFonf","Education")
+ .getSingleResult();
+
+     }
+
+     @Transactional
+     public niveau_etude getNivauEtude(){
+        niveau_etude myDom= new niveau_etude();
+
+      return  myDom= (niveau_etude) em.createQuery("select e from niveau_etude e   where e.niveau_etude_libelle =:libelleFonf"
+        ,niveau_etude.class )
+ .setParameter("libelleFonf","Niveau Fondateur")
+ .getSingleResult();
+
      }
 
 @Transactional

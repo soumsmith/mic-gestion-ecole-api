@@ -614,8 +614,8 @@ public class connexionService implements PanacheRepositoryBase<utilisateur_has_p
     public utilisateur checkPassword(String emailUtilisateur,String motdePasse){
         try {
             return (utilisateur) em.createQuery("select o from utilisateur o where o.utilisateu_email =:email and o.utilisateur_mot_de_passe=:motPasse")
-                    .setParameter("email",emailUtilisateur)
-                    .setParameter("motPasse",motdePasse)
+                    .setParameter("email",emailUtilisateur.trim())
+                    .setParameter("motPasse",motdePasse.trim())
                     .getSingleResult();
         } catch (Exception e) {
             return  null;
