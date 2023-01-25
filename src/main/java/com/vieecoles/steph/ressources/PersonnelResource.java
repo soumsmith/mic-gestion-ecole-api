@@ -4,14 +4,16 @@ import javax.inject.Inject;
 import javax.print.attribute.standard.MediaSize.NA;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 import com.vieecoles.steph.services.PersonnelService;
 
-@Path("/personnel")
+@Path("/personnels")
 public class PersonnelResource {
 	
 	@Inject
@@ -27,6 +29,7 @@ public class PersonnelResource {
 	@GET
 	@Path("/get-by-fonction")
 	@Tag(name = "Personnel")
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response listProf(@QueryParam("fonction") int fonctionId) {
 		return Response.ok().entity(personnelService.getListByFonction(fonctionId)).build();
 	}

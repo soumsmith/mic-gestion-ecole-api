@@ -25,6 +25,7 @@ public class PersonnelService {
 	
 	
 	public List<Personnel> getListByFonction(int fonctionId) {
+		logger.info("---> list by fonction id ::: "+fonctionId);
 		return Personnel.find("fonction.id = ?1", fonctionId)
 				.list();
 	}	
