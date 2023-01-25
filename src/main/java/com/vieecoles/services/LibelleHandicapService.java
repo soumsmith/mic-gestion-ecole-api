@@ -1,13 +1,15 @@
 package com.vieecoles.services;
 
-import com.vieecoles.dao.entities.Libellehandicap;
-import com.vieecoles.dao.entities.objet;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.ws.rs.NotFoundException;
+
+import com.vieecoles.entities.Libellehandicap;
+import com.vieecoles.entities.objet;
+
 import java.util.List;
 
 

@@ -1,6 +1,6 @@
 package com.vieecoles.ressource;
 
-import com.vieecoles.dao.entities.motif_permission;
+import com.vieecoles.entities.motif_permission;
 import com.vieecoles.services.motif_persmissionService;
 
 import javax.inject.Inject;

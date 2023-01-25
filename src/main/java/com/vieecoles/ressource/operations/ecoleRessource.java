@@ -1,11 +1,11 @@
 package com.vieecoles.ressource.operations;
 
 import com.vieecoles.dto.ecoleDto;
-import com.vieecoles.dao.entities.cycle;
-import com.vieecoles.dao.entities.groupe_ecole;
-import com.vieecoles.dao.entities.operations.ecole;
-import com.vieecoles.dao.entities.operations.quartier;
-import com.vieecoles.dao.entities.Zone;
+import com.vieecoles.entities.Zone;
+import com.vieecoles.entities.cycle;
+import com.vieecoles.entities.groupe_ecole;
+import com.vieecoles.entities.operations.ecole;
+import com.vieecoles.entities.operations.quartier;
 import com.vieecoles.services.operations.ecoleService;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 

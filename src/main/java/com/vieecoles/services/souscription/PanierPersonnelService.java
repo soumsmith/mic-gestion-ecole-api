@@ -1,8 +1,8 @@
 package com.vieecoles.services.souscription;
 
-import com.vieecoles.dao.entities.operations.*;
 import com.vieecoles.dto.panier_personnelDto;
 import com.vieecoles.dto.souscriptionEcoleDto;
+import com.vieecoles.entities.operations.*;
 import com.vieecoles.projection.emploi_du_temps_professeurSelect;
 import com.vieecoles.projection.panier_personnelSelect;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;

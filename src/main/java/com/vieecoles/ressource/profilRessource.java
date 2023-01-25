@@ -1,8 +1,7 @@
 package com.vieecoles.ressource;
 
 
-import com.vieecoles.dao.entities.profil;
-
+import com.vieecoles.entities.profil;
 import com.vieecoles.services.profilService;
 
 import javax.inject.Inject;

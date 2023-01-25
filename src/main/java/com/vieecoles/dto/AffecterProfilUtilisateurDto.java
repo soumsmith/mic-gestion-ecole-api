@@ -1,9 +1,9 @@
 package com.vieecoles.dto;
 
-import com.vieecoles.dao.entities.profil;
-
 import java.time.LocalDate;
 import java.util.List;
+
+import com.vieecoles.entities.profil;
 
 
 public class AffecterProfilUtilisateurDto {

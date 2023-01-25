@@ -1,12 +1,13 @@
 package com.vieecoles.services.souscription;
 
 
-import com.vieecoles.dao.entities.operations.sous_attent_personn;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
+
+import com.vieecoles.entities.operations.sous_attent_personn;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;

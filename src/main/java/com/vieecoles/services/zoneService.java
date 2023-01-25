@@ -1,18 +1,23 @@
 package com.vieecoles.services;
 
-import com.vieecoles.dao.entities.domaine;
-import com.vieecoles.dao.entities.Zone;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.persistence.EntityManager;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Response;
+
+import com.oracle.svm.core.annotate.Inject;
+import com.vieecoles.entities.Zone;
+import com.vieecoles.entities.domaine;
+
 import java.net.URI;
 import java.util.List;
 
 @ApplicationScoped
 public class zoneService implements PanacheRepositoryBase<Zone, Long> {
-
+    @Inject
+    EntityManager em;
    public List<Zone> getListzone(){
        return  Zone.listAll();
    }
@@ -49,7 +54,20 @@ public class zoneService implements PanacheRepositoryBase<Zone, Long> {
 
     public  long count(){
         return  Zone.count();
+    } 
+
+  /*   public  List<Zone> findZoneByCommune(Long idtyp){
+        return    em.createQuery("select o from Zone o join fetch o.mCommune h where h.communeid =:typeObj")
+                .setParameter("idtyp",idtyp)
+                .getResultList();
+
+    } */
+
+    public  List<Zone> findZoneByCommune(Long idtyp){
+        return  Zone.find("commune_communeid",idtyp).list() ;
+
     }
+
 
 
 }

@@ -1,7 +1,7 @@
 package com.vieecoles.ressource.operations;
 
-import com.vieecoles.dao.entities.operations.commune;
-import com.vieecoles.dao.entities.operations.ville;
+import com.vieecoles.entities.operations.commune;
+import com.vieecoles.entities.operations.ville;
 import com.vieecoles.services.operations.communeService;
 
 import javax.inject.Inject;

@@ -1,7 +1,7 @@
 package com.vieecoles.ressource.operations.souscription;
 
-import com.vieecoles.dao.entities.operations.message_personnel;
 import com.vieecoles.dto.message_personnelDto;
+import com.vieecoles.entities.operations.message_personnel;
 import com.vieecoles.projection.MessageSelect;
 import com.vieecoles.services.souscription.MessagePersonnelService;
 import com.vieecoles.services.souscription.PanierPersonnelService;

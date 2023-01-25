@@ -1,8 +1,8 @@
-package com.vieecoles.ressource;
+package com.vieecoles.ressource.operations.etats;
 
 
-import com.vieecoles.dao.entities.profil;
 import com.vieecoles.dto.profilDto;
+import com.vieecoles.entities.profil;
 import com.vieecoles.services.profilService;
 
 import net.sf.jasperreports.engine.JRException;

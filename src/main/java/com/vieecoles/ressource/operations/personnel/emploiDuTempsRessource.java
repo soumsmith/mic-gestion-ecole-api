@@ -1,6 +1,6 @@
 package com.vieecoles.ressource.operations.personnel;
 
-import com.vieecoles.dao.entities.operations.emploi_du_temps_professeur;
+import com.vieecoles.entities.operations.emploi_du_temps_professeur;
 import com.vieecoles.projection.emploi_du_temps_professeurSelect;
 import com.vieecoles.services.eleves.EleveService;
 import com.vieecoles.services.personnels.emploi_du_temps_professeurService;

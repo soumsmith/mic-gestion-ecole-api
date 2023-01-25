@@ -1,9 +1,10 @@
 package com.vieecoles.dto;
 
-import com.vieecoles.dao.entities.operations.Inscriptions;
-
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+
+import com.vieecoles.entities.operations.Inscriptions;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;

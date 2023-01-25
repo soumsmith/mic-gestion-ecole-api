@@ -1,6 +1,6 @@
 package com.vieecoles.ressource;
 
-import com.vieecoles.dao.entities.type_autorisation;
+import com.vieecoles.entities.type_autorisation;
 import com.vieecoles.services.typeAutorisationService;
 
 import javax.inject.Inject;

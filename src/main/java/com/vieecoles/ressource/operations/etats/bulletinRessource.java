@@ -1,8 +1,8 @@
-package com.vieecoles.ressource;
+package com.vieecoles.ressource.operations.etats;
 
 
 import com.mysql.cj.Query;
-import com.vieecoles.dao.entities.profil;
+import com.vieecoles.entities.profil;
 import com.vieecoles.projection.BulletinSelectDto;
 import com.vieecoles.services.profilService;
 

@@ -1,9 +1,9 @@
 package com.vieecoles.ressource;
 
 
-import com.vieecoles.dao.entities.profil;
 import com.vieecoles.dto.ecoleDto;
 import com.vieecoles.dto.ecoleDto2;
+import com.vieecoles.entities.profil;
 import com.vieecoles.services.operations.ecoleService;
 import com.vieecoles.services.profilService;
 

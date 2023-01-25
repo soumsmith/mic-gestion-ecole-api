@@ -1,7 +1,7 @@
 package com.vieecoles.ressource;
 
 
-import com.vieecoles.dao.entities.personnel_status;
+import com.vieecoles.entities.personnel_status;
 import com.vieecoles.services.personnel_statusService;
 
 import javax.inject.Inject;

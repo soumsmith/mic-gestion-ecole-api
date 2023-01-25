@@ -2,9 +2,9 @@ package com.vieecoles.ressource.operations.eleves;
 
 import com.vieecoles.dto.EleveDto;
 import com.vieecoles.dto.InscriptionDto;
-import com.vieecoles.dao.entities.operations.Inscriptions;
-import com.vieecoles.dao.entities.operations.eleve;
 import com.vieecoles.dto.importEleveDto;
+import com.vieecoles.entities.operations.Inscriptions;
+import com.vieecoles.entities.operations.eleve;
 import com.vieecoles.services.eleves.EleveService;
 import com.vieecoles.services.eleves.InscriptionService;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;

@@ -1,6 +1,6 @@
 package com.vieecoles.ressource;
 
-import com.vieecoles.dao.entities.Annee_Scolaire;
+import com.vieecoles.entities.Annee_Scolaire;
 import com.vieecoles.services.annee_scolaireService;
 
 import javax.inject.Inject;

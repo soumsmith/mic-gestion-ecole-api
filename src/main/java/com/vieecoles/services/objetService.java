@@ -1,7 +1,8 @@
 package com.vieecoles.services;
 
 import com.vieecoles.dto.objetDto;
-import com.vieecoles.dao.entities.objet;
+import com.vieecoles.entities.objet;
+
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.enterprise.context.ApplicationScoped;

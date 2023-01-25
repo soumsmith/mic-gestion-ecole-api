@@ -1,6 +1,6 @@
 package com.vieecoles.ressource.operations.personnel;
 
-import com.vieecoles.dao.entities.operations.personnel_matiere;
+import com.vieecoles.entities.operations.personnel_matiere;
 import com.vieecoles.projection.personnel_matiereSelect;
 import com.vieecoles.services.eleves.EleveService;
 import com.vieecoles.services.personnels.PersonnelMatiereService;

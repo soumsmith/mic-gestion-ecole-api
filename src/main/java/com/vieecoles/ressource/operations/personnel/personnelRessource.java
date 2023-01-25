@@ -1,7 +1,7 @@
 package com.vieecoles.ressource.operations.personnel;
 
 import com.vieecoles.dto.personnelDto;
-import com.vieecoles.dao.entities.operations.personnel;
+import com.vieecoles.entities.operations.personnel;
 import com.vieecoles.services.eleves.EleveService;
 import com.vieecoles.services.personnels.PersonnelService;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
