@@ -139,10 +139,10 @@ public class connexionRessource {
     }
 
     @GET
-    @Path("infos-personnel-connecte/{emailUtilisateur}")
+    @Path("infos-personnel-connecte/{emailUtilisateur}/{idEcole}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.TEXT_PLAIN)
-    public personnelConnexionDto infoPersonnConnect(@PathParam("emailUtilisateur") String emailUtilisateur )
+    public personnelConnexionDto infoPersonnConnect(@PathParam("emailUtilisateur") String emailUtilisateur ,@PathParam("idEcole") Long idEcole)
     {
         Long idUtilisateur ;
         idUtilisateur = myconnexionService.getIdUtilisateur(emailUtilisateur) ;
@@ -150,7 +150,7 @@ public class connexionRessource {
         System.out.println("idUtilisateurxxx "+ idUtilisateur);
 
         if(idUtilisateur!=0L) {
-            myPersonn =  myconnexionService.infosUtilisateurConnecte(emailUtilisateur) ;
+            myPersonn =  myconnexionService.infosUtilisateurConnecte(emailUtilisateur,idEcole) ;
         }
       return   myPersonn ;
     }
