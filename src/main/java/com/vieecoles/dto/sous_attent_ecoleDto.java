@@ -21,7 +21,7 @@ public class sous_attent_ecoleDto {
     private String sous_attent_personn_login ;
     private String sous_attent_personn_password ;
     private  String sous_attent_personn_email;
-
+    private Long Niveau_Enseignement_id ;
 
     
     public Long getSousc_atten_etablissid() {
@@ -154,6 +154,21 @@ public class sous_attent_ecoleDto {
      */
     public void setSous_attent_personn_email(String sous_attent_personn_email) {
         this.sous_attent_personn_email = sous_attent_personn_email;
+    }
+
+
+    /**
+     * @return Long return the Niveau_Enseignement_id
+     */
+    public Long getNiveau_Enseignement_id() {
+        return Niveau_Enseignement_id;
+    }
+
+    /**
+     * @param Niveau_Enseignement_id the Niveau_Enseignement_id to set
+     */
+    public void setNiveau_Enseignement_id(Long Niveau_Enseignement_id) {
+        this.Niveau_Enseignement_id = Niveau_Enseignement_id;
     }
 
 }

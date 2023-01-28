@@ -1,7 +1,5 @@
 package com.vieecoles.services;
 
-import com.vieecoles.dao.entities.domaine;
-import com.vieecoles.dao.entities.profil;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -10,6 +8,10 @@ import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Response;
+
+import com.vieecoles.entities.domaine;
+import com.vieecoles.entities.profil;
+
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;

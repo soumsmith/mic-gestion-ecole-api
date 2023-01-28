@@ -1,9 +1,10 @@
 package com.vieecoles.services;
 
 import com.vieecoles.dto.ParentDto;
-import com.vieecoles.dao.entities.Parent;
-import com.vieecoles.dao.entities.tenant;
-import com.vieecoles.dao.entities.type_parent;
+import com.vieecoles.entities.Parent;
+import com.vieecoles.entities.tenant;
+import com.vieecoles.entities.type_parent;
+
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.enterprise.context.ApplicationScoped;

@@ -1,8 +1,9 @@
 package com.vieecoles.services.operations;
 
 import com.vieecoles.dto.ecoleDto;
-import com.vieecoles.dao.entities.operations.ecole;
 import com.vieecoles.dto.ecoleDto2;
+import com.vieecoles.entities.operations.ecole;
+
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.enterprise.context.ApplicationScoped;

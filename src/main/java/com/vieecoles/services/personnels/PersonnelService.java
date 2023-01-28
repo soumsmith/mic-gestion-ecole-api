@@ -1,10 +1,11 @@
 package com.vieecoles.services.personnels;
 
-import com.vieecoles.dao.entities.*;
 import com.vieecoles.dto.EleveDto;
 import com.vieecoles.dto.personnelDto;
-import com.vieecoles.dao.entities.operations.eleve;
-import com.vieecoles.dao.entities.operations.personnel;
+import com.vieecoles.entities.*;
+import com.vieecoles.entities.operations.eleve;
+import com.vieecoles.entities.operations.personnel;
+
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.enterprise.context.ApplicationScoped;

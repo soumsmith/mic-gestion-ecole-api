@@ -1,6 +1,6 @@
 package com.vieecoles.ressource;
 
-import com.vieecoles.dao.entities.emprunteur;
+import com.vieecoles.entities.emprunteur;
 import com.vieecoles.services.emprunteurService;
 
 import javax.inject.Inject;

@@ -1,29 +1,32 @@
 package com.vieecoles.services.souscription;
 
-import com.vieecoles.dao.entities.utilisateur;
 import com.vieecoles.dto.CreerCompteUtilsateurDto;
 import com.vieecoles.dto.sous_attent_personnDto;
 import com.vieecoles.dto.souscriptionValidationDto;
 import com.vieecoles.dto.souscriptionValidationFondatDto;
+import com.vieecoles.entities.domaine_formation;
+import com.vieecoles.entities.fonction;
+import com.vieecoles.entities.niveau_etude;
+import com.vieecoles.entities.utilisateur;
+import com.vieecoles.entities.operations.Inscriptions;
+import com.vieecoles.entities.operations.ecole;
+import com.vieecoles.entities.operations.personnel;
+import com.vieecoles.entities.operations.sous_attent_personn;
+import com.vieecoles.entities.operations.sousc_atten_etabliss;
 import com.vieecoles.services.domaineFormationService;
 import com.vieecoles.services.domaineService;
 import com.vieecoles.services.profilService;
 import com.vieecoles.services.connexion.connexionService;
-import com.vieecoles.dao.entities.domaine_formation;
-import com.vieecoles.dao.entities.fonction;
-import com.vieecoles.dao.entities.niveau_etude;
-import com.vieecoles.dao.entities.operations.ecole;
-import com.vieecoles.dao.entities.operations.personnel;
-import com.vieecoles.dao.entities.operations.sous_attent_personn;
+
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import javax.ws.rs.core.Response;
-import java.io.*;
 import java.io.*;
 import java.io.File;
 import java.io.FileInputStream;
@@ -156,8 +159,9 @@ public class SouscPersonnelService implements PanacheRepositoryBase<sous_attent_
 
 
     public  List<personnel> findAllPersonneParEcole(Long idEcole ){
-        TypedQuery<personnel> q = (TypedQuery<personnel>) em.createQuery( "SELECT  o from personnel o join o.domaine_formation_domaine_formationid  d join o.niveau_etude n join o.fonction where o.ecole.ecoleid=:idEcole  ");
+        TypedQuery<personnel> q = (TypedQuery<personnel>) em.createQuery( "SELECT  o from personnel o join o.domaine_formation_domaine_formationid  d join o.niveau_etude n join o.fonction f where o.ecole.ecoleid=:idEcole and f.fonctionlibelle <>:fonctionLibelle ");
         List<personnel> listSouscriptionAvaliderDto = q.setParameter("idEcole" ,idEcole).
+                                                   setParameter("fonctionLibelle" ,"FONDATEUR").
                 getResultList();
         return  listSouscriptionAvaliderDto;
     }
@@ -180,22 +184,56 @@ public class SouscPersonnelService implements PanacheRepositoryBase<sous_attent_
 
      public String  valideCreerCompteFondateur(souscriptionValidationFondatDto mysouscription) {
         String MessageRetour =null ;
+        List<Long> listEcole = getListEcoleBySouscrip2(mysouscription.getIdsouscrip());
         // valider soucripValider
         validerSouscriptionFond(mysouscription) ;
-        //recruter fondateur
-        personnel PersonnCreer = new personnel() ;
-        PersonnCreer =recruterUnFondateur(mysouscription.getIdEcole(), mysouscription.getIdsouscrip()) ;
-        System.out.print("PersonnCreer "+PersonnCreer.getPersonnelid());
-        //creer compte fondateur
+        for(int i = 0 ; i < listEcole.size() ; i++){
+            personnel PersonnCreer = new personnel() ;
+            //recruter fondateur
+            Long idEcole = getEcoleByIDSousc(listEcole.get(i)) ;
+            PersonnCreer =recruterUnFondateur(idEcole, mysouscription.getIdsouscrip()) ;
+            System.out.print("PersonnCreer "+PersonnCreer.getPersonnelid());
+            //creer compte fondateur
         System.out.print("DateFin "+mysouscription.getDatefin());
-        System.out.print("IdEcole "+mysouscription.getIdEcole());
+        //System.out.print("IdEcole "+mysouscription.getIdEcole());
         System.out.print("ProfilId "+mysouscription.getProfilId());
-
-
-        MessageRetour= conServ.affecterProfilFondateur(PersonnCreer.getPersonnelid(), mysouscription.getDatefin(), mysouscription.getIdEcole(), mysouscription.getProfilId());
+        conServ.affecterProfilFondateur(PersonnCreer.getPersonnelid(), mysouscription.getDatefin(), idEcole, mysouscription.getProfilId());
+        }
+        
+        
+        MessageRetour="opération effectuée avec succès!";
+        
       return MessageRetour ;
      }
 
+     @Transactional
+     public List<Long> getListEcoleBySouscrip(Long idSouscripteur){
+               TypedQuery<Long> q = (TypedQuery<Long>) em.createQuery( "SELECT  o.idSOUS_ATTENT_ETABLISSEMENT from sousc_atten_etabliss o where o.sous_attent_personn_sous_attent_personnid =:idSouscripteur and o.sousc_atten_etabliss_statut=:status");
+        List<Long> listEcole = q.setParameter("idSouscripteur" ,idSouscripteur)
+                               .setParameter("status" ,Inscriptions.status.EN_ATTENTE).
+                getResultList();
+        return  listEcole;
+       }
+
+       @Transactional
+       public  List<Long> getListEcoleBySouscrip2(Long idSouscripteur){
+        List<Long> listEcole ;
+        listEcole=  em.createQuery( "SELECT  o.idSOUS_ATTENT_ETABLISSEMENT from sousc_atten_etabliss o where o.sous_attent_personn_sous_attent_personnid =:idSouscripteur and o.sousc_atten_etabliss_statut=:status")
+        .setParameter("idSouscripteur" ,idSouscripteur)
+                                 .setParameter("status" ,Inscriptions.status.VALIDEE).
+                  getResultList();
+          return  listEcole;
+         }
+
+         @Transactional
+       public  Long getEcoleByIDSousc(Long idDemand){
+        Long  myEcoleid ;
+        myEcoleid =    (Long) em.createQuery( "SELECT  o.ecoleid from ecole o where o.sousc_atten_etabliss_idSOUS_ATTENT_ETABLISSEMENT =:idDemand ")
+        .setParameter("idDemand" ,idDemand)
+                                .
+                 getSingleResult() ;
+          return  myEcoleid;
+         }
      
      @Transactional
      public personnel  recruterUnFondateur(Long idEcole ,Long sous_attentId){

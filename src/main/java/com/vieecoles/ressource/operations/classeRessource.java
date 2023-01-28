@@ -1,7 +1,7 @@
 package com.vieecoles.ressource.operations;
 
-import com.vieecoles.dao.entities.Niveau;
-import com.vieecoles.dao.entities.operations.classe;
+import com.vieecoles.entities.Niveau;
+import com.vieecoles.entities.operations.classe;
 import com.vieecoles.services.operations.classeService;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 

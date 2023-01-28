@@ -1,6 +1,6 @@
 package com.vieecoles.ressource;
 
-import com.vieecoles.dao.entities.pays;
+import com.vieecoles.entities.pays;
 import com.vieecoles.services.paysService;
 
 import javax.inject.Inject;

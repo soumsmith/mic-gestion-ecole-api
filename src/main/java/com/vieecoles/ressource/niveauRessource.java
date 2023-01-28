@@ -1,6 +1,6 @@
 package com.vieecoles.ressource;
 
-import com.vieecoles.dao.entities.Niveau;
+import com.vieecoles.entities.Niveau;
 import com.vieecoles.services.niveauService;
 
 import javax.inject.Inject;

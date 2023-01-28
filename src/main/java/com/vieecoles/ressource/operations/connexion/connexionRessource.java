@@ -1,10 +1,10 @@
 package com.vieecoles.ressource.operations.connexion;
 
-import com.vieecoles.dao.entities.operations.Inscriptions;
-import com.vieecoles.dao.entities.operations.eleve;
-import com.vieecoles.dao.entities.profil;
-import com.vieecoles.dao.entities.utilisateur;
 import com.vieecoles.dto.*;
+import com.vieecoles.entities.profil;
+import com.vieecoles.entities.utilisateur;
+import com.vieecoles.entities.operations.Inscriptions;
+import com.vieecoles.entities.operations.eleve;
 import com.vieecoles.services.profilService;
 import com.vieecoles.services.connexion.connexionService;
 import com.vieecoles.services.eleves.EleveService;

@@ -1,12 +1,13 @@
 package com.vieecoles.ressource.operations.souscription;
 
-import com.vieecoles.dao.entities.profil;
-import com.vieecoles.dao.entities.operations.personnel;
 import com.vieecoles.dto.CreerCompteUtilsateurDto;
 import com.vieecoles.dto.sous_attent_personnDto;
 import com.vieecoles.dto.souscriptionValidationDto;
 import com.vieecoles.dto.souscriptionValidationFondatDto;
-import com.vieecoles.dao.entities.operations.sous_attent_personn;
+import com.vieecoles.entities.profil;
+import com.vieecoles.entities.operations.personnel;
+import com.vieecoles.entities.operations.sous_attent_personn;
+import com.vieecoles.entities.operations.sousc_atten_etabliss;
 import com.vieecoles.services.profilService;
 import com.vieecoles.services.personnels.PersonnelService;
 import com.vieecoles.services.souscription.FileStorageService;
@@ -121,10 +122,35 @@ public class SouscriptionRessource {
 
      return souscPersonnelService.convertFileInp(UPLOAD_DIR+path) ;
 
-
-
      }
 
+
+     @GET
+    // @Produces(MediaType.TEXT_PLAIN)
+     @Consumes(MediaType.APPLICATION_JSON)
+     @Path("nombre-ecole-valider-par-fondateur/{idSouscrip}")
+     public String nombreEcoleValiFonda(@PathParam("idSouscrip") Long idSouscrip) throws IOException {
+        List<Long> listEcole ;
+        String messageRetour = null ;
+      listEcole = souscPersonnelService.getListEcoleBySouscrip(idSouscrip) ;
+       if(listEcole.size()>0 ) {
+        messageRetour = "1";
+       }else {
+        messageRetour = "2";
+       }
+
+      return messageRetour ;
+     }
+
+     @GET
+      @Produces(MediaType.APPLICATION_JSON)
+      @Consumes(MediaType.APPLICATION_JSON)
+      @Path("ecole-valider-par-fondateur/{idSouscrip}")
+      public List<Long> EcoleValiFonda(@PathParam("idSouscrip") Long idSouscrip) throws IOException {
+         List<Long> listEcole ;
+       listEcole = souscPersonnelService.getListEcoleBySouscrip2(idSouscrip) ;
+       return listEcole ;
+      }
 
 
 

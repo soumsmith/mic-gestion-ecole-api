@@ -1,6 +1,6 @@
 package com.vieecoles.ressource;
 
-import com.vieecoles.dao.entities.Libellehandicap;
+import com.vieecoles.entities.Libellehandicap;
 import com.vieecoles.services.LibelleHandicapService;
 
 import javax.inject.Inject;

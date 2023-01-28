@@ -1,6 +1,6 @@
 package com.vieecoles.services.personnels;
 
-import com.vieecoles.dao.entities.operations.emploi_du_temps_professeur;
+import com.vieecoles.entities.operations.emploi_du_temps_professeur;
 import com.vieecoles.projection.emploi_du_temps_professeurSelect;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 

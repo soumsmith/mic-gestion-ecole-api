@@ -1,11 +1,11 @@
 package com.vieecoles.services.personnels;
 
-import com.vieecoles.dao.entities.Annee_Scolaire;
-import com.vieecoles.dao.entities.matiere;
-import com.vieecoles.dao.entities.operations.classe;
-import com.vieecoles.dao.entities.operations.personnel;
-import com.vieecoles.dao.entities.operations.personnel_matiere_classe;
-import com.vieecoles.dao.entities.tenant;
+import com.vieecoles.entities.Annee_Scolaire;
+import com.vieecoles.entities.matiere;
+import com.vieecoles.entities.tenant;
+import com.vieecoles.entities.operations.classe;
+import com.vieecoles.entities.operations.personnel;
+import com.vieecoles.entities.operations.personnel_matiere_classe;
 import com.vieecoles.projection.personnel_matiere_classeSelect;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 

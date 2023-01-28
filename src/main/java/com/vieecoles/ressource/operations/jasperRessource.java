@@ -1,6 +1,6 @@
 package com.vieecoles.ressource.operations;
 
-import com.vieecoles.dao.entities.tenant;
+import com.vieecoles.entities.tenant;
 import com.vieecoles.services.tenantService;
 
 import javax.inject.Inject;

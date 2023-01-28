@@ -1,6 +1,6 @@
 package com.vieecoles.ressource;
 
-import com.vieecoles.dao.entities.type_personnel;
+import com.vieecoles.entities.type_personnel;
 import com.vieecoles.services.type_personnelService;
 
 import javax.inject.Inject;

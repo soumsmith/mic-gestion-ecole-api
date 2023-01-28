@@ -1,6 +1,5 @@
 package com.vieecoles.services;
 
-import com.vieecoles.dao.entities.Annee_Scolaire;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -8,6 +7,9 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Response;
+
+import com.vieecoles.entities.Annee_Scolaire;
+
 import java.net.URI;
 import java.util.List;
 

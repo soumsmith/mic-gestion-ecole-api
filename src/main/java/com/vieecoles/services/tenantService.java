@@ -1,10 +1,12 @@
 package com.vieecoles.services;
 
-import com.vieecoles.dao.entities.tenant;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.NotFoundException;
+
+import com.vieecoles.entities.tenant;
+
 import java.util.List;
 
 @ApplicationScoped

@@ -1,9 +1,9 @@
 package com.vieecoles.services.souscription;
 
-import com.vieecoles.dao.entities.operations.ecole;
-import com.vieecoles.dao.entities.operations.message_personnel;
-import com.vieecoles.dao.entities.operations.sous_attent_personn;
 import com.vieecoles.dto.message_personnelDto;
+import com.vieecoles.entities.operations.ecole;
+import com.vieecoles.entities.operations.message_personnel;
+import com.vieecoles.entities.operations.sous_attent_personn;
 import com.vieecoles.projection.MessageSelect;
 import com.vieecoles.projection.panier_personnelSelect;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;

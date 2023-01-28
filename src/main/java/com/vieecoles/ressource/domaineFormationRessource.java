@@ -1,6 +1,6 @@
 package com.vieecoles.ressource;
 
-import com.vieecoles.dao.entities.domaine_formation;
+import com.vieecoles.entities.domaine_formation;
 import com.vieecoles.services.domaineEtudeService;
 
 import javax.inject.Inject;

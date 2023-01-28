@@ -1,7 +1,7 @@
 package com.vieecoles.ressource.operations;
 
 import com.vieecoles.dto.ParentDto;
-import com.vieecoles.dao.entities.Parent;
+import com.vieecoles.entities.Parent;
 import com.vieecoles.services.ParentService;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 

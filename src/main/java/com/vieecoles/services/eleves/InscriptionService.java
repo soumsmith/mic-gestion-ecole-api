@@ -1,11 +1,11 @@
 package com.vieecoles.services.eleves;
 
-import com.vieecoles.dao.entities.*;
 import com.vieecoles.dto.InscriptionAvaliderDto;
 import com.vieecoles.dto.InscriptionDto;
-import com.vieecoles.dao.entities.operations.Inscriptions;
-import com.vieecoles.dao.entities.operations.ecole;
-import com.vieecoles.dao.entities.operations.eleve;
+import com.vieecoles.entities.*;
+import com.vieecoles.entities.operations.Inscriptions;
+import com.vieecoles.entities.operations.ecole;
+import com.vieecoles.entities.operations.eleve;
 import com.vieecoles.steph.entities.Branche;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
@@ -417,13 +417,13 @@ public  void updatelibelleHandicap_inscrip (Long InscriptionId , Long oldHandica
            throw new RuntimeException("L'identifiant de l'elève  est requis");
        }
 
-       eleve eleve = com.vieecoles.dao.entities.operations.eleve.findById(inscriptionDto.getIdentifiantEleve());
+       eleve eleve = com.vieecoles.entities.operations.eleve.findById(inscriptionDto.getIdentifiantEleve());
        if (eleve == null)
            throw new RuntimeException("Cet elève n'existe pas ");
 
        if (inscriptionDto.getIdentifiantEcole() == null || inscriptionDto.getIdentifiantEcole()==0)
            throw new RuntimeException("L'identifiant de l'ecole  est requis");
-       ecole ecole = com.vieecoles.dao.entities.operations.ecole.findById(inscriptionDto.getIdentifiantEcole());
+       ecole ecole = com.vieecoles.entities.operations.ecole.findById(inscriptionDto.getIdentifiantEcole());
        if (ecole == null)
            throw new RuntimeException("Cette ecole n'existe pas ");
        System.out.println("Mon objet3");
@@ -436,7 +436,7 @@ public  void updatelibelleHandicap_inscrip (Long InscriptionId , Long oldHandica
            libellehandicapList.add(libellehandicap) ;
        }
        System.out.println("Mon objet4");
-           eleve  eleve1= com.vieecoles.dao.entities.operations.eleve.findById(inscriptionDto.getIdentifiantEleve());
+           eleve  eleve1= com.vieecoles.entities.operations.eleve.findById(inscriptionDto.getIdentifiantEleve());
            ecole ecole1= ecole.findById(inscriptionDto.getIdentifiantEcole()) ;
        Annee_Scolaire annee_scolaire= Annee_Scolaire.findById(inscriptionDto.getIdentifiantAnnee_scolaire()) ;
        System.out.println("Mon objet5");
@@ -495,13 +495,13 @@ public  void updatelibelleHandicap_inscrip (Long InscriptionId , Long oldHandica
 
         if (inscriptionDto.getIdentifiantEleve() == null || inscriptionDto.getIdentifiantEleve()==0)
             throw new RuntimeException("L'identifiant de l'elève  est requis");
-        eleve eleve = com.vieecoles.dao.entities.operations.eleve.findById(inscriptionDto.getIdentifiantEleve());
+        eleve eleve = com.vieecoles.entities.operations.eleve.findById(inscriptionDto.getIdentifiantEleve());
         if (eleve == null)
             throw new RuntimeException("Cet elève n'existe pas ");
 
         if (inscriptionDto.getIdentifiantEcole() == null || inscriptionDto.getIdentifiantEcole()==0)
             throw new RuntimeException("L'identifiant de l'ecole  est requis");
-        ecole ecole = com.vieecoles.dao.entities.operations.ecole.findById(inscriptionDto.getIdentifiantEcole());
+        ecole ecole = com.vieecoles.entities.operations.ecole.findById(inscriptionDto.getIdentifiantEcole());
         if (ecole == null)
             throw new RuntimeException("Cette ecole n'existe pas ");
 

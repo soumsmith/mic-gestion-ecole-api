@@ -1,6 +1,6 @@
 package com.vieecoles.ressource;
 
-import com.vieecoles.dao.entities.fonction;
+import com.vieecoles.entities.fonction;
 import com.vieecoles.services.fonctionService;
 
 import javax.inject.Inject;

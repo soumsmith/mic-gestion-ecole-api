@@ -2,7 +2,7 @@ package com.vieecoles.ressource.operations.eleves;
 
 import com.vieecoles.dto.InscriptionAvaliderDto;
 import com.vieecoles.dto.InscriptionDto;
-import com.vieecoles.dao.entities.operations.Inscriptions;
+import com.vieecoles.entities.operations.Inscriptions;
 import com.vieecoles.services.eleves.InscriptionService;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 

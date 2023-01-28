@@ -1,12 +1,12 @@
 package com.vieecoles.services.eleves;
 
-import com.vieecoles.dao.entities.operations.Inscriptions;
 import com.vieecoles.dto.EleveDto;
-import com.vieecoles.dao.entities.Parent;
-import com.vieecoles.dao.entities.cycle;
-import com.vieecoles.dao.entities.operations.eleve;
 import com.vieecoles.dto.InscriptionDto;
 import com.vieecoles.dto.importEleveDto;
+import com.vieecoles.entities.Parent;
+import com.vieecoles.entities.cycle;
+import com.vieecoles.entities.operations.Inscriptions;
+import com.vieecoles.entities.operations.eleve;
 import com.vieecoles.steph.entities.Branche;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 

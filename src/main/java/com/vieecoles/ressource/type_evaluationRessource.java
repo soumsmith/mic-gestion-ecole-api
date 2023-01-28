@@ -1,6 +1,6 @@
 package com.vieecoles.ressource;
 
-import com.vieecoles.dao.entities.type_evaluation;
+import com.vieecoles.entities.type_evaluation;
 import com.vieecoles.services.type_evaluationService;
 
 import javax.inject.Inject;

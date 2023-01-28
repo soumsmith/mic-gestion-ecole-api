@@ -1,6 +1,6 @@
 package com.vieecoles.ressource;
 
-import com.vieecoles.dao.entities.matiere;
+import com.vieecoles.entities.matiere;
 import com.vieecoles.services.matiereService;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 

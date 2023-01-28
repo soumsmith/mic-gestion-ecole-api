@@ -1,11 +1,12 @@
 package com.vieecoles.services.connexion;
 
-import com.vieecoles.dao.entities.operations.ecole;
-import com.vieecoles.dao.entities.operations.sous_attent_personn;
-import com.vieecoles.dao.entities.profil;
-import com.vieecoles.dao.entities.utilisateur;
-import com.vieecoles.dao.entities.utilisateur_has_personnel;
 import com.vieecoles.dto.*;
+import com.vieecoles.entities.profil;
+import com.vieecoles.entities.utilisateur;
+import com.vieecoles.entities.utilisateur_has_personnel;
+import com.vieecoles.entities.operations.ecole;
+import com.vieecoles.entities.operations.sous_attent_personn;
+
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.enterprise.context.ApplicationScoped;

@@ -1,15 +1,16 @@
 package com.vieecoles.services.souscription;
 
-import com.vieecoles.dao.entities.fonction;
-import com.vieecoles.dao.entities.utilisateur;
-import com.vieecoles.dao.entities.operations.*;
 import com.vieecoles.dto.CreerCompteUtilsateurDto;
 import com.vieecoles.dto.ecoleDto2;
 import com.vieecoles.dto.sous_attent_ecoleDto;
 import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
-import com.vieecoles.dao.entities.Zone;
 import com.vieecoles.dto.souscriptionEcoleDto;
 import com.vieecoles.dto.souscriptionValidationDto;
+import com.vieecoles.entities.Zone;
+import com.vieecoles.entities.fonction;
+import com.vieecoles.entities.utilisateur;
+import com.vieecoles.entities.operations.*;
+
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -172,6 +173,7 @@ return  messageRetour ;
               sousEtabli.setSousc_atten_etabliss_tel(listsouscr.get(i).getSousc_atten_etabliss_tel()) ;
               sousEtabli.setSousc_atten_etablisscode(listsouscr.get(i).getSousc_atten_etablisscode()) ;
               sousEtabli.setSousc_atten_etabliss_lien_autorisa(listsouscr.get(i).getSousc_atten_etabliss_lien_autorisa());
+              sousEtabli.setNiveau_Enseignement_id(listsouscr.get(i).getNiveau_Enseignement_id());
               sousEtabli.persist();
               System.out.println("sousEtabli "+sousEtabli.toString());
           } else {
@@ -262,10 +264,11 @@ return  listEcoleDto;
                 myEcole.setEcolecode(mysous.getSousc_atten_etablisscode());
                 myEcole.setEcole_fondateur_contact(mysous.getSousc_atten_etabliss_fondateur());
                 myEcole.setEcoleclibelle(mysous.getSousc_atten_etabliss_nom());
-                myEcole.setVille_villeid(mysous.getVille().getVilleid());
+                //myEcole.setVille_villeid(mysous.getVille().getVilleid());
                 myEcole.setEcole_telephone(mysous.getSousc_atten_etabliss_tel());
                 myEcole.setZone_zoneid(mysous.getZone().getZoneid());
                 myEcole.setSousc_atten_etabliss_idSOUS_ATTENT_ETABLISSEMENT(mysous.getIdSOUS_ATTENT_ETABLISSEMENT());
+                myEcole.setNiveau_Enseignement_id(mysous.getNiveau_Enseignement_id());
                 myEcole.persist();
 
                  }
@@ -275,8 +278,8 @@ return  listEcoleDto;
         List <souscriptionEcoleDto> minScription ;
         try {
             System.out.println("entree1");
-            return  minScription = em.createQuery("SELECT new com.vieecoles.dto.souscriptionEcoleDto(o.idSOUS_ATTENT_ETABLISSEMENT ,o.sousc_atten_etablisscode ,o.sousc_atten_etabliss_nom,p.sous_attent_personn_nom ,p.sous_attent_personn_prenom,p.sous_attent_personn_contact,p.sous_attent_personn_contact2,o.sousc_atten_etabliss_indication,v.villeid,z.zoneid,f.fonctionid,v.villelibelle,z.zonelibelle,f.fonctionlibelle,o.sousc_atten_etabliss_statut,o.sousc_atten_etabliss_lien_autorisa) from sousc_atten_etabliss o , sous_attent_personn  p join  o.ville v join o.zone z join p.fonction f " +
-                            " where o.sous_attent_personn_sous_attent_personnid = p.sous_attent_personnid and o.sousc_atten_etabliss_statut=: status ",souscriptionEcoleDto.class )
+            return  minScription = em.createQuery("SELECT new com.vieecoles.dto.souscriptionEcoleDto(o.idSOUS_ATTENT_ETABLISSEMENT ,o.sousc_atten_etablisscode ,o.sousc_atten_etabliss_nom,p.sous_attent_personn_nom ,p.sous_attent_personn_prenom,p.sous_attent_personn_contact,p.sous_attent_personn_contact2,o.sousc_atten_etabliss_indication,v.villeid,z.zoneid,f.fonctionid,v.villelibelle,z.zonelibelle,f.fonctionlibelle,o.sousc_atten_etabliss_statut,o.sousc_atten_etabliss_lien_autorisa,n.libelle)  from NiveauEnseignement n ,sousc_atten_etabliss o , sous_attent_personn  p join  o.ville v join o.zone z join p.fonction f " +
+                            " where o.sous_attent_personn_sous_attent_personnid = p.sous_attent_personnid and o.Niveau_Enseignement_id = n.id and o.sousc_atten_etabliss_statut=: status ",souscriptionEcoleDto.class )
                     .setParameter("status",status)
                     .getResultList();
         } catch (Exception e){
@@ -290,8 +293,8 @@ return  listEcoleDto;
         List <souscriptionEcoleDto> minScription ;
         try {
             System.out.println("entree1");
-            return  minScription = em.createQuery("SELECT new com.vieecoles.dto.souscriptionEcoleDto(o.idSOUS_ATTENT_ETABLISSEMENT ,o.sousc_atten_etablisscode ,o.sousc_atten_etabliss_nom,p.sous_attent_personn_nom ,p.sous_attent_personn_prenom,p.sous_attent_personn_contact,p.sous_attent_personn_contact2,o.sousc_atten_etabliss_indication,v.villeid,z.zoneid,f.fonctionid,v.villelibelle,z.zonelibelle,f.fonctionlibelle,o.sousc_atten_etabliss_statut,o.sousc_atten_etabliss_lien_autorisa) from sousc_atten_etabliss o , sous_attent_personn  p join  o.ville v join o.zone z join p.fonction f " +
-                            " where o.sous_attent_personn_sous_attent_personnid = p.sous_attent_personnid  and o.sous_attent_personn_sous_attent_personnid=:sousCripteur",souscriptionEcoleDto.class )
+            return  minScription = em.createQuery("SELECT new com.vieecoles.dto.souscriptionEcoleDto(o.idSOUS_ATTENT_ETABLISSEMENT ,o.sousc_atten_etablisscode ,o.sousc_atten_etabliss_nom,p.sous_attent_personn_nom ,p.sous_attent_personn_prenom,p.sous_attent_personn_contact,p.sous_attent_personn_contact2,o.sousc_atten_etabliss_indication,v.villeid,z.zoneid,f.fonctionid,v.villelibelle,z.zonelibelle,f.fonctionlibelle,o.sousc_atten_etabliss_statut,o.sousc_atten_etabliss_lien_autorisa ,n.libelle) from NiveauEnseignement n, sousc_atten_etabliss o , sous_attent_personn  p join  o.ville v join o.zone z join p.fonction f " +
+                            " where o.sous_attent_personn_sous_attent_personnid = p.sous_attent_personnid  and o.sous_attent_personn_sous_attent_personnid=:sousCripteur and o.Niveau_Enseignement_id = n.id",souscriptionEcoleDto.class )
                     .setParameter("sousCripteur",sousCripteur)
                     .getResultList();
         } catch (Exception e){

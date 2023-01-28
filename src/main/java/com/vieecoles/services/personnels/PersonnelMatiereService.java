@@ -1,6 +1,6 @@
 package com.vieecoles.services.personnels;
 
-import com.vieecoles.dao.entities.operations.personnel_matiere;
+import com.vieecoles.entities.operations.personnel_matiere;
 import com.vieecoles.projection.personnel_matiereSelect;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 

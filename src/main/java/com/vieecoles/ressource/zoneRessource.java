@@ -1,8 +1,7 @@
 package com.vieecoles.ressource;
 
 
-import com.vieecoles.dao.entities.Zone;
-
+import com.vieecoles.entities.Zone;
 import com.vieecoles.services.zoneService;
 
 import javax.inject.Inject;
@@ -28,6 +27,13 @@ public class zoneRessource {
     public Zone get(@PathParam("id") Long id) {
         return zonService.findById(id);
     }
+
+    @GET
+    @Path("commune/{idCommune}")
+    public List<Zone> getZoneByCommune(@PathParam("idCommune") Long idCommune) {
+        return zonService.findZoneByCommune(idCommune) ;
+    }
+
 
     @GET
     @Path("/soumm-test")

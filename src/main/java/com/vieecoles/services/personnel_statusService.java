@@ -1,11 +1,13 @@
 package com.vieecoles.services;
 
-import com.vieecoles.dao.entities.personnel_status;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Response;
+
+import com.vieecoles.entities.personnel_status;
+
 import java.net.URI;
 import java.util.List;
 

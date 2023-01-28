@@ -1,9 +1,9 @@
 package com.vieecoles.dto;
 
-import com.vieecoles.dao.entities.operations.Inscriptions;
-
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+
+import com.vieecoles.entities.operations.Inscriptions;
 
 public class souscriptionEcoleDto {
     private Long  idSouscr ;
@@ -22,6 +22,7 @@ public class souscriptionEcoleDto {
     private  String zoneLibelle ;
     private  String fonctionLibelle ;
     private  String lienAutorisationEnseign;
+    private String niveauEnseignement ;
     @Enumerated(EnumType.STRING)
     private Inscriptions.status statuts ;
 
@@ -53,7 +54,7 @@ public class souscriptionEcoleDto {
                                 String telfondateurSouscrl, String telfondateurSouscrl2,
                                 String ecoleindicationSouscrl, Long villeidSouscrl, Long zoneidSouscrl,
                                 Long fonctionidSouscrl, String villeLibelle,
-                                String zoneLibelle, String fonctionLibelle ,Inscriptions.status  statuts,String lienAutorisationEnseign) {
+                                String zoneLibelle, String fonctionLibelle ,Inscriptions.status  statuts,String lienAutorisationEnseign ,String niveauEnseignement) {
         this.idSouscr = idSouscr;
         this.codeSouscr = codeSouscr;
         this.nomEcoleSouscr = nomEcoleSouscr;
@@ -70,6 +71,7 @@ public class souscriptionEcoleDto {
         this.fonctionLibelle = fonctionLibelle;
         this.statuts= statuts ;
         this.lienAutorisationEnseign = lienAutorisationEnseign ;
+        this.niveauEnseignement= niveauEnseignement ;
     }
 
     public Inscriptions.status getStatuts() {
@@ -179,4 +181,19 @@ public class souscriptionEcoleDto {
     public void setFonctionidSouscrl(Long fonctionidSouscrl) {
         this.fonctionidSouscrl = fonctionidSouscrl;
     }
+
+    /**
+     * @return String return the niveauEnseignement
+     */
+    public String getNiveauEnseignement() {
+        return niveauEnseignement;
+    }
+
+    /**
+     * @param niveauEnseignement the niveauEnseignement to set
+     */
+    public void setNiveauEnseignement(String niveauEnseignement) {
+        this.niveauEnseignement = niveauEnseignement;
+    }
+
 }
