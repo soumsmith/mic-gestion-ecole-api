@@ -148,7 +148,7 @@ public class connexionService implements PanacheRepositoryBase<utilisateur_has_p
     }
 
 @Transactional
-  public personnelConnexionDto infosUtilisateurConnecte(String email){
+  public personnelConnexionDto infosUtilisateurConnecte(String email,Long idEcole){
 
     Long idUtilisateur ,IdPersonnel ;
       personnelConnexionDto  myPersoDto = new personnelConnexionDto() ;
@@ -157,7 +157,7 @@ public class connexionService implements PanacheRepositoryBase<utilisateur_has_p
       idUtilisateur =   getIdUtilisateur(email);
       System.out.println("idUtilisateur "+idUtilisateur);
 
-          IdPersonnel = getIDpersonnel(idUtilisateur) ;
+          IdPersonnel = getIDpersonnel(idUtilisateur,idEcole) ;
 
           System.out.println("IdPersonnel "+IdPersonnel);
           myPersoDto = getInfoPersonn(IdPersonnel) ;
@@ -248,11 +248,12 @@ public class connexionService implements PanacheRepositoryBase<utilisateur_has_p
        }
 
     @Transactional
-    public long  getIDpersonnel(Long  idUtilisateur){
+    public long  getIDpersonnel(Long  idUtilisateur,Long idEcole){
         Long IdPersonnel = null;
         try {
-            IdPersonnel= (Long) em.createQuery("select distinct  o.personnel_personnelid from utilisateur_has_personnel  o  where  o.utilisateur.utilisateurid =:idUtilisateur ")
+            IdPersonnel= (Long) em.createQuery("select distinct  o.personnel_personnelid from utilisateur_has_personnel  o  where  o.utilisateur.utilisateurid =:idUtilisateur and o.ecole_ecoleid=:idEcole ")
                     .setParameter("idUtilisateur",idUtilisateur)
+                    .setParameter("idEcole",idEcole)
                     .getSingleResult();
         } catch (Exception e) {
             IdPersonnel = null;
