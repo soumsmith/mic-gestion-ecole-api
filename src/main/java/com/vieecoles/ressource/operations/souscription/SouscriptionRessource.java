@@ -12,6 +12,7 @@ import com.vieecoles.services.profilService;
 import com.vieecoles.services.personnels.PersonnelService;
 import com.vieecoles.services.souscription.FileStorageService;
 import com.vieecoles.services.souscription.SouscPersonnelService;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
@@ -111,18 +112,57 @@ public class SouscriptionRessource {
     }
 
      @GET
-     @Produces("application/pdf")
+     @Produces({"application/pdf", "image/jpeg"})
      @Consumes(MediaType.APPLICATION_JSON)
-     @Path("ouvrir-fichier/{path}")
-     public Response lireFichier(@PathParam("path") String path) throws IOException {
-         Desktop desktop = Desktop.getDesktop();
-         File file = new File(UPLOAD_DIR+path);
-         System.out.println("Path"+UPLOAD_DIR+path);
+     @Path("ouvrir-fichier/{fileName}")
+     public Response lireFichier(@PathParam("fileName") String fileName) throws IOException {
+        String exten = null ;
+
+         System.out.println("Path"+UPLOAD_DIR+fileName);
+
+         System.out.println("File requested is : " + fileName);
+
+         //Put some validations here such as invalid file name or missing file name
+         if(fileName == null || fileName.isEmpty())
+         {
+             Response.ResponseBuilder response = Response.status(Response.Status.BAD_REQUEST);
+             return response.build();
+         }
+
+         //Prepare a file object with file to return
+         File file = new File(UPLOAD_DIR+fileName);
+
+       //  exten= FilenameUtils.getExtension(UPLOAD_DIR+fileName) ;
 
 
-     return souscPersonnelService.convertFileInp(UPLOAD_DIR+path) ;
+         Response.ResponseBuilder response = Response.ok((Object) file);
+         response.header("Content-Disposition", "attachment; filename="+UPLOAD_DIR+fileName+"");
+         return response.build();
 
      }
+
+    @GET
+    @Path("/ouvrir-image/{fileName}")
+    @Produces("image/jpeg")
+    public Response getFileInJPEGFormat(@PathParam("fileName") String fileName)
+    {
+        System.out.println("File requested is : " + fileName);
+
+        //Put some validations here such as invalid file name or missing file name
+        if(fileName == null || fileName.isEmpty())
+        {
+            Response.ResponseBuilder response = Response.status(Response.Status.BAD_REQUEST);
+            return response.build();
+        }
+        //Prepare a file object with file to return
+        File file = new File(UPLOAD_DIR+fileName);
+
+        Response.ResponseBuilder response = Response.ok((Object) file);
+        response.header("Content-Disposition", "attachment; filename="+UPLOAD_DIR+fileName+"");
+        return response.build();
+    }
+
+
 
 
      @GET
@@ -215,6 +255,11 @@ public class SouscriptionRessource {
        return     souscPersonnelService.CreerSouscripCompteUtilisateur(mySouscrip) ;
     }
 
+
+
+
+
+
     @POST
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -230,7 +275,6 @@ public class SouscriptionRessource {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-
     public sous_attent_personn UpdateSouscripPersonne(sous_attent_personnDto mySouscrip) {
      return    souscPersonnelService.modifierSousCriptionPersonnel(mySouscrip) ;
     }

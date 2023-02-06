@@ -31,7 +31,7 @@ public class connexionService implements PanacheRepositoryBase<utilisateur_has_p
 
     public  ecole  findByIDecole(Long idpobj){
         return ecole.find("ecoleid",idpobj).singleResult();
-    } 
+    }
     @Transactional
     public String affecterProfilFondateur(Long personnelid,LocalDate Datefin, Long idEcole, Long ProfilId  ){
         utilisateur_has_personnelDto utilisatPersonDto = new utilisateur_has_personnelDto() ;
@@ -44,7 +44,7 @@ public class connexionService implements PanacheRepositoryBase<utilisateur_has_p
         myutilisateur2 = verifiEmailUtilisateur(emailUtilisateur) ;
         System.out.print("myutilisateurObjectParEmail "+myutilisateur2.toString());
         Long idUser = getIdUser(personnelid) ;
-       
+
         myutilisateurPerson= veriCompteUtilisateurEcole(personnelid ,idEcole, ProfilId);
 
         if(myutilisateurPerson!=null) {
@@ -293,7 +293,7 @@ public class connexionService implements PanacheRepositoryBase<utilisateur_has_p
     public CandidatConnexionDto getInfoPersonnCandidat(Long  idPersonnel){
         CandidatConnexionDto  myPersoDto = new CandidatConnexionDto() ;
         try {
-            myPersoDto= (CandidatConnexionDto) em.createQuery("select  new com.vieecoles.dto.CandidatConnexionDto(o.sous_attent_personnid,o.sous_attent_personn_nom,o.sous_attent_personn_prenom,o.sous_attent_personn_email,'1') from sous_attent_personn  o  where  o.sous_attent_personnid =:idPersonnel",CandidatConnexionDto.class)
+            myPersoDto= (CandidatConnexionDto) em.createQuery("select  new com.vieecoles.dto.CandidatConnexionDto(o.sous_attent_personnid,o.sous_attent_personn_nom,o.sous_attent_personn_prenom,o.sous_attent_personn_email,'1',f.fonctionlibelle) from sous_attent_personn  o join o.fonction f where  o.sous_attent_personnid =:idPersonnel",CandidatConnexionDto.class)
                     .setParameter("idPersonnel",idPersonnel)
                     .getSingleResult();
         } catch (Exception e) {

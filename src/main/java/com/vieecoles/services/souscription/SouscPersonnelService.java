@@ -42,7 +42,7 @@ import java.util.List;
 public class SouscPersonnelService implements PanacheRepositoryBase<sous_attent_personn, Long> {
     @Inject
     EntityManager em;
-   
+
     @Inject
     connexionService conServ ;
     @Inject
@@ -50,7 +50,7 @@ public class SouscPersonnelService implements PanacheRepositoryBase<sous_attent_
 
     @Inject
     domaineFormationService domServ ;
-    
+
 
 
 
@@ -134,7 +134,7 @@ public class SouscPersonnelService implements PanacheRepositoryBase<sous_attent_
                 .setParameter("status" ,status).
                 getResultList();
         return  listSouscriptionAvaliderDto;
-    } 
+    }
 
     public  List<sous_attent_personn> findAllSouscriptionAvaliderDtoFondateur(String status,String fonction ){
         TypedQuery<sous_attent_personn> q = (TypedQuery<sous_attent_personn>) em.createQuery( "SELECT  o from sous_attent_personn o join o.fonction f where o.sous_attent_personn_statut=:status and f.fonctionlibelle=:fonction  ");
@@ -199,10 +199,10 @@ public class SouscPersonnelService implements PanacheRepositoryBase<sous_attent_
         System.out.print("ProfilId "+mysouscription.getProfilId());
         conServ.affecterProfilFondateur(PersonnCreer.getPersonnelid(), mysouscription.getDatefin(), idEcole, mysouscription.getProfilId());
         }
-        
-        
+
+
         MessageRetour="opération effectuée avec succès!";
-        
+
       return MessageRetour ;
      }
 
@@ -234,7 +234,7 @@ public class SouscPersonnelService implements PanacheRepositoryBase<sous_attent_
                  getSingleResult() ;
           return  myEcoleid;
          }
-     
+
      @Transactional
      public personnel  recruterUnFondateur(Long idEcole ,Long sous_attentId){
        personnel PersonnCreer = new personnel() ;
@@ -269,13 +269,13 @@ public class SouscPersonnelService implements PanacheRepositoryBase<sous_attent_
              person2.setNiveau_etude(myNive);
              person2.persist();
              PersonnCreer= person2;
-             
+
          } else {
             PersonnCreer = null;
          }
- 
+
          return  PersonnCreer ;
-     }          
+     }
     @Transactional
      public domaine_formation getDomFormation(){
         domaine_formation myDom= new domaine_formation();
@@ -405,11 +405,14 @@ public class SouscPersonnelService implements PanacheRepositoryBase<sous_attent_
         niveau_etude  myNiveauEtude = new niveau_etude() ;
         domaine_formation myDomaineFormation = new domaine_formation() ;
         sous_attent_personn  mysouscripPersonn = new sous_attent_personn() ;
-
         myNiveauEtude= niveau_etude.findById(souscPersonn.getNiveau_etudeIdentifiant()) ;
         myDomaineFormation = domaine_formation.findById(souscPersonn.getIdentifiantdomaine_formation());
-
+        mysouscripPersonn= sous_attent_personn.findById(souscPersonn.getSous_attent_personnid()) ;
         mysouscripPersonn.setNiveau_etude(myNiveauEtude);
+        fonction myFonction= new fonction() ;
+        myFonction = fonction.findById(souscPersonn.getFonctionidentifiant());
+        mysouscripPersonn.setSous_attent_personn_contact(souscPersonn.getSous_attent_personn_contact());
+        mysouscripPersonn.setFonction(myFonction);
         mysouscripPersonn.setDomaine_formation(myDomaineFormation);
         mysouscripPersonn.setSous_attent_personn_date_naissance(souscPersonn.getSous_attent_personn_date_naissance());
         mysouscripPersonn.setSous_attent_personn_diplome_recent(souscPersonn.getSous_attent_personn_diplome_recent());

@@ -23,8 +23,19 @@ public class souscriptionEcoleDto {
     private  String fonctionLibelle ;
     private  String lienAutorisationEnseign;
     private String niveauEnseignement ;
+    private String idcommune ;
+    private String libelleCommune ;
+    private  String sousc_atten_etabliss_lien_logo ;
     @Enumerated(EnumType.STRING)
     private Inscriptions.status statuts ;
+
+    public String getSousc_atten_etabliss_lien_logo() {
+        return sousc_atten_etabliss_lien_logo;
+    }
+
+    public void setSousc_atten_etabliss_lien_logo(String sousc_atten_etabliss_lien_logo) {
+        this.sousc_atten_etabliss_lien_logo = sousc_atten_etabliss_lien_logo;
+    }
 
     public Long getIdSouscr() {
         return idSouscr;
@@ -49,14 +60,30 @@ public class souscriptionEcoleDto {
     public souscriptionEcoleDto() {
     }
 
-    public souscriptionEcoleDto(Long idSouscr, String codeSouscr, String nomEcoleSouscr,
-                                String nomfondateurSouscr, String prenomfondateurSouscr,
-                                String telfondateurSouscrl, String telfondateurSouscrl2,
-                                String ecoleindicationSouscrl, Long villeidSouscrl, Long zoneidSouscrl,
-                                Long fonctionidSouscrl, String villeLibelle,
-                                String zoneLibelle, String fonctionLibelle ,Inscriptions.status  statuts,String lienAutorisationEnseign ,String niveauEnseignement) {
+    public String getIdcommune() {
+        return idcommune;
+    }
+
+    public souscriptionEcoleDto(Long idSouscr,
+                                String codeSouscr ,
+                                String nomEcoleSouscr,
+                                String nomfondateurSouscr,
+                                String prenomfondateurSouscr,
+                                String telfondateurSouscrl,
+                                String telfondateurSouscrl2,
+                                String ecoleindicationSouscrl,
+                                Long villeidSouscrl,
+                                Long zoneidSouscrl,
+                                Long fonctionidSouscrl,
+                                String zoneLibelle,
+                                String fonctionLibelle,
+                                String lienAutorisationEnseign,
+                                String niveauEnseignement,
+                                String idcommune,
+                                String libelleCommune,
+                                Inscriptions.status statuts) {
         this.idSouscr = idSouscr;
-        this.codeSouscr = codeSouscr;
+        this.codeSouscr = codeSouscr ;
         this.nomEcoleSouscr = nomEcoleSouscr;
         this.nomfondateurSouscr = nomfondateurSouscr;
         this.prenomfondateurSouscr = prenomfondateurSouscr;
@@ -66,12 +93,25 @@ public class souscriptionEcoleDto {
         this.villeidSouscrl = villeidSouscrl;
         this.zoneidSouscrl = zoneidSouscrl;
         this.fonctionidSouscrl = fonctionidSouscrl;
-        this.villeLibelle = villeLibelle;
         this.zoneLibelle = zoneLibelle;
         this.fonctionLibelle = fonctionLibelle;
-        this.statuts= statuts ;
-        this.lienAutorisationEnseign = lienAutorisationEnseign ;
-        this.niveauEnseignement= niveauEnseignement ;
+        this.lienAutorisationEnseign = lienAutorisationEnseign;
+        this.niveauEnseignement = niveauEnseignement;
+        this.idcommune = idcommune;
+        this.libelleCommune = libelleCommune;
+        this.statuts = statuts;
+    }
+
+    public void setIdcommune(String idcommune) {
+        this.idcommune = idcommune;
+    }
+
+    public String getLibelleCommune() {
+        return libelleCommune;
+    }
+
+    public void setLibelleCommune(String libelleCommune) {
+        this.libelleCommune = libelleCommune;
     }
 
     public Inscriptions.status getStatuts() {

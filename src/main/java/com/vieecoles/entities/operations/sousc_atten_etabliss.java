@@ -24,6 +24,7 @@ public class sousc_atten_etabliss extends PanacheEntityBase {
     private  String sousc_atten_etabliss_motifRefus ;
     private LocalDateTime sousc_atten_etabliss_dateCreation ;
     private  LocalDateTime sousc_atten_etabliss_date_traitement ;
+    private  String sousc_atten_etabliss_lien_logo ;
     private Long Niveau_Enseignement_id ;
 
     @Enumerated(EnumType.STRING)
@@ -31,30 +32,39 @@ public class sousc_atten_etabliss extends PanacheEntityBase {
 
 
    private  Long sous_attent_personn_sous_attent_personnid ;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ville_villeid")
-    private  ville ville ;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "zone_zoneid")
-    private Zone zone ;
 
-   
+
+    private Long  zone_zoneid ;
+    private Long  commune_communeid ;
 
     @Override
     public String toString() {
-        return "sousc_atten_etabliss [idSOUS_ATTENT_ETABLISSEMENT=" + idSOUS_ATTENT_ETABLISSEMENT
-                + ", sousc_atten_etablisscode=" + sousc_atten_etablisscode + ", sousc_atten_etabliss_nom="
-                + sousc_atten_etabliss_nom + ", sousc_atten_etabliss_fondateur=" + sousc_atten_etabliss_fondateur
-                + ", sousc_atten_etabliss_tel=" + sousc_atten_etabliss_tel + ", sousc_atten_etabliss_email="
-                + sousc_atten_etabliss_email + ", sousc_atten_etabliss_indication=" + sousc_atten_etabliss_indication
-                + ", sousc_atten_etabliss_lien_autorisa=" + sousc_atten_etabliss_lien_autorisa
-                + ", sousc_atten_etabliss_motifRefus=" + sousc_atten_etabliss_motifRefus
-                + ", sousc_atten_etabliss_dateCreation=" + sousc_atten_etabliss_dateCreation
-                + ", sousc_atten_etabliss_date_traitement=" + sousc_atten_etabliss_date_traitement
-                + ", Niveau_Enseignement_id=" + Niveau_Enseignement_id + ", sousc_atten_etabliss_statut="
-                + sousc_atten_etabliss_statut + ", sous_attent_personn_sous_attent_personnid="
-                + sous_attent_personn_sous_attent_personnid + ", ville=" + ville + ", zone=" + zone + "]";
+        return "sousc_atten_etabliss{" +
+                "idSOUS_ATTENT_ETABLISSEMENT=" + idSOUS_ATTENT_ETABLISSEMENT +
+                ", sousc_atten_etablisscode='" + sousc_atten_etablisscode + '\'' +
+                ", sousc_atten_etabliss_nom='" + sousc_atten_etabliss_nom + '\'' +
+                ", sousc_atten_etabliss_fondateur='" + sousc_atten_etabliss_fondateur + '\'' +
+                ", sousc_atten_etabliss_tel='" + sousc_atten_etabliss_tel + '\'' +
+                ", sousc_atten_etabliss_email='" + sousc_atten_etabliss_email + '\'' +
+                ", sousc_atten_etabliss_indication='" + sousc_atten_etabliss_indication + '\'' +
+                ", sousc_atten_etabliss_lien_autorisa='" + sousc_atten_etabliss_lien_autorisa + '\'' +
+                ", sousc_atten_etabliss_motifRefus='" + sousc_atten_etabliss_motifRefus + '\'' +
+                ", sousc_atten_etabliss_dateCreation=" + sousc_atten_etabliss_dateCreation +
+                ", sousc_atten_etabliss_date_traitement=" + sousc_atten_etabliss_date_traitement +
+                ", Niveau_Enseignement_id=" + Niveau_Enseignement_id +
+                ", sousc_atten_etabliss_statut=" + sousc_atten_etabliss_statut +
+                ", sous_attent_personn_sous_attent_personnid=" + sous_attent_personn_sous_attent_personnid +
+                ", zone_zoneid=" + zone_zoneid +
+                '}';
+    }
+
+    public String getSousc_atten_etabliss_lien_logo() {
+        return sousc_atten_etabliss_lien_logo;
+    }
+
+    public void setSousc_atten_etabliss_lien_logo(String sousc_atten_etabliss_lien_logo) {
+        this.sousc_atten_etabliss_lien_logo = sousc_atten_etabliss_lien_logo;
     }
 
     public String getSousc_atten_etabliss_motifRefus() {
@@ -63,6 +73,14 @@ public class sousc_atten_etabliss extends PanacheEntityBase {
 
     public void setSousc_atten_etabliss_motifRefus(String sousc_atten_etabliss_motifRefus) {
         this.sousc_atten_etabliss_motifRefus = sousc_atten_etabliss_motifRefus;
+    }
+
+    public Long getCommune_communeid() {
+        return commune_communeid;
+    }
+
+    public void setCommune_communeid(Long commune_communeid) {
+        this.commune_communeid = commune_communeid;
     }
 
     public LocalDateTime getSousc_atten_etabliss_dateCreation() {
@@ -162,20 +180,12 @@ public class sousc_atten_etabliss extends PanacheEntityBase {
         this.sousc_atten_etabliss_indication = sousc_atten_etabliss_indication;
     }
 
-    public com.vieecoles.entities.operations.ville getVille() {
-        return ville;
+    public Long getZone_zoneid() {
+        return zone_zoneid;
     }
 
-    public void setVille(com.vieecoles.entities.operations.ville ville) {
-        this.ville = ville;
-    }
-
-    public Zone getZone() {
-        return zone;
-    }
-
-    public void setZone(Zone zone) {
-        this.zone = zone;
+    public void setZone_zoneid(Long zone_zoneid) {
+        this.zone_zoneid = zone_zoneid;
     }
 
     /**
