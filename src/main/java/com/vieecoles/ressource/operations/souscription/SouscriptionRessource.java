@@ -47,8 +47,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class SouscriptionRessource {
-    //private static String UPLOAD_DIR = "/data/";
-    private static String UPLOAD_DIR = "D:/BrouillonsReactJS/";
+    private static String UPLOAD_DIR = "/data/";
+    //private static String UPLOAD_DIR = "D:/BrouillonsReactJS/";
     @Inject
     SouscPersonnelService souscPersonnelService ;
     @Inject
