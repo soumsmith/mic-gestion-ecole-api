@@ -31,8 +31,8 @@ public class ecole extends PanacheEntityBase {
     //private Long ville_villeid ;
     private Long sousc_atten_etabliss_idSOUS_ATTENT_ETABLISSEMENT;
     private Long Niveau_Enseignement_id ;
-    
-   
+    private Long commune_communeid ;
+
 
     /**
      * @return Long return the ecoleid
@@ -47,12 +47,20 @@ public class ecole extends PanacheEntityBase {
     public void setEcoleid(Long ecoleid) {
         this.ecoleid = ecoleid;
     }
-      
+
     /**
      * @return String return the ecolecode
      */
     public String getEcolecode() {
         return ecolecode;
+    }
+
+    public Long getCommune_communeid() {
+        return commune_communeid;
+    }
+
+    public void setCommune_communeid(Long commune_communeid) {
+        this.commune_communeid = commune_communeid;
     }
 
     /**
@@ -247,7 +255,7 @@ public class ecole extends PanacheEntityBase {
     /**
      * @return Long return the ville_villeid
      */
-  
+
 
 
     /**

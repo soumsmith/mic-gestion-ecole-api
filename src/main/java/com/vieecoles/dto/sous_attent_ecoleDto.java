@@ -17,13 +17,81 @@ public class sous_attent_ecoleDto {
     private  String sousc_atten_etabliss_indication ;
     private  Long  ville_villeid ;
     private  Long zone_zoneid  ;
+    private  Long commune_communeid  ;
     private Long fonctionid ;
     private String sous_attent_personn_login ;
     private String sous_attent_personn_password ;
     private  String sous_attent_personn_email;
     private Long Niveau_Enseignement_id ;
+    private String  niveauEnseignement ;
+    private String  libelleCommune ;
+    private  String sousc_atten_etabliss_lien_logo ;
 
-    
+
+
+
+    public sous_attent_ecoleDto() {
+    }
+
+    public String getSousc_atten_etabliss_lien_logo() {
+        return sousc_atten_etabliss_lien_logo;
+    }
+
+    public void setSousc_atten_etabliss_lien_logo(String sousc_atten_etabliss_lien_logo) {
+        this.sousc_atten_etabliss_lien_logo = sousc_atten_etabliss_lien_logo;
+    }
+
+    public sous_attent_ecoleDto(String sousc_atten_etablisscode,
+                                String sousc_atten_etabliss_nom,
+                                String sousc_atten_etabliss_tel,
+                                String sousc_atten_etabliss_email,
+                                String sousc_atten_etabliss_lien_autorisa,
+                                String sousc_atten_etabliss_indication,
+
+                                Long zone_zoneid,
+                                Long niveau_Enseignement_id,
+                                Long communeid ,
+                                String niveauEnseignement,
+                                String libelleCommune
+                                ) {
+        this.sousc_atten_etablisscode = sousc_atten_etablisscode;
+        this.sousc_atten_etabliss_nom = sousc_atten_etabliss_nom;
+        this.sousc_atten_etabliss_tel = sousc_atten_etabliss_tel;
+        this.sousc_atten_etabliss_email = sousc_atten_etabliss_email;
+        this.sousc_atten_etabliss_lien_autorisa = sousc_atten_etabliss_lien_autorisa;
+        this.sousc_atten_etabliss_indication = sousc_atten_etabliss_indication;
+        this.zone_zoneid = zone_zoneid;
+        this.Niveau_Enseignement_id = niveau_Enseignement_id;
+        this.commune_communeid= communeid ;
+        this.niveauEnseignement =niveauEnseignement ;
+        this.libelleCommune=libelleCommune ;
+
+    }
+
+    public String getNiveauEnseignement() {
+        return niveauEnseignement;
+    }
+
+    public void setNiveauEnseignement(String niveauEnseignement) {
+        this.niveauEnseignement = niveauEnseignement;
+    }
+
+    public String getLibelleCommune() {
+        return libelleCommune;
+    }
+
+    public void setLibelleCommune(String libelleCommune) {
+        this.libelleCommune = libelleCommune;
+    }
+
+    public Long getCommune_communeid() {
+        return commune_communeid;
+    }
+
+    public void setCommune_communeid(Long commune_communeid) {
+        this.commune_communeid = commune_communeid;
+    }
+
     public Long getSousc_atten_etablissid() {
         return sousc_atten_etablissid;
     }

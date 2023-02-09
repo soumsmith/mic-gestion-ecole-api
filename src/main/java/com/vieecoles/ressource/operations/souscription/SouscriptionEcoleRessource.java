@@ -1,9 +1,6 @@
 package com.vieecoles.ressource.operations.souscription;
 
-import com.vieecoles.dto.ecoleDto2;
-import com.vieecoles.dto.sous_attent_ecoleDto;
-import com.vieecoles.dto.souscriptionEcoleDto;
-import com.vieecoles.dto.souscriptionValidationDto;
+import com.vieecoles.dto.*;
 import com.vieecoles.entities.operations.Inscriptions;
 import com.vieecoles.entities.operations.ecole;
 import com.vieecoles.entities.operations.sousc_atten_etabliss;
@@ -61,7 +58,7 @@ public class SouscriptionEcoleRessource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("allSouscriptionEcoles/{status}")
-    public List<souscriptionEcoleDto> getAllSouscriptionEcoleS(@PathParam("status") String status) {
+    public List<etablissementDto> getAllSouscriptionEcoleS(@PathParam("status") String status) {
         Inscriptions.status status1= Inscriptions.status.valueOf(status);
         return souscPersonnelService.listTousLesSouscrEcole(status1) ;
     }
@@ -73,6 +70,16 @@ public class SouscriptionEcoleRessource {
        // Inscriptions.status status1= Inscriptions.status.valueOf(status);
         return souscPersonnelService.listTousLesSouscrEcoleParFondateur(idsouscrip);
     }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("souscri-etabliss-a-modifier-fondateur/{idsouscrip}")
+    public List<etablissementAmodifierDto> getSouscripAmodifierParFondateur(@PathParam("idsouscrip") Long idsouscrip) {
+        // Inscriptions.status status1= Inscriptions.status.valueOf(status);
+        return souscPersonnelService.getListSouscEcoleParFondateur(idsouscrip) ;
+    }
+
 
 
     @PUT
@@ -90,13 +97,13 @@ public class SouscriptionEcoleRessource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    
+
     @Path("creer-ecole-by-souscription/{idsouscrip}")
     public void souscriptionEtablissementCreer(@PathParam("idsouscrip")Long idsouscrip){
       souscPersonnelService.creerEcoleBySouscrip(idsouscrip) ;
     }
 
-    
+
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -104,6 +111,16 @@ public class SouscriptionEcoleRessource {
     public String souscriptionEtablissement(@QueryParam("fonctionId") Long fonctionId ,@QueryParam("nom")String nom,@QueryParam("prenom") String prenom,@QueryParam("contact1") String contact1 ,@QueryParam("contact2")String contact2 ,@QueryParam("email")String email ,@QueryParam("passWord")String passWord ,List<sous_attent_ecoleDto> listsouscr ){
      return   souscPersonnelService.creerSouscripEtablissement(fonctionId,nom,prenom ,contact1,contact2,email,passWord,listsouscr) ;
     }
+
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("souscription-etablissement")
+    public String updatesouscriptionEtablissement(@QueryParam("souscripId") Long souscripId ,@QueryParam("nom")String nom,@QueryParam("prenom") String prenom,@QueryParam("contact1") String contact1 ,@QueryParam("contact2")String contact2 ,@QueryParam("email")String email ,List<sous_attent_ecoleDto> listsouscr ){
+        return   souscPersonnelService.ModifierSouscripEtablissement(souscripId,nom,prenom ,contact1,contact2,email ,listsouscr) ;
+    }
+
+
 
 
     @POST

@@ -8,13 +8,23 @@ public class CandidatConnexionDto {
     private  String candidat_prenom;
     private  String candidat_email;
     private String connect ;
-
-    public CandidatConnexionDto(Long candidatid, String candidat_nom, String candidat_prenom, String candidat_email ,String connect) {
+   private  String libelleFonction ;
+    public CandidatConnexionDto(Long candidatid, String candidat_nom, String candidat_prenom, String candidat_email ,String connect,
+                                String libelleFonction ) {
         this.candidatid = candidatid;
         this.candidat_nom = candidat_nom;
         this.candidat_prenom = candidat_prenom;
         this.candidat_email = candidat_email;
         this.connect = connect ;
+        this.libelleFonction=libelleFonction;
+    }
+
+    public String getLibelleFonction() {
+        return libelleFonction;
+    }
+
+    public void setLibelleFonction(String libelleFonction) {
+        this.libelleFonction = libelleFonction;
     }
 
     public CandidatConnexionDto() {
