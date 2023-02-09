@@ -31,7 +31,7 @@ public class Inscription extends PanacheEntityBase{
 	@ManyToOne
 	@JoinColumn(name = "Branche_id")
 	private Branche branche;
-	@Column(name = "inscriptions_statut_eleve")
+	@Column(name = "inscriptions_status")
 	private String statut;
 	@Column(name="inscriptions_boursier")
 	private String boursier;

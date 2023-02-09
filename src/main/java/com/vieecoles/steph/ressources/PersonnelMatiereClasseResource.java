@@ -19,10 +19,14 @@ import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 import com.vieecoles.steph.dto.ProfEducDto;
-import com.vieecoles.steph.entities.Classe;
 import com.vieecoles.steph.entities.PersonnelMatiereClasse;
 import com.vieecoles.steph.services.PersonnelMatiereClasseService;
-
+/**
+ * 
+ * MODIFIER LE PARAMETRE annee par sa variable
+ * @author stephane
+ *
+ */
 @Path("personnel-matiere-classe")
 public class PersonnelMatiereClasseResource {
 	@Inject

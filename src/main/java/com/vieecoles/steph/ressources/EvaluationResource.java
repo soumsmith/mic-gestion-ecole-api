@@ -36,7 +36,7 @@ public class EvaluationResource {
 	@Operation(description = "Obtenir le nombre des evaluations par matiere et classe", summary = "")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Tag(name = "Evaluation")
-	public Response getCountByClasseAndMatiere(@QueryParam("classeId") Long classeId,@QueryParam("matiereId") Long matiereId) {
+	public Response getCountByClasseAndMatiere(@QueryParam("anneeId") Long anneeId, @QueryParam("classeId") Long classeId,@QueryParam("matiereId") Long matiereId) {
 		//logger.info("--------> get count ------>");
 
 		return Response.ok().entity(evaluationService.getCountByClasseAndMatiere(classeId, matiereId)).build();
