@@ -197,7 +197,7 @@ return  messageRetour ;
 
 
     public List<etablissementAmodifierDto> getListSouscEcoleParFondateur(Long idSouscrip){
-        TypedQuery<etablissementAmodifierDto> q = em.createQuery( "SELECT distinct new com.vieecoles.dto.etablissementAmodifierDto(o.idSOUS_ATTENT_ETABLISSEMENT, o.sousc_atten_etablisscode,o.sousc_atten_etabliss_nom,o.sousc_atten_etabliss_tel,o.sousc_atten_etabliss_email,o.sousc_atten_etabliss_indication,v,c,z,n,o.sousc_atten_etabliss_lien_autorisa,v.myDirection_regionale , v.myDirection_regionale.pays,o.sousc_atten_etabliss_lien_logo) from sousc_atten_etabliss o left join zone z on o.zone_zoneid=z.zoneid ,commune  c ,ville v, NiveauEnseignement n where o.commune_communeid=c.communeid  and v.villeid=c.ville.villeid and o.Niveau_Enseignement_id= n.id and o.sous_attent_personn_sous_attent_personnid=:idFondat",
+        TypedQuery<etablissementAmodifierDto> q = em.createQuery( "SELECT distinct new com.vieecoles.dto.etablissementAmodifierDto(o.idSOUS_ATTENT_ETABLISSEMENT, o.sousc_atten_etablisscode,o.sousc_atten_etabliss_nom,o.sousc_atten_etabliss_tel,o.sousc_atten_etabliss_email,o.sousc_atten_etabliss_indication,v,c,z,n,o.sousc_atten_etabliss_lien_autorisa,v.myDirection_regionale , v.myDirection_regionale.pays,o.sousc_atten_etabliss_lien_logo,o.sousc_atten_etabliss_statut) from sousc_atten_etabliss o left join zone z on o.zone_zoneid=z.zoneid ,commune  c ,ville v, NiveauEnseignement n where o.commune_communeid=c.communeid  and v.villeid=c.ville.villeid and o.Niveau_Enseignement_id= n.id and o.sous_attent_personn_sous_attent_personnid=:idFondat",
                 etablissementAmodifierDto.class);
 
         List<etablissementAmodifierDto> listEcoleDto = q.setParameter("idFondat", idSouscrip).

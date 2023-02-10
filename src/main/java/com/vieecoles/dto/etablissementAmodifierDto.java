@@ -3,6 +3,7 @@ package com.vieecoles.dto;
 
 import com.vieecoles.entities.Direction_regionale;
 import com.vieecoles.entities.Zone;
+import com.vieecoles.entities.operations.Inscriptions;
 import com.vieecoles.entities.operations.ville;
 import com.vieecoles.entities.operations.commune;
 import com.vieecoles.entities.pays;
@@ -23,6 +24,7 @@ public class etablissementAmodifierDto {
     private  String sousc_atten_etabliss_lien_autorisa ;
     private Direction_regionale myDirection_regionale ;
     private String sousc_atten_etabliss_lien_logo ;
+    private Inscriptions.status sousc_atten_etabliss_status ;
     private pays pays ;
 
     public Long getSousc_atten_etablissid() {
@@ -40,6 +42,14 @@ public class etablissementAmodifierDto {
         return sousc_atten_etabliss_lien_logo;
     }
 
+    public Inscriptions.status getSousc_atten_etabliss_status() {
+        return sousc_atten_etabliss_status;
+    }
+
+    public void setSousc_atten_etabliss_status(Inscriptions.status sousc_atten_etabliss_status) {
+        this.sousc_atten_etabliss_status = sousc_atten_etabliss_status;
+    }
+
     public void setSousc_atten_etabliss_lien_logo(String sousc_atten_etabliss_lien_logo) {
         this.sousc_atten_etabliss_lien_logo = sousc_atten_etabliss_lien_logo;
     }
@@ -54,7 +64,7 @@ public class etablissementAmodifierDto {
                                      com.vieecoles.entities.operations.commune commune,
                                      Zone zone, NiveauEnseignement niveauEnseignement,
                                      String nomFichier, Direction_regionale myDirection_regionale,
-                                     pays pays,String sousc_atten_etabliss_lien_logo ) {
+                                     pays pays,String sousc_atten_etabliss_lien_logo ,Inscriptions.status sousc_atten_etabliss_status) {
         this.sousc_atten_etablissid = sousc_atten_etablissid ;
         this.sousc_atten_etablisscode = sousc_atten_etablisscode;
         this.sousc_atten_etabliss_nom = sousc_atten_etabliss_nom;
@@ -69,6 +79,7 @@ public class etablissementAmodifierDto {
         this.myDirection_regionale = myDirection_regionale ;
         this.pays= pays;
         this.sousc_atten_etabliss_lien_logo =  sousc_atten_etabliss_lien_logo;
+        this.sousc_atten_etabliss_status = sousc_atten_etabliss_status ;
     }
 
     public String getSousc_atten_etablisscode() {
