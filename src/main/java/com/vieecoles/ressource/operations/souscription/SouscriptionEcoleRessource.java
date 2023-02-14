@@ -112,6 +112,14 @@ public class SouscriptionEcoleRessource {
      return   souscPersonnelService.creerSouscripEtablissement(fonctionId,nom,prenom ,contact1,contact2,email,passWord,listsouscr) ;
     }
 
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("ajouter/souscription-etablissement")
+    public String ajoutersouscriptionEtablissement(@QueryParam("idSouscrip")Long idSouscrip ,List<sous_attent_ecoleDto> listsouscr ){
+        return   souscPersonnelService.ajouterLesEcoles(idSouscrip,listsouscr) ;
+    }
+
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)

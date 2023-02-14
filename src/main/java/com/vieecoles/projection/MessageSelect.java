@@ -8,6 +8,7 @@ public class MessageSelect {
 
     private Long  message_personnel_id ;
     private  String message_personnel_emetteur;
+    private  String type_acteur ;
     private  String message_personnel_sujet;
     private  String message_personnel_message;
     private  LocalDate message_personnel_date ;
@@ -15,25 +16,33 @@ public class MessageSelect {
     private String sous_attent_personn_prenom ;
     private String fullName ;
 
+
+
     public MessageSelect() {
     }
 
+
+
+    public String getType_acteur() {
+        return type_acteur;
+    }
+
+    public void setType_acteur(String type_acteur) {
+        this.type_acteur = type_acteur;
+    }
+
     public MessageSelect(Long message_personnel_id,
-                         String message_personnel_emetteur,
                          String message_personnel_sujet,
                          String message_personnel_message,
                          LocalDate message_personnel_date,
-                         String sous_attent_personn_nom,
-                         String sous_attent_personn_prenom,
                          String fullName) {
         this.message_personnel_id = message_personnel_id;
-        this.message_personnel_emetteur = message_personnel_emetteur;
         this.message_personnel_sujet = message_personnel_sujet;
         this.message_personnel_message = message_personnel_message;
         this.message_personnel_date = message_personnel_date;
-        this.sous_attent_personn_nom = sous_attent_personn_nom;
-        this.sous_attent_personn_prenom = sous_attent_personn_prenom;
-        this.fullName=fullName;
+         this.fullName=fullName;
+
+
     }
 
     public String getFullName() {

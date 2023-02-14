@@ -47,8 +47,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class SouscriptionRessource {
-    //private static String UPLOAD_DIR = "/data/";
-    private static String UPLOAD_DIR = "D:/BrouillonsReactJS/";
+    private static String UPLOAD_DIR = "/data/";
+    //private static String UPLOAD_DIR = "D:/BrouillonsReactJS/";
     @Inject
     SouscPersonnelService souscPersonnelService ;
     @Inject
@@ -181,6 +181,28 @@ public class SouscriptionRessource {
 
       return messageRetour ;
      }
+
+
+    @GET
+    // @Produces(MediaType.TEXT_PLAIN)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("nombre-nouvelle-ecoles-valider/{idSouscrip}")
+    public String nombreNewEcoleValiFonda(@PathParam("idSouscrip") Long idSouscrip) throws IOException {
+        List<Long> listEcole ;
+        String messageRetour = null ;
+        listEcole = souscPersonnelService.getListNewEcoleBySouscrip(idSouscrip) ;
+        if(listEcole.size()>0 ) {
+            messageRetour = "1";
+        }else {
+            messageRetour = "2";
+        }
+
+        return messageRetour ;
+    }
+
+
+
+
 
      @GET
       @Produces(MediaType.APPLICATION_JSON)

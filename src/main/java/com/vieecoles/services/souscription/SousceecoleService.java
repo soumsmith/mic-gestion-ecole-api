@@ -117,8 +117,10 @@ return  messageRetour ;
                return  messaRetour= "Cet utilisateur à déjà un compte";
             }
 
-
         }
+
+
+
 
 
     public String ModifierSouscripEtablissement(Long souscripId ,String nom, String prenom, String contact1 ,String contact2 ,String email ,List<sous_attent_ecoleDto> listsouscr){
@@ -195,7 +197,7 @@ return  messageRetour ;
 
 
     public List<etablissementAmodifierDto> getListSouscEcoleParFondateur(Long idSouscrip){
-        TypedQuery<etablissementAmodifierDto> q = em.createQuery( "SELECT distinct new com.vieecoles.dto.etablissementAmodifierDto(o.idSOUS_ATTENT_ETABLISSEMENT, o.sousc_atten_etablisscode,o.sousc_atten_etabliss_nom,o.sousc_atten_etabliss_tel,o.sousc_atten_etabliss_email,o.sousc_atten_etabliss_indication,v,c,z,n,o.sousc_atten_etabliss_lien_autorisa,v.myDirection_regionale , v.myDirection_regionale.pays,o.sousc_atten_etabliss_lien_logo) from sousc_atten_etabliss o left join zone z on o.zone_zoneid=z.zoneid ,commune  c ,ville v, NiveauEnseignement n where o.commune_communeid=c.communeid  and v.villeid=c.ville.villeid and o.Niveau_Enseignement_id= n.id and o.sous_attent_personn_sous_attent_personnid=:idFondat",
+        TypedQuery<etablissementAmodifierDto> q = em.createQuery( "SELECT distinct new com.vieecoles.dto.etablissementAmodifierDto(o.idSOUS_ATTENT_ETABLISSEMENT, o.sousc_atten_etablisscode,o.sousc_atten_etabliss_nom,o.sousc_atten_etabliss_tel,o.sousc_atten_etabliss_email,o.sousc_atten_etabliss_indication,v,c,z,n,o.sousc_atten_etabliss_lien_autorisa,v.myDirection_regionale , v.myDirection_regionale.pays,o.sousc_atten_etabliss_lien_logo,o.sousc_atten_etabliss_statut) from sousc_atten_etabliss o left join zone z on o.zone_zoneid=z.zoneid ,commune  c ,ville v, NiveauEnseignement n where o.commune_communeid=c.communeid  and v.villeid=c.ville.villeid and o.Niveau_Enseignement_id= n.id and o.sous_attent_personn_sous_attent_personnid=:idFondat",
                 etablissementAmodifierDto.class);
 
         List<etablissementAmodifierDto> listEcoleDto = q.setParameter("idFondat", idSouscrip).
@@ -218,6 +220,54 @@ return listEcoleDto ;
               System.out.println("Personnel "+sous_attent_personn.toString());
             return sous_attent_personn ;
   }
+
+    @Transactional
+    public String ajouterLesEcoles(Long souscripteurId,List<sous_attent_ecoleDto> listsouscr ) {
+        /*sous_attent_personn sous = new sous_attent_personn() ;
+        sous = CreerPersonnelSouscriAndCompteUser(fonctionId,nom,prenom,contact1,contact2,email,password);
+
+        System.out.println("sous+++ "+sous.toString());
+        System.out.println("Longueur Tableau listsouscr+++ "+listsouscr.size());*/
+        String messageRetour ="" ;
+        List<String> matriculeNonCreer = new ArrayList<>();
+        for(int i = 0 ; i < listsouscr.size() ; i++)
+        {
+            sousc_atten_etabliss  sousc_atten_etabliss1= new sousc_atten_etabliss() ;
+            sousc_atten_etabliss1 = checkExistEtabliss(listsouscr.get(i).getSousc_atten_etablisscode()) ;
+            sousc_atten_etabliss sousEtabli = new sousc_atten_etabliss() ;
+
+            if(sousc_atten_etabliss1 ==null ){
+                sousEtabli.setSousc_atten_etabliss_email(listsouscr.get(i).getSousc_atten_etabliss_email());
+                sousEtabli.setSous_attent_personn_sous_attent_personnid(souscripteurId);
+                sousEtabli.setZone_zoneid(listsouscr.get(i).getZone_zoneid());
+                sousEtabli.setCommune_communeid(listsouscr.get(i).getCommune_communeid());
+                sousEtabli.setSousc_atten_etabliss_statut(Inscriptions.status.EN_ATTENTE);
+                sousEtabli.setSousc_atten_etabliss_indication(listsouscr.get(i).getSousc_atten_etabliss_indication()) ;
+                sousEtabli.setSousc_atten_etabliss_nom(listsouscr.get(i).getSousc_atten_etabliss_nom()) ;
+                sousEtabli.setSousc_atten_etabliss_tel(listsouscr.get(i).getSousc_atten_etabliss_tel()) ;
+                sousEtabli.setSousc_atten_etablisscode(listsouscr.get(i).getSousc_atten_etablisscode()) ;
+                sousEtabli.setSousc_atten_etabliss_lien_autorisa(listsouscr.get(i).getSousc_atten_etabliss_lien_autorisa());
+                sousEtabli.setSousc_atten_etabliss_lien_logo(listsouscr.get(i).getSousc_atten_etabliss_lien_logo());
+
+                sousEtabli.setNiveau_Enseignement_id(listsouscr.get(i).getNiveau_Enseignement_id());
+                sousEtabli.persist();
+                System.out.println("sousEtabli "+sousEtabli.toString());
+            } else {
+                matriculeNonCreer.add(listsouscr.get(i).getSousc_atten_etablisscode()) ;
+            }
+        }
+        if(matriculeNonCreer.size()>0){
+            String mess="Veuillez contacter l'administrateur.Les écoles avec les codes  suivants existent déjà:";
+            messageRetour = String.join(", ", matriculeNonCreer);
+            messageRetour= mess+" "+ messageRetour ;
+        } else  {
+            messageRetour ="DEMANDE D'INSCRIPTION EFFECTUEE AVEC SUCCES!" ;
+        }
+
+        return  messageRetour ;
+
+    }
+
 
   @Transactional
   public String creerLesEcoles(Long fonctionId ,String nom, String prenom, String contact1 ,String contact2 ,String email ,String password,List<sous_attent_ecoleDto> listsouscr ) {
@@ -265,9 +315,6 @@ return listEcoleDto ;
       } else  {
           messageRetour ="DEMANDE D'INSCRIPTION EFFECTUEE AVEC SUCCES!" ;
       }
-
-
-
 
 return  messageRetour ;
 
@@ -326,6 +373,7 @@ return  listEcoleDto;
 
       Inscriptions.status status1= Inscriptions.status.valueOf(mysouscription.getStatuts());
         mysous.setSousc_atten_etabliss_statut(status1);
+      mysous.setConnecte(0);
       mysous.setSousc_atten_etabliss_date_traitement(LocalDateTime.now());
       mysous.setSousc_atten_etabliss_motifRefus(mysouscription.getMessageRefus());
     }

@@ -1,6 +1,7 @@
 package com.vieecoles.services.souscription;
 
 import com.vieecoles.dto.message_personnelDto;
+import com.vieecoles.entities.operations.acteur_messages;
 import com.vieecoles.entities.operations.ecole;
 import com.vieecoles.entities.operations.message_personnel;
 import com.vieecoles.entities.operations.sous_attent_personn;
@@ -20,88 +21,96 @@ public class MessagePersonnelService implements PanacheRepositoryBase<message_pe
     @Inject
     EntityManager em;
 
-    @Transactional
-  public String  creeerMessage(message_personnelDto messageDto) {
-        ecole myecole= new ecole() ;
-        String messageRetour ;
-        sous_attent_personn myperson= new sous_attent_personn() ;
-        message_personnel message= new message_personnel() ;
-        myperson = sous_attent_personn.findById(messageDto.getIdentifiant_personnel()) ;
-        message.setMessage_personnel_message(messageDto.getMessage_personnel_message());
-        message.setMessage_personnel_date(LocalDate.now());
-        message.setSous_attent_personn(myperson);
-        message.setMessage_personnel_sujet(messageDto.getMessage_personnel_sujet());
-        message.setMessage_personnel_emetteur(messageDto.getMessage_personnel_emetteur());
-        message.setEcole_ecoleid(messageDto.getEcole_ecoleid());
-        message.setAdministrateur_gain_idadministrateur_gain(messageDto.getAdministrateur_gain_idadministrateur_gain());
-        message.persist();
+
+
+
+
+
+@Transactional
+  public  String buildMessage( message_personnelDto messageDto){
+      String messageRetour ;
+      message_personnel message= new message_personnel() ;
+      message.setMessage_personnel_message(messageDto.getMessage_personnel_message());
+      message.setMessage_personnel_date(LocalDate.now());
+      message.setMessage_personnel_sujet(messageDto.getMessage_personnel_sujet());
+      message.setIdemetteur(messageDto.getIdEmetteur());
+      message.setIdrecepteur(messageDto.getIdDestinataire());
+      message.persist();
       messageRetour="MESSAGE ENVOYE AVEC SUCCES" ;
-      return messageRetour ;
+      return  messageRetour ;
   }
+public long getGlobalIdUser(Long idPanier){
+    Long idUser;
+    Long idPersonnel;
+    idPersonnel=getIdPersonnelByPanier(idPanier);
+    System.out.println("idPersonnel "+idPersonnel);
 
-    public  List<message_personnel> getAllMessageByEcole(Long id_ecole){
+    idUser= getIdUtilisateurByPersonnel(idPersonnel);
+    System.out.println("idUser "+idUser);
+    return idUser ;
+}
+    @Transactional
+    public long  getIdUtilisateurByPersonnel(Long idPersonnel){
+        Long IdUtilisateur = null;
         try {
-            return (List<message_personnel>) em.createQuery("select o from  message_personnel  o where o.ecole_ecoleid  =:id_ecole ")
-                    .setParameter("id_ecole",id_ecole)
-                    .getResultList() ;
-        } catch (Exception e) {
-            return  null;
-        }
-    }
-
-    public List<MessageSelect> messageByEcole(Long idEcole){
-        List<MessageSelect> mesPaniers  ;
-        try {
-            mesPaniers= (List<MessageSelect>) em.createQuery("SELECT new com.vieecoles.projection.MessageSelect(o.message_personnel_id,o.message_personnel_emetteur,o.message_personnel_sujet, o.message_personnel_message,o.message_personnel_date,p.sous_attent_personn_nom,p.sous_attent_personn_prenom,concat(p.sous_attent_personn_nom,' ',p.sous_attent_personn_prenom) ) from message_personnel o join" +
-                            " o.sous_attent_personn p where o.ecole_ecoleid=:idEcole ")
-                    .setParameter("idEcole",idEcole)
-                    .getResultList();
-        } catch (Exception e) {
-            mesPaniers=  null;
-        }
-        System.out.println("mesPaniersxx"+ mesPaniers);
-        return mesPaniers ;
-    }
-
-
-
-
-    public List<MessageSelect> messageByUser(Long idPersonnel){
-        List<MessageSelect> mesPaniers  ;
-        try {
-            mesPaniers= (List<MessageSelect>) em.createQuery("SELECT new com.vieecoles.projection.MessageSelect(o.message_personnel_id,o.message_personnel_emetteur,o.message_personnel_sujet, o.message_personnel_message,o.message_personnel_date,p.sous_attent_personn_nom,p.sous_attent_personn_prenom ,concat(p.sous_attent_personn_nom,' ',p.sous_attent_personn_prenom)) from message_personnel o join" +
-                            " o.sous_attent_personn p where p.sous_attent_personnid=:idPersonnel ")
-                                  .setParameter("idPersonnel",idPersonnel)
-                    .getResultList();
-        } catch (Exception e) {
-            mesPaniers=  null;
-        }
-        System.out.println("mesPaniersxx"+ mesPaniers);
-        return mesPaniers ;
-    }
-
-
-
-
-    public  List<message_personnel> getAllMessageByPersonnel(Long idPersonnel){
-        try {
-            return (List<message_personnel>) em.createQuery("select o from  message_personnel  o where o.sous_attent_personn.sous_attent_personnid  =:idPersonnel")
+            IdUtilisateur= (Long) em.createQuery("select o.utilisateurid from utilisateur  o  where  o.sous_attent_personn_sous_attent_personnid =:idPersonnel ")
                     .setParameter("idPersonnel",idPersonnel)
-                    .getResultList() ;
+                    .getSingleResult();
         } catch (Exception e) {
-            return  null;
+            IdUtilisateur = 0L;
         }
+        return IdUtilisateur ;
+    }
+@Transactional
+    public long  getIdPersonnelByPanier(Long idPanier){
+        Long idPersonnel = null;
+        try {
+            idPersonnel= (Long) em.createQuery("select o.sous_attent_personn.sous_attent_personnid from panier_personnel  o  where  o.idpanier_personnel_id =:idPanier ")
+                    .setParameter("idPanier",idPanier)
+                    .getSingleResult();
+        } catch (Exception e) {
+            idPersonnel = 0L;
+        }
+        return idPersonnel ;
     }
 
-    public  List<message_personnel> getAllMessageByAdministrateur(Long idAdministrate){
+
+
+ public List<MessageSelect> messageEmetteur(Long idEmetteur){
+        List<MessageSelect> mesPaniers  ;
         try {
-            return (List<message_personnel>) em.createQuery("select o from  message_personnel  o where o.administrateur_gain_idadministrateur_gain  =:idAdministrate ")
-                    .setParameter("idAdministrate",idAdministrate)
-                    .getResultList() ;
+            mesPaniers= (List<MessageSelect>) em.createQuery("SELECT new com.vieecoles.projection.MessageSelect(o.message_personnel_id,o.message_personnel_sujet, o.message_personnel_message,o.message_personnel_date,concat(p.sous_attent_personn_nom,' ',p.sous_attent_personn_prenom)) from message_personnel o , utilisateur u , sous_attent_personn  p " +
+                                    "where  o.idrecepteur=u.utilisateurid and u.sous_attent_personn_sous_attent_personnid = p.sous_attent_personnid and o.idemetteur=:idEmetteur  ")
+                    .setParameter("idEmetteur",idEmetteur)
+                    .getResultList();
         } catch (Exception e) {
-            return  null;
+            mesPaniers=  null;
         }
+        System.out.println("mesPaniersxx"+ mesPaniers);
+        return mesPaniers ;
     }
+
+
+    public List<MessageSelect> messageRecu(Long idrecu){
+        List<MessageSelect> mesPaniers  ;
+        try {
+            mesPaniers= (List<MessageSelect>) em.createQuery("SELECT new com.vieecoles.projection.MessageSelect(o.message_personnel_id,o.message_personnel_sujet, o.message_personnel_message,o.message_personnel_date,concat(p.sous_attent_personn_nom,' ',p.sous_attent_personn_prenom) ) from message_personnel o , utilisateur u , sous_attent_personn  p " +
+                            "where  o.idemetteur=u.utilisateurid and u.sous_attent_personn_sous_attent_personnid = p.sous_attent_personnid and o.idrecepteur=:idrecu  ")
+                    .setParameter("idrecu",idrecu)
+                    .getResultList();
+        } catch (Exception e) {
+            mesPaniers=  null;
+        }
+        System.out.println("mesPaniersxx"+ mesPaniers);
+        return mesPaniers ;
+    }
+
+
+
+
+
+
+
 
 
     @Transactional
