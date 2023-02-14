@@ -115,7 +115,7 @@ public class connexionRessource {
         email= myConnexionDto.getEmail().trim();
         motPasse= myConnexionDto.getMotdePasse().trim() ;
         profilId= myProfil.getProfilid() ;
-       
+
         System.out.println("Info-compte "+email +" "+motPasse+" "+ profilId);
         return  myconnexionService.seConnecterAdmin(email,motPasse,profilId) ;
     }
@@ -173,6 +173,19 @@ public class connexionRessource {
         return   myPersonn ;
     }
 
+
+
+    @GET
+    @Path("id-utilisateur-connecte/{emailUtilisateur}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.TEXT_PLAIN)
+    public Long idPersonnConnect(@PathParam("emailUtilisateur") String emailUtilisateur )
+    {
+        Long idUtilisateur ;
+        idUtilisateur = myconnexionService.getIdUtilisateur(emailUtilisateur) ;
+
+        return   idUtilisateur ;
+    }
 
     @PUT
     @Path("/modifier-motDePasse")

@@ -373,6 +373,7 @@ return  listEcoleDto;
 
       Inscriptions.status status1= Inscriptions.status.valueOf(mysouscription.getStatuts());
         mysous.setSousc_atten_etabliss_statut(status1);
+      mysous.setConnecte(0);
       mysous.setSousc_atten_etabliss_date_traitement(LocalDateTime.now());
       mysous.setSousc_atten_etabliss_motifRefus(mysouscription.getMessageRefus());
     }

@@ -26,6 +26,7 @@ public class sousc_atten_etabliss extends PanacheEntityBase {
     private  LocalDateTime sousc_atten_etabliss_date_traitement ;
     private  String sousc_atten_etabliss_lien_logo ;
     private Long Niveau_Enseignement_id ;
+    private  int connecte ;
 
     @Enumerated(EnumType.STRING)
     private Inscriptions.status sousc_atten_etabliss_statut ;
@@ -33,7 +34,13 @@ public class sousc_atten_etabliss extends PanacheEntityBase {
 
    private  Long sous_attent_personn_sous_attent_personnid ;
 
+    public int getConnecte() {
+        return connecte;
+    }
 
+    public void setConnecte(int connecte) {
+        this.connecte = connecte;
+    }
 
     private Long  zone_zoneid ;
     private Long  commune_communeid ;

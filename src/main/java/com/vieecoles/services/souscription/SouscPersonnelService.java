@@ -184,11 +184,14 @@ public class SouscPersonnelService implements PanacheRepositoryBase<sous_attent_
 
      public String  valideCreerCompteFondateur(souscriptionValidationFondatDto mysouscription) {
         String MessageRetour =null ;
+
         List<Long> listEcole = getListEcoleBySouscrip2(mysouscription.getIdsouscrip());
         // valider soucripValider
         validerSouscriptionFond(mysouscription) ;
         for(int i = 0 ; i < listEcole.size() ; i++){
             personnel PersonnCreer = new personnel() ;
+            //Mise à jour Etablissement connecte
+            miseAjourEtabliConnecte(listEcole.get(i)) ;
             //recruter fondateur
             Long idEcole = getEcoleByIDSousc(listEcole.get(i)) ;
             PersonnCreer =recruterUnFondateur(idEcole, mysouscription.getIdsouscrip()) ;
@@ -208,22 +211,47 @@ public class SouscPersonnelService implements PanacheRepositoryBase<sous_attent_
 
      @Transactional
      public List<Long> getListEcoleBySouscrip(Long idSouscripteur){
-               TypedQuery<Long> q = (TypedQuery<Long>) em.createQuery( "SELECT  o.idSOUS_ATTENT_ETABLISSEMENT from sousc_atten_etabliss o where o.sous_attent_personn_sous_attent_personnid =:idSouscripteur and o.sousc_atten_etabliss_statut=:status");
+               TypedQuery<Long> q = (TypedQuery<Long>) em.createQuery( "SELECT  o.idSOUS_ATTENT_ETABLISSEMENT from sousc_atten_etabliss o where o.sous_attent_personn_sous_attent_personnid =:idSouscripteur and o.sousc_atten_etabliss_statut=:status and o.connecte=0");
         List<Long> listEcole = q.setParameter("idSouscripteur" ,idSouscripteur)
                                .setParameter("status" ,Inscriptions.status.EN_ATTENTE).
                 getResultList();
         return  listEcole;
        }
 
+    @Transactional
+    public List<Long> getListNewEcoleBySouscrip(Long idSouscripteur){
+        TypedQuery<Long> q = (TypedQuery<Long>) em.createQuery( "SELECT  o.idSOUS_ATTENT_ETABLISSEMENT from sousc_atten_etabliss o where o.sous_attent_personn_sous_attent_personnid =:idSouscripteur and o.sousc_atten_etabliss_statut=:status and o.connecte=0");
+        List<Long> listEcole = q.setParameter("idSouscripteur" ,idSouscripteur)
+                .setParameter("status" ,Inscriptions.status.VALIDEE).
+                getResultList();
+        return  listEcole;
+    }
+
        @Transactional
        public  List<Long> getListEcoleBySouscrip2(Long idSouscripteur){
         List<Long> listEcole ;
-        listEcole=  em.createQuery( "SELECT  o.idSOUS_ATTENT_ETABLISSEMENT from sousc_atten_etabliss o where o.sous_attent_personn_sous_attent_personnid =:idSouscripteur and o.sousc_atten_etabliss_statut=:status")
-        .setParameter("idSouscripteur" ,idSouscripteur)
+        listEcole=  em.createQuery( "SELECT  o.idSOUS_ATTENT_ETABLISSEMENT from sousc_atten_etabliss o where o.sous_attent_personn_sous_attent_personnid =:idSouscripteur and o.sousc_atten_etabliss_statut=:status and o.connecte=0")
+                                .setParameter("idSouscripteur" ,idSouscripteur)
                                  .setParameter("status" ,Inscriptions.status.VALIDEE).
                   getResultList();
           return  listEcole;
          }
+
+
+    @Transactional
+    public  void  miseAjourEtabliConnecte(Long idEcole){
+      sousc_atten_etabliss sousc = new sousc_atten_etabliss();
+        sousc = sousc_atten_etabliss.findById(idEcole) ;
+        sousc.setConnecte(1);
+    }
+
+    @Transactional
+    public  Long getidUser(Long idSouscripteur){
+       Long idUser ;
+        idUser= (Long) em.createQuery( "SELECT  o.utilisateurid from utilisateur o where o.sous_attent_personn_sous_attent_personnid =:idSouscripteur ")
+                .setParameter("idSouscripteur" ,idSouscripteur).getSingleResult();
+        return  idUser;
+    }
 
          @Transactional
        public  Long getEcoleByIDSousc(Long idDemand){
