@@ -87,7 +87,7 @@ System.out.print("detailsBull "+detailsBull);
         return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.APPLICATION_PDF).body(data);
     } else {
         JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(detailsBull) ;
-        JasperReport compileReport = JasperCompileManager.compileReport(new FileInputStream("src/main/resources/etats/BulletinBean.jrxml"));
+        JasperReport compileReport = JasperCompileManager.compileReport(new FileInputStream("/data/BulletinBean.jrxml"));
         Map<String, Object> map = new HashMap<>();
        // map.put("title", type);
         JasperPrint report = JasperFillManager.fillReport(compileReport, map, beanCollectionDataSource);
