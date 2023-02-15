@@ -76,7 +76,7 @@ System.out.print("detailsBull "+detailsBull);
        System.out.print("soummm"+detailsBull.toString());
         if(type.toUpperCase().equals("PDF")){
             JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(detailsBull) ;
-            JasperReport compileReport = JasperCompileManager.compileReport(new FileInputStream("src/main/resources/etats/BulletinBean.jrxml"));
+            JasperReport compileReport = JasperCompileManager.compileReport(new FileInputStream("/data/BulletinBean.jrxml"));
             Map<String, Object> map = new HashMap<>();
            // map.put("title",type);
             JasperPrint report = JasperFillManager.fillReport(compileReport, map, beanCollectionDataSource);
