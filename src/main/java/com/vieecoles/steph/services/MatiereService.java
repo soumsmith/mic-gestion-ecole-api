@@ -37,6 +37,10 @@ public class MatiereService implements PanacheRepositoryBase<Matiere, Long>{
 		ev.persist();
 		return Response.ok("Matiere creee").build();
 	}
+	
+	public List<Matiere> getByNiveauEnseignement(Long niveau){
+		return find("niveauEnseignement.id = ?1", niveau).list();
+	}
 
 	@Transactional
 	public Matiere update(Matiere ev) {

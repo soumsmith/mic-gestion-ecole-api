@@ -1,5 +1,6 @@
 package com.vieecoles.steph.ressources;
 
+import com.vieecoles.steph.entities.Ecole;
 import com.vieecoles.steph.entities.Evaluation;
 import com.vieecoles.steph.entities.Matiere;
 import com.vieecoles.steph.services.MatiereService;
@@ -29,10 +30,19 @@ public class MatiereResource {
 
 	@GET
 	@Path("/get-by-id")
-
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getById(@QueryParam("id") long id) {
 		return Response.ok().entity(matiereService.findById(id)).build();
+	}
+	
+	// Quand le niveau d enseignement sera pris en compte dans les variables  d env alors remplacer le param ecole par niveau enseign
+	@GET
+	@Path("/get-by-niveau-enseignement")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getByNiveau(@QueryParam("id") Long ecoleId) {
+		Ecole ecole = Ecole.findById(ecoleId);
+		
+		return Response.ok().entity(matiereService.getByNiveauEnseignement(ecole.getNiveauEnseignement().getId())).build();
 	}
 
 	@POST

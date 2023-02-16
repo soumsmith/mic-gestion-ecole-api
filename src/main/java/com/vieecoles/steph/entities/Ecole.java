@@ -3,6 +3,8 @@ package com.vieecoles.steph.entities;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
@@ -27,4 +29,7 @@ public class Ecole extends PanacheEntityBase{
 	private String tel;
 	@Column(name = "ecole_statut")
 	private String statut;
+	@ManyToOne
+	@JoinColumn(name = "Niveau_Enseignement_id")
+	private NiveauEnseignement niveauEnseignement;
 }
