@@ -76,8 +76,8 @@ public class PersonnelMatiereClasseResource {
     @Path("/get-by-prof")
     @Operation(description = "Obtenir les classes d un prof", summary = "")
 	@Tag(name = "PersonnelMatiereClasse")
-    public List<PersonnelMatiereClasse> getByProf(@QueryParam("prof") long profId) {
-    	List<PersonnelMatiereClasse> personnels = persMatClasService.findByProfesseur(profId, 1);
+    public List<PersonnelMatiereClasse> getByProf(@QueryParam("prof") long profId, @QueryParam("annee") long anneeId) {
+    	List<PersonnelMatiereClasse> personnels = persMatClasService.findByProfesseur(profId, anneeId);
     	return personnels;
     }
     
