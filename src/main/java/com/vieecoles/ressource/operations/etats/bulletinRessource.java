@@ -1,11 +1,15 @@
 package com.vieecoles.ressource.operations.etats;
 
 
-import com.mysql.cj.Query;
+
 import com.vieecoles.entities.profil;
 import com.vieecoles.projection.BulletinSelectDto;
 import com.vieecoles.services.profilService;
 
+import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Files;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -15,6 +19,8 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.ooxml.JRDocxExporter;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.engine.util.JRSaver;
 import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 
@@ -38,20 +44,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Path("/imprimer-bulletin")
+@Path("/imprimer-bulletinold")
 //@Produces(MediaType.APPLICATION_JSON)
 //@Consumes(MediaType.APPLICATION_JSON)
 
 public class bulletinRessource {
     @Inject
     EntityManager em;
-
+    private static String UPLOAD_DIR = "/data/";
    @Transactional
    @GET
    @Path("/details-bulletin-infos/{type}/{matricule}")
     public List<BulletinSelectDto>  detailBulletinInfos(@PathParam("type") String type,@PathParam("matricule") String matricule) throws Exception, JRException {
         List<BulletinSelectDto>  detailsBull = new ArrayList<>() ;
-        TypedQuery<BulletinSelectDto> q = em.createQuery( "SELECT new com.vieecoles.projection.BulletinSelectDto(b.ecoleId,b.nomEcole,b.statutEcole,b.urlLogo,b.adresseEcole,b.telEcole,b.anneeLibelle, b.libellePeriode,b.matricule,b.nom, b.prenoms, b.sexe,b.dateNaissance,b.lieuNaissance,b.nationalite,b.redoublant,b.boursier,b.affecte,b.libelleClasse,b.effectif,b.totalCoef,b.totalMoyCoef,b.nomPrenomProfPrincipal,b.heuresAbsJustifiees,b.heuresAbsNonJustifiees,b.moyGeneral,b.moyMax,b.moyMin,b.moyAvg,b.moyAn,b.rangAn,b.appreciation,b.dateCreation,b.codeQr,b.statut,d.matiereLibelle,d.moyenne,d.rang,d.coef,d.moyCoef,d.appreciation,d.categorie,d.num_ordre,b.rang,d.nom_prenom_professeur) from DetailBulletin  d join d.bulletin b where b.matricule=:matricule order by d.num_ordre ASC  ", BulletinSelectDto.class);
+        TypedQuery<BulletinSelectDto> q = em.createQuery( "SELECT new com.vieecoles.projection.BulletinSelectDto(b.ecoleId,b.nomEcole,b.statutEcole,b.urlLogo,b.adresseEcole,b.telEcole,b.anneeLibelle, b.libellePeriode,b.matricule,b.nom, b.prenoms, b.sexe,b.dateNaissance,b.lieuNaissance,b.nationalite,b.redoublant,b.boursier,b.affecte,b.libelleClasse,b.effectif,b.totalCoef,b.totalMoyCoef,b.nomPrenomProfPrincipal,b.heuresAbsJustifiees,b.heuresAbsNonJustifiees,b.moyGeneral,b.moyMax,b.moyMin,b.moyAvg,b.moyAn,b.rangAn,b.appreciation,b.dateCreation,b.codeQr,b.statut,d.matiereLibelle,d.moyenne,d.rang,d.coef ,d.moyCoef,d.appreciation,d.categorie,d.num_ordre,b.rang,d.nom_prenom_professeur) from DetailBulletin  d join d.bulletin b where b.matricule=:matricule order by d.num_ordre ASC  ", BulletinSelectDto.class);
         detailsBull = q.setParameter("matricule", matricule).getResultList() ;
 System.out.print("detailsBull "+detailsBull);
        return detailsBull ;
@@ -63,23 +69,26 @@ System.out.print("detailsBull "+detailsBull);
     @Path("/details-bulletin/{type}/{matricule}/{idEcole}/{libelleAnnee}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public ResponseEntity<byte[]>  getdetailsBulletin(@PathParam("type") String type,@PathParam("matricule") String matricule,@PathParam("idEcole") Long idEcole,@PathParam("libelleAnnee") String libelleAnnee) throws Exception, JRException {
+        InputStream myInpuStream ;
+        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/BulletinBean.jrxml");
         List<BulletinSelectDto>  detailsBull = new ArrayList<>() ;
        // detailsBull = detailBulletinInfos(matricule,idEcole,libelleAnnee);
 
-       TypedQuery<BulletinSelectDto> q = em.createQuery( "SELECT new com.vieecoles.projection.BulletinSelectDto(b.ecoleId,b.nomEcole,b.statutEcole,b.urlLogo,b.adresseEcole,b.telEcole,b.anneeLibelle, b.libellePeriode,b.matricule,b.nom, b.prenoms, b.sexe,b.dateNaissance,b.lieuNaissance,b.nationalite,b.redoublant,b.boursier,b.affecte,b.libelleClasse,b.effectif,b.totalCoef,b.totalMoyCoef,b.nomPrenomProfPrincipal,b.heuresAbsJustifiees,b.heuresAbsNonJustifiees,b.moyGeneral,b.moyMax,b.moyMin,b.moyAvg,b.moyAn,b.rangAn,b.appreciation,b.dateCreation,b.codeQr,b.statut,d.matiereLibelle,d.moyenne,d.rang,d.coef,d.moyCoef,d.appreciation,d.categorie,d.num_ordre,b.rang,d.nom_prenom_professeur) from DetailBulletin  d join d.bulletin b where b.matricule=:matricule " +
+
+       TypedQuery<BulletinSelectDto> q = em.createQuery( "SELECT new com.vieecoles.projection.BulletinSelectDto(b.ecoleId,b.nomEcole,b.statutEcole,b.urlLogo,b.adresseEcole,b.telEcole,b.anneeLibelle, b.libellePeriode,b.matricule,b.nom, b.prenoms, b.sexe,b.dateNaissance,b.lieuNaissance,b.nationalite,b.redoublant,b.boursier,b.affecte,b.libelleClasse,b.effectif,b.totalCoef,b.totalMoyCoef,b.nomPrenomProfPrincipal,b.heuresAbsJustifiees,b.heuresAbsNonJustifiees,b.moyGeneral,b.moyMax,b.moyMin,b.moyAvg,b.moyAn,b.rangAn,b.appreciation,b.dateCreation,b.codeQr,b.statut,d.matiereLibelle,d.moyenne,d.rang,d.coef ,d.moyCoef,d.appreciation,d.categorie,d.num_ordre,b.rang,d.nom_prenom_professeur) from DetailBulletin  d join d.bulletin b where b.matricule=:matricule " +
                "and b.ecoleId=:idEcole and b.anneeLibelle=:libelleAnnee order by d.num_ordre ASC  ", BulletinSelectDto.class);
-       detailsBull = q.setParameter("matricule", matricule)
-                       .setParameter("libelleAnnee", libelleAnnee.trim())
-                      .setParameter("idEcole", idEcole)
+       detailsBull = q.setParameter("matricule", "74585J")
+                       .setParameter("libelleAnnee", "2021-2022")
+                      .setParameter("idEcole", 1L)
                        . getResultList() ;
 
        System.out.print("soummm"+detailsBull.toString());
         if(type.toUpperCase().equals("PDF")){
             JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(detailsBull) ;
-            JasperReport compileReport = JasperCompileManager.compileReport(new FileInputStream("/data/BulletinBean.jrxml"));
-            Map<String, Object> map = new HashMap<>();
-           // map.put("title",type);
-            JasperPrint report = JasperFillManager.fillReport(compileReport, map, beanCollectionDataSource);
+            JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
+             //JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");
+             Map<String, Object> map = new HashMap<>();
+             JasperPrint report = JasperFillManager.fillReport(compileReport, map, beanCollectionDataSource);
     //to pdf ;
       byte[] data =JasperExportManager.exportReportToPdf(report);
       HttpHeaders headers= new HttpHeaders();
@@ -87,7 +96,8 @@ System.out.print("detailsBull "+detailsBull);
         return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.APPLICATION_PDF).body(data);
     } else {
         JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(detailsBull) ;
-        JasperReport compileReport = JasperCompileManager.compileReport(new FileInputStream("/data/BulletinBean.jrxml"));
+            JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
+       //   JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");
         Map<String, Object> map = new HashMap<>();
        // map.put("title", type);
         JasperPrint report = JasperFillManager.fillReport(compileReport, map, beanCollectionDataSource);
