@@ -1,7 +1,11 @@
 package com.vieecoles.steph.services;
 
 import com.google.gson.Gson;
+import com.vieecoles.steph.dto.MatiereDto;
+import com.vieecoles.steph.entities.CategorieMatiere;
 import com.vieecoles.steph.entities.Matiere;
+import com.vieecoles.steph.entities.NiveauEnseignement;
+
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -40,6 +44,24 @@ public class MatiereService implements PanacheRepositoryBase<Matiere, Long>{
 	
 	public List<Matiere> getByNiveauEnseignement(Long niveau){
 		return find("niveauEnseignement.id = ?1", niveau).list();
+	}
+	
+	public MatiereDto buildEntityToDto(Matiere matiere) {
+		MatiereDto dto = new MatiereDto();
+		
+		dto.setId(matiere.getId());
+		dto.setCode(matiere.getCode());
+		dto.setLibelle(matiere.getLibelle());
+		dto.setPec(matiere.getPec());
+		dto.setNiveauEnseignement(matiere.getNiveauEnseignement());
+		dto.setMoyenne(matiere.getMoyenne());
+		dto.setRang(matiere.getRang());
+		dto.setCoef(matiere.getCoef());
+		dto.setAppreciation(matiere.getAppreciation());
+		dto.setMatiereParent(matiere.getMatiereParent()!= null ? Matiere.findById(Long.parseLong(matiere.getMatiereParent())) : null);
+		dto.setCategorie(matiere.getCategorie());
+		
+		return dto;
 	}
 
 	@Transactional

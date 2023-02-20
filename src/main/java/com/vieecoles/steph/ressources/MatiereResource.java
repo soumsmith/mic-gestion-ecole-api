@@ -1,11 +1,16 @@
 package com.vieecoles.steph.ressources;
 
+import com.vieecoles.steph.dto.MatiereDto;
 import com.vieecoles.steph.entities.Ecole;
 import com.vieecoles.steph.entities.Evaluation;
 import com.vieecoles.steph.entities.Matiere;
 import com.vieecoles.steph.services.MatiereService;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import org.jboss.logging.Logger;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -25,7 +30,13 @@ public class MatiereResource {
 	@Path("/list")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response list() {
-		return Response.ok().entity(matiereService.getList()).build();
+		List<Matiere> matieres = matiereService.getList();
+		List<MatiereDto> matieresDto = new ArrayList<MatiereDto>();
+		for(Matiere m: matieres) {
+			matieresDto.add(matiereService.buildEntityToDto(m));
+		}
+		
+		return Response.ok().entity(matieresDto).build();
 	}
 
 	@GET
@@ -56,7 +67,7 @@ public class MatiereResource {
 		if (ev == null) {
 			throw new NotFoundException();
 		}
-		return Response.ok().entity(ev).build();
+		return Response.ok().entity(matiereService.buildEntityToDto(ev)).build();
 	}
 
 	@POST
@@ -100,10 +111,12 @@ public class MatiereResource {
 	    	try {
 	    	//	logger.info("Saving and display ...");
 	    		matiereService.create(matiere);
+	    		Matiere entity = matiereService.findById(matiere.getId());
+	    		return Response.ok().entity(matiereService.buildEntityToDto(entity)).build();
+	    		
 	    	} catch(Exception e) {
 	    		 e.printStackTrace();
 	    		 return Response.serverError().entity(new Evaluation()).build();
 	    	 }
-	    	return Response.ok().entity(matiereService.findById(matiere.getId())).build();
 	    }
 }

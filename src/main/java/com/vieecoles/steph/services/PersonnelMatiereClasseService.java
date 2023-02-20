@@ -71,13 +71,13 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 
 
 	public List<PersonnelMatiereClasse> findByProfesseur(long profId, long annee) {
-		logger.info(String.format("find by Prof id :: %s and annee :: %s", profId, getAnneeScolaire));
-		return PersonnelMatiereClasse.find("personnel.id = ?1 and annee.id = ?2 and matiere is not null", profId, getAnneeScolaire).list();
+		logger.info(String.format("find by Prof id :: %s and annee :: %s", profId, annee!=0 ? annee: getAnneeScolaire));
+		return PersonnelMatiereClasse.find("personnel.id = ?1 and annee.id = ?2 and matiere is not null", profId, annee!=0 ? annee: getAnneeScolaire).list();
 	}
 	
 	public List<PersonnelMatiereClasse> findByProfesseurAndClasse(long profId, long classe, long annee) {
-		logger.info(String.format("find by Prof id :: %s and annee :: %s", profId, getAnneeScolaire));
-		return PersonnelMatiereClasse.find("personnel.id = ?1 and annee.id = ?2 and classe.id = ?3 and matiere is not null", profId, getAnneeScolaire, classe).list();
+		logger.info(String.format("find by Prof id :: %s and annee :: %s", profId, annee));
+		return PersonnelMatiereClasse.find("personnel.id = ?1 and annee.id = ?2 and classe.id = ?3 and matiere is not null", profId, annee!=0 ? annee: getAnneeScolaire, classe).list();
 	}
 	
 	public List<PersonnelMatiereClasse> findListByClasse(int annee, long classe) {
