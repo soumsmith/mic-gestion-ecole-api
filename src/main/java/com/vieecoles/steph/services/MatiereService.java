@@ -3,52 +3,73 @@ package com.vieecoles.steph.services;
 import com.google.gson.Gson;
 import com.vieecoles.steph.dto.MatiereDto;
 import com.vieecoles.steph.entities.CategorieMatiere;
+import com.vieecoles.steph.entities.Ecole;
+import com.vieecoles.steph.entities.EcoleHasMatiere;
 import com.vieecoles.steph.entities.Matiere;
 import com.vieecoles.steph.entities.NiveauEnseignement;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.logging.Logger;
 
 @ApplicationScoped
-public class MatiereService implements PanacheRepositoryBase<Matiere, Long>{
-	//Logger logger = Logger.getLogger(Matiere.class.getName());
+public class MatiereService implements PanacheRepositoryBase<Matiere, Long> {
+	// Logger logger = Logger.getLogger(Matiere.class.getName());
+
+	@Inject
+	EcoleService ecoleService;
+	@Inject
+	EcoleHasMatiereService ecoleHasMatiereService;
+
+	Logger logger = Logger.getLogger(MatiereService.class.getName());
 
 	public List<Matiere> getList() {
 		try {
 			return Matiere.listAll();
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			return new ArrayList<Matiere>() ;
+			return new ArrayList<Matiere>();
 		}
 	}
 
 	@Transactional
-	public Response create(Matiere ev) {
-		Gson gson = new Gson();
-		//logger.info(gson.toJson(ev));
-
-//		UUID uuid = UUID.randomUUID();
-//		ev.setCode(uuid.toString());
-//		ev.setDateCreation(new Date());
-
+	public void create(Matiere ev) {
+		logger.info("--> Création de matière");
+		Gson g = new Gson();
+		System.out.println(g.toJson(ev));
 		ev.persist();
-		return Response.ok("Matiere creee").build();
 	}
-	
-	public List<Matiere> getByNiveauEnseignement(Long niveau){
+
+	/*
+	 * Cette methode permet de creer une matiere en centrale et dans chacune des
+	 * ecoles existantes
+	 */
+	@Transactional
+	public Matiere createMatiereInEcole(Matiere matiere) {
+		try {
+			create(matiere);
+			ecoleHasMatiereService.createMatiereToEcoles(matiere);
+			return matiere;
+		} catch (RuntimeException r) {
+			r.printStackTrace();
+			throw new RuntimeException(new String("Une Erreur s'est produite: " + r.getMessage()));
+		}
+	}
+
+	public List<Matiere> getByNiveauEnseignement(Long niveau) {
 		return find("niveauEnseignement.id = ?1", niveau).list();
 	}
-	
+
 	public MatiereDto buildEntityToDto(Matiere matiere) {
 		MatiereDto dto = new MatiereDto();
-		
+
 		dto.setId(matiere.getId());
 		dto.setCode(matiere.getCode());
 		dto.setLibelle(matiere.getLibelle());
@@ -58,14 +79,20 @@ public class MatiereService implements PanacheRepositoryBase<Matiere, Long>{
 		dto.setRang(matiere.getRang());
 		dto.setCoef(matiere.getCoef());
 		dto.setAppreciation(matiere.getAppreciation());
-		dto.setMatiereParent(matiere.getMatiereParent()!= null ? Matiere.findById(Long.parseLong(matiere.getMatiereParent())) : null);
+		dto.setMatiereParent(
+				matiere.getMatiereParent() != null ? Matiere.findById(Long.parseLong(matiere.getMatiereParent()))
+						: null);
 		dto.setCategorie(matiere.getCategorie());
-		
+
 		return dto;
 	}
 
 	@Transactional
 	public Matiere update(Matiere ev) {
+		
+		Gson g = new Gson();
+		System.out.println(g.toJson(ev));
+		
 		Matiere entity = Matiere.findById(ev.getId());
 		if (entity == null) {
 			throw new NotFoundException();
@@ -84,14 +111,18 @@ public class MatiereService implements PanacheRepositoryBase<Matiere, Long>{
 		return entity;
 	}
 
-	public Matiere updateAndDisplay(Matiere evaluation) {
+	public Matiere updateAndDisplay(Matiere matiere) {
 		Matiere ev;
-		if (update(evaluation) != null) {
-			ev = findById(evaluation.getId());
+		try {
+		if (update(matiere) != null) {
+			ev = findById(matiere.getId());
 			return ev;
 		}
-
 		return null;
+		}catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 
 	}
 

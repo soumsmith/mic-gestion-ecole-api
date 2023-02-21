@@ -73,7 +73,7 @@ public class Bulletin extends PanacheEntityBase{
 	@Column(name = "heures_abs_non_just")
 	private String heuresAbsNonJustifiees;
 	@Column(name = "moy_general")
-	private String moyGeneral;
+	private Double moyGeneral;
 	@Column(name = "moy_max")
 	private String moyMax;
 	@Column(name = "moy_min")

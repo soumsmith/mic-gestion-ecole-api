@@ -59,10 +59,10 @@ public class EvaluationResource {
 	@Operation(description = "Obtenir les evaluations par matiere et classe", summary = "")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Tag(name = "Evaluation")
-	public Response getByClasseAndMatierePeriode(@QueryParam("classeId") String classeId,@QueryParam("matiereId") String matiereId, @QueryParam("periodeId") String periodeId) {
+	public Response getByClasseAndMatierePeriode(@QueryParam("classeId") String classeId,@QueryParam("matiereId") String matiereId, @QueryParam("periodeId") String periodeId,@QueryParam("annee") String anneeId) {
 
 
-		return Response.ok().entity(evaluationService.getByClasseAndMatiereAndPeriode(Long.parseLong(classeId),Long.parseLong(matiereId),Long.parseLong(periodeId))).build();
+		return Response.ok().entity(evaluationService.getByClasseAndMatiereAndPeriode(Long.parseLong(classeId),Long.parseLong(matiereId),Long.parseLong(periodeId),Long.parseLong(anneeId))).build();
 	}
 
 	@GET

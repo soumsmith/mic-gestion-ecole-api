@@ -22,11 +22,13 @@ public class DetailBulletin extends PanacheEntityBase{
 	private String matiereCode;
 	@Column(name = "libelle_matiere")
 	private String matiereLibelle;
-	private String moyenne;
+	@Column(name = "categorie_matiere")
+	private String categorieMatiere;
+	private Double moyenne;
 	private String rang;
 	private String coef;
 	@Column(name = "moy_coef")
-	private String moyCoef;
+	private Double moyCoef;
 	private String appreciation;
 	private String  categorie;
     private int  num_ordre;

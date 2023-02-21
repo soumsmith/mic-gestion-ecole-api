@@ -162,11 +162,12 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 				if(flag != null) {
 					logger.info("--> Modification de detail bulletin");
 					flag.setMatiereLibelle(entry.getKey().getLibelle());
-					flag.setMoyenne(String.valueOf(CommonUtils.roundDouble(entry.getKey().getMoyenne(),2)));
-					flag.setMoyCoef(String.valueOf(CommonUtils.roundDouble(moyCoef, 2) ));
+					flag.setMoyenne(CommonUtils.roundDouble(entry.getKey().getMoyenne(),2));
+					flag.setMoyCoef(CommonUtils.roundDouble(moyCoef, 2));
 					flag.setAppreciation(entry.getKey().getAppreciation());
 					flag.setCoef(entry.getKey().getCoef());
 					flag.setRang(entry.getKey().getRang());
+					flag.setCategorieMatiere(entry.getKey().getCategorie().getLibelle());
 				} else {
 					logger.info("--> Création de detail bulletin");
 					flag = new DetailBulletin();
@@ -175,8 +176,8 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 					flag.setId(idDetail.toString());
 					flag.setMatiereCode(entry.getKey().getCode());
 					flag.setMatiereLibelle(entry.getKey().getLibelle());
-					flag.setMoyenne(String.valueOf(CommonUtils.roundDouble(entry.getKey().getMoyenne(),2)));
-					flag.setMoyCoef(String.valueOf(CommonUtils.roundDouble(moyCoef, 2) ));
+					flag.setMoyenne(CommonUtils.roundDouble(entry.getKey().getMoyenne(),2));
+					flag.setMoyCoef(CommonUtils.roundDouble(moyCoef, 2));
 					flag.setCoef(entry.getKey().getCoef());
 					flag.setAppreciation(entry.getKey().getAppreciation());
 					flag.setRang(entry.getKey().getRang());
@@ -259,7 +260,8 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 		bul.setMoyAn(null);
 		bul.setRangAn(null);
 		bul.setMoyAvg(null);
-		bul.setMoyGeneral(me.getMoyenne().toString());
+//		bul.setMoyGeneral(me.getMoyenne().toString());
+		bul.setMoyGeneral(me.getMoyenne());
 		bul.setMoyMax(null);
 		bul.setMoyMin(null);
 		bul.setNationalite(me.getEleve().getNationalite());
