@@ -4,75 +4,75 @@ import java.util.Date;
 
 public class BulletinSelectDto {
 
-	
-	
+
+
 	public Long id_ecole;
-	
+
 	public String nom_ecole;
-	
+
 	public String statut_ecole;
-	
+
 	public String url_logo;
-	
+
 	public String adresse_ecole;
-	
+
 	public String tel_ecole;
 
 	public String annee_libelle;
-	
+
 	private String libelle_periode;
-	
+
 	public String matricule;
 	public String nom;
 	public String prenoms;
 	public String sexe;
 
 	private String date_naissance;
-	
+
 	private String lieu_naissance;
-	
+
 	private String nationalite;
 	private String redoublant;
 	private String boursier;
 	private String affecte;
-	
+
 	private String libelle_classe;
-	
+
 	private String effectif_classe;
-	
+
 	private String total_coef;
-	
+
 	private String total_moy_coef;
-	
+
 	private String nom_prof_princ;
-	
+
 	private String heures_abs_just;
-	
+
 	private String heures_abs_non_just;
-	
+
 	private String moy_general;
-	
+
 	private String moy_max;
-	
+
 	private String moy_min;
-	
+
 	private String moy_avg;
-	
+
 	private String moy_annuelle;
 
 	private String rang_annuelle;
-	
+
 	private String appreciation_conseil;
 
 	private Date date_creation;
-	
+
 	private String code_qr;
 	private String statut;
 	private String libelle_matiere;
 	private String moyenne;
 	private String rang;
 	private String coef;
-	
+
 	private String moy_coef;
 	private String appreciation;
     private String  categorie;
@@ -80,7 +80,7 @@ public class BulletinSelectDto {
     private String  rangBulletin;
     private String nom_prenom_professeur ;
 
-	
+
 
     public BulletinSelectDto() {
     }
@@ -88,7 +88,7 @@ public class BulletinSelectDto {
 
 
 
-    
+
 
 
 
@@ -121,7 +121,7 @@ public class BulletinSelectDto {
 
 
 
-    
+
 
 
 
@@ -372,7 +372,7 @@ public class BulletinSelectDto {
     /* (non-Javadoc)
      * @see java.lang.Object#toString()
      */
-    
+
     /**
      * @param date_naissance the date_naissance to set
      */
@@ -380,7 +380,7 @@ public class BulletinSelectDto {
         this.date_naissance = date_naissance;
     }
 
-   
+
 
     /**
      * @return String return the lieu_naissance
@@ -665,7 +665,7 @@ public class BulletinSelectDto {
     /**
      * @return String return the codeQr
      */
-   
+
 
     /**
      * @return String return the statut
@@ -684,7 +684,7 @@ public class BulletinSelectDto {
     /**
      * @return String return the matiereLibelle
      */
-  
+
 
     /**
      * @return String return the moyenne
@@ -758,18 +758,18 @@ public class BulletinSelectDto {
 
 
 
- 
 
 
 
 
 
-    
 
 
 
 
-    
+
+
+
 
 
 
@@ -835,7 +835,7 @@ public class BulletinSelectDto {
     /**
      * @return String return the RangBulletin
      */
-   
+
 
 
     /**

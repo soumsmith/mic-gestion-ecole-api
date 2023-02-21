@@ -243,6 +243,13 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 		<property name="com.jaspersoft.studio.field.label" value="categorie"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value=""/>
 	</field>
+	<variable name="TotalMoyenParCategParMatier" class="java.lang.Double" resetType="Group" resetGroup="MyCategorie" incrementType="Group" incrementGroup="MyCategorie" calculation="Sum">
+		<variableExpression><![CDATA[Double.valueOf($F{moyenne})]]></variableExpression>
+	</variable>
+	<variable name="TotalMoyenCoeffParCategParMatier" class="java.lang.Double" resetType="Group" resetGroup="MyCategorie" incrementType="Group" incrementGroup="MyCategorie" calculation="Sum">
+		<variableExpression><![CDATA[Double.parseDouble($F{coef})]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
 	<group name="InfosPersonnelEleve"/>
 	<group name="DisciplineLettre"/>
 	<group name="BilanScientifique"/>
@@ -271,14 +278,14 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 					</reportElement>
 					<textFieldExpression><![CDATA["Bilan "+$F{categorie}]]></textFieldExpression>
 				</textField>
-				<staticText>
-					<reportElement x="198" y="0" width="42" height="15" uuid="be636221-78b1-4728-aa8d-65a2efd19444"/>
-					<text><![CDATA[$V{V_moy_bilan_Lettre}]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="240" y="-1" width="42" height="15" uuid="7943c653-299a-4023-91fd-dc2ef142ba97"/>
-					<text><![CDATA[$V{V_Coeff_Bilan_lettre}]]></text>
-				</staticText>
+				<textField textAdjust="ScaleFont" evaluationTime="Group" evaluationGroup="MyCategorie">
+					<reportElement x="198" y="0" width="42" height="15" uuid="d18d3cd5-4736-429b-91ed-b7c9ad359b00"/>
+					<textFieldExpression><![CDATA[$V{TotalMoyenParCategParMatier}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="240" y="-1" width="42" height="15" uuid="0b7e7a72-b949-4f4d-99ae-1f65e0a1ea3a"/>
+					<textFieldExpression><![CDATA[$V{TotalMoyenCoeffParCategParMatier}]]></textFieldExpression>
+				</textField>
 				<staticText>
 					<reportElement x="283" y="0" width="42" height="15" uuid="62132e34-b408-4e3c-a537-5c12eaaab771"/>
 					<text><![CDATA[$V{V_moy_coef_Bilan_Lettre}]]></text>
@@ -318,21 +325,9 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 							<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						</reportElement>
-						<image>
-							<reportElement x="0" y="0" width="90" height="65" uuid="16955be6-fef5-48bd-b956-9821723036c9">
-								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
-								<property name="com.jaspersoft.layout.grid.y" value="-1"/>
-								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-								<property name="com.jaspersoft.layout.grid.rowspan" value="2"/>
-								<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-							</reportElement>
-							<imageExpression><![CDATA["C:/Users/HP/Pictures/pub.png"]]></imageExpression>
-						</image>
 						<staticText>
-							<reportElement style="TitreLibelle" x="90" y="0" width="150" height="50" uuid="36634628-804a-4af6-93a2-3bc587ad220e">
-								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+							<reportElement style="TitreLibelle" x="90" y="0" width="150" height="40" uuid="36634628-804a-4af6-93a2-3bc587ad220e">
+								<property name="com.jaspersoft.layout.grid.x" value="1"/>
 								<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
 								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
@@ -342,12 +337,12 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							</reportElement>
 							<textElement>
-								<font size="9"/>
+								<font size="8"/>
 							</textElement>
 							<text><![CDATA[REPUBLIQUE DE COTE D'IVOIRE MINISTERE DE L'EDUCATION NATIONALE ET DE L'ALPHABETISATION]]></text>
 						</staticText>
 						<staticText>
-							<reportElement style="TitreLibelle" x="90" y="50" width="150" height="15" uuid="4bda196e-4a7d-4c8b-8497-025e892a9c98">
+							<reportElement style="TitreLibelle" x="90" y="40" width="150" height="25" uuid="4bda196e-4a7d-4c8b-8497-025e892a9c98">
 								<property name="com.jaspersoft.layout.grid.x" value="1"/>
 								<property name="com.jaspersoft.layout.grid.y" value="1"/>
 								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -740,18 +735,6 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 					<reportElement x="444" y="0" width="147" height="70" uuid="8ffb767a-e06d-4678-a946-1344308fc520">
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 					</reportElement>
-					<image onErrorType="Blank">
-						<reportElement stretchType="ContainerHeight" x="0" y="0" width="130" height="70" uuid="2fec0de9-172f-415b-b330-35d9529be350">
-							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
-							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
-							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-							<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-							<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-							<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-						</reportElement>
-						<imageExpression><![CDATA["C:/Users/HP/Pictures/pub.png"]]></imageExpression>
-					</image>
 				</frame>
 			</frame>
 		</band>
