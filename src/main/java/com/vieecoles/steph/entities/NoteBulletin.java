@@ -18,7 +18,7 @@ import lombok.EqualsAndHashCode;
 public class NoteBulletin extends PanacheEntityBase {
 	@Id
 	private String id;
-	private String note;
+	private Double note;
 	@Column(name = "note_sur")
 	private String noteSur;
 	@ManyToOne

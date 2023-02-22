@@ -293,7 +293,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 //					System.out.println(String.format("PEC value >>>>>><<<<<< %s", note.getEvaluation().getPec()));
 
 					if (note.getEvaluation().getPec() == 1) {
-						noteList.add(Double.parseDouble(note.getNote()));
+						noteList.add(note.getNote());
 //						System.out.println(String.format("PEC value >>> %s", note.getEvaluation().getPec()));
 						diviser = diviser
 								+ (Double.parseDouble(note.getEvaluation().getNoteSur()) / Double.parseDouble("20"));

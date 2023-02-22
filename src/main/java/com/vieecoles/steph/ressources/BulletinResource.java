@@ -36,7 +36,7 @@ public class BulletinResource {
 			nbreEleve = bulletinService.handleSave(classe, annee, periode);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return Response.serverError().build();
+			return Response.serverError().entity(e.getMessage()).build();
 		}
 		return Response.ok(nbreEleve == 0 ? "Aucun bulletin sauvegardé" : String.format("%s Bulletin(s) sauvegardé(s)",nbreEleve)).build();
 	}

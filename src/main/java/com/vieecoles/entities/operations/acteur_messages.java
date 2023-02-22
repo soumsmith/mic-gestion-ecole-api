@@ -5,7 +5,7 @@ import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import javax.persistence.*;
 import java.time.LocalDate;
 
-@Entity
+//@Entity
 public class acteur_messages extends PanacheEntityBase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

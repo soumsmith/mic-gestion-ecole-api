@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 import java.util.logging.Logger;
 
@@ -199,7 +200,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 						noteBulletin = new NoteBulletin();
 						idNoteBul = UUID.randomUUID();
 						noteBulletin.setId(idNoteBul.toString());
-						noteBulletin.setNote(note.getNote());
+						noteBulletin.setNote( note.getNote());
 						noteBulletin.setNoteSur(note.getEvaluation().getNoteSur());
 						noteBulletin.setDetailBulletin(flag);
 						noteBulletin.persist();
@@ -208,11 +209,18 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 			}
 		}
 		
-		Double maxMoy = Collections.max(moyGenElevesList);
-		Double minMoy = Collections.min(moyGenElevesList);
+		Double maxMoy ;
+		Double minMoy ;
+		Double sumMoy;
 		
-		Double sumMoy = moyGenElevesList.stream().mapToDouble(a -> a).sum();
+		try {
+		maxMoy = Collections.max(moyGenElevesList);
+		minMoy = Collections.min(moyGenElevesList);
 		
+		sumMoy = moyGenElevesList.stream().mapToDouble(a -> a).sum();
+		}catch (NoSuchElementException e) {
+			throw new RuntimeException("Aucune donnée trouvée");
+		}
 		int effectif = classeEleveService.getCountByClasseAnnee(Long.parseLong(classe), Long.parseLong(annee));
 		
 		Double avgMoy = sumMoy/(moyGenElevesList.size() != 0 ? moyGenElevesList.size() : 1);
@@ -223,10 +231,10 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 		bulletin = new Bulletin();
 		for(String id : bulletinIdList) {
 			bulletin = Bulletin.findById(id);
-			bulletin.setMoyMax(String.valueOf(CommonUtils.roundDouble(maxMoy, 2)));
-			bulletin.setMoyMin(String.valueOf(CommonUtils.roundDouble(minMoy, 2)));
-			bulletin.setMoyAvg(String.valueOf(CommonUtils.roundDouble(avgMoy, 2)));
-			bulletin.setEffectif(String.valueOf(effectif));
+			bulletin.setMoyMax(CommonUtils.roundDouble(maxMoy, 2));
+			bulletin.setMoyMin(CommonUtils.roundDouble(minMoy, 2));
+			bulletin.setMoyAvg(CommonUtils.roundDouble(avgMoy, 2));
+			bulletin.setEffectif(effectif);
 		}
 		
 		

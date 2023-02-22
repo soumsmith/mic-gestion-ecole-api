@@ -19,7 +19,7 @@ public class Notes extends PanacheEntityBase{
 	@JoinColumn(name = "evaluation_evaluationid")
 	private Evaluation evaluation;
 	@Column(name = "note_elevenote")
-	private String note;
+	private Double note;
 	@ManyToOne
 	@JoinColumn(name = "inscription_has_eleve_id")
 	private ClasseEleve classeEleve;

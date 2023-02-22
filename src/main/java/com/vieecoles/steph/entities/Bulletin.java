@@ -59,11 +59,11 @@ public class Bulletin extends PanacheEntityBase{
 	@Column(name = "libelle_classe")
 	private String libelleClasse;
 	@Column(name = "effectif_classe")
-	private String effectif;
+	private Integer effectif;
 	@Column(name = "total_coef")
-	private String totalCoef;
+	private Double totalCoef;
 	@Column(name = "total_moy_coef")
-	private String totalMoyCoef;
+	private Double totalMoyCoef;
 	@Column(name = "code_prof_princ")
 	private String codeProfPrincipal;
 	@Column(name = "nom_prof_princ")
@@ -75,15 +75,15 @@ public class Bulletin extends PanacheEntityBase{
 	@Column(name = "moy_general")
 	private Double moyGeneral;
 	@Column(name = "moy_max")
-	private String moyMax;
+	private Double moyMax;
 	@Column(name = "moy_min")
-	private String moyMin;
+	private Double moyMin;
 	@Column(name = "moy_avg")
-	private String moyAvg;
+	private Double moyAvg;
 	@Column(name = "moy_annuelle")
-	private String moyAn;
+	private Double moyAn;
 	@Column(name = "rang_annuelle")
-	private String rangAn;
+	private Integer rangAn;
 	@Column(name = "appreciation_conseil")
 	private String appreciation;
 	@Column(name = "date_creation")
@@ -93,7 +93,7 @@ public class Bulletin extends PanacheEntityBase{
 	@Column(name = "code_qr")
 	private String codeQr;
 	private String statut;
-	private String rang;
+	private Integer rang;
 	
 	
 }
