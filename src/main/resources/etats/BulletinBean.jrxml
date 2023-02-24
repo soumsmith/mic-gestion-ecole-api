@@ -15,6 +15,7 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 	<style name="TitreLibelle" fontName="Serif" fontSize="10">
 		<box leftPadding="5"/>
 	</style>
+	<style name="TotalCateg" hTextAlign="Center" fontName="Algerian" fontSize="10"/>
 	<queryString language="SQL">
 		<![CDATA[]]>
 	</queryString>
@@ -113,17 +114,17 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 		<property name="com.jaspersoft.studio.field.label" value="libelle_classe"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value=""/>
 	</field>
-	<field name="effectif_classe" class="java.lang.String">
+	<field name="effectif_classe" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.name" value="effectif_classe"/>
 		<property name="com.jaspersoft.studio.field.label" value="effectif_classe"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value=""/>
 	</field>
-	<field name="total_coef" class="java.lang.String">
+	<field name="total_coef" class="java.lang.Double">
 		<property name="com.jaspersoft.studio.field.name" value="total_coef"/>
 		<property name="com.jaspersoft.studio.field.label" value="total_coef"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value=""/>
 	</field>
-	<field name="total_moy_coef" class="java.lang.String">
+	<field name="total_moy_coef" class="java.lang.Double">
 		<property name="com.jaspersoft.studio.field.name" value="total_moy_coef"/>
 		<property name="com.jaspersoft.studio.field.label" value="total_moy_coef"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value=""/>
@@ -143,32 +144,32 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 		<property name="com.jaspersoft.studio.field.label" value="heures_abs_non_just"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value=""/>
 	</field>
-	<field name="moy_general" class="java.lang.String">
+	<field name="moy_general" class="java.lang.Double">
 		<property name="com.jaspersoft.studio.field.name" value="moy_general"/>
 		<property name="com.jaspersoft.studio.field.label" value="moy_general"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value=""/>
 	</field>
-	<field name="moy_max" class="java.lang.String">
+	<field name="moy_max" class="java.lang.Double">
 		<property name="com.jaspersoft.studio.field.name" value="moy_max"/>
 		<property name="com.jaspersoft.studio.field.label" value="moy_max"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value=""/>
 	</field>
-	<field name="moy_min" class="java.lang.String">
+	<field name="moy_min" class="java.lang.Double">
 		<property name="com.jaspersoft.studio.field.name" value="moy_min"/>
 		<property name="com.jaspersoft.studio.field.label" value="moy_min"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value=""/>
 	</field>
-	<field name="moy_avg" class="java.lang.String">
+	<field name="moy_avg" class="java.lang.Double">
 		<property name="com.jaspersoft.studio.field.name" value="moy_avg"/>
 		<property name="com.jaspersoft.studio.field.label" value="moy_avg"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value=""/>
 	</field>
-	<field name="moy_annuelle" class="java.lang.String">
+	<field name="moy_annuelle" class="java.lang.Double">
 		<property name="com.jaspersoft.studio.field.name" value="moy_annuelle"/>
 		<property name="com.jaspersoft.studio.field.label" value="moy_annuelle"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value=""/>
 	</field>
-	<field name="rang_annuelle" class="java.lang.String">
+	<field name="rang_annuelle" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.name" value="rang_annuelle"/>
 		<property name="com.jaspersoft.studio.field.label" value="rang_annuelle"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value=""/>
@@ -198,22 +199,22 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 		<property name="com.jaspersoft.studio.field.label" value="libelle_matiere"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value=""/>
 	</field>
-	<field name="moyenne" class="java.lang.String">
+	<field name="moyenne" class="java.lang.Double">
 		<property name="com.jaspersoft.studio.field.name" value="moyenne"/>
 		<property name="com.jaspersoft.studio.field.label" value="moyenne"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value=""/>
 	</field>
-	<field name="rang" class="java.lang.String">
+	<field name="rang" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.name" value="rang"/>
 		<property name="com.jaspersoft.studio.field.label" value="rang"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value=""/>
 	</field>
-	<field name="coef" class="java.lang.String">
+	<field name="coef" class="java.lang.Double">
 		<property name="com.jaspersoft.studio.field.name" value="coef"/>
 		<property name="com.jaspersoft.studio.field.label" value="coef"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value=""/>
 	</field>
-	<field name="moy_coef" class="java.lang.String">
+	<field name="moy_coef" class="java.lang.Double">
 		<property name="com.jaspersoft.studio.field.name" value="moy_coef"/>
 		<property name="com.jaspersoft.studio.field.label" value="moy_coef"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value=""/>
@@ -243,12 +244,16 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 		<property name="com.jaspersoft.studio.field.label" value="categorie"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value=""/>
 	</field>
-	<variable name="TotalMoyenParCategParMatier" class="java.lang.Double" resetType="Group" resetGroup="MyCategorie" incrementType="Group" incrementGroup="MyCategorie" calculation="Sum">
-		<variableExpression><![CDATA[Double.valueOf($F{moyenne})]]></variableExpression>
+	<variable name="TotalMoyenParCategParMatier" class="java.lang.Double" resetType="Group" resetGroup="MyCategorie" calculation="Sum">
+		<variableExpression><![CDATA[$F{moyenne}]]></variableExpression>
 	</variable>
-	<variable name="TotalMoyenCoeffParCategParMatier" class="java.lang.Double" resetType="Group" resetGroup="MyCategorie" incrementType="Group" incrementGroup="MyCategorie" calculation="Sum">
-		<variableExpression><![CDATA[Double.parseDouble($F{coef})]]></variableExpression>
-		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	<variable name="TotalCoeffParCategParMatier" class="java.lang.Double" resetType="Group" resetGroup="MyCategorie" calculation="Sum">
+		<variableExpression><![CDATA[$F{coef}]]></variableExpression>
+	</variable>
+	<variable name="imageEcole" class="java.awt.Image"/>
+	<variable name="ImageEleve" class="java.awt.Image"/>
+	<variable name="TotalMoyeCoefParCategorie" class="java.lang.Double" resetType="Group" resetGroup="MyCategorie" calculation="Sum">
+		<variableExpression><![CDATA[$F{moy_coef}]]></variableExpression>
 	</variable>
 	<group name="InfosPersonnelEleve"/>
 	<group name="DisciplineLettre"/>
@@ -263,33 +268,38 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 	<group name="MyCategorie">
 		<groupExpression><![CDATA[$F{categorie}]]></groupExpression>
 		<groupFooter>
-			<band height="15">
+			<band height="20">
 				<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
-				<textField>
-					<reportElement x="10" y="0" width="187" height="15" uuid="5c33eaca-aa70-4a1e-a999-403d0b91c53a">
-						<property name="com.jaspersoft.layout.grid.x" value="1"/>
-						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
-						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<frame>
+					<reportElement x="10" y="2" width="315" height="16" uuid="cdc6a204-66d5-4ce5-b53e-3e92416c1067">
+						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 					</reportElement>
-					<textFieldExpression><![CDATA["Bilan "+$F{categorie}]]></textFieldExpression>
-				</textField>
-				<textField textAdjust="ScaleFont" evaluationTime="Group" evaluationGroup="MyCategorie">
-					<reportElement x="198" y="0" width="42" height="15" uuid="d18d3cd5-4736-429b-91ed-b7c9ad359b00"/>
-					<textFieldExpression><![CDATA[$V{TotalMoyenParCategParMatier}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement x="240" y="-1" width="42" height="15" uuid="0b7e7a72-b949-4f4d-99ae-1f65e0a1ea3a"/>
-					<textFieldExpression><![CDATA[$V{TotalMoyenCoeffParCategParMatier}]]></textFieldExpression>
-				</textField>
-				<staticText>
-					<reportElement x="283" y="0" width="42" height="15" uuid="62132e34-b408-4e3c-a537-5c12eaaab771"/>
-					<text><![CDATA[$V{V_moy_coef_Bilan_Lettre}]]></text>
-				</staticText>
+					<textField>
+						<reportElement style="TotalCateg" x="1" y="0" width="187" height="15" uuid="5c33eaca-aa70-4a1e-a999-403d0b91c53a">
+							<property name="com.jaspersoft.layout.grid.x" value="1"/>
+							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						</reportElement>
+						<textFieldExpression><![CDATA["Bilan "+$F{categorie}]]></textFieldExpression>
+					</textField>
+					<textField textAdjust="ScaleFont" evaluationTime="Group" evaluationGroup="MyCategorie" pattern="#,#00.00#;(#,#00.00#-)">
+						<reportElement style="TotalCateg" x="188" y="0" width="43" height="15" uuid="d18d3cd5-4736-429b-91ed-b7c9ad359b00"/>
+						<textFieldExpression><![CDATA[$V{TotalMoyenParCategParMatier}]]></textFieldExpression>
+					</textField>
+					<textField textAdjust="StretchHeight" pattern="#,#00.00#;(#,#00.00#-)">
+						<reportElement style="TotalCateg" x="231" y="0" width="42" height="15" uuid="0b7e7a72-b949-4f4d-99ae-1f65e0a1ea3a"/>
+						<textFieldExpression><![CDATA[$V{TotalCoeffParCategParMatier}]]></textFieldExpression>
+					</textField>
+					<textField pattern="#,#00.00#;(#,#00.00#-)">
+						<reportElement style="TotalCateg" x="273" y="0" width="42" height="15" uuid="1bd18bef-51b3-45e0-90c0-bf067ba41b58"/>
+						<textFieldExpression><![CDATA[$V{TotalMoyeCoefParCategorie}]]></textFieldExpression>
+					</textField>
+				</frame>
 			</band>
 		</groupFooter>
 	</group>
@@ -357,6 +367,18 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 							</textElement>
 							<text><![CDATA[Groupe Scolaire la Maison de Bambi]]></text>
 						</staticText>
+						<image scaleImage="FillFrame">
+							<reportElement x="0" y="0" width="90" height="65" uuid="84b9dc49-ac7e-4236-9846-0e398cbf5848">
+								<property name="com.jaspersoft.layout.grid.x" value="0"/>
+								<property name="com.jaspersoft.layout.grid.y" value="0"/>
+								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.rowspan" value="2"/>
+								<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+							</reportElement>
+							<imageExpression><![CDATA[$V{imageEcole}]]></imageExpression>
+						</image>
 					</frame>
 					<frame>
 						<reportElement x="0" y="65" width="230" height="19" uuid="0a35297c-022e-4a32-b024-7fa4210fd971">
@@ -735,6 +757,10 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 					<reportElement x="444" y="0" width="147" height="70" uuid="8ffb767a-e06d-4678-a946-1344308fc520">
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 					</reportElement>
+					<image scaleImage="FillFrame">
+						<reportElement x="0" y="0" width="147" height="70" uuid="84293349-5d38-4373-81b4-c00d752d2e48"/>
+						<imageExpression><![CDATA[$V{ImageEleve}]]></imageExpression>
+					</image>
 				</frame>
 			</frame>
 		</band>

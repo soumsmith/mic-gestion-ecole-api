@@ -25,8 +25,8 @@ public class DetailBulletin extends PanacheEntityBase{
 	@Column(name = "categorie_matiere")
 	private String categorieMatiere;
 	private Double moyenne;
-	private String rang;
-	private String coef;
+	private Integer rang;
+	private Double coef;
 	@Column(name = "moy_coef")
 	private Double moyCoef;
 	private String appreciation;
