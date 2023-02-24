@@ -29,7 +29,7 @@ public class SalleService implements PanacheRepositoryBase<Salle, Long> {
 
 	public List<Salle> getWithSallesDisponibles(long anneeId, long classeId, int jourId, String heureDeb,
 			String heureFin) {
-		List<Activite> activites = activiteService.getListByClasseAndJour(anneeId, classeId, jourId);
+		List<Activite> activites = activiteService.getListByClasseAndJour(classeId, jourId);
 		List<Salle> salles = list();
 		LocalTime timeDeb = LocalTime.parse(heureDeb);
 		LocalTime timeFin = LocalTime.parse(heureFin);

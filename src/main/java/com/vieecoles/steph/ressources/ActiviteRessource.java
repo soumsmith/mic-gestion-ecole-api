@@ -28,7 +28,7 @@ public class ActiviteRessource {
     @Path("/list-by-classe-jour")
     @Tag(name = "Activite")
     public Response getByClasseAndJour(@QueryParam("annee") long anneeId, @QueryParam("classe") long classeId, @QueryParam("jour") int jourId) {
-        return Response.ok().entity(activiteService.getListByClasseAndJour(anneeId, classeId, jourId)).build();
+        return Response.ok().entity(activiteService.getListByClasseAndJour(classeId, jourId)).build();
     }
 
 

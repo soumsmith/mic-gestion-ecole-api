@@ -34,19 +34,18 @@ public class ActiviteService implements PanacheRepositoryBase<Activite, Integer>
 
 	/**
 	 * Renvoie la liste des activités en fonction de l année, la classe et le jour
-	 *
-	 * @param anneeId
 	 * @param classeId
 	 * @param jourId
+	 *
 	 * @return
 	 */
-	public List<Activite> getListByClasseAndJour(long anneeId, long classeId, int jourId) {
+	public List<Activite> getListByClasseAndJour(long classeId, int jourId) {
 		//logger.info(String.format("Annee %s - classe %s - jour %s", anneeId, classeId, jourId));
 		return Activite.find("classe.id = ?1 and jour.id = ?2 and statut = ?3", classeId, jourId, Constants.ACTIF)
 				.list();
 	}
 
-	public List<Activite> getListByJour(long anneeId, int jourId) {
+	public List<Activite> getListByJour(int jourId) {
 	//	logger.info(String.format("Annee %s - classe %s - jour %s",1, anneeId, jourId));
 		return Activite.find("jour.id = ?1 and statut = ?2", jourId, Constants.ACTIF)
 				.list();
@@ -63,7 +62,7 @@ public class ActiviteService implements PanacheRepositoryBase<Activite, Integer>
 	 * @return
 	 */
 	public Boolean isPlageHoraireValid(long anneeId, long classeId, int jourId, String heureDeb, String heureFin) {
-		List<Activite> activites = getListByClasseAndJour(anneeId, classeId, jourId);
+		List<Activite> activites = getListByClasseAndJour(classeId, jourId);
 		LocalTime timeDeb = LocalTime.parse(heureDeb);
 		LocalTime timeFin = LocalTime.parse(heureFin);
 		for (Activite atv : activites) {

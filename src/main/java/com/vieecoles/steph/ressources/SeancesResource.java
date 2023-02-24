@@ -54,7 +54,7 @@ public class SeancesResource {
 		LocalDate ld = DateUtils.getDateWithString(date);
 		Date ourDate = DateUtils.asDate(ld);
 		System.out.println(ourDate);
-		return Response.ok().entity(seanceService.getListByClasseAndDateAndStatut(1,classeId,ourDate,statut )).build();
+		return Response.ok().entity(seanceService.getListByClasseAndDateAndStatut(classeId,ourDate,statut )).build();
     }
 
 	@GET

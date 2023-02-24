@@ -60,7 +60,7 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 		return Seances.find("classe.id = ?1 and jour.id = ?2 and statut = ?3", classeId, jourId, statut).list();
 	}
 
-	public List<Seances> getListByClasseAndDateAndStatut(long anneeId, long classeId, Date date, String statut) {
+	public List<Seances> getListByClasseAndDateAndStatut(long classeId, Date date, String statut) {
 		//logger.info(String.format("Annee %s - classe %s - date %s - statut %s", anneeId, classeId, date, statut));
 		return Seances.find("classe.id = ?1 and dateSeance = ?2 and statut = ?3", classeId, date, statut).list();
 	}
@@ -154,9 +154,9 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 		// Recuperer la liste des emploi du temps en fonction du jour et/ou de la classe
 		// (si classe non nulle)
 		if (classe == null)
-			activites = activiteService.getListByJour(1, jour.getId());
+			activites = activiteService.getListByJour(jour.getId());
 		else
-			activites = activiteService.getListByClasseAndJour(1, Long.parseLong(classe), jour.getId());
+			activites = activiteService.getListByClasseAndJour(Long.parseLong(classe), jour.getId());
 
 		// inserer pour chaque emploi du temps une seance (en recherchant le professeur
 		// de la matiere si existe)
@@ -176,11 +176,11 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 			cpteSeancesTot ++;
 
 			if (!blackIdsClasses.contains(atv.getClasse().getId())) {
-				seanceExist = getListByClasseAndDateAndStatut(1, atv.getClasse().getId(), date, Constants.AUTOMATIQUE);
+				seanceExist = getListByClasseAndDateAndStatut(atv.getClasse().getId(), date, Constants.AUTOMATIQUE);
 
 				if (seanceExist.size()==0) {
 					seance = new Seances();
-					pers = personnelMatiereClasseService.findByMatiereAndClasse(atv.getMatiere().getId(), 0,atv.getClasse().getId());
+					pers = personnelMatiereClasseService.findByMatiereAndClasse(atv.getMatiere().getId(), 1,atv.getClasse().getId());
 					seance.setAnnee(atv.getAnnee());
 					seance.setClasse(atv.getClasse());
 					seance.setDateCreation(new Date());
