@@ -38,11 +38,11 @@ public class BulletinSelectDto {
 
 	private String libelle_classe;
 
-	private String effectif_classe;
+	private Integer effectif_classe;
 
-	private String total_coef;
+	private Double total_coef;
 
-	private String total_moy_coef;
+	private Double total_moy_coef;
 
 	private String nom_prof_princ;
 
@@ -50,17 +50,17 @@ public class BulletinSelectDto {
 
 	private String heures_abs_non_just;
 
-	private String moy_general;
+	private Double moy_general;
 
-	private String moy_max;
+	private Double moy_max;
 
-	private String moy_min;
+	private Double moy_min;
 
-	private String moy_avg;
+	private Double moy_avg;
 
-	private String moy_annuelle;
+	private Double moy_annuelle;
 
-	private String rang_annuelle;
+	private Integer rang_annuelle;
 
 	private String appreciation_conseil;
 
@@ -69,15 +69,15 @@ public class BulletinSelectDto {
 	private String code_qr;
 	private String statut;
 	private String libelle_matiere;
-	private String moyenne;
-	private String rang;
-	private String coef;
+	private Double moyenne;
+	private Integer rang;
+	private Double coef;
 
-	private String moy_coef;
+	private Double moy_coef;
 	private String appreciation;
     private String  categorie;
-    private Integer  num_ordre;
-    private String  rangBulletin;
+    private int  num_ordre;
+    private Integer  rangBulletin;
     private String nom_prenom_professeur ;
 
 
@@ -133,12 +133,12 @@ public class BulletinSelectDto {
     public BulletinSelectDto(Long id_ecole, String nom_ecole, String statut_ecole, String url_logo,
             String adresse_ecole, String tel_ecole, String annee_libelle, String libelle_periode, String matricule,
             String nom, String prenoms, String sexe, String date_naissance, String lieu_naissance, String nationalite,
-            String redoublant, String boursier, String affecte, String libelle_classe, String effectif_classe,
-            String total_coef, String total_moy_coef, String nom_prof_princ, String heures_abs_just,
-            String heures_abs_non_just, String moy_general, String moy_max, String moy_min, String moy_avg,
-            String moy_annuelle, String rang_annuelle, String appreciation_conseil, Date date_creation, String code_qr,
-            String statut, String libelle_matiere, String moyenne, String rang, String coef, String moy_coef,
-            String appreciation, String categorie, Integer num_ordre, String rangBulletin, String nom_prenom_professeur) {
+            String redoublant, String boursier, String affecte, String libelle_classe, Integer effectif_classe,
+            Double total_coef, Double total_moy_coef, String nom_prof_princ, String heures_abs_just,
+            String heures_abs_non_just, Double moy_general, Double moy_max, Double moy_min, Double moy_avg,
+            Double moy_annuelle, Integer rang_annuelle, String appreciation_conseil, Date date_creation, String code_qr,
+            String statut, String libelle_matiere, Double moyenne, Integer rang, Double coef, Double moy_coef,
+            String appreciation, String categorie, int num_ordre, Integer rangBulletin, String nom_prenom_professeur) {
         this.id_ecole = id_ecole;
         this.nom_ecole = nom_ecole;
         this.statut_ecole = statut_ecole;
@@ -469,42 +469,42 @@ public class BulletinSelectDto {
     /**
      * @return String return the effectif_classe
      */
-    public String getEffectif_classe() {
+    public Integer getEffectif_classe() {
         return effectif_classe;
     }
 
     /**
      * @param effectif_classe the effectif_classe to set
      */
-    public void setEffectif_classe(String effectif_classe) {
+    public void setEffectif_classe(Integer effectif_classe) {
         this.effectif_classe = effectif_classe;
     }
 
     /**
      * @return String return the total_coef
      */
-    public String getTotal_coef() {
+    public Double getTotal_coef() {
         return total_coef;
     }
 
     /**
      * @param total_coef the total_coef to set
      */
-    public void setTotal_coef(String total_coef) {
+    public void setTotal_coef(Double total_coef) {
         this.total_coef = total_coef;
     }
 
     /**
      * @return String return the total_moy_coef
      */
-    public String getTotal_moy_coef() {
+    public Double getTotal_moy_coef() {
         return total_moy_coef;
     }
 
     /**
      * @param total_moy_coef the total_moy_coef to set
      */
-    public void setTotal_moy_coef(String total_moy_coef) {
+    public void setTotal_moy_coef(Double total_moy_coef) {
         this.total_moy_coef = total_moy_coef;
     }
 
@@ -553,84 +553,84 @@ public class BulletinSelectDto {
     /**
      * @return String return the moy_general
      */
-    public String getMoy_general() {
+    public Double getMoy_general() {
         return moy_general;
     }
 
     /**
      * @param moy_general the moy_general to set
      */
-    public void setMoy_general(String moy_general) {
+    public void setMoy_general(Double moy_general) {
         this.moy_general = moy_general;
     }
 
     /**
      * @return String return the moy_max
      */
-    public String getMoy_max() {
+    public Double getMoy_max() {
         return moy_max;
     }
 
     /**
      * @param moy_max the moy_max to set
      */
-    public void setMoy_max(String moy_max) {
+    public void setMoy_max(Double moy_max) {
         this.moy_max = moy_max;
     }
 
     /**
      * @return String return the moy_min
      */
-    public String getMoy_min() {
+    public Double getMoy_min() {
         return moy_min;
     }
 
     /**
      * @param moy_min the moy_min to set
      */
-    public void setMoy_min(String moy_min) {
+    public void setMoy_min(Double moy_min) {
         this.moy_min = moy_min;
     }
 
     /**
      * @return String return the moy_avg
      */
-    public String getMoy_avg() {
+    public Double getMoy_avg() {
         return moy_avg;
     }
 
     /**
      * @param moy_avg the moy_avg to set
      */
-    public void setMoy_avg(String moy_avg) {
+    public void setMoy_avg(Double moy_avg) {
         this.moy_avg = moy_avg;
     }
 
     /**
      * @return String return the moy_annuelle
      */
-    public String getMoy_annuelle() {
+    public Double getMoy_annuelle() {
         return moy_annuelle;
     }
 
     /**
      * @param moy_annuelle the moy_annuelle to set
      */
-    public void setMoy_annuelle(String moy_annuelle) {
+    public void setMoy_annuelle(Double moy_annuelle) {
         this.moy_annuelle = moy_annuelle;
     }
 
     /**
      * @return String return the rang_annuelle
      */
-    public String getRang_annuelle() {
+    public Integer getRang_annuelle() {
         return rang_annuelle;
     }
 
     /**
      * @param rang_annuelle the rang_annuelle to set
      */
-    public void setRang_annuelle(String rang_annuelle) {
+    public void setRang_annuelle(Integer rang_annuelle) {
         this.rang_annuelle = rang_annuelle;
     }
 
@@ -689,56 +689,56 @@ public class BulletinSelectDto {
     /**
      * @return String return the moyenne
      */
-    public String getMoyenne() {
+    public Double getMoyenne() {
         return moyenne;
     }
 
     /**
      * @param moyenne the moyenne to set
      */
-    public void setMoyenne(String moyenne) {
+    public void setMoyenne(Double moyenne) {
         this.moyenne = moyenne;
     }
 
     /**
      * @return String return the rang
      */
-    public String getRang() {
+    public Integer getRang() {
         return rang;
     }
 
     /**
      * @param rang the rang to set
      */
-    public void setRang(String rang) {
+    public void setRang(Integer rang) {
         this.rang = rang;
     }
 
     /**
      * @return String return the coef
      */
-    public String getCoef() {
+    public Double getCoef() {
         return coef;
     }
 
     /**
      * @param coef the coef to set
      */
-    public void setCoef(String coef) {
+    public void setCoef(Double coef) {
         this.coef = coef;
     }
 
     /**
      * @return String return the moy_coef
      */
-    public String getMoy_coef() {
+    public Double getMoy_coef() {
         return moy_coef;
     }
 
     /**
      * @param moy_coef the moy_coef to set
      */
-    public void setMoy_coef(String moy_coef) {
+    public void setMoy_coef(Double moy_coef) {
         this.moy_coef = moy_coef;
     }
 
@@ -856,14 +856,14 @@ public class BulletinSelectDto {
     /**
      * @return String return the rangBulletin
      */
-    public String getRangBulletin() {
+    public Integer getRangBulletin() {
         return rangBulletin;
     }
 
     /**
      * @param rangBulletin the rangBulletin to set
      */
-    public void setRangBulletin(String rangBulletin) {
+    public void setRangBulletin(Integer rangBulletin) {
         this.rangBulletin = rangBulletin;
     }
 

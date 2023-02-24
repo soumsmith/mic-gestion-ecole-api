@@ -94,6 +94,6 @@ public class Bulletin extends PanacheEntityBase{
 	private String codeQr;
 	private String statut;
 	private Integer rang;
-	
-	
+
+
 }
