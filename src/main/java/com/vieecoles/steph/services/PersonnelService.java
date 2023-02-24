@@ -24,12 +24,12 @@ public class PersonnelService {
 
 	
 	
-	public List<Personnel> getListByFonction(int fonctionId) {
+	public List<Personnel> getListByFonction(int fonctionId, Long ecole) {
 		logger.info("---> list by fonction id ::: "+fonctionId);
-		return Personnel.find("fonction.id = ?1", fonctionId)
+		return Personnel.find("fonction.id = ?1 and ecole.id=?2", fonctionId, ecole)
 				.list();
 	}	
-	public List<Personnel> getListByFonctionAndClasse(int fonctionId, long classeId) {
+	public List<Personnel> getListByFonctionAndClasse(Long fonctionId, Long classeId) {
 		return Personnel.find("fonction.id = ?1 and classe.id=?2", fonctionId, classeId)
 				.list();
 	}

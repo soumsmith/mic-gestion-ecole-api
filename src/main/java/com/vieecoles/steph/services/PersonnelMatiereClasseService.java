@@ -49,18 +49,18 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 	}
 
 	// modifier l annee avec le parametre quand disponible
-	public List<PersonnelMatiereClasse> findByMatiere(long matiereId, long annee) {
-		logger.info(String.format("find by Matiere id :: %s and annee :: %s", matiereId, getAnneeScolaire));
-		return PersonnelMatiereClasse.find("matiere.id = ?1 and annee.id = ?2", matiereId, getAnneeScolaire).list();
+	public List<PersonnelMatiereClasse> findByMatiere(long matiereId, long annee, long ecole) {
+		logger.info(String.format("find by Matiere id :: %s and annee :: %s and ecole ::: %s", matiereId, annee, ecole));
+		return PersonnelMatiereClasse.find("matiere.id = ?1 and annee.id = ?2 and classe.ecole.id = ?3", matiereId, annee, ecole).list();
 	}
 
 	public PersonnelMatiereClasse findByMatiereAndClasse(long matiereId, long annee, long classeId) {
 		logger.info(String.format("find by Matiere id :: %s and annee :: %s and classe :: %s", matiereId,
-				getAnneeScolaire, classeId));
+				annee, classeId));
 		PersonnelMatiereClasse pmc;
 		try {
 			pmc = PersonnelMatiereClasse
-					.find("matiere.id = ?1 and annee.id = ?2 and classe.id = ?3", matiereId, getAnneeScolaire, classeId)
+					.find("matiere.id = ?1 and annee.id = ?2 and classe.id = ?3", matiereId, annee, classeId)
 					.singleResult();
 		} catch (RuntimeException re) {
 			logger.log(Level.WARNING, "Aucun PersonnelMatiereClasse trouve");
@@ -70,9 +70,9 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 	}
 
 
-	public List<PersonnelMatiereClasse> findByProfesseur(long profId, long annee) {
+	public List<PersonnelMatiereClasse> findByProfesseur(long profId, long annee, long ecole) {
 		logger.info(String.format("find by Prof id :: %s and annee :: %s", profId, annee!=0 ? annee: getAnneeScolaire));
-		return PersonnelMatiereClasse.find("personnel.id = ?1 and annee.id = ?2 and matiere is not null", profId, annee!=0 ? annee: getAnneeScolaire).list();
+		return PersonnelMatiereClasse.find("personnel.id = ?1 and annee.id = ?2  and classe.ecole.id=?3 and matiere is not null", profId, annee!=0 ? annee: getAnneeScolaire,ecole).list();
 	}
 	
 	public List<PersonnelMatiereClasse> findByProfesseurAndClasse(long profId, long classe, long annee) {

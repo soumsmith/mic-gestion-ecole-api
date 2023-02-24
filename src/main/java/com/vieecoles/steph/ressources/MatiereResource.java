@@ -38,7 +38,8 @@ public class MatiereResource {
 	@Path("/get-by-id")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getById(@QueryParam("id") long id) {
-		return Response.ok().entity(matiereService.findById(id)).build();
+		
+		return Response.ok().entity(matiereService.buildEntityToDto(matiereService.getById(id))).build();
 	}
 
 	// Quand le niveau d enseignement sera pris en compte dans les variables d env
@@ -57,14 +58,15 @@ public class MatiereResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 
-	public Response updateAndDisplay(Matiere matiere) {
+	public Response updateAndDisplay(MatiereDto matiereDto) {
 		try {
-			Matiere ev = matiereService.updateAndDisplay(matiere);
+			Matiere ev = matiereService.updateAndDisplay(matiereService.buildDtoToEntity(matiereDto));
 			if (ev == null) {
 				throw new NotFoundException();
 			}
 			return Response.ok().entity(matiereService.buildEntityToDto(ev)).build();
 		} catch (Exception e) {
+			e.printStackTrace();
 			return Response.serverError().entity(new String("Erreur dans la mise à jour de matière : "+e.getMessage())).build();
 		}
 	}
@@ -102,10 +104,11 @@ public class MatiereResource {
 	@Path("/saveAndDisplay")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response createAndDisplay(Matiere matiere) {
+	public Response createAndDisplay(MatiereDto matiereDto) {
 		try {
 			// logger.info("Saving and display ...");
-			matiere = matiereService.createMatiereInEcole(matiere);
+			Matiere matiere = matiereService.createMatiereInEcole(matiereService.buildDtoToEntity(matiereDto));
+			
 			Matiere entity = Matiere.findById(matiere.getId());
 			// Créér la matiere dans chaque ecole
 			return Response.ok().entity(matiereService.buildEntityToDto(entity)).build();

@@ -15,6 +15,8 @@ public class Branche extends PanacheEntityBase{
 	@Id
 	private long id;
 	private String libelle;
+	
+	//Type d'enseignement (GENERAL - PROFESSIONNEL - TECHNIQUE - ...)
 	@ManyToOne
 	private Filiere filiere;
 	@ManyToOne
@@ -22,4 +24,8 @@ public class Branche extends PanacheEntityBase{
 	private Niveau niveau;
 	@ManyToOne
 	private Serie serie;
+	
+	@ManyToOne
+	@JoinColumn(name = "niveau_enseignement_id")
+	private NiveauEnseignement niveauEnseignement;
 }

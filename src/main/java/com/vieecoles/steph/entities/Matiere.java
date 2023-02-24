@@ -45,6 +45,8 @@ public class Matiere extends PanacheEntityBase {
 //    @JoinColumn(name = "matiereparent_id")
     @Column(name = "matiereparent_id")
     private String matiereParent;
+    @Column(name = "num_ordre_affichage")
+    private Integer numOrdre;
 
     @ManyToOne
     @JoinColumn(name = "categorie_matiere_categorie_matiereid")

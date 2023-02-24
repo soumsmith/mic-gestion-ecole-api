@@ -18,6 +18,7 @@ import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Response;
 
 import com.google.gson.Gson;
+import com.vieecoles.entities.matiere;
 import com.vieecoles.steph.dto.MoyenneEleveDto;
 import com.vieecoles.steph.entities.Classe;
 import com.vieecoles.steph.entities.ClasseEleve;
@@ -239,6 +240,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 						matiereTemp.setMoyenne(note.getEvaluation().getMatiere().getMoyenne());
 						matiereTemp.setNiveauEnseignement(note.getEvaluation().getMatiere().getNiveauEnseignement());
 						matiereTemp.setCategorie(note.getEvaluation().getMatiere().getCategorie());
+						matiereTemp.setNumOrdre(note.getEvaluation().getMatiere().getNumOrdre());
 //						System.out.println(g.toJson(matiereTemp));
 //						System.out.println("----------------------");
 //						System.out.println(g.toJson(note.getEvaluation().getMatiere()));

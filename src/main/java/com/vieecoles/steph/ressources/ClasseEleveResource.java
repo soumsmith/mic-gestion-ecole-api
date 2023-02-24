@@ -51,6 +51,17 @@ public class ClasseEleveResource {
 	}
 
 	@GET
+	@Path("/retrieve-by-branche-annee/{brancheId}/{anneeId}/")
+	@Operation(description = "Obtenir les eleve affecte dans des classes par branche", summary = "")
+	@Tag(name = "Classe-Eleve")
+	public Response getByBrancheAnnee(@PathParam("brancheId") long brancheId,
+			@PathParam("anneeId") Long anneeId, @QueryParam("ecole") Long ecoleId) {
+		System.out.println("anne: "+anneeId+" ecole : "+ecoleId+" branche : "+brancheId);
+		return Response.ok(classeEleveService.getByBrancheAndAnnee(brancheId, anneeId, ecoleId)).build();
+
+	}
+	
+	@GET
 	@Path("/get-count-by-classe/{classeId}/{anneeId}")
 	@Operation(description = "Obtenir le nombre d Eleve par classe et annee", summary = "")
 	@Produces(MediaType.TEXT_PLAIN)

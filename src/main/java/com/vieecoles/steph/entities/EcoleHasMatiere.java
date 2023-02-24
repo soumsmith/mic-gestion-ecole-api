@@ -32,7 +32,8 @@ public class EcoleHasMatiere extends PanacheEntityBase{
     private  String aliasLibelle;
 	
 	private Integer pec;
-	
+	@Column(name = "num_ordre_affichage")
+	private Integer numOrdre;
     @Transient
     private Double moyenne;
     @Transient

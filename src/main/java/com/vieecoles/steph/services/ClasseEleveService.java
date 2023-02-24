@@ -12,11 +12,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-
 @ApplicationScoped
 public class ClasseEleveService implements PanacheRepositoryBase<ClasseEleve, Long> {
 
-	//Logger logger = Logger.getLogger(ClasseEleveService.class.getName());
+	// Logger logger = Logger.getLogger(ClasseEleveService.class.getName());
 
 	public List<ClasseEleve> findByid(Long id) {
 		return ClasseEleve.findById(id);
@@ -26,22 +25,25 @@ public class ClasseEleveService implements PanacheRepositoryBase<ClasseEleve, Lo
 		return ClasseEleve.listAll();
 	}
 
+	@Transactional
 	public void create(ClasseEleve ce) {
 		ce.persist();
 	}
 
 	@Transactional
 	public List<ClasseEleve> handleCreate(long classeId, List<Inscription> inscriptions) {
-		ClasseEleve classeEleve = new ClasseEleve();
 		List<ClasseEleve> classeEleves = new ArrayList<ClasseEleve>();
+		for (Inscription ins : inscriptions) {
+		ClasseEleve classeEleve = new ClasseEleve();
 		Classe classe = new Classe();
 		classe.setId(classeId);
 		classeEleve.setClasse(classe);
 		classeEleve.setDateCreation(new Date());
 		classeEleve.setStatut("ACTIF");
 		classeEleve.setDateUpdate(new Date());
-		for (Inscription ins : inscriptions) {
 			classeEleve.setInscription(ins);
+			System.out.println(
+					"----> Affectation de " + ins.getEleve().getMatricule() + " en classe de " + classe.getId());
 			create(classeEleve);
 			classeEleves.add(classeEleve);
 		}
@@ -66,7 +68,7 @@ public class ClasseEleveService implements PanacheRepositoryBase<ClasseEleve, Lo
 
 	@Transactional
 	public void delete(long id) {
-		//logger.info(String.format("Id to delete %s", id));
+		// logger.info(String.format("Id to delete %s", id));
 		ClasseEleve entity = ClasseEleve.findById(id);
 		if (entity == null) {
 			throw new NotFoundException();
@@ -74,9 +76,9 @@ public class ClasseEleveService implements PanacheRepositoryBase<ClasseEleve, Lo
 		entity.delete();
 	}
 
-	public List<ClasseEleve> getByIds(List<Long> ids){
+	public List<ClasseEleve> getByIds(List<Long> ids) {
 		List<ClasseEleve> list = new ArrayList<ClasseEleve>();
-		for(Long id : ids) {
+		for (Long id : ids) {
 			list.add(ClasseEleve.findById(id));
 		}
 		return list;
@@ -93,15 +95,17 @@ public class ClasseEleveService implements PanacheRepositoryBase<ClasseEleve, Lo
 	}
 
 	public List<ClasseEleve> getByClasseAnnee(Long classeId, Long anneeId) {
-		return ClasseEleve.find("classe.id = ?1 and inscription.annee.id = ?2", classeId, anneeId).list();
+		return ClasseEleve.find("classe.id = ?1 and inscription.annee.id = ?2", classeId,
+				anneeId).list();
 	}
 
 	public int getCountByClasseAnnee(Long classeId, Long anneeId) {
-		return ClasseEleve.find("classe.id = ?1 and inscription.annee.id = ?2", classeId, anneeId).list().size();
+		return ClasseEleve.find("classe.id = ?1 and inscription.annee.id = ?2 ", classeId, anneeId).list().size();
 	}
 
-	public List<ClasseEleve> getByBrancheAndAnnee(Long brancheId, Long anneeId) {
-		return ClasseEleve.find("inscription.branche.id = ?1 and inscription.annee.id = ?2", brancheId, anneeId).list();
+	public List<ClasseEleve> getByBrancheAndAnnee(Long brancheId, Long anneeId, Long ecoleId) {
+		System.out.println(brancheId+" "+anneeId+" "+ecoleId);
+		return ClasseEleve.find("inscription.branche.id = ?1 and inscription.annee.id = ?2 and inscription.ecole.id = ?3", brancheId, anneeId, ecoleId).list();
 	}
 
 	public long count() {

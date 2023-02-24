@@ -24,11 +24,31 @@ public class ClasseService implements PanacheRepositoryBase<Classe,Integer> {
 			return null ;
 		}
 	}
+	
+	public List<Classe> getListClasseByEcole(Long ecoleId) {
+		try {
+		//	logger.info("........ in list <<<<>>>>>");
+			return Classe.find("ecole.id =?1", ecoleId).list();
+		}catch(Exception e) {
+			e.printStackTrace();
+			return null ;
+		}
+	}
 
 	public List<Classe> getListClasseAllFields() {
 		try {
 			//logger.info("........ in list <<<<>>>>>");
 			return populateNullFieldClasse(Classe.listAll());
+		}catch(Exception e) {
+			e.printStackTrace();
+			return null ;
+		}
+	}
+	
+	public List<Classe> getListClasseAllFields(Long ecoleId) {
+		try {
+			//logger.info("........ in list <<<<>>>>>");
+			return populateNullFieldClasse(getListClasseByEcole(ecoleId));
 		}catch(Exception e) {
 			e.printStackTrace();
 			return null ;
@@ -40,9 +60,9 @@ public class ClasseService implements PanacheRepositoryBase<Classe,Integer> {
 		return Classe.findById(id);
 	}
 
-	public List<Classe> findByBranche(long id) {
+	public List<Classe> findByBranche(long id, Long ecoleId) {
 		//logger.info(String.format("find by Branche id :: %s", id));
-		return Classe.find("branche.id = ?1",id).list();
+		return Classe.find("branche.id = ?1 and ecole.id=?2",id, ecoleId).list();
 	}
 	@Transactional
 	public Response save(Classe classe) {

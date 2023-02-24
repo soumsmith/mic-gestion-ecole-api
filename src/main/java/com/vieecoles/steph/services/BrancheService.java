@@ -1,6 +1,8 @@
 package com.vieecoles.steph.services;
 
 import com.vieecoles.steph.entities.Branche;
+import com.vieecoles.steph.entities.Ecole;
+
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.enterprise.context.RequestScoped;
@@ -16,6 +18,11 @@ public class BrancheService implements PanacheRepositoryBase<Branche, Long>{
 	   }
 	   public  Branche findById(Long id){
 	       return Branche.findById(id);
+	   }
+	   
+	   public  List<Branche> findByNiveauEnseignementViaEcole(Long id){
+		   Ecole ecole = Ecole.findById(id);
+	       return Branche.find("niveauEnseignement.id =?1", ecole.getNiveauEnseignement().getId()).list();
 	   }
 
 	   public Response create(Branche branche) {

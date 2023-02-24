@@ -30,14 +30,14 @@ public class PersonnelResource {
 	@Path("/get-by-fonction")
 	@Tag(name = "Personnel")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response listProf(@QueryParam("fonction") int fonctionId) {
-		return Response.ok().entity(personnelService.getListByFonction(fonctionId)).build();
+	public Response listProf(@QueryParam("fonction") int fonctionId, @QueryParam("ecole") Long ecoleId) {
+		return Response.ok().entity(personnelService.getListByFonction(fonctionId, ecoleId)).build();
 	}
 	
 	@GET
 	@Path("/get-by-fonction-and-classe")
 	@Tag(name = "Personnel")
-	public Response listProfByClasse(@QueryParam("fonction") int fonctionId, long classeId) {
+	public Response listProfByClasse(@QueryParam("fonction") Long fonctionId, Long classeId) {
 		return Response.ok().entity(personnelService.getListByFonctionAndClasse(fonctionId, classeId)).build();
 	}
 }

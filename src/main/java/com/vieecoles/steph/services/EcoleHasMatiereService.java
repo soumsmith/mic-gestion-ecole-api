@@ -69,6 +69,7 @@ public class EcoleHasMatiereService implements PanacheRepositoryBase<EcoleHasMat
 			matiereEcole.setEcole(ecole);
 			matiereEcole.setMatiere(matiere);
 			matiereEcole.setPec(matiere.getPec());
+			matiereEcole.setNumOrdre(matiere.getNumOrdre());
 			
 			// SetMatiere parent pour plus tard lorsque l'algo sera bien précis
 			

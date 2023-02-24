@@ -25,6 +25,7 @@ import com.vieecoles.steph.entities.Inscription;
 import com.vieecoles.steph.entities.Matiere;
 import com.vieecoles.steph.entities.NoteBulletin;
 import com.vieecoles.steph.entities.Notes;
+import com.vieecoles.steph.entities.Periode;
 import com.vieecoles.steph.util.CommonUtils;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
@@ -35,10 +36,10 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 
 	@Inject
 	NoteService noteService;
-	
+
 	@Inject
 	InscriptionService inscriptionService;
-	
+
 	@Inject
 	ClasseEleveService classeEleveService;
 
@@ -57,19 +58,19 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 		if (b == null) {
 			throw new RuntimeException("Bulletin a mettre a jour non trouve");
 		}
-		
+
 		b.setDateUpdate(new Date());
 		b.setAppreciation(bulletin.getAppreciation());
 		b.setMoyGeneral(bulletin.getMoyGeneral());
 		b.setAdresseEcole(bulletin.getAdresseEcole());
 		b.setAffecte(bulletin.getAffecte());
-		
+
 //		b.setAnneeId(null);
 		b.setAnneeLibelle(bulletin.getAnneeLibelle());
 		b.setBoursier(bulletin.getBoursier());
 		b.setClasseId(bulletin.getClasseId());
 		b.setEcoleId(bulletin.getEcoleId());
-		//b.setCodePeriode(me.getPeriode().getCode());
+		// b.setCodePeriode(me.getPeriode().getCode());
 		b.setCodeProfPrincipal(bulletin.getCodeProfPrincipal());
 		b.setCodeQr(bulletin.getCodeQr());
 		b.setDateNaissance(bulletin.getDateNaissance());
@@ -97,6 +98,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 		b.setTotalCoef(bulletin.getTotalCoef());
 		b.setTotalMoyCoef(bulletin.getTotalMoyCoef());
 	}
+
 	@Transactional
 	public int handleSave(String classe, String annee, String periode) {
 		logger.info(String.format("classe %s  annee %s  periode  %s", classe, annee, periode));
@@ -106,101 +108,121 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 		NoteBulletin noteBulletin;
 		List<Double> moyGenElevesList = new ArrayList<Double>();
 		List<String> bulletinIdList = new ArrayList<String>();
-				
-		//logger.info(g.toJson(moyenneParEleve));
+
 
 		for (MoyenneEleveDto me : moyenneParEleve) {
+//			 logger.info(g.toJson(me));
 			logger.info(
 					String.format("%s  %s  %s ", me.getClasse().getLibelle(), me.getMoyenne(), me.getAppreciation()));
-			
-			Inscription infosInscriptionsEleve = inscriptionService.getByEleveAndAnnee(me.getEleve().getId(),Long.parseLong(annee));
-			//Collecter toutes les moyennes des élèves pour déterminer la moyenne max, min et avg
+
+			Inscription infosInscriptionsEleve = inscriptionService.getByEleveAndAnnee(me.getEleve().getId(),
+					Long.parseLong(annee));
+			// Collecter toutes les moyennes des élèves pour déterminer la moyenne max, min
+			// et avg
 			moyGenElevesList.add(me.getMoyenne());
-			
+
 			bulletin = new Bulletin();
 			bulletin = convert(me);
-				// Paramètres de la variable de session
+			// Paramètres de la variable de session
 			bulletin.setAnneeId(Long.parseLong(annee));
-			AnneeScolaire anDb = AnneeScolaire.findById(Long.parseLong(annee));		
+			AnneeScolaire anDb = AnneeScolaire.findById(Long.parseLong(annee));
+			Periode periodeDb = Periode.findById(Long.parseLong(periode));
 			bulletin.setAnneeLibelle(anDb.getLibelle());
-			
+			bulletin.setPeriodeId(periodeDb.getId());
+			bulletin.setLibellePeriode(periodeDb.getLibelle());
+
 			// A la fin d'une annee scolaire
 //			bulletin.setMoyAn(null);
 //			bulletin.setRangAn(null);
-			
+
 			if (infosInscriptionsEleve != null) {
 				bulletin.setAffecte(infosInscriptionsEleve.getAfecte());
 				bulletin.setRedoublant(infosInscriptionsEleve.getRedoublant());
 				bulletin.setBoursier(infosInscriptionsEleve.getBoursier());
 			}
-			
+
 			Bulletin bltDb = null;
 			try {
-				bltDb = Bulletin.find("matricule = :matricule and classeId = :classe and periodeId= :periode and anneeId= :annee", Parameters.with("matricule", bulletin.getMatricule()).and("classe", Long.parseLong(classe)).and("periode", Long.parseLong(periode) ).and("annee", Long.parseLong(annee))).singleResult();
-			}catch (NoResultException e) {
+				bltDb = Bulletin.find(
+						"matricule = :matricule and classeId = :classe and periodeId= :periode and anneeId= :annee",
+						Parameters.with("matricule", bulletin.getMatricule()).and("classe", Long.parseLong(classe))
+								.and("periode", Long.parseLong(periode)).and("annee", Long.parseLong(annee)))
+						.singleResult();
+			} catch (NoResultException e) {
 				logger.info("Aucun bulletin trouvé dans la bd");
 			}
 //			logger.info("bulletin find ::: %s "+ g.toJson(bltDb));
-			if (bltDb!= null && bltDb.getId() != null) {
+			if (bltDb != null && bltDb.getId() != null) {
 				bulletin.setId(bltDb.getId());
 				bulletinIdList.add(bltDb.getId());
 				update(bulletin);
-			}else {
+			} else {
 				save(bulletin);
 				bulletinIdList.add(bulletin.getId());
 			}
-			
-			
+
 			Double moyCoef = (double) 0;
 			for (Map.Entry<Matiere, List<Notes>> entry : me.getNotesMatiereMap().entrySet()) {
-				logger.info(String.format("bulletin id %s - matiere %s",bulletin.getId(),entry.getKey().getCode()));
+				logger.info(String.format("bulletin id %s - matiere %s", bulletin.getId(), entry.getKey().getCode()));
 				DetailBulletin flag = null;
 				try {
-				flag = DetailBulletin.find("bulletin.id = :bulletinId and matiereCode =: matiereCode ", Parameters.with("bulletinId", bulletin.getId()).and("matiereCode", entry.getKey().getCode())).singleResult();
-				} catch(NoResultException ex) {
+					flag = DetailBulletin
+							.find("bulletin.id = :bulletinId and matiereCode =: matiereCode ", Parameters
+									.with("bulletinId", bulletin.getId()).and("matiereCode", entry.getKey().getCode()))
+							.singleResult();
+				} catch (NoResultException ex) {
 					logger.info("Aucun detail de bulletin trouvé");
 				}
-				if(flag != null) {
+				if (flag != null) {
 					logger.info("--> Modification de detail bulletin");
 					flag.setMatiereLibelle(entry.getKey().getLibelle());
-					flag.setMoyenne(CommonUtils.roundDouble(entry.getKey().getMoyenne(),2));
+					flag.setMoyenne(CommonUtils.roundDouble(entry.getKey().getMoyenne(), 2));
 					flag.setMoyCoef(CommonUtils.roundDouble(moyCoef, 2));
 					flag.setAppreciation(entry.getKey().getAppreciation());
-					flag.setCoef(entry.getKey().getCoef());
-					flag.setRang(entry.getKey().getRang());
+					flag.setCoef(Double.valueOf(entry.getKey().getCoef()));
+					flag.setRang(Integer.valueOf(entry.getKey().getRang()));
 					flag.setCategorieMatiere(entry.getKey().getCategorie().getLibelle());
+					flag.setCategorie(entry.getKey().getCategorie().getCode());
+					logger.info(g.toJson(entry.getKey()));
+					flag.setNum_ordre(entry.getKey().getNumOrdre());
 				} else {
 					logger.info("--> Création de detail bulletin");
 					flag = new DetailBulletin();
 					UUID idDetail = UUID.randomUUID();
-					moyCoef = entry.getKey().getMoyenne()*Double.parseDouble(entry.getKey().getCoef());
+					moyCoef = entry.getKey().getMoyenne() * Double.parseDouble(entry.getKey().getCoef());
 					flag.setId(idDetail.toString());
 					flag.setMatiereCode(entry.getKey().getCode());
 					flag.setMatiereLibelle(entry.getKey().getLibelle());
-					flag.setMoyenne(CommonUtils.roundDouble(entry.getKey().getMoyenne(),2));
+					flag.setMoyenne(CommonUtils.roundDouble(entry.getKey().getMoyenne(), 2));
 					flag.setMoyCoef(CommonUtils.roundDouble(moyCoef, 2));
-					flag.setCoef(entry.getKey().getCoef());
+					flag.setCoef(Double.valueOf(entry.getKey().getCoef()));
 					flag.setAppreciation(entry.getKey().getAppreciation());
-					flag.setRang(entry.getKey().getRang());
+					flag.setRang(Integer.valueOf(entry.getKey().getRang()));
+					flag.setNum_ordre(entry.getKey().getNumOrdre());
+					flag.setCategorieMatiere(entry.getKey().getCategorie().getLibelle());
+					flag.setCategorie(entry.getKey().getCategorie().getCode());
 					flag.setBulletin(bulletin);
+					logger.info("--> Categorie"+entry.getKey().getCategorie().getLibelle());
 					flag.persist();
 				}
-				notesBulletin = NoteBulletin.find("detailBulletin.id = : detail", Parameters.with("detail", flag.getId())).list();
-				
-				if(notesBulletin!=null) {
+				notesBulletin = NoteBulletin
+						.find("detailBulletin.id = : detail", Parameters.with("detail", flag.getId())).list();
+
+				if (notesBulletin != null) {
 					logger.info("--> Suppresion notes trouvees");
-					for(NoteBulletin noteBul : notesBulletin) {
+					for (NoteBulletin noteBul : notesBulletin) {
 						noteBul.delete();
 					}
 				}
 				UUID idNoteBul;
-				for(Notes note : entry.getValue()) {
-					if(note.getEvaluation().getPec() == 1) {
-						logger.info(String.format("--> Creation notes %s/%s", note.getNote(), note.getEvaluation().getNoteSur()));
+				for (Notes note : entry.getValue()) {
+					if (note.getEvaluation().getPec() == 1) {
+						logger.info(String.format("--> Creation notes %s/%s", note.getNote(),
+								note.getEvaluation().getNoteSur()));
 						noteBulletin = new NoteBulletin();
 						idNoteBul = UUID.randomUUID();
 						noteBulletin.setId(idNoteBul.toString());
-						noteBulletin.setNote( note.getNote());
+						noteBulletin.setNote(note.getNote());
 						noteBulletin.setNoteSur(note.getEvaluation().getNoteSur());
 						noteBulletin.setDetailBulletin(flag);
 						noteBulletin.persist();
@@ -208,38 +230,39 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 				}
 			}
 		}
-		
-		Double maxMoy ;
-		Double minMoy ;
+
+		Double maxMoy;
+		Double minMoy;
 		Double sumMoy;
-		
+
 		try {
-		maxMoy = Collections.max(moyGenElevesList);
-		minMoy = Collections.min(moyGenElevesList);
-		
-		sumMoy = moyGenElevesList.stream().mapToDouble(a -> a).sum();
-		}catch (NoSuchElementException e) {
+			maxMoy = Collections.max(moyGenElevesList);
+			minMoy = Collections.min(moyGenElevesList);
+
+			sumMoy = moyGenElevesList.stream().mapToDouble(a -> a).sum();
+		} catch (NoSuchElementException e) {
 			throw new RuntimeException("Aucune donnée trouvée");
 		}
 		int effectif = classeEleveService.getCountByClasseAnnee(Long.parseLong(classe), Long.parseLong(annee));
-		
-		Double avgMoy = sumMoy/(moyGenElevesList.size() != 0 ? moyGenElevesList.size() : 1);
-		
-		logger.info(String.format("Max= %s , Min = %s, Sum = %s, Avg = %s, effectif %s", maxMoy, minMoy, sumMoy, avgMoy, effectif));
-		
+
+		Double avgMoy = sumMoy / (moyGenElevesList.size() != 0 ? moyGenElevesList.size() : 1);
+
+		logger.info(String.format("Max= %s , Min = %s, Sum = %s, Avg = %s, effectif %s", maxMoy, minMoy, sumMoy, avgMoy,
+				effectif));
+
 		// Mise à jour des bulletins
 		bulletin = new Bulletin();
-		for(String id : bulletinIdList) {
+		for (String id : bulletinIdList) {
 			bulletin = Bulletin.findById(id);
 			bulletin.setMoyMax(CommonUtils.roundDouble(maxMoy, 2));
 			bulletin.setMoyMin(CommonUtils.roundDouble(minMoy, 2));
 			bulletin.setMoyAvg(CommonUtils.roundDouble(avgMoy, 2));
 			bulletin.setEffectif(effectif);
-		}
-		
-		
-		return moyenneParEleve != null? moyenneParEleve.size() : 0;
+//			logger.info(String.format("m a j du bulletin %s [effectif : % . smoy max : %s . moy min : %s . moy avg : %s", id,
+//					effectif, bulletin.getMoyMax().toString(), bulletin.getMoyMin(), bulletin.getMoyAvg()));
 
+		}
+		return moyenneParEleve != null ? moyenneParEleve.size() : 0;
 	}
 
 	Bulletin convert(MoyenneEleveDto me) {
@@ -254,7 +277,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 		bul.setBoursier(null);
 		bul.setClasseId(me.getClasse().getId());
 		bul.setEcoleId(me.getClasse().getEcole().getId());
-		//bul.setCodePeriode(me.getPeriode().getCode());
+		// bul.setCodePeriode(me.getPeriode().getCode());
 		bul.setCodeProfPrincipal(null);
 		bul.setCodeQr(null);
 		bul.setDateNaissance(me.getEleve().getDateNaissance());
@@ -262,7 +285,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 		bul.setHeuresAbsJustifiees(null);
 		bul.setHeuresAbsNonJustifiees(null);
 		bul.setLibelleClasse(me.getClasse().getLibelle());
-		//bul.setLibellePeriode(me.getPeriode().getLibelle());
+		// bul.setLibellePeriode(me.getPeriode().getLibelle());
 		bul.setLieuNaissance(me.getEleve().getLieuNaissance());
 		bul.setMatricule(me.getEleve().getMatricule());
 		bul.setMoyAn(null);

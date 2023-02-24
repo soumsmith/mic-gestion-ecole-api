@@ -21,4 +21,5 @@ public class MatiereDto {
 	private String appreciation;
 	private Matiere matiereParent;
 	private CategorieMatiere categorie;
+	private Integer numOrdre;
 }

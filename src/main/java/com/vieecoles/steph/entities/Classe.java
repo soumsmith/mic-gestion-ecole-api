@@ -38,6 +38,7 @@ public class Classe extends PanacheEntityBase {
 	@Transient
 	private Date dateCreation;
 	@ManyToOne
+	@JoinColumn(name = "ecole_ecoleid")
 	private Ecole ecole;
 	@Column(name = "effectif")
 	private Integer effectif;

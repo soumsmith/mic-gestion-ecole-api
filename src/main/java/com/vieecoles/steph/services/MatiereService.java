@@ -29,6 +29,7 @@ public class MatiereService implements PanacheRepositoryBase<Matiere, Long> {
 	EcoleHasMatiereService ecoleHasMatiereService;
 
 	Logger logger = Logger.getLogger(MatiereService.class.getName());
+	Gson gson = new Gson();
 
 	public List<Matiere> getList() {
 		try {
@@ -36,6 +37,15 @@ public class MatiereService implements PanacheRepositoryBase<Matiere, Long> {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ArrayList<Matiere>();
+		}
+	}
+	
+	public Matiere getById(Long id) {
+		try {
+			return Matiere.findById(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new Matiere();
 		}
 	}
 
@@ -54,6 +64,8 @@ public class MatiereService implements PanacheRepositoryBase<Matiere, Long> {
 	@Transactional
 	public Matiere createMatiereInEcole(Matiere matiere) {
 		try {
+			System.out.println("--------------------------------------");
+			System.out.println(gson.toJson(matiere));
 			create(matiere);
 			ecoleHasMatiereService.createMatiereToEcoles(matiere);
 			return matiere;
@@ -79,6 +91,7 @@ public class MatiereService implements PanacheRepositoryBase<Matiere, Long> {
 		dto.setRang(matiere.getRang());
 		dto.setCoef(matiere.getCoef());
 		dto.setAppreciation(matiere.getAppreciation());
+		dto.setNumOrdre(matiere.getNumOrdre());
 		dto.setMatiereParent(
 				matiere.getMatiereParent() != null ? Matiere.findById(Long.parseLong(matiere.getMatiereParent()))
 						: null);
@@ -87,12 +100,37 @@ public class MatiereService implements PanacheRepositoryBase<Matiere, Long> {
 		return dto;
 	}
 
+	public Matiere buildDtoToEntity(MatiereDto matiereDto) {
+		
+		System.out.println(gson.toJson(matiereDto));
+		Matiere matiere = new Matiere();
+
+		matiere.setId(matiereDto.getId());
+		matiere.setCode(matiereDto.getCode());
+		matiere.setLibelle(matiereDto.getLibelle());
+		matiere.setPec(matiereDto.getPec());
+		matiere.setNiveauEnseignement(matiereDto.getNiveauEnseignement());
+		matiere.setMoyenne(matiereDto.getMoyenne());
+		matiere.setRang(matiereDto.getRang());
+		matiere.setCoef(matiereDto.getCoef());
+		matiere.setAppreciation(matiereDto.getAppreciation());
+		matiere.setCategorie(matiereDto.getCategorie());
+		matiere.setNumOrdre(matiereDto.getNumOrdre());
+
+		if (matiereDto.getMatiereParent().getId() != 0)
+			matiere.setMatiereParent(matiereDto.getMatiereParent().getId().toString());
+		else
+			matiere.setMatiereParent(null);
+
+		return matiere;
+	}
+
 	@Transactional
 	public Matiere update(Matiere ev) {
-		
+
 		Gson g = new Gson();
 		System.out.println(g.toJson(ev));
-		
+
 		Matiere entity = Matiere.findById(ev.getId());
 		if (entity == null) {
 			throw new NotFoundException();
@@ -107,6 +145,8 @@ public class MatiereService implements PanacheRepositoryBase<Matiere, Long> {
 		entity.setLibelle(ev.getLibelle());
 		entity.setNiveauEnseignement(ev.getNiveauEnseignement());
 		entity.setMatiereParent(ev.getMatiereParent());
+		entity.setCategorie(ev.getCategorie());
+		entity.setNumOrdre(ev.getNumOrdre());
 
 		return entity;
 	}
@@ -114,12 +154,12 @@ public class MatiereService implements PanacheRepositoryBase<Matiere, Long> {
 	public Matiere updateAndDisplay(Matiere matiere) {
 		Matiere ev;
 		try {
-		if (update(matiere) != null) {
-			ev = findById(matiere.getId());
-			return ev;
-		}
-		return null;
-		}catch (Exception e) {
+			if (update(matiere) != null) {
+				ev = findById(matiere.getId());
+				return ev;
+			}
+			return null;
+		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
