@@ -45,6 +45,8 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 	EvaluationService evaluationService;
 
 	Logger logger = Logger.getLogger(NoteService.class.getName());
+	
+	Gson gson = new Gson();
 
 	public List<Notes> getList() {
 		return Notes.listAll();
@@ -154,6 +156,8 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			}
 		}
 
+		logger.info("noteListTemp");
+		logger.info(gson.toJson(noteListTemp));
 		return noteListTemp;
 	}
 
@@ -188,14 +192,17 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			logger.info(ev.getPec().toString());
 			noteList.addAll(getNotesClasse(ev.getCode()));
 		}
-//		logger.info("note size " + noteList.size());
+		logger.info("note size " + noteList.size());
+		logger.info(gson.toJson(noteList));
 		// Regroupement des notes par élève
 		for (Notes note : noteList) {
+			logger.info("note.getClasseEleve().getInscription().getEleve()");
+			logger.info(gson.toJson(note.getClasseEleve().getInscription().getEleve()));
 			if (noteGroup.containsKey(note.getClasseEleve().getInscription().getEleve())) {
-//				logger.info("**** upd ****>");
+				logger.info("**** upd |||****>");
 				noteGroup.get(note.getClasseEleve().getInscription().getEleve()).add(note);
 			} else {
-//				logger.info("<**** new ****");
+				logger.info("<****||| new ****");
 				notesTemp = new ArrayList<Notes>();
 				notesTemp.add(note);
 				noteGroup.put(note.getClasseEleve().getInscription().getEleve(), notesTemp);
