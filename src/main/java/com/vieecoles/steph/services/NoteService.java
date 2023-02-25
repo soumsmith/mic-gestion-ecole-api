@@ -156,8 +156,8 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			}
 		}
 
-		logger.info("noteListTemp");
-		logger.info(gson.toJson(noteListTemp));
+//		logger.info("noteListTemp");
+//		logger.info(gson.toJson(noteListTemp));
 		return noteListTemp;
 	}
 
@@ -192,12 +192,12 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			logger.info(ev.getPec().toString());
 			noteList.addAll(getNotesClasse(ev.getCode()));
 		}
-		logger.info("note size " + noteList.size());
-		logger.info(gson.toJson(noteList));
+//		logger.info("note size " + noteList.size());
+//		logger.info(gson.toJson(noteList));
 		// Regroupement des notes par élève
 		for (Notes note : noteList) {
-			logger.info("note.getClasseEleve().getInscription().getEleve()");
-			logger.info(gson.toJson(note.getClasseEleve().getInscription().getEleve()));
+//			logger.info("note.getClasseEleve().getInscription().getEleve()");
+//			logger.info(gson.toJson(note.getClasseEleve().getInscription().getEleve()));
 			if (noteGroup.containsKey(note.getClasseEleve().getInscription().getEleve())) {
 				logger.info("**** upd |||****>");
 				noteGroup.get(note.getClasseEleve().getInscription().getEleve()).add(note);
@@ -218,22 +218,25 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			moyenneEleveDto.setClasse(classe);
 			notesMatiereGroup = new HashMap<Matiere, List<Notes>>();
 			Matiere matiereTemp;
+			List<String> filter = new ArrayList<>();
 //			Gson g = new Gson();
 //			logger.info(String.format("Eleve - %s - %s", entry.getKey().getMatricule(),entry.getKey().getNom()));
 			for (Notes note : entry.getValue()) {
 				logger.info("note id --->"+note.getId());
 				if (note.getId() != 0) {
-					if (notesMatiereGroup.containsKey(note.getEvaluation().getMatiere())) {
+					if(filter.contains(note.getEvaluation().getMatiere().getCode())) {
+//					if (notesMatiereGroup.containsKey(note.getEvaluation().getMatiere())) {
 						logger.info("**** upd ****>"+note.getEvaluation().getMatiere().getCode());
 						notesMatiereGroup.get(note.getEvaluation().getMatiere()).add(note);
-						System.out.println("----------------------------");
-						System.out.println(g.toJson(note.getEvaluation().getMatiere()));
+//						System.out.println("----------------------------");
+//						System.out.println(g.toJson(note.getEvaluation().getMatiere()));
 //						logger.info(String.format("%s - %s - %s", entry.getKey().getMatricule(),note.getEvaluation().getMatiere(),note.getNote()));
 //						logger.info(g.toJson(notesMatiereGroup));
 					} else {
 						logger.info("<*** new *****"+note.getEvaluation().getMatiere().getCode());
 						notesTemp = new ArrayList<Notes>();
 						notesTemp.add(note);
+						filter.add(note.getEvaluation().getMatiere().getCode());
 //						logger.info("ref mtiere"+note.getEvaluation().getMatiere().hashCode());
 						/*
 						 * Mettre a jour matiereTemp si la structure de Matiere évolue
