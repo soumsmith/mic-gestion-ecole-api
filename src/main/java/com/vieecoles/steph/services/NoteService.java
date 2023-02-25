@@ -251,6 +251,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 						matiereTemp.setNiveauEnseignement(note.getEvaluation().getMatiere().getNiveauEnseignement());
 						matiereTemp.setCategorie(note.getEvaluation().getMatiere().getCategorie());
 						matiereTemp.setNumOrdre(note.getEvaluation().getMatiere().getNumOrdre());
+						matiereTemp.setMatiereParent(note.getEvaluation().getMatiere().getMatiereParent());;
 //						System.out.println(g.toJson(matiereTemp));
 //						System.out.println("----------------------");
 //						System.out.println(g.toJson(note.getEvaluation().getMatiere()));
