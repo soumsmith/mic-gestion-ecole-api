@@ -79,6 +79,7 @@ public class BulletinSelectDto {
     private int  num_ordre;
     private Integer  rangBulletin;
     private String nom_prenom_professeur ;
+    private String libelle_categorie ;
 
 
 
@@ -138,7 +139,7 @@ public class BulletinSelectDto {
             String heures_abs_non_just, Double moy_general, Double moy_max, Double moy_min, Double moy_avg,
             Double moy_annuelle, Integer rang_annuelle, String appreciation_conseil, Date date_creation, String code_qr,
             String statut, String libelle_matiere, Double moyenne, Integer rang, Double coef, Double moy_coef,
-            String appreciation, String categorie, int num_ordre, Integer rangBulletin, String nom_prenom_professeur) {
+            String appreciation, String categorie, int num_ordre, Integer rangBulletin, String nom_prenom_professeur,String libelle_categorie) {
         this.id_ecole = id_ecole;
         this.nom_ecole = nom_ecole;
         this.statut_ecole = statut_ecole;
@@ -184,6 +185,7 @@ public class BulletinSelectDto {
         this.num_ordre = num_ordre;
         this.rangBulletin = rangBulletin;
         this.nom_prenom_professeur = nom_prenom_professeur;
+        this.libelle_categorie= libelle_categorie ;
     }
 
 
@@ -269,6 +271,14 @@ public class BulletinSelectDto {
      */
     public String getTel_ecole() {
         return tel_ecole;
+    }
+
+    public String getLibelle_categorie() {
+        return libelle_categorie;
+    }
+
+    public void setLibelle_categorie(String libelle_categorie) {
+        this.libelle_categorie = libelle_categorie;
     }
 
     /**

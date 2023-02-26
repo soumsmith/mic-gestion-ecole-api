@@ -244,6 +244,7 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 		<property name="com.jaspersoft.studio.field.label" value="categorie"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value=""/>
 	</field>
+	<field name="libelle_categorie" class="java.lang.String"/>
 	<variable name="TotalMoyenParCategParMatier" class="java.lang.Double" resetType="Group" resetGroup="MyCategorie" calculation="Sum">
 		<variableExpression><![CDATA[$F{moyenne}]]></variableExpression>
 	</variable>
@@ -285,7 +286,7 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 							<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						</reportElement>
-						<textFieldExpression><![CDATA["Bilan "+$F{categorie}]]></textFieldExpression>
+						<textFieldExpression><![CDATA["Bilan "+$F{libelle_categorie}]]></textFieldExpression>
 					</textField>
 					<textField textAdjust="ScaleFont" evaluationTime="Group" evaluationGroup="MyCategorie" pattern="#,#00.00#;(#,#00.00#-)">
 						<reportElement style="TotalCateg" x="188" y="0" width="43" height="15" uuid="d18d3cd5-4736-429b-91ed-b7c9ad359b00"/>
@@ -351,8 +352,8 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 							</textElement>
 							<text><![CDATA[REPUBLIQUE DE COTE D'IVOIRE MINISTERE DE L'EDUCATION NATIONALE ET DE L'ALPHABETISATION]]></text>
 						</staticText>
-						<staticText>
-							<reportElement style="TitreLibelle" x="90" y="40" width="150" height="25" uuid="4bda196e-4a7d-4c8b-8497-025e892a9c98">
+						<textField textAdjust="ScaleFont">
+							<reportElement style="TitreLibelle" x="90" y="40" width="150" height="25" uuid="d2c6fec4-ff6d-4c67-90d2-9c0a5f3a972a">
 								<property name="com.jaspersoft.layout.grid.x" value="1"/>
 								<property name="com.jaspersoft.layout.grid.y" value="1"/>
 								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -363,10 +364,10 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							</reportElement>
 							<textElement>
-								<font size="8" isBold="true"/>
+								<font size="9" isBold="true"/>
 							</textElement>
-							<text><![CDATA[Groupe Scolaire la Maison de Bambi]]></text>
-						</staticText>
+							<textFieldExpression><![CDATA[$F{nom_ecole}]]></textFieldExpression>
+						</textField>
 						<image scaleImage="FillFrame">
 							<reportElement x="0" y="0" width="90" height="65" uuid="84b9dc49-ac7e-4236-9846-0e398cbf5848">
 								<property name="com.jaspersoft.layout.grid.x" value="0"/>
