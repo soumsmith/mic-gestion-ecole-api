@@ -26,6 +26,7 @@ import com.vieecoles.steph.entities.Matiere;
 import com.vieecoles.steph.entities.NoteBulletin;
 import com.vieecoles.steph.entities.Notes;
 import com.vieecoles.steph.entities.Periode;
+import com.vieecoles.steph.entities.PersonnelMatiereClasse;
 import com.vieecoles.steph.util.CommonUtils;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
@@ -42,6 +43,9 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 
 	@Inject
 	ClasseEleveService classeEleveService;
+	
+	@Inject
+	PersonnelMatiereClasseService personnelMatiereClasseService;
 
 	Logger logger = Logger.getLogger(BulletinService.class.getName());
 	Gson g = new Gson();
@@ -130,7 +134,12 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 			bulletin.setAnneeLibelle(anDb.getLibelle());
 			bulletin.setPeriodeId(periodeDb.getId());
 			bulletin.setLibellePeriode(periodeDb.getLibelle());
-
+			// Ajout de l'enseignant de la matiere
+			PersonnelMatiereClasse pp = personnelMatiereClasseService.getPersonnelByClasseAndAnneeAndFonction(Long.parseLong(annee), Long.parseLong(classe), 1);
+			if(pp!=null) {
+				bulletin.setCodeProfPrincipal(pp.getPersonnel().getCode());
+				bulletin.setNomPrenomProfPrincipal(pp.getPersonnel().getNom()+" "+pp.getPersonnel().getPrenom());
+			}
 			// A la fin d'une annee scolaire
 //			bulletin.setMoyAn(null);
 //			bulletin.setRangAn(null);
@@ -185,6 +194,14 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 					flag.setCategorie(entry.getKey().getCategorie().getCode());
 					logger.info(g.toJson(entry.getKey()));
 					flag.setNum_ordre(entry.getKey().getNumOrdre());
+					
+					// Ajout de l'enseignant de la matiere
+					PersonnelMatiereClasse pers = personnelMatiereClasseService.findProfesseurByMatiereAndClasse(Long.parseLong(annee), Long.parseLong(classe), entry.getKey().getId());
+					if(pers!=null)
+						flag.setNom_prenom_professeur(pers.getPersonnel().getNom()+" "+pers.getPersonnel().getPrenom());
+					
+						
+					
 				} else {
 					logger.info("--> Création de detail bulletin");
 					flag = new DetailBulletin();
@@ -203,6 +220,11 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 					flag.setCategorie(entry.getKey().getCategorie().getCode());
 					flag.setBulletin(bulletin);
 					logger.info("--> Categorie"+entry.getKey().getCategorie().getLibelle());
+					// Ajout de l'enseignant de la matiere
+					PersonnelMatiereClasse pers = personnelMatiereClasseService.findProfesseurByMatiereAndClasse(Long.parseLong(annee), Long.parseLong(classe), entry.getKey().getId());
+					if(pers!=null)
+						flag.setNom_prenom_professeur(pers.getPersonnel().getNom()+" "+pers.getPersonnel().getPrenom());
+					
 					flag.persist();
 				}
 				notesBulletin = NoteBulletin

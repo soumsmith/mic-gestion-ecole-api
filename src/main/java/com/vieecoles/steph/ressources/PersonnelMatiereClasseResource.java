@@ -104,7 +104,7 @@ public class PersonnelMatiereClasseResource {
     
     @GET
     @Path("/get-professeur-by-classe")
-    @Operation(description = "Obtenir les professeur enseignant dans une classe", summary = "")
+    @Operation(description = "Obtenir les professeurs enseignant dans une classe", summary = "")
 	@Tag(name = "PersonnelMatiereClasse")
 	public List<PersonnelMatiereClasse> findListByClasse( @QueryParam("annee") int annee, @QueryParam("classe") long classe) {
 		
@@ -113,14 +113,38 @@ public class PersonnelMatiereClasseResource {
     	
 	}
     
+    
+    @GET
+    @Path("/get-pp-or-educateur")
+    @Operation(description = "Obtenir le personnel (prof princ. ou educateur) assignées à une classe", summary = "")
+	@Tag(name = "PersonnelMatiereClasse")
+	public PersonnelMatiereClasse getPpOrEduc( @QueryParam("annee") Long annee,@QueryParam("fonction") int fonction, @QueryParam("classe") long classe) {
+		
+		PersonnelMatiereClasse personnel = persMatClasService.getPersonnelByClasseAndAnneeAndFonction(classe, annee,fonction );
+    	return personnel;
+    	
+	}
+    
     @GET
     @Path("/get-personnel-by-classe")
-    @Operation(description = "Obtenir les personnel (prof princ. ou educateur) assignées à une classe", summary = "")
+    @Operation(description = "Obtenir les personnels (prof princ. ou educateur) assignées à une classe", summary = "")
 	@Tag(name = "PersonnelMatiereClasse")
-	public List<PersonnelMatiereClasse> findListByPersonnel( @QueryParam("annee") int annee,@QueryParam("ecole") int ecole, @QueryParam("classe") long classe) {
+	public List<PersonnelMatiereClasse> findListByPersonnel( @QueryParam("annee") Long annee,@QueryParam("ecole") int ecole, @QueryParam("classe") long classe) {
 		
 		List<PersonnelMatiereClasse> personnels = persMatClasService.findListByPersonnel(annee,ecole, classe);
     	return personnels;
+    	
+	}
+    
+    
+    @GET
+    @Path("/get-professeur-by-matiere")
+    @Operation(description = "Obtenir le professeur enseignant une matière dans une classe", summary = "")
+	@Tag(name = "PersonnelMatiereClasse")
+	public PersonnelMatiereClasse findProfesseurByMatiereAndClasse( @QueryParam("annee") Long annee,@QueryParam("matiere") Long matiere, @QueryParam("classe") Long classe) {
+		
+		PersonnelMatiereClasse personnel = persMatClasService.findProfesseurByMatiereAndClasse(annee, classe, matiere);
+    	return personnel;
     	
 	}
 	
