@@ -68,6 +68,10 @@ public class Bulletin extends PanacheEntityBase{
 	private String codeProfPrincipal;
 	@Column(name = "nom_prof_princ")
 	private String nomPrenomProfPrincipal;
+	@Column(name = "code_educateur")
+	private String codeEducateur;
+	@Column(name = "nom_educateur")
+	private String nomPrenomEducateur;
 	@Column(name = "heures_abs_just")
 	private String heuresAbsJustifiees;
 	@Column(name = "heures_abs_non_just")
@@ -90,10 +94,19 @@ public class Bulletin extends PanacheEntityBase{
 	private Date dateCreation;
 	@Column(name = "date_update")
 	private Date dateUpdate;
+	@Column(name = "num_decision_affecte")
+	private String numDecisionAffecte;
+	private String lv2;
+	private String nature;
+	@Column(name="is_classed")
+	private String isClassed;
 	@Column(name = "code_qr")
 	private String codeQr;
 	private String statut;
 	private Integer rang;
+	private String niveau;
+	@Column(name = "niveau_libelle")
+	private String niveauLibelle;
 
 
 }

@@ -6,6 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 
 import org.hibernate.internal.build.AllowSysOut;
@@ -43,7 +44,16 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 	
 	// Obtenir le prof princ ou l'éducateur d' une classe
 	public PersonnelMatiereClasse getPersonnelByClasseAndAnneeAndFonction(Long classe, Long annee, int fonction) {
-		return PersonnelMatiereClasse.find("classe.id = ?1 and annee.id= ?2 and personnel.fonction.id =?3 and matiere is null", classe, annee, fonction).singleResult();
+		PersonnelMatiereClasse pmc = null;
+		try {
+			pmc = PersonnelMatiereClasse.find("classe.id = ?1 and annee.id= ?2 and personnel.fonction.id =?3 and matiere is null", classe, annee, fonction).singleResult();
+		}catch(RuntimeException e) {
+			if(e.getClass().getName().equals(NoResultException.class.getName())) {
+				logger.info(String.format("Aucun personnel educateur ou professeur principal [fonction : %s] trouvé ", fonction));
+			}
+			return pmc;
+		}
+		return pmc;
 	}
 	
 	public PersonnelMatiereClasse findProfesseurByMatiereAndClasse( Long annee,Long classe,Long matiere) {
