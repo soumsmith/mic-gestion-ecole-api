@@ -26,6 +26,7 @@ public class Inscriptions extends PanacheEntityBase {
     private  String  inscriptions_langue_vivante ;
     private  String inscriptions_contact1 ;
     private  String inscriptions_contact2 ;
+    private String num_decision_affecte;
     @Enumerated(EnumType.STRING)
     private  statusEleve   inscriptions_statut_eleve ;
     @Enumerated(EnumType.STRING)
@@ -72,6 +73,14 @@ public class Inscriptions extends PanacheEntityBase {
     }
     public enum typeOperation{
         INSCRIPTION, PREINSCRIPTION
+    }
+
+    public String getNum_decision_affecte() {
+        return num_decision_affecte;
+    }
+
+    public void setNum_decision_affecte(String num_decision_affecte) {
+        this.num_decision_affecte = num_decision_affecte;
     }
 
     public String getInscriptions_contact1() {

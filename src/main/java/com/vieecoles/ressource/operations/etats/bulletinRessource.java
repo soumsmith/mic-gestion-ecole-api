@@ -44,7 +44,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Path("/imprimer-bulletinold")
+@Path("/imprimer-bulletin")
 //@Produces(MediaType.APPLICATION_JSON)
 //@Consumes(MediaType.APPLICATION_JSON)
 
@@ -71,7 +71,8 @@ System.out.print("detailsBull "+detailsBull);
     public ResponseEntity<byte[]>  getdetailsBulletin(@PathParam("type") String type,@PathParam("matricule") String matricule,@PathParam("idEcole") Long idEcole,@PathParam("libelleAnnee") String libelleAnnee,
                                                       @PathParam("libelleTrimetre") String libelleTrimetre) throws Exception, JRException {
         InputStream myInpuStream ;
-        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/BulletinBean.jrxml");
+        /*myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/BulletinBean.jrxml");*/
+        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("spider/test.jrxml");
         List<BulletinSelectDto>  detailsBull = new ArrayList<>() ;
        // detailsBull = detailBulletinInfos(matricule,idEcole,libelleAnnee);
 

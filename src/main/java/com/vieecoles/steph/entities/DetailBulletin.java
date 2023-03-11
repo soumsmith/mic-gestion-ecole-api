@@ -34,6 +34,7 @@ public class DetailBulletin extends PanacheEntityBase{
 	private String  categorie;
     private int  num_ordre;
 	private String nom_prenom_professeur ;
+
 	@ManyToOne
 	private Bulletin bulletin;
 }

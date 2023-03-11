@@ -15,7 +15,9 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import javax.ws.rs.NotFoundException;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -56,9 +58,11 @@ public class EleveService implements PanacheRepositoryBase<eleve, Long> {
            eleveDto.setEleveSexe(lisImpo.get(i).getSexe());
            eleveDto.setElevenom(lisImpo.get(i).getNom());
            eleveDto.setEleveprenom(lisImpo.get(i).getPrenoms());
-         /*  String dateNaissance = lisImpo.get(i).getDate_naissance();
-           LocalDate localDateNaiss = LocalDate.parse(dateNaissance, formatter);
-           eleveDto.setElevedate_naissance(localDateNaiss);*/
+           //String dateNaissance = lisImpo.get(i).getDate_naissance();
+         //  System.out.println("dateNaissance "+ dateNaissance);
+
+           LocalDate localDateNaiss = LocalDate.from((TemporalAccessor) lisImpo.get(i).getDate_naissance());
+           eleveDto.setElevedate_naissance(localDateNaiss);
            eleveDto.setElevelieu_naissance(lisImpo.get(i).getLieu_naissance());
 
     ///Creer l'eleve

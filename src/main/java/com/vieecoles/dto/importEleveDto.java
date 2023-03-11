@@ -1,5 +1,6 @@
 package com.vieecoles.dto;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 
 public class importEleveDto {
@@ -13,7 +14,7 @@ public class importEleveDto {
     private  String classe;
     private  String lv2;
     private  Long identifiant_classe;
-    private String date_naissance ;
+    private LocalDate date_naissance ;
     private String lieu_naissance ;
     private  String sexe;
     private  Long identifiantEcole;
@@ -107,11 +108,11 @@ public class importEleveDto {
     }
 
 
-    public String getDate_naissance() {
+    public LocalDate getDate_naissance() {
         return date_naissance;
     }
 
-    public void setDate_naissance(String date_naissance) {
+    public void setDate_naissance(LocalDate date_naissance) {
         this.date_naissance = date_naissance;
     }
 

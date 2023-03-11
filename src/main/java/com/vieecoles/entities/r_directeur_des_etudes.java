@@ -16,9 +16,12 @@ public class r_directeur_des_etudes extends PanacheEntityBase {
   private Long  id ;
 private String direct_adresse ;
 private String  direct_telephone ;
-private String  direct_cellulaire; 
+private String  direct_cellulaire;
 private String direct_email ;
 private String direct_numero_autorisation_enseigner ;
 private String direct_nom_prenom ;
 private String direct_code_etablissement;
+private Long direct_id_ecole ;
+private String emailDirecteurEtude ;
+private  String autoriSatDirecteurEtude ;
 }
