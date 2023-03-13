@@ -107,6 +107,14 @@ public class ClasseEleveService implements PanacheRepositoryBase<ClasseEleve, Lo
 		System.out.println(brancheId+" "+anneeId+" "+ecoleId);
 		return ClasseEleve.find("inscription.branche.id = ?1 and inscription.annee.id = ?2 and inscription.ecole.id = ?3", brancheId, anneeId, ecoleId).list();
 	}
+	
+	public ClasseEleve getByClasseAndEleveAndAnnee(Long classeId, Long eleveId, Long anneeId) {
+		return ClasseEleve.find("classe.id = ?1 and inscription.annee.id = ?2 and inscription.eleve.id = ?3", classeId, anneeId, eleveId).singleResult();
+	}
+	
+	public ClasseEleve getByMatriculeAndAnnee(String matricule, Long anneeId) {
+		return ClasseEleve.find("inscription.eleve.matricule = ?1 and inscription.annee.id = ?2 ", matricule, anneeId).singleResult();
+	}
 
 	public long count() {
 		return ClasseEleve.count();

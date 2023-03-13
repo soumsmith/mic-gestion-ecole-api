@@ -15,6 +15,9 @@ public class Constants {
 	
 	public static final String OUI = "O";
 	public static final String NON = "N";
+	
+	public static final String LOADED = "LOADED";
+	public static final String APPLIED = "APPLIED";
 
 
 

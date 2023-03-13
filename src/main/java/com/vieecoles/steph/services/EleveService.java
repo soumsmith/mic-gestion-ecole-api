@@ -3,11 +3,12 @@ package com.vieecoles.steph.services;
 import com.vieecoles.steph.entities.Eleve;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
+import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Response;
 import java.net.URI;
 import java.util.List;
-
+@RequestScoped
 public class EleveService implements PanacheRepositoryBase<Eleve, Long> {
 
 	public List<Eleve> getList() {
@@ -16,6 +17,10 @@ public class EleveService implements PanacheRepositoryBase<Eleve, Long> {
 
 	public Eleve findById(Long id) {
 		return Eleve.findById(id);
+	}
+	
+	public Eleve findByMatricule(String matricule) {
+		return Eleve.find("matricule =?1", matricule).singleResult();
 	}
 
 	public Response create(Eleve eleve) {

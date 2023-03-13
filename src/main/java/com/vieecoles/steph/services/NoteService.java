@@ -58,6 +58,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 
 	@Transactional
 	public Response create(Notes notes) {
+		logger.info("--> Création de note pour "+notes.getClasseEleve().getInscription().getEleve().getNom());
 		notes.persist();
 		return Response.created(URI.create("/notes/" + notes.getId())).build();
 	}

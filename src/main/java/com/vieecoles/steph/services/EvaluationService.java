@@ -5,7 +5,7 @@ import com.vieecoles.steph.entities.Evaluation;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 import io.quarkus.panache.common.Parameters;
 
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.transaction.Transactional;
 import javax.ws.rs.NotFoundException;
 import java.util.Date;
@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
 
-@ApplicationScoped
+@RequestScoped
 public class EvaluationService implements PanacheRepositoryBase<Evaluation, Long> {
 
 	Logger logger = Logger.getLogger(EvaluationService.class.getName());
@@ -36,14 +36,19 @@ public class EvaluationService implements PanacheRepositoryBase<Evaluation, Long
 
 	@Transactional
 	public Evaluation create(Evaluation ev) {
-		Gson gson = new Gson();
-		logger.info(gson.toJson(ev));
-
+//		Gson gson = new Gson();
+//		logger.info(gson.toJson(ev));
+		try {
 		UUID uuid = UUID.randomUUID();
+		logger.info("Creation de l'evaluation "+uuid.toString());
 		ev.setCode(uuid.toString());
 		ev.setDateCreation(new Date());
 		ev.setPec(setPecValue());
 		ev.persist();
+		}catch (RuntimeException e) {
+			e.printStackTrace();
+		}
+		logger.info("id creation "+ev.getId());
 		return ev;
 	}
 
