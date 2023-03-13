@@ -6,6 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 
 import org.hibernate.internal.build.AllowSysOut;
@@ -39,6 +40,25 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 	public PersonnelMatiereClasse findById(long id) {
 		logger.info(String.format("find by id :: %s", id));
 		return PersonnelMatiereClasse.findById(id);
+	}
+	
+	// Obtenir le prof princ ou l'éducateur d' une classe
+	public PersonnelMatiereClasse getPersonnelByClasseAndAnneeAndFonction(Long classe, Long annee, int fonction) {
+		PersonnelMatiereClasse pmc = null;
+		try {
+			pmc = PersonnelMatiereClasse.find("classe.id = ?1 and annee.id= ?2 and personnel.fonction.id =?3 and matiere is null", classe, annee, fonction).singleResult();
+		}catch(RuntimeException e) {
+			if(e.getClass().getName().equals(NoResultException.class.getName())) {
+				logger.info(String.format("Aucun personnel educateur ou professeur principal [fonction : %s] trouvé ", fonction));
+			}
+			return pmc;
+		}
+		return pmc;
+	}
+	
+	public PersonnelMatiereClasse findProfesseurByMatiereAndClasse( Long annee,Long classe,Long matiere) {
+		return PersonnelMatiereClasse.find("classe.id = ?1 and annee.id= ?2 and matiere.id = ?3", classe, annee,matiere).singleResult();
+//		return new PersonnelMatiereClasse();
 	}
 
 	// modifier l annee avec le parametre quand disponible
@@ -80,22 +100,22 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 		return PersonnelMatiereClasse.find("personnel.id = ?1 and annee.id = ?2 and classe.id = ?3 and matiere is not null", profId, annee!=0 ? annee: getAnneeScolaire, classe).list();
 	}
 	
-	public List<PersonnelMatiereClasse> findListByClasse(int annee, long classe) {
+	public List<PersonnelMatiereClasse> findListByClasse(long annee, long classe) {
 		return PersonnelMatiereClasse.find("annee.id = ?1 and classe.id =?2 and matiere is not null",
-				getAnneeScolaire, classe).list();
+				annee, classe).list();
 	}
 	
 // Attention ne pas utiliser pour determiner les matieres enseignees par un professeur
-	public List<PersonnelMatiereClasse> findListByFonction(int annee, long ecole, int fonctionId) {
+	public List<PersonnelMatiereClasse> findListByFonction(long annee, long ecole, int fonctionId) {
 		return PersonnelMatiereClasse
 				.find("annee.id = ?1 and classe.ecole.id=?2 and personnel.fonction.id =?3 and matiere is null",
-						getAnneeScolaire, ecole, fonctionId)
+						annee, ecole, fonctionId)
 				.list();
 	}
 	// Attention ne pas utiliser pour determiner les matieres enseignees par un professeur
-	public List<PersonnelMatiereClasse> findListByPersonnel(int annee, long ecole, long classe) {
+	public List<PersonnelMatiereClasse> findListByPersonnel(Long annee, long ecole, long classe) {
 		return PersonnelMatiereClasse.find("annee.id = ?1 and classe.ecole.id=?2 and classe.id =?3 and matiere is null",
-				getAnneeScolaire, ecole, classe).list();
+				annee, ecole, classe).list();
 	}
 
 	@Transactional
@@ -220,5 +240,5 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 		persMatClasse.delete();
 
 	}
-
+	
 }

@@ -22,6 +22,10 @@ public class Inscription extends PanacheEntityBase{
 	private long id;
 	@Column(name = "inscriptionscode")
 	private String code;
+	@Column(name = "num_decision_affecte")
+	private String numDecisionAffecte;
+	@Column(name = "inscriptions_langue_vivante")
+	private String lv2;
 	@ManyToOne
 	@JoinColumn(name = "annee_scolaire_annee_scolaireid")
 	private AnneeScolaire annee;

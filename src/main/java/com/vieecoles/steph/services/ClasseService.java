@@ -59,6 +59,11 @@ public class ClasseService implements PanacheRepositoryBase<Classe,Integer> {
 		//logger.info(String.format("find by id :: %s", id));
 		return Classe.findById(id);
 	}
+	
+	public Classe findByCode(String code) {
+		//logger.info(String.format("find by id :: %s", id));
+		return Classe.find("code =?1",code).singleResult();
+	}
 
 	public List<Classe> findByBranche(long id, Long ecoleId) {
 		//logger.info(String.format("find by Branche id :: %s", id));

@@ -4,10 +4,16 @@ import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.List;
+
+import javax.json.bind.annotation.JsonbProperty;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -22,4 +28,14 @@ public class AnneeScolaire extends PanacheEntityBase{
 	private String code;
 	@Column(name = "annee_scolaire_libelle")
 	private String libelle;
+	private String periodicite;
+	@Column(name = "nbre_eval")
+	private Integer nbreEval;
+	@ManyToOne
+	@JoinColumn(name = "niveau_enseignement_id")
+	private NiveauEnseignement niveauEnseignement;
+	
+//	@Transient
+//	private List<AnneePeriode> anneePeriodes;
+	
 }
