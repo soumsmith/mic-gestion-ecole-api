@@ -26,6 +26,8 @@ import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Path("/imprimer-rapport")
@@ -54,10 +56,80 @@ public class spiderRessource {
 
     @Inject
     TransfertsServices transfertsServices ;
+    @Inject
+    MajorParClasseNiveauServices majorServices ;
+
+    @Inject
+    EleveNonAffecteParClasseServices eleveNonAffecteParClasseServices ;
+
+    @Inject
+    EleveAffecteParClasseServices eleveAffecteParClasseServices ;
+
+    @Inject
+    resultatsRecapServices resultatsRecapServices ;
 
     private static String UPLOAD_DIR = "/data/";
 
+    @Transactional
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/convertDate")
+    public String  convert() throws Exception, JRException {
 
+        return "DFS" ;
+
+    }
+
+
+
+    @Transactional
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/recape-resultats-affecte-par-niveau/{idEcole}")
+    public List<ResultatsElevesAffecteDto>  recap(@PathParam("idEcole") Long idEcole) throws Exception, JRException {
+        List<ResultatsElevesAffecteDto>  detailsBull = new ArrayList<>() ;
+        System.out.println("classeNiveauDtoList entree");
+        detailsBull= resultatsRecapServices.RecapCalculResultatsEleveAffecte(idEcole) ;
+        return detailsBull ;
+
+    }
+
+
+    @Transactional
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/Eleve-affecte-par-classe/{idEcole}")
+    public List<eleveNonAffecteParClasseDto>  eleveAffecteParClasse(@PathParam("idEcole") Long idEcole) throws Exception, JRException {
+        List<eleveNonAffecteParClasseDto>  detailsBull = new ArrayList<>() ;
+        System.out.println("classeNiveauDtoList entree");
+        detailsBull= eleveAffecteParClasseServices.eleveAffecteParClasse(idEcole) ;
+        return detailsBull ;
+
+    }
+
+    @Transactional
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/Eleve-non-affecte-par-classe/{idEcole}")
+    public List<eleveNonAffecteParClasseDto>  eleveNonAffecteParClasse(@PathParam("idEcole") Long idEcole) throws Exception, JRException {
+        List<eleveNonAffecteParClasseDto>  detailsBull = new ArrayList<>() ;
+        System.out.println("classeNiveauDtoList entree");
+        detailsBull= eleveNonAffecteParClasseServices.eleveNonAffecteParClasse(idEcole) ;
+        return detailsBull ;
+
+    }
+
+    @Transactional
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/Major/{idEcole}")
+    public List<MajorParClasseNiveauDto>  majorParClasseNiveau(@PathParam("idEcole") Long idEcole) throws Exception, JRException {
+        List<MajorParClasseNiveauDto>  detailsBull = new ArrayList<>() ;
+        System.out.println("classeNiveauDtoList entree");
+        detailsBull= majorServices.MajorParNiveauClasse(idEcole) ;
+        return detailsBull ;
+
+    }
 
     @Transactional
     @GET

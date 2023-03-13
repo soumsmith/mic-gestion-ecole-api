@@ -1,5 +1,6 @@
 package com.vieecoles.entities.operations;
 
+import com.mysql.cj.jdbc.Clob;
 import com.vieecoles.entities.Annee_Scolaire;
 import com.vieecoles.entities.Libellehandicap;
 import com.vieecoles.steph.entities.Branche;
@@ -27,6 +28,9 @@ public class Inscriptions extends PanacheEntityBase {
     private  String inscriptions_contact1 ;
     private  String inscriptions_contact2 ;
     private String num_decision_affecte;
+    @Lob @Basic(fetch = FetchType.LAZY)
+    @Column(length=100000)
+    private byte[] photo_eleve ;
     @Enumerated(EnumType.STRING)
     private  statusEleve   inscriptions_statut_eleve ;
     @Enumerated(EnumType.STRING)
@@ -48,6 +52,13 @@ public class Inscriptions extends PanacheEntityBase {
     @JoinColumn(name = "annee_scolaire_annee_scolaireid")
     private Annee_Scolaire annee_scolaire ;
 
+    public byte[] getPhoto_eleve() {
+        return photo_eleve;
+    }
+
+    public void setPhoto_eleve(byte[] photo_eleve) {
+        this.photo_eleve = photo_eleve;
+    }
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ecole_ecoleid")

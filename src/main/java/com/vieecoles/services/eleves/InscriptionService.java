@@ -14,6 +14,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
+import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -396,6 +397,17 @@ public  void updatelibelleHandicap_inscrip (Long InscriptionId , Long oldHandica
         myInsription.setInscriptions_delete(0);
        // myInsription.setInscriptions_processus(Inscriptions.processus.EN_COURS);
         myInsription.setInscriptions_status(Inscriptions.status.VALIDEE);
+    }
+
+    public void chargerPhoto(byte[] bytes,Long inscriptionID){
+
+
+        Inscriptions myInsription= new Inscriptions() ;
+        myInsription= (Inscriptions) em.createQuery(" select e from Inscriptions e   where e.inscriptionsid=:inscriptionId ",Inscriptions.class )
+                .setParameter("inscriptionId",inscriptionID)
+                .getSingleResult();
+        myInsription.setPhoto_eleve(bytes);
+
     }
 
 

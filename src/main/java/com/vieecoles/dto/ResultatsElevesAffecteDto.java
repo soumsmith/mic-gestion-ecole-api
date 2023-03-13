@@ -3,7 +3,6 @@ package com.vieecoles.dto;
 public class ResultatsElevesAffecteDto {
     private String niveau ;
     private String classe;
-
     private Long effeF;
     private Long effeG;
     private Long classF;
@@ -30,7 +29,6 @@ public class ResultatsElevesAffecteDto {
 
     public ResultatsElevesAffecteDto(String niveau,
                                      String classe,
-
                                      Long effeF,
                                      Long effeG,
                                      Long classF,

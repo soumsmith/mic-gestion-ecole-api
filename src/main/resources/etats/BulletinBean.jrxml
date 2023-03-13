@@ -17,6 +17,7 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 		<box leftPadding="5"/>
 	</style>
 	<style name="TotalCateg" hTextAlign="Center" fontName="Serif" fontSize="10"/>
+	<parameter name="photo_eleve" class="java.awt.Image"/>
 	<queryString language="SQL">
 		<![CDATA[]]>
 	</queryString>
@@ -815,6 +816,10 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 					<reportElement x="444" y="0" width="147" height="70" uuid="8ffb767a-e06d-4678-a946-1344308fc520">
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 					</reportElement>
+					<image scaleImage="FillFrame">
+						<reportElement x="0" y="0" width="147" height="70" uuid="ead8d2cf-965c-4bfa-a420-f2630105d2a3"/>
+						<imageExpression><![CDATA[$P{photo_eleve}]]></imageExpression>
+					</image>
 				</frame>
 			</frame>
 		</band>

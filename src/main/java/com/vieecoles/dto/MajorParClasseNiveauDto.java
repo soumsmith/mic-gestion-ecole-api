@@ -16,6 +16,23 @@ public class MajorParClasseNiveauDto {
     public MajorParClasseNiveauDto() {
     }
 
+    @Override
+    public String toString() {
+        return "MajorParClasseNiveauDto{" +
+                "niveau='" + niveau + '\'' +
+                ", classeLibelle='" + classeLibelle + '\'' +
+                ", matricule='" + matricule + '\'' +
+                ", nom='" + nom + '\'' +
+                ", prenom='" + prenom + '\'' +
+                ", anneeNaiss='" + anneeNaiss + '\'' +
+                ", sexe='" + sexe + '\'' +
+                ", Nature='" + Nature + '\'' +
+                ", redoublant='" + redoublant + '\'' +
+                ", moyGeneral=" + moyGeneral +
+                ", lv2='" + lv2 + '\'' +
+                '}';
+    }
+
     public MajorParClasseNiveauDto(String niveau,
                                    String classeLibelle,
                                    String matricule,

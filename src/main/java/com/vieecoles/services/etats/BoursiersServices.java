@@ -52,7 +52,7 @@ public class BoursiersServices {
         List<BoursierDto> classeNiveauDtoList = new ArrayList<>() ;
         try {
             TypedQuery<BoursierDto> q= em.createQuery("select new com.vieecoles.dto.BoursierDto(o.matricule,o.nom,o.prenoms,o.sexe,o.dateNaissance,o.lieuNaissance,o.niveau) from Bulletin o where  o.ecoleId=:idEcole and  o.niveau=:niveau and o.boursier=:boursier", BoursierDto.class);
-            classeNiveauDtoList = q.setParameter("boursier","BOURSIER")
+            classeNiveauDtoList = q.setParameter("boursier","B")
 
                                   .setParameter("idEcole",idEcole)
                                   .setParameter("niveau",niveau)
@@ -68,7 +68,7 @@ public class BoursiersServices {
         List<BoursierDto> classeNiveauDtoList = new ArrayList<>() ;
         try {
             TypedQuery<BoursierDto> q= em.createQuery("select new com.vieecoles.dto.BoursierDto(o.matricule,o.nom,o.prenoms,o.sexe,o.dateNaissance,o.lieuNaissance,o.niveau) from Bulletin o where  o.ecoleId=:idEcole and  o.niveau=:niveau and o.boursier=:boursier", BoursierDto.class);
-            classeNiveauDtoList = q.setParameter("boursier","DEMI-BOURSIER")
+            classeNiveauDtoList = q.setParameter("boursier","1/2B")
                     .setParameter("idEcole",idEcole)
                     .setParameter("niveau",niveau)
                     .getResultList() ;

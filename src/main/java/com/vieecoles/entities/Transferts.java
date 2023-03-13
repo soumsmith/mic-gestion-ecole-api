@@ -26,6 +26,7 @@ public class Transferts {
 	private String etablissementOrigine;
 	private String niveau;
 	private Long idEcole;
+	private String matricule;
 
 
 }

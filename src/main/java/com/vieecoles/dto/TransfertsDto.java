@@ -19,6 +19,7 @@ public class TransfertsDto {
 	private String decision;
 	private String etablissementOrigine;
 	private String niveau;
+	private String matricule;
 
 
 	public TransfertsDto(
@@ -31,7 +32,8 @@ public class TransfertsDto {
 						 String nredoublant,
 						 String decision,
 						 String etablissementOrigine,
-						 String niveau
+						 String niveau,
+						 String matricule
 						  ) {
 
 		this.nom = nom;
@@ -43,9 +45,17 @@ public class TransfertsDto {
 		this.decision = decision;
 		this.etablissementOrigine = etablissementOrigine;
 		this.niveau = niveau;
+		this.matricule=matricule ;
 
 	}
 
+	public String getMatricule() {
+		return matricule;
+	}
+
+	public void setMatricule(String matricule) {
+		this.matricule = matricule;
+	}
 
 	public String getNom() {
 		return nom;
