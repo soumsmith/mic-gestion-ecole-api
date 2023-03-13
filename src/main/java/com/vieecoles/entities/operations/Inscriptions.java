@@ -66,11 +66,6 @@ public class Inscriptions extends PanacheEntityBase {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Branche_id")
     private Branche branche;
-    @ManyToMany
-    @JoinTable( name = "libelleHandicap_has_inscriptions",
-            joinColumns = @JoinColumn( name = "inscriptions_inscriptionsid" ),
-            inverseJoinColumns = @JoinColumn( name = "libelleHandicap_libelleHandicapid" ) )
-    private List<Libellehandicap> libellehandicap = new ArrayList<>();
 
 
     public enum processus{
@@ -185,13 +180,6 @@ public class Inscriptions extends PanacheEntityBase {
         this.ecole = ecole;
     }
 
-    public List<Libellehandicap> getLibellehandicap() {
-        return libellehandicap;
-    }
-
-    public void setLibellehandicap(List<Libellehandicap> libellehandicap) {
-        this.libellehandicap = libellehandicap;
-    }
 
     public Long getInscriptionsid() {
         return inscriptionsid;
@@ -306,7 +294,7 @@ public class Inscriptions extends PanacheEntityBase {
                 ", inscriptionsdate_modification=" + inscriptionsdate_modification +
                 ", eleve=" + eleve +
                 ", ecole=" + ecole +
-                ", libellehandicap=" + libellehandicap +
+                ", libellehandicap=" + "libellehandicap" +
                 '}';
     }
 
