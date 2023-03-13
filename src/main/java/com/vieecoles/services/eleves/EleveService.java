@@ -15,7 +15,9 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import javax.ws.rs.NotFoundException;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -39,40 +41,109 @@ public class EleveService implements PanacheRepositoryBase<eleve, Long> {
        List<String> matriculeNonCreer = new ArrayList<>();
        for (int i = 0; i < lisImpo.size(); i++){
 
-           DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
-
-
+           //String myStatut= lisImpo.get(i).getStatut() ;
+           String NewmyStatut ;
+System.out.println("Statut0 "+lisImpo.get(i).getStatut());
+           if(lisImpo.get(i).getStatut().equals("AFF")){
+               NewmyStatut= String.valueOf(Inscriptions.statusEleve.AFFECTE);
+           }else {
+               NewmyStatut= String.valueOf(Inscriptions.statusEleve.NON_AFFECTE);
+           }
            EleveDto eleveDto= new EleveDto() ;
            eleve elv =new eleve() ;
            InscriptionDto inscriptionDto = new InscriptionDto() ;
            Long  identifiantBranche ;
            Branche myBranch = new Branche() ;
-           myBranch= (Branche) em.createQuery("select o from Branche o  where o.libelle =:branche " )
-                   .setParameter("branche", lisImpo.get(i).getLibelleBranche()).getSingleResult() ;
-           System.out.println("identifiantBranche "+myBranch.getId());
 
-           eleveDto.setElevematricule_national(lisImpo.get(i).getMatricule());
-           eleveDto.setEleveSexe(lisImpo.get(i).getSexe());
+           Long NiveauEnseignement=  (Long) em.createQuery("select o.Niveau_Enseignement_id from ecole o  where o.ecoleid =:idEcole " )
+                   .setParameter("idEcole", idEcole).getSingleResult() ;
+
+           System.out.println("NiveauEnseignement "+NiveauEnseignement);
+
+           myBranch= (Branche) em.createQuery("select o from Branche o  where o.libelle like :branche and o.niveauEnseignement.id=:idNiveauEnsei " )
+                   .setParameter("branche", lisImpo.get(i).getNiveau())
+                   .setParameter("idNiveauEnsei", NiveauEnseignement)
+                   .getSingleResult();
+
+           System.out.println("myBranch "+myBranch);
+
+
+           if(lisImpo.get(i).getMatricule().equals("")||lisImpo.get(i).getMatricule()==null)
+           {
+               eleveDto.setElevematricule_national(lisImpo.get(i).getID());
+               System.out.println("CodeInterne+++ "+lisImpo.get(i).getID());
+               System.out.println("Matricule+++ "+lisImpo.get(i).getMatricule());
+           }
+
+           else
+               eleveDto.setElevematricule_national(lisImpo.get(i).getMatricule());
+
+           String msexe ;
+           if(lisImpo.get(i).getSexe().equals("F"))
+               msexe = "FEMININ";
+           else
+               msexe = "MASCULIN";
+
+           eleveDto.setEleveSexe(msexe);
+
            eleveDto.setElevenom(lisImpo.get(i).getNom());
            eleveDto.setEleveprenom(lisImpo.get(i).getPrenoms());
-         /*  String dateNaissance = lisImpo.get(i).getDate_naissance();
-           LocalDate localDateNaiss = LocalDate.parse(dateNaissance, formatter);
-           eleveDto.setElevedate_naissance(localDateNaiss);*/
-           eleveDto.setElevelieu_naissance(lisImpo.get(i).getLieu_naissance());
+           System.out.println("Debut creation Date format ");
+           DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+           System.out.println("Fin creation Date format ");
+           if(lisImpo.get(i).getDateNaissance()==null||lisImpo.get(i).getDateNaissance().equals("")){
+               String date = "01/01/1900";
+               LocalDate localDate = LocalDate.parse(date, formatter);
+               LocalDate localDateNaiss = localDate;
+
+               eleveDto.setElevedate_naissance(localDateNaiss);
+           } else {
+               String date = lisImpo.get(i).getDateNaissance();
+               LocalDate localDate = LocalDate.parse(date, formatter);
+               LocalDate localDateNaiss = localDate;
+
+               eleveDto.setElevedate_naissance(localDateNaiss);
+           }
+
+           eleveDto.setElevelieu_naissance(lisImpo.get(i).getLieuNaissance());
 
     ///Creer l'eleve
+           System.out.println("Debut creation eleve ");
            elv= CreerUnEleve(eleveDto) ;
-
+           System.out.println("Fin creation eleve ");
            inscriptionDto.setIdentifiantEcole(idEcole);
            inscriptionDto.setIdentifiantAnnee_scolaire(idAnneeScolaire);
            inscriptionDto.setIdentifiantBranche(myBranch.getId());
            Inscriptions.typeOperation myOperation= Inscriptions.typeOperation.valueOf(typeOperation);
-           Inscriptions.statusEleve myStatutEleve = Inscriptions.statusEleve.valueOf(lisImpo.get(i).getStatut());
+
+           Inscriptions.statusEleve myStatutEleve = Inscriptions.statusEleve.valueOf(NewmyStatut);
            inscriptionDto.setInscriptions_langue_vivante(lisImpo.get(i).getLv2());
+           inscriptionDto.setInscriptions_redoublant(lisImpo.get(i).getRed());
+           inscriptionDto.setInscriptions_contact1(lisImpo.get(i).getContact());
+
            inscriptionDto.setInscriptions_statut_eleve(myStatutEleve);
            inscriptionDto.setIdentifiantEleve(elv.getEleveid());
            inscriptionDto.setInscriptions_type(myOperation);
+           inscriptionDto.setInscriptions_boursier(lisImpo.get(i).getRegime());
+
+           if(lisImpo.get(i).getDateInscription()==null||lisImpo.get(i).getDateInscription().equals("")){
+               DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+               String date2 = "01/01/1900";
+               LocalDate localDate2 = LocalDate.parse(date2, formatter2);
+               LocalDate localDateNaiss2 = localDate2;
+               inscriptionDto.setInscriptionsdate_creation(localDateNaiss2);
+           } else {
+               DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+               String date2 = lisImpo.get(i).getDateInscription();
+               LocalDate localDate2 = LocalDate.parse(date2, formatter2);
+               LocalDate localDateNaiss2 = localDate2;
+               inscriptionDto.setInscriptionsdate_creation(localDateNaiss2);
+           }
+
+
+
+
+           System.out.println("Fin creation Insrip ");
            messageRetour=  inscriptionService.verifInscriptionImporter(inscriptionDto,idEcole,elv.getEleve_matricule(),idAnneeScolaire);
 
            if(!messageRetour.equals("DEMANDE D'INSCRIPTION EFFECTUEE AVEC SUCCES!")){

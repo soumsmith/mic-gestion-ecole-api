@@ -3,10 +3,7 @@ package com.vieecoles.steph.entities;
 import java.util.Date;
 import java.util.UUID;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Data;
@@ -104,9 +101,21 @@ public class Bulletin extends PanacheEntityBase{
 	private String codeQr;
 	private String statut;
 	private Integer rang;
-	private String niveau;
+	private String niveau ;
+	private String is_classed;
+	private  String num_decision_affecte;
+	private String code_educateur ;
+	private String nom_educateur ;
+
+	private String niveau_libelle ;
+	@Lob
+	@Basic(fetch = FetchType.LAZY)
+	@Column(length=100000)
+	private byte[] photo_eleve ;
+
 	@Column(name = "niveau_libelle")
 	private String niveauLibelle;
+
 
 
 }

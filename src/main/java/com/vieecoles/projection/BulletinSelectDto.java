@@ -1,4 +1,10 @@
 package com.vieecoles.projection;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.FetchType;
+import javax.persistence.Lob;
+import java.awt.image.BufferedImage;
+import java.util.Arrays;
 import java.util.Date;
 
 
@@ -80,66 +86,80 @@ public class BulletinSelectDto {
     private Integer  rangBulletin;
     private String nom_prenom_professeur ;
     private String libelle_categorie ;
-
+    private BufferedImage photo_eleve ;
 
 
     public BulletinSelectDto() {
     }
 
 
-
-
-
-
-
+    public void setNum_ordre(int num_ordre) {
+        this.num_ordre = num_ordre;
+    }
 
 
     @Override
     public String toString() {
-        return "BulletinSelectDto [id_ecole=" + id_ecole + ", nom_ecole=" + nom_ecole + ", statut_ecole=" + statut_ecole
-                + ", url_logo=" + url_logo + ", adresse_ecole=" + adresse_ecole + ", tel_ecole=" + tel_ecole
-                + ", annee_libelle=" + annee_libelle + ", libelle_periode=" + libelle_periode + ", matricule="
-                + matricule + ", nom=" + nom + ", prenoms=" + prenoms + ", sexe=" + sexe + ", date_naissance="
-                + date_naissance + ", lieu_naissance=" + lieu_naissance + ", nationalite=" + nationalite
-                + ", redoublant=" + redoublant + ", boursier=" + boursier + ", affecte=" + affecte + ", libelle_classe="
-                + libelle_classe + ", effectif_classe=" + effectif_classe + ", total_coef=" + total_coef
-                + ", total_moy_coef=" + total_moy_coef + ", nom_prof_princ=" + nom_prof_princ + ", heures_abs_just="
-                + heures_abs_just + ", heures_abs_non_just=" + heures_abs_non_just + ", moy_general=" + moy_general
-                + ", moy_max=" + moy_max + ", moy_min=" + moy_min + ", moy_avg=" + moy_avg + ", moy_annuelle="
-                + moy_annuelle + ", rang_annuelle=" + rang_annuelle + ", appreciation_conseil=" + appreciation_conseil
-                + ", date_creation=" + date_creation + ", code_qr=" + code_qr + ", statut=" + statut
-                + ", libelle_matiere=" + libelle_matiere + ", moyenne=" + moyenne + ", rang=" + rang + ", coef=" + coef
-                + ", moy_coef=" + moy_coef + ", appreciation=" + appreciation + ", categorie=" + categorie
-                + ", num_ordre=" + num_ordre + ", RangBulletin=" + rangBulletin + ", nom_prenom_professeur="
-                + nom_prenom_professeur + "]";
+        return "BulletinSelectDto{" +
+                "id_ecole=" + id_ecole +
+                ", nom_ecole='" + nom_ecole + '\'' +
+                ", statut_ecole='" + statut_ecole + '\'' +
+                ", url_logo='" + url_logo + '\'' +
+                ", adresse_ecole='" + adresse_ecole + '\'' +
+                ", tel_ecole='" + tel_ecole + '\'' +
+                ", annee_libelle='" + annee_libelle + '\'' +
+                ", libelle_periode='" + libelle_periode + '\'' +
+                ", matricule='" + matricule + '\'' +
+                ", nom='" + nom + '\'' +
+                ", prenoms='" + prenoms + '\'' +
+                ", sexe='" + sexe + '\'' +
+                ", date_naissance='" + date_naissance + '\'' +
+                ", lieu_naissance='" + lieu_naissance + '\'' +
+                ", nationalite='" + nationalite + '\'' +
+                ", redoublant='" + redoublant + '\'' +
+                ", boursier='" + boursier + '\'' +
+                ", affecte='" + affecte + '\'' +
+                ", libelle_classe='" + libelle_classe + '\'' +
+                ", effectif_classe=" + effectif_classe +
+                ", total_coef=" + total_coef +
+                ", total_moy_coef=" + total_moy_coef +
+                ", nom_prof_princ='" + nom_prof_princ + '\'' +
+                ", heures_abs_just='" + heures_abs_just + '\'' +
+                ", heures_abs_non_just='" + heures_abs_non_just + '\'' +
+                ", moy_general=" + moy_general +
+                ", moy_max=" + moy_max +
+                ", moy_min=" + moy_min +
+                ", moy_avg=" + moy_avg +
+                ", moy_annuelle=" + moy_annuelle +
+                ", rang_annuelle=" + rang_annuelle +
+                ", appreciation_conseil='" + appreciation_conseil + '\'' +
+                ", date_creation=" + date_creation +
+                ", code_qr='" + code_qr + '\'' +
+                ", statut='" + statut + '\'' +
+                ", libelle_matiere='" + libelle_matiere + '\'' +
+                ", moyenne=" + moyenne +
+                ", rang=" + rang +
+                ", coef=" + coef +
+                ", moy_coef=" + moy_coef +
+                ", appreciation='" + appreciation + '\'' +
+                ", categorie='" + categorie + '\'' +
+                ", num_ordre=" + num_ordre +
+                ", rangBulletin=" + rangBulletin +
+                ", nom_prenom_professeur='" + nom_prenom_professeur + '\'' +
+                ", libelle_categorie='" + libelle_categorie + '\'' +
+                ", photo_eleve=" + "photo_eleve" +
+                '}';
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public BulletinSelectDto(Long id_ecole, String nom_ecole, String statut_ecole, String url_logo,
-            String adresse_ecole, String tel_ecole, String annee_libelle, String libelle_periode, String matricule,
-            String nom, String prenoms, String sexe, String date_naissance, String lieu_naissance, String nationalite,
-            String redoublant, String boursier, String affecte, String libelle_classe, Integer effectif_classe,
-            Double total_coef, Double total_moy_coef, String nom_prof_princ, String heures_abs_just,
-            String heures_abs_non_just, Double moy_general, Double moy_max, Double moy_min, Double moy_avg,
-            Double moy_annuelle, Integer rang_annuelle, String appreciation_conseil, Date date_creation, String code_qr,
-            String statut, String libelle_matiere, Double moyenne, Integer rang, Double coef, Double moy_coef,
-            String appreciation, String categorie, int num_ordre, Integer rangBulletin, String nom_prenom_professeur,String libelle_categorie) {
+                             String adresse_ecole, String tel_ecole, String annee_libelle, String libelle_periode, String matricule,
+                             String nom, String prenoms, String sexe, String date_naissance, String lieu_naissance, String nationalite,
+                             String redoublant, String boursier, String affecte, String libelle_classe, Integer effectif_classe,
+                             Double total_coef, Double total_moy_coef, String nom_prof_princ, String heures_abs_just,
+                             String heures_abs_non_just, Double moy_general, Double moy_max, Double moy_min, Double moy_avg,
+                             Double moy_annuelle, Integer rang_annuelle, String appreciation_conseil, Date date_creation, String code_qr,
+                             String statut, String libelle_matiere, Double moyenne, Integer rang, Double coef, Double moy_coef,
+                             String appreciation, String categorie, int num_ordre, Integer rangBulletin, String nom_prenom_professeur, String libelle_categorie) {
         this.id_ecole = id_ecole;
         this.nom_ecole = nom_ecole;
         this.statut_ecole = statut_ecole;
@@ -186,6 +206,7 @@ public class BulletinSelectDto {
         this.rangBulletin = rangBulletin;
         this.nom_prenom_professeur = nom_prenom_professeur;
         this.libelle_categorie= libelle_categorie ;
+
     }
 
 

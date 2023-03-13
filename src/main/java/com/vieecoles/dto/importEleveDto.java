@@ -1,35 +1,38 @@
 package com.vieecoles.dto;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 
 public class importEleveDto {
-    private  String code_interne ;
+    private  String ID ;
     private  String matricule ;
     private  String nom;
     private  String prenoms ;
     private  String statut;
-    private  String contact1;
-    private  String contact2;
+    private  String red;
+    private  String nationalite;
     private  String classe;
     private  String lv2;
-    private  Long identifiant_classe;
-    private String date_naissance ;
-    private String lieu_naissance ;
+    private  String regime;
+    private String dateNaissance ;
+    private String lieuNaissance ;
     private  String sexe;
+    private  String dateInscription ;
+    private  String contact;
     private  Long identifiantEcole;
-    private  String libelleBranche ;
+    private  String niveau ;
     private  Long identifiantBranche;
 
 
     public importEleveDto() {
     }
 
-    public String getCode_interne() {
-        return code_interne;
+    public String getID() {
+        return ID;
     }
 
-    public void setCode_interne(String code_interne) {
-        this.code_interne = code_interne;
+    public void setID(String ID) {
+        this.ID = ID;
     }
 
     public String getMatricule() {
@@ -64,20 +67,20 @@ public class importEleveDto {
         this.statut = statut;
     }
 
-    public String getContact1() {
-        return contact1;
+    public String getRed() {
+        return red;
     }
 
-    public void setContact1(String contact1) {
-        this.contact1 = contact1;
+    public void setRed(String red) {
+        this.red = red;
     }
 
-    public String getContact2() {
-        return contact2;
+    public String getNationalite() {
+        return nationalite;
     }
 
-    public void setContact2(String contact2) {
-        this.contact2 = contact2;
+    public void setNationalite(String nationalite) {
+        this.nationalite = nationalite;
     }
 
     public String getClasse() {
@@ -88,16 +91,6 @@ public class importEleveDto {
         this.classe = classe;
     }
 
-    public Long getIdentifiant_classe() {
-        return identifiant_classe;
-    }
-
-    public void setIdentifiant_classe(Long identifiant_classe) {
-        this.identifiant_classe = identifiant_classe;
-    }
-
-
-
     public String getLv2() {
         return lv2;
     }
@@ -107,20 +100,28 @@ public class importEleveDto {
     }
 
 
-    public String getDate_naissance() {
-        return date_naissance;
+    public String getRegime() {
+        return regime;
     }
 
-    public void setDate_naissance(String date_naissance) {
-        this.date_naissance = date_naissance;
+    public void setRegime(String regime) {
+        this.regime = regime;
     }
 
-    public String getLieu_naissance() {
-        return lieu_naissance;
+    public String getDateNaissance() {
+        return dateNaissance;
     }
 
-    public void setLieu_naissance(String lieu_naissance) {
-        this.lieu_naissance = lieu_naissance;
+    public void setDateNaissance(String dateNaissance) {
+        this.dateNaissance = dateNaissance;
+    }
+
+    public String getLieuNaissance() {
+        return lieuNaissance;
+    }
+
+    public void setLieuNaissance(String lieuNaissance) {
+        this.lieuNaissance = lieuNaissance;
     }
 
     public String getSexe() {
@@ -131,6 +132,22 @@ public class importEleveDto {
         this.sexe = sexe;
     }
 
+    public String getDateInscription() {
+        return dateInscription;
+    }
+
+    public void setDateInscription(String dateInscription) {
+        this.dateInscription = dateInscription;
+    }
+
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
+
     public Long getIdentifiantEcole() {
         return identifiantEcole;
     }
@@ -139,12 +156,12 @@ public class importEleveDto {
         this.identifiantEcole = identifiantEcole;
     }
 
-    public String getLibelleBranche() {
-        return libelleBranche;
+    public String getNiveau() {
+        return niveau;
     }
 
-    public void setLibelleBranche(String libelleBranche) {
-        this.libelleBranche = libelleBranche;
+    public void setNiveau(String niveau) {
+        this.niveau = niveau;
     }
 
     public Long getIdentifiantBranche() {
@@ -153,5 +170,29 @@ public class importEleveDto {
 
     public void setIdentifiantBranche(Long identifiantBranche) {
         this.identifiantBranche = identifiantBranche;
+    }
+
+    @Override
+    public String toString() {
+        return "importEleveDto{" +
+                "ID='" + ID + '\'' +
+                ", matricule='" + matricule + '\'' +
+                ", nom='" + nom + '\'' +
+                ", prenoms='" + prenoms + '\'' +
+                ", statut='" + statut + '\'' +
+                ", red='" + red + '\'' +
+                ", nationalite='" + nationalite + '\'' +
+                ", classe='" + classe + '\'' +
+                ", lv2='" + lv2 + '\'' +
+                ", regime='" + regime + '\'' +
+                ", dateNaissance='" + dateNaissance + '\'' +
+                ", lieuNaissance='" + lieuNaissance + '\'' +
+                ", sexe='" + sexe + '\'' +
+                ", dateInscription='" + dateInscription + '\'' +
+                ", contact='" + contact + '\'' +
+                ", identifiantEcole=" + identifiantEcole +
+                ", niveau='" + niveau + '\'' +
+                ", identifiantBranche=" + identifiantBranche +
+                '}';
     }
 }

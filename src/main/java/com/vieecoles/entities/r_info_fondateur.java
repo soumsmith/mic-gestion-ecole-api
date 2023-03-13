@@ -15,10 +15,12 @@ public class r_info_fondateur extends PanacheEntityBase {
   private Long  id ;
 private String fon_nomPrenoms ;
 private String  fon_fonction ;
-private String  fon_adresse; 
+private String  fon_adresse;
 private String fon_telephone ;
 private String fon_cellulaire ;
 private String fon_email ;
 private String fon_code_etablissement;
+private Long  fon_id_ecole ;
+
 
 }
