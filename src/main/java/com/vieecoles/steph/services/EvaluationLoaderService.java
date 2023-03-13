@@ -159,6 +159,7 @@ public class EvaluationLoaderService implements PanacheRepositoryBase<Evaluation
 				evaluation.setType(typeEvaluation);
 				evaluation.setClasse(classe);
 				evaluation.setDate(DateUtils.asDate(LocalDate.now()));
+				evaluation.setNoteSur(Constants.DEFAULT_NOTE_SUR);
 				evaluationService.create(evaluation);
 
 				for (EvaluationLoader ev : evals) {

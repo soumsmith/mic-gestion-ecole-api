@@ -18,6 +18,8 @@ public class Constants {
 	
 	public static final String LOADED = "LOADED";
 	public static final String APPLIED = "APPLIED";
+	
+	public static final String DEFAULT_NOTE_SUR = "20";
 
 
 

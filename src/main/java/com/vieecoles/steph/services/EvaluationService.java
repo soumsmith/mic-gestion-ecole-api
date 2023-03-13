@@ -65,6 +65,7 @@ public class EvaluationService implements PanacheRepositoryBase<Evaluation, Long
 		entity.setDuree(ev.getDuree());
 		entity.setEtat(ev.getEtat());
 		entity.setPec(ev.getPec());
+		entity.setType(ev.getType());
 		//entity.setHeure(ev.getHeure());
 		entity.setNoteSur(ev.getNoteSur());
 		return entity;
