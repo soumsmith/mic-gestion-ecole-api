@@ -102,12 +102,8 @@ public class Bulletin extends PanacheEntityBase{
 	private String statut;
 	private Integer rang;
 	private String niveau ;
-//	private String is_classed;
-//	private  String num_decision_affecte;
-//	private String code_educateur ;
-//	private String nom_educateur ;
 
-//	private String niveau_libelle ;
+
 	@Lob
 	@Basic(fetch = FetchType.LAZY)
 	@Column(length=100000)

@@ -182,7 +182,7 @@ public class resultatsServices {
   public  Long getclassF(Long idEcole ,String classe, String niveau){
       Long classF;
       try {
-          classF = (Long) em.createQuery("select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole and o.affecte=:affecte and o.is_classed=:isClass group by o.libelleClasse , o.niveau having o.libelleClasse=:classe and o.niveau=:niveau")
+          classF = (Long) em.createQuery("select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole and o.affecte=:affecte and o.isClassed=:isClass group by o.libelleClasse , o.niveau having o.libelleClasse=:classe and o.niveau=:niveau")
                   .setParameter("sexe","FEMININ")
                   .setParameter("idEcole",idEcole)
                   .setParameter("affecte","AFFECTE")
@@ -201,7 +201,7 @@ public class resultatsServices {
     public Long getclassG(Long idEcole ,String classe, String niveau){
         Long classG;
         try {
-            classG = (Long) em.createQuery("select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole and o.affecte=:affecte and o.is_classed=:isClass group by o.libelleClasse , o.niveau having o.libelleClasse=:classe and o.niveau=:niveau")
+            classG = (Long) em.createQuery("select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole and o.affecte=:affecte and o.isClassed=:isClass group by o.libelleClasse , o.niveau having o.libelleClasse=:classe and o.niveau=:niveau")
                     .setParameter("sexe","MASCULIN")
                     .setParameter("idEcole",idEcole)
                     .setParameter("affecte","AFFECTE")
@@ -217,7 +217,7 @@ public class resultatsServices {
     }
     public  Long getNonClasseF(Long idEcole ,String classe, String niveau){
         try {
-            Long nonclassF = (Long) em.createQuery("select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole and o.affecte=:affecte and o.is_classed=:isClass group by o.libelleClasse , o.niveau having o.libelleClasse=:classe and o.niveau=:niveau")
+            Long nonclassF = (Long) em.createQuery("select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole and o.affecte=:affecte and o.isClassed=:isClass group by o.libelleClasse , o.niveau having o.libelleClasse=:classe and o.niveau=:niveau")
                     .setParameter("sexe","FEMININ")
                     .setParameter("idEcole",idEcole)
                     .setParameter("affecte","AFFECTE")
@@ -236,7 +236,7 @@ public class resultatsServices {
 
     public  Long getNonClasseG(Long idEcole ,String classe, String niveau){
         try {
-            Long    nonclassG = (Long) em.createQuery("select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole and o.affecte=:affecte and o.is_classed=:isClass group by o.libelleClasse , o.niveau having o.libelleClasse=:classe and o.niveau=:niveau")
+            Long    nonclassG = (Long) em.createQuery("select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole and o.affecte=:affecte and o.isClassed=:isClass group by o.libelleClasse , o.niveau having o.libelleClasse=:classe and o.niveau=:niveau")
                     .setParameter("sexe","MASCULIN")
                     .setParameter("idEcole",idEcole)
                     .setParameter("affecte","AFFECTE")
@@ -353,7 +353,7 @@ public class resultatsServices {
 
     public  Double getmoyClasseF(Long idEcole ,String classe, String niveau){
         try {
-            Double   moyClasseF = (Double) em.createQuery("select AVG(o.moyGeneral) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole and o.affecte=:affecte and o.is_classed=:isClass group by o.libelleClasse , o.niveau having o.libelleClasse=:classe and o.niveau=:niveau")
+            Double   moyClasseF = (Double) em.createQuery("select AVG(o.moyGeneral) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole and o.affecte=:affecte and o.isClassed=:isClass group by o.libelleClasse , o.niveau having o.libelleClasse=:classe and o.niveau=:niveau")
                     .setParameter("sexe","FEMININ")
                     .setParameter("idEcole",idEcole)
                     .setParameter("affecte","AFFECTE")
@@ -369,7 +369,7 @@ public class resultatsServices {
     }
     public  Double  getmoyClasseG(Long idEcole ,String classe, String niveau){
         try {
-            Double  moyClasseG = (Double) em.createQuery("select AVG(o.moyGeneral) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole and o.affecte=:affecte and o.is_classed=:isClass group by o.libelleClasse , o.niveau having o.libelleClasse=:classe and o.niveau=:niveau")
+            Double  moyClasseG = (Double) em.createQuery("select AVG(o.moyGeneral) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole and o.affecte=:affecte and o.isClassed=:isClass group by o.libelleClasse , o.niveau having o.libelleClasse=:classe and o.niveau=:niveau")
                     .setParameter("sexe","MASCULIN")
                     .setParameter("idEcole",idEcole)
                     .setParameter("affecte","AFFECTE")

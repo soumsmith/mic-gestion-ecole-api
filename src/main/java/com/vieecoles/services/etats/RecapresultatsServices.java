@@ -59,28 +59,28 @@ public class RecapresultatsServices {
                 .setParameter("affecte",affecte)
                 .getSingleResult();
 
-        classF = (Integer) em.createQuery("select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole and o.affecte=:affecte and o.is_classed=:isClass group by  o.niveau")
+        classF = (Integer) em.createQuery("select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole and o.affecte=:affecte and o.isClassed =:isClass group by  o.niveau")
                 .setParameter("sexe","FEMININ")
                 .setParameter("idEcole",idEcole)
                 .setParameter("affecte",affecte)
                 .setParameter("isClass","O")
                 .getSingleResult();
 
-        classG = (Integer) em.createQuery("select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole and o.affecte=:affecte and o.is_classed=:isClass group by  o.niveau")
+        classG = (Integer) em.createQuery("select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole and o.affecte=:affecte and o.isClassed=:isClass group by  o.niveau")
                 .setParameter("sexe","MASCULIN")
                 .setParameter("idEcole",idEcole)
                 .setParameter("affecte",affecte)
                 .setParameter("isClass","O")
                 .getSingleResult();
 
-        nonclassF = (Integer) em.createQuery("select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole and o.affecte=:affecte and o.is_classed=:isClass group by o.niveau")
+        nonclassF = (Integer) em.createQuery("select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole and o.affecte=:affecte and o.isClassed =:isClass group by o.niveau")
                 .setParameter("sexe","FEMININ")
                 .setParameter("idEcole",idEcole)
                 .setParameter("affecte",affecte)
                 .setParameter("isClass","N")
                 .getSingleResult();
 
-        nonclassG = (Integer) em.createQuery("select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole and o.affecte=:affecte and o.is_classed=:isClass group by  o.niveau")
+        nonclassG = (Integer) em.createQuery("select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole and o.affecte=:affecte and o.isClassed =:isClass group by  o.niveau")
                 .setParameter("sexe","MASCULIN")
                 .setParameter("idEcole",idEcole)
                 .setParameter("affecte",affecte)
@@ -131,14 +131,14 @@ public class RecapresultatsServices {
                 .setParameter("moy",8.5)
                 .getSingleResult();
 
-        moyClasseF = (Double) em.createQuery("select AVG(o.moyGeneral) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole and o.affecte=:affecte and o.is_classed=:isClass group by  o.niveau")
+        moyClasseF = (Double) em.createQuery("select AVG(o.moyGeneral) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole and o.affecte=:affecte and o.isClassed =:isClass group by  o.niveau")
                 .setParameter("sexe","FEMININ")
                 .setParameter("idEcole",idEcole)
                 .setParameter("affecte",affecte)
                 .setParameter("isClass","O")
                 .getSingleResult();
 
-        moyClasseG = (Double) em.createQuery("select AVG(o.moyGeneral) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole and o.affecte=:affecte and o.is_classed=:isClass group by  o.niveau")
+        moyClasseG = (Double) em.createQuery("select AVG(o.moyGeneral) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole and o.affecte=:affecte and o.isClassed =:isClass group by  o.niveau")
                 .setParameter("sexe","MASCULIN")
                 .setParameter("idEcole",idEcole)
                 .setParameter("affecte",affecte)

@@ -127,7 +127,7 @@ public class InscriptionService implements PanacheRepositoryBase<Inscriptions, L
           inscr.setAnnee_scolaire(annee_scolaire);
           inscr.setInscriptions_type(inscriptionDto.getInscriptions_type());
           inscr.setInscriptions_statut_eleve(inscriptionDto.getInscriptions_statut_eleve());
-           inscr.setLibellehandicap(libellehandicapList);
+          // inscr.setLibellehandicap(libellehandicapList);
           inscr.setInscriptions_processus(Inscriptions.processus.EN_COURS);
           inscr.setInscriptions_status(Inscriptions.status.EN_ATTENTE);
           inscr.setInscriptions_contact1(inscriptionDto.getInscriptions_contact1());
@@ -146,7 +146,7 @@ public class InscriptionService implements PanacheRepositoryBase<Inscriptions, L
           inscr.setEleve(eleve1);
            inscr.setInscriptions_type(inscriptionDto.getInscriptions_type());
           inscr.setInscriptions_statut_eleve(inscriptionDto.getInscriptions_statut_eleve());
-          inscr.setLibellehandicap(libellehandicapList);
+        //  inscr.setLibellehandicap(libellehandicapList);
           inscr.setInscriptions_processus(Inscriptions.processus.EN_COURS);
           inscr.setInscriptions_status(Inscriptions.status.EN_ATTENTE);
           inscr.setInscriptions_contact1(inscriptionDto.getInscriptions_contact1());
@@ -206,7 +206,7 @@ public class InscriptionService implements PanacheRepositoryBase<Inscriptions, L
             inscr.setAnnee_scolaire(annee_scolaire);
             inscr.setInscriptions_type(inscriptionDto.getInscriptions_type());
             inscr.setInscriptions_statut_eleve(inscriptionDto.getInscriptions_statut_eleve());
-            inscr.setLibellehandicap(libellehandicapList);
+           // inscr.setLibellehandicap(libellehandicapList);
             inscr.setInscriptions_processus(Inscriptions.processus.EN_COURS);
             inscr.setInscriptions_status(Inscriptions.status.VALIDEE);
             inscr.setInscriptions_contact1(inscriptionDto.getInscriptions_contact1());
@@ -225,7 +225,7 @@ public class InscriptionService implements PanacheRepositoryBase<Inscriptions, L
             inscr.setEleve(eleve1);
             inscr.setInscriptions_type(inscriptionDto.getInscriptions_type());
             inscr.setInscriptions_statut_eleve(inscriptionDto.getInscriptions_statut_eleve());
-            inscr.setLibellehandicap(libellehandicapList);
+        //    inscr.setLibellehandicap(libellehandicapList);
             inscr.setInscriptions_processus(Inscriptions.processus.EN_COURS);
             inscr.setInscriptions_status(Inscriptions.status.VALIDEE);
             inscr.setInscriptions_contact1(inscriptionDto.getInscriptions_contact1());
