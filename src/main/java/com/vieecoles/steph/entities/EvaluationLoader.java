@@ -39,6 +39,8 @@ public class EvaluationLoader extends PanacheEntityBase {
 	private String observation;
 	@Column(name = "nom_prenom")
 	private String nomPrenom;
+	@Column(name = "classe_id")
+	private Long classeId;
 	@Column(name = "classe_code")
 	private String classeCode;
 	@Column(name = "classe_libelle")

@@ -132,7 +132,7 @@ public class EvaluationLoaderService implements PanacheRepositoryBase<Evaluation
 		per.setId(periode);
 		AnneeScolaire ann = new AnneeScolaire();
 		ann.setId(annee);
-		Classe classe = classeService.findByCode(evals.get(0).getClasseCode());
+		Classe classe = classeService.findById(evals.get(0).getClasseId());
 
 		// Obtenir le nombre d'evaluations à creer
 		int nbreEval = 0;
@@ -224,6 +224,7 @@ public class EvaluationLoaderService implements PanacheRepositoryBase<Evaluation
 			el.setCode(uuid.toString());
 			el.setClasseCode(classe != null ? classe.getCode() : null);
 			el.setClasseLibelle(classe != null ? classe.getLibelle() : null);
+			el.setClasseId(classe != null ? classe.getId() : null);
 			create(control(el, classeId, anneeId));
 			System.out.println("id eval cree ::: " + el.getId());
 			i = 1;
