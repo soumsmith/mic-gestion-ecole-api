@@ -59,6 +59,8 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 	@Transactional
 	public Response create(Notes notes) {
 		logger.info("--> Création de note pour "+notes.getClasseEleve().getInscription().getEleve().getNom());
+		// pec dans le calcul de moyenne par defaut
+		notes.setPec(1);
 		notes.persist();
 		return Response.created(URI.create("/notes/" + notes.getId())).build();
 	}
@@ -71,6 +73,8 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 		}
 		entity.setClasseEleve(notes.getClasseEleve());
 		entity.setEvaluation(notes.getEvaluation());
+		System.out.println("Note --> "+notes.getNote());
+		System.out.println("Note --> "+notes.getNote().toString());
 		entity.setNote(notes.getNote());
 		return entity;
 	}

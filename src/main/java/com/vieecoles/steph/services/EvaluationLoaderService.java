@@ -165,16 +165,18 @@ public class EvaluationLoaderService implements PanacheRepositoryBase<Evaluation
 				for (EvaluationLoader ev : evals) {
 //					if (compteurEleve < nbreEleves) {
 //						System.out.println(compteurEleve+" sur "+nbreEleves);
+					if (ev.getApplicable().equals(Constants.OUI)) {
 					Notes notes = new Notes();
-					ClasseEleve classeEleve = classeEleveService.getByMatriculeAndAnnee(ev.getMatricule(), annee);
+					ClasseEleve classeEleve = classeEleveService.getByMatriculeAndAnnee(ev.getMatricule(), classe.getEcole().getId(), annee);
 					notes.setEvaluation(evaluation);
 					notes.setNote(ev.getNoteloaders().get(i) != null
 							? CommonUtils.roundDouble(ev.getNoteloaders().get(i).getNote(), 2)
 							: null);
 					notes.setClasseEleve(classeEleve);
-					if (ev.getApplicable().equals(Constants.OUI))
+					notes.setPec(1);
 						noteService.create(notes);
 //					}
+					}
 				}
 //				compteurEleve++;
 			} catch (RuntimeException e) {
