@@ -495,7 +495,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			public int compare(MoyenneEleveDto u1, MoyenneEleveDto u2) {
 				if (u1.getMoyenne() == null || u2.getMoyenne() == null)
 					return 0;
-				return u2.getMoyenneMatiereToSort().compareTo(u1.getMoyenneMatiereToSort());
+				return u2.getMoyenne().compareTo(u1.getMoyenne());
 			}
 		});
 
