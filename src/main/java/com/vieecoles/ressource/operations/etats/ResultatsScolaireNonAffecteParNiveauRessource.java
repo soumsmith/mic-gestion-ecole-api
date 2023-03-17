@@ -65,15 +65,12 @@ public class ResultatsScolaireNonAffecteParNiveauRessource {
         /*myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/BulletinBean.jrxml");*/
         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/sub_resultat_des_elevesNonAffecte_classe.jrxml");
 
-        URL res = getClass().getClassLoader().getResource("etats/spider/sub_resultat_des_elevesNonAffecte_classe.jrxml");
-        File file = Paths.get(res.toURI()).toFile();
-        String absolutePath = file.getAbsolutePath();
-        System.out.println("absolutePath "+absolutePath);
+
 
        List<ResultatsElevesAffecteDto> detailsBull = new ArrayList<>() ;
 
         detailsBull= resultatsnonServices.CalculResultatsEleveAffecte(idEcole) ;
-        System.out.println("detailsBull "+detailsBull);
+
 
         if(type.toUpperCase().equals("PDF")){
             JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(detailsBull) ;

@@ -102,7 +102,7 @@ public class EvaluationService implements PanacheRepositoryBase<Evaluation, Long
 
 
 	public List<Evaluation> getByClasseAndMatiereAndPeriode(Long classeId, Long matiereId, Long periodeId, Long anneeId) {
-		return Evaluation.find("annee.id=?1 and classe.id=?2 and matiere.id=?3 and periode.id",anneeId, classeId, matiereId, periodeId).list();
+		return Evaluation.find("annee.id=?1 and classe.id=?2 and matiere.id=?3 and periode.id=?4",anneeId, classeId, matiereId, periodeId).list();
 	}
 
 	public Long getCountByClasseAndMatiere(Long classeId, Long matiereId) {

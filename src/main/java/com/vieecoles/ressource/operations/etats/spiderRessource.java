@@ -212,12 +212,8 @@ public class spiderRessource {
     public ResponseEntity<byte[]>  getDtoRapport(@PathParam("idEcole") Long idEcole ,@PathParam("type") String type) throws Exception, JRException {
         InputStream myInpuStream ;
         /*myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/BulletinBean.jrxml");*/
-        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Spider_Book3.jrxml");
+        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Spider_Book.jrxml");
 
-        URL res = getClass().getClassLoader().getResource("etats/spider/Spider_Book3.jrxml");
-        File file = Paths.get(res.toURI()).toFile();
-        String absolutePath = file.getAbsolutePath();
-        System.out.println("absolutePath "+absolutePath);
 
         List<IdentiteEtatDto>  identiteEtatDto = new ArrayList<>() ;
        List<ResultatsElevesAffecteDto> resultatsElevesAffecteDto = new ArrayList<>() ;
@@ -233,7 +229,7 @@ public class spiderRessource {
         detailsBull.setIdentiteEtatDto(identiteEtatDto);
         detailsBull.setResultatsElevesAffecteDto(resultatsElevesAffecteDto);
 
-       System.out.print("soummm"+resultatsElevesAffecteDto.toString());
+      // System.out.print("soummm"+resultatsElevesAffecteDto.toString());
         if(type.toUpperCase().equals("PDF")){
             JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(Collections.singleton(detailsBull)) ;
             JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
