@@ -6,6 +6,7 @@
 	<property name="com.jaspersoft.studio.book.group.cover.header" value="Cover and Table of Contents"/>
 	<property name="com.jaspersoft.studio.book.group.cover.footer" value="Backcover"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="net.sf.jasperreports.default.font.name" value="Sans Serif"/>
 	<parameter name="codeEcole" class="java.lang.String"/>
 	<parameter name="SUB_REPORT_DIR" class="java.lang.String" isForPrompting="false"/>
 	<queryString language="SQL">
@@ -13,48 +14,51 @@
 	</queryString>
 	<field name="identiteEtatDto" class="java.util.List"/>
 	<field name="resultatsElevesAffecteDto" class="java.util.List"/>
-	<group name="cover">
+	<!--<group name="cover">
 		<groupHeader>
-
-			<!--<part evaluationTime="Report" uuid="56ab525c-754f-4f48-a52c-7cc23934be3d">
+			<part uuid="7aed05b9-1301-4a53-b47e-34289560bc0c">
+				<p:subreportPart xmlns:p="http://jasperreports.sourceforge.net/jasperreports/parts" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/parts http://jasperreports.sourceforge.net/xsd/parts.xsd">
+					<subreportExpression><![CDATA["Spider_Book_cover.jasper"]]></subreportExpression>
+				</p:subreportPart>
+			</part>
+			<part evaluationTime="Report" uuid="56ab525c-754f-4f48-a52c-7cc23934be3d">
 				<property name="net.sf.jasperreports.bookmarks.data.source.parameter" value="REPORT_DATA_SOURCE"/>
 				<p:subreportPart xmlns:p="http://jasperreports.sourceforge.net/jasperreports/parts" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/parts http://jasperreports.sourceforge.net/xsd/parts.xsd">
-					<subreportExpression><![CDATA["etats/spider/Spider_Book_toc.jasper"]]></subreportExpression>
+					<subreportExpression><![CDATA["Spider_Book_toc.jasper"]]></subreportExpression>
 				</p:subreportPart>
-			</part>-->
+			</part>
 		</groupHeader>
 		<groupFooter>
-			<!--<part uuid="88decbbe-63ad-45cc-9e03-5dadc50004d5">
+			<part uuid="88decbbe-63ad-45cc-9e03-5dadc50004d5">
 				<p:subreportPart xmlns:p="http://jasperreports.sourceforge.net/jasperreports/parts" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/parts http://jasperreports.sourceforge.net/xsd/parts.xsd">
-					<subreportExpression><![CDATA["etats/spider/Spider_Book_backcover.jasper"]]></subreportExpression>
+					<subreportExpression><![CDATA["Spider_Book_backcover.jasper"]]></subreportExpression>
 				</p:subreportPart>
-			</part>-->
+			</part>
 		</groupFooter>
-	</group>
+	</group>-->
 	<detail>
 		<part uuid="968947e9-d627-441c-a302-1bd9eaebff99">
 			<p:subreportPart xmlns:p="http://jasperreports.sourceforge.net/jasperreports/parts" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/parts http://jasperreports.sourceforge.net/xsd/parts.xsd">
 				<subreportParameter name="REPORT_CONNECTION">
 					<subreportParameterExpression><![CDATA[$P{REPORT_CONNECTION}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="codeEcole">
-					<subreportParameterExpression><![CDATA[$P{codeEcole}]]></subreportParameterExpression>
-				</subreportParameter>
+
 				<subreportParameter name="REPORT_DATA_SOURCE">
 					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{identiteEtatDto})]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportExpression><![CDATA["etats/spider/Identite.jasper"]]></subreportExpression>
 			</p:subreportPart>
 		</part>
-		<part uuid="0b789389-c901-460c-a4db-3ca0c0c24a35">
+
+		<part uuid="968947e9-d627-441c-a302-1bd9eaebff99">
 			<p:subreportPart xmlns:p="http://jasperreports.sourceforge.net/jasperreports/parts" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/parts http://jasperreports.sourceforge.net/xsd/parts.xsd">
 				<subreportParameter name="REPORT_CONNECTION">
 					<subreportParameterExpression><![CDATA[$P{REPORT_CONNECTION}]]></subreportParameterExpression>
 				</subreportParameter>
+
 				<subreportParameter name="REPORT_DATA_SOURCE">
 					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{resultatsElevesAffecteDto})]]></subreportParameterExpression>
 				</subreportParameter>
-
 				<subreportExpression><![CDATA["etats/spider/sub_resultat_des_eleves_classe.jasper"]]></subreportExpression>
 			</p:subreportPart>
 		</part>
