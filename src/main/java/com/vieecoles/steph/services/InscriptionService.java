@@ -23,9 +23,9 @@ public class InscriptionService implements PanacheRepositoryBase<Inscription, In
 				statut, ecole).list();
 	}
 
-	public Inscription getByEleveAndAnnee(long eleve, long annee) {
+	public Inscription getByEleveAndEcoleAndAnnee(long eleve,long ecole, long annee) {
 
-		return Inscription.find("eleve.id = ?1 and annee.id = ?2", eleve, annee).singleResult();
+		return Inscription.find("eleve.id = ?1 and ecole.id =?2 and annee.id = ?3", eleve,ecole, annee).singleResult();
 	}
 
 	public List<Inscription> getByBrancheAndAnneeAndStatutNotinClasse(long branche, long annee, String statut,
