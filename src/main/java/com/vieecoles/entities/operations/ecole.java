@@ -33,7 +33,9 @@ public class ecole extends PanacheEntityBase {
     private Long Niveau_Enseignement_id ;
     private Long commune_communeid ;
 
-
+    @Lob @Basic(fetch = FetchType.LAZY)
+    @Column(length=100000)
+    private byte[] logoBlob ;
     /**
      * @return Long return the ecoleid
      */
@@ -140,9 +142,34 @@ public class ecole extends PanacheEntityBase {
         this.ecole_indication = ecole_indication;
     }
 
+    @Override
+    public String toString() {
+        return "ecole{" +
+                "ecoleid=" + ecoleid +
+                ", ecolecode='" + ecolecode + '\'' +
+                ", ecoleclibelle='" + ecoleclibelle + '\'' +
+                ", ecolearreteecreation='" + ecolearreteecreation + '\'' +
+                ", recoiaffecteetat=" + recoiaffecteetat +
+                ", zone_zoneid=" + zone_zoneid +
+                ", ecole_indication='" + ecole_indication + '\'' +
+                ", ecole_fondateur_nom_prenom='" + ecole_fondateur_nom_prenom + '\'' +
+                ", ecole_fondateur_contact='" + ecole_fondateur_contact + '\'' +
+                ", quartier_quartierid=" + quartier_quartierid +
+                ", groupe_ecole_groupe_ecoleid=" + groupe_ecole_groupe_ecoleid +
+                ", ecole_libelle_groupe='" + ecole_libelle_groupe + '\'' +
+                ", ecole_adresse='" + ecole_adresse + '\'' +
+                ", ecole_telephone='" + ecole_telephone + '\'' +
+                ", ecole_statut='" + ecole_statut + '\'' +
+                ", sousc_atten_etabliss_idSOUS_ATTENT_ETABLISSEMENT=" + sousc_atten_etabliss_idSOUS_ATTENT_ETABLISSEMENT +
+                ", Niveau_Enseignement_id=" + Niveau_Enseignement_id +
+                ", commune_communeid=" + commune_communeid +
+                '}';
+    }
+
     /**
      * @return String return the ecole_fondateur_nom_prenom
      */
+
     public String getEcole_fondateur_nom_prenom() {
         return ecole_fondateur_nom_prenom;
     }
@@ -166,6 +193,14 @@ public class ecole extends PanacheEntityBase {
      */
     public void setEcole_fondateur_contact(String ecole_fondateur_contact) {
         this.ecole_fondateur_contact = ecole_fondateur_contact;
+    }
+
+    public byte[] getLogoBlob() {
+        return logoBlob;
+    }
+
+    public void setLogoBlob(byte[] logoBlob) {
+        this.logoBlob = logoBlob;
     }
 
     /**

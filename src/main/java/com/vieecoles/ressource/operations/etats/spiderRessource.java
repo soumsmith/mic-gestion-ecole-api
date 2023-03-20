@@ -2,6 +2,7 @@ package com.vieecoles.ressource.operations.etats;
 
 
 import com.vieecoles.dto.*;
+import com.vieecoles.entities.operations.ecole;
 import com.vieecoles.projection.BulletinSelectDto;
 import com.vieecoles.services.etats.*;
 import net.sf.jasperreports.engine.*;
@@ -214,10 +215,13 @@ public class spiderRessource {
         /*myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/BulletinBean.jrxml");*/
         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Spider_Book.jrxml");
 
-
+        EmptyDto myIntro = new EmptyDto();
+        myIntro.setIntro("INTRODUCTION");
         List<IdentiteEtatDto>  identiteEtatDto = new ArrayList<>() ;
        List<ResultatsElevesAffecteDto> resultatsElevesAffecteDto = new ArrayList<>() ;
 
+       List<EmptyDto> introLis= new ArrayList<>() ;
+        introLis.add(myIntro) ;
          spiderDto detailsBull= new spiderDto() ;
 
 
@@ -228,6 +232,7 @@ public class spiderRessource {
 
         detailsBull.setIdentiteEtatDto(identiteEtatDto);
         detailsBull.setResultatsElevesAffecteDto(resultatsElevesAffecteDto);
+        detailsBull.setIntro(introLis);
 
       // System.out.print("soummm"+resultatsElevesAffecteDto.toString());
         if(type.toUpperCase().equals("PDF")){

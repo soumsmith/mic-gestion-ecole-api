@@ -4,6 +4,8 @@ package com.vieecoles.ressource.operations.etats;
 
 import com.vieecoles.dto.NiveauDto;
 import com.vieecoles.entities.operations.Inscriptions;
+import com.vieecoles.entities.operations.ecole;
+import com.vieecoles.entities.parametre;
 import com.vieecoles.entities.profil;
 import com.vieecoles.projection.BulletinSelectDto;
 import com.vieecoles.services.eleves.InscriptionService;
@@ -14,6 +16,8 @@ import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
+
+import com.vieecoles.services.souscription.SousceecoleService;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -40,6 +44,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.hibernate.Session;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 
@@ -57,6 +62,8 @@ public class bulletinRessource {
     EntityManager em;
     @Inject
     InscriptionService inscriptionService ;
+    @Inject
+    SousceecoleService sousceecoleService ;
 
     private static String UPLOAD_DIR = "/data/";
    @Transactional
@@ -75,6 +82,7 @@ System.out.print("detailsBull "+detailsBull);
     @GET
     @Path("/details-bulletin/{type}/{matricule}/{idEcole}/{libelleAnnee}/{libelleTrimetre}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    @Transactional
     public ResponseEntity<byte[]>  getdetailsBulletin(@PathParam("type") String type,@PathParam("matricule") String matricule,@PathParam("idEcole") Long idEcole,@PathParam("libelleAnnee") String libelleAnnee,
                                                       @PathParam("libelleTrimetre") String libelleTrimetre) throws Exception, JRException {
 
@@ -86,10 +94,24 @@ System.out.print("detailsBull "+detailsBull);
         List<BulletinSelectDto>  detailsBull = new ArrayList<>() ;
 
         Inscriptions myIns= new Inscriptions() ;
-         myIns = inscriptionService.checkInscrit(idEcole,matricule,1L);
-        byte[] imagebytes = myIns.getPhoto_eleve() ;
-        BufferedImage photo_eleve= ImageIO.read(new ByteArrayInputStream(imagebytes));
+        ecole myEcole= new ecole() ;
+        parametre  mpara = new parametre();
+        mpara = parametre.findById(1L) ;
 
+
+
+        myEcole=sousceecoleService.getInffosEcoleByID(23L);
+        //System.out.println("myEcole "+myEcole.toString());
+         myIns = inscriptionService.checkInscrit(idEcole,matricule,1L);
+       // System.out.println("Inscription "+ myIns.toString());
+        byte[] imagebytes = myIns.getPhoto_eleve() ;
+        byte[] imagebytes2 = myEcole.getLogoBlob() ;
+        byte[] imagebytes3 = mpara.getImage() ;
+        BufferedImage photo_eleve= ImageIO.read(new ByteArrayInputStream(imagebytes));
+      BufferedImage logo= ImageIO.read(new ByteArrayInputStream(imagebytes2));
+        BufferedImage amoirie = ImageIO.read(new ByteArrayInputStream(imagebytes3));
+
+        System.out.println("myEcoleImage "+imagebytes2.toString());
         TypedQuery<BulletinSelectDto> q = em.createQuery( "SELECT new com.vieecoles.projection.BulletinSelectDto(b.ecoleId,b.nomEcole,b.statutEcole,b.urlLogo,b.adresseEcole,b.telEcole,b.anneeLibelle, b.libellePeriode,b.matricule,b.nom, b.prenoms, b.sexe,b.dateNaissance,b.lieuNaissance,b.nationalite,b.redoublant,b.boursier,b.affecte,b.libelleClasse,b.effectif,b.totalCoef,b.totalMoyCoef,b.nomPrenomProfPrincipal,b.heuresAbsJustifiees,b.heuresAbsNonJustifiees,b.moyGeneral,b.moyMax,b.moyMin,b.moyAvg,b.moyAn,b.rangAn,b.appreciation,b.dateCreation,b.codeQr,b.statut,d.matiereLibelle,d.moyenne,d.rang,d.coef ,d.moyCoef,d.appreciation,d.categorie,d.num_ordre,b.rang,d.nom_prenom_professeur,d.categorieMatiere) from DetailBulletin  d join d.bulletin b where b.matricule=:matricule " +
                 "and b.ecoleId=:idEcole and b.anneeLibelle=:libelleAnnee and b.libellePeriode=:libelleTrimetre order by d.num_ordre ASC  ", BulletinSelectDto.class);
         detailsBull = q.setParameter("matricule", matricule)
@@ -105,6 +127,9 @@ System.out.print("detailsBull "+detailsBull);
             //JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");
             Map<String, Object> map = new HashMap<>();
             map.put("photo_eleve",photo_eleve);
+            map.put("logo",logo);
+            map.put("amoirie",amoirie);
+
             JasperPrint report = JasperFillManager.fillReport(compileReport, map, beanCollectionDataSource);
             //to pdf ;
             byte[] data =JasperExportManager.exportReportToPdf(report);
@@ -133,6 +158,7 @@ System.out.print("detailsBull "+detailsBull);
 
 
     }
+
 
 
     List<NiveauDto> getMatriculeParClasse(Long idEcole ,String libelleClasse){
