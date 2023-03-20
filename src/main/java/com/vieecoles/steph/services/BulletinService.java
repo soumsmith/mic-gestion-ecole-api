@@ -1,8 +1,6 @@
-
 package com.vieecoles.steph.services;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -193,8 +191,10 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 			if (bltDb != null && bltDb.getId() != null) {
 				bulletin.setId(bltDb.getId());
 				bulletinIdList.add(bltDb.getId());
+				logger.info("Mise à jour bulletin id [ "+bltDb.getId()+"] ...");
 				update(bulletin);
 			} else {
+				logger.info("Création bulletin ...");
 				save(bulletin);
 				bulletinIdList.add(bulletin.getId());
 			}
@@ -361,8 +361,8 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 //		bul.setTotalCoef(null);
 //		bul.setTotalMoyCoef(null);
 //		bul.setUrlLogo(null);
-		bul.setNiveau(me.getClasse().getEcole().getNiveauEnseignement().getCode());
-		bul.setNiveauLibelle(me.getClasse().getEcole().getNiveauEnseignement().getLibelle());
+		bul.setNiveau(me.getClasse().getBranche().getNiveau().getLibelle());
+		bul.setNiveauLibelle(me.getClasse().getBranche().getNiveau().getLibelle());
 //		bul.setLv2(null);
 //		bul.setNumDecisionAffecte(null);
 //		bul.setNature(null);
