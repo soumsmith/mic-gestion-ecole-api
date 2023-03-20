@@ -18,6 +18,7 @@ import javax.persistence.*;
 public class ClasseMatiere extends PanacheEntityBase{
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private String coef;
 	@ManyToOne
@@ -30,5 +31,9 @@ public class ClasseMatiere extends PanacheEntityBase{
 	// A supprimer après verification des incidences
 	@ManyToOne
 	private Branche branche;
+	
+	@ManyToOne
+	@JoinColumn(name = "ecole_id")
+	private Ecole ecole;
 
 }
