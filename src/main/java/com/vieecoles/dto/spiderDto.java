@@ -13,6 +13,7 @@ public class spiderDto {
     public List<ResultatsElevesAffecteDto> getResultatsElevesAffecteDto() {
         return resultatsElevesAffecteDto;
     }
+    public List<EmptyDto> intro ;
 
     public void setResultatsElevesAffecteDto(List<ResultatsElevesAffecteDto> resultatsElevesAffecteDto) {
         this.resultatsElevesAffecteDto = resultatsElevesAffecteDto;
@@ -20,5 +21,13 @@ public class spiderDto {
 
     public void setIdentiteEtatDto(List<IdentiteEtatDto> identiteEtatDto) {
         this.identiteEtatDto = identiteEtatDto;
+    }
+
+    public List<EmptyDto> getIntro() {
+        return intro;
+    }
+
+    public void setIntro(List<EmptyDto> intro) {
+        this.intro = intro;
     }
 }

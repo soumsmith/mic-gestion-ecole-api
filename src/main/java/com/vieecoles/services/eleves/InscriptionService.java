@@ -247,8 +247,7 @@ public class InscriptionService implements PanacheRepositoryBase<Inscriptions, L
 
 
 
-
-                    public Inscriptions checkInscrit(Long idEcole , String matricule, Long idAnnee){
+               public Inscriptions checkInscrit(Long idEcole , String matricule, Long idAnnee){
                                    Inscriptions minScription = new Inscriptions() ;
                                try {
                                 return    minScription = (Inscriptions) em.createQuery("select o from Inscriptions o join  o.ecole e  join  o.eleve l join o.annee_scolaire " +
@@ -260,7 +259,7 @@ public class InscriptionService implements PanacheRepositoryBase<Inscriptions, L
                             } catch (Exception e){
                                 return  null ;
                             }
-                  }
+              }
 
     @Transactional
     public List<InscriptionAvaliderDto> listTousLesInscription(Long idEcole , Long idAnnee, Inscriptions.typeOperation typeOperation){

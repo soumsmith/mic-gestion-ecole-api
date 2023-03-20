@@ -27,6 +27,9 @@ public class sousc_atten_etabliss extends PanacheEntityBase {
     private  String sousc_atten_etabliss_lien_logo ;
     private Long Niveau_Enseignement_id ;
     private  int connecte ;
+    @Lob @Basic(fetch = FetchType.LAZY)
+    @Column(length=100000)
+    private byte[] logoBlob ;
 
     @Enumerated(EnumType.STRING)
     private Inscriptions.status sousc_atten_etabliss_statut ;
@@ -64,6 +67,14 @@ public class sousc_atten_etabliss extends PanacheEntityBase {
                 ", sous_attent_personn_sous_attent_personnid=" + sous_attent_personn_sous_attent_personnid +
                 ", zone_zoneid=" + zone_zoneid +
                 '}';
+    }
+
+    public byte[] getLogoBlob() {
+        return logoBlob;
+    }
+
+    public void setLogoBlob(byte[] logoBlob) {
+        this.logoBlob = logoBlob;
     }
 
     public String getSousc_atten_etabliss_lien_logo() {

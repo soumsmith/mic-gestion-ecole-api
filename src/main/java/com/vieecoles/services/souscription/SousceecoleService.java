@@ -130,6 +130,17 @@ return  messageRetour ;
 
 
     }
+    public String chargerPhotoBulletinEcole(byte[] bytes,String codeEcole){
+      String message;
+        sousc_atten_etabliss  sousEtabli= new sousc_atten_etabliss() ;
+        ecole myEcole = new ecole() ;
+        sousEtabli = checkExistEtabliss(codeEcole) ;
+        myEcole = getEcoleIdBySouscrId(sousEtabli.getIdSOUS_ATTENT_ETABLISSEMENT()) ;
+        sousEtabli.setLogoBlob(bytes);
+        myEcole.setLogoBlob(bytes);
+        message="Photo chargée avec succès!";
+      return  message;
+    }
 
     @Transactional
     public String modifierLesEcoles(Long souscripId ,String nom, String prenom, String contact1 ,String contact2 ,String email ,List<sous_attent_ecoleDto> listsouscr ) {
@@ -330,7 +341,30 @@ return  messageRetour ;
     }
     return sousc_atten_etabliss1 ;
   }
+@Transactional
+    public  ecole getEcoleIdBySouscrId(Long  idCodeEtabli) {
+        ecole  myEcole= new ecole() ;
+        try {
+            myEcole= (ecole) em.createQuery("select o from ecole o  where o.sousc_atten_etabliss_idSOUS_ATTENT_ETABLISSEMENT=:idCodeEtabli " )
+                    .setParameter("idCodeEtabli", idCodeEtabli).getSingleResult() ;
+        }catch (Exception e){
+            myEcole = null ;
+        }
+        return myEcole ;
+    }
 
+
+
+    public  ecole getInffosEcoleByID(Long  idEtabli) {
+        ecole  myEcole= new ecole() ;
+        try {
+            myEcole= (ecole) em.createQuery("select o from ecole o  where o.ecoleid =:idEtabli " )
+                    .setParameter("idEtabli", idEtabli).getSingleResult() ;
+        }catch (Exception e){
+            myEcole = null ;
+        }
+        return myEcole ;
+    }
 
 
     public  List<sousc_atten_etabliss> getAllSouscriptionPersonnels(){

@@ -6,15 +6,23 @@ import com.vieecoles.entities.operations.ecole;
 import com.vieecoles.entities.operations.sousc_atten_etabliss;
 import com.vieecoles.services.personnels.PersonnelService;
 import com.vieecoles.services.souscription.SousceecoleService;
+import org.apache.commons.io.IOUtils;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
+import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
+import org.jboss.resteasy.plugins.providers.multipart.InputPart;
+import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Tag(name = "Souscription-Ecole", description = "mes Souscriptions-Ecole")
 @Path("/souscription-ecole")
@@ -128,6 +136,49 @@ public class SouscriptionEcoleRessource {
         return   souscPersonnelService.ModifierSouscripEtablissement(souscripId,nom,prenom ,contact1,contact2,email ,listsouscr) ;
     }
 
+    @PUT
+    @Produces(MediaType.TEXT_PLAIN)
+    @Consumes({MediaType.APPLICATION_JSON,MediaType.MULTIPART_FORM_DATA})
+    @Path("/charger-photo-etablissement/{inscriptionId}")
+    @Transactional
+    public Response chargerPhoto(@MultipartForm MultipartFormDataInput input, @PathParam("inscriptionId") String   inscriptionId ) {
+        Map<String, List<InputPart>> uploadForm = input.getFormDataMap();
+        List<String> fileNames = new ArrayList<>();
+
+        List<InputPart> inputParts = uploadForm.get("file");
+        System.out.println("inputParts size: " + inputParts.size());
+        String fileName = null;
+        for (InputPart inputPart : inputParts) {
+            try {
+
+                MultivaluedMap<String, String> header = inputPart.getHeaders();
+                fileName = getFileName(header);
+                fileNames.add(fileName);
+                System.out.println("File Name: " + fileName);
+                InputStream inputStream = inputPart.getBody(InputStream.class, null);
+                byte[] bytes = IOUtils.toByteArray(inputStream);
+                souscPersonnelService.chargerPhotoBulletinEcole(bytes,inscriptionId) ;
+                //matService.chargerPhoto(bytes,inscriptionId);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        return   Response.ok(String.format("Inscription  %s mis à jour",inscriptionId)).build();
+    }
+
+    private String getFileName(MultivaluedMap<String, String> header) {
+        String[] contentDisposition = header.getFirst("Content-Disposition").split(";");
+        for (String filename : contentDisposition) {
+            if ((filename.trim().startsWith("filename"))) {
+                String[] name = filename.split("=");
+                String finalFileName = name[1].trim().replaceAll("\"", "");
+                return finalFileName;
+            }
+        }
+        return "unknown";
+    }
 
 
 
