@@ -55,12 +55,14 @@ public class ClasseMatiereResource {
 		try {
 		List<ClasseMatiere> cmList = new ArrayList<ClasseMatiere>();
 		Long brancheId = (long) 0; 
+		Long ecoleId = (long) 0; 
 		if(classeMatieres!= null && classeMatieres.size()>0) {
 			classeMatiereService.handleSaveOrUpdate(classeMatieres);
 			System.out.println(g.toJson(classeMatieres));
 			brancheId = classeMatieres.get(0).getBranche().getId();
-			System.out.println(brancheId);
-			cmList = classeMatiereService.getByBranche(brancheId, 0, 0);
+			ecoleId = classeMatieres.get(0).getEcole().getId();
+//			System.out.println(brancheId);
+			cmList = classeMatiereService.getByBranche(brancheId, 0, ecoleId);
 		}
         return Response.ok(cmList).build();
 		} catch (RuntimeException e) {
