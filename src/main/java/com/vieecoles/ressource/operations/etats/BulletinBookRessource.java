@@ -2,6 +2,7 @@ package com.vieecoles.ressource.operations.etats;
 
 
 import com.vieecoles.dto.*;
+import com.vieecoles.projection.BulletinSelectDto;
 import com.vieecoles.services.etats.*;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
@@ -20,81 +21,54 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.InputStream;
-import java.net.URL;
-import java.nio.file.Paths;
 import java.util.*;
 
 @Path("/imprimer-rapport")
 //@Produces(MediaType.APPLICATION_JSON)
 //@Consumes(MediaType.APPLICATION_JSON)
 
-public class ResultatsScolaireParNiveauRessource {
+public class BulletinBookRessource {
     @Inject
     EntityManager em;
     @Inject
-    IdentiteEtatService identiteEtatService ;
-    @Inject
-    resultatsServices resultatsServices ;
+    BulletinClasseServices identiteEtatService ;
 
-    @Inject
-    RepartitionElevParAnNaissServices repartitionElevParAnNaissServices ;
-
-    @Inject
-    RecapClassePedaAffNonAffecServices recapClassePedaAffNonAffecServices ;
-
-    @Inject
-    ApprocheParNiveauParGenreServices approcheParNiveauParGenreServices ;
-
-    @Inject
-    BoursiersServices boursiersServices ;
-
-    @Inject
-    TransfertsServices transfertsServices ;
-    @Inject
-    MajorParClasseNiveauServices majorServices ;
-
-    @Inject
-    EleveNonAffecteParClasseServices eleveNonAffecteParClasseServices ;
-
-    @Inject
-    EleveAffecteParClasseServices eleveAffecteParClasseServices ;
 
     private static String UPLOAD_DIR = "/data/";
 
     @Transactional
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/list-eleve-affecte-par-classe-par-niveau/{idEcole}")
-    public List<ResultatsElevesAffecteDto>  repartiParAnn(@PathParam("idEcole") Long idEcole) throws Exception, JRException {
-        List<ResultatsElevesAffecteDto>  detailsBull = new ArrayList<>() ;
-        System.out.println("classeNiveauDtoList entree");
-        detailsBull= resultatsServices.CalculResultatsEleveAffecte(idEcole)  ;
-        return detailsBull ;
+    @Path("/convertDate")
+    public String  convert() throws Exception, JRException {
+
+        return "DFS" ;
 
     }
 
+
+
+
     @GET
-    @Path("/imprimer-list-eleve-affecte-par-classe-par-niveau/{idEcole}/{type}")
+    @Path("/bulletin-par-classe/{type}/{classe}/{idEcole}/{libelleAnnee}/{libelleTrimetre}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    public ResponseEntity<byte[]>  getDtoRapport(@PathParam("idEcole") Long idEcole ,@PathParam("type") String type) throws Exception, JRException {
+    public ResponseEntity<byte[]>  getDtoRapport(@PathParam("idEcole") Long idEcole ,@PathParam("type") String type,@PathParam("classe") String classe,@PathParam("libelleAnnee") String libelleAnnee,
+    @PathParam("libelleTrimetre") String libelleTrimetre) throws Exception, JRException {
         InputStream myInpuStream ;
         /*myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/BulletinBean.jrxml");*/
-        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Resultats_scolaire.jrxml");
+        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Bulletin_Book.jrxml");
 
-        URL res = getClass().getClassLoader().getResource("etats/spider/Resultats_scolaire.jrxml");
-        File file = Paths.get(res.toURI()).toFile();
-        String absolutePath = file.getAbsolutePath();
-        System.out.println("absolutePath "+absolutePath);
 
-       List<ResultatsElevesAffecteDto> detailsBull = new ArrayList<>() ;
+         bulletinBookDto detailsBull= new bulletinBookDto() ;
+        List<BulletinSelectDto> bulletinSelectDto = new ArrayList<>() ;
 
-        detailsBull= resultatsServices.CalculResultatsEleveAffecte(idEcole) ;
-        System.out.println("detailsBull "+detailsBull);
+        bulletinSelectDto= identiteEtatService.bulletinParClasse(idEcole,classe,libelleAnnee,libelleTrimetre) ;
+        detailsBull.setBulletinSelectDto(bulletinSelectDto);
 
+      // System.out.print("soummm "+detailsBull.);
         if(type.toUpperCase().equals("PDF")){
-            JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(detailsBull) ;
+            JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(Collections.singleton(detailsBull)) ;
             JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
              //JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");
              Map<String, Object> map = new HashMap<>();
@@ -102,10 +76,10 @@ public class ResultatsScolaireParNiveauRessource {
     //to pdf ;
       byte[] data =JasperExportManager.exportReportToPdf(report);
       HttpHeaders headers= new HttpHeaders();
-      headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=eleveAffecteParNiveau.pdf");
+      headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=RapportPouls.pdf");
         return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.APPLICATION_PDF).body(data);
     } else {
-        JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(detailsBull) ;
+        JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(Collections.singleton(detailsBull)) ;
             JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
        //   JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");
         Map<String, Object> map = new HashMap<>();
@@ -119,7 +93,7 @@ public class ResultatsScolaireParNiveauRessource {
         exporter.exportReport();
         byte[] data = baos.toByteArray() ;
         HttpHeaders headers= new HttpHeaders();
-      headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=eleveAffecteParNiveau.docx");
+      headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=RapportPouls.docx");
         return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.MULTIPART_FORM_DATA).body(data);
     }
 

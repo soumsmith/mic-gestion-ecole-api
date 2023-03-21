@@ -63,14 +63,10 @@ public class ResultatsScolaireNonAffecteParNiveauRessource {
     public ResponseEntity<byte[]>  getDtoRapport(@PathParam("idEcole") Long idEcole ,@PathParam("type") String type) throws Exception, JRException {
         InputStream myInpuStream ;
         /*myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/BulletinBean.jrxml");*/
-        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/sub_resultat_des_elevesNonAffecte_classe.jrxml");
-
-
-
+        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Resultats_scolaire_non_aff.jrxml");
        List<ResultatsElevesAffecteDto> detailsBull = new ArrayList<>() ;
 
         detailsBull= resultatsnonServices.CalculResultatsEleveAffecte(idEcole) ;
-
 
         if(type.toUpperCase().equals("PDF")){
             JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(detailsBull) ;

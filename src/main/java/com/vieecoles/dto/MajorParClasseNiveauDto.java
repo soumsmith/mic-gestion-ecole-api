@@ -8,7 +8,7 @@ public class MajorParClasseNiveauDto {
     private String  prenom;
     private String anneeNaiss;
     private String sexe;
-    private String Nature;
+    private String nature;
     private String redoublant;
     private Double moyGeneral;
     private String lv2 ;
@@ -26,7 +26,7 @@ public class MajorParClasseNiveauDto {
                 ", prenom='" + prenom + '\'' +
                 ", anneeNaiss='" + anneeNaiss + '\'' +
                 ", sexe='" + sexe + '\'' +
-                ", Nature='" + Nature + '\'' +
+                ", Nature='" + nature + '\'' +
                 ", redoublant='" + redoublant + '\'' +
                 ", moyGeneral=" + moyGeneral +
                 ", lv2='" + lv2 + '\'' +
@@ -51,7 +51,7 @@ public class MajorParClasseNiveauDto {
         this.prenom=prenom;
         this.anneeNaiss = anneeNaiss;
         this.sexe = sexe;
-        Nature = nature;
+        nature = nature;
         this.redoublant = redoublant;
         this.moyGeneral = moyGeneral;
         this.lv2 = lv2;
@@ -114,11 +114,11 @@ public class MajorParClasseNiveauDto {
     }
 
     public String getNature() {
-        return Nature;
+        return nature;
     }
 
     public void setNature(String nature) {
-        Nature = nature;
+        nature = nature;
     }
 
     public String getRedoublant() {

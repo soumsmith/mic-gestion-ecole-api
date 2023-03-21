@@ -1,7 +1,7 @@
 package com.vieecoles.ressource.operations.etats;
 
 
-import com.vieecoles.dto.*;
+import com.vieecoles.dto.eleveNonAffecteParClasseDto;
 import com.vieecoles.services.etats.*;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
@@ -20,23 +20,23 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.InputStream;
-import java.net.URL;
-import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Path("/imprimer-rapport")
 //@Produces(MediaType.APPLICATION_JSON)
 //@Consumes(MediaType.APPLICATION_JSON)
 
-public class ResultatsScolaireParNiveauRessource {
+public class ListeEleveNonAffecteParClasseRessource {
     @Inject
     EntityManager em;
     @Inject
     IdentiteEtatService identiteEtatService ;
     @Inject
-    resultatsServices resultatsServices ;
+    EleveNonAffecteParClasseServices resultatsServices ;
 
     @Inject
     RepartitionElevParAnNaissServices repartitionElevParAnNaissServices ;
@@ -66,31 +66,28 @@ public class ResultatsScolaireParNiveauRessource {
     @Transactional
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/list-eleve-affecte-par-classe-par-niveau/{idEcole}")
-    public List<ResultatsElevesAffecteDto>  repartiParAnn(@PathParam("idEcole") Long idEcole) throws Exception, JRException {
-        List<ResultatsElevesAffecteDto>  detailsBull = new ArrayList<>() ;
+    @Path("/list-eleve-non-affecte-par-classe/{idEcole}")
+    public List<eleveNonAffecteParClasseDto>  repartiParAnn(@PathParam("idEcole") Long idEcole) throws Exception, JRException {
+        List<eleveNonAffecteParClasseDto>  detailsBull = new ArrayList<>() ;
         System.out.println("classeNiveauDtoList entree");
-        detailsBull= resultatsServices.CalculResultatsEleveAffecte(idEcole)  ;
+        detailsBull= resultatsServices.eleveNonAffecteParClasse(idEcole)  ;
         return detailsBull ;
 
     }
 
     @GET
-    @Path("/imprimer-list-eleve-affecte-par-classe-par-niveau/{idEcole}/{type}")
+    @Path("/imprimer-list-non-eleve-affecte-par-classe/{idEcole}/{type}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public ResponseEntity<byte[]>  getDtoRapport(@PathParam("idEcole") Long idEcole ,@PathParam("type") String type) throws Exception, JRException {
         InputStream myInpuStream ;
         /*myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/BulletinBean.jrxml");*/
-        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Resultats_scolaire.jrxml");
+        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Liste_nominative_des_eleves_non_aff_et_resultats_scolaire.jrxml");
 
-        URL res = getClass().getClassLoader().getResource("etats/spider/Resultats_scolaire.jrxml");
-        File file = Paths.get(res.toURI()).toFile();
-        String absolutePath = file.getAbsolutePath();
-        System.out.println("absolutePath "+absolutePath);
 
-       List<ResultatsElevesAffecteDto> detailsBull = new ArrayList<>() ;
 
-        detailsBull= resultatsServices.CalculResultatsEleveAffecte(idEcole) ;
+       List<eleveNonAffecteParClasseDto> detailsBull = new ArrayList<>() ;
+
+        detailsBull= resultatsServices.eleveNonAffecteParClasse(idEcole) ;
         System.out.println("detailsBull "+detailsBull);
 
         if(type.toUpperCase().equals("PDF")){
