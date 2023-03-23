@@ -42,6 +42,10 @@ public class ClasseMatiereService implements PanacheRepositoryBase<ClasseMatiere
 	@Transactional
 	public void handleSaveOrUpdate(List<ClasseMatiere> classeMatieres) {
 		for (ClasseMatiere cl : classeMatieres) {
+			if(cl.getCoef() == null)
+				throw new RuntimeException("Un coefficient ne peut etre vide");
+			else if (cl.getCoef().equals(0))
+				throw new RuntimeException("Un coefficient ne peut etre nul");
 			if (cl.getId() != 0) {
 				ClasseMatiere.update("coef = ?1, matiere.id= ?2, branche.id=?3, ecole.id=?4 where id = ?5",
 						cl.getCoef(), cl.getMatiere().getId(), cl.getBranche().getId(), cl.getEcole().getId(),
