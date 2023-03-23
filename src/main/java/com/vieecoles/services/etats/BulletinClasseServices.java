@@ -67,6 +67,17 @@ public List<BulletinSelectDto>  getInfosBulletin(Long idEcole , String matricule
     return detailsBull ;
 }
 
+public List<MatriculeClasseDto> getMatriculeClasse(String classe, Long idEcole){
+
+    List<MatriculeClasseDto> classeNiveauDtoList = new ArrayList<>() ;
+    TypedQuery<MatriculeClasseDto> q = em.createQuery( "SELECT new com.vieecoles.dto.MatriculeClasseDto(b.matricule,b.libelleClasse) from  Bulletin b , DetailBulletin d where b.id= d.bulletin.id and  b.ecoleId =:idEcole and b.libelleClasse=:classe group by b.matricule,b.libelleClasse "
+            , MatriculeClasseDto.class);
+    classeNiveauDtoList = q.setParameter("idEcole", idEcole)
+            .setParameter("classe", classe)
+            .getResultList() ;
+    System.out.println("classeNiveauDtoList "+classeNiveauDtoList.toString());
+    return  classeNiveauDtoList ;
+}
 
 
 

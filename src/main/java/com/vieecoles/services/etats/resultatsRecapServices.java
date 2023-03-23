@@ -2,6 +2,7 @@ package com.vieecoles.services.etats;
 
 import com.vieecoles.dto.ClasseNiveauDto;
 import com.vieecoles.dto.NiveauDto;
+import com.vieecoles.dto.RecapDesResultatsElevesAffecteDto;
 import com.vieecoles.dto.ResultatsElevesAffecteDto;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -17,7 +18,7 @@ public class resultatsRecapServices {
     @Inject
     EntityManager em;
 
-    public List<ResultatsElevesAffecteDto> RecapCalculResultatsEleveAffecte(Long idEcole){
+    public List<RecapDesResultatsElevesAffecteDto> RecapCalculResultatsEleveAffecte(Long idEcole){
 
         List<NiveauDto> classeNiveauDtoList = new ArrayList<>() ;
         TypedQuery<NiveauDto> q = em.createQuery( "SELECT new com.vieecoles.dto.NiveauDto(b.niveau) from Bulletin b  where b.ecoleId =:idEcole and b.affecte=:affecte " +
@@ -33,10 +34,10 @@ public class resultatsRecapServices {
         Long  effeG,effeF,classF,classG,nonclassF,nonclassG,nbreMoySup10F,nbreMoySup10G,nbreMoyInf999F,nbreMoyInf999G,nbreMoyInf85G,nbreMoyInf85F;
         Double pourMoySup10F ,pourMoySup10G,pourMoyInf999F,pourMoyInf999G,pourMoyInf85G,pourMoyInf85F,moyClasseF,moyClasseG;
        Long effectifClasse ;
-        List<ResultatsElevesAffecteDto> resultatsListElevesDto = new ArrayList<>(LongTableau);
+        List<RecapDesResultatsElevesAffecteDto> resultatsListElevesDto = new ArrayList<>(LongTableau);
         System.out.println("resultatsListElevesDto Size "+ resultatsListElevesDto.size());
         for (int i=0; i< LongTableau;i++) {
-            ResultatsElevesAffecteDto resultatsListEleves= new ResultatsElevesAffecteDto();
+            RecapDesResultatsElevesAffecteDto resultatsListEleves= new RecapDesResultatsElevesAffecteDto();
             effectifClasse= getEffectifParClasse(idEcole,classeNiveauDtoList.get(i).getNiveau());
             System.out.println("effectifClasse "+effectifClasse);
             effeG = geteffeG(idEcole,classeNiveauDtoList.get(i).getNiveau());

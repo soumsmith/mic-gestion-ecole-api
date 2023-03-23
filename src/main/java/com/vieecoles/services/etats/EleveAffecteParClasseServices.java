@@ -1,6 +1,7 @@
 package com.vieecoles.services.etats;
 
 import com.vieecoles.dto.NiveauDto;
+import com.vieecoles.dto.eleveAffecteParClasseDto;
 import com.vieecoles.dto.eleveNonAffecteParClasseDto;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -16,7 +17,7 @@ public class EleveAffecteParClasseServices {
     @Inject
     EntityManager em;
 
-    public List<eleveNonAffecteParClasseDto>  eleveAffecteParClasse(Long idEcole){
+    public List<eleveAffecteParClasseDto>  eleveAffecteParClasse(Long idEcole){
         int LongTableau;
 
         List<NiveauDto> classeNiveauDtoList = new ArrayList<>() ;
@@ -26,11 +27,11 @@ public class EleveAffecteParClasseServices {
                 .getResultList() ;
 
         LongTableau= classeNiveauDtoList.size();
-        List<eleveNonAffecteParClasseDto> resultatsListElevesDto = new ArrayList<>();
+        List<eleveAffecteParClasseDto> resultatsListElevesDto = new ArrayList<>();
 
 
         for (int i=0; i< LongTableau;i++) {
-            List<eleveNonAffecteParClasseDto> resultatsListEleves= new ArrayList<>();
+            List<eleveAffecteParClasseDto> resultatsListEleves= new ArrayList<>();
 
             resultatsListEleves = getListEleveNonAffectParClassDto(idEcole,classeNiveauDtoList.get(i).getNiveau());
 
@@ -46,10 +47,10 @@ public class EleveAffecteParClasseServices {
 
 
 
-    public List<eleveNonAffecteParClasseDto> getListEleveNonAffectParClassDto(Long idEcole , String classe){
-        List<eleveNonAffecteParClasseDto> classeNiveauDtoList = new ArrayList<>() ;
+    public List<eleveAffecteParClasseDto> getListEleveNonAffectParClassDto(Long idEcole , String classe){
+        List<eleveAffecteParClasseDto> classeNiveauDtoList = new ArrayList<>() ;
         try {
-            TypedQuery<eleveNonAffecteParClasseDto> q= em.createQuery("select new com.vieecoles.dto.eleveNonAffecteParClasseDto(o.libelleClasse,o.nomPrenomProfPrincipal,o.matricule,o.nom,o.prenoms,o.sexe,o.dateNaissance,o.nationalite,o.redoublant,o.affecte,o.numDecisionAffecte,o.moyGeneral,o.rang,o.appreciation,o.nomPrenomEducateur) from Bulletin o where  o.ecoleId=:idEcole and o.libelleClasse=:classe and o.affecte=:affecte", eleveNonAffecteParClasseDto.class);
+            TypedQuery<eleveAffecteParClasseDto> q= em.createQuery("select new com.vieecoles.dto.eleveAffecteParClasseDto(o.libelleClasse,o.nomPrenomProfPrincipal,o.matricule,o.nom,o.prenoms,o.sexe,o.dateNaissance,o.nationalite,o.redoublant,o.affecte,o.numDecisionAffecte,o.moyGeneral,o.rang,o.appreciation,o.nomPrenomEducateur) from Bulletin o where  o.ecoleId=:idEcole and o.libelleClasse=:classe and o.affecte=:affecte", eleveAffecteParClasseDto.class);
             classeNiveauDtoList = q.setParameter("idEcole",idEcole)
                                  .setParameter("classe",classe)
                                  .setParameter("affecte","AFFECTE")

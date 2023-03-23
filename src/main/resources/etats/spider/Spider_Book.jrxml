@@ -14,6 +14,13 @@
 	</queryString>
 	<field name="identiteEtatDto" class="java.util.List"/>
 	<field name="resultatsElevesAffecteDto" class="java.util.List"/>
+	<field name="recapDesResultatsElevesAffecteDto" class="java.util.List"/>
+	<field name="resultatsElevesNonAffecteDto" class="java.util.List"/>
+	<field name="recapDesResultatsElevesNonAffecteDto" class="java.util.List"/>
+	<field name="recapResultatsElevesAffeEtNonAffDto" class="java.util.List"/>
+	<field name="eleveAffecteParClasseDto" class="java.util.List"/>
+	<field name="eleveNonAffecteParClasseDto" class="java.util.List"/>
+	<field name="majorParClasseNiveauDto" class="java.util.List"/>
 	<field name="intro" class="java.util.List"/>
 
 	<!--<group name="cover">
@@ -82,9 +89,9 @@
 					<subreportParameterExpression><![CDATA[$P{REPORT_CONNECTION}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="REPORT_DATA_SOURCE">
-					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{intro})]]></subreportParameterExpression>
+					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{resultatsElevesAffecteDto})]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportExpression><![CDATA["etats/spider/Vie_scolaire.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["etats/spider/Resultats_scolaire.jasper"]]></subreportExpression>
 			</p:subreportPart>
 		</part>
 
@@ -95,10 +102,89 @@
 				</subreportParameter>
 
 				<subreportParameter name="REPORT_DATA_SOURCE">
-					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{resultatsElevesAffecteDto})]]></subreportParameterExpression>
+					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{recapDesResultatsElevesAffecteDto})]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportExpression><![CDATA["etats/spider/sub_resultat_des_eleves_classe.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["etats/spider/Recap_resultats_scolaire_aff.jasper"]]></subreportExpression>
 			</p:subreportPart>
 		</part>
+
+		<part uuid="968947e9-d627-441c-a302-1bd9eaebff19">
+			<p:subreportPart xmlns:p="http://jasperreports.sourceforge.net/jasperreports/parts" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/parts http://jasperreports.sourceforge.net/xsd/parts.xsd">
+				<subreportParameter name="REPORT_CONNECTION">
+					<subreportParameterExpression><![CDATA[$P{REPORT_CONNECTION}]]></subreportParameterExpression>
+				</subreportParameter>
+
+				<subreportParameter name="REPORT_DATA_SOURCE">
+					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{resultatsElevesNonAffecteDto})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportExpression><![CDATA["etats/spider/Resultats_scolaire_non_aff.jasper"]]></subreportExpression>
+			</p:subreportPart>
+		</part>
+
+		<part uuid="968947e9-d627-441c-a302-1bd9eaebff29">
+			<p:subreportPart xmlns:p="http://jasperreports.sourceforge.net/jasperreports/parts" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/parts http://jasperreports.sourceforge.net/xsd/parts.xsd">
+				<subreportParameter name="REPORT_CONNECTION">
+					<subreportParameterExpression><![CDATA[$P{REPORT_CONNECTION}]]></subreportParameterExpression>
+				</subreportParameter>
+
+				<subreportParameter name="REPORT_DATA_SOURCE">
+					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{recapDesResultatsElevesNonAffecteDto})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportExpression><![CDATA["etats/spider/Recap_resultats_scolaire_non_aff.jasper"]]></subreportExpression>
+			</p:subreportPart>
+		</part>
+
+		<part uuid="968947e9-d627-441c-a302-1bd9eaebff39">
+			<p:subreportPart xmlns:p="http://jasperreports.sourceforge.net/jasperreports/parts" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/parts http://jasperreports.sourceforge.net/xsd/parts.xsd">
+				<subreportParameter name="REPORT_CONNECTION">
+					<subreportParameterExpression><![CDATA[$P{REPORT_CONNECTION}]]></subreportParameterExpression>
+				</subreportParameter>
+
+				<subreportParameter name="REPORT_DATA_SOURCE">
+					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{recapResultatsElevesAffeEtNonAffDto})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportExpression><![CDATA["etats/spider/Recap_resultats_scolaire_aff_et_non_aff.jasper"]]></subreportExpression>
+			</p:subreportPart>
+		</part>
+
+		<part uuid="968947e9-d627-441c-a302-1bd9eaebff49">
+			<p:subreportPart xmlns:p="http://jasperreports.sourceforge.net/jasperreports/parts" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/parts http://jasperreports.sourceforge.net/xsd/parts.xsd">
+				<subreportParameter name="REPORT_CONNECTION">
+					<subreportParameterExpression><![CDATA[$P{REPORT_CONNECTION}]]></subreportParameterExpression>
+				</subreportParameter>
+
+				<subreportParameter name="REPORT_DATA_SOURCE">
+					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{eleveAffecteParClasseDto})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportExpression><![CDATA["etats/spider/Liste_nominative_des_eleves_et_resultats_scolaire.jasper"]]></subreportExpression>
+			</p:subreportPart>
+		</part>
+
+		<part uuid="968947e9-d627-441c-a302-1bd9eaebff59">
+			<p:subreportPart xmlns:p="http://jasperreports.sourceforge.net/jasperreports/parts" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/parts http://jasperreports.sourceforge.net/xsd/parts.xsd">
+				<subreportParameter name="REPORT_CONNECTION">
+					<subreportParameterExpression><![CDATA[$P{REPORT_CONNECTION}]]></subreportParameterExpression>
+				</subreportParameter>
+
+				<subreportParameter name="REPORT_DATA_SOURCE">
+					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{eleveNonAffecteParClasseDto})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportExpression><![CDATA["etats/spider/Liste_nominative_des_eleves_non_aff_et_resultats_scolaire.jasper"]]></subreportExpression>
+			</p:subreportPart>
+		</part>
+
+		<part uuid="968947e9-d627-441c-a302-1bd9eaebff69">
+			<p:subreportPart xmlns:p="http://jasperreports.sourceforge.net/jasperreports/parts" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/parts http://jasperreports.sourceforge.net/xsd/parts.xsd">
+				<subreportParameter name="REPORT_CONNECTION">
+					<subreportParameterExpression><![CDATA[$P{REPORT_CONNECTION}]]></subreportParameterExpression>
+				</subreportParameter>
+
+				<subreportParameter name="REPORT_DATA_SOURCE">
+					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{majorParClasseNiveauDto})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportExpression><![CDATA["etats/spider/Liste_des_majors_de_classe_par_niveau.jasper"]]></subreportExpression>
+			</p:subreportPart>
+		</part>
+
 	</detail>
 </jasperReport>

@@ -209,6 +209,8 @@ public class InscriptionService implements PanacheRepositoryBase<Inscriptions, L
            // inscr.setLibellehandicap(libellehandicapList);
             inscr.setInscriptions_processus(Inscriptions.processus.EN_COURS);
             inscr.setInscriptions_status(Inscriptions.status.VALIDEE);
+            inscr.setInscriptions_boursier(inscriptionDto.getInscriptions_boursier());
+            inscr.setInscriptions_redoublant(inscriptionDto.getInscriptions_redoublant());
             inscr.setInscriptions_contact1(inscriptionDto.getInscriptions_contact1());
             inscr.setInscriptions_contact2(inscriptionDto.getInscriptions_contact2());
             inscr.setInscriptions_code_interne(inscriptionDto.getInscriptions_code_interne());

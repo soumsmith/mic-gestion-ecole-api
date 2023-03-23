@@ -65,7 +65,7 @@
 							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 						</reportElement>
 						<textElement>
-							<font isBold="true"/>
+							<font fontName="SansSerif" isBold="true"/>
 						</textElement>
 						<text><![CDATA[N°]]></text>
 					</staticText>
@@ -80,7 +80,7 @@
 							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 						</reportElement>
 						<textElement>
-							<font isBold="true"/>
+							<font fontName="SansSerif" isBold="true"/>
 						</textElement>
 						<text><![CDATA[MATRICULE]]></text>
 					</staticText>
@@ -95,7 +95,7 @@
 							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 						</reportElement>
 						<textElement>
-							<font isBold="true"/>
+							<font fontName="SansSerif" isBold="true"/>
 						</textElement>
 						<text><![CDATA[NOM ET PRENOMS]]></text>
 					</staticText>
@@ -110,7 +110,7 @@
 							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 						</reportElement>
 						<textElement>
-							<font isBold="true"/>
+							<font fontName="SansSerif" isBold="true"/>
 						</textElement>
 						<text><![CDATA[SEXE]]></text>
 					</staticText>
@@ -125,7 +125,7 @@
 							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 						</reportElement>
 						<textElement>
-							<font isBold="true"/>
+							<font fontName="SansSerif" isBold="true"/>
 						</textElement>
 						<text><![CDATA[AN]]></text>
 					</staticText>
@@ -140,7 +140,7 @@
 							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 						</reportElement>
 						<textElement>
-							<font isBold="true"/>
+							<font fontName="SansSerif" isBold="true"/>
 						</textElement>
 						<text><![CDATA[NAT]]></text>
 					</staticText>
@@ -155,7 +155,7 @@
 							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 						</reportElement>
 						<textElement>
-							<font isBold="true"/>
+							<font fontName="SansSerif" isBold="true"/>
 						</textElement>
 						<text><![CDATA[R]]></text>
 					</staticText>
@@ -170,7 +170,7 @@
 							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 						</reportElement>
 						<textElement>
-							<font isBold="true"/>
+							<font fontName="SansSerif" isBold="true"/>
 						</textElement>
 						<text><![CDATA[STATUT]]></text>
 					</staticText>
@@ -185,7 +185,7 @@
 							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 						</reportElement>
 						<textElement>
-							<font isBold="true"/>
+							<font fontName="SansSerif" isBold="true"/>
 						</textElement>
 						<text><![CDATA[N° DEC AFF]]></text>
 					</staticText>
@@ -200,7 +200,7 @@
 							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 						</reportElement>
 						<textElement>
-							<font isBold="true"/>
+							<font fontName="SansSerif" isBold="true"/>
 						</textElement>
 						<text><![CDATA[MOY]]></text>
 					</staticText>
@@ -215,7 +215,7 @@
 							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 						</reportElement>
 						<textElement>
-							<font isBold="true"/>
+							<font fontName="SansSerif" isBold="true"/>
 						</textElement>
 						<text><![CDATA[RANG]]></text>
 					</staticText>
@@ -230,7 +230,7 @@
 							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 						</reportElement>
 						<textElement>
-							<font isBold="true"/>
+							<font fontName="SansSerif" isBold="true"/>
 						</textElement>
 						<text><![CDATA[OBSERVATION]]></text>
 					</staticText>
@@ -246,7 +246,7 @@
 						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 					</reportElement>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Caladea" size="8"/>
+						<font fontName="SansSerif" size="8"/>
 					</textElement>
 					<text><![CDATA[Professeur principal:]]></text>
 				</staticText>
@@ -261,7 +261,7 @@
 						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 					</reportElement>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Caladea" size="8" isBold="true"/>
+						<font fontName="SansSerif" size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{professeurPrincipal}]]></textFieldExpression>
 				</textField>
@@ -276,7 +276,7 @@
 						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 					</reportElement>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Caladea" size="8"/>
+						<font fontName="SansSerif" size="8"/>
 					</textElement>
 					<text><![CDATA[Educateur]]></text>
 				</staticText>
@@ -291,14 +291,14 @@
 						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 					</reportElement>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Caladea" size="8" isBold="true"/>
+						<font fontName="SansSerif" size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{nomEducateur}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="-14" y="20" width="87" height="16" uuid="274cb7ea-b480-4965-b70b-2fde653ec391"/>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Arial" size="10" isBold="true"/>
+						<font fontName="SansSerif" size="10" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{classeLibelle}]]></textFieldExpression>
 				</textField>
@@ -325,7 +325,7 @@
 					<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="12" isBold="true"/>
+					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[a.Liste des élèves affectés par classe ]]></text>
 			</staticText>
@@ -340,7 +340,7 @@
 					<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="12" isBold="true"/>
+					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[2.Liste nominative des élèves ]]></text>
 			</staticText>
@@ -365,7 +365,9 @@
 					<box>
 						<pen lineWidth="0.5"/>
 					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="SansSerif"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$V{Compteur}]]></textFieldExpression>
 				</textField>
 				<textField>
@@ -381,7 +383,9 @@
 					<box>
 						<pen lineWidth="0.25"/>
 					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="SansSerif"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{matricule}]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
@@ -402,7 +406,7 @@
 						<rightPen lineWidth="0.25" lineStyle="Dotted" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="Amiri" size="8"/>
+						<font fontName="SansSerif" size="8"/>
 						<paragraph lineSpacing="Single"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{nomEleve}+" "+$F{prenomEleve}]]></textFieldExpression>
@@ -420,7 +424,9 @@
 					<box>
 						<pen lineWidth="0.25"/>
 					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="SansSerif"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{sexe}]]></textFieldExpression>
 				</textField>
 				<textField>
@@ -436,7 +442,9 @@
 					<box>
 						<pen lineWidth="0.25"/>
 					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="SansSerif"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{anneeNaissance}]]></textFieldExpression>
 				</textField>
 				<textField>
@@ -452,7 +460,9 @@
 					<box>
 						<pen lineWidth="0.25"/>
 					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="SansSerif"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{nationnalite}]]></textFieldExpression>
 				</textField>
 				<textField>
@@ -468,7 +478,9 @@
 					<box>
 						<pen lineWidth="0.25"/>
 					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="SansSerif"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{redoublan}]]></textFieldExpression>
 				</textField>
 				<textField>
@@ -484,7 +496,9 @@
 					<box>
 						<pen lineWidth="0.25"/>
 					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="SansSerif"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{affecte}]]></textFieldExpression>
 				</textField>
 				<textField>
@@ -500,7 +514,9 @@
 					<box>
 						<pen lineWidth="0.25"/>
 					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="SansSerif"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{numDecisionAffecte}]]></textFieldExpression>
 				</textField>
 				<textField>
@@ -516,7 +532,9 @@
 					<box>
 						<pen lineWidth="0.25"/>
 					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="SansSerif"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{moyeGeneral}]]></textFieldExpression>
 				</textField>
 				<textField>
@@ -532,7 +550,9 @@
 					<box>
 						<pen lineWidth="0.25"/>
 					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="SansSerif"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{rang}]]></textFieldExpression>
 				</textField>
 				<textField>
@@ -548,7 +568,9 @@
 					<box>
 						<pen lineWidth="0.25"/>
 					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="SansSerif"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{observat}]]></textFieldExpression>
 				</textField>
 			</frame>
