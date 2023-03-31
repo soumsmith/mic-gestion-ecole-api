@@ -27,7 +27,7 @@ public class MajorParClasseNiveauServices {
                           .setParameter("affecte", "AFFECTE")
                            . getResultList() ;
 
-  System.out.println("classeNiveauDtoList "+classeNiveauDtoList.toString());
+  //System.out.println("classeNiveauDtoList "+classeNiveauDtoList.toString());
         System.out.println("Longueur Tableau" +classeNiveauDtoList.size());
       int LongTableau =classeNiveauDtoList.size() ;
 
@@ -35,7 +35,7 @@ public class MajorParClasseNiveauServices {
         Double pourMoySup10F ,pourMoySup10G,pourMoyInf999F,pourMoyInf999G,pourMoyInf85G,pourMoyInf85F,moyClasseF,moyClasseG;
        Integer effectifClasse ;
         List<MajorParClasseNiveauDto> resultatsListElevesDto = new ArrayList<>(LongTableau);
-        System.out.println("resultatsListElevesDto Size "+ resultatsListElevesDto.size());
+       // System.out.println("resultatsListElevesDto Size "+ resultatsListElevesDto.size());
         for (int i=0; i< LongTableau;i++) {
             MajorParClasseNiveauDto resultatsListEleves= new MajorParClasseNiveauDto();
             Double moyMajor;

@@ -26,7 +26,7 @@ public class resultatsNonAffecteServices {
                           .setParameter("affecte", "NON_AFFECTE")
                            . getResultList() ;
 
-  System.out.println("classeNiveauDtoList "+classeNiveauDtoList.toString());
+  //System.out.println("classeNiveauDtoList "+classeNiveauDtoList.toString());
         System.out.println("Longueur Tableau" +classeNiveauDtoList.size());
       int LongTableau =classeNiveauDtoList.size() ;
 
@@ -34,7 +34,7 @@ public class resultatsNonAffecteServices {
         Double pourMoySup10F ,pourMoySup10G,pourMoyInf999F,pourMoyInf999G,pourMoyInf85G,pourMoyInf85F,moyClasseF,moyClasseG;
        Integer effectifClasse ;
         List<ResultatsElevesNonAffecteDto> resultatsListElevesDto = new ArrayList<>(LongTableau);
-        System.out.println("resultatsListElevesDto Size "+ resultatsListElevesDto.size());
+        //System.out.println("resultatsListElevesDto Size "+ resultatsListElevesDto.size());
         for (int i=0; i< LongTableau;i++) {
             ResultatsElevesNonAffecteDto resultatsListEleves= new ResultatsElevesNonAffecteDto();
             effectifClasse= getEffectifParClasse(idEcole,classeNiveauDtoList.get(i).getClasse(),classeNiveauDtoList.get(i).getNiveau());

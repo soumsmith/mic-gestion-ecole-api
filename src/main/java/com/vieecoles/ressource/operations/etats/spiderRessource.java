@@ -75,6 +75,9 @@ public class spiderRessource {
     @Inject
     resultatsRecapAffEtNonAffServices resultatsRecapAffEtNonAffServices ;
 
+
+
+
     private static String UPLOAD_DIR = "/data/";
 
     @Transactional
@@ -232,6 +235,11 @@ public class spiderRessource {
        List<eleveAffecteParClasseDto> eleveAffecteParClasseDto = new ArrayList<>();
        List<eleveNonAffecteParClasseDto> eleveNonAffecteParClasseDto = new ArrayList<>();
        List<MajorParClasseNiveauDto> majorParClasseNiveauDto = new ArrayList<>();
+       List<TransfertsDto>transfertsDto= new ArrayList<>() ;
+       List<RepartitionEleveParAnNaissDto> repartitionEleveParAnNaissDto = new ArrayList<>() ;
+       List<BoursierDto> boursierDto = new ArrayList<>() ;
+       List<EffApprocheNiveauGenreDto> effApprocheNiveauGenreDto= new ArrayList<>()  ;
+       EffApprocheNiveauGenreDto effApprocheNive = new EffApprocheNiveauGenreDto() ;
 
 
        List<EmptyDto> introLis= new ArrayList<>() ;
@@ -248,6 +256,12 @@ public class spiderRessource {
         eleveAffecteParClasseDto= eleveAffecteParClasseServices.eleveAffecteParClasse(idEcole) ;
         eleveNonAffecteParClasseDto = eleveNonAffecteParClasseServices.eleveNonAffecteParClasse(idEcole);
         majorParClasseNiveauDto = majorServices.MajorParNiveauClasse(idEcole) ;
+        transfertsDto= transfertsServices.transferts(idEcole) ;
+        repartitionEleveParAnNaissDto= repartitionElevParAnNaissServices.CalculRepartElevParAnnNaiss(idEcole);
+        boursierDto = boursiersServices.boursier(idEcole);
+        effApprocheNive= approcheParNiveauParGenreServices.EffApprocheNiveauGenre(idEcole) ;
+        effApprocheNiveauGenreDto.add(effApprocheNive)   ;
+
 
         detailsBull.setIdentiteEtatDto(identiteEtatDto);
         detailsBull.setResultatsElevesAffecteDto(resultatsElevesAffecteDto);
@@ -259,6 +273,11 @@ public class spiderRessource {
         detailsBull.setEleveAffecteParClasseDto(eleveAffecteParClasseDto);
         detailsBull.setEleveNonAffecteParClasseDto(eleveNonAffecteParClasseDto);
         detailsBull.setMajorParClasseNiveauDto(majorParClasseNiveauDto);
+        detailsBull.setTransfertsDto(transfertsDto);
+        detailsBull.setRepartitionEleveParAnNaissDto(repartitionEleveParAnNaissDto);
+        detailsBull.setBoursierDto(boursierDto);
+        detailsBull.setEffApprocheNiveauGenreDto(effApprocheNiveauGenreDto);
+
       // System.out.print("soummm"+resultatsElevesAffecteDto.toString());
         if(type.toUpperCase().equals("PDF")){
             JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(Collections.singleton(detailsBull)) ;

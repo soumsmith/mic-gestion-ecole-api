@@ -27,7 +27,7 @@ public class resultatsRecapServices {
                           .setParameter("affecte", "AFFECTE")
                            . getResultList() ;
 
-  System.out.println("classeNiveauDtoList "+classeNiveauDtoList.toString());
+  //System.out.println("classeNiveauDtoList "+classeNiveauDtoList.toString());
         System.out.println("Longueur Tableau" +classeNiveauDtoList.size());
       int LongTableau =classeNiveauDtoList.size() ;
 
@@ -89,7 +89,7 @@ public class resultatsRecapServices {
 
             pourMoySup10G = (double) ((nbreMoySup10G*100)/effectifClasse);
             System.out.println("pourMoySup10G "+pourMoySup10G);
-            System.out.println("resultatsListElevesDto "+resultatsListElevesDto.toString());
+            //System.out.println("resultatsListElevesDto "+resultatsListElevesDto.toString());
             System.out.println("resultats0 ");
             resultatsListEleves.setNiveau(classeNiveauDtoList.get(i).getNiveau());
             System.out.println("resultats1 "+resultatsListEleves.getNiveau());

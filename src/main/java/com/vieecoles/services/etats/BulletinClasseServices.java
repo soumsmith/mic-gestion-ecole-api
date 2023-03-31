@@ -28,7 +28,7 @@ public class BulletinClasseServices {
         classeNiveauDtoList = q.setParameter("idEcole", idEcole)
                 .setParameter("classe", classe)
                 .getResultList() ;
-System.out.println("classeNiveauDtoList "+classeNiveauDtoList.toString());
+//System.out.println("classeNiveauDtoList "+classeNiveauDtoList.toString());
 
 
         LongTableau= classeNiveauDtoList.size();

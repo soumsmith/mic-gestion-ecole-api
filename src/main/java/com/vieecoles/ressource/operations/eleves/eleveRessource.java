@@ -54,7 +54,7 @@ public class eleveRessource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("importer-eleve/{idEcole}/{idAnneeScolaire}/{typeOperation}")
     public String importerCreerEleve(List<importEleveDto> lisImpo , @PathParam("idEcole") Long idEcole, @PathParam("idAnneeScolaire") Long idAnneeScolaire,@PathParam("typeOperation") String typeOperation ){
-       System.out.print("lisImpo "+lisImpo);
+      // System.out.print("lisImpo "+lisImpo);
         return  EleveService.importerCreerEleve(lisImpo,idEcole,idAnneeScolaire,typeOperation);
     }
 

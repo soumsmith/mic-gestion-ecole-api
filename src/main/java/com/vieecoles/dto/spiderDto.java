@@ -12,9 +12,47 @@ public class spiderDto {
    private List<eleveAffecteParClasseDto> eleveAffecteParClasseDto ;
    private  List<eleveNonAffecteParClasseDto> eleveNonAffecteParClasseDto ;
    private  List<MajorParClasseNiveauDto> majorParClasseNiveauDto ;
+   private List<TransfertsDto> transfertsDto ;
+   private List<RepartitionEleveParAnNaissDto> repartitionEleveParAnNaissDto ;
+    private List<BoursierDto> boursierDto ;
+    private List<EffApprocheNiveauGenreDto> effApprocheNiveauGenreDto ;
+
+    public List<EffApprocheNiveauGenreDto> getEffApprocheNiveauGenreDto() {
+        return effApprocheNiveauGenreDto;
+    }
+
+    public void setEffApprocheNiveauGenreDto(List<EffApprocheNiveauGenreDto> effApprocheNiveauGenreDto) {
+        this.effApprocheNiveauGenreDto = effApprocheNiveauGenreDto;
+    }
+
+    public List<BoursierDto> getBoursierDto() {
+        return boursierDto;
+    }
+
+
+
+    public void setBoursierDto(List<BoursierDto> boursierDto) {
+        this.boursierDto = boursierDto;
+    }
+
+    public List<RepartitionEleveParAnNaissDto> getRepartitionEleveParAnNaissDto() {
+        return repartitionEleveParAnNaissDto;
+    }
+
+    public void setRepartitionEleveParAnNaissDto(List<RepartitionEleveParAnNaissDto> repartitionEleveParAnNaissDto) {
+        this.repartitionEleveParAnNaissDto = repartitionEleveParAnNaissDto;
+    }
 
     public List<RecapDesResultatsElevesAffecteDto> getRecapDesResultatsElevesAffecteDto() {
         return recapDesResultatsElevesAffecteDto;
+    }
+
+    public List<TransfertsDto> getTransfertsDto() {
+        return transfertsDto;
+    }
+
+    public void setTransfertsDto(List<TransfertsDto> transfertsDto) {
+        this.transfertsDto = transfertsDto;
     }
 
     public void setRecapDesResultatsElevesAffecteDto(List<RecapDesResultatsElevesAffecteDto> recapDesResultatsElevesAffecteDto) {

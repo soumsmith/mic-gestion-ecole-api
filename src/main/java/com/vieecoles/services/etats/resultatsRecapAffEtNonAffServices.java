@@ -25,7 +25,7 @@ public class resultatsRecapAffEtNonAffServices {
         classeNiveauDtoList = q.setParameter("idEcole", idEcole)
                               . getResultList() ;
 
-  System.out.println("classeNiveauDtoList "+classeNiveauDtoList.toString());
+  //System.out.println("classeNiveauDtoList "+classeNiveauDtoList.toString());
         System.out.println("Longueur Tableau" +classeNiveauDtoList.size());
       int LongTableau =classeNiveauDtoList.size() ;
 
@@ -33,7 +33,7 @@ public class resultatsRecapAffEtNonAffServices {
         Double pourMoySup10F ,pourMoySup10G,pourMoyInf999F,pourMoyInf999G,pourMoyInf85G,pourMoyInf85F,moyClasseF,moyClasseG;
        Long effectifClasse ;
         List<RecapResultatsElevesAffeEtNonAffDto> resultatsListElevesDto = new ArrayList<>(LongTableau);
-        System.out.println("resultatsListElevesDto Size "+ resultatsListElevesDto.size());
+       // System.out.println("resultatsListElevesDto Size "+ resultatsListElevesDto.size());
         for (int i=0; i< LongTableau;i++) {
             RecapResultatsElevesAffeEtNonAffDto resultatsListEleves= new RecapResultatsElevesAffeEtNonAffDto();
             effectifClasse= getEffectifParClasse(idEcole,classeNiveauDtoList.get(i).getNiveau());
