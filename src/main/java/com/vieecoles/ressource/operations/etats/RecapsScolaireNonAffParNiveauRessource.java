@@ -1,6 +1,7 @@
 package com.vieecoles.ressource.operations.etats;
 
 
+import com.vieecoles.dto.RecapDesResultatsElevesNonAffecteDto;
 import com.vieecoles.dto.ResultatsElevesAffecteDto;
 import com.vieecoles.services.etats.*;
 import net.sf.jasperreports.engine.*;
@@ -67,8 +68,8 @@ public class RecapsScolaireNonAffParNiveauRessource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/list-recap-non-affecte-par-classe-par-niveau/{idEcole}")
-    public List<ResultatsElevesAffecteDto>  repartiParAnn(@PathParam("idEcole") Long idEcole) throws Exception, JRException {
-        List<ResultatsElevesAffecteDto>  detailsBull = new ArrayList<>() ;
+    public List<RecapDesResultatsElevesNonAffecteDto>  repartiParAnn(@PathParam("idEcole") Long idEcole) throws Exception, JRException {
+        List<RecapDesResultatsElevesNonAffecteDto>  detailsBull = new ArrayList<>() ;
         System.out.println("classeNiveauDtoList entree");
         detailsBull= resultatsServices.RecapCalculResultatsEleveAffecte(idEcole)  ;
         return detailsBull ;
@@ -85,7 +86,7 @@ public class RecapsScolaireNonAffParNiveauRessource {
 
 
 
-       List<ResultatsElevesAffecteDto> detailsBull = new ArrayList<>() ;
+       List<RecapDesResultatsElevesNonAffecteDto> detailsBull = new ArrayList<>() ;
 
         detailsBull= resultatsServices.RecapCalculResultatsEleveAffecte(idEcole) ;
         System.out.println("detailsBull "+detailsBull);

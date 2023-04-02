@@ -18,8 +18,8 @@ public class RepartitionElevParAnNaissServices {
     public List<RepartitionEleveParAnNaissDto> CalculRepartElevParAnnNaiss(Long idEcole){
 
         List<DateNaissNiveauDto> dateNiveauDtoList = new ArrayList<>() ;
-        TypedQuery<DateNaissNiveauDto> q = em.createQuery( "SELECT new com.vieecoles.dto.DateNaissNiveauDto(SUBSTRING(b.dateNaissance,1,4),b.niveau) from Bulletin b  where b.ecoleId =:idEcole " +
-                "group by SUBSTRING(b.dateNaissance,1,4) ,b.niveau ", DateNaissNiveauDto.class);
+        TypedQuery<DateNaissNiveauDto> q = em.createQuery( "SELECT new com.vieecoles.dto.DateNaissNiveauDto(SUBSTRING(b.dateNaissance,1,4)) from Bulletin b  where b.ecoleId =:idEcole " +
+                "group by SUBSTRING(b.dateNaissance,1,4)  ", DateNaissNiveauDto.class);
 
         dateNiveauDtoList = q.setParameter("idEcole", idEcole)
                              . getResultList() ;
@@ -30,49 +30,64 @@ public class RepartitionElevParAnNaissServices {
       int LongTableau =dateNiveauDtoList.size() ;
 
       Long an6F, an5F,an4F,an3F,an2AF,an2CF,an1AF,an1CF,an1DF,anTAF,anTCF,
-              anTDF,an6G,an5G,an4G,an3G,an2AG,an2CG,an1AG,an1CG,an1DG,anTAG,anTCG,anTDG;
+              anTDF,an6G,an5G,an4G,an3G,an2AG,an2CG,an1AG,an1CG,an1DG,anTAG,anTCG,anTDG,
+        t6,t5,t4,t3,t2A,t2C,t1A,t1C,t1D,tTA,tTC,tTD
+              ;
 
        Integer effectifClasse ;
         List<RepartitionEleveParAnNaissDto> repartitionEleveParAnNaissDto = new ArrayList<>(LongTableau);
-        System.out.println("resultatsListElevesDto Size "+ repartitionEleveParAnNaissDto.size());
+       // System.out.println("resultatsListElevesDto Size "+ repartitionEleveParAnNaissDto.size());
         for (int i=0; i< LongTableau;i++) {
             RepartitionEleveParAnNaissDto repartParElevParNiveau= new RepartitionEleveParAnNaissDto();
 
             an6F = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Sixième","FEMININ");
+            //System.out.println("DateNaissance "+dateNiveauDtoList.get(i).getDateNaiss());
             an6G = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Sixième","MASCULIN");
+            t6 = geTotaltRepartiParAnneeParNiveau(idEcole,"Sixième") ;
 
             an5F = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Cinquième","FEMININ");
             an5G = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Cinquième","MASCULIN");
+            t5 = geTotaltRepartiParAnneeParNiveau(idEcole,"Cinquième") ;
 
             an4G = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Quatrième","MASCULIN");
             an4F = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Quatrième","FEMININ");
+            t4 = geTotaltRepartiParAnneeParNiveau(idEcole,"Quatrième") ;
 
             an3G = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Troisième","MASCULIN");
             an3F = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Troisième","FEMININ");
+            t3 = geTotaltRepartiParAnneeParNiveau(idEcole,"Troisième") ;
 
             an2AG = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Seconde A","MASCULIN");
             an2AF = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Seconde A","FEMININ");
+            t2A = geTotaltRepartiParAnneeParNiveau(idEcole,"Seconde A") ;
 
             an2CG = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Seconde C","MASCULIN");
             an2CF = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Seconde C","FEMININ");
+            t2C = geTotaltRepartiParAnneeParNiveau(idEcole,"Seconde C") ;
 
             an1AG = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Première A","MASCULIN");
             an1AF = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Première A","FEMININ");
+            t1A = geTotaltRepartiParAnneeParNiveau(idEcole,"Première A") ;
 
             an1CG = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Première C","MASCULIN");
             an1CF = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Première C","FEMININ");
+            t1C = geTotaltRepartiParAnneeParNiveau(idEcole,"Première C") ;
 
             an1DG = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Première D","MASCULIN");
             an1DF = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Première D","FEMININ");
+            t1D = geTotaltRepartiParAnneeParNiveau(idEcole,"Première D") ;
 
             anTAG = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Terminale A","MASCULIN");
             anTAF = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Terminale A","FEMININ");
+            tTA = geTotaltRepartiParAnneeParNiveau(idEcole,"Terminale A") ;
 
             anTDG = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Terminale D","MASCULIN");
             anTDF = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Terminale D","FEMININ");
+            tTD = geTotaltRepartiParAnneeParNiveau(idEcole,"Terminale D") ;
 
             anTCG = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Terminale C","MASCULIN");
             anTCF = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Terminale C","FEMININ");
+            tTC = geTotaltRepartiParAnneeParNiveau(idEcole,"Terminale C") ;
 
             repartParElevParNiveau.setAn6F(an6F);
             repartParElevParNiveau.setAn6G(an6G);
@@ -109,8 +124,20 @@ public class RepartitionElevParAnNaissServices {
 
             repartParElevParNiveau.setAnTCF(anTCF);
             repartParElevParNiveau.setAnTCG(anTCG);
-            repartParElevParNiveau.setNiveau(dateNiveauDtoList.get(i).getNiveau());
-            repartParElevParNiveau.setAnnee(dateNiveauDtoList.get(i).getDateNaiss());
+            repartParElevParNiveau.setT6(t6);
+            repartParElevParNiveau.setT5(t5);
+            repartParElevParNiveau.setT4(t4);
+            repartParElevParNiveau.setT3(t3);
+            repartParElevParNiveau.setT2A(t2A);
+            repartParElevParNiveau.setT2C(t2C);
+            repartParElevParNiveau.setT1A(t1A);
+            repartParElevParNiveau.setT1D(t1D);
+            repartParElevParNiveau.setT1C(t1C);
+            repartParElevParNiveau.settTA(tTA);
+            repartParElevParNiveau.settTD(tTD);
+            repartParElevParNiveau.settTC(tTC);
+            repartParElevParNiveau.setNiveau("niveau1");
+                repartParElevParNiveau.setAnnee(dateNiveauDtoList.get(i).getDateNaiss());
             repartitionEleveParAnNaissDto.add(repartParElevParNiveau);
 
         }
@@ -123,7 +150,7 @@ public class RepartitionElevParAnNaissServices {
       Long repartParAnneParNiv ;
       try {
           NbreAnneeDto dateNiveauDtoList = new NbreAnneeDto() ;
-          TypedQuery<NbreAnneeDto> q = em.createQuery( "SELECT new com.vieecoles.dto.NbreAnneeDto(count(b.id),SUBSTRING(b.dateNaissance,1,4) )  from Bulletin as b  where b.sexe=:sexe and b.ecoleId=:idEcole and b.niveau=:niveau and SUBSTRING(b.dateNaissance,1,4) =:annee  group by SUBSTRING(b.dateNaissance,1,4) , b.niveau  "
+          TypedQuery<NbreAnneeDto> q = em.createQuery( "SELECT new com.vieecoles.dto.NbreAnneeDto(count(b.id),SUBSTRING(b.dateNaissance,1,4) )  from Bulletin as b  where b.sexe=:sexe and b.ecoleId=:idEcole and b.niveau=:niveau and SUBSTRING(b.dateNaissance,1,4) =:annee  group by SUBSTRING(b.dateNaissance,1,4)  "
                   , NbreAnneeDto.class);
           dateNiveauDtoList =  q.setParameter("sexe",sexe)
                   .setParameter("idEcole",idEcole)
@@ -137,6 +164,25 @@ public class RepartitionElevParAnNaissServices {
       }
 
   }
+
+
+
+    public  Long geTotaltRepartiParAnneeParNiveau(Long idEcole , String niveau){
+        Long repartParAnneParNiv = null;
+        try {
+            Long dateNiveauDtoList  ;
+            TypedQuery<Long> q = (TypedQuery<Long>) em.createQuery( "SELECT count(b.id)  from Bulletin as b  where  b.ecoleId=:idEcole and b.niveau=:niveau  group by  b.niveau  "
+                    );
+            dateNiveauDtoList =  q.setParameter("idEcole",idEcole)
+                                  .setParameter("niveau",niveau)
+                                   .getSingleResult();
+
+            return  dateNiveauDtoList  ;
+        } catch (NoResultException e){
+            return 0L ;
+        }
+
+    }
 
 
 

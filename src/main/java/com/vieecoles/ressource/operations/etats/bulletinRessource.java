@@ -2,6 +2,7 @@ package com.vieecoles.ressource.operations.etats;
 
 
 
+import com.vieecoles.dto.MatriculeClasseDto;
 import com.vieecoles.dto.NiveauDto;
 import com.vieecoles.entities.operations.Inscriptions;
 import com.vieecoles.entities.operations.ecole;
@@ -9,6 +10,7 @@ import com.vieecoles.entities.parametre;
 import com.vieecoles.entities.profil;
 import com.vieecoles.projection.BulletinSelectDto;
 import com.vieecoles.services.eleves.InscriptionService;
+import com.vieecoles.services.etats.BulletinClasseServices;
 import com.vieecoles.services.profilService;
 
 import java.awt.image.BufferedImage;
@@ -26,6 +28,7 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.engine.export.ooxml.JRDocxExporter;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.engine.util.JRSaver;
@@ -44,6 +47,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import net.sf.jasperreports.export.SimplePdfExporterConfiguration;
 import org.hibernate.Session;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -65,7 +69,19 @@ public class bulletinRessource {
     @Inject
     SousceecoleService sousceecoleService ;
 
+    @Inject
+    BulletinClasseServices bulletinClasseServices ;
+
     private static String UPLOAD_DIR = "/data/";
+    @GET
+    @Path("/list-matricule-par-classe/{idEcole}/{classe}")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    @Transactional
+    public List<NiveauDto>  getMatriculeByClasse(@PathParam("idEcole") Long idEcole,@PathParam("classe") String classe)  {
+      List<NiveauDto> matricule= new ArrayList<>() ;
+        matricule=  getMatriculeParClasse(idEcole,classe) ;
+        return matricule;
+    }
 
 
     @GET
@@ -91,14 +107,16 @@ public class bulletinRessource {
 
         myEcole=sousceecoleService.getInffosEcoleByID(idEcole);
         //System.out.println("myEcole "+myEcole.toString());
-         myIns = inscriptionService.checkInscrit(idEcole,matricule,1L);
-       // System.out.println("Inscription "+ myIns.toString());
+        myIns = inscriptionService.checkInscrit(idEcole,matricule,1L);
+        // System.out.println("Inscription "+ myIns.toString());
         byte[] imagebytes = myIns.getPhoto_eleve() ;
         byte[] imagebytes2 = myEcole.getLogoBlob() ;
         byte[] imagebytes3 = mpara.getImage() ;
+        byte[] imagebytes4 = mpara.getFiligramme() ;
         BufferedImage photo_eleve= ImageIO.read(new ByteArrayInputStream(imagebytes));
-      BufferedImage logo= ImageIO.read(new ByteArrayInputStream(imagebytes2));
+        BufferedImage logo= ImageIO.read(new ByteArrayInputStream(imagebytes2));
         BufferedImage amoirie = ImageIO.read(new ByteArrayInputStream(imagebytes3));
+        BufferedImage bg = ImageIO.read(new ByteArrayInputStream(imagebytes4)) ;
 
         System.out.println("myEcoleImage "+imagebytes2.toString());
         TypedQuery<BulletinSelectDto> q = em.createQuery( "SELECT new com.vieecoles.projection.BulletinSelectDto(b.ecoleId,b.nomEcole,b.statutEcole,b.urlLogo,b.adresseEcole,b.telEcole,b.anneeLibelle, b.libellePeriode,b.matricule,b.nom, b.prenoms, b.sexe,b.dateNaissance,b.lieuNaissance,b.nationalite,b.redoublant,b.boursier,b.affecte,b.libelleClasse,b.effectif,b.totalCoef,b.totalMoyCoef,b.nomPrenomProfPrincipal,b.heuresAbsJustifiees,b.heuresAbsNonJustifiees,b.moyGeneral,b.moyMax,b.moyMin,b.moyAvg,b.moyAn,b.rangAn,b.appreciation,b.dateCreation,b.codeQr,b.statut,d.matiereLibelle,d.moyenne,d.rang,d.coef ,d.moyCoef,d.appreciation,d.categorie,d.num_ordre,b.rang,d.nom_prenom_professeur,d.categorieMatiere) from DetailBulletin  d join d.bulletin b where b.matricule=:matricule " +
@@ -120,6 +138,7 @@ public class bulletinRessource {
             map.put("photo_eleve",photo_eleve);
             map.put("logo",logo);
             map.put("amoirie",amoirie);
+            map.put("bg",bg);
 
             JasperPrint report = JasperFillManager.fillReport(compileReport, map, beanCollectionDataSource);
 
@@ -155,12 +174,12 @@ public class bulletinRessource {
 
     List<NiveauDto> getMatriculeParClasse(Long idEcole ,String libelleClasse){
         List<NiveauDto> classeNiveauDtoList = new ArrayList<>() ;
-        TypedQuery<NiveauDto> q = em.createQuery( "SELECT new com.vieecoles.dto.NiveauDto(b.matricule) from Bulletin b  where b.ecoleId =:idEcole  and b.libelleClasse=:classe "
-               , NiveauDto.class);
+        TypedQuery<NiveauDto> q = em.createQuery( "SELECT new com.vieecoles.dto.NiveauDto(b.matricule) from Bulletin b  where b.ecoleId =:idEcole  and b.libelleClasse=:classe  "
+                , NiveauDto.class);
         classeNiveauDtoList = q.setParameter("idEcole", idEcole)
-                              .setParameter("classe", libelleClasse)
+                .setParameter("classe", libelleClasse)
                 .getResultList() ;
-return  classeNiveauDtoList ;
+        return  classeNiveauDtoList ;
     }
 
     @Transactional
@@ -193,14 +212,15 @@ return  classeNiveauDtoList ;
     }
 
     Inscriptions getIdForPhoto(String matricule){
-       Long idEleve= getIdEleveByMatricule(matricule);
-       System.out.println("idEleve "+idEleve);
+        Long idEleve= getIdEleveByMatricule(matricule);
+        System.out.println("idEleve "+idEleve);
 
         Inscriptions IdInscrip = getIdInscription(idEleve);
 
         System.out.println("IdInscrip "+IdInscrip);
-       return  IdInscrip ;
+        return  IdInscrip ;
     }
+
 
 
 

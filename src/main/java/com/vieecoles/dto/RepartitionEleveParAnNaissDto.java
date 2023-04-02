@@ -2,7 +2,7 @@ package com.vieecoles.dto;
 
 public class RepartitionEleveParAnNaissDto {
     private  String niveau ;
-    private String Annee ;
+    private String annee ;
    private Long an6F ;
     private Long an5F;
     private Long an4F;
@@ -27,12 +27,24 @@ public class RepartitionEleveParAnNaissDto {
     private Long anTAG;
     private Long anTCG;
     private Long anTDG;
+    private Long t6;
+    private Long t5;
+    private Long t4;
+    private Long t3;
+    private Long t2A;
+    private Long t2C;
+    private Long t1A;
+    private Long t1C;
+    private Long t1D;
+    private Long tTA;
+    private Long tTC;
+    private Long tTD;
 
     @Override
     public String toString() {
         return "RepartitionEleveParAnNaissDto{" +
                 "niveau='" + niveau + '\'' +
-                ", Annee='" + Annee + '\'' +
+                ", annee='" + annee + '\'' +
                 ", an6F=" + an6F +
                 ", an5F=" + an5F +
                 ", an4F=" + an4F +
@@ -57,6 +69,18 @@ public class RepartitionEleveParAnNaissDto {
                 ", anTAG=" + anTAG +
                 ", anTCG=" + anTCG +
                 ", anTDG=" + anTDG +
+                ", t6=" + t6 +
+                ", t5=" + t5 +
+                ", t4=" + t4 +
+                ", t3=" + t3 +
+                ", t2A=" + t2A +
+                ", t2C=" + t2C +
+                ", t1A=" + t1A +
+                ", t1C=" + t1C +
+                ", t1D=" + t1D +
+                ", tTA=" + tTA +
+                ", tTC=" + tTC +
+                ", tTD=" + tTD +
                 '}';
     }
 
@@ -68,12 +92,108 @@ public class RepartitionEleveParAnNaissDto {
         this.niveau = niveau;
     }
 
+    public Long getT6() {
+        return t6;
+    }
+
+    public void setT6(Long t6) {
+        this.t6 = t6;
+    }
+
+    public Long getT5() {
+        return t5;
+    }
+
+    public void setT5(Long t5) {
+        this.t5 = t5;
+    }
+
+    public Long getT4() {
+        return t4;
+    }
+
+    public void setT4(Long t4) {
+        this.t4 = t4;
+    }
+
+    public Long getT3() {
+        return t3;
+    }
+
+    public void setT3(Long t3) {
+        this.t3 = t3;
+    }
+
+    public Long getT2A() {
+        return t2A;
+    }
+
+    public void setT2A(Long t2A) {
+        this.t2A = t2A;
+    }
+
+    public Long getT2C() {
+        return t2C;
+    }
+
+    public void setT2C(Long t2C) {
+        this.t2C = t2C;
+    }
+
+    public Long getT1A() {
+        return t1A;
+    }
+
+    public void setT1A(Long t1A) {
+        this.t1A = t1A;
+    }
+
+    public Long getT1C() {
+        return t1C;
+    }
+
+    public void setT1C(Long t1C) {
+        this.t1C = t1C;
+    }
+
+    public Long getT1D() {
+        return t1D;
+    }
+
+    public void setT1D(Long t1D) {
+        this.t1D = t1D;
+    }
+
+    public Long gettTA() {
+        return tTA;
+    }
+
+    public void settTA(Long tTA) {
+        this.tTA = tTA;
+    }
+
+    public Long gettTC() {
+        return tTC;
+    }
+
+    public void settTC(Long tTC) {
+        this.tTC = tTC;
+    }
+
+    public Long gettTD() {
+        return tTD;
+    }
+
+    public void settTD(Long tTD) {
+        this.tTD = tTD;
+    }
+
     public String getAnnee() {
-        return Annee;
+        return annee;
     }
 
     public void setAnnee(String annee) {
-        Annee = annee;
+        this.annee = annee;
     }
 
     public RepartitionEleveParAnNaissDto() {

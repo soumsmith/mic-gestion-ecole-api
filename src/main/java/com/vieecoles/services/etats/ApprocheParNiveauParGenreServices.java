@@ -1,5 +1,6 @@
 package com.vieecoles.services.etats;
 
+import com.vieecoles.dto.ClasseNiveauDto;
 import com.vieecoles.dto.EffApprocheNiveauGenreDto;
 import com.vieecoles.dto.NiveauDto;
 import com.vieecoles.dto.RecapitulatifClassePedagoAffectNonAffect;
@@ -223,15 +224,20 @@ public class ApprocheParNiveauParGenreServices {
 
     public Long getBase(Long idEcole , String niveau){
         Long classG;
+
+        List<ClasseNiveauDto> classeNiveauDtoList = new ArrayList<>() ;
         try {
-            classG = (Long) em.createQuery("select count(o.libelleClasse) from Bulletin o where  o.ecoleId=:idEcole  and  o.niveau=:niveau group by  o.niveau ")
-                    .setParameter("idEcole",idEcole)
+
+            TypedQuery<ClasseNiveauDto> q = em.createQuery( "SELECT new com.vieecoles.dto.ClasseNiveauDto(b.libelleClasse ,b.niveau) from Bulletin b  where b.ecoleId =:idEcole and  b.niveau=:niveau " +
+                    "group by b.libelleClasse ,b.niveau ", ClasseNiveauDto.class);
+            classeNiveauDtoList = q.setParameter("idEcole", idEcole)
                     .setParameter("niveau",niveau)
-                    .getSingleResult();
-            return classG ;
-        } catch (NoResultException e){
-            return 0L ;
+                    . getResultList() ;
+            classG= (long) classeNiveauDtoList.size();
+        }   catch (NoResultException e){
+            classG=0L;
         }
+        return  classG ;
 
     }
 

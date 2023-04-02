@@ -68,6 +68,15 @@ public class spiderRessource {
 
     @Inject
     resultatsRecapServices resultatsRecapServices ;
+    @Inject
+    resultatsNonAffecteServices resultatsNonAffecteServices ;
+    @Inject
+    resultatsRecapNonAffServices resultatsRecapNonAffServices ;
+    @Inject
+    resultatsRecapAffEtNonAffServices resultatsRecapAffEtNonAffServices ;
+
+
+
 
     private static String UPLOAD_DIR = "/data/";
 
@@ -87,8 +96,8 @@ public class spiderRessource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/recape-resultats-affecte-par-niveau/{idEcole}")
-    public List<ResultatsElevesAffecteDto>  recap(@PathParam("idEcole") Long idEcole) throws Exception, JRException {
-        List<ResultatsElevesAffecteDto>  detailsBull = new ArrayList<>() ;
+    public List<RecapDesResultatsElevesAffecteDto>  recap(@PathParam("idEcole") Long idEcole) throws Exception, JRException {
+        List<RecapDesResultatsElevesAffecteDto>  detailsBull = new ArrayList<>() ;
         System.out.println("classeNiveauDtoList entree");
         detailsBull= resultatsRecapServices.RecapCalculResultatsEleveAffecte(idEcole) ;
         return detailsBull ;
@@ -100,8 +109,8 @@ public class spiderRessource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/Eleve-affecte-par-classe/{idEcole}")
-    public List<eleveNonAffecteParClasseDto>  eleveAffecteParClasse(@PathParam("idEcole") Long idEcole) throws Exception, JRException {
-        List<eleveNonAffecteParClasseDto>  detailsBull = new ArrayList<>() ;
+    public List<eleveAffecteParClasseDto>  eleveAffecteParClasse(@PathParam("idEcole") Long idEcole) throws Exception, JRException {
+        List<eleveAffecteParClasseDto>  detailsBull = new ArrayList<>() ;
         System.out.println("classeNiveauDtoList entree");
         detailsBull= eleveAffecteParClasseServices.eleveAffecteParClasse(idEcole) ;
         return detailsBull ;
@@ -219,6 +228,19 @@ public class spiderRessource {
         myIntro.setIntro("INTRODUCTION");
         List<IdentiteEtatDto>  identiteEtatDto = new ArrayList<>() ;
        List<ResultatsElevesAffecteDto> resultatsElevesAffecteDto = new ArrayList<>() ;
+       List<RecapDesResultatsElevesAffecteDto> recapDesResultatsElevesAffecteDto= new ArrayList<>();
+       List<ResultatsElevesNonAffecteDto> resultatsElevesNonAffecteDto = new ArrayList<>();
+       List<RecapDesResultatsElevesNonAffecteDto> recapDesResultatsElevesNonAffecteDto = new ArrayList<>();
+       List<RecapResultatsElevesAffeEtNonAffDto> recapResultatsElevesAffeEtNonAffDto = new ArrayList<>();
+       List<eleveAffecteParClasseDto> eleveAffecteParClasseDto = new ArrayList<>();
+       List<eleveNonAffecteParClasseDto> eleveNonAffecteParClasseDto = new ArrayList<>();
+       List<MajorParClasseNiveauDto> majorParClasseNiveauDto = new ArrayList<>();
+       List<TransfertsDto>transfertsDto= new ArrayList<>() ;
+       List<RepartitionEleveParAnNaissDto> repartitionEleveParAnNaissDto = new ArrayList<>() ;
+       List<BoursierDto> boursierDto = new ArrayList<>() ;
+       List<EffApprocheNiveauGenreDto> effApprocheNiveauGenreDto= new ArrayList<>()  ;
+       EffApprocheNiveauGenreDto effApprocheNive = new EffApprocheNiveauGenreDto() ;
+
 
        List<EmptyDto> introLis= new ArrayList<>() ;
         introLis.add(myIntro) ;
@@ -227,12 +249,34 @@ public class spiderRessource {
 
         identiteEtatDto= identiteEtatService.getIdentiteDto(idEcole) ;
         resultatsElevesAffecteDto= resultatsServices.CalculResultatsEleveAffecte(idEcole) ;
-
+        recapDesResultatsElevesAffecteDto= resultatsRecapServices.RecapCalculResultatsEleveAffecte(idEcole);
+        resultatsElevesNonAffecteDto = resultatsNonAffecteServices.CalculResultatsEleveAffecte(idEcole);
+        recapDesResultatsElevesNonAffecteDto= resultatsRecapNonAffServices.RecapCalculResultatsEleveAffecte(idEcole) ;
+        recapResultatsElevesAffeEtNonAffDto = resultatsRecapAffEtNonAffServices.RecapCalculResultatsEleveAffecte(idEcole) ;
+        eleveAffecteParClasseDto= eleveAffecteParClasseServices.eleveAffecteParClasse(idEcole) ;
+        eleveNonAffecteParClasseDto = eleveNonAffecteParClasseServices.eleveNonAffecteParClasse(idEcole);
+        majorParClasseNiveauDto = majorServices.MajorParNiveauClasse(idEcole) ;
+        transfertsDto= transfertsServices.transferts(idEcole) ;
+        repartitionEleveParAnNaissDto= repartitionElevParAnNaissServices.CalculRepartElevParAnnNaiss(idEcole);
+        boursierDto = boursiersServices.boursier(idEcole);
+        effApprocheNive= approcheParNiveauParGenreServices.EffApprocheNiveauGenre(idEcole) ;
+        effApprocheNiveauGenreDto.add(effApprocheNive)   ;
 
 
         detailsBull.setIdentiteEtatDto(identiteEtatDto);
         detailsBull.setResultatsElevesAffecteDto(resultatsElevesAffecteDto);
         detailsBull.setIntro(introLis);
+        detailsBull.setRecapDesResultatsElevesAffecteDto(recapDesResultatsElevesAffecteDto);
+        detailsBull.setResultatsElevesNonAffecteDto(resultatsElevesNonAffecteDto);
+        detailsBull.setRecapDesResultatsElevesNonAffecteDto(recapDesResultatsElevesNonAffecteDto);
+        detailsBull.setRecapResultatsElevesAffeEtNonAffDto(recapResultatsElevesAffeEtNonAffDto);
+        detailsBull.setEleveAffecteParClasseDto(eleveAffecteParClasseDto);
+        detailsBull.setEleveNonAffecteParClasseDto(eleveNonAffecteParClasseDto);
+        detailsBull.setMajorParClasseNiveauDto(majorParClasseNiveauDto);
+        detailsBull.setTransfertsDto(transfertsDto);
+        detailsBull.setRepartitionEleveParAnNaissDto(repartitionEleveParAnNaissDto);
+        detailsBull.setBoursierDto(boursierDto);
+        detailsBull.setEffApprocheNiveauGenreDto(effApprocheNiveauGenreDto);
 
       // System.out.print("soummm"+resultatsElevesAffecteDto.toString());
         if(type.toUpperCase().equals("PDF")){

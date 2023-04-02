@@ -2,6 +2,7 @@ package com.vieecoles.ressource.operations.etats;
 
 
 import com.vieecoles.dto.ResultatsElevesAffecteDto;
+import com.vieecoles.dto.eleveAffecteParClasseDto;
 import com.vieecoles.dto.eleveNonAffecteParClasseDto;
 import com.vieecoles.services.etats.*;
 import net.sf.jasperreports.engine.*;
@@ -68,8 +69,8 @@ public class ListeEleveAffecteParClasseRessource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/list-eleve-affecte-par-classe/{idEcole}")
-    public List<eleveNonAffecteParClasseDto>  repartiParAnn(@PathParam("idEcole") Long idEcole) throws Exception, JRException {
-        List<eleveNonAffecteParClasseDto>  detailsBull = new ArrayList<>() ;
+    public List<eleveAffecteParClasseDto>  repartiParAnn(@PathParam("idEcole") Long idEcole) throws Exception, JRException {
+        List<eleveAffecteParClasseDto>  detailsBull = new ArrayList<>() ;
         System.out.println("classeNiveauDtoList entree");
         detailsBull= resultatsServices.eleveAffecteParClasse(idEcole)  ;
         return detailsBull ;
@@ -86,7 +87,7 @@ public class ListeEleveAffecteParClasseRessource {
 
 
 
-       List<eleveNonAffecteParClasseDto> detailsBull = new ArrayList<>() ;
+       List<eleveAffecteParClasseDto> detailsBull = new ArrayList<>() ;
 
         detailsBull= resultatsServices.eleveAffecteParClasse(idEcole) ;
         System.out.println("detailsBull "+detailsBull);

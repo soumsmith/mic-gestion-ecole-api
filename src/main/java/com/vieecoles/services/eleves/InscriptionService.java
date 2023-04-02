@@ -209,6 +209,8 @@ public class InscriptionService implements PanacheRepositoryBase<Inscriptions, L
            // inscr.setLibellehandicap(libellehandicapList);
             inscr.setInscriptions_processus(Inscriptions.processus.EN_COURS);
             inscr.setInscriptions_status(Inscriptions.status.VALIDEE);
+            inscr.setInscriptions_boursier(inscriptionDto.getInscriptions_boursier());
+            inscr.setInscriptions_redoublant(inscriptionDto.getInscriptions_redoublant());
             inscr.setInscriptions_contact1(inscriptionDto.getInscriptions_contact1());
             inscr.setInscriptions_contact2(inscriptionDto.getInscriptions_contact2());
             inscr.setInscriptions_code_interne(inscriptionDto.getInscriptions_code_interne());
@@ -409,6 +411,48 @@ public  void updatelibelleHandicap_inscrip (Long InscriptionId , Long oldHandica
 
     }
 
+    public  void updateInfosComplementaire( InscriptionDto inscriptionDto){
+        Inscriptions myIns= new Inscriptions() ;
+        myIns =Inscriptions.findById(inscriptionDto.getInscriptionsid()) ;
+        myIns.setInscriptions_ecole_origine(inscriptionDto.getInscriptions_ecole_origine());
+        myIns.setInscriptions_boursier(inscriptionDto.getInscriptions_boursier());
+        myIns.setInscriptions_redoublant(inscriptionDto.getInscriptions_redoublant());
+        myIns.setInscriptions_classe_actuelle(inscriptionDto.getInscriptions_classe_actuelle());
+        myIns.setInscriptions_classe_precedente(inscriptionDto.getInscriptions_classe_precedente());
+        myIns.setInscriptions_derniereclasse_religieuse(inscriptionDto.getInscriptions_derniereclasse_religieuse());
+        myIns.setInscriptionsdate_modification(LocalDate.now());
+
+    }
+
+    public  String checkInfosAjour( Long idIns){
+        String mess= null ;
+        Inscriptions myIns= new Inscriptions() ;
+        myIns =Inscriptions.findById(idIns) ;
+        if((myIns.getInscriptions_boursier()==null )||( myIns.getInscriptions_boursier().equals(""))) {
+            mess= "INFORMATIONS INCOMPLETES" ;
+        } else if ((myIns.getInscriptions_redoublant()==null )||( myIns.getInscriptions_redoublant().equals(""))) {
+            mess= "INFORMATIONS INCOMPLETES" ;
+        }
+        else if ((myIns.getInscriptions_classe_actuelle()==null )||( myIns.getInscriptions_classe_actuelle().equals(""))) {
+            mess= "INFORMATIONS INCOMPLETES" ;
+        }
+        else if ((myIns.getInscriptions_classe_precedente()==null )||( myIns.getInscriptions_classe_precedente().equals(""))) {
+            mess= "INFORMATIONS INCOMPLETES" ;
+        }
+        else if ((myIns.getInscriptions_derniereclasse_religieuse()==null )||( myIns.getInscriptions_derniereclasse_religieuse().equals(""))) {
+            mess= "INFORMATIONS INCOMPLETES" ;
+        }
+        else if ((myIns.getPhoto_eleve()==null )) {
+            mess= "INFORMATIONS INCOMPLETES" ;
+        }
+        else if ((myIns.getInscriptions_ecole_origine()==null || myIns.getInscriptions_ecole_origine().equals("") )) {
+            mess= "INFORMATIONS INCOMPLETES" ;
+        } else {
+            mess= "VOS INFORMATIONS SONT A JOUR" ;
+        }
+       return mess ;
+
+    }
 
    public  void updateIns(InscriptionDto inscriptionDto){
 

@@ -128,6 +128,26 @@ public class InscriptionRessource {
         return   Response.ok(String.format("Inscription  %s mis à jour",inscriptionDto.getInscriptionsid())).build();
     }
 
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Transactional
+    @Path("/verifier-infos-a-jour/{idInscrip}")
+    public String checkInfosAjour(@PathParam("idInscrip") Long  idInscrip) {
+         return   matService.checkInfosAjour(idInscrip);
+    }
+
+
+    @PUT
+    @Produces(MediaType.TEXT_PLAIN)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/infos-complementaires")
+    @Transactional
+    public Response updateInfosComplementaire(InscriptionDto inscriptionDto) {
+        matService.updateInfosComplementaire(inscriptionDto);
+        return   Response.ok(String.format("Inscription  %s mis à jour",inscriptionDto.getInscriptionsid())).build();
+    }
+
     @PUT
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_JSON)

@@ -40,7 +40,6 @@ public class EleveService implements PanacheRepositoryBase<eleve, Long> {
        String messageRetour ="" ;
        List<String> matriculeNonCreer = new ArrayList<>();
        for (int i = 0; i < lisImpo.size(); i++){
-
            //String myStatut= lisImpo.get(i).getStatut() ;
            String NewmyStatut ;
 System.out.println("Statut0 "+lisImpo.get(i).getStatut());
@@ -85,7 +84,6 @@ System.out.println("Statut0 "+lisImpo.get(i).getStatut());
                msexe = "MASCULIN";
 
            eleveDto.setEleveSexe(msexe);
-
            eleveDto.setElevenom(lisImpo.get(i).getNom());
            eleveDto.setEleveprenom(lisImpo.get(i).getPrenoms());
            System.out.println("Debut creation Date format ");
@@ -124,6 +122,7 @@ System.out.println("Statut0 "+lisImpo.get(i).getStatut());
            inscriptionDto.setInscriptions_statut_eleve(myStatutEleve);
            inscriptionDto.setIdentifiantEleve(elv.getEleveid());
            inscriptionDto.setInscriptions_type(myOperation);
+           System.out.println("regime+++ "+lisImpo.get(i).getRegime());
            inscriptionDto.setInscriptions_boursier(lisImpo.get(i).getRegime());
 
            if(lisImpo.get(i).getDateInscription()==null||lisImpo.get(i).getDateInscription().equals("")){
@@ -143,7 +142,7 @@ System.out.println("Statut0 "+lisImpo.get(i).getStatut());
 
 
 
-           System.out.println("Fin creation Insrip ");
+           System.out.println("Debut  creation Insrip "+inscriptionDto.toString());
            messageRetour=  inscriptionService.verifInscriptionImporter(inscriptionDto,idEcole,elv.getEleve_matricule(),idAnneeScolaire);
 
            if(!messageRetour.equals("DEMANDE D'INSCRIPTION EFFECTUEE AVEC SUCCES!")){

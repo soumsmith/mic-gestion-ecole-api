@@ -13,7 +13,19 @@ public class parametre extends PanacheEntityBase {
     @Basic(fetch = FetchType.LAZY)
     @Column(length=100000)
     private byte[] image ;
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    @Column(length=100000)
+    private byte[] filigramme ;
     private  String libelle;
+
+    public byte[] getFiligramme() {
+        return filigramme;
+    }
+
+    public void setFiligramme(byte[] filigramme) {
+        this.filigramme = filigramme;
+    }
 
     public Long getIdparametre() {
         return idparametre;

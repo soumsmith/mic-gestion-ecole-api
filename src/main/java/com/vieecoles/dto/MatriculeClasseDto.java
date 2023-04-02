@@ -4,6 +4,9 @@ public class MatriculeClasseDto {
     String matricule;
     String classe ;
 
+    public MatriculeClasseDto() {
+    }
+
     public MatriculeClasseDto(String matricule, String classe) {
         this.matricule = matricule;
         this.classe = classe;
