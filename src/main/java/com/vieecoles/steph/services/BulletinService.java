@@ -178,7 +178,8 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 				bulletin.setBoursier(infosInscriptionsEleve.getBoursier());
 				bulletin.setLv2(infosInscriptionsEleve.getLv2());
 				bulletin.setNumDecisionAffecte(infosInscriptionsEleve.getNumDecisionAffecte());
-				bulletin.setEcoleOrigine(infosInscriptionsEleve.getTransfert());
+				bulletin.setEcoleOrigine(infosInscriptionsEleve.getEcoleOrigine());
+				bulletin.setTransfert(infosInscriptionsEleve.getTransfert());
 			}
 
 			Bulletin bltDb = null;
