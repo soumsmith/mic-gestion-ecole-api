@@ -92,6 +92,7 @@ public class MatiereService implements PanacheRepositoryBase<Matiere, Long> {
 		dto.setCoef(matiere.getCoef());
 		dto.setAppreciation(matiere.getAppreciation());
 		dto.setNumOrdre(matiere.getNumOrdre());
+		dto.setBonus(matiere.getBonus());
 		dto.setMatiereParent(
 				matiere.getMatiereParent() != null ? Matiere.findById(Long.parseLong(matiere.getMatiereParent()))
 						: null);
@@ -116,6 +117,7 @@ public class MatiereService implements PanacheRepositoryBase<Matiere, Long> {
 		matiere.setAppreciation(matiereDto.getAppreciation());
 		matiere.setCategorie(matiereDto.getCategorie());
 		matiere.setNumOrdre(matiereDto.getNumOrdre());
+		matiere.setBonus(matiereDto.getBonus());
 
 		if (matiereDto.getMatiereParent().getId() != 0)
 			matiere.setMatiereParent(matiereDto.getMatiereParent().getId().toString());
@@ -126,27 +128,28 @@ public class MatiereService implements PanacheRepositoryBase<Matiere, Long> {
 	}
 
 	@Transactional
-	public Matiere update(Matiere ev) {
+	public Matiere update(Matiere matiere) {
 
 		Gson g = new Gson();
-		System.out.println(g.toJson(ev));
+		System.out.println(g.toJson(matiere));
 
-		Matiere entity = Matiere.findById(ev.getId());
+		Matiere entity = Matiere.findById(matiere.getId());
 		if (entity == null) {
 			throw new NotFoundException();
 		}
-		entity.setId(ev.getId());
-		entity.setCode(ev.getCode());
+		entity.setId(matiere.getId());
+		entity.setCode(matiere.getCode());
 //		entity.setDate(ev.getDate());
 //		entity.setDateLimite(ev.getDateLimite());
 //		entity.setDuree(ev.getDuree());
 //		entity.setEtat(ev.getEtat());
-		entity.setPec(ev.getPec());
-		entity.setLibelle(ev.getLibelle());
-		entity.setNiveauEnseignement(ev.getNiveauEnseignement());
-		entity.setMatiereParent(ev.getMatiereParent());
-		entity.setCategorie(ev.getCategorie());
-		entity.setNumOrdre(ev.getNumOrdre());
+		entity.setPec(matiere.getPec());
+		entity.setLibelle(matiere.getLibelle());
+		entity.setNiveauEnseignement(matiere.getNiveauEnseignement());
+		entity.setMatiereParent(matiere.getMatiereParent());
+		entity.setCategorie(matiere.getCategorie());
+		entity.setNumOrdre(matiere.getNumOrdre());
+		entity.setBonus(matiere.getBonus());
 
 		return entity;
 	}
