@@ -22,6 +22,8 @@ public class InscriptionDto {
     private  String  inscriptions_langue_vivante ;
     private  String inscriptions_contact1 ;
     private  String inscriptions_contact2 ;
+    private  String transfert ;
+    private String num_decision_affecte ;
     @Enumerated(EnumType.STRING)
     private Inscriptions.statusEleve inscriptions_statut_eleve ;
     @Enumerated(EnumType.STRING)
@@ -38,9 +40,23 @@ public class InscriptionDto {
     private  Long identifiantAnnee_scolaire ;
     private Long identifiantBranche ;
 
+    public String getTransfert() {
+        return transfert;
+    }
+
+    public void setTransfert(String transfert) {
+        this.transfert = transfert;
+    }
 
     private List<Long> libellehandicap = new ArrayList<>();
 
+    public String getNum_decision_affecte() {
+        return num_decision_affecte;
+    }
+
+    public void setNum_decision_affecte(String num_decision_affecte) {
+        this.num_decision_affecte = num_decision_affecte;
+    }
 
     public InscriptionDto() {
     }

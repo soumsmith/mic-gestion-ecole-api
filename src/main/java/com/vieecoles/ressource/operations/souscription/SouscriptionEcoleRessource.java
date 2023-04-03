@@ -4,6 +4,9 @@ import com.vieecoles.dto.*;
 import com.vieecoles.entities.operations.Inscriptions;
 import com.vieecoles.entities.operations.ecole;
 import com.vieecoles.entities.operations.sousc_atten_etabliss;
+import com.vieecoles.entities.r_directeur_des_etudes;
+import com.vieecoles.entities.r_info_etablissement;
+import com.vieecoles.entities.r_info_fondateur;
 import com.vieecoles.services.personnels.PersonnelService;
 import com.vieecoles.services.souscription.SousceecoleService;
 import org.apache.commons.io.IOUtils;
@@ -139,9 +142,9 @@ public class SouscriptionEcoleRessource {
     @PUT
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes({MediaType.APPLICATION_JSON,MediaType.MULTIPART_FORM_DATA})
-    @Path("/charger-photo-etablissement/{inscriptionId}")
+    @Path("/charger-photo-etablissement/{inscriptionId}/{signataire}")
     @Transactional
-    public Response chargerPhoto(@MultipartForm MultipartFormDataInput input, @PathParam("inscriptionId") String   inscriptionId ) {
+    public Response chargerPhoto(@MultipartForm MultipartFormDataInput input,  @PathParam("inscriptionId") String   inscriptionId ,@PathParam("signataire") String   signataire) {
         Map<String, List<InputPart>> uploadForm = input.getFormDataMap();
         List<String> fileNames = new ArrayList<>();
 
@@ -157,16 +160,47 @@ public class SouscriptionEcoleRessource {
                 System.out.println("File Name: " + fileName);
                 InputStream inputStream = inputPart.getBody(InputStream.class, null);
                 byte[] bytes = IOUtils.toByteArray(inputStream);
-                souscPersonnelService.chargerPhotoBulletinEcole(bytes,inscriptionId) ;
+                souscPersonnelService.chargerPhotoBulletinEcole(bytes,inscriptionId,signataire) ;
                 //matService.chargerPhoto(bytes,inscriptionId);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
 
+        return   Response.ok(String.format("Inscription  %s mis à jour",inscriptionId)).build();
+    }
+    @PUT
+    @Produces(MediaType.TEXT_PLAIN)
+    @Consumes({MediaType.APPLICATION_JSON,MediaType.MULTIPART_FORM_DATA})
+    @Path("/charger-filigrane-etablissement/{inscriptionId}")
+    @Transactional
+    public Response chargerFiligrane(@MultipartForm MultipartFormDataInput input, @PathParam("inscriptionId") String   inscriptionId ) {
+        Map<String, List<InputPart>> uploadForm = input.getFormDataMap();
+        List<String> fileNames = new ArrayList<>();
+
+        List<InputPart> inputParts = uploadForm.get("file");
+        System.out.println("inputParts size: " + inputParts.size());
+        String fileName = null;
+        for (InputPart inputPart : inputParts) {
+            try {
+
+                MultivaluedMap<String, String> header = inputPart.getHeaders();
+                fileName = getFileName(header);
+                fileNames.add(fileName);
+                System.out.println("File Name: " + fileName);
+                InputStream inputStream = inputPart.getBody(InputStream.class, null);
+                byte[] bytes = IOUtils.toByteArray(inputStream);
+                souscPersonnelService.chargerFiligraneEcole(bytes,inscriptionId) ;
+                //matService.chargerPhoto(bytes,inscriptionId);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
         return   Response.ok(String.format("Inscription  %s mis à jour",inscriptionId)).build();
     }
+
+
 
     private String getFileName(MultivaluedMap<String, String> header) {
         String[] contentDisposition = header.getFirst("Content-Disposition").split(";");
@@ -188,6 +222,35 @@ public class SouscriptionEcoleRessource {
     @Transactional
     public String   CreerSouscription(sous_attent_ecoleDto mySouscrip) {
     return     souscPersonnelService.CreerSousCrietabliss(mySouscrip) ;
+
+    }
+    @POST
+    @Produces(MediaType.TEXT_PLAIN)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/rapport-infos-etablissement")
+    @Transactional
+    public String   rapportEtblissement(r_info_etablissement et) {
+        return     souscPersonnelService.creationMiseAjourInfosEtablisse(et) ;
+
+    }
+
+    @POST
+    @Produces(MediaType.TEXT_PLAIN)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/rapport-infos-directeur_etude")
+    @Transactional
+    public String   rapportDirecteurEtude(r_directeur_des_etudes et) {
+        return     souscPersonnelService.creationMiseAjourInfosDirecteurEtude(et);
+
+    }
+
+    @POST
+    @Produces(MediaType.TEXT_PLAIN)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/rapport-infos-fondateur")
+    @Transactional
+    public String   rapportFondateur(r_info_fondateur et) {
+        return     souscPersonnelService.creationMiseAjourInfosFondatateur(et);
 
     }
 

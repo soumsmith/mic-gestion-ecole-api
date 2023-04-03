@@ -421,6 +421,8 @@ public  void updatelibelleHandicap_inscrip (Long InscriptionId , Long oldHandica
         myIns.setInscriptions_classe_precedente(inscriptionDto.getInscriptions_classe_precedente());
         myIns.setInscriptions_derniereclasse_religieuse(inscriptionDto.getInscriptions_derniereclasse_religieuse());
         myIns.setInscriptionsdate_modification(LocalDate.now());
+        myIns.setTransfert(inscriptionDto.getTransfert());
+        myIns.setNum_decision_affecte(inscriptionDto.getNum_decision_affecte());
 
     }
 
@@ -442,6 +444,13 @@ public  void updatelibelleHandicap_inscrip (Long InscriptionId , Long oldHandica
         else if ((myIns.getInscriptions_derniereclasse_religieuse()==null )||( myIns.getInscriptions_derniereclasse_religieuse().equals(""))) {
             mess= "INFORMATIONS INCOMPLETES" ;
         }
+        else if ((myIns.getTransfert()==null )||( myIns.getTransfert().equals(""))) {
+            mess= "INFORMATIONS INCOMPLETES" ;
+        }
+        else if ((myIns.getNum_decision_affecte()==null )||( myIns.getNum_decision_affecte().equals(""))) {
+            mess= "INFORMATIONS INCOMPLETES" ;
+        }
+
         else if ((myIns.getPhoto_eleve()==null )) {
             mess= "INFORMATIONS INCOMPLETES" ;
         }
