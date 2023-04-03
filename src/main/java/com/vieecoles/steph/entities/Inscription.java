@@ -43,6 +43,10 @@ public class Inscription extends PanacheEntityBase{
 	private String afecte;
 	@Column(name="inscriptions_redoublant")
 	private String redoublant;
+	@Column(name = "inscriptions_ecole_origine")
+	private String ecoleOrigine; 
+	@Column(name = "transfert")
+	private String transfert;
 	@ManyToOne
 	@JoinColumn(name = "ecole_ecoleid")
 	private Ecole ecole;

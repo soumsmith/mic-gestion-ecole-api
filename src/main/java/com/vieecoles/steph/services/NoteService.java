@@ -18,7 +18,6 @@ import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Response;
 
 import com.google.gson.Gson;
-import com.vieecoles.entities.matiere;
 import com.vieecoles.steph.dto.MoyenneEleveDto;
 import com.vieecoles.steph.entities.Classe;
 import com.vieecoles.steph.entities.ClasseEleve;
@@ -232,11 +231,13 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 						if (filter.contains(note.getEvaluation().getMatiere().getCode())) {
 //					if (notesMatiereGroup.containsKey(note.getEvaluation().getMatiere())) {
 							logger.info("**** upd ****>" + note.getEvaluation().getMatiere().getCode());
+//						logger.info(g.toJson(notesMatiereGroup));
+//						logger.info("----------");
+//						logger.info(g.toJson(filter));
 							notesMatiereGroup.get(note.getEvaluation().getMatiere()).add(note);
 //						System.out.println("----------------------------");
 //						System.out.println(g.toJson(note.getEvaluation().getMatiere()));
 //						logger.info(String.format("%s - %s - %s", entry.getKey().getMatricule(),note.getEvaluation().getMatiere(),note.getNote()));
-//						logger.info(g.toJson(notesMatiereGroup));
 						} else {
 							logger.info("<*** new *****" + note.getEvaluation().getMatiere().getCode());
 							notesTemp = new ArrayList<Notes>();
@@ -258,6 +259,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 							matiereTemp.setCategorie(note.getEvaluation().getMatiere().getCategorie());
 							matiereTemp.setNumOrdre(note.getEvaluation().getMatiere().getNumOrdre());
 							matiereTemp.setMatiereParent(note.getEvaluation().getMatiere().getMatiereParent());
+							matiereTemp.setBonus(note.getEvaluation().getMatiere().getBonus());
 							;
 //						System.out.println(g.toJson(matiereTemp));
 //						System.out.println("----------------------");
@@ -401,10 +403,27 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 					moy = matiere.getMoyenne();
 					logger.info(matiere + "+++");
 					coef = Double.parseDouble(matiere.getCoef() == null ? "1" : matiere.getCoef());
+					if(matiere.getCoef() == null)
+						matiere.setCoef("1");
+					
 					moyPond = (moy * coef);
 					moyTotPond += moyPond;
 					coefTot += Double.parseDouble(matiere.getCoef() == null ? "1" : matiere.getCoef());
 					logger.info(String.format("moy %s --- coef %s ---- moy pondere --> %s", moy, coef, moyPond));
+				}else if(matiere.getBonus()!=null && matiere.getBonus() == 1) {
+					moy = matiere.getMoyenne();
+					logger.info(matiere + "+++ is matiere bonus");
+					coef = Double.parseDouble(matiere.getCoef() == null ? "1" : matiere.getCoef());
+					if(matiere.getCoef() == null)
+						matiere.setCoef("1");
+					
+					if(moy > 10)
+						moyPond = moy-10;
+					else
+						moyPond = 0.0;
+					
+					moyTotPond += moyPond;
+//					coefTot += Double.parseDouble(matiere.getCoef() == null ? "1" : matiere.getCoef());
 				}
 			}
 			if (coefTot == 0.0)

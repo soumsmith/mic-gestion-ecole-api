@@ -29,6 +29,8 @@ public class Ecole extends PanacheEntityBase{
 	private String tel;
 	@Column(name = "ecole_statut")
 	private String statut;
+	@Column(name = "nom_signataire")
+	private String nomSignataire;
 	@ManyToOne
 	@JoinColumn(name = "Niveau_Enseignement_id")
 	private NiveauEnseignement niveauEnseignement;

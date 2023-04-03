@@ -14,6 +14,7 @@ public class MatiereDto {
 	private String code;
 	private String libelle;
 	private Integer pec;
+	private Integer bonus;
 	private NiveauEnseignement niveauEnseignement;
 	private Double moyenne;
 	private String rang;

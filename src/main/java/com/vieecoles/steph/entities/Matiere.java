@@ -30,6 +30,7 @@ public class Matiere extends PanacheEntityBase {
     private  String libelle;
 	
 	private Integer pec;
+	private Integer bonus;
 	@ManyToOne
 	@JoinColumn(name = "niveau_enseign_id")
 	private NiveauEnseignement niveauEnseignement; 
