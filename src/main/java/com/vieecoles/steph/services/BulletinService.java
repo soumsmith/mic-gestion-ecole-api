@@ -259,6 +259,8 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 					flag.setCategorieMatiere(entry.getKey().getCategorie().getLibelle());
 					flag.setCategorie(entry.getKey().getCategorie().getCode());
 					flag.setBulletin(bulletin);
+					flag.setBonus(entry.getKey().getBonus());
+					flag.setPec(entry.getKey().getPec());
 					logger.info("--> Categorie"+entry.getKey().getCategorie().getLibelle());
 					// Ajout de l'enseignant de la matiere
 					PersonnelMatiereClasse pers = personnelMatiereClasseService.findProfesseurByMatiereAndClasse(Long.parseLong(annee), Long.parseLong(classe), entry.getKey().getId());
