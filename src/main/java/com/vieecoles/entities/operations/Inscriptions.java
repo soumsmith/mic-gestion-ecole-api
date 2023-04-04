@@ -28,6 +28,7 @@ public class Inscriptions extends PanacheEntityBase {
     private  String inscriptions_contact1 ;
     private  String inscriptions_contact2 ;
     private String num_decision_affecte;
+    private  String transfert ;
     @Lob @Basic(fetch = FetchType.LAZY)
     @Column(length=100000)
     private byte[] photo_eleve ;
@@ -40,6 +41,14 @@ public class Inscriptions extends PanacheEntityBase {
    private status inscriptions_status ;
    private LocalDate inscriptionsdate_creation ;
    private LocalDate inscriptionsdate_modification ;
+
+    public String getTransfert() {
+        return transfert;
+    }
+
+    public void setTransfert(String transfert) {
+        this.transfert = transfert;
+    }
 
     @Enumerated(EnumType.STRING)
    private processus inscriptions_processus ;

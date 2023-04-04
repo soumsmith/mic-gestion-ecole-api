@@ -27,15 +27,35 @@ public class sousc_atten_etabliss extends PanacheEntityBase {
     private  String sousc_atten_etabliss_lien_logo ;
     private Long Niveau_Enseignement_id ;
     private  int connecte ;
+
     @Lob @Basic(fetch = FetchType.LAZY)
     @Column(length=100000)
     private byte[] logoBlob ;
 
+    @Lob @Basic(fetch = FetchType.LAZY)
+    @Column(length=100000)
+    private byte[] filigramme ;
+    private String nom_signataire ;
     @Enumerated(EnumType.STRING)
     private Inscriptions.status sousc_atten_etabliss_statut ;
 
+    public byte[] getFiligramme() {
+        return filigramme;
+    }
 
-   private  Long sous_attent_personn_sous_attent_personnid ;
+    public String getNom_signataire() {
+        return nom_signataire;
+    }
+
+    public void setNom_signataire(String nom_signataire) {
+        this.nom_signataire = nom_signataire;
+    }
+
+    public void setFiligramme(byte[] filigramme) {
+        this.filigramme = filigramme;
+    }
+
+    private  Long sous_attent_personn_sous_attent_personnid ;
 
     public int getConnecte() {
         return connecte;

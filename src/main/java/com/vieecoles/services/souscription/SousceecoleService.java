@@ -2,9 +2,7 @@ package com.vieecoles.services.souscription;
 
 import com.vieecoles.dto.*;
 
-import com.vieecoles.entities.Zone;
-import com.vieecoles.entities.fonction;
-import com.vieecoles.entities.utilisateur;
+import com.vieecoles.entities.*;
 import com.vieecoles.entities.operations.*;
 
 import com.vieecoles.services.connexion.connexionService;
@@ -28,6 +26,69 @@ public class SousceecoleService implements PanacheRepositoryBase<sousc_atten_eta
     connexionService myconnexionService ;
     @Inject
     SouscPersonnelService souscPersonnelService ;
+    public String creationMiseAjourInfosFondatateur(r_info_fondateur fondateur){
+        r_info_fondateur fondateur1 = new r_info_fondateur() ;
+        fondateur1 = checkFondateur(fondateur.getFon_id_ecole()) ;
+        String message= null ;
+        if(fondateur1==null){
+            fondateur.persist();
+        } else {
+            fondateur1.setFon_adresse(fondateur.getFon_adresse());
+            fondateur1.setFon_cellulaire(fondateur.getFon_cellulaire());
+            fondateur1.setFon_telephone(fondateur.getFon_telephone());
+            fondateur1.setFon_email(fondateur.getFon_email());
+            fondateur1.setFon_nomPrenoms(fondateur.getFon_nomPrenoms());
+            fondateur1.setFon_code_etablissement(fondateur.getFon_code_etablissement());
+            fondateur1.setFon_fonction(fondateur.getFon_fonction());
+            fondateur1.setFon_id_ecole(fondateur.getFon_id_ecole());
+        }
+        message="INFORMATIONS ENREGISTREES" ;
+        return message ;
+    }
+
+    public String creationMiseAjourInfosEtablisse(r_info_etablissement et){
+        r_info_etablissement et1 = new r_info_etablissement() ;
+        et1 = checkEtablissement(et.getEtab_id_ecole()) ;
+        String message= null ;
+        if(et1==null){
+            et1.persist();
+        } else {
+            et1.setEtab_adresse(et.getEtab_fax());
+            et1.setEtab_fax(et.getEtab_fax());
+            et1.setEtab_code_etablissement(et.getEtab_code_etablissement());
+            et1.setEtab_denomination(et.getEtab_denomination());
+            et1.setEtab_adresse(et.getEtab_adresse());
+            et1.setEtab_id_ecole(et.getEtab_id_ecole());
+            et1.setEtab_email(et.getEtab_email());
+            et1.setEtab_situation_geographique(et.getEtab_situation_geographique());
+            et1.setEtab_num_decision_ouverture(et.getEtab_num_decision_ouverture());
+        }
+        message="INFORMATIONS ENREGISTREES" ;
+        return message ;
+    }
+    public String creationMiseAjourInfosDirecteurEtude(r_directeur_des_etudes et){
+        r_directeur_des_etudes et1 = new r_directeur_des_etudes() ;
+        et1 = checkDirecteurEtude(et.getDirect_id_ecole()) ;
+        String message= null ;
+        if(et1==null){
+            et1.persist();
+        } else {
+           et1.setAutoriSatDirecteurEtude(et.getAutoriSatDirecteurEtude());
+           et1.setEmailDirecteurEtude(et.getEmailDirecteurEtude());
+           et1.setDirect_adresse(et.getDirect_adresse());
+           et1.setDirect_cellulaire(et.getDirect_cellulaire());
+           et1.setDirect_code_etablissement(et.getDirect_code_etablissement());
+           et1.setDirect_email(et.getDirect_email());
+           et1.setDirect_nom_prenom(et.getDirect_nom_prenom());
+           et1.setDirect_telephone(et.getDirect_telephone());
+           et1.setDirect_numero_autorisation_enseigner(et.getDirect_numero_autorisation_enseigner());
+           et1.setDirect_id_ecole(et.getDirect_id_ecole());
+        }
+        message="INFORMATIONS ENREGISTREES" ;
+        return message ;
+    }
+
+
 
   @Transactional
    public String   CreerSousCrietabliss(sous_attent_ecoleDto souscriecole) {
@@ -90,6 +151,34 @@ return  messageRetour ;
 
        }
 
+    public  r_info_fondateur checkFondateur(Long idEcole){
+        try {
+            return (r_info_fondateur) em.createQuery("select o from r_info_fondateur o where o.fon_id_ecole =:idEcole")
+                    .setParameter("idEcole",idEcole)
+                    .getSingleResult();
+        } catch (Exception e) {
+            return  null;
+        }
+    }
+    public r_info_etablissement checkEtablissement(Long idEcole){
+        try {
+            return (r_info_etablissement) em.createQuery("select o from r_info_etablissement o where o.etab_id_ecole =:idEcole")
+                    .setParameter("idEcole",idEcole)
+                    .getSingleResult();
+        } catch (Exception e) {
+            return  null;
+        }
+    }
+
+    public r_directeur_des_etudes checkDirecteurEtude(Long idEcole){
+        try {
+            return (r_directeur_des_etudes) em.createQuery("select o from r_directeur_des_etudes o where o.direct_id_ecole =:idEcole")
+                    .setParameter("idEcole",idEcole)
+                    .getSingleResult();
+        } catch (Exception e) {
+            return  null;
+        }
+    }
 
 
      @Transactional
@@ -130,18 +219,30 @@ return  messageRetour ;
 
 
     }
-    public String chargerPhotoBulletinEcole(byte[] bytes,String codeEcole){
+    public String chargerPhotoBulletinEcole(byte[] bytes,String codeEcole,String signataire){
       String message;
         sousc_atten_etabliss  sousEtabli= new sousc_atten_etabliss() ;
         ecole myEcole = new ecole() ;
         sousEtabli = checkExistEtabliss(codeEcole) ;
         myEcole = getEcoleIdBySouscrId(sousEtabli.getIdSOUS_ATTENT_ETABLISSEMENT()) ;
         sousEtabli.setLogoBlob(bytes);
+        sousEtabli.setNom_signataire(signataire);
         myEcole.setLogoBlob(bytes);
-        message="Photo chargée avec succès!";
+        myEcole.setNom_signataire(signataire);
+        message="Informations mises à jour avec succès!";
       return  message;
     }
-
+    public String chargerFiligraneEcole(byte[] bytes,String codeEcole){
+        String message;
+        sousc_atten_etabliss  sousEtabli= new sousc_atten_etabliss() ;
+        ecole myEcole = new ecole() ;
+        sousEtabli = checkExistEtabliss(codeEcole) ;
+        myEcole = getEcoleIdBySouscrId(sousEtabli.getIdSOUS_ATTENT_ETABLISSEMENT()) ;
+        sousEtabli.setFiligramme(bytes);
+        myEcole.setFiligramme(bytes);
+        message="Photo chargée avec succès!";
+        return  message;
+    }
     @Transactional
     public String modifierLesEcoles(Long souscripId ,String nom, String prenom, String contact1 ,String contact2 ,String email ,List<sous_attent_ecoleDto> listsouscr ) {
         modifierInfosPersonnel(souscripId,nom,prenom,contact1,contact2,email);

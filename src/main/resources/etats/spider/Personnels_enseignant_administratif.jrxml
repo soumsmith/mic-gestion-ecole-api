@@ -5885,7 +5885,7 @@ YWRkYmZhZTdmOw==]]>
 				<text><![CDATA[1.3.effectifs des enseignants par discipline et par cycle]]></text>
 			</staticText>
 			<frame>
-				<reportElement x="-8" y="350" width="583" height="30" uuid="10f7a5dd-9912-42ff-818c-9e37a7f79086">
+				<reportElement x="-12" y="351" width="583" height="30" uuid="10f7a5dd-9912-42ff-818c-9e37a7f79086">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 				</reportElement>
 				<box>
@@ -7015,7 +7015,7 @@ YWRkYmZhZTdmOw==]]>
 				</frame>
 			</frame>
 			<frame>
-				<reportElement x="-8" y="381" width="583" height="15" uuid="1817fa36-e18f-4238-b4cb-f4dbb1e525bc">
+				<reportElement x="-12" y="382" width="583" height="15" uuid="1817fa36-e18f-4238-b4cb-f4dbb1e525bc">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 				</reportElement>
 				<box>
@@ -7079,7 +7079,7 @@ YWRkYmZhZTdmOw==]]>
 						<textElement>
 							<font fontName="SansSerif" isBold="true"/>
 						</textElement>
-						<text><![CDATA[1c]]></text>
+						<text><![CDATA[]]></text>
 					</staticText>
 					<staticText>
 						<reportElement style="titre" x="20" y="0" width="20" height="15" uuid="50165ffe-9836-41a2-9cd7-48671855911e">
@@ -7102,7 +7102,7 @@ YWRkYmZhZTdmOw==]]>
 						<textElement>
 							<font fontName="SansSerif" isBold="true"/>
 						</textElement>
-						<text><![CDATA[2c]]></text>
+						<text><![CDATA[]]></text>
 					</staticText>
 				</frame>
 				<frame>
@@ -7136,7 +7136,7 @@ YWRkYmZhZTdmOw==]]>
 						<textElement>
 							<font fontName="SansSerif" isBold="true"/>
 						</textElement>
-						<text><![CDATA[1c]]></text>
+						<text><![CDATA[]]></text>
 					</staticText>
 					<staticText>
 						<reportElement style="titre" x="20" y="0" width="20" height="15" uuid="6887c5cf-2296-4f78-8a69-eb65114a8b70">
@@ -7158,7 +7158,7 @@ YWRkYmZhZTdmOw==]]>
 						<textElement>
 							<font fontName="SansSerif" isBold="true"/>
 						</textElement>
-						<text><![CDATA[2c]]></text>
+						<text><![CDATA[]]></text>
 					</staticText>
 				</frame>
 				<frame>
@@ -7192,7 +7192,7 @@ YWRkYmZhZTdmOw==]]>
 						<textElement>
 							<font fontName="SansSerif" isBold="true"/>
 						</textElement>
-						<text><![CDATA[1c]]></text>
+						<text><![CDATA[]]></text>
 					</staticText>
 					<staticText>
 						<reportElement style="titre" x="20" y="0" width="20" height="15" uuid="c7a856b2-37d7-434c-bb13-2d336976acef">
@@ -7214,7 +7214,7 @@ YWRkYmZhZTdmOw==]]>
 						<textElement>
 							<font fontName="SansSerif" isBold="true"/>
 						</textElement>
-						<text><![CDATA[2c]]></text>
+						<text><![CDATA[]]></text>
 					</staticText>
 				</frame>
 				<frame>
@@ -7248,7 +7248,7 @@ YWRkYmZhZTdmOw==]]>
 						<textElement>
 							<font fontName="SansSerif" isBold="true"/>
 						</textElement>
-						<text><![CDATA[1c]]></text>
+						<text><![CDATA[]]></text>
 					</staticText>
 					<staticText>
 						<reportElement style="titre" x="20" y="0" width="20" height="15" uuid="edc072bc-e706-4d08-a47a-ce5dfb3755f4">
@@ -7270,7 +7270,7 @@ YWRkYmZhZTdmOw==]]>
 						<textElement>
 							<font fontName="SansSerif" isBold="true"/>
 						</textElement>
-						<text><![CDATA[2c]]></text>
+						<text><![CDATA[]]></text>
 					</staticText>
 				</frame>
 				<frame>
@@ -7304,7 +7304,7 @@ YWRkYmZhZTdmOw==]]>
 						<textElement>
 							<font fontName="SansSerif" isBold="true"/>
 						</textElement>
-						<text><![CDATA[1c]]></text>
+						<text><![CDATA[]]></text>
 					</staticText>
 					<staticText>
 						<reportElement style="titre" x="20" y="0" width="20" height="15" uuid="d8d8f81e-6808-45c0-a355-e91eb616a6e6">
@@ -7326,7 +7326,7 @@ YWRkYmZhZTdmOw==]]>
 						<textElement>
 							<font fontName="SansSerif" isBold="true"/>
 						</textElement>
-						<text><![CDATA[2c]]></text>
+						<text><![CDATA[]]></text>
 					</staticText>
 				</frame>
 				<frame>
@@ -7360,7 +7360,7 @@ YWRkYmZhZTdmOw==]]>
 						<textElement>
 							<font fontName="SansSerif" isBold="true"/>
 						</textElement>
-						<text><![CDATA[1c]]></text>
+						<text><![CDATA[]]></text>
 					</staticText>
 					<staticText>
 						<reportElement style="titre" x="20" y="0" width="20" height="15" uuid="3b8f47a8-38af-48cc-8541-a6606bb839b2">
@@ -7382,7 +7382,7 @@ YWRkYmZhZTdmOw==]]>
 						<textElement>
 							<font fontName="SansSerif" isBold="true"/>
 						</textElement>
-						<text><![CDATA[2c]]></text>
+						<text><![CDATA[]]></text>
 					</staticText>
 				</frame>
 				<frame>
@@ -7416,7 +7416,7 @@ YWRkYmZhZTdmOw==]]>
 						<textElement>
 							<font fontName="SansSerif" isBold="true"/>
 						</textElement>
-						<text><![CDATA[1c]]></text>
+						<text><![CDATA[]]></text>
 					</staticText>
 					<staticText>
 						<reportElement style="titre" x="20" y="0" width="20" height="15" uuid="dc181a48-f5ad-4dc8-8254-9af0113fa352">
@@ -7438,7 +7438,7 @@ YWRkYmZhZTdmOw==]]>
 						<textElement>
 							<font fontName="SansSerif" isBold="true"/>
 						</textElement>
-						<text><![CDATA[2c]]></text>
+						<text><![CDATA[]]></text>
 					</staticText>
 				</frame>
 				<frame>
@@ -7472,7 +7472,7 @@ YWRkYmZhZTdmOw==]]>
 						<textElement>
 							<font fontName="SansSerif" isBold="true"/>
 						</textElement>
-						<text><![CDATA[1c]]></text>
+						<text><![CDATA[]]></text>
 					</staticText>
 					<staticText>
 						<reportElement style="titre" x="20" y="0" width="20" height="15" uuid="f5bb640b-5ec3-491c-98d9-12e75c7da917">
@@ -7494,7 +7494,7 @@ YWRkYmZhZTdmOw==]]>
 						<textElement>
 							<font fontName="SansSerif" isBold="true"/>
 						</textElement>
-						<text><![CDATA[2c]]></text>
+						<text><![CDATA[]]></text>
 					</staticText>
 				</frame>
 				<frame>
@@ -7528,7 +7528,7 @@ YWRkYmZhZTdmOw==]]>
 						<textElement>
 							<font fontName="SansSerif" isBold="true"/>
 						</textElement>
-						<text><![CDATA[1c]]></text>
+						<text><![CDATA[]]></text>
 					</staticText>
 					<staticText>
 						<reportElement style="titre" x="20" y="0" width="20" height="15" uuid="e0c5c938-99c8-41ac-a7bf-2fad9a7b2a4c">
@@ -7550,7 +7550,7 @@ YWRkYmZhZTdmOw==]]>
 						<textElement>
 							<font fontName="SansSerif" isBold="true"/>
 						</textElement>
-						<text><![CDATA[2c]]></text>
+						<text><![CDATA[]]></text>
 					</staticText>
 				</frame>
 				<frame>
@@ -7584,7 +7584,7 @@ YWRkYmZhZTdmOw==]]>
 						<textElement>
 							<font fontName="SansSerif" isBold="true"/>
 						</textElement>
-						<text><![CDATA[1c]]></text>
+						<text><![CDATA[]]></text>
 					</staticText>
 					<staticText>
 						<reportElement style="titre" x="20" y="0" width="20" height="15" uuid="82a12717-385f-4e96-99e5-539fea9e239e">
@@ -7606,7 +7606,7 @@ YWRkYmZhZTdmOw==]]>
 						<textElement>
 							<font fontName="SansSerif" isBold="true"/>
 						</textElement>
-						<text><![CDATA[2c]]></text>
+						<text><![CDATA[]]></text>
 					</staticText>
 				</frame>
 				<frame>
@@ -7640,7 +7640,7 @@ YWRkYmZhZTdmOw==]]>
 						<textElement>
 							<font fontName="SansSerif" isBold="true"/>
 						</textElement>
-						<text><![CDATA[1c]]></text>
+						<text><![CDATA[]]></text>
 					</staticText>
 					<staticText>
 						<reportElement style="titre" x="20" y="0" width="20" height="15" uuid="9dd74aab-04c3-4c26-9de0-8fb99eed0f75">
@@ -7662,7 +7662,7 @@ YWRkYmZhZTdmOw==]]>
 						<textElement>
 							<font fontName="SansSerif" isBold="true"/>
 						</textElement>
-						<text><![CDATA[2c]]></text>
+						<text><![CDATA[]]></text>
 					</staticText>
 				</frame>
 				<frame>
@@ -7696,7 +7696,7 @@ YWRkYmZhZTdmOw==]]>
 						<textElement>
 							<font fontName="SansSerif" isBold="true"/>
 						</textElement>
-						<text><![CDATA[1c]]></text>
+						<text><![CDATA[]]></text>
 					</staticText>
 					<staticText>
 						<reportElement style="titre" x="20" y="0" width="20" height="15" uuid="9635d13f-76fe-43c3-8d1d-3605b97fa1af">
@@ -7718,7 +7718,7 @@ YWRkYmZhZTdmOw==]]>
 						<textElement>
 							<font fontName="SansSerif" isBold="true"/>
 						</textElement>
-						<text><![CDATA[2c]]></text>
+						<text><![CDATA[]]></text>
 					</staticText>
 				</frame>
 				<frame>
@@ -7752,7 +7752,7 @@ YWRkYmZhZTdmOw==]]>
 						<textElement>
 							<font fontName="SansSerif" isBold="true"/>
 						</textElement>
-						<text><![CDATA[1c]]></text>
+						<text><![CDATA[]]></text>
 					</staticText>
 					<staticText>
 						<reportElement style="titre" x="20" y="0" width="20" height="15" uuid="224070cd-5794-42ac-ba7d-82ef6b3672b4">
@@ -7774,7 +7774,7 @@ YWRkYmZhZTdmOw==]]>
 						<textElement>
 							<font fontName="SansSerif" isBold="true"/>
 						</textElement>
-						<text><![CDATA[2c]]></text>
+						<text><![CDATA[]]></text>
 					</staticText>
 				</frame>
 				<frame>
@@ -7809,7 +7809,7 @@ YWRkYmZhZTdmOw==]]>
 						<textElement>
 							<font fontName="SansSerif" isBold="true"/>
 						</textElement>
-						<text><![CDATA[1c]]></text>
+						<text><![CDATA[]]></text>
 					</staticText>
 					<staticText>
 						<reportElement style="titre" x="15" y="0" width="15" height="15" uuid="fbbecd37-aa2a-4585-9bc0-e308e78025c9">
@@ -7832,7 +7832,7 @@ YWRkYmZhZTdmOw==]]>
 						<textElement>
 							<font fontName="SansSerif" isBold="true"/>
 						</textElement>
-						<text><![CDATA[2c]]></text>
+						<text><![CDATA[]]></text>
 					</staticText>
 				</frame>
 			</frame>

@@ -112,14 +112,29 @@ public class bulletinRessource {
         byte[] imagebytes = myIns.getPhoto_eleve() ;
         byte[] imagebytes2 = myEcole.getLogoBlob() ;
         byte[] imagebytes3 = mpara.getImage() ;
-        byte[] imagebytes4 = mpara.getFiligramme() ;
-        BufferedImage photo_eleve= ImageIO.read(new ByteArrayInputStream(imagebytes));
-        BufferedImage logo= ImageIO.read(new ByteArrayInputStream(imagebytes2));
-        BufferedImage amoirie = ImageIO.read(new ByteArrayInputStream(imagebytes3));
-        BufferedImage bg = ImageIO.read(new ByteArrayInputStream(imagebytes4)) ;
+        byte[] imagebytes4 = myEcole.getFiligramme() ;
+        BufferedImage photo_eleve = null,logo= null ,amoirie= null,bg= null;
+
+        if(imagebytes!=null){
+          photo_eleve= ImageIO.read(new ByteArrayInputStream(imagebytes));
+        }
+        if(imagebytes2!=null){
+            logo= ImageIO.read(new ByteArrayInputStream(imagebytes2));
+        }
+
+        if(imagebytes3!=null){
+            amoirie = ImageIO.read(new ByteArrayInputStream(imagebytes3));
+        }
+
+        if(imagebytes4!=null){
+            bg = ImageIO.read(new ByteArrayInputStream(imagebytes4)) ;
+        }
+
+
+
 
         System.out.println("myEcoleImage "+imagebytes2.toString());
-        TypedQuery<BulletinSelectDto> q = em.createQuery( "SELECT new com.vieecoles.projection.BulletinSelectDto(b.ecoleId,b.nomEcole,b.statutEcole,b.urlLogo,b.adresseEcole,b.telEcole,b.anneeLibelle, b.libellePeriode,b.matricule,b.nom, b.prenoms, b.sexe,b.dateNaissance,b.lieuNaissance,b.nationalite,b.redoublant,b.boursier,b.affecte,b.libelleClasse,b.effectif,b.totalCoef,b.totalMoyCoef,b.nomPrenomProfPrincipal,b.heuresAbsJustifiees,b.heuresAbsNonJustifiees,b.moyGeneral,b.moyMax,b.moyMin,b.moyAvg,b.moyAn,b.rangAn,b.appreciation,b.dateCreation,b.codeQr,b.statut,d.matiereLibelle,d.moyenne,d.rang,d.coef ,d.moyCoef,d.appreciation,d.categorie,d.num_ordre,b.rang,d.nom_prenom_professeur,d.categorieMatiere) from DetailBulletin  d join d.bulletin b where b.matricule=:matricule " +
+        TypedQuery<BulletinSelectDto> q = em.createQuery( "SELECT new com.vieecoles.projection.BulletinSelectDto(b.ecoleId,b.nomEcole,b.statutEcole,b.urlLogo,b.adresseEcole,b.telEcole,b.anneeLibelle, b.libellePeriode,b.matricule,b.nom, b.prenoms, b.sexe,b.dateNaissance,b.lieuNaissance,b.nationalite,b.redoublant,b.boursier,b.affecte,b.libelleClasse,b.effectif,b.totalCoef,b.totalMoyCoef,b.nomPrenomProfPrincipal,b.heuresAbsJustifiees,b.heuresAbsNonJustifiees,b.moyGeneral,b.moyMax,b.moyMin,b.moyAvg,b.moyAn,b.rangAn,b.appreciation,b.dateCreation,b.codeQr,b.statut,d.matiereLibelle,d.moyenne,d.rang,d.coef ,d.moyCoef,d.appreciation,d.categorie,d.num_ordre,CAST(b.rang as string ) ,d.nom_prenom_professeur,d.categorieMatiere,b.nomSignataire,CAST(d.bonus as string ),cast(d.pec as string) ) from DetailBulletin  d join d.bulletin b where b.matricule=:matricule " +
                 "and b.ecoleId=:idEcole and b.anneeLibelle=:libelleAnnee and b.libellePeriode=:libelleTrimetre order by d.num_ordre ASC  ", BulletinSelectDto.class);
         detailsBull = q.setParameter("matricule", matricule)
                 .setParameter("libelleAnnee", libelleAnnee)

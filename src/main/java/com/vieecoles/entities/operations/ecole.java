@@ -28,6 +28,7 @@ public class ecole extends PanacheEntityBase {
     private  String  ecole_adresse ;
     private  String  ecole_telephone ;
     private  String  ecole_statut ;
+
     //private Long ville_villeid ;
     private Long sousc_atten_etabliss_idSOUS_ATTENT_ETABLISSEMENT;
     private Long Niveau_Enseignement_id ;
@@ -36,6 +37,10 @@ public class ecole extends PanacheEntityBase {
     @Lob @Basic(fetch = FetchType.LAZY)
     @Column(length=100000)
     private byte[] logoBlob ;
+    @Lob @Basic(fetch = FetchType.LAZY)
+    @Column(length=100000)
+    private byte[] filigramme ;
+    private String nom_signataire ;
     /**
      * @return Long return the ecoleid
      */
@@ -48,6 +53,22 @@ public class ecole extends PanacheEntityBase {
      */
     public void setEcoleid(Long ecoleid) {
         this.ecoleid = ecoleid;
+    }
+
+    public byte[] getFiligramme() {
+        return filigramme;
+    }
+
+    public String getNom_signataire() {
+        return nom_signataire;
+    }
+
+    public void setNom_signataire(String nom_signataire) {
+        this.nom_signataire = nom_signataire;
+    }
+
+    public void setFiligramme(byte[] filigramme) {
+        this.filigramme = filigramme;
     }
 
     /**
