@@ -115,6 +115,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 		b.setEcoleOrigine(bulletin.getEcoleOrigine());
 		b.setNomSignataire(bulletin.getNomSignataire());
 		b.setTransfert(bulletin.getTransfert());
+		b.setRang(bulletin.getRang());
 	}
 
 	@Transactional
@@ -148,6 +149,8 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 			bulletin.setAnneeLibelle(anDb.getLibelle());
 			bulletin.setPeriodeId(periodeDb.getId());
 			bulletin.setLibellePeriode(periodeDb.getLibelle());
+//			System.out.println("rang ->"+me.getRang());
+//			bulletin.setRang(Integer.parseInt(me.getRang()));
 			// Ajout du professeur principal
 			PersonnelMatiereClasse pp = personnelMatiereClasseService.getPersonnelByClasseAndAnneeAndFonction(Long.parseLong(annee), Long.parseLong(classe), 1);
 			if(pp!=null) {
@@ -227,6 +230,8 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 					flag.setRang(Integer.valueOf(entry.getKey().getRang()));
 					flag.setCategorieMatiere(entry.getKey().getCategorie().getLibelle());
 					flag.setCategorie(entry.getKey().getCategorie().getCode());
+					flag.setBonus(entry.getKey().getBonus());
+					flag.setPec(entry.getKey().getPec());
 					logger.info(g.toJson(entry.getKey()));
 					flag.setNum_ordre(entry.getKey().getNumOrdre());
 					
@@ -348,6 +353,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 		// bul.setLibellePeriode(me.getPeriode().getLibelle());
 		bul.setLieuNaissance(me.getEleve().getLieuNaissance());
 		bul.setMatricule(me.getEleve().getMatricule());
+		bul.setRang(Integer.parseInt(me.getRang()));
 //		bul.setMoyAn(null);
 //		bul.setRangAn(null);
 //		bul.setMoyAvg(null);
