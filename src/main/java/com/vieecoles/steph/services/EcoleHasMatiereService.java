@@ -70,6 +70,7 @@ public class EcoleHasMatiereService implements PanacheRepositoryBase<EcoleHasMat
 			matiereEcole.setMatiere(matiere);
 			matiereEcole.setPec(matiere.getPec());
 			matiereEcole.setNumOrdre(matiere.getNumOrdre());
+			matiereEcole.setBonus(matiere.getBonus());
 			
 			// SetMatiere parent pour plus tard lorsque l'algo sera bien précis
 			
@@ -92,6 +93,7 @@ public class EcoleHasMatiereService implements PanacheRepositoryBase<EcoleHasMat
 		dto.setMatiere(ecoleMatiere.getMatiere());
 		dto.setEcole(ecoleMatiere.getEcole());
 		dto.setAlias(ecoleMatiere.getAliasLibelle());
+		dto.setBonus(ecoleMatiere.getBonus());
 //		dto.setRang(ecoleMatiere.getRang());
 //		dto.setCoef(ecoleMatiere.getCoef());
 //		dto.setAppreciation(ecoleMatiere.getAppreciation());
@@ -112,6 +114,7 @@ public class EcoleHasMatiereService implements PanacheRepositoryBase<EcoleHasMat
 //		entity.setDuree(ev.getDuree());
 //		entity.setEtat(ev.getEtat());
 		entity.setPec(ev.getPec());
+		entity.setBonus(ev.getBonus());
 
 		return entity;
 	}

@@ -220,6 +220,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 					logger.info("--> Modification de detail bulletin");
 					flag.setMatiereLibelle(entry.getKey().getLibelle());
 					flag.setMoyenne(CommonUtils.roundDouble(entry.getKey().getMoyenne(), 2));
+					moyCoef = entry.getKey().getMoyenne() * Double.parseDouble(entry.getKey().getCoef());
 					flag.setMoyCoef(CommonUtils.roundDouble(moyCoef, 2));
 					flag.setAppreciation(entry.getKey().getAppreciation());
 					flag.setCoef(Double.valueOf(entry.getKey().getCoef()));

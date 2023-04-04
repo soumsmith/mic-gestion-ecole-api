@@ -421,7 +421,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 						moyPond = moy-10;
 					else
 						moyPond = 0.0;
-					
+					matiere.setMoyenne(moyPond);
 					moyTotPond += moyPond;
 //					coefTot += Double.parseDouble(matiere.getCoef() == null ? "1" : matiere.getCoef());
 				}
