@@ -60,7 +60,7 @@ System.out.println("Statut0 "+lisImpo.get(i).getStatut());
            System.out.println("NiveauEnseignement "+NiveauEnseignement);
 
            myBranch= (Branche) em.createQuery("select o from Branche o  where o.libelle like :branche and o.niveauEnseignement.id=:idNiveauEnsei " )
-                   .setParameter("branche", lisImpo.get(i).getNiveau())
+                   .setParameter("branche", lisImpo.get(i).getNiveau().trim())
                    .setParameter("idNiveauEnsei", NiveauEnseignement)
                    .getSingleResult();
 

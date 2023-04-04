@@ -251,26 +251,28 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 	</field>
 	<field name="libelle_categorie" class="java.lang.String"/>
 	<field name="signataire" class="java.lang.String"/>
+	<field name="bonus" class="java.lang.String"/>
+	<field name="pec" class="java.lang.String"/>
 	<sortField name="matricule"/>
-	<variable name="TotalMoyenParCategParMatier" class="java.lang.Double" resetType="Group" resetGroup="MyCategorie">
-		<variableExpression><![CDATA[5.2/2.2]]></variableExpression>
+	<variable name="TotalMoyenParCategParMatier" class="java.lang.Double" resetType="Group" resetGroup="MyCategorie" calculation="Sum">
+		<variableExpression><![CDATA[$F{moyenne}]]></variableExpression>
 	</variable>
 	<variable name="TotalCoeffParCategParMatier" class="java.lang.Double" resetType="Group" resetGroup="MyCategorie" calculation="Sum">
-		<variableExpression><![CDATA[$F{coef}]]></variableExpression>
+		<variableExpression><![CDATA[$F{bonus}.equals("0")? $F{coef} : 0]]></variableExpression>
 	</variable>
 	<variable name="imageEcole" class="java.awt.Image"/>
 	<variable name="ImageEleve" class="java.awt.Image"/>
 	<variable name="TotalMoyeCoefParCategorie" class="java.lang.Double" resetType="Group" resetGroup="MyCategorie" calculation="Sum">
-		<variableExpression><![CDATA[$F{moy_coef}]]></variableExpression>
+		<variableExpression><![CDATA[$F{moyenne}*$F{coef}]]></variableExpression>
 	</variable>
 	<variable name="moyenXcoef" class="java.lang.Double" resetType="Group" resetGroup="MyCategorie" calculation="Sum">
 		<variableExpression><![CDATA[$F{moyenne}*$F{coef}]]></variableExpression>
 	</variable>
 	<variable name="TotauxCoefficient" class="java.lang.Double" calculation="Sum">
-		<variableExpression><![CDATA[$F{coef}]]></variableExpression>
+		<variableExpression><![CDATA[$F{pec}.equals("1")? $F{coef} : 0]]></variableExpression>
 	</variable>
 	<variable name="TotauxMoyenCoef" class="java.lang.Double" calculation="Sum">
-		<variableExpression><![CDATA[$F{moy_coef}]]></variableExpression>
+		<variableExpression><![CDATA[$F{pec}.equals("1")? $F{moyenne}*$F{coef} : $F{moyenne}]]></variableExpression>
 	</variable>
 	<group name="InfosPersonnelEleve"/>
 	<group name="DisciplineLettre"/>
@@ -307,7 +309,7 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 						</textElement>
 						<textFieldExpression><![CDATA["Bilan "+$F{libelle_categorie}]]></textFieldExpression>
 					</textField>
-					<textField evaluationTime="Group" evaluationGroup="MyCategorie" pattern="#,#00.00#;(#,#00.00#-)" isBlankWhenNull="true">
+					<textField pattern="#,#00.00#;(#,#00.00#-)" isBlankWhenNull="true">
 						<reportElement style="TotalCateg" x="188" y="0" width="43" height="15" uuid="d18d3cd5-4736-429b-91ed-b7c9ad359b00"/>
 						<textElement textAlignment="Center">
 							<font fontName="SansSerif"/>
@@ -599,7 +601,7 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 							<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						</reportElement>
-						<textElement textAlignment="Center">
+						<textElement textAlignment="Left">
 							<font fontName="SansSerif"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{nom}+' '+$F{prenoms}]]></textFieldExpression>
@@ -1070,6 +1072,7 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 						<font fontName="SansSerif" size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{moyenne}]]></textFieldExpression>
+					<patternExpression><![CDATA[$F{bonus}.equals("1") ? "+#": "##.##"]]></patternExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
 					<reportElement style="champsLibelle" x="231" y="0" width="43" height="15" isRemoveLineWhenBlank="true" uuid="0769c409-8245-46ef-83a7-1e78073c255f">
@@ -1087,9 +1090,9 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 					<textElement>
 						<font fontName="SansSerif" size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{coef}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{bonus}.equals("0")? $F{coef} : 0]]></textFieldExpression>
 				</textField>
-				<textField isBlankWhenNull="true">
+				<textField evaluationTime="Band" isBlankWhenNull="true">
 					<reportElement style="champsLibelle" x="274" y="0" width="43" height="15" isRemoveLineWhenBlank="true" uuid="bce375a3-3cae-4e5f-b66f-612cf0b45756">
 						<property name="com.jaspersoft.layout.grid.x" value="3"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
@@ -1105,7 +1108,7 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 					<textElement>
 						<font fontName="SansSerif" size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{moy_coef}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{bonus}.equals("0")?$F{moyenne}*$F{coef}:$F{moyenne}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
 					<reportElement style="champsLibelle" x="317" y="0" width="43" height="15" isRemoveLineWhenBlank="true" uuid="5c314687-6996-4f2b-a4f6-28bcc25ec57c">

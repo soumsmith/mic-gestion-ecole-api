@@ -48,7 +48,7 @@ public class TransfertsServices {
     public List<TransfertsDto> getTransfertParNiveau(Long idEcole , String niveau){
         List<TransfertsDto> classeNiveauDtoList = new ArrayList<>() ;
         try {
-            TypedQuery<TransfertsDto> q= em.createQuery("select new com.vieecoles.dto.TransfertsDto(o.nom,o.prenoms,o.libelleClasse,o.redoublant,o.dateNaissance,o.redoublant,o.numDecisionAffecte,o.ecole_origine,o.niveau,o.matricule) from Bulletin o where  o.ecoleId =:idEcole and  o.niveau=:niveau and o.transfert=:transfert ", TransfertsDto.class);
+            TypedQuery<TransfertsDto> q= em.createQuery("select new com.vieecoles.dto.TransfertsDto(o.nom,o.prenoms,o.libelleClasse,o.redoublant,o.dateNaissance,o.redoublant,o.numDecisionAffecte,o.ecoleOrigine,o.niveau,o.matricule) from Bulletin o where  o.ecoleId =:idEcole and  o.niveau=:niveau and o.transfert=:transfert ", TransfertsDto.class);
             classeNiveauDtoList = q.setParameter("idEcole",idEcole)
                                   .setParameter("niveau",niveau)
                                    .setParameter("transfert","O")

@@ -88,6 +88,8 @@ public class BulletinSelectDto {
     private String libelle_categorie ;
     private BufferedImage photo_eleve ;
     private String signataire ;
+    private  String bonus ;
+    private  String pec ;
 
     public String getSignataire() {
         return signataire;
@@ -100,6 +102,21 @@ public class BulletinSelectDto {
     public BulletinSelectDto() {
     }
 
+    public String getBonus() {
+        return bonus;
+    }
+
+    public void setBonus(String bonus) {
+        this.bonus = bonus;
+    }
+
+    public String getPec() {
+        return pec;
+    }
+
+    public void setPec(String pec) {
+        this.pec = pec;
+    }
 
     public void setNum_ordre(int num_ordre) {
         this.num_ordre = num_ordre;
@@ -167,7 +184,7 @@ public class BulletinSelectDto {
                              String heures_abs_non_just, Double moy_general, Double moy_max, Double moy_min, Double moy_avg,
                              Double moy_annuelle, Integer rang_annuelle, String appreciation_conseil, Date date_creation, String code_qr,
                              String statut, String libelle_matiere, Double moyenne, Integer rang, Double coef, Double moy_coef,
-                             String appreciation, String categorie, int num_ordre, Integer rangBulletin, String nom_prenom_professeur, String libelle_categorie,String signataire) {
+                             String appreciation, String categorie, int num_ordre, Integer rangBulletin, String nom_prenom_professeur, String libelle_categorie,String signataire,String bonus ,String pec) {
         this.id_ecole = id_ecole;
         this.nom_ecole = nom_ecole;
         this.statut_ecole = statut_ecole;
@@ -215,6 +232,8 @@ public class BulletinSelectDto {
         this.nom_prenom_professeur = nom_prenom_professeur;
         this.libelle_categorie= libelle_categorie ;
         this.signataire = signataire ;
+        this.bonus = bonus ;
+        this.pec = pec ;
 
     }
 
