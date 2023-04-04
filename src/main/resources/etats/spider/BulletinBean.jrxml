@@ -251,26 +251,28 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 	</field>
 	<field name="libelle_categorie" class="java.lang.String"/>
 	<field name="signataire" class="java.lang.String"/>
+	<field name="bonus" class="java.lang.String"/>
+	<field name="pec" class="java.lang.String"/>
 	<sortField name="matricule"/>
-	<variable name="TotalMoyenParCategParMatier" class="java.lang.Double" resetType="Group" resetGroup="MyCategorie">
-		<variableExpression><![CDATA[5.2/2.2]]></variableExpression>
+	<variable name="TotalMoyenParCategParMatier" class="java.lang.Double" resetType="Group" resetGroup="MyCategorie" calculation="Sum">
+		<variableExpression><![CDATA[$F{moyenne}]]></variableExpression>
 	</variable>
 	<variable name="TotalCoeffParCategParMatier" class="java.lang.Double" resetType="Group" resetGroup="MyCategorie" calculation="Sum">
-		<variableExpression><![CDATA[$F{coef}]]></variableExpression>
+		<variableExpression><![CDATA[$F{bonus}.equals("0")? $F{coef} : 0]]></variableExpression>
 	</variable>
 	<variable name="imageEcole" class="java.awt.Image"/>
 	<variable name="ImageEleve" class="java.awt.Image"/>
 	<variable name="TotalMoyeCoefParCategorie" class="java.lang.Double" resetType="Group" resetGroup="MyCategorie" calculation="Sum">
-		<variableExpression><![CDATA[$F{moy_coef}]]></variableExpression>
+		<variableExpression><![CDATA[$F{moyenne}*$F{coef}]]></variableExpression>
 	</variable>
 	<variable name="moyenXcoef" class="java.lang.Double" resetType="Group" resetGroup="MyCategorie" calculation="Sum">
 		<variableExpression><![CDATA[$F{moyenne}*$F{coef}]]></variableExpression>
 	</variable>
 	<variable name="TotauxCoefficient" class="java.lang.Double" calculation="Sum">
-		<variableExpression><![CDATA[$F{coef}]]></variableExpression>
+		<variableExpression><![CDATA[$F{pec}.equals("1")? $F{coef} : 0]]></variableExpression>
 	</variable>
 	<variable name="TotauxMoyenCoef" class="java.lang.Double" calculation="Sum">
-		<variableExpression><![CDATA[$F{moy_coef}]]></variableExpression>
+		<variableExpression><![CDATA[$F{pec}.equals("1")? $F{moyenne}*$F{coef} : $F{moyenne}]]></variableExpression>
 	</variable>
 	<group name="InfosPersonnelEleve"/>
 	<group name="DisciplineLettre"/>
@@ -307,7 +309,7 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 						</textElement>
 						<textFieldExpression><![CDATA["Bilan "+$F{libelle_categorie}]]></textFieldExpression>
 					</textField>
-					<textField evaluationTime="Group" evaluationGroup="MyCategorie" pattern="#,#00.00#;(#,#00.00#-)" isBlankWhenNull="true">
+					<textField pattern="#,#00.00#;(#,#00.00#-)" isBlankWhenNull="true">
 						<reportElement style="TotalCateg" x="188" y="0" width="43" height="15" uuid="d18d3cd5-4736-429b-91ed-b7c9ad359b00"/>
 						<textElement textAlignment="Center">
 							<font fontName="SansSerif"/>
@@ -599,7 +601,7 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 							<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						</reportElement>
-						<textElement textAlignment="Center">
+						<textElement textAlignment="Left">
 							<font fontName="SansSerif"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{nom}+' '+$F{prenoms}]]></textFieldExpression>
@@ -1070,6 +1072,7 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 						<font fontName="SansSerif" size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{moyenne}]]></textFieldExpression>
+					<patternExpression><![CDATA[$F{bonus}.equals("1") ? "+#": "##.##"]]></patternExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
 					<reportElement style="champsLibelle" x="231" y="0" width="43" height="15" isRemoveLineWhenBlank="true" uuid="0769c409-8245-46ef-83a7-1e78073c255f">
@@ -1087,9 +1090,9 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 					<textElement>
 						<font fontName="SansSerif" size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{coef}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{bonus}.equals("0")? $F{coef} : 0]]></textFieldExpression>
 				</textField>
-				<textField isBlankWhenNull="true">
+				<textField evaluationTime="Band" isBlankWhenNull="true">
 					<reportElement style="champsLibelle" x="274" y="0" width="43" height="15" isRemoveLineWhenBlank="true" uuid="bce375a3-3cae-4e5f-b66f-612cf0b45756">
 						<property name="com.jaspersoft.layout.grid.x" value="3"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
@@ -1105,7 +1108,7 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 					<textElement>
 						<font fontName="SansSerif" size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{moy_coef}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{bonus}.equals("0")?$F{moyenne}*$F{coef}:$F{moyenne}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
 					<reportElement style="champsLibelle" x="317" y="0" width="43" height="15" isRemoveLineWhenBlank="true" uuid="5c314687-6996-4f2b-a4f6-28bcc25ec57c">
@@ -1288,8 +1291,8 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 							<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 						</reportElement>
-						<staticText>
-							<reportElement style="champsLibelle" x="0" y="0" width="90" height="33" uuid="a6d84a54-3e93-4e04-8472-d67e1c3daf71">
+						<textField>
+							<reportElement style="champsLibelle" x="0" y="0" width="179" height="33" uuid="4bb11041-f0e4-4560-be6a-84b41dc8b24a">
 								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 								<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1302,26 +1305,10 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
 								<font fontName="SansSerif"/>
 							</textElement>
-							<text><![CDATA[Moyenne:]]></text>
-						</staticText>
-						<textField isBlankWhenNull="true">
-							<reportElement style="champsLibelle" x="90" y="0" width="89" height="33" uuid="82f861b9-b4df-4d65-aea5-ef891151c63e">
-								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
-								<property name="com.jaspersoft.layout.grid.y" value="-1"/>
-								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-								<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-								<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-								<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
-								<property name="com.jaspersoft.studio.unit.height" value="px"/>
-							</reportElement>
-							<textElement verticalAlignment="Middle">
-								<font fontName="SansSerif"/>
-							</textElement>
-							<textFieldExpression><![CDATA[$F{moy_general}]]></textFieldExpression>
+							<textFieldExpression><![CDATA["Moyenne: "+$F{moy_general}]]></textFieldExpression>
 						</textField>
-						<staticText>
-							<reportElement style="champsLibelle" x="0" y="33" width="90" height="32" uuid="ac32a242-f50e-443a-a315-213fad1e1bdb">
+						<textField>
+							<reportElement style="champsLibelle" x="0" y="33" width="179" height="32" uuid="f62b183d-91dc-4195-af6c-974764b4d78a">
 								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 								<property name="com.jaspersoft.layout.grid.y" value="1"/>
 								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1334,14 +1321,7 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
 								<font fontName="SansSerif"/>
 							</textElement>
-							<text><![CDATA[Rang]]></text>
-						</staticText>
-						<textField isBlankWhenNull="true">
-							<reportElement style="champsLibelle" x="90" y="33" width="89" height="32" uuid="7c5ddff7-1435-4ee3-b532-b962b4a62ff6"/>
-							<textElement>
-								<font fontName="SansSerif"/>
-							</textElement>
-							<textFieldExpression><![CDATA[$F{rangBulletin}]]></textFieldExpression>
+							<textFieldExpression><![CDATA["Rang: "+$F{rangBulletin}]]></textFieldExpression>
 						</textField>
 					</frame>
 					<frame>
