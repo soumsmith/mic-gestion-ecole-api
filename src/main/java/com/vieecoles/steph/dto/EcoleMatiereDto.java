@@ -14,5 +14,6 @@ public class EcoleMatiereDto {
 	private Ecole ecole;
 	private String alias;
 	private Integer pec;
+	private Integer bonus;
 	
 }
