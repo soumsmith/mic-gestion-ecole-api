@@ -1126,7 +1126,7 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 					<textElement>
 						<font fontName="SansSerif" size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{rang}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{rang}.equals("1") ?  $F{rang}+" èr(e)" :$F{rang}+" ème"]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
 					<reportElement style="champsLibelle" x="360" y="0" width="117" height="15" isRemoveLineWhenBlank="true" uuid="9b56321e-a818-455c-8464-c33caa23381e">
@@ -1292,36 +1292,43 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 						</reportElement>
 						<textField>
-							<reportElement style="champsLibelle" x="0" y="0" width="179" height="33" uuid="4bb11041-f0e4-4560-be6a-84b41dc8b24a">
-								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+							<reportElement style="champsLibelle" x="0" y="0" width="179" height="30" uuid="4bb11041-f0e4-4560-be6a-84b41dc8b24a">
+								<property name="com.jaspersoft.layout.grid.x" value="0"/>
 								<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
 								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
 								<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-								<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-								<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+								<property name="com.jaspersoft.layout.grid.colspan" value="2"/>
+								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							</reportElement>
-							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font fontName="SansSerif"/>
+							<textElement textAlignment="Left" verticalAlignment="Middle">
+								<font fontName="SansSerif" size="10" isBold="true"/>
 							</textElement>
 							<textFieldExpression><![CDATA["Moyenne: "+$F{moy_general}]]></textFieldExpression>
 						</textField>
-						<textField>
-							<reportElement style="champsLibelle" x="0" y="33" width="179" height="32" uuid="f62b183d-91dc-4195-af6c-974764b4d78a">
+						<staticText>
+							<reportElement style="champsLibelle" x="0" y="30" width="30" height="32" uuid="416f510a-3999-47f7-bc72-bb6f8b5ab233">
 								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 								<property name="com.jaspersoft.layout.grid.y" value="1"/>
 								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
 								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
 								<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
 								<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-								<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							</reportElement>
-							<textElement textAlignment="Center" verticalAlignment="Middle">
+							<textElement textAlignment="Left" verticalAlignment="Middle">
 								<font fontName="SansSerif"/>
 							</textElement>
-							<textFieldExpression><![CDATA["Rang: "+$F{rangBulletin}]]></textFieldExpression>
+							<text><![CDATA[Rang :]]></text>
+						</staticText>
+						<textField>
+							<reportElement x="30" y="30" width="149" height="32" uuid="6ac578b8-ddb5-47dd-bd35-8961790e7b9b"/>
+							<textElement textAlignment="Left" verticalAlignment="Middle">
+								<font isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{rangBulletin}.equals("1") ?  $F{rangBulletin}+" èr(e)" :$F{rangBulletin}+" ème"]]></textFieldExpression>
 						</textField>
 					</frame>
 					<frame>
