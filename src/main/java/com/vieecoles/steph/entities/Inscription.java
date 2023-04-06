@@ -39,7 +39,7 @@ public class Inscription extends PanacheEntityBase{
 	private String statut;
 	@Column(name="inscriptions_boursier")
 	private String boursier;
-	@Column(name="inscriptions_etat_affectation")
+	@Column(name="inscriptions_statut_eleve")
 	private String afecte;
 	@Column(name="inscriptions_redoublant")
 	private String redoublant;

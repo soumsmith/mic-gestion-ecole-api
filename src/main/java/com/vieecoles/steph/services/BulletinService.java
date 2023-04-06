@@ -176,6 +176,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 //			bulletin.setRangAn(null);
 
 			if (infosInscriptionsEleve != null) {
+				System.out.println("affecté ::: "+infosInscriptionsEleve.getAfecte());
 				bulletin.setAffecte(infosInscriptionsEleve.getAfecte());
 				bulletin.setRedoublant(infosInscriptionsEleve.getRedoublant());
 				bulletin.setBoursier(infosInscriptionsEleve.getBoursier());
