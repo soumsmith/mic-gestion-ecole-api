@@ -2,6 +2,7 @@ package com.vieecoles.steph.services;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Logger;
 
 import javax.enterprise.context.RequestScoped;
 import javax.transaction.Transactional;
@@ -12,6 +13,9 @@ import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 @RequestScoped
 public class ClasseEleveMatiereService implements PanacheRepositoryBase<ClasseEleveMatiere, String> {
+	
+	Logger logger = Logger.getLogger(ClasseEleveMatiere.class.getName());
+	
 	public List<ClasseEleveMatiere> getList() {
 		return ClasseEleveMatiere.listAll();
 	}
@@ -22,8 +26,14 @@ public class ClasseEleveMatiereService implements PanacheRepositoryBase<ClasseEl
 
 	public ClasseEleveMatiere findByClasseAndMatiereAndEleveAndAnneeAndPeriode(long classe, long matiere, long eleve,
 			long annee, long periode) {
-		return ClasseEleveMatiere.find("classe.id =?1 and matiere.id = ?2 and eleve.id = ?3 and annee.id=?4 and periode.id =?5", classe,
-				matiere, eleve, annee).singleResult();
+		ClasseEleveMatiere cem = null;
+		try {
+		cem =  ClasseEleveMatiere.find("classe.id =?1 and matiere.id = ?2 and eleve.id = ?3 and annee.id=?4 and periode.id =?5", classe,
+				matiere, eleve, annee, periode).singleResult();
+		}catch(RuntimeException ex) {
+			logger.warning(String.format("Aucune classe elève matiere trouvée [classe %s] [matiere %s] [eleve %s] [annee %s] [periode %s]", String.valueOf(classe) , String.valueOf(matiere),String.valueOf(eleve), String.valueOf(annee),String.valueOf(periode)));
+		}
+		return cem;
 	}
 
 	@Transactional

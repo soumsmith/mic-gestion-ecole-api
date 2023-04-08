@@ -15,10 +15,11 @@ public class MoyenneEleveDto implements Comparable<MoyenneEleveDto> {
 	private Double moyenne;
 	private Double moyenneMatiereToSort;
 	private String rang;
+	private String isClassed;
 	private String appreciation;
 	private List<Notes> notes;
 	private Map<Matiere, List<Notes>> notesMatiereMap;
-
+	private AnneeScolaire annee;
 
 	@Override
 	public int compareTo(MoyenneEleveDto o) {

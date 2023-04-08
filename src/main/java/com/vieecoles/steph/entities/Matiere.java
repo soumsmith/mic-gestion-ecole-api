@@ -42,6 +42,8 @@ public class Matiere extends PanacheEntityBase {
     private String  coef ;
     @Transient
     private String appreciation;
+    @Transient
+    private String eleveMatiereIsClassed;
 //    @ManyToOne
 //    @JoinColumn(name = "matiereparent_id")
     @Column(name = "matiereparent_id")
