@@ -131,6 +131,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 		NoteBulletin noteBulletin;
 		List<Double> moyGenElevesList = new ArrayList<Double>();
 		List<String> bulletinIdList = new ArrayList<String>();
+		Integer countNonClasses = 0;
 
 		for (MoyenneEleveDto me : moyenneParEleve) {
 //			 logger.info(g.toJson(me));
@@ -141,7 +142,11 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 					me.getClasse().getEcole().getId(), Long.parseLong(annee));
 			// Collecter toutes les moyennes des élèves pour déterminer la moyenne max, min
 			// et avg
-			moyGenElevesList.add(me.getMoyenne());
+			if(!me.getIsClassed().equals(Constants.NON))
+				moyGenElevesList.add(me.getMoyenne());
+			else
+				countNonClasses ++;
+				
 
 			bulletin = new Bulletin();
 			bulletin = convert(me);
@@ -257,7 +262,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 					flag.setCategorie(entry.getKey().getCategorie().getCode());
 					flag.setBonus(entry.getKey().getBonus());
 					flag.setPec(entry.getKey().getPec());
-					logger.info(g.toJson(entry.getKey()));
+//					logger.info(g.toJson(entry.getKey()));
 					flag.setNum_ordre(entry.getKey().getNumOrdre());
 
 					// Ajout de l'enseignant de la matiere
@@ -341,7 +346,6 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 			throw new RuntimeException("Aucune donnée trouvée");
 		}
 		int effectif = classeEleveService.getCountByClasseAnnee(Long.parseLong(classe), Long.parseLong(annee));
-
 		Double avgMoy = sumMoy / (moyGenElevesList.size() != 0 ? moyGenElevesList.size() : 1);
 
 		logger.info(String.format("Max= %s , Min = %s, Sum = %s, Avg = %s, effectif %s", maxMoy, minMoy, sumMoy, avgMoy,
@@ -355,6 +359,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 			bulletin.setMoyMin(CommonUtils.roundDouble(minMoy, 2));
 			bulletin.setMoyAvg(CommonUtils.roundDouble(avgMoy, 2));
 			bulletin.setEffectif(effectif);
+			bulletin.setEffectifNonClasse(String.valueOf(countNonClasses));
 //			logger.info(String.format("m a j du bulletin %s [effectif : % . smoy max : %s . moy min : %s . moy avg : %s", id,
 //					effectif, bulletin.getMoyMax().toString(), bulletin.getMoyMin(), bulletin.getMoyAvg()));
 

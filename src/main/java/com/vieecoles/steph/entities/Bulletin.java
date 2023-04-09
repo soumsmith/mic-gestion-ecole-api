@@ -117,9 +117,7 @@ public class Bulletin extends PanacheEntityBase{
 	@Column(name = "niveau_libelle")
 	private String niveauLibelle;
 
-
-
-
-
+	@Column(name = "effectif_non_classe")
+	private String effectifNonClasse;
 
 }

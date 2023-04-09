@@ -421,7 +421,8 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			
 			for (Matiere matiere : eleve.getNotesMatiereMap().keySet()) {
 //				System.out.println(matiere);
-				if (matiere.getPec() == 1 && !matiere.getEleveMatiereIsClassed().equals("N") && !eleve.getIsClassed().equals("N")) {
+				// Vérifier si la note doit être prise en compte et si l'élève est classé dans la matière concernée ou même pour la période
+				if (matiere.getPec() == 1 && !matiere.getEleveMatiereIsClassed().equals(Constants.NON) && !eleve.getIsClassed().equals(Constants.NON)) {
 					moy = matiere.getMoyenne();
 					logger.info(matiere + "+++");
 					coef = Double.parseDouble(matiere.getCoef() == null ? "1" : matiere.getCoef());
