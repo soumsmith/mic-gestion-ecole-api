@@ -16,6 +16,7 @@ public class MoyenneEleveDto implements Comparable<MoyenneEleveDto> {
 	private Double moyenneMatiereToSort;
 	private String rang;
 	private String isClassed;
+	private String classeMatierePeriodeId;
 	private String appreciation;
 	private List<Notes> notes;
 	private Map<Matiere, List<Notes>> notesMatiereMap;
