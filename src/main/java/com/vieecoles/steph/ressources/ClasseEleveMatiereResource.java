@@ -52,7 +52,7 @@ public class ClasseEleveMatiereResource {
 		}
 	}
 
-	@Path("/get-by-classe-eleve-matiere-annee/{classe}/{matiere}/{eleve}/{annee}")
+	@Path("/get-by-classe-eleve-matiere-annee/{classe}/{matiere}/{eleve}/{annee}/{periode}")
 	@Tag(name = "ClasseEleveMatiere")
 	@GET
 	public Response findByClasseAndMatiereAndEleveAndAnnee(@PathParam("classe") long classe, @PathParam("matiere") long matiere, @PathParam("eleve") long eleve, @PathParam("annee") long annee, @PathParam("periode") long periode) {
