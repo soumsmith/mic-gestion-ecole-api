@@ -90,6 +90,15 @@ public class BulletinSelectDto {
     private String signataire ;
     private  String bonus ;
     private  String pec ;
+    private  String parent_matiere ;
+
+    public String getParent_matiere() {
+        return parent_matiere;
+    }
+
+    public void setParent_matiere(String parent_matiere) {
+        this.parent_matiere = parent_matiere;
+    }
 
     public String getSignataire() {
         return signataire;
@@ -184,7 +193,7 @@ public class BulletinSelectDto {
                              String heures_abs_non_just, Double moy_general, Double moy_max, Double moy_min, Double moy_avg,
                              Double moy_annuelle, Integer rang_annuelle, String appreciation_conseil, Date date_creation, String code_qr,
                              String statut, String libelle_matiere, Double moyenne, Integer rang, Double coef, Double moy_coef,
-                             String appreciation, String categorie, int num_ordre, String rangBulletin, String nom_prenom_professeur, String libelle_categorie,String signataire,String bonus ,String pec) {
+                             String appreciation, String categorie, int num_ordre, String rangBulletin, String nom_prenom_professeur, String libelle_categorie,String signataire,String bonus ,String pec,String parent_matiere) {
         this.id_ecole = id_ecole;
         this.nom_ecole = nom_ecole;
         this.statut_ecole = statut_ecole;
@@ -234,6 +243,7 @@ public class BulletinSelectDto {
         this.signataire = signataire ;
         this.bonus = bonus ;
         this.pec = pec ;
+        this.parent_matiere = parent_matiere ;
 
     }
 

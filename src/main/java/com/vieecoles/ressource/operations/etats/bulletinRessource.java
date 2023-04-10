@@ -6,6 +6,7 @@ import com.vieecoles.dto.MatriculeClasseDto;
 import com.vieecoles.dto.NiveauDto;
 import com.vieecoles.entities.operations.Inscriptions;
 import com.vieecoles.entities.operations.ecole;
+import com.vieecoles.entities.operations.eleve;
 import com.vieecoles.entities.parametre;
 import com.vieecoles.entities.profil;
 import com.vieecoles.projection.BulletinSelectDto;
@@ -52,10 +53,9 @@ import org.hibernate.Session;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.*;
 
 @Path("/imprimer-bulletin")
 //@Produces(MediaType.APPLICATION_JSON)
@@ -94,7 +94,7 @@ public class bulletinRessource {
 
 
         InputStream myInpuStream ;
-        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/BulletinBean.jrxml");
+        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/BulletinNobel.jrxml");
         //  myInpuStream = this.getClass().getClassLoader().getResourceAsStream("spider/test.jrxml");
         List<BulletinSelectDto>  detailsBull = new ArrayList<>() ;
 
@@ -102,7 +102,8 @@ public class bulletinRessource {
         ecole myEcole= new ecole() ;
         parametre  mpara = new parametre();
         mpara = parametre.findById(1L) ;
-
+        eleve myelev = new eleve() ;
+        String DateNaiss = null;
 
 
         myEcole=sousceecoleService.getInffosEcoleByID(idEcole);
@@ -114,6 +115,18 @@ public class bulletinRessource {
         byte[] imagebytes3 = mpara.getImage() ;
         byte[] imagebytes4 = myEcole.getFiligramme() ;
         BufferedImage photo_eleve = null,logo= null ,amoirie= null,bg= null;
+        String codeEcole = myEcole.getEcolecode() ;
+        String statut = myEcole.getEcole_statut() ;
+        myelev= eleve.findById(myIns.getEleve().getEleveid()) ;
+
+        LocalDate date ;
+        date = myelev.getElevedate_naissance();
+
+
+        if(date!=null){
+            DateNaiss= String.valueOf(date.getDayOfMonth())+'/'+String.valueOf(date.getMonthValue())+'/'+String.valueOf(date.getYear()) ;
+
+        }
 
         if(imagebytes!=null){
           photo_eleve= ImageIO.read(new ByteArrayInputStream(imagebytes));
@@ -134,15 +147,18 @@ public class bulletinRessource {
 
 
         System.out.println("myEcoleImage "+imagebytes2.toString());
-        TypedQuery<BulletinSelectDto> q = em.createQuery( "SELECT new com.vieecoles.projection.BulletinSelectDto(b.ecoleId,b.nomEcole,b.statutEcole,b.urlLogo,b.adresseEcole,b.telEcole,b.anneeLibelle, b.libellePeriode,b.matricule,b.nom, b.prenoms, b.sexe,b.dateNaissance,b.lieuNaissance,b.nationalite,b.redoublant,b.boursier,b.affecte,b.libelleClasse,b.effectif,b.totalCoef,b.totalMoyCoef,b.nomPrenomProfPrincipal,b.heuresAbsJustifiees,b.heuresAbsNonJustifiees,b.moyGeneral,b.moyMax,b.moyMin,b.moyAvg,b.moyAn,b.rangAn,b.appreciation,b.dateCreation,b.codeQr,b.statut,d.matiereLibelle,d.moyenne,d.rang,d.coef ,d.moyCoef,d.appreciation,d.categorie,d.num_ordre,CAST(b.rang as string ) ,d.nom_prenom_professeur,d.categorieMatiere,b.nomSignataire,CAST(d.bonus as string ),cast(d.pec as string) ) from DetailBulletin  d join d.bulletin b where b.matricule=:matricule " +
+        TypedQuery<BulletinSelectDto> q = em.createQuery( "SELECT new com.vieecoles.projection.BulletinSelectDto(b.ecoleId,b.nomEcole,b.statutEcole,b.urlLogo,b.adresseEcole,b.telEcole,b.anneeLibelle, b.libellePeriode,b.matricule,b.nom, b.prenoms, b.sexe,b.dateNaissance,b.lieuNaissance,b.nationalite,b.redoublant,b.boursier,b.affecte,b.libelleClasse,b.effectif,b.totalCoef,b.totalMoyCoef,b.nomPrenomProfPrincipal,b.heuresAbsJustifiees,b.heuresAbsNonJustifiees,b.moyGeneral,b.moyMax,b.moyMin,b.moyAvg,b.moyAn,b.rangAn,b.appreciation,b.dateCreation,b.codeQr,b.statut,d.matiereLibelle,d.moyenne,d.rang,d.coef ,d.moyCoef,d.appreciation,d.categorie,d.num_ordre,CAST(b.rang as string ) ,d.nom_prenom_professeur,d.categorieMatiere,b.nomSignataire,CAST(d.bonus as string ),cast(d.pec as string),d.parent_matiere ) from DetailBulletin  d join d.bulletin b where b.matricule=:matricule " +
                 "and b.ecoleId=:idEcole and b.anneeLibelle=:libelleAnnee and b.libellePeriode=:libelleTrimetre order by d.num_ordre ASC  ", BulletinSelectDto.class);
         detailsBull = q.setParameter("matricule", matricule)
                 .setParameter("libelleAnnee", libelleAnnee)
                 .setParameter("libelleTrimetre", libelleTrimetre)
                 .setParameter("idEcole", idEcole)
                 . getResultList() ;
-
-
+        Double TmoyFr= calculTMoyFran(matricule,libelleAnnee,libelleTrimetre,idEcole) ;
+        Double TcoefFr = calculcoefFran(matricule,libelleAnnee,libelleTrimetre,idEcole) ;
+        Double  TmoyCoefFr = calculMoycoefFran(matricule,libelleAnnee,libelleTrimetre,idEcole) ;
+        Double TrangFr1 = calculRangFran(matricule,libelleAnnee,libelleTrimetre,idEcole) ;
+        int TrangFr = TrangFr1.intValue() ;
         if(type.toUpperCase().equals("PDF")){
 
 
@@ -154,6 +170,14 @@ public class bulletinRessource {
             map.put("logo",logo);
             map.put("amoirie",amoirie);
             map.put("bg",bg);
+            map.put("TmoyFr",TmoyFr);
+            map.put("TcoefFr",TcoefFr);
+            map.put("TmoyCoefFr",TmoyCoefFr);
+            map.put("TrangFr",TrangFr);
+            map.put("codeEcole",codeEcole);
+            map.put("statut",statut);
+            map.put("DateNaiss",DateNaiss);
+
 
             JasperPrint report = JasperFillManager.fillReport(compileReport, map, beanCollectionDataSource);
 
@@ -236,8 +260,62 @@ public class bulletinRessource {
         return  IdInscrip ;
     }
 
+     public  Double calculTMoyFran(String matricule, String annee,String periode,Long idEcole){
+         try {
+             Double  moyTfr = (Double) em.createQuery("select SUM(d.moyenne/4) from DetailBulletin d join d.bulletin b where b.matricule=:matricule and b.libellePeriode=:periode and b.ecoleId=:idEcole and b.anneeLibelle=:annee  and d.matiereLibelle in ('COMPOSITION FRANCAISE','ORTHOGRAPHE ET GRAMMAIRE','EXPRESSION ORALE') ")
+                     .setParameter("matricule",matricule)
+                     .setParameter("annee",annee)
+                     .setParameter("periode",periode)
+                     .setParameter("idEcole",idEcole)
+                      .getSingleResult();
+             return  moyTfr ;
+         } catch (NoResultException e){
+             return 0D ;
+         }
+     }
+
+    public  Double calculcoefFran(String matricule, String annee,String periode,Long idEcole){
+        try {
+            Double  moyTfr = (Double) em.createQuery("select SUM(d.coef) from DetailBulletin d join d.bulletin b where b.matricule=:matricule and b.libellePeriode=:periode and b.ecoleId=:idEcole and b.anneeLibelle=:annee  and d.matiereLibelle in ('COMPOSITION FRANCAISE','ORTHOGRAPHE ET GRAMMAIRE','EXPRESSION ORALE') ")
+                    .setParameter("matricule",matricule)
+                    .setParameter("annee",annee)
+                    .setParameter("periode",periode)
+                    .setParameter("idEcole",idEcole)
+                    .getSingleResult();
+            return  moyTfr ;
+        } catch (NoResultException e){
+            return 0D ;
+        }
+    }
+
+    public  Double calculMoycoefFran(String matricule, String annee,String periode,Long idEcole){
+        try {
+            Double  moyTfr = (Double) em.createQuery("select SUM(d.coef*d.moyenne) from DetailBulletin d join d.bulletin b where b.matricule=:matricule and b.libellePeriode=:periode and b.ecoleId=:idEcole and b.anneeLibelle=:annee  and d.matiereLibelle in ('COMPOSITION FRANCAISE','ORTHOGRAPHE ET GRAMMAIRE','EXPRESSION ORALE') ")
+                    .setParameter("matricule",matricule)
+                    .setParameter("annee",annee)
+                    .setParameter("periode",periode)
+                    .setParameter("idEcole",idEcole)
+                    .getSingleResult();
+            return  moyTfr ;
+        } catch (NoResultException e){
+            return 0D ;
+        }
+    }
 
 
+    public  Double calculRangFran(String matricule, String annee,String periode,Long idEcole){
+        try {
+            Double  moyTfr = (Double) em.createQuery("select AVG(d.rang) from DetailBulletin d join d.bulletin b where b.matricule=:matricule and b.libellePeriode=:periode and b.ecoleId=:idEcole and b.anneeLibelle=:annee  and d.matiereLibelle in ('COMPOSITION FRANCAISE','ORTHOGRAPHE ET GRAMMAIRE','EXPRESSION ORALE') ")
+                    .setParameter("matricule",matricule)
+                    .setParameter("annee",annee)
+                    .setParameter("periode",periode)
+                    .setParameter("idEcole",idEcole)
+                    .getSingleResult();
+            return  moyTfr ;
+        } catch (NoResultException e){
+            return 0D ;
+        }
+    }
 
 
 }
