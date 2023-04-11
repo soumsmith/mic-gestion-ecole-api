@@ -292,6 +292,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 					flag.setBulletin(bulletin);
 					flag.setBonus(entry.getKey().getBonus());
 					flag.setPec(entry.getKey().getPec());
+					flag.setParentMatiere(entry.getKey().getParentMatiereLibelle());
 					// Inscrire si oui ou non l'élève est classé dans la matiere
 					if (cem != null)
 						flag.setIsRanked(cem.getIsClassed());
