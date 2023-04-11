@@ -48,6 +48,9 @@ public class Matiere extends PanacheEntityBase {
 //    @JoinColumn(name = "matiereparent_id")
     @Column(name = "matiereparent_id")
     private String matiereParent;
+    // Ajouté par Soum pour sa gestion des bulletins
+    @Column(name = "parent_matiere")
+    private String parentMatiereLibelle;
     @Column(name = "num_ordre_affichage")
     private Integer numOrdre;
 

@@ -244,6 +244,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 					flag.setMoyCoef(CommonUtils.roundDouble(moyCoef, 2));
 					flag.setAppreciation(entry.getKey().getAppreciation());
 					flag.setCoef(Double.valueOf(entry.getKey().getCoef()));
+					flag.setParentMatiere(entry.getKey().getParentMatiereLibelle());
 					
 					// Inscrire si oui ou non l'élève est classé dans la matiere
 					if (cem != null)
