@@ -132,6 +132,8 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 		List<Double> moyGenElevesList = new ArrayList<Double>();
 		List<String> bulletinIdList = new ArrayList<String>();
 		Integer countNonClasses = 0;
+		
+		logger.info(String.format("Nombre d'élèves concerné %s ", moyenneParEleve.size()));
 
 		for (MoyenneEleveDto me : moyenneParEleve) {
 //			 logger.info(g.toJson(me));
@@ -232,7 +234,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 
 				// marquer que l eleve est classé dans une matiere ou non
 				ClasseEleveMatiere cem = classeEleveMatiereService.findByClasseAndMatiereAndEleveAndAnneeAndPeriode(
-						Long.parseLong(classe), Long.parseLong(entry.getKey().getCode()), me.getEleve().getId(),
+						Long.parseLong(classe), entry.getKey().getId(), me.getEleve().getId(),
 						Long.parseLong(annee), Long.parseLong(periode));
 
 				if (flag != null) {

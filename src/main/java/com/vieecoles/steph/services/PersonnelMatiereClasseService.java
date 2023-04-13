@@ -50,6 +50,8 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 		}catch(RuntimeException e) {
 			if(e.getClass().getName().equals(NoResultException.class.getName())) {
 				logger.info(String.format("Aucun personnel educateur ou professeur principal [fonction : %s] trouvé ", fonction));
+			}else {
+				e.printStackTrace();				
 			}
 			return pmc;
 		}
