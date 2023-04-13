@@ -142,11 +142,10 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 					me.getClasse().getEcole().getId(), Long.parseLong(annee));
 			// Collecter toutes les moyennes des élèves pour déterminer la moyenne max, min
 			// et avg
-			if(!me.getIsClassed().equals(Constants.NON))
+			if (!me.getIsClassed().equals(Constants.NON))
 				moyGenElevesList.add(me.getMoyenne());
 			else
-				countNonClasses ++;
-				
+				countNonClasses++;
 
 			bulletin = new Bulletin();
 			bulletin = convert(me);
@@ -245,13 +244,13 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 					flag.setAppreciation(entry.getKey().getAppreciation());
 					flag.setCoef(Double.valueOf(entry.getKey().getCoef()));
 					flag.setParentMatiere(entry.getKey().getParentMatiereLibelle());
-					
+
 					// Inscrire si oui ou non l'élève est classé dans la matiere
 					if (cem != null)
 						flag.setIsRanked(cem.getIsClassed());
 					else
 						flag.setIsRanked(Constants.OUI);
-					
+
 					try {
 						flag.setRang(Integer.valueOf(entry.getKey().getRang()));
 					} catch (RuntimeException ex) {
@@ -298,7 +297,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 						flag.setIsRanked(cem.getIsClassed());
 					else
 						flag.setIsRanked(Constants.OUI);
-					
+
 					logger.info("--> Categorie" + entry.getKey().getCategorie().getLibelle());
 					// Ajout de l'enseignant de la matiere
 					PersonnelMatiereClasse pers = personnelMatiereClasseService.findProfesseurByMatiereAndClasse(
@@ -314,8 +313,14 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 
 				if (notesBulletin != null) {
 					logger.info("--> Suppresion notes trouvees");
-					for (NoteBulletin noteBul : notesBulletin) {
-						noteBul.delete();
+					try {
+						for (NoteBulletin noteBul : notesBulletin) {
+							logger.info("id --->" + noteBul.getId());
+							noteBul.delete();
+						}
+					} catch (RuntimeException ex) {
+						logger.warning("Erreur lors de la suppression des notes");
+						ex.printStackTrace();
 					}
 				}
 				UUID idNoteBul;
