@@ -262,7 +262,7 @@ public class bulletinRessource {
 
      public  Double calculTMoyFran(String matricule, String annee,String periode,Long idEcole){
          try {
-             Double  moyTfr = (Double) em.createQuery("select SUM(d.moyenne/3) from DetailBulletin d join d.bulletin b where b.matricule=:matricule and b.libellePeriode=:periode and b.ecoleId=:idEcole and b.anneeLibelle=:annee  and d.matiereLibelle in ('COMPOSITION FRANCAISE','ORTHOGRAPHE ET GRAMMAIRE','EXPRESSION ORALE') ")
+             Double  moyTfr = (Double) em.createQuery("select SUM(d.moyenne/4) from DetailBulletin d join d.bulletin b where b.matricule=:matricule and b.libellePeriode=:periode and b.ecoleId=:idEcole and b.anneeLibelle=:annee  and d.matiereLibelle in ('COMPOSITION FRANCAISE','ORTHOGRAPHE ET GRAMMAIRE','EXPRESSION ORALE') ")
                      .setParameter("matricule",matricule)
                      .setParameter("annee",annee)
                      .setParameter("periode",periode)
