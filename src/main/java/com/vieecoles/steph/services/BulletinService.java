@@ -162,7 +162,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 //			bulletin.setRang(Integer.parseInt(me.getRang()));
 			// Ajout du professeur principal
 			PersonnelMatiereClasse pp = personnelMatiereClasseService
-					.getPersonnelByClasseAndAnneeAndFonction(Long.parseLong(annee), Long.parseLong(classe), 1);
+					.getPersonnelByClasseAndAnneeAndFonction(Long.parseLong(classe), Long.parseLong(annee), 1);
 			if (pp != null) {
 				bulletin.setCodeProfPrincipal(pp.getPersonnel().getCode());
 				bulletin.setNomPrenomProfPrincipal(pp.getPersonnel().getNom() + " " + pp.getPersonnel().getPrenom());
