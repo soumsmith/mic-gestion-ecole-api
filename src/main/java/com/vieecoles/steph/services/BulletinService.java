@@ -169,7 +169,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 			}
 			// Ajout de l'éducateur
 			PersonnelMatiereClasse educ = personnelMatiereClasseService
-					.getPersonnelByClasseAndAnneeAndFonction(Long.parseLong(annee), Long.parseLong(classe), 2);
+					.getPersonnelByClasseAndAnneeAndFonction(Long.parseLong(classe),Long.parseLong(annee) , 2);
 			if (educ != null) {
 				bulletin.setCodeEducateur(educ.getPersonnel().getCode());
 				bulletin.setNomPrenomEducateur(educ.getPersonnel().getNom() + " " + educ.getPersonnel().getPrenom());
