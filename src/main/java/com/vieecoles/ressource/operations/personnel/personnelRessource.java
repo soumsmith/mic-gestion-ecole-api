@@ -2,6 +2,7 @@ package com.vieecoles.ressource.operations.personnel;
 
 import com.vieecoles.dto.personnelDto;
 import com.vieecoles.entities.operations.personnel;
+import com.vieecoles.projection.InfosConnexionSelect;
 import com.vieecoles.services.eleves.EleveService;
 import com.vieecoles.services.personnels.PersonnelService;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
@@ -42,6 +43,23 @@ public class personnelRessource {
     public List<personnel> getAllPersonnel(@PathParam("idtenant") String   tenant ) {
         return personnelService.getPersonnels(tenant) ;
     }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/infos-connexion-personnels/{idtenant}")
+    public List<InfosConnexionSelect> getInfosConnexionPer(@PathParam("idtenant") Long   tenant) {
+        return personnelService.getConnexionInfosByEcole(tenant);
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/infos-connexion-personnels")
+    public List<InfosConnexionSelect> getInfosConnexionPer() {
+        return personnelService.getConnexionInfos() ;
+    }
+
 
 
 

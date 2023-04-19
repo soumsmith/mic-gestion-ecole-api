@@ -155,8 +155,11 @@ public class bulletinRessource {
                 .setParameter("idEcole", idEcole)
                 . getResultList() ;
         Double TmoyFr= calculTMoyFran(matricule,libelleAnnee,libelleTrimetre,idEcole) ;
+
+
         Double TcoefFr = calculcoefFran(matricule,libelleAnnee,libelleTrimetre,idEcole) ;
         Double  TmoyCoefFr = calculMoycoefFran(matricule,libelleAnnee,libelleTrimetre,idEcole) ;
+        System.out.println("Moyene en Francais: "+TmoyCoefFr/4);
         Double TrangFr1 = calculRangFran(matricule,libelleAnnee,libelleTrimetre,idEcole) ;
         int TrangFr = TrangFr1.intValue() ;
         if(type.toUpperCase().equals("PDF")){
@@ -170,7 +173,7 @@ public class bulletinRessource {
             map.put("logo",logo);
             map.put("amoirie",amoirie);
             map.put("bg",bg);
-            map.put("TmoyFr",TmoyFr);
+            map.put("TmoyFr",TmoyCoefFr/4);
             map.put("TcoefFr",TcoefFr);
             map.put("TmoyCoefFr",TmoyCoefFr);
             map.put("TrangFr",TrangFr);
@@ -262,7 +265,7 @@ public class bulletinRessource {
 
      public  Double calculTMoyFran(String matricule, String annee,String periode,Long idEcole){
          try {
-             Double  moyTfr = (Double) em.createQuery("select SUM(d.moyenne/4) from DetailBulletin d join d.bulletin b where b.matricule=:matricule and b.libellePeriode=:periode and b.ecoleId=:idEcole and b.anneeLibelle=:annee  and d.matiereLibelle in ('COMPOSITION FRANCAISE','ORTHOGRAPHE ET GRAMMAIRE','EXPRESSION ORALE') ")
+             Double  moyTfr = (Double) em.createQuery("select SUM(d.moyenne) from DetailBulletin d join d.bulletin b where b.matricule=:matricule and b.libellePeriode=:periode and b.ecoleId=:idEcole and b.anneeLibelle=:annee  and d.matiereLibelle in ('COMPOSITION FRANCAISE','ORTHOGRAPHE ET GRAMMAIRE','EXPRESSION ORALE') ")
                      .setParameter("matricule",matricule)
                      .setParameter("annee",annee)
                      .setParameter("periode",periode)

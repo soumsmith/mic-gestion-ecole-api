@@ -4,101 +4,61 @@ package com.vieecoles.projection;
 import java.time.LocalDate;
 
 
-public class personnelSelect {
+public class InfosConnexionSelect {
+private  String nom ;
+private String prenom ;
+private  String ecole ;
+private String login ;
+private String motPasse ;
 
-    private Long  personnelid ;
-   private  String personnelcode;
-    private  String personnelnom;
-    private  String personnelprenom;
-    private LocalDate personneldatenaissance;
-    private  String personnel_lieunaissance;
-    private  String type_personnel_liblle ;
-    private  String personnelStatut_liblle ;
-    private  String fonction_liblle ;
-
-
-
-    public Long getPersonnelid() {
-        return personnelid;
+    public InfosConnexionSelect() {
     }
 
-    public void setPersonnelid(Long personnelid) {
-        this.personnelid = personnelid;
+    public InfosConnexionSelect(String nom, String prenom, String ecole, String login, String motPasse) {
+        this.nom = nom;
+        this.prenom = prenom;
+        this.ecole = ecole;
+        this.login = login;
+        this.motPasse = motPasse;
     }
 
-    public String getPersonnelcode() {
-        return personnelcode;
+    public String getNom() {
+        return nom;
     }
 
-    public void setPersonnelcode(String personnelcode) {
-        this.personnelcode = personnelcode;
+    public void setNom(String nom) {
+        this.nom = nom;
     }
 
-    public String getPersonnelnom() {
-        return personnelnom;
+    public String getPrenom() {
+        return prenom;
     }
 
-    public void setPersonnelnom(String personnelnom) {
-        this.personnelnom = personnelnom;
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
     }
 
-    public String getPersonnelprenom() {
-        return personnelprenom;
+    public String getEcole() {
+        return ecole;
     }
 
-    public void setPersonnelprenom(String personnelprenom) {
-        this.personnelprenom = personnelprenom;
+    public void setEcole(String ecole) {
+        this.ecole = ecole;
     }
 
-    public LocalDate getPersonneldatenaissance() {
-        return personneldatenaissance;
+    public String getLogin() {
+        return login;
     }
 
-    public void setPersonneldatenaissance(LocalDate personneldatenaissance) {
-        this.personneldatenaissance = personneldatenaissance;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
-    public String getPersonnel_lieunaissance() {
-        return personnel_lieunaissance;
+    public String getMotPasse() {
+        return motPasse;
     }
 
-    public void setPersonnel_lieunaissance(String personnel_lieunaissance) {
-        this.personnel_lieunaissance = personnel_lieunaissance;
-    }
-
-    public String getType_personnel_liblle() {
-        return type_personnel_liblle;
-    }
-
-    public void setType_personnel_liblle(String type_personnel_liblle) {
-        this.type_personnel_liblle = type_personnel_liblle;
-    }
-
-    public String getPersonnelStatut_liblle() {
-        return personnelStatut_liblle;
-    }
-
-    public void setPersonnelStatut_liblle(String personnelStatut_liblle) {
-        this.personnelStatut_liblle = personnelStatut_liblle;
-    }
-
-    public String getFonction_liblle() {
-        return fonction_liblle;
-    }
-
-    public void setFonction_liblle(String fonction_liblle) {
-        this.fonction_liblle = fonction_liblle;
-    }
-
-    public personnelSelect(Long personnelid, String personnelcode, String personnelnom, String personnelprenom, LocalDate personneldatenaissance, String personnel_lieunaissance, String type_personnel_liblle, String personnelStatut_liblle, String fonction_liblle) {
-        this.personnelid = personnelid;
-        this.personnelcode = personnelcode;
-        this.personnelnom = personnelnom;
-        this.personnelprenom = personnelprenom;
-        this.personneldatenaissance = personneldatenaissance;
-        this.personnel_lieunaissance = personnel_lieunaissance;
-        this.type_personnel_liblle = type_personnel_liblle;
-        this.personnelStatut_liblle = personnelStatut_liblle;
-        this.fonction_liblle = fonction_liblle;
+    public void setMotPasse(String motPasse) {
+        this.motPasse = motPasse;
     }
 }

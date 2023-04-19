@@ -36,6 +36,139 @@ public class EleveService implements PanacheRepositoryBase<eleve, Long> {
        return eleve.findById(cycleId);
    }
 
+    public String importerMiseEleve(List<importEleveDto> lisImpo ,Long idEcole,Long idAnneeScolaire,String typeOperation){
+        String messageRetour ="" ;
+        List<String> matriculeNonCreer = new ArrayList<>();
+        for (int i = 0; i < lisImpo.size(); i++){
+            //String myStatut= lisImpo.get(i).getStatut() ;
+            String NewmyStatut ;
+            System.out.println("Statut0 "+lisImpo.get(i).getStatut());
+            if(lisImpo.get(i).getStatut().equals("AFF")){
+                NewmyStatut= String.valueOf(Inscriptions.statusEleve.AFFECTE);
+            }else {
+                NewmyStatut= String.valueOf(Inscriptions.statusEleve.NON_AFFECTE);
+            }
+            EleveDto eleveDto= new EleveDto() ;
+            eleve elv =new eleve() ;
+            InscriptionDto inscriptionDto = new InscriptionDto() ;
+            Long  identifiantBranche ;
+            Branche myBranch = new Branche() ;
+
+            Long NiveauEnseignement=  (Long) em.createQuery("select o.Niveau_Enseignement_id from ecole o  where o.ecoleid =:idEcole " )
+                    .setParameter("idEcole", idEcole).getSingleResult() ;
+
+            System.out.println("NiveauEnseignement "+NiveauEnseignement);
+
+            myBranch= (Branche) em.createQuery("select o from Branche o  where o.libelle like :branche and o.niveauEnseignement.id=:idNiveauEnsei " )
+                    .setParameter("branche", lisImpo.get(i).getNiveau().trim())
+                    .setParameter("idNiveauEnsei", NiveauEnseignement)
+                    .getSingleResult();
+
+            System.out.println("myBranch "+myBranch);
+
+
+            if(lisImpo.get(i).getMatricule().equals("")||lisImpo.get(i).getMatricule()==null)
+            {
+                eleveDto.setElevematricule_national(lisImpo.get(i).getID());
+                System.out.println("CodeInterne+++ "+lisImpo.get(i).getID());
+                System.out.println("Matricule+++ "+lisImpo.get(i).getMatricule());
+            }
+
+            else
+                eleveDto.setElevematricule_national(lisImpo.get(i).getMatricule());
+
+            String msexe ;
+            if(lisImpo.get(i).getSexe().equals("F"))
+                msexe = "FEMININ";
+            else
+                msexe = "MASCULIN";
+
+            eleveDto.setEleveSexe(msexe);
+            eleveDto.setElevenom(lisImpo.get(i).getNom());
+            eleveDto.setEleveprenom(lisImpo.get(i).getPrenoms());
+            eleveDto.setEleve_nationalite(lisImpo.get(i).getNationalite());
+            System.out.println("Debut creation Date format ");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            System.out.println("Fin creation Date format ");
+            if(lisImpo.get(i).getDateNaissance()==null||lisImpo.get(i).getDateNaissance().equals("")){
+                String date = "01/01/1900";
+                LocalDate localDate = LocalDate.parse(date, formatter);
+                LocalDate localDateNaiss = localDate;
+
+                eleveDto.setElevedate_naissance(localDateNaiss);
+            } else {
+                String date = lisImpo.get(i).getDateNaissance();
+                LocalDate localDate = LocalDate.parse(date, formatter);
+                LocalDate localDateNaiss = localDate;
+
+                eleveDto.setElevedate_naissance(localDateNaiss);
+            }
+
+            eleveDto.setElevelieu_naissance(lisImpo.get(i).getLieuNaissance());
+
+            ///Creer l'eleve
+            System.out.println("Debut creation eleve ");
+
+            elv = ModifierEleve(eleveDto) ;
+
+
+
+            if(elv != null){
+                System.out.println("Matricule: "+ elv.getEleve_matricule());
+                System.out.println("Fin creation eleve ");
+                inscriptionDto.setIdentifiantEcole(idEcole);
+                inscriptionDto.setIdentifiantAnnee_scolaire(idAnneeScolaire);
+                inscriptionDto.setIdentifiantBranche(myBranch.getId());
+                Inscriptions.typeOperation myOperation= Inscriptions.typeOperation.valueOf(typeOperation);
+
+                Inscriptions.statusEleve myStatutEleve = Inscriptions.statusEleve.valueOf(NewmyStatut);
+                inscriptionDto.setInscriptions_langue_vivante(lisImpo.get(i).getLv2());
+                inscriptionDto.setInscriptions_redoublant(lisImpo.get(i).getRed());
+                inscriptionDto.setInscriptions_contact1(lisImpo.get(i).getContact());
+
+                inscriptionDto.setInscriptions_statut_eleve(myStatutEleve);
+                inscriptionDto.setIdentifiantEleve(elv.getEleveid());
+                inscriptionDto.setInscriptions_type(myOperation);
+                System.out.println("regime+++ "+lisImpo.get(i).getRegime());
+                inscriptionDto.setInscriptions_boursier(lisImpo.get(i).getRegime());
+
+                if(lisImpo.get(i).getDateInscription()==null||lisImpo.get(i).getDateInscription().equals("")){
+                    DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                    String date2 = "01/01/1900";
+                    LocalDate localDate2 = LocalDate.parse(date2, formatter2);
+                    LocalDate localDateNaiss2 = localDate2;
+                    inscriptionDto.setInscriptionsdate_creation(localDateNaiss2);
+                } else {
+                    DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                    String date2 = lisImpo.get(i).getDateInscription();
+                    LocalDate localDate2 = LocalDate.parse(date2, formatter2);
+                    LocalDate localDateNaiss2 = localDate2;
+                    inscriptionDto.setInscriptionsdate_creation(localDateNaiss2);
+                }
+
+                System.out.println("Debut  creation Insrip "+inscriptionDto.toString());
+                messageRetour=  inscriptionService.verifmodifierInscription(inscriptionDto,idEcole,elv.getEleve_matricule(),idAnneeScolaire);
+
+                if(!messageRetour.equals("INSCRIPTION MODIFIEE AVEC SUCCES!")){
+                    matriculeNonCreer.add(lisImpo.get(i).getMatricule()) ;
+                }
+            } else  {
+                matriculeNonCreer.add(lisImpo.get(i).getMatricule()) ;
+            }
+
+        }
+
+        if(matriculeNonCreer.size()>0){
+            String mess="Les matricules suivants n'existe pas!";
+            messageRetour = String.join(", ", matriculeNonCreer);
+            messageRetour= mess+" "+ messageRetour ;
+        }
+
+        return messageRetour ;
+    }
+
+
+
    public String importerCreerEleve(List<importEleveDto> lisImpo ,Long idEcole,Long idAnneeScolaire,String typeOperation){
        String messageRetour ="" ;
        List<String> matriculeNonCreer = new ArrayList<>();
@@ -85,6 +218,7 @@ System.out.println("Statut0 "+lisImpo.get(i).getStatut());
 
            eleveDto.setEleveSexe(msexe);
            eleveDto.setElevenom(lisImpo.get(i).getNom());
+           eleveDto.setEleve_nationalite(lisImpo.get(i).getNationalite());
            eleveDto.setEleveprenom(lisImpo.get(i).getPrenoms());
            System.out.println("Debut creation Date format ");
            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -139,9 +273,6 @@ System.out.println("Statut0 "+lisImpo.get(i).getStatut());
                inscriptionDto.setInscriptionsdate_creation(localDateNaiss2);
            }
 
-
-
-
            System.out.println("Debut  creation Insrip "+inscriptionDto.toString());
            messageRetour=  inscriptionService.verifInscriptionImporter(inscriptionDto,idEcole,elv.getEleve_matricule(),idAnneeScolaire);
 
@@ -159,7 +290,38 @@ System.out.println("Statut0 "+lisImpo.get(i).getStatut());
 
    return messageRetour ;
    }
-@Transactional
+
+    @Transactional
+    public eleve   ModifierEleve(EleveDto eleveDto) {
+        eleve myeleve = new eleve() ;
+        eleve myElev = new eleve() ;
+        try {
+            myeleve= (eleve) em.createQuery("select o from eleve o  where o.eleve_matricule =:matricule " )
+                    .setParameter("matricule", eleveDto.getElevematricule_national()).getSingleResult() ;
+            System.out.println(eleveDto.getElevematricule_national());
+            System.out.println("Ancien elève");
+            myElev = eleve.findById(myeleve.getEleveid());
+            myElev.setEleveprenom(eleveDto.getEleveprenom());
+            myElev.setElevenom(eleveDto.getElevenom());
+            myElev.setElevelieu_naissance(eleveDto.getElevelieu_naissance());
+            myElev.setEleveadresse(eleveDto.getEleveadresse());
+            myElev.setEleve_nationalite(eleveDto.getEleve_nationalite());
+            myElev.setElevecellulaire(eleveDto.getElevecellulaire());
+            myElev.setElevedate_naissance(eleveDto.getElevedate_naissance());
+            myElev.setElevedate_etabli_extrait_naiss(eleveDto.getElevedate_etabli_extrait_naiss());
+            myElev.setElevelieu_etabliss_etrait_naissance(eleveDto.getElevelieu_etabliss_etrait_naissance());
+            myElev.setEleve_sexe(eleveDto.getEleveSexe());
+            myElev.setEleve_matricule(eleveDto.getElevematricule_national());
+
+        } catch (Exception e) {
+            System.out.println("Nouvel elève");
+            myElev= null;
+        }
+
+       // System.out.println("Moustt"+myElev.toString());
+        return myElev ;
+    }
+  @Transactional
    public eleve   CreerUnEleve(EleveDto eleveDto) {
     eleve myeleve = new eleve() ;
     try {
@@ -172,9 +334,6 @@ System.out.println("Statut0 "+lisImpo.get(i).getStatut());
         System.out.println("Nouvel elève");
         myeleve= null ;
     }
-
-
-
 
        List<Parent> parentsList= new ArrayList<>() ;
       // System.out.println( "Longueur"+ eleveDto.getParentList().size());
@@ -191,6 +350,7 @@ System.out.println("Statut0 "+lisImpo.get(i).getStatut());
            myElev.setElevenom(eleveDto.getElevenom());
            myElev.setElevelieu_naissance(eleveDto.getElevelieu_naissance());
            myElev.setEleveadresse(eleveDto.getEleveadresse());
+           myElev.setEleve_nationalite(eleveDto.getEleve_nationalite());
            myElev.setElevecellulaire(eleveDto.getElevecellulaire());
            myElev.setElevedate_naissance(eleveDto.getElevedate_naissance());
            myElev.setElevedate_etabli_extrait_naiss(eleveDto.getElevedate_etabli_extrait_naiss());
@@ -203,15 +363,9 @@ System.out.println("Statut0 "+lisImpo.get(i).getStatut());
            myElev= myeleve ;
        }
 
-
-
-
-      /// public void run() {
-
        System.out.println("Moustt"+myElev.toString());
     return myElev ;
-
-          }
+   }
 
 
     public  String getElevCode(String tenant) {
