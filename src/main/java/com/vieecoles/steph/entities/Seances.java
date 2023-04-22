@@ -39,7 +39,7 @@ public class Seances extends PanacheEntityBase {
 
 	@ManyToOne
 	@JoinColumn(name = "matiere_id")
-	private Matiere matiere;
+	private EcoleHasMatiere matiere;
 	@ManyToOne
 	@JoinColumn(name = "classe_id")
 	private Classe classe;

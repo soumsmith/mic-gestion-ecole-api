@@ -4,6 +4,8 @@ import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -57,5 +59,11 @@ public class Matiere extends PanacheEntityBase {
     @ManyToOne
     @JoinColumn(name = "categorie_matiere_categorie_matiereid")
     private CategorieMatiere categorie;
+    
+    private LocalDateTime dateCreation;
+    private LocalDateTime dateUpdate;
+    
+    @Transient
+    private String user;
 
 }

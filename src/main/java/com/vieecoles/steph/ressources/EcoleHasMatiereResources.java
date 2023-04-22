@@ -76,7 +76,7 @@ public class EcoleHasMatiereResources  {
 	public Response getByNiveau(@QueryParam("id") Long ecoleId) {
 		Ecole ecole = Ecole.findById(ecoleId);
 		
-		return Response.ok().entity(matiereEcoleService.getByNiveauEnseignement(ecole.getNiveauEnseignement().getId())).build();
+		return Response.ok().entity(matiereEcoleService.getByNiveauEnseignement(ecoleId, ecole.getNiveauEnseignement().getId())).build();
 	}
 
 	@POST

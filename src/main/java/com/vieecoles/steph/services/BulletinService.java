@@ -22,6 +22,7 @@ import com.vieecoles.steph.entities.ClasseEleveMatiere;
 import com.vieecoles.steph.entities.ClasseElevePeriode;
 import com.vieecoles.steph.entities.Constants;
 import com.vieecoles.steph.entities.DetailBulletin;
+import com.vieecoles.steph.entities.EcoleHasMatiere;
 import com.vieecoles.steph.entities.Inscription;
 import com.vieecoles.steph.entities.Matiere;
 import com.vieecoles.steph.entities.NoteBulletin;
@@ -220,7 +221,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 			}
 
 			Double moyCoef = (double) 0;
-			for (Map.Entry<Matiere, List<Notes>> entry : me.getNotesMatiereMap().entrySet()) {
+			for (Map.Entry<EcoleHasMatiere, List<Notes>> entry : me.getNotesMatiereMap().entrySet()) {
 				logger.info(String.format("bulletin id %s - matiere %s", bulletin.getId(), entry.getKey().getCode()));
 				DetailBulletin flag = null;
 				try {

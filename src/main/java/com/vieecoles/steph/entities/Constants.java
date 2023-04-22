@@ -20,6 +20,7 @@ public class Constants {
 	public static final String APPLIED = "APPLIED";
 	
 	public static final String DEFAULT_NOTE_SUR = "20";
+	public static final String DEFAULT_COEFFICIENT = "1";
 
 	public static final Double MOYENNE_ELEVE_NON_CLASSE_MATIERE = -1.00;
 

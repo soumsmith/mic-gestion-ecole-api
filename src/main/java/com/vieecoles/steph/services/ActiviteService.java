@@ -31,6 +31,15 @@ public class ActiviteService implements PanacheRepositoryBase<Activite, Integer>
 			return new ArrayList<Activite>();
 		}
 	}
+	
+	public List<Activite> getListByEcole(Long ecoleId) {
+		try {
+			return Activite.find("statut=?1 and ecole.id=?2", Constants.ACTIF, ecoleId).list();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ArrayList<Activite>();
+		}
+	}
 
 	/**
 	 * Renvoie la liste des activités en fonction de l année, la classe et le jour

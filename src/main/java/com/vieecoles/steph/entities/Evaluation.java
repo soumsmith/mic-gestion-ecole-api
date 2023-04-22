@@ -46,7 +46,7 @@ public class Evaluation extends PanacheEntityBase{
 	private Classe classe;
 	@ManyToOne
 	@JoinColumn(name = "matiere_matiereid")
-	private Matiere matiere;
+	private EcoleHasMatiere matiereEcole;
 	@Column(name = "date_creation")
 	private Date dateCreation;
 

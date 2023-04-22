@@ -11,6 +11,7 @@ import com.vieecoles.steph.entities.AnneeScolaire;
 import com.vieecoles.steph.entities.Classe;
 import com.vieecoles.steph.entities.ClasseEleve;
 import com.vieecoles.steph.entities.Constants;
+import com.vieecoles.steph.entities.EcoleHasMatiere;
 import com.vieecoles.steph.entities.Eleve;
 import com.vieecoles.steph.entities.Evaluation;
 import com.vieecoles.steph.entities.EvaluationLoader;
@@ -126,7 +127,7 @@ public class EvaluationLoaderService implements PanacheRepositoryBase<Evaluation
 		TypeEvaluation typeEvaluation = new TypeEvaluation();
 		typeEvaluation.setId(1);
 //		evaluation.setAnnee(null);
-		Matiere mat = new Matiere();
+		EcoleHasMatiere mat = new EcoleHasMatiere();
 		mat.setId(matiere);
 		Periode per = new Periode();
 		per.setId(periode);
@@ -153,7 +154,7 @@ public class EvaluationLoaderService implements PanacheRepositoryBase<Evaluation
 		for (int i = 0; i < maxi; i++) {
 			try {
 				Evaluation evaluation = new Evaluation();
-				evaluation.setMatiere(mat);
+				evaluation.setMatiereEcole(mat);
 				evaluation.setPeriode(per);
 				evaluation.setAnnee(ann);
 				evaluation.setType(typeEvaluation);

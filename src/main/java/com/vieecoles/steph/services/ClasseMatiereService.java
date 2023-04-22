@@ -19,6 +19,9 @@ public class ClasseMatiereService implements PanacheRepositoryBase<ClasseMatiere
 
 	@Inject
 	ClasseService classeService;
+	
+	@Inject
+	BrancheService brancheService;
 
 	Logger logger = Logger.getLogger(ClasseMatiereService.class.getName());
 
@@ -37,6 +40,29 @@ public class ClasseMatiereService implements PanacheRepositoryBase<ClasseMatiere
 	public List<ClasseMatiere> getByBrancheViaClasse(long classeId, long anneeId, long ecoleId) {
 		Classe classe = classeService.findById(classeId);
 		return getByBranche(classe.getBranche().getId(), anneeId, ecoleId);
+	}
+	
+	@Transactional
+	public void create(ClasseMatiere classeMatiere) {
+		 classeMatiere.persist();
+	}
+	/*
+	 * Créer pour chaque ecole les coeficients de la matière et pour chaque branche
+	 * lors de la création d'une matière en centrale
+	 */
+	@Transactional
+	public void handleCreateMatiereToBranche(ClasseMatiere classeMatiere) {
+		logger.info("-> Création des coefficients pour la matière : "+classeMatiere.getMatiere().getLibelle());
+		List<Branche> branches = brancheService.findByNiveauEnseignementViaEcole(classeMatiere.getEcole().getId());
+		for(Branche branche : branches) {
+			ClasseMatiere cm = new ClasseMatiere();
+			cm.setEcole(classeMatiere.getEcole());
+			cm.setMatiere(classeMatiere.getMatiere());
+			cm.setCoef(classeMatiere.getCoef());
+			cm.setBranche(branche);
+			create(cm);
+			logger.info("-> Branche : "+cm.getBranche().getLibelle()+" [ok]");
+		}
 	}
 
 	@Transactional

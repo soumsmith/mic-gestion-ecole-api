@@ -15,6 +15,8 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Response;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -50,11 +52,13 @@ public class MatiereService implements PanacheRepositoryBase<Matiere, Long> {
 	}
 
 	@Transactional
-	public void create(Matiere ev) {
-		logger.info("--> Création de matière");
+	public void create(Matiere matiere) {
 		Gson g = new Gson();
-		System.out.println(g.toJson(ev));
-		ev.persist();
+//		System.out.println(g.toJson(matiere));
+		matiere.persist();
+		matiere.setDateCreation(LocalDateTime.now());
+		matiere.setDateUpdate(LocalDateTime.now());
+		logger.info("--> Création de matière "+matiere.getLibelle()+" [ok]");
 	}
 
 	/*
@@ -150,6 +154,7 @@ public class MatiereService implements PanacheRepositoryBase<Matiere, Long> {
 		entity.setCategorie(matiere.getCategorie());
 		entity.setNumOrdre(matiere.getNumOrdre());
 		entity.setBonus(matiere.getBonus());
+		entity.setDateUpdate(LocalDateTime.now());
 
 		return entity;
 	}

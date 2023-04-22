@@ -23,7 +23,7 @@ public class ClasseMatiere extends PanacheEntityBase{
 	private String coef;
 	@ManyToOne
 	@JoinColumn(name = "matiereid")
-	private Matiere matiere;
+	private EcoleHasMatiere matiere;
 	@Transient
 //	@ManyToOne
 //	@JoinColumn(name = "Classe_id")

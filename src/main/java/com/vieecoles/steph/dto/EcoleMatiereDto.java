@@ -1,6 +1,8 @@
 package com.vieecoles.steph.dto;
 
+import com.vieecoles.steph.entities.CategorieMatiere;
 import com.vieecoles.steph.entities.Ecole;
+import com.vieecoles.steph.entities.EcoleHasMatiere;
 import com.vieecoles.steph.entities.Matiere;
 
 import lombok.Getter;
@@ -12,8 +14,11 @@ public class EcoleMatiereDto {
 	private Long id;
 	private Matiere matiere;
 	private Ecole ecole;
-	private String alias;
+	private String code;
+	private String libelle;
 	private Integer pec;
 	private Integer bonus;
+	private CategorieMatiere categorie;
+	private EcoleHasMatiere matiereParent;
 	
 }

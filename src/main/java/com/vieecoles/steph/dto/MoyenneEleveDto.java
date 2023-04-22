@@ -19,7 +19,7 @@ public class MoyenneEleveDto implements Comparable<MoyenneEleveDto> {
 	private String classeMatierePeriodeId;
 	private String appreciation;
 	private List<Notes> notes;
-	private Map<Matiere, List<Notes>> notesMatiereMap;
+	private Map<EcoleHasMatiere, List<Notes>> notesMatiereMap;
 	private AnneeScolaire annee;
 
 	@Override

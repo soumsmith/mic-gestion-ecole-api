@@ -1,5 +1,9 @@
 package com.vieecoles.steph.entities;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,12 +32,15 @@ public class EcoleHasMatiere extends PanacheEntityBase{
 	@ManyToOne
 	@JoinColumn(name = "matiere_matiereid")
     private  Matiere matiere;
+	
+	@Column(name = "alias_matiere_code")
+    private  String code;
 	@Column(name = "alias_matiere_libelle")
-    private  String aliasLibelle;
+    private  String libelle;
 	
 	private Integer pec;
-	@Column(name = "num_ordre_affichage")
 	private Integer bonus;
+	@Column(name = "num_ordre_affichage")
 	private Integer numOrdre;
     @Transient
     private Double moyenne;
@@ -43,9 +50,26 @@ public class EcoleHasMatiere extends PanacheEntityBase{
     private String  coef ;
     @Transient
     private String appreciation;
-//    @ManyToOne
-//    @JoinColumn(name = "matiereparent_id")
-//    @Column(name = "matiereparent_id")
-//    private String matiereParent;
+    @ManyToOne
+    @JoinColumn(name = "matiere_parent_id")
+    private EcoleHasMatiere matiereParent;
+    @ManyToOne
+    @JoinColumn(name = "categorie")
+    private CategorieMatiere categorie;
+    
+    @ManyToOne
+	@JoinColumn(name = "niveau_enseign_id")
+	private NiveauEnseignement niveauEnseignement; 
+    
+    @Transient
+    private String eleveMatiereIsClassed;
+    
+    @Column(name = "parent_matiere")
+    private String parentMatiereLibelle;
 
+    private LocalDateTime dateCreation;
+    private LocalDateTime dateUpdate;
+    
+    @Transient
+    private String user;
 }

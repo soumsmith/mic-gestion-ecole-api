@@ -25,7 +25,7 @@ public class PersonnelMatiereClasse extends PanacheEntityBase {
 	private Classe classe;
 	@ManyToOne
 	@JoinColumn(name = "matiere_matiereid")
-	private Matiere matiere;
+	private EcoleHasMatiere matiere;
 	@ManyToOne
 	@JoinColumn(name = "annee_scolaire_annee_scolaireid")
 	private AnneeScolaire annee;

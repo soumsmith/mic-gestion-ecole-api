@@ -19,6 +19,9 @@ public class Activite extends PanacheEntityBase{
 	private long id;
 	private String annee;
 	@ManyToOne
+	@JoinColumn(name = "ecole_id")
+	private Ecole ecole;
+	@ManyToOne
 	@JoinColumn(name="jour")
 	private Jour jour;
 //	@ManyToOne
@@ -30,8 +33,8 @@ public class Activite extends PanacheEntityBase{
 	private String heureFin;
 
 	@ManyToOne
-	@JoinColumn(name = "matiere_matiereid")
-	private Matiere matiere;
+	@JoinColumn(name = "ecole_matiereid")
+	private EcoleHasMatiere matiere;
 	@ManyToOne
 	@JoinColumn(name = "classe_classeid")
 	private Classe classe;
