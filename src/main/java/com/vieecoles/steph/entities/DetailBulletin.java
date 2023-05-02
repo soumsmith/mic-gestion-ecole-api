@@ -32,7 +32,7 @@ public class DetailBulletin extends PanacheEntityBase{
 	private String appreciation;
 	@Column(name = "code_categorie")
 	private String  categorie;
-    private int  num_ordre;
+    private Integer  num_ordre;
 	private String nom_prenom_professeur ;
 
 	private Integer pec;

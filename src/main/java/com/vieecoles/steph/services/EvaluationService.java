@@ -97,16 +97,17 @@ public class EvaluationService implements PanacheRepositoryBase<Evaluation, Long
 	}
 
 	public List<Evaluation> getByClasseAndMatiere(Long classeId, Long matiereId) {
-		return Evaluation.find("annee.id=?1 and classe.id=?2 and matiere.id=?3 ",Long.parseLong("1"), classeId, matiereId).list();
+		return Evaluation.find("annee.id=?1 and classe.id=?2 and matiereEcole.id=?3 ",Long.parseLong("1"), classeId, matiereId).list();
 	}
 
 
 	public List<Evaluation> getByClasseAndMatiereAndPeriode(Long classeId, Long matiereId, Long periodeId, Long anneeId) {
-		return Evaluation.find("annee.id=?1 and classe.id=?2 and matiere.id=?3 and periode.id=?4",anneeId, classeId, matiereId, periodeId).list();
+		logger.info(String.format("classse: %s  | annee : %s  | matiere : %s  | periode : %s", classeId, anneeId, matiereId, periodeId));
+		return Evaluation.find("annee.id=?1 and classe.id=?2 and matiereEcole.id=?3 and periode.id=?4",anneeId, classeId, matiereId, periodeId).list();
 	}
 
 	public Long getCountByClasseAndMatiere(Long classeId, Long matiereId) {
-		return Evaluation.find("annee.id=?1 and classe.id=?2 and matiere.id=?3",Long.parseLong("1"), classeId, matiereId).count();
+		return Evaluation.find("annee.id=?1 and classe.id=?2 and matiereEcole.id=?3",Long.parseLong("1"), classeId, matiereId).count();
 	}
 
 	// Faire une recherche via le champ

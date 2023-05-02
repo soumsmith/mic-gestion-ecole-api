@@ -14,8 +14,8 @@ import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 @RequestScoped
 public class ClasseElevePeriodeService implements PanacheRepositoryBase<ClasseElevePeriode, String> {
-	Logger logger  = Logger.getLogger(ClasseElevePeriodeService.class.getName());
-	
+	Logger logger = Logger.getLogger(ClasseElevePeriodeService.class.getName());
+
 	public List<ClasseElevePeriode> getList() {
 		return ClasseElevePeriode.listAll();
 	}
@@ -24,21 +24,38 @@ public class ClasseElevePeriodeService implements PanacheRepositoryBase<ClasseEl
 		return ClasseElevePeriode.findById(id);
 	}
 
-	public ClasseElevePeriode findByClasseAndEleveAndAnneeAndPeriode(long classe, long eleve, long annee, long periode) {
+	public ClasseElevePeriode findByClasseAndEleveAndAnneeAndPeriode(long classe, long eleve, long annee,
+			long periode) {
 		ClasseElevePeriode cep = null;
 		try {
-			cep = ClasseElevePeriode.find("classe.id =?1 and eleve.id = ?2 and annee.id=?3 and periode.id =?4", classe, eleve, annee, periode).singleResult();
-		}catch(RuntimeException e) {
-			if(e.getClass().getName().equals(NoResultException.class.getName()))
+			cep = ClasseElevePeriode.find("classe.id =?1 and eleve.id = ?2 and annee.id=?3 and periode.id =?4", classe,
+					eleve, annee, periode).singleResult();
+		} catch (RuntimeException e) {
+			if (e.getClass().getName().equals(NoResultException.class.getName()))
 				logger.info("Aucune donnée sur le marquage de non classement d'un élève trouvé");
 			return cep;
 		}
-		
+
 		return cep;
 	}
 
 	@Transactional
+	public void handleMarquageClassement(ClasseElevePeriode classeElevePeriode) {
+		
+			ClasseElevePeriode cep = findByClasseAndEleveAndAnneeAndPeriode(classeElevePeriode.getClasse().getId(),
+					classeElevePeriode.getEleve().getId(), classeElevePeriode.getAnnee().getId(),
+					classeElevePeriode.getPeriode().getId());
+
+			if(cep!=null) {
+				cep.setIsClassed(classeElevePeriode.getIsClassed());
+			} else {
+				create(classeElevePeriode);
+			}
+	}
+
+	@Transactional
 	public void create(ClasseElevePeriode classeElevePeriode) {
+		logger.info("--> Création de classe eleve periode");
 		classeElevePeriode.setId(UUID.randomUUID().toString());
 		classeElevePeriode.persist();
 	}

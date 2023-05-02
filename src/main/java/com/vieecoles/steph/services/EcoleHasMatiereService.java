@@ -126,6 +126,8 @@ public class EcoleHasMatiereService implements PanacheRepositoryBase<EcoleHasMat
 		dto.setBonus(ecoleMatiere.getBonus());
 		dto.setCategorie(ecoleMatiere.getCategorie());
 		dto.setMatiereParent(ecoleMatiere.getMatiereParent());
+		
+		// Maj la matiere parentlibelle
 
 		return dto;
 	}
@@ -162,6 +164,8 @@ public class EcoleHasMatiereService implements PanacheRepositoryBase<EcoleHasMat
 		entity.setPec(ecoleHasMatiere.getPec());
 		entity.setBonus(ecoleHasMatiere.getBonus());
 		entity.setDateUpdate(LocalDateTime.now());
+		
+		
 
 		return entity;
 	}

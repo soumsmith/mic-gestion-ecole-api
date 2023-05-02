@@ -8,7 +8,9 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
@@ -52,10 +54,10 @@ public class ClasseElevePeriodeResource {
 		}
 	}
 
-	@Path("/get-by-classe-eleve-matiere-annee/{classe}/{matiere}/{eleve}/{annee}")
+	@Path("/get-by-classe-eleve-periode-annee/{classe}/{eleve}/{periode}/{annee}")
 	@Tag(name = "ClasseElevePeriode")
 	@GET
-	public Response findByClasseAndMatiereAndEleveAndAnnee(@PathParam("classe") long classe, @PathParam("eleve") long eleve, @PathParam("annee") long annee, @PathParam("periode") long periode) {
+	public Response findByClasseAndPeriodeAndEleveAndAnnee(@PathParam("classe") long classe, @PathParam("eleve") long eleve, @PathParam("annee") long annee, @PathParam("periode") long periode) {
 		ClasseElevePeriode classeElevePeriode = new ClasseElevePeriode();
 		try {
 			classeElevePeriode = classeElevePeriodeService.findByClasseAndEleveAndAnneeAndPeriode(classe, eleve, annee, periode);
@@ -63,6 +65,20 @@ public class ClasseElevePeriodeResource {
 		}catch (RuntimeException e) {
 			e.printStackTrace();
 			return Response.serverError().entity(classeElevePeriode).build();
+		}
+	}
+	
+	@Path("/marquage-classement")
+	@Produces(MediaType.TEXT_PLAIN)
+	@Tag(name = "ClasseElevePeriode")
+	@POST
+	public Response handleMarquageClassementStatut(ClasseElevePeriode classeElevePeriode) {
+		try {
+			classeElevePeriodeService.handleMarquageClassement(classeElevePeriode);
+			return Response.ok(classeElevePeriode.getIsClassed()).build();
+		}catch (RuntimeException e) {
+			e.printStackTrace();
+			return Response.serverError().entity(String.format("Marquage non effectué pour l'élève %s - %s %s", classeElevePeriode.getEleve().getMatricule(), classeElevePeriode.getEleve().getNom(), classeElevePeriode.getEleve().getPrenom())).build();
 		}
 	}
 

@@ -21,20 +21,24 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Table(name = "ecole_has_matiere")
 @Data
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
 public class EcoleHasMatiere extends PanacheEntityBase{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
+	@EqualsAndHashCode.Include
     private Long  id ;
 	@ManyToOne
+	@EqualsAndHashCode.Include
 	@JoinColumn(name = "ecole_ecoleid")
     private  Ecole ecole;
 	@ManyToOne
 	@JoinColumn(name = "matiere_matiereid")
+	@EqualsAndHashCode.Include
     private  Matiere matiere;
-	
+	@EqualsAndHashCode.Include
 	@Column(name = "alias_matiere_code")
     private  String code;
+	@EqualsAndHashCode.Include
 	@Column(name = "alias_matiere_libelle")
     private  String libelle;
 	
@@ -55,10 +59,12 @@ public class EcoleHasMatiere extends PanacheEntityBase{
     private EcoleHasMatiere matiereParent;
     @ManyToOne
     @JoinColumn(name = "categorie")
+    @EqualsAndHashCode.Include
     private CategorieMatiere categorie;
     
     @ManyToOne
 	@JoinColumn(name = "niveau_enseign_id")
+    @EqualsAndHashCode.Include
 	private NiveauEnseignement niveauEnseignement; 
     
     @Transient

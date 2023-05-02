@@ -276,7 +276,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 								pers.getPersonnel().getNom() + " " + pers.getPersonnel().getPrenom());
 
 				} else {
-					logger.info("--> Création de detail bulletin");
+					logger.info("--> Création de detail bulletin ");
 					flag = new DetailBulletin();
 					UUID idDetail = UUID.randomUUID();
 					moyCoef = entry.getKey().getMoyenne() * Double.parseDouble(entry.getKey().getCoef());
