@@ -318,6 +318,141 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			return new ArrayList<MoyenneEleveDto>();
 		}
 	}
+	
+	
+	public List<MoyenneEleveDto> moyennesAndMatiereAndNotesHandle(String classeId,String matiereId, String anneeId, String periodeId) {
+		// Obtenir la liste des evaluations dans une classe et une matiere au cours de l année pour une
+		// période
+		logger.info("---> Processus de Calcul des moyennes des éleves d une matiere");
+		try {
+			Map<Eleve, List<Notes>> noteGroup = new HashMap<Eleve, List<Notes>>();
+			Parameters params = Parameters.with("classeId", Long.parseLong(classeId)).and("matiereId", Long.parseLong(matiereId))
+					.and("anneeId", Long.parseLong(anneeId)).and("periodeId", Long.parseLong(periodeId)).and("pok", 1);
+			String criteria = "classe.id = :classeId and matiereEcole.id= :matiereId and annee.id = :anneeId and periode.id = :periodeId and pec = :pok";
+			List<Evaluation> evalList = evaluationService.search(criteria, params);
+			List<Notes> noteList = new ArrayList<Notes>();
+			List<Notes> notesTemp;
+			List<MoyenneEleveDto> moyenneList = new ArrayList<MoyenneEleveDto>();
+			Map<EcoleHasMatiere, List<Notes>> notesMatiereGroup;
+			Classe classe;
+			MoyenneEleveDto moyenneEleveDto;
+//			Gson g = new Gson();
+			// pour chaque évaluation avoir la liste des notes des élèves
+			for (Evaluation ev : evalList) {
+				logger.info(ev.getPec().toString());
+				if (ev.getPec() != null && ev.getPec() == 1)
+					noteList.addAll(getNotesClasse(ev.getCode()));
+			}
+//		logger.info("note size " + noteList.size());
+//		logger.info(gson.toJson(noteList));
+			// Regroupement des notes par élève
+			for (Notes note : noteList) {
+//			logger.info("note.getClasseEleve().getInscription().getEleve()");
+//			logger.info(gson.toJson(note.getClasseEleve().getInscription().getEleve()));
+				if (noteGroup.containsKey(note.getClasseEleve().getInscription().getEleve())) {
+					logger.info("**** upd |||****>");
+					noteGroup.get(note.getClasseEleve().getInscription().getEleve()).add(note);
+				} else {
+					logger.info("<****||| new ****");
+					notesTemp = new ArrayList<Notes>();
+					notesTemp.add(note);
+					noteGroup.put(note.getClasseEleve().getInscription().getEleve(), notesTemp);
+				}
+			}
+			classe = classeService.findById(Long.parseLong(classeId));
+//		logger.info(g.toJson(classe));
+
+			// Formatage des dto
+			AnneeScolaire anneeScolaire = new AnneeScolaire();
+			Periode periode = new Periode();
+			anneeScolaire.setId(Long.parseLong(anneeId));
+			periode.setId(Long.parseLong(periodeId));
+			for (Map.Entry<Eleve, List<Notes>> entry : noteGroup.entrySet()) {
+				moyenneEleveDto = new MoyenneEleveDto();
+				moyenneEleveDto.setEleve(entry.getKey());
+				moyenneEleveDto.setClasse(classe);
+				moyenneEleveDto.setAnnee(anneeScolaire);
+				moyenneEleveDto.setPeriode(periode);
+				notesMatiereGroup = new HashMap<EcoleHasMatiere, List<Notes>>();
+				EcoleHasMatiere matiereTemp;
+				List<String> filter = new ArrayList<>();
+				Gson g = new Gson();
+//			logger.info(String.format("Eleve - %s - %s", entry.getKey().getMatricule(),entry.getKey().getNom()));
+				for (Notes note : entry.getValue()) {
+					logger.info("note id --->" + note.getId());
+					if (note.getId() != 0) {
+						if (filter.contains(note.getEvaluation().getMatiereEcole().getCode())) {
+//					if (notesMatiereGroup.containsKey(note.getEvaluation().getMatiere())) {
+							logger.info("**** upd ****>" + note.getEvaluation().getMatiereEcole().getCode());
+//						logger.info(g.toJson(notesMatiereGroup));
+//						logger.info("----------");
+//						logger.info(g.toJson(note.getEvaluation().getMatiereEcole()));
+							notesMatiereGroup.get(note.getEvaluation().getMatiereEcole()).add(note);
+//						System.out.println("----------------------------");
+//						System.out.println(g.toJson(note.getEvaluation().getMatiere()));
+//						logger.info(String.format("%s - %s - %s", entry.getKey().getMatricule(),note.getEvaluation().getMatiere(),note.getNote()));
+						} else {
+							logger.info("<*** new *****" + note.getEvaluation().getMatiereEcole().getCode());
+							notesTemp = new ArrayList<Notes>();
+							notesTemp.add(note);
+							filter.add(note.getEvaluation().getMatiereEcole().getCode());
+//						logger.info("ref mtiere"+note.getEvaluation().getMatiere().hashCode());
+							/*
+							 * Mettre a jour matiereTemp si la structure de EcoleHasMatiere évolue
+							 */
+
+							matiereTemp = new EcoleHasMatiere();
+							matiereTemp.setId(note.getEvaluation().getMatiereEcole().getId());
+							matiereTemp.setCode(note.getEvaluation().getMatiereEcole().getCode());
+							matiereTemp.setPec(note.getEvaluation().getMatiereEcole().getPec());
+							matiereTemp.setLibelle(note.getEvaluation().getMatiereEcole().getLibelle());
+							matiereTemp.setMoyenne(note.getEvaluation().getMatiereEcole().getMoyenne());
+							matiereTemp.setNiveauEnseignement(
+									note.getEvaluation().getMatiereEcole().getNiveauEnseignement());
+							matiereTemp.setCategorie(note.getEvaluation().getMatiereEcole().getCategorie());
+							matiereTemp.setNumOrdre(note.getEvaluation().getMatiereEcole().getNumOrdre());
+							matiereTemp.setMatiereParent(note.getEvaluation().getMatiereEcole().getMatiereParent());
+							matiereTemp.setBonus(note.getEvaluation().getMatiereEcole().getBonus());
+							matiereTemp.setParentMatiereLibelle(
+									note.getEvaluation().getMatiereEcole().getParentMatiereLibelle());
+							matiereTemp.setMatiere(note.getEvaluation().getMatiereEcole().getMatiere());
+							matiereTemp.setEcole(note.getClasseEleve().getClasse().getEcole());
+//						logger.info(g.toJson(matiereTemp));
+//						System.out.println("----------------------");
+//						System.out.println(g.toJson(note.getEvaluation().getMatiere()));
+							/**
+							 * ***********************************************
+							 */
+
+							notesMatiereGroup.put(matiereTemp, notesTemp);
+							logger.info(String.format("%s - %s - %s", entry.getKey().getMatricule(),
+									note.getEvaluation().getMatiereEcole().getCode(), note.getNote()));
+							;
+
+						}
+//					logger.info(g.toJson(notesMatiereGroup));
+					}
+				}
+				moyenneEleveDto.setNotesMatiereMap(notesMatiereGroup);
+//			logger.info(g.toJson(moyenneEleveDto));
+//			moyenneEleveDto.setMatiere(null);
+//			moyenneEleveDto.setNotes(entry.getValue());
+				moyenneList.add(moyenneEleveDto);
+			}
+//		calculMoyenneMatiere(moyenneList);
+//		logger.info(moyenneList.toString());
+//		logger.info("-------------------------------------------");
+			classementEleveParMatiere(calculMoyenneMatiere(moyenneList), classe.getBranche().getId(),
+					classe.getEcole().getId());
+			//calculMoyenneGeneralEleve(moyenneList);
+			//Collections.sort(moyenneList);
+//	    logger.info(g.toJson(moyenneList));
+			return moyenneList;
+		} catch (RuntimeException r) {
+			r.printStackTrace();
+			return new ArrayList<MoyenneEleveDto>();
+		}
+	}
 
 	List<MoyenneEleveDto> calculMoyenneMatiere(List<MoyenneEleveDto> moyEleve) {
 		logger.info("---> Calcul des moyennes par matiere");
