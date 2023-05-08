@@ -302,7 +302,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 //		calculMoyenneMatiere(moyenneList);
 //		logger.info(moyenneList.toString());
 //		logger.info("-------------------------------------------");
-			classementEleveParMatiere(calculMoyenneMatiere(moyenneList), classe.getBranche().getId());
+			classementEleveParMatiere(calculMoyenneMatiere(moyenneList), classe.getBranche().getId(), classe.getEcole().getId());
 			calculMoyenneGeneralEleve(moyenneList);
 			Collections.sort(moyenneList);
 //	    logger.info(g.toJson(moyenneList));
@@ -494,9 +494,9 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 		classementElevePeriode(classement);
 	}
 
-	void classementEleveParMatiere(List<MoyenneEleveDto> moyEleve, Long brancheId) {
+	void classementEleveParMatiere(List<MoyenneEleveDto> moyEleve, Long brancheId, Long ecoleId) {
 		logger.info("---> Classement des eleves par matiere");
-		List<ClasseMatiere> classeMatList = ClasseMatiere.find("branche.id = ?1", brancheId).list();
+		List<ClasseMatiere> classeMatList = ClasseMatiere.find("branche.id = ?1 and ecole.id", brancheId, ecoleId).list();
 		Map<Double, MoyenneEleveDto> mapt;
 
 		int i = 0;
@@ -504,6 +504,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			mapt = new HashMap<Double, MoyenneEleveDto>();
 			for (MoyenneEleveDto me : moyEleve) {
 				logger.info("eleve - " + me.getEleve().getNom());
+				logger.info(".getNotesMatiereMap() - " + me.getNotesMatiereMap());
 				if (me.getNotesMatiereMap() != null) {
 					for (Map.Entry<Matiere, List<Notes>> map : me.getNotesMatiereMap().entrySet()) {
 						if (map.getKey().getCode().equals(cm.getMatiere().getCode())) {
