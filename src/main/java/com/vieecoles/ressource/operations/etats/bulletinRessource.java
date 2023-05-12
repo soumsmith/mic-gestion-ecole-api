@@ -173,7 +173,7 @@ public class bulletinRessource {
             map.put("logo",logo);
             map.put("amoirie",amoirie);
             map.put("bg",bg);
-            map.put("TmoyFr",TmoyCoefFr/4);
+            map.put("TmoyFr",TmoyCoefFr/TcoefFr);
             map.put("TcoefFr",TcoefFr);
             map.put("TmoyCoefFr",TmoyCoefFr);
             map.put("TrangFr",TrangFr);

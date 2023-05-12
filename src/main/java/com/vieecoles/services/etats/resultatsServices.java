@@ -32,12 +32,15 @@ public class resultatsServices {
 
         Long  effeG,effeF,classF,classG,nonclassF,nonclassG,nbreMoySup10F,nbreMoySup10G,nbreMoyInf999F,nbreMoyInf999G,nbreMoyInf85G,nbreMoyInf85F;
         Double pourMoySup10F ,pourMoySup10G,pourMoyInf999F,pourMoyInf999G,pourMoyInf85G,pourMoyInf85F,moyClasseF,moyClasseG;
-       Integer effectifClasse ;
+       Integer effectifClasse,orderNiveau ;
         List<ResultatsElevesAffecteDto> resultatsListElevesDto = new ArrayList<>(LongTableau);
         System.out.println("resultatsListElevesDto Size "+ resultatsListElevesDto.size());
         for (int i=0; i< LongTableau;i++) {
             ResultatsElevesAffecteDto resultatsListEleves= new ResultatsElevesAffecteDto();
+            orderNiveau= getOrderNiveau(classeNiveauDtoList.get(i).getNiveau());
             effectifClasse= getEffectifParClasse(idEcole,classeNiveauDtoList.get(i).getClasse(),classeNiveauDtoList.get(i).getNiveau());
+            System.out.println("libelle classe "+classeNiveauDtoList.get(i).getClasse());
+            System.out.println("libelle niveau "+classeNiveauDtoList.get(i).getNiveau());
             System.out.println("effectifClasse "+effectifClasse);
             effeG = geteffeG(idEcole,classeNiveauDtoList.get(i).getClasse(),classeNiveauDtoList.get(i).getNiveau());
             System.out.println("effeG "+effeG);
@@ -88,7 +91,7 @@ public class resultatsServices {
 
             pourMoySup10G = (double) ((nbreMoySup10G*100)/effectifClasse);
             System.out.println("pourMoySup10G "+pourMoySup10G);
-            System.out.println("resultatsListElevesDto "+resultatsListElevesDto.toString());
+            //System.out.println("resultatsListElevesDto "+resultatsListElevesDto.toString());
             System.out.println("resultats0 ");
             resultatsListEleves.setNiveau(classeNiveauDtoList.get(i).getNiveau());
             System.out.println("resultats1 "+resultatsListEleves.getNiveau());
@@ -121,12 +124,23 @@ public class resultatsServices {
             resultatsListEleves.setMoyClasseG(moyClasseG);
             resultatsListEleves.setMoyClasseF(moyClasseF);
             resultatsListElevesDto.add(resultatsListEleves) ;
+            resultatsListEleves.setOrdre_niveau(orderNiveau);
 
         }
-
+        System.out.println("FIN CalculResultatsEleveAffecte ");
         return  resultatsListElevesDto ;
     }
-
+    public  Integer getOrderNiveau(String niveau){
+        Integer ordNiveau;
+        try {
+            ordNiveau = (Integer) em.createQuery("select distinct cast(o.ordre_niveau as integer ) from Bulletin o where  o.niveau=:niveau")
+                     .setParameter("niveau",niveau)
+                    .getSingleResult();
+        } catch (NoResultException e){
+            return 0 ;
+        }
+        return  ordNiveau ;
+    }
   public  Integer getEffectifParClasse(Long idEcole ,String classe, String niveau){
        Integer effectifClasse;
       try {
