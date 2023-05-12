@@ -59,7 +59,14 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 	}
 	
 	public PersonnelMatiereClasse findProfesseurByMatiereAndClasse( Long annee,Long classe,Long matiere) {
-		return PersonnelMatiereClasse.find("classe.id = ?1 and annee.id= ?2 and matiere.id = ?3", classe, annee,matiere).singleResult();
+		
+		PersonnelMatiereClasse pcm = null;
+		try {
+			pcm = PersonnelMatiereClasse.find("classe.id = ?1 and annee.id= ?2 and matiere.id = ?3", classe, annee,matiere).singleResult();
+		}catch(RuntimeException ex){
+			logger.info("Aucun personnel associé à la matiere");
+		}
+		return pcm;
 //		return new PersonnelMatiereClasse();
 	}
 
