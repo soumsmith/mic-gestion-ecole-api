@@ -58,6 +58,16 @@ public class eleveRessource {
         return  EleveService.importerCreerEleve(lisImpo,idEcole,idAnneeScolaire,typeOperation);
     }
 
+    @PUT
+    @Produces(MediaType.TEXT_PLAIN)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("importer-eleve/{idEcole}/{idAnneeScolaire}/{typeOperation}")
+    public String importerMiseAjourEleve(List<importEleveDto> lisImpo , @PathParam("idEcole") Long idEcole, @PathParam("idAnneeScolaire") Long idAnneeScolaire,@PathParam("typeOperation") String typeOperation ){
+        // System.out.print("lisImpo "+lisImpo);
+        return  EleveService.importerMiseEleve(lisImpo,idEcole,idAnneeScolaire,typeOperation);
+    }
+
+
     @POST
     @Path("/{idEcole}/{idAnneeScolaire}/{statutEleve}/{typeOperation}/{idBranche}")
     @Produces(MediaType.APPLICATION_JSON)

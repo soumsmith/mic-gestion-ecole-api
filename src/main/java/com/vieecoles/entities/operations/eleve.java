@@ -28,6 +28,7 @@ public class eleve extends PanacheEntityBase {
     private  String  eleve_mail ;
     private  String eleve_sexe ;
     private  String eleve_matricule ;
+    private  String eleve_nationalite ;
 
    // @JsonbTransient
 
@@ -92,6 +93,14 @@ public class eleve extends PanacheEntityBase {
     }
 
     public eleve() {
+    }
+
+    public String getEleve_nationalite() {
+        return eleve_nationalite;
+    }
+
+    public void setEleve_nationalite(String eleve_nationalite) {
+        this.eleve_nationalite = eleve_nationalite;
     }
 
     public String getEleve_matricule() {

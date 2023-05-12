@@ -19,6 +19,7 @@ public class EleveDto {
     private  String eleveadresse ;
     private  String  elevecellulaire ;
     private  String  eleve_mail ;
+    private  String eleve_nationalite ;
 
     private  String elevematricule_national ;
     private  String eleveSexe ;
@@ -67,6 +68,14 @@ public class EleveDto {
                 ", elevecellulaire='" + elevecellulaire + '\'' +
                 ", eleve_mail='" + eleve_mail + '\'' +
                    '}';
+    }
+
+    public String getEleve_nationalite() {
+        return eleve_nationalite;
+    }
+
+    public void setEleve_nationalite(String eleve_nationalite) {
+        this.eleve_nationalite = eleve_nationalite;
     }
 
     public EleveDto(Long eleveid, String elevecode, String elevenom, String eleveprenom, LocalDate elevedate_naissance, String elevelieu_naissance, Integer eleve_numero_extrait_naiss, LocalDate elevedate_etabli_extrait_naiss, String elevelieu_etabliss_etrait_naissance, String eleveadresse, String elevecellulaire, String eleve_mail) {

@@ -47,11 +47,13 @@ public class SousceecoleService implements PanacheRepositoryBase<sousc_atten_eta
     }
 
     public String creationMiseAjourInfosEtablisse(r_info_etablissement et){
+        System.out.print("infos_etablisseDto "+et.toString());
         r_info_etablissement et1 = new r_info_etablissement() ;
+        System.out.print("id_ecole "+et.getEtab_id_ecole());
         et1 = checkEtablissement(et.getEtab_id_ecole()) ;
         String message= null ;
         if(et1==null){
-            et1.persist();
+            et.persist();
         } else {
             et1.setEtab_adresse(et.getEtab_fax());
             et1.setEtab_fax(et.getEtab_fax());
