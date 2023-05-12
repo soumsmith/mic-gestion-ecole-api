@@ -23,6 +23,15 @@ public class RecapDesResultatsElevesNonAffecteDto {
     private Double pourMoyInf85F;
     private Double moyClasseF ;
     private Double moyClasseG ;
+    Integer ordre_niveau ;
+
+    public Integer getOrdre_niveau() {
+        return ordre_niveau;
+    }
+
+    public void setOrdre_niveau(Integer ordre_niveau) {
+        this.ordre_niveau = ordre_niveau;
+    }
 
     public RecapDesResultatsElevesNonAffecteDto() {
     }

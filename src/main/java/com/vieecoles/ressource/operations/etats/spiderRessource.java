@@ -217,6 +217,7 @@ public class spiderRessource {
 
 
     @GET
+    @Transactional
     @Path("/pouls-rapport/{idEcole}/{type}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public ResponseEntity<byte[]>  getDtoRapport(@PathParam("idEcole") Long idEcole ,@PathParam("type") String type) throws Exception, JRException {
@@ -249,17 +250,29 @@ public class spiderRessource {
 
         identiteEtatDto= identiteEtatService.getIdentiteDto(idEcole) ;
         resultatsElevesAffecteDto= resultatsServices.CalculResultatsEleveAffecte(idEcole) ;
+        System.out.println("FIN ResultatsEleveAffecte ");
         recapDesResultatsElevesAffecteDto= resultatsRecapServices.RecapCalculResultatsEleveAffecte(idEcole);
+        System.out.println("FIN RecapResultatsEleveAffecte ");
         resultatsElevesNonAffecteDto = resultatsNonAffecteServices.CalculResultatsEleveAffecte(idEcole);
+        System.out.println("FIN resultatsNonAffecte ");
         recapDesResultatsElevesNonAffecteDto= resultatsRecapNonAffServices.RecapCalculResultatsEleveAffecte(idEcole) ;
+        System.out.println("FIN resultatsRecapNonAff ");
         recapResultatsElevesAffeEtNonAffDto = resultatsRecapAffEtNonAffServices.RecapCalculResultatsEleveAffecte(idEcole) ;
+        System.out.println("FIN resultatsRecapAffEtNonAff ");
         eleveAffecteParClasseDto= eleveAffecteParClasseServices.eleveAffecteParClasse(idEcole) ;
+        System.out.println("FIN eleveAffecteParClasse ");
         eleveNonAffecteParClasseDto = eleveNonAffecteParClasseServices.eleveNonAffecteParClasse(idEcole);
+        System.out.println("FIN eleveNonAffecteParClasse ");
         majorParClasseNiveauDto = majorServices.MajorParNiveauClasse(idEcole) ;
+        System.out.println("FIN major ");
         transfertsDto= transfertsServices.transferts(idEcole) ;
+        System.out.println(" FIN transfert ");
         repartitionEleveParAnNaissDto= repartitionElevParAnNaissServices.CalculRepartElevParAnnNaiss(idEcole);
+        System.out.println("FIN repartitionElevParAnNaiss ");
         boursierDto = boursiersServices.boursier(idEcole);
+        System.out.println("FIN Boursier ");
         effApprocheNive= approcheParNiveauParGenreServices.EffApprocheNiveauGenre(idEcole) ;
+        System.out.println("FIN approcheParNiveauParGenre ");
         effApprocheNiveauGenreDto.add(effApprocheNive)   ;
 
 

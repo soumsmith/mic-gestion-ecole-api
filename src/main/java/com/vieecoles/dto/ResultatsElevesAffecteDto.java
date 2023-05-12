@@ -23,8 +23,17 @@ public class ResultatsElevesAffecteDto {
     private Double pourMoyInf85F;
     private Double moyClasseF ;
     private Double moyClasseG ;
+    private  Integer ordre_niveau ;
 
     public ResultatsElevesAffecteDto() {
+    }
+
+    public Integer getOrdre_niveau() {
+        return ordre_niveau;
+    }
+
+    public void setOrdre_niveau(Integer ordre_niveau) {
+        this.ordre_niveau = ordre_niveau;
     }
 
     public ResultatsElevesAffecteDto(String niveau,
@@ -48,7 +57,8 @@ public class ResultatsElevesAffecteDto {
                                      Long nbreMoyInf85F,
                                      Double pourMoyInf85F,
                                      Double moyClasseF,
-                                     Double moyClasseG) {
+                                     Double moyClasseG,
+                                     Integer ordre_niveau) {
         this.niveau = niveau;
         this.classe = classe;
 
@@ -72,6 +82,7 @@ public class ResultatsElevesAffecteDto {
         this.pourMoyInf85F = pourMoyInf85F;
         this.moyClasseF = moyClasseF;
         this.moyClasseG = moyClasseG;
+        this.ordre_niveau = ordre_niveau ;
     }
 
     public String getNiveau() {

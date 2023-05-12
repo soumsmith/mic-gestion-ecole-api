@@ -107,6 +107,7 @@ public class Bulletin extends PanacheEntityBase{
 	@Column(name = "nom_signataire")
 	private String nomSignataire;
 	private String transfert;
+	private  String ordre_niveau ;
 
 
 	@Lob
