@@ -29,7 +29,6 @@ import com.vieecoles.steph.entities.Constants;
 import com.vieecoles.steph.entities.EcoleHasMatiere;
 import com.vieecoles.steph.entities.Eleve;
 import com.vieecoles.steph.entities.Evaluation;
-import com.vieecoles.steph.entities.Matiere;
 import com.vieecoles.steph.entities.Notes;
 import com.vieecoles.steph.entities.Periode;
 import com.vieecoles.steph.util.CommonUtils;
@@ -315,7 +314,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			return moyenneList;
 		} catch (RuntimeException r) {
 			r.printStackTrace();
-			return new ArrayList<MoyenneEleveDto>();
+			return null;
 		}
 	}
 

@@ -77,7 +77,7 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 	public List<PersonnelMatiereClasse> findByBranche(long brancheId, long annee) {
 		logger.info(String.format("find by Branche id :: %s", brancheId));
 		return PersonnelMatiereClasse
-				.find("classe.branche.id = ?1 and annee.id = ?2 and matiere is not null", brancheId, getAnneeScolaire)
+				.find("classe.branche.id = ?1 and annee.id = ?2 and matiere is not null", brancheId, annee)
 				.list();
 	}
 

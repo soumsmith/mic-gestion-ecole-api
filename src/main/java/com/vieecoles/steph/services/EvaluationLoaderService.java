@@ -167,14 +167,15 @@ public class EvaluationLoaderService implements PanacheRepositoryBase<Evaluation
 //					if (compteurEleve < nbreEleves) {
 //						System.out.println(compteurEleve+" sur "+nbreEleves);
 					if (ev.getApplicable().equals(Constants.OUI)) {
-					Notes notes = new Notes();
-					ClasseEleve classeEleve = classeEleveService.getByMatriculeAndAnnee(ev.getMatricule(), classe.getEcole().getId(), annee);
-					notes.setEvaluation(evaluation);
-					notes.setNote(ev.getNoteloaders().get(i) != null
-							? CommonUtils.roundDouble(ev.getNoteloaders().get(i).getNote(), 2)
-							: null);
-					notes.setClasseEleve(classeEleve);
-					notes.setPec(1);
+						Notes notes = new Notes();
+						ClasseEleve classeEleve = classeEleveService.getByMatriculeAndAnnee(ev.getMatricule(),
+								classe.getEcole().getId(), annee);
+						notes.setEvaluation(evaluation);
+						notes.setNote(ev.getNoteloaders().get(i) != null
+								? CommonUtils.roundDouble(ev.getNoteloaders().get(i).getNote(), 2)
+								: null);
+						notes.setClasseEleve(classeEleve);
+						notes.setPec(1);
 						noteService.create(notes);
 //					}
 					}
@@ -184,12 +185,12 @@ public class EvaluationLoaderService implements PanacheRepositoryBase<Evaluation
 				e.printStackTrace();
 			}
 		}
-		
-		//Mettre a jour les statuts des lignes chargées
-		for(EvaluationLoader evl : evals) {
+
+		// Mettre a jour les statuts des lignes chargées
+		for (EvaluationLoader evl : evals) {
 			if (evl.getApplicable().equals(Constants.OUI))
 				evl.setStatut(Constants.ARCHIVE);
-				
+
 			update(evl);
 		}
 
@@ -264,9 +265,7 @@ public class EvaluationLoaderService implements PanacheRepositoryBase<Evaluation
 			ev = findById(evaluation.getId());
 			return ev;
 		}
-
 		return null;
-
 	}
 
 	@Transactional
@@ -287,27 +286,44 @@ public class EvaluationLoaderService implements PanacheRepositoryBase<Evaluation
 		return EvaluationLoader.find("statut", statut).list();
 	}
 
-	public List<EvaluationLoader> getByClasseAndMatiere(Long classeId, Long matiereId) {
-		return EvaluationLoader
-				.find("annee.id=?1 and classe.id=?2 and matiere.id=?3 ", Long.parseLong("1"), classeId, matiereId)
-				.list();
+	public List<EvaluationLoader> getByClasseAndMatiere(Long anneeId, Long classeId, Long matiereId) {
+		List<EvaluationLoader> evaList = null;
+		try {
+			evaList = EvaluationLoader
+					.find("annee.id=?1 and classe.id=?2 and matiere.id=?3 ", anneeId, classeId, matiereId).list();
+		} catch (RuntimeException ex) {
+			logger.warning("Probably no result found");
+		}
+		return evaList;
 	}
 
 	public List<EvaluationLoader> getByClasseAndMatiereAndPeriode(Long classeId, Long matiereId, Long periodeId,
 			Long anneeId) {
-		return EvaluationLoader.find("annee.id=?1 and classe.id=?2 and matiere.id=?3 and periode.id", anneeId, classeId,
-				matiereId, periodeId).list();
+
+		List<EvaluationLoader> evaList = null;
+		try {
+			evaList = EvaluationLoader.find("annee.id=?1 and classe.id=?2 and matiere.id=?3 and periode.id", anneeId,
+					classeId, matiereId, periodeId).list();
+		} catch (RuntimeException ex) {
+			logger.warning("Probably no result found");
+		}
+		return evaList;
 	}
 
-	public Long getCountByClasseAndMatiere(Long classeId, Long matiereId) {
-		return EvaluationLoader
-				.find("annee.id=?1 and classe.id=?2 and matiere.id=?3", Long.parseLong("1"), classeId, matiereId)
+	public Long getCountByClasseAndMatiere(Long anneeId, Long classeId, Long matiereId) {
+		return EvaluationLoader.find("annee.id=?1 and classe.id=?2 and matiere.id=?3", anneeId, classeId, matiereId)
 				.count();
 	}
 
 	// Faire une recherche via le champ
 	public List<EvaluationLoader> search(String query, Parameters params) {
-		return EvaluationLoader.find(query, params).list();
+		List<EvaluationLoader> evaList = null;
+		try {
+			evaList = EvaluationLoader.find(query, params).list();
+		} catch (RuntimeException ex) {
+			logger.warning("Probably no result found");
+		}
+		return evaList;
 	}
 
 	public long count() {

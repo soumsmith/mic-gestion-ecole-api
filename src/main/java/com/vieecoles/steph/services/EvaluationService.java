@@ -27,7 +27,14 @@ public class EvaluationService implements PanacheRepositoryBase<Evaluation, Long
 	}
 
 	public Evaluation findByCode(String code) {
-		return Evaluation.find("code", code).singleResult();
+		Evaluation evaList = null;
+
+		try {
+			evaList = Evaluation.find("code", code).singleResult();
+		} catch (RuntimeException ex) {
+			logger.warning("Probably no result found");
+		}
+		return  evaList;
 	}
 
 	Integer setPecValue() {
@@ -39,16 +46,16 @@ public class EvaluationService implements PanacheRepositoryBase<Evaluation, Long
 //		Gson gson = new Gson();
 //		logger.info(gson.toJson(ev));
 		try {
-		UUID uuid = UUID.randomUUID();
-		logger.info("Creation de l'evaluation "+uuid.toString());
-		ev.setCode(uuid.toString());
-		ev.setDateCreation(new Date());
-		ev.setPec(setPecValue());
-		ev.persist();
-		}catch (RuntimeException e) {
+			UUID uuid = UUID.randomUUID();
+			logger.info("Creation de l'evaluation " + uuid.toString());
+			ev.setCode(uuid.toString());
+			ev.setDateCreation(new Date());
+			ev.setPec(setPecValue());
+			ev.persist();
+		} catch (RuntimeException e) {
 			e.printStackTrace();
 		}
-		logger.info("id creation "+ev.getId());
+		logger.info("id creation " + ev.getId());
 		return ev;
 	}
 
@@ -66,7 +73,7 @@ public class EvaluationService implements PanacheRepositoryBase<Evaluation, Long
 		entity.setEtat(ev.getEtat());
 		entity.setPec(ev.getPec());
 		entity.setType(ev.getType());
-		//entity.setHeure(ev.getHeure());
+		// entity.setHeure(ev.getHeure());
 		entity.setNoteSur(ev.getNoteSur());
 		return entity;
 	}
@@ -93,26 +100,60 @@ public class EvaluationService implements PanacheRepositoryBase<Evaluation, Long
 
 	// obténir la liste des évaluations (l évaluation) par le code
 	public List<Evaluation> search(String code) {
-		return Evaluation.find("code", code).list();
+		List<Evaluation> evaList = null;
+
+		try {
+			evaList = Evaluation.find("code", code).list();
+		} catch (RuntimeException ex) {
+			logger.warning("Probably no result found");
+		}
+
+		return evaList;
 	}
 
-	public List<Evaluation> getByClasseAndMatiere(Long classeId, Long matiereId) {
-		return Evaluation.find("annee.id=?1 and classe.id=?2 and matiereEcole.id=?3 ",Long.parseLong("1"), classeId, matiereId).list();
+	public List<Evaluation> getByClasseAndMatiere(Long anneeId, Long classeId, Long matiereId) {
+		List<Evaluation> evaList = null;
+
+		try {
+			evaList = Evaluation
+					.find("annee.id=?1 and classe.id=?2 and matiereEcole.id=?3 ", anneeId, classeId, matiereId).list();
+		} catch (RuntimeException ex) {
+			logger.warning("Probably no result found");
+		}
+		return evaList;
 	}
 
+	public List<Evaluation> getByClasseAndMatiereAndPeriode(Long classeId, Long matiereId, Long periodeId,
+			Long anneeId) {
+		logger.info(String.format("classse: %s  | annee : %s  | matiere : %s  | periode : %s", classeId, anneeId,
+				matiereId, periodeId));
+		List<Evaluation> evaList = null;
 
-	public List<Evaluation> getByClasseAndMatiereAndPeriode(Long classeId, Long matiereId, Long periodeId, Long anneeId) {
-		logger.info(String.format("classse: %s  | annee : %s  | matiere : %s  | periode : %s", classeId, anneeId, matiereId, periodeId));
-		return Evaluation.find("annee.id=?1 and classe.id=?2 and matiereEcole.id=?3 and periode.id=?4",anneeId, classeId, matiereId, periodeId).list();
+		try {
+			evaList = Evaluation.find("annee.id=?1 and classe.id=?2 and matiereEcole.id=?3 and periode.id=?4", anneeId,
+					classeId, matiereId, periodeId).list();
+		} catch (RuntimeException ex) {
+			logger.warning("Probably no result found");
+		}
+		return evaList;
 	}
 
-	public Long getCountByClasseAndMatiere(Long classeId, Long matiereId) {
-		return Evaluation.find("annee.id=?1 and classe.id=?2 and matiereEcole.id=?3",Long.parseLong("1"), classeId, matiereId).count();
+	public Long getCountByClasseAndMatiere(Long anneeId, Long classeId, Long matiereId) {
+		return Evaluation
+				.find("annee.id=?1 and classe.id=?2 and matiereEcole.id=?3", anneeId, classeId, matiereId)
+				.count();
 	}
 
 	// Faire une recherche via le champ
 	public List<Evaluation> search(String query, Parameters params) {
-		return Evaluation.find(query,params).list();
+		List<Evaluation> evaList = null;
+
+		try {
+			evaList = Evaluation.find(query, params).list();
+		} catch (RuntimeException ex) {
+			logger.warning("Probably no result found");
+		}
+		return evaList;
 	}
 
 	public long count() {

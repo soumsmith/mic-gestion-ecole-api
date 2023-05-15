@@ -107,6 +107,46 @@ public class EcoleHasMatiereService implements PanacheRepositoryBase<EcoleHasMat
 		}
 	}
 
+	/*
+	 * Process de création de matiere pour une ecole
+	 */
+	
+	@Transactional
+	public void createMatiereToOneEcole(Matiere matiere, Ecole ecole) {
+
+			logger.info("-> Création de matiere pour l'ecole : " + ecole.getLibelle());
+			EcoleHasMatiere matiereEcole = new EcoleHasMatiere();
+			EcoleHasMatiere matiereParent = null;
+			ClasseMatiere classeMatiere = new ClasseMatiere();
+
+			matiereEcole = buildMatiereToEcoleMatiere(matiere);
+			matiereEcole.setEcole(ecole);
+			if (matiere.getMatiereParent() != null) {
+				try {
+					// Retrouver le parent par rapport à la matière source de l'école
+//					logger.info("Matiere parent id : "+matiere.getMatiereParent()+ "ecole id : "+ ecole.getId());
+					matiereParent = EcoleHasMatiere.find("matiere.id = ?1 and ecole.id=?2",Long.parseLong(matiere.getMatiereParent()),ecole.getId())
+							.singleResult();
+				} catch (RuntimeException e) {
+					matiereParent = null;
+					logger.warning(
+							"Something wrong in the panache find request, to get matiere parent by code matiere source");
+//					e.printStackTrace();
+				}
+			}
+			matiereEcole.setMatiereParent(matiereParent);
+			matiereEcole.setParentMatiereLibelle(matiereParent==null ? matiereEcole.getLibelle() : matiereParent.getLibelle());
+			create(matiereEcole);
+
+			// Pour chaque matiere créee il faut obligatoirement créer le coeficient avec
+			// "1" comme valeur par defaut
+			// classeMatiere.setBranche(null);
+			classeMatiere.setCoef(Constants.DEFAULT_COEFFICIENT);
+			classeMatiere.setEcole(ecole);
+			classeMatiere.setMatiere(matiereEcole);
+			classeMatiereService.handleCreateMatiereToBranche(classeMatiere);
+	}
+	
 	public List<EcoleHasMatiere> getByNiveauEnseignement(Long ecole, Long niveau) {
 		return find("matiere.niveauEnseignement.id = ?1 and ecole.id=?2", niveau, ecole).list();
 	}

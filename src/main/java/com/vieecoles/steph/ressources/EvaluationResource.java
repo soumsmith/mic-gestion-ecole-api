@@ -42,7 +42,7 @@ public class EvaluationResource {
 	public Response getCountByClasseAndMatiere(@QueryParam("anneeId") Long anneeId, @QueryParam("classeId") Long classeId,@QueryParam("matiereId") Long matiereId) {
 		//logger.info("--------> get count ------>");
 
-		return Response.ok().entity(evaluationService.getCountByClasseAndMatiere(classeId, matiereId)).build();
+		return Response.ok().entity(evaluationService.getCountByClasseAndMatiere(anneeId, classeId, matiereId)).build();
 	}
 
 
@@ -51,10 +51,9 @@ public class EvaluationResource {
 	@Operation(description = "Obtenir les evaluations par matiere et classe", summary = "")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Tag(name = "Evaluation")
-	public Response getByClasseAndMatiere(@QueryParam("classeId") String classeId,@QueryParam("matiereId") String matiereId) {
+	public Response getByClasseAndMatiere(@QueryParam("anneeId") String anneeId, @QueryParam("classeId") String classeId,@QueryParam("matiereId") String matiereId) {
 
-
-		return Response.ok().entity(evaluationService.getByClasseAndMatiere(Long.parseLong(classeId),Long.parseLong(matiereId))).build();
+		return Response.ok().entity(evaluationService.getByClasseAndMatiere(Long.parseLong(anneeId),Long.parseLong(classeId),Long.parseLong(matiereId))).build();
 	}
 
 	@GET
