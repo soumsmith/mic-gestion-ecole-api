@@ -52,83 +52,83 @@ public class ApprocheParNiveauParGenreServices {
         EffApprocheNiveauGenreDto resultatsListEleves= new EffApprocheNiveauGenreDto();
 
         n6 = getBase(idEcole,"Sixième") ;
-        n6RF= getNbreParGenreParNiveau(idEcole,"Sixième","FEMININ","RED");
-        n6NRF= getNbreParGenreParNiveau(idEcole,"Sixième","FEMININ","NRED");
-        n6RG= getNbreParGenreParNiveau(idEcole,"Sixième","MASCULIN","RED");
-        n6NRG= getNbreParGenreParNiveau(idEcole,"Sixième","MASCULIN","NRED");
+        n6RF= getNbreParGenreParNiveau(idEcole,"Sixième","FEMININ","OUI");
+        n6NRF= getNbreParGenreParNiveau(idEcole,"Sixième","FEMININ","NON");
+        n6RG= getNbreParGenreParNiveau(idEcole,"Sixième","MASCULIN","OUI");
+        n6NRG= getNbreParGenreParNiveau(idEcole,"Sixième","MASCULIN","NON");
 
         n5 = getBase(idEcole,"Cinquième") ;
-        n5RF= getNbreParGenreParNiveau(idEcole,"Cinquième","FEMININ","RED");
-        n5NRF= getNbreParGenreParNiveau(idEcole,"Cinquième","FEMININ","NRED");
-        n5RG= getNbreParGenreParNiveau(idEcole,"Cinquième","MASCULIN","RED");
-        n5NRG= getNbreParGenreParNiveau(idEcole,"Cinquième","MASCULIN","NRED");
+        n5RF= getNbreParGenreParNiveau(idEcole,"Cinquième","FEMININ","OUI");
+        n5NRF= getNbreParGenreParNiveau(idEcole,"Cinquième","FEMININ","NON");
+        n5RG= getNbreParGenreParNiveau(idEcole,"Cinquième","MASCULIN","OUI");
+        n5NRG= getNbreParGenreParNiveau(idEcole,"Cinquième","MASCULIN","NON");
 
 
         n4 = getBase(idEcole,"Quatrième") ;
-        n4RF= getNbreParGenreParNiveau(idEcole,"Quatrième","FEMININ","RED");
-        n4NRF= getNbreParGenreParNiveau(idEcole,"Quatrième","FEMININ","NRED");
-        n4RG= getNbreParGenreParNiveau(idEcole,"Quatrième","MASCULIN","RED");
-        n4NRG= getNbreParGenreParNiveau(idEcole,"Quatrième","MASCULIN","NRED");
+        n4RF= getNbreParGenreParNiveau(idEcole,"Quatrième","FEMININ","OUI");
+        n4NRF= getNbreParGenreParNiveau(idEcole,"Quatrième","FEMININ","NON");
+        n4RG= getNbreParGenreParNiveau(idEcole,"Quatrième","MASCULIN","OUI");
+        n4NRG= getNbreParGenreParNiveau(idEcole,"Quatrième","MASCULIN","NON");
 
         n3 = getBase(idEcole,"Troisième") ;
-        n3RF= getNbreParGenreParNiveau(idEcole,"Troisième","FEMININ","RED");
-        n3NRF= getNbreParGenreParNiveau(idEcole,"Troisième","FEMININ","NRED");
-        n3RG= getNbreParGenreParNiveau(idEcole,"Troisième","MASCULIN","RED");
-        n3NRG= getNbreParGenreParNiveau(idEcole,"Troisième","MASCULIN","NRED");
+        n3RF= getNbreParGenreParNiveau(idEcole,"Troisième","FEMININ","OUI");
+        n3NRF= getNbreParGenreParNiveau(idEcole,"Troisième","FEMININ","NON");
+        n3RG= getNbreParGenreParNiveau(idEcole,"Troisième","MASCULIN","OUI");
+        n3NRG= getNbreParGenreParNiveau(idEcole,"Troisième","MASCULIN","NON");
 
         n2ndA = getBase(idEcole,"Seconde A") ;
-        n2ndARF= getNbreParGenreParNiveau(idEcole,"Seconde A","FEMININ","RED");
-        n2ndANRF= getNbreParGenreParNiveau(idEcole,"Seconde A","FEMININ","NRED");
-        n2ndARG= getNbreParGenreParNiveau(idEcole,"Seconde A","MASCULIN","RED");
-        n2ndANRG= getNbreParGenreParNiveau(idEcole,"Seconde A","MASCULIN","NRED");
+        n2ndARF= getNbreParGenreParNiveau(idEcole,"Seconde A","FEMININ","OUI");
+        n2ndANRF= getNbreParGenreParNiveau(idEcole,"Seconde A","FEMININ","NON");
+        n2ndARG= getNbreParGenreParNiveau(idEcole,"Seconde A","MASCULIN","OUI");
+        n2ndANRG= getNbreParGenreParNiveau(idEcole,"Seconde A","MASCULIN","NON");
 
         n2ndC = getBase(idEcole,"Seconde C") ;
-        n2ndCRF= getNbreParGenreParNiveau(idEcole,"Seconde C","FEMININ","RED");
-        n2ndCNRF= getNbreParGenreParNiveau(idEcole,"Seconde C","FEMININ","NRED");
-        n2ndCRG= getNbreParGenreParNiveau(idEcole,"Seconde C","MASCULIN","RED");
-        n2ndCNRG= getNbreParGenreParNiveau(idEcole,"Seconde C","MASCULIN","NRED");
+        n2ndCRF= getNbreParGenreParNiveau(idEcole,"Seconde C","FEMININ","OUI");
+        n2ndCNRF= getNbreParGenreParNiveau(idEcole,"Seconde C","FEMININ","NON");
+        n2ndCRG= getNbreParGenreParNiveau(idEcole,"Seconde C","MASCULIN","OUI");
+        n2ndCNRG= getNbreParGenreParNiveau(idEcole,"Seconde C","MASCULIN","NON");
 
         n1ereA = getBase(idEcole,"Première A") ;
-        n1ereARF= getNbreParGenreParNiveau(idEcole,"Première A","FEMININ","RED");
-        n1ereANRF= getNbreParGenreParNiveau(idEcole,"Première A","FEMININ","NRED");
-        n1ereARG= getNbreParGenreParNiveau(idEcole,"Première A","MASCULIN","RED");
-        n1ereANRG= getNbreParGenreParNiveau(idEcole,"Première A","MASCULIN","NRED");
+        n1ereARF= getNbreParGenreParNiveau(idEcole,"Première A","FEMININ","OUI");
+        n1ereANRF= getNbreParGenreParNiveau(idEcole,"Première A","FEMININ","NON");
+        n1ereARG= getNbreParGenreParNiveau(idEcole,"Première A","MASCULIN","OUI");
+        n1ereANRG= getNbreParGenreParNiveau(idEcole,"Première A","MASCULIN","NON");
 
         n1ereC = getBase(idEcole,"Première C") ;
-        n1ereCRF= getNbreParGenreParNiveau(idEcole,"Première C","FEMININ","RED");
-        n1ereCNRF= getNbreParGenreParNiveau(idEcole,"Première C","FEMININ","NRED");
-        n1ereCRG= getNbreParGenreParNiveau(idEcole,"Première C","MASCULIN","RED");
-        n1ereCNRG= getNbreParGenreParNiveau(idEcole,"Première C","MASCULIN","NRED");
+        n1ereCRF= getNbreParGenreParNiveau(idEcole,"Première C","FEMININ","OUI");
+        n1ereCNRF= getNbreParGenreParNiveau(idEcole,"Première C","FEMININ","NON");
+        n1ereCRG= getNbreParGenreParNiveau(idEcole,"Première C","MASCULIN","OUI");
+        n1ereCNRG= getNbreParGenreParNiveau(idEcole,"Première C","MASCULIN","NON");
 
         n1ereD = getBase(idEcole,"Première D") ;
-        n1ereDRF= getNbreParGenreParNiveau(idEcole,"Première D","FEMININ","RED");
-        n1ereDNRF= getNbreParGenreParNiveau(idEcole,"Première D","FEMININ","NRED");
-        n1ereDRG= getNbreParGenreParNiveau(idEcole,"Première D","MASCULIN","RED");
-        n1ereDNRG= getNbreParGenreParNiveau(idEcole,"Première D","MASCULIN","NRED");
+        n1ereDRF= getNbreParGenreParNiveau(idEcole,"Première D","FEMININ","OUI");
+        n1ereDNRF= getNbreParGenreParNiveau(idEcole,"Première D","FEMININ","NON");
+        n1ereDRG= getNbreParGenreParNiveau(idEcole,"Première D","MASCULIN","OUI");
+        n1ereDNRG= getNbreParGenreParNiveau(idEcole,"Première D","MASCULIN","NON");
 
         nTleA1 = getBase(idEcole,"Terminale A1") ;
-        nTleA1RF= getNbreParGenreParNiveau(idEcole,"Terminale A1","FEMININ","RED");
-        nTleA1NRF= getNbreParGenreParNiveau(idEcole,"Terminale A1","FEMININ","NRED");
-        nTleA1RG= getNbreParGenreParNiveau(idEcole,"Terminale A1","MASCULIN","RED");
-        nTleA1NRG= getNbreParGenreParNiveau(idEcole,"Terminale A1","MASCULIN","NRED");
+        nTleA1RF= getNbreParGenreParNiveau(idEcole,"Terminale A1","FEMININ","OUI");
+        nTleA1NRF= getNbreParGenreParNiveau(idEcole,"Terminale A1","FEMININ","NON");
+        nTleA1RG= getNbreParGenreParNiveau(idEcole,"Terminale A1","MASCULIN","OUI");
+        nTleA1NRG= getNbreParGenreParNiveau(idEcole,"Terminale A1","MASCULIN","NON");
 
         nTleA2 = getBase(idEcole,"Terminale A2") ;
-        nTleA2RF= getNbreParGenreParNiveau(idEcole,"Terminale A2","FEMININ","RED");
-        nTleA2NRF= getNbreParGenreParNiveau(idEcole,"Terminale A2","FEMININ","NRED");
-        nTleA2RG= getNbreParGenreParNiveau(idEcole,"Terminale A2","MASCULIN","RED");
-        nTleA2NRG= getNbreParGenreParNiveau(idEcole,"Terminale A2","MASCULIN","NRED");
+        nTleA2RF= getNbreParGenreParNiveau(idEcole,"Terminale A2","FEMININ","OUI");
+        nTleA2NRF= getNbreParGenreParNiveau(idEcole,"Terminale A2","FEMININ","NON");
+        nTleA2RG= getNbreParGenreParNiveau(idEcole,"Terminale A2","MASCULIN","OUI");
+        nTleA2NRG= getNbreParGenreParNiveau(idEcole,"Terminale A2","MASCULIN","NON");
 
         nTleC = getBase(idEcole,"Terminale C") ;
-        nTleCRF= getNbreParGenreParNiveau(idEcole,"Terminale C","FEMININ","RED");
-        nTleCNRF= getNbreParGenreParNiveau(idEcole,"Terminale C","FEMININ","NRED");
-        nTleCRG= getNbreParGenreParNiveau(idEcole,"Terminale C","MASCULIN","RED");
-        nTleCNRG= getNbreParGenreParNiveau(idEcole,"Terminale C","MASCULIN","NRED");
+        nTleCRF= getNbreParGenreParNiveau(idEcole,"Terminale C","FEMININ","OUI");
+        nTleCNRF= getNbreParGenreParNiveau(idEcole,"Terminale C","FEMININ","NON");
+        nTleCRG= getNbreParGenreParNiveau(idEcole,"Terminale C","MASCULIN","OUI");
+        nTleCNRG= getNbreParGenreParNiveau(idEcole,"Terminale C","MASCULIN","NON");
 
         nTleD = getBase(idEcole,"Terminale D") ;
-        nTleDRF= getNbreParGenreParNiveau(idEcole,"Terminale D","FEMININ","RED");
-        nTleDNRF= getNbreParGenreParNiveau(idEcole,"Terminale D","FEMININ","NRED");
-        nTleDRG= getNbreParGenreParNiveau(idEcole,"Terminale D","MASCULIN","RED");
-        nTleDNRG= getNbreParGenreParNiveau(idEcole,"Terminale D","MASCULIN","NRED");
+        nTleDRF= getNbreParGenreParNiveau(idEcole,"Terminale D","FEMININ","OUI");
+        nTleDNRF= getNbreParGenreParNiveau(idEcole,"Terminale D","FEMININ","NON");
+        nTleDRG= getNbreParGenreParNiveau(idEcole,"Terminale D","MASCULIN","OUI");
+        nTleDNRG= getNbreParGenreParNiveau(idEcole,"Terminale D","MASCULIN","NON");
 
         resultatsListEleves.setnTleD(nTleD);
         resultatsListEleves.setnTleDRF(nTleDRF);

@@ -8,6 +8,15 @@ public class BoursierDto {
     private String dateNaiss;
     private String lieuNaiss;
     private String niveau ;
+    private  Integer ordre_niveau ;
+
+    public Integer getOrdre_niveau() {
+        return ordre_niveau;
+    }
+
+    public void setOrdre_niveau(Integer ordre_niveau) {
+        this.ordre_niveau = ordre_niveau;
+    }
 
     public BoursierDto() {
     }
@@ -18,7 +27,8 @@ public class BoursierDto {
                        String sexe,
                        String dateNaiss,
                        String lieuNaiss,
-                       String niveau) {
+                       String niveau,
+                        Integer  ordre_niveau) {
         this.matricule = matricule;
         this.nom = nom;
         this.prenoms = prenoms;
@@ -26,6 +36,7 @@ public class BoursierDto {
         this.dateNaiss = dateNaiss;
         this.lieuNaiss = lieuNaiss;
         this.niveau = niveau;
+        this.ordre_niveau = ordre_niveau ;
     }
 
     public String getMatricule() {

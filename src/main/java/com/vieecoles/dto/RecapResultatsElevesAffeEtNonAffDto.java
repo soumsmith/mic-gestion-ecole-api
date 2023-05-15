@@ -25,6 +25,43 @@ public class RecapResultatsElevesAffeEtNonAffDto {
     private Double moyClasseG ;
     private  Integer ordre_niveau ;
 
+    private Double moyClasse ;
+    private Double moyClasseF_ET ;
+    private Double moyClasseG_ET ;
+    private Double moyClasse_ET ;
+
+    public Double getMoyClasse() {
+        return moyClasse;
+    }
+
+    public void setMoyClasse(Double moyClasse) {
+        this.moyClasse = moyClasse;
+    }
+
+    public Double getMoyClasseF_ET() {
+        return moyClasseF_ET;
+    }
+
+    public void setMoyClasseF_ET(Double moyClasseF_ET) {
+        this.moyClasseF_ET = moyClasseF_ET;
+    }
+
+    public Double getMoyClasseG_ET() {
+        return moyClasseG_ET;
+    }
+
+    public void setMoyClasseG_ET(Double moyClasseG_ET) {
+        this.moyClasseG_ET = moyClasseG_ET;
+    }
+
+    public Double getMoyClasse_ET() {
+        return moyClasse_ET;
+    }
+
+    public void setMoyClasse_ET(Double moyClasse_ET) {
+        this.moyClasse_ET = moyClasse_ET;
+    }
+
     public Integer getOrdre_niveau() {
         return ordre_niveau;
     }
@@ -58,7 +95,11 @@ public class RecapResultatsElevesAffeEtNonAffDto {
                                                Double pourMoyInf85F,
                                                Double moyClasseF,
                                                Double moyClasseG,
-                                               Integer ordre_niveau) {
+                                               Integer ordre_niveau,
+                                               Double moyClasse,
+                                               Double moyClasseF_ET,
+                                               Double moyClasseG_ET,
+                                               Double moyClasse_ET) {
         this.niveau = niveau;
         this.classe = classe;
 
@@ -83,6 +124,10 @@ public class RecapResultatsElevesAffeEtNonAffDto {
         this.moyClasseF = moyClasseF;
         this.moyClasseG = moyClasseG;
         this.ordre_niveau=ordre_niveau ;
+        this.moyClasse = moyClasse ;
+        this.moyClasseF_ET = moyClasseF_ET ;
+        this.moyClasseG_ET = moyClasseG_ET;
+        this.moyClasse_ET = moyClasse_ET ;
     }
 
     public String getNiveau() {

@@ -16,13 +16,13 @@ public class eleveNonAffecteParClasseDto {
    private  Integer rang ;
    private  String observat ;
    private  String nomEducateur ;
-   private  String ordre_niveau ;
+   private  Integer ordre_niveau ;
 
-   public String getOrdre_niveau() {
+   public Integer getOrdre_niveau() {
       return ordre_niveau;
    }
 
-   public void setOrdre_niveau(String ordre_niveau) {
+   public void setOrdre_niveau(Integer ordre_niveau) {
       this.ordre_niveau = ordre_niveau;
    }
 
@@ -41,7 +41,7 @@ public class eleveNonAffecteParClasseDto {
                                       Integer rang,
                                       String observat,
                                       String nomEducateur,
-                                      String ordre_niveau ) {
+                                      Integer ordre_niveau ) {
       this.classeLibelle = classeLibelle;
       this.professeurPrincipal = professeurPrincipal;
       this.matricule = matricule;

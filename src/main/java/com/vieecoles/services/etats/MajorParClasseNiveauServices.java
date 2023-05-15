@@ -45,7 +45,9 @@ public class MajorParClasseNiveauServices {
             System.out.println("Niveau   " + classeNiveauDtoList.get(i).getNiveau());
             System.out.println("Classe   " + classeNiveauDtoList.get(i).getClasse());
             majorExeco = getListMajorParClasseNiveau(idEcole,classeNiveauDtoList.get(i).getNiveau(),classeNiveauDtoList.get(i).getClasse(),moyMajor) ;
+
             if(majorExeco.size() >1){
+                System.out.println("Mojor et execo   " + majorExeco.toString());
                 for (int k=0 ;k< majorExeco.size(); k++){
                     resultatsListEleves = majorExeco.get(k);
                     resultatsListElevesDto.add(resultatsListEleves) ;
@@ -68,7 +70,7 @@ public class MajorParClasseNiveauServices {
     public List<MajorParClasseNiveauDto>  getListMajorParClasseNiveau(Long idEcole , String niveau,String classe,Double moy){
         List<MajorParClasseNiveauDto> classeNiveauDtoList = new ArrayList<>();
         try {
-            TypedQuery  q= em.createQuery("select new com.vieecoles.dto.MajorParClasseNiveauDto(o.niveau,o.libelleClasse,o.matricule,o.nom,o.prenoms,SUBSTRING(o.dateNaissance,1,4) ,o.sexe,o.appreciation,o.redoublant,o.moyGeneral,o.lv2) from Bulletin o where  o.ecoleId =:idEcole and  o.niveau=:niveau and o.libelleClasse=:libelleClasse and o.moyGeneral=:moy ", MajorParClasseNiveauDto.class);
+            TypedQuery  q= em.createQuery("select new com.vieecoles.dto.MajorParClasseNiveauDto(o.niveau,o.libelleClasse,o.matricule,o.nom,o.prenoms,SUBSTRING(o.dateNaissance,1,4) ,o.sexe,o.appreciation,o.redoublant,o.moyGeneral,o.lv2,cast(o.ordre_niveau as integer )) from Bulletin o where  o.ecoleId =:idEcole and  o.niveau=:niveau and o.libelleClasse=:libelleClasse and o.moyGeneral=:moy ", MajorParClasseNiveauDto.class);
             classeNiveauDtoList = q.setParameter("idEcole",idEcole)
                     .setParameter("niveau",niveau)
                     .setParameter("libelleClasse",classe)

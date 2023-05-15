@@ -5,6 +5,7 @@ import com.vieecoles.dto.*;
 import com.vieecoles.entities.operations.ecole;
 import com.vieecoles.projection.BulletinSelectDto;
 import com.vieecoles.services.etats.*;
+import com.vieecoles.steph.entities.Ecole;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.ooxml.JRDocxExporter;
@@ -247,6 +248,8 @@ public class spiderRessource {
         introLis.add(myIntro) ;
          spiderDto detailsBull= new spiderDto() ;
 
+         ecole myScole= new ecole() ;
+        myScole= ecole.findById(idEcole) ;
 
         identiteEtatDto= identiteEtatService.getIdentiteDto(idEcole) ;
         resultatsElevesAffecteDto= resultatsServices.CalculResultatsEleveAffecte(idEcole) ;
@@ -318,7 +321,8 @@ public class spiderRessource {
         exporter.exportReport();
         byte[] data = baos.toByteArray() ;
         HttpHeaders headers= new HttpHeaders();
-      headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=RapportPouls.docx");
+     // headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Rapport"+myScole.getEcoleclibelle()+".docx");
+            headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Rapport Pouls-Scolaire.docx");
         return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.MULTIPART_FORM_DATA).body(data);
     }
 

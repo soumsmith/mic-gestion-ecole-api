@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Liste_des_boursiers_et_demi_boursiers" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="289bafba-8554-4c45-832c-ca3bd3ff7a77">
-	<property name="com.jaspersoft.studio.data.sql.tables">
-		<![CDATA[ZWNvbGV2aWVkYnYyLmVjb2xlIEFTICwxMzMsNjcsZWE5OWI5ZWUtNGIyYS00NDMzLWEyZDItMmZh
-ZWZiYjdmNGI4Ow==]]>
-	</property>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ecolevieDB2"/>
 	<property name="net.sf.jasperreports.export.docx.flexible.row.height" value="true"/>
 	<property name="net.sf.jasperreports.export.docx.frames.as.nested.tables" value="false"/>
@@ -36,6 +33,9 @@ ZWZiYjdmNGI4Ow==]]>
 	<field name="niveau" class="java.lang.String"/>
 	<field name="lieuNaiss" class="java.lang.String"/>
 	<field name="sexe" class="java.lang.String"/>
+	<field name="ordre_niveau" class="java.lang.Integer"/>
+	<sortField name="ordre_niveau"/>
+	<sortField name="niveau"/>
 	<variable name="Compteur" class="java.lang.Integer" calculation="Count">
 		<variableExpression><![CDATA[$V{Compteur}+1]]></variableExpression>
 		<initialValueExpression><![CDATA[0]]></initialValueExpression>
@@ -47,18 +47,18 @@ ZWZiYjdmNGI4Ow==]]>
 				<frame>
 					<reportElement x="52" y="0" width="450" height="18" uuid="d6d5953d-6f9c-4adf-a2e6-4d1d25a7f996"/>
 					<box>
-						<pen lineWidth="0.5"/>
-						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
-						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<pen lineWidth="0.0"/>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textField>
-						<reportElement x="170" y="1" width="70" height="16" uuid="1c1f33bf-e74f-44cc-82e6-d3fa05d87faa"/>
+						<reportElement x="159" y="1" width="109" height="16" uuid="1c1f33bf-e74f-44cc-82e6-d3fa05d87faa"/>
 						<textElement textAlignment="Center" verticalAlignment="Middle">
-							<font fontName="SansSerif"/>
+							<font fontName="SansSerif" isBold="true"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$F{niveau}]]></textFieldExpression>
+						<textFieldExpression><![CDATA["Niveau "+$F{niveau}]]></textFieldExpression>
 					</textField>
 				</frame>
 			</band>
@@ -91,10 +91,11 @@ ZWZiYjdmNGI4Ow==]]>
 		</band>
 	</title>
 	<columnHeader>
-		<band height="30" splitType="Stretch">
+		<band height="15" splitType="Stretch">
 			<frame>
-				<reportElement x="52" y="0" width="450" height="30" uuid="8ca47e01-d13b-410a-8b8e-7ba124a6b347">
+				<reportElement x="52" y="0" width="450" height="15" uuid="8ca47e01-d13b-410a-8b8e-7ba124a6b347">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<box>
 					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
@@ -103,7 +104,7 @@ ZWZiYjdmNGI4Ow==]]>
 					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<staticText>
-					<reportElement style="Titre" x="0" y="0" width="30" height="30" uuid="972c43b4-e25b-4d58-904e-6c64b1ad60ea">
+					<reportElement style="Titre" x="0" y="0" width="30" height="15" uuid="972c43b4-e25b-4d58-904e-6c64b1ad60ea">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -111,14 +112,15 @@ ZWZiYjdmNGI4Ow==]]>
 						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
 						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<textElement>
-						<font fontName="SansSerif"/>
+						<font fontName="SansSerif" size="6" isBold="true"/>
 					</textElement>
 					<text><![CDATA[N°]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="Titre" x="30" y="0" width="60" height="30" uuid="d35325c4-8e27-4b1c-95ac-27ef728c48bb">
+					<reportElement style="Titre" x="30" y="0" width="60" height="15" uuid="d35325c4-8e27-4b1c-95ac-27ef728c48bb">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -126,14 +128,15 @@ ZWZiYjdmNGI4Ow==]]>
 						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
 						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<textElement>
-						<font fontName="SansSerif"/>
+						<font fontName="SansSerif" size="6" isBold="true"/>
 					</textElement>
 					<text><![CDATA[MATRICULE]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="Titre" x="90" y="0" width="140" height="30" uuid="4c3b8b23-50a9-4c72-996a-2d43c19db122">
+					<reportElement style="Titre" x="90" y="0" width="140" height="15" uuid="4c3b8b23-50a9-4c72-996a-2d43c19db122">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -141,14 +144,15 @@ ZWZiYjdmNGI4Ow==]]>
 						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
 						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<textElement>
-						<font fontName="SansSerif"/>
+						<font fontName="SansSerif" size="6" isBold="true"/>
 					</textElement>
 					<text><![CDATA[NOM ET PRENOMS]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="Titre" x="230" y="0" width="60" height="30" uuid="c41ce027-a5f9-4599-a9c9-8d13f65d0694">
+					<reportElement style="Titre" x="230" y="0" width="60" height="15" uuid="c41ce027-a5f9-4599-a9c9-8d13f65d0694">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -156,14 +160,15 @@ ZWZiYjdmNGI4Ow==]]>
 						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
 						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<textElement>
-						<font fontName="SansSerif"/>
+						<font fontName="SansSerif" size="6" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Sexe]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="Titre" x="290" y="0" width="80" height="30" uuid="5eb50fc4-11f7-49a4-a4d0-7da1434830f4">
+					<reportElement style="Titre" x="290" y="0" width="80" height="15" uuid="5eb50fc4-11f7-49a4-a4d0-7da1434830f4">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -171,14 +176,15 @@ ZWZiYjdmNGI4Ow==]]>
 						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
 						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<textElement>
-						<font fontName="SansSerif"/>
+						<font fontName="SansSerif" size="6" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Date Naissance]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="Titre" x="370" y="0" width="80" height="30" uuid="1786cae7-7c95-4227-8a21-d58090f8aa31">
+					<reportElement style="Titre" x="370" y="0" width="80" height="15" uuid="1786cae7-7c95-4227-8a21-d58090f8aa31">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -186,9 +192,10 @@ ZWZiYjdmNGI4Ow==]]>
 						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
 						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<textElement>
-						<font fontName="SansSerif"/>
+						<font fontName="SansSerif" size="6" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Lieu de Naissance]]></text>
 				</staticText>
@@ -196,9 +203,11 @@ ZWZiYjdmNGI4Ow==]]>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="32" splitType="Stretch">
+		<band height="15" splitType="Stretch">
 			<frame>
-				<reportElement x="52" y="1" width="450" height="29" uuid="040b637f-0587-498c-9130-f6650c5fc02a"/>
+				<reportElement x="52" y="0" width="450" height="15" uuid="040b637f-0587-498c-9130-f6650c5fc02a">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
 				<box>
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -207,7 +216,9 @@ ZWZiYjdmNGI4Ow==]]>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textField>
-					<reportElement x="30" y="-1" width="60" height="30" uuid="6ec15aee-dbbd-4cd9-b642-40b535dbf6d3"/>
+					<reportElement x="30" y="0" width="60" height="15" uuid="6ec15aee-dbbd-4cd9-b642-40b535dbf6d3">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
 					<box>
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -215,12 +226,14 @@ ZWZiYjdmNGI4Ow==]]>
 						<rightPen lineWidth="1.0"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="SansSerif" size="8" isBold="false"/>
+						<font fontName="SansSerif" size="6" isBold="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{matricule}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="90" y="-1" width="140" height="30" uuid="326944d5-3a33-45c6-9a3d-9342ea8621da"/>
+					<reportElement x="90" y="0" width="140" height="15" uuid="326944d5-3a33-45c6-9a3d-9342ea8621da">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
 					<box>
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -228,12 +241,14 @@ ZWZiYjdmNGI4Ow==]]>
 						<rightPen lineWidth="1.0"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="SansSerif" size="8" isBold="false"/>
+						<font fontName="SansSerif" size="6" isBold="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{nom} + " " + $F{prenoms}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="290" y="-1" width="80" height="30" uuid="937d73d3-3495-4b56-ab5f-cec72724d85e"/>
+					<reportElement x="290" y="0" width="80" height="15" uuid="937d73d3-3495-4b56-ab5f-cec72724d85e">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
 					<box>
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -241,12 +256,14 @@ ZWZiYjdmNGI4Ow==]]>
 						<rightPen lineWidth="1.0"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="SansSerif" size="8" isBold="false"/>
+						<font fontName="SansSerif" size="6" isBold="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{dateNaiss}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="0" y="-1" width="30" height="30" uuid="37b645f3-178d-4d97-8211-c8a9cad58e19"/>
+					<reportElement x="0" y="0" width="30" height="15" uuid="37b645f3-178d-4d97-8211-c8a9cad58e19">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
 					<box>
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -254,12 +271,14 @@ ZWZiYjdmNGI4Ow==]]>
 						<rightPen lineWidth="1.0"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="SansSerif" size="8" isBold="false"/>
+						<font fontName="SansSerif" size="6" isBold="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{Compteur}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="370" y="-1" width="80" height="30" uuid="0823594e-e1e2-4485-9f4b-e8198b3e3571"/>
+					<reportElement x="370" y="0" width="80" height="15" uuid="0823594e-e1e2-4485-9f4b-e8198b3e3571">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
 					<box>
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -267,12 +286,14 @@ ZWZiYjdmNGI4Ow==]]>
 						<rightPen lineWidth="1.0"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="SansSerif" size="8" isBold="false"/>
+						<font fontName="SansSerif" size="6" isBold="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{lieuNaiss}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="230" y="-1" width="60" height="30" uuid="1b7335ac-4e70-4af8-907a-2c9c5b867acf"/>
+					<reportElement x="230" y="0" width="60" height="15" uuid="1b7335ac-4e70-4af8-907a-2c9c5b867acf">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
 					<box>
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -280,7 +301,7 @@ ZWZiYjdmNGI4Ow==]]>
 						<rightPen lineWidth="1.0"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="SansSerif" size="8" isBold="false"/>
+						<font fontName="SansSerif" size="6" isBold="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{sexe}]]></textFieldExpression>
 				</textField>

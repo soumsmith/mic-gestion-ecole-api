@@ -1271,7 +1271,7 @@ MWRkMzNkNTc5Ow==]]>
 							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
 						</reportElement>
 						<box>
-							<pen lineWidth="0.5" lineStyle="Solid"/>
+							<pen lineWidth="0.25" lineStyle="Solid"/>
 							<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 							<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 							<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
@@ -1286,7 +1286,7 @@ MWRkMzNkNTc5Ow==]]>
 								<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font fontName="SansSerif"/>
+								<font fontName="SansSerif" isBold="true"/>
 							</textElement>
 							<text><![CDATA[TOTAL 1er CYCLE]]></text>
 						</staticText>
@@ -1299,7 +1299,7 @@ MWRkMzNkNTc5Ow==]]>
 								<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font fontName="SansSerif"/>
+								<font fontName="SansSerif" isBold="true"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{n6RF}+$F{n5RF}+$F{n4RF}+$F{n3RF}]]></textFieldExpression>
 						</textField>
@@ -1312,7 +1312,7 @@ MWRkMzNkNTc5Ow==]]>
 								<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font fontName="SansSerif"/>
+								<font fontName="SansSerif" isBold="true"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{n6NRF}+$F{n5NRF}+$F{n4NRF}+$F{n3NRF}]]></textFieldExpression>
 						</textField>
@@ -1325,7 +1325,7 @@ MWRkMzNkNTc5Ow==]]>
 								<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font fontName="SansSerif"/>
+								<font fontName="SansSerif" isBold="true"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{n6RF}+$F{n6NRF}+$F{n5RF}+$F{n5NRF}+$F{n4RF}+$F{n4NRF}+$F{n3RF}+$F{n3NRF}]]></textFieldExpression>
 						</textField>
@@ -1338,7 +1338,7 @@ MWRkMzNkNTc5Ow==]]>
 								<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font fontName="SansSerif"/>
+								<font fontName="SansSerif" isBold="true"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{n6RG}+$F{n5RG}+$F{n4RG}+$F{n3RG}]]></textFieldExpression>
 						</textField>
@@ -1351,7 +1351,7 @@ MWRkMzNkNTc5Ow==]]>
 								<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font fontName="SansSerif"/>
+								<font fontName="SansSerif" isBold="true"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{n6NRG}+$F{n5NRF}+$F{n4NRG}+$F{n3NRG}]]></textFieldExpression>
 						</textField>
@@ -1364,7 +1364,7 @@ MWRkMzNkNTc5Ow==]]>
 								<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font fontName="SansSerif"/>
+								<font fontName="SansSerif" isBold="true"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{n6RG}+$F{n5RG}+$F{n4RG}+$F{n3RG}+$F{n6NRG}+$F{n5NRF}+$F{n4NRG}+$F{n3NRG}]]></textFieldExpression>
 						</textField>
@@ -1377,7 +1377,7 @@ MWRkMzNkNTc5Ow==]]>
 								<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font fontName="SansSerif"/>
+								<font fontName="SansSerif" isBold="true"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{n6RF}+$F{n6RG}+$F{n5RF}+$F{n5RG}+$F{n4RF}+$F{n4RG}+$F{n3RF}+$F{n3RG}]]></textFieldExpression>
 						</textField>
@@ -1390,7 +1390,7 @@ MWRkMzNkNTc5Ow==]]>
 								<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font fontName="SansSerif"/>
+								<font fontName="SansSerif" isBold="true"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{n6NRF}+$F{n6NRG}+$F{n5NRF}+$F{n5NRG}+$F{n4NRF}+$F{n4NRG}+$F{n3NRF}+$F{n3NRG}]]></textFieldExpression>
 						</textField>
@@ -1403,7 +1403,7 @@ MWRkMzNkNTc5Ow==]]>
 								<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font fontName="SansSerif"/>
+								<font fontName="SansSerif" isBold="true"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{n6RF}+$F{n6RG}+$F{n5RF}+$F{n5RG}+$F{n4RF}+$F{n4RG}+$F{n3RF}+$F{n3RG}
 +$F{n6NRF}+$F{n6NRG}+$F{n5NRF}+$F{n5NRG}+$F{n4NRF}+$F{n4NRG}+$F{n3NRF}+$F{n3NRG}]]></textFieldExpression>
@@ -1995,6 +1995,7 @@ MWRkMzNkNTc5Ow==]]>
 							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
 						</reportElement>
 						<box>
+							<pen lineWidth="0.25"/>
 							<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2009,7 +2010,7 @@ MWRkMzNkNTc5Ow==]]>
 								<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font fontName="SansSerif"/>
+								<font fontName="SansSerif" isBold="true"/>
 							</textElement>
 							<text><![CDATA[TOTAL SECONDES]]></text>
 						</staticText>
@@ -2022,7 +2023,7 @@ MWRkMzNkNTc5Ow==]]>
 								<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font fontName="SansSerif"/>
+								<font fontName="SansSerif" isBold="true"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{n2ndARF}+$F{n2ndCRF}]]></textFieldExpression>
 						</textField>
@@ -2035,7 +2036,7 @@ MWRkMzNkNTc5Ow==]]>
 								<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font fontName="SansSerif"/>
+								<font fontName="SansSerif" isBold="true"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{n2ndCNRF}+$F{n2ndANRF}]]></textFieldExpression>
 						</textField>
@@ -2048,7 +2049,7 @@ MWRkMzNkNTc5Ow==]]>
 								<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font fontName="SansSerif"/>
+								<font fontName="SansSerif" isBold="true"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{n2ndARF}+$F{n2ndCRF}+$F{n2ndCNRF}+$F{n2ndANRF}]]></textFieldExpression>
 						</textField>
@@ -2061,7 +2062,7 @@ MWRkMzNkNTc5Ow==]]>
 								<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font fontName="SansSerif"/>
+								<font fontName="SansSerif" isBold="true"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{n2ndARG}+$F{n2ndCRG}]]></textFieldExpression>
 						</textField>
@@ -2074,7 +2075,7 @@ MWRkMzNkNTc5Ow==]]>
 								<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font fontName="SansSerif"/>
+								<font fontName="SansSerif" isBold="true"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{n2ndANRG}+$F{n2ndCNRG}]]></textFieldExpression>
 						</textField>
@@ -2087,7 +2088,7 @@ MWRkMzNkNTc5Ow==]]>
 								<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font fontName="SansSerif"/>
+								<font fontName="SansSerif" isBold="true"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{n2ndARG}+$F{n2ndCRG}+$F{n2ndANRG}+$F{n2ndCNRG}]]></textFieldExpression>
 						</textField>
@@ -2100,7 +2101,7 @@ MWRkMzNkNTc5Ow==]]>
 								<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font fontName="SansSerif"/>
+								<font fontName="SansSerif" isBold="true"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{n2ndARF}+$F{n2ndCRF}+$F{n2ndARG}+$F{n2ndCRG}]]></textFieldExpression>
 						</textField>
@@ -2113,7 +2114,7 @@ MWRkMzNkNTc5Ow==]]>
 								<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font fontName="SansSerif"/>
+								<font fontName="SansSerif" isBold="true"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{n2ndCNRF}+$F{n2ndANRF}+$F{n2ndCNRG}+$F{n2ndANRG}]]></textFieldExpression>
 						</textField>
@@ -2126,7 +2127,7 @@ MWRkMzNkNTc5Ow==]]>
 								<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font fontName="SansSerif"/>
+								<font fontName="SansSerif" isBold="true"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{n2ndARF}+$F{n2ndCRF}+$F{n2ndARG}+$F{n2ndCRG}+$F{n2ndCNRF}+$F{n2ndANRF}+$F{n2ndCNRG}+$F{n2ndANRG}]]></textFieldExpression>
 						</textField>
@@ -3029,7 +3030,7 @@ MWRkMzNkNTc5Ow==]]>
 								<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font fontName="SansSerif"/>
+								<font fontName="SansSerif" isBold="true"/>
 							</textElement>
 							<text><![CDATA["TOTAL PREMIERES"]]></text>
 						</staticText>
@@ -3042,7 +3043,7 @@ MWRkMzNkNTc5Ow==]]>
 								<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font fontName="SansSerif"/>
+								<font fontName="SansSerif" isBold="true"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{n1ereARF}+$F{n1ereDRF}+$F{n1ereCRF}]]></textFieldExpression>
 						</textField>
@@ -3055,7 +3056,7 @@ MWRkMzNkNTc5Ow==]]>
 								<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font fontName="SansSerif"/>
+								<font fontName="SansSerif" isBold="true"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{n1ereANRF}+$F{n1ereDNRF}+$F{n1ereCNRF}]]></textFieldExpression>
 						</textField>
@@ -3068,7 +3069,7 @@ MWRkMzNkNTc5Ow==]]>
 								<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font fontName="SansSerif"/>
+								<font fontName="SansSerif" isBold="true"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{n1ereARF}+$F{n1ereDRF}+$F{n1ereCRF}+$F{n1ereANRF}+$F{n1ereDNRF}+$F{n1ereCNRF}]]></textFieldExpression>
 						</textField>
@@ -3081,7 +3082,7 @@ MWRkMzNkNTc5Ow==]]>
 								<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font fontName="SansSerif"/>
+								<font fontName="SansSerif" isBold="true"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{n1ereARG}+$F{n1ereDRG}+$F{n1ereCRG}]]></textFieldExpression>
 						</textField>
@@ -3094,7 +3095,7 @@ MWRkMzNkNTc5Ow==]]>
 								<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font fontName="SansSerif"/>
+								<font fontName="SansSerif" isBold="true"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{n1ereANRG}+$F{n1ereDNRG}+$F{n1ereCNRG}]]></textFieldExpression>
 						</textField>
@@ -3107,7 +3108,7 @@ MWRkMzNkNTc5Ow==]]>
 								<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font fontName="SansSerif"/>
+								<font fontName="SansSerif" isBold="true"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{n1ereARG}+$F{n1ereDRG}+$F{n1ereCRG}+$F{n1ereANRG}+$F{n1ereDNRG}+$F{n1ereCNRG}]]></textFieldExpression>
 						</textField>
@@ -3120,7 +3121,7 @@ MWRkMzNkNTc5Ow==]]>
 								<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font fontName="SansSerif"/>
+								<font fontName="SansSerif" isBold="true"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{n1ereARF}+$F{n1ereDRF}+$F{n1ereCRF}+$F{n1ereARG}+$F{n1ereDRG}+$F{n1ereCRG}]]></textFieldExpression>
 						</textField>
@@ -3133,7 +3134,7 @@ MWRkMzNkNTc5Ow==]]>
 								<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font fontName="SansSerif"/>
+								<font fontName="SansSerif" isBold="true"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{n1ereANRF}+$F{n1ereDNRF}+$F{n1ereCNRF}+$F{n1ereANRG}+$F{n1ereDNRG}+$F{n1ereCNRG}]]></textFieldExpression>
 						</textField>
@@ -3146,7 +3147,7 @@ MWRkMzNkNTc5Ow==]]>
 								<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font fontName="SansSerif"/>
+								<font fontName="SansSerif" isBold="true"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{n1ereARF}+$F{n1ereDRF}+$F{n1ereCRF}+$F{n1ereARG}+$F{n1ereDRG}+$F{n1ereCRG}+
 $F{n1ereANRF}+$F{n1ereDNRF}+$F{n1ereCNRF}+$F{n1ereANRG}+$F{n1ereDNRG}+$F{n1ereCNRG}]]></textFieldExpression>
@@ -4308,6 +4309,7 @@ $F{n1ereANRF}+$F{n1ereDNRF}+$F{n1ereCNRF}+$F{n1ereANRG}+$F{n1ereDNRG}+$F{n1ereCN
 									<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
 								</reportElement>
 								<box>
+									<pen lineWidth="0.25"/>
 									<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 									<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 									<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -4322,7 +4324,7 @@ $F{n1ereANRF}+$F{n1ereDNRF}+$F{n1ereCNRF}+$F{n1ereANRG}+$F{n1ereDNRG}+$F{n1ereCN
 										<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 									</box>
 									<textElement textAlignment="Center" verticalAlignment="Middle">
-										<font fontName="SansSerif"/>
+										<font fontName="SansSerif" isBold="true"/>
 									</textElement>
 									<text><![CDATA[TOTAL TERMINALES]]></text>
 								</staticText>
@@ -4335,7 +4337,7 @@ $F{n1ereANRF}+$F{n1ereDNRF}+$F{n1ereCNRF}+$F{n1ereANRG}+$F{n1ereDNRG}+$F{n1ereCN
 										<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 									</box>
 									<textElement textAlignment="Center" verticalAlignment="Middle">
-										<font fontName="SansSerif"/>
+										<font fontName="SansSerif" isBold="true"/>
 									</textElement>
 									<textFieldExpression><![CDATA[$F{nTleA1RF}+$F{nTleA2RF}+$F{nTleDRF}+$F{nTleCRF}]]></textFieldExpression>
 								</textField>
@@ -4348,7 +4350,7 @@ $F{n1ereANRF}+$F{n1ereDNRF}+$F{n1ereCNRF}+$F{n1ereANRG}+$F{n1ereDNRG}+$F{n1ereCN
 										<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 									</box>
 									<textElement textAlignment="Center" verticalAlignment="Middle">
-										<font fontName="SansSerif"/>
+										<font fontName="SansSerif" isBold="true"/>
 									</textElement>
 									<textFieldExpression><![CDATA[$F{nTleA1NRF}+$F{nTleA2NRF}+$F{nTleDNRF}+$F{nTleCNRF}]]></textFieldExpression>
 								</textField>
@@ -4361,7 +4363,7 @@ $F{n1ereANRF}+$F{n1ereDNRF}+$F{n1ereCNRF}+$F{n1ereANRG}+$F{n1ereDNRG}+$F{n1ereCN
 										<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 									</box>
 									<textElement textAlignment="Center" verticalAlignment="Middle">
-										<font fontName="SansSerif"/>
+										<font fontName="SansSerif" isBold="true"/>
 									</textElement>
 									<textFieldExpression><![CDATA[$F{nTleA1RF}+$F{nTleA2RF}+$F{nTleDRF}+$F{nTleCRF}+$F{nTleA1NRF}+$F{nTleA2NRF}+$F{nTleDNRF}+$F{nTleCNRF}]]></textFieldExpression>
 								</textField>
@@ -4374,7 +4376,7 @@ $F{n1ereANRF}+$F{n1ereDNRF}+$F{n1ereCNRF}+$F{n1ereANRG}+$F{n1ereDNRG}+$F{n1ereCN
 										<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 									</box>
 									<textElement textAlignment="Center" verticalAlignment="Middle">
-										<font fontName="SansSerif"/>
+										<font fontName="SansSerif" isBold="true"/>
 									</textElement>
 									<textFieldExpression><![CDATA[$F{nTleA1RG}+$F{nTleA2RG}+$F{nTleDRG}+$F{nTleCRG}]]></textFieldExpression>
 								</textField>
@@ -4387,7 +4389,7 @@ $F{n1ereANRF}+$F{n1ereDNRF}+$F{n1ereCNRF}+$F{n1ereANRG}+$F{n1ereDNRG}+$F{n1ereCN
 										<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 									</box>
 									<textElement textAlignment="Center" verticalAlignment="Middle">
-										<font fontName="SansSerif"/>
+										<font fontName="SansSerif" isBold="true"/>
 									</textElement>
 									<textFieldExpression><![CDATA[$F{nTleA1NRG}+$F{nTleA2NRG}+$F{nTleDNRG}+$F{nTlCNRG}]]></textFieldExpression>
 								</textField>
@@ -4400,7 +4402,7 @@ $F{n1ereANRF}+$F{n1ereDNRF}+$F{n1ereCNRF}+$F{n1ereANRG}+$F{n1ereDNRG}+$F{n1ereCN
 										<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 									</box>
 									<textElement textAlignment="Center" verticalAlignment="Middle">
-										<font fontName="SansSerif"/>
+										<font fontName="SansSerif" isBold="true"/>
 									</textElement>
 									<textFieldExpression><![CDATA[$F{nTleA1RG}+$F{nTleA2RG}+$F{nTleDRG}+$F{nTleCRG}+$F{nTleA1NRG}+$F{nTleA2NRG}+$F{nTleDNRG}+$F{nTlCNRG}]]></textFieldExpression>
 								</textField>
@@ -4413,7 +4415,7 @@ $F{n1ereANRF}+$F{n1ereDNRF}+$F{n1ereCNRF}+$F{n1ereANRG}+$F{n1ereDNRG}+$F{n1ereCN
 										<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 									</box>
 									<textElement textAlignment="Center" verticalAlignment="Middle">
-										<font fontName="SansSerif"/>
+										<font fontName="SansSerif" isBold="true"/>
 									</textElement>
 									<textFieldExpression><![CDATA[$F{nTleA1RF}+$F{nTleA2RF}+$F{nTleDRF}+$F{nTleCRF}+$F{nTleA1RG}+$F{nTleA2RG}+$F{nTleDRG}+$F{nTleCRG}]]></textFieldExpression>
 								</textField>
@@ -4426,7 +4428,7 @@ $F{n1ereANRF}+$F{n1ereDNRF}+$F{n1ereCNRF}+$F{n1ereANRG}+$F{n1ereDNRG}+$F{n1ereCN
 										<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 									</box>
 									<textElement textAlignment="Center" verticalAlignment="Middle">
-										<font fontName="SansSerif"/>
+										<font fontName="SansSerif" isBold="true"/>
 									</textElement>
 									<textFieldExpression><![CDATA[$F{nTleA1NRF}+$F{nTleA2NRF}+$F{nTleDNRF}+$F{nTleCNRF}+$F{nTleA1NRG}+$F{nTleA2NRG}+$F{nTleDNRG}+$F{nTlCNRG}]]></textFieldExpression>
 								</textField>
@@ -4439,7 +4441,7 @@ $F{n1ereANRF}+$F{n1ereDNRF}+$F{n1ereCNRF}+$F{n1ereANRG}+$F{n1ereDNRG}+$F{n1ereCN
 										<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 									</box>
 									<textElement textAlignment="Center" verticalAlignment="Middle">
-										<font fontName="SansSerif"/>
+										<font fontName="SansSerif" isBold="true"/>
 									</textElement>
 									<textFieldExpression><![CDATA[$F{nTleA1RF}+$F{nTleA2RF}+$F{nTleDRF}+$F{nTleCRF}+$F{nTleA1RG}+$F{nTleA2RG}+$F{nTleDRG}+$F{nTleCRG}+$F{nTleA1NRF}+$F{nTleA2NRF}+$F{nTleDNRF}+$F{nTleCNRF}+$F{nTleA1NRG}+$F{nTleA2NRG}+$F{nTleDNRG}+$F{nTlCNRG}]]></textFieldExpression>
 								</textField>
@@ -4448,6 +4450,7 @@ $F{n1ereANRF}+$F{n1ereDNRF}+$F{n1ereCNRF}+$F{n1ereANRG}+$F{n1ereDNRG}+$F{n1ereCN
 										<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 									</reportElement>
 									<box>
+										<pen lineWidth="0.25"/>
 										<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 										<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 										<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -4493,7 +4496,7 @@ $F{n1ereANRF}+$F{n1ereDNRF}+$F{n1ereCNRF}+$F{n1ereANRG}+$F{n1ereDNRG}+$F{n1ereCN
 											<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 										</box>
 										<textElement textAlignment="Center" verticalAlignment="Middle">
-											<font fontName="SansSerif"/>
+											<font fontName="SansSerif" isBold="true"/>
 										</textElement>
 										<textFieldExpression><![CDATA[$F{n2ndARF}+$F{n2ndCRF}+$F{n1ereARF}+$F{n1ereDRF}+$F{n1ereCRF}+$F{nTleA1RF}+$F{nTleA2RF}+$F{nTleDRF}+$F{nTleCRF}]]></textFieldExpression>
 									</textField>
@@ -4515,7 +4518,7 @@ $F{n1ereANRF}+$F{n1ereDNRF}+$F{n1ereCNRF}+$F{n1ereANRG}+$F{n1ereDNRG}+$F{n1ereCN
 											<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 										</box>
 										<textElement textAlignment="Center" verticalAlignment="Middle">
-											<font fontName="SansSerif"/>
+											<font fontName="SansSerif" isBold="true"/>
 										</textElement>
 										<textFieldExpression><![CDATA[$F{n2ndANRF}+$F{n2ndCNRF}+$F{n1ereANRF}+$F{n1ereDNRF}+$F{n1ereCNRF}+$F{nTleA1NRF}+$F{nTleA2NRF}+$F{nTleDNRF}+$F{nTleCNRF}]]></textFieldExpression>
 									</textField>
@@ -4537,7 +4540,7 @@ $F{n1ereANRF}+$F{n1ereDNRF}+$F{n1ereCNRF}+$F{n1ereANRG}+$F{n1ereDNRG}+$F{n1ereCN
 											<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 										</box>
 										<textElement textAlignment="Center" verticalAlignment="Middle">
-											<font fontName="SansSerif"/>
+											<font fontName="SansSerif" isBold="true"/>
 										</textElement>
 										<textFieldExpression><![CDATA[$F{n2ndARF}+$F{n2ndCRF}+$F{n2ndCNRF}+$F{n2ndANRF}+
 $F{n1ereARF}+$F{n1ereDRF}+$F{n1ereCRF}+$F{n1ereANRF}+$F{n1ereDNRF}+$F{n1ereCNRF}+
@@ -4561,7 +4564,7 @@ $F{nTleA1RF}+$F{nTleA2RF}+$F{nTleDRF}+$F{nTleCRF}+$F{nTleA1NRF}+$F{nTleA2NRF}+$F
 											<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 										</box>
 										<textElement textAlignment="Center" verticalAlignment="Middle">
-											<font fontName="SansSerif"/>
+											<font fontName="SansSerif" isBold="true"/>
 										</textElement>
 										<textFieldExpression><![CDATA[$F{n2ndARG}+$F{n2ndCRG}+$F{n1ereARG}+$F{n1ereDRG}+$F{n1ereCRG}+$F{nTleA1RG}+$F{nTleA2RG}+$F{nTleDRF}+$F{nTleCRG}]]></textFieldExpression>
 									</textField>
@@ -4583,7 +4586,7 @@ $F{nTleA1RF}+$F{nTleA2RF}+$F{nTleDRF}+$F{nTleCRF}+$F{nTleA1NRF}+$F{nTleA2NRF}+$F
 											<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 										</box>
 										<textElement textAlignment="Center" verticalAlignment="Middle">
-											<font fontName="SansSerif"/>
+											<font fontName="SansSerif" isBold="true"/>
 										</textElement>
 										<textFieldExpression><![CDATA[$F{n2ndANRG}+$F{n2ndCNRG}+$F{n1ereANRG}+$F{n1ereDNRG}+$F{n1ereCNRG}+$F{nTleA1NRG}+$F{nTleA2NRG}+$F{nTleDNRG}+$F{nTlCNRG}]]></textFieldExpression>
 									</textField>
@@ -4605,7 +4608,7 @@ $F{nTleA1RF}+$F{nTleA2RF}+$F{nTleDRF}+$F{nTleCRF}+$F{nTleA1NRF}+$F{nTleA2NRF}+$F
 											<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 										</box>
 										<textElement textAlignment="Center" verticalAlignment="Middle">
-											<font fontName="SansSerif"/>
+											<font fontName="SansSerif" isBold="true"/>
 										</textElement>
 										<textFieldExpression><![CDATA[$F{n2ndARG}+$F{n2ndCRG}+$F{n1ereARG}+$F{n1ereDRG}+$F{n1ereCRG}+$F{nTleA1RG}+$F{nTleA2RG}+$F{nTleDRF}+$F{nTleCRG}+
 $F{n2ndANRG}+$F{n2ndCNRG}+$F{n1ereANRG}+$F{n1ereDNRG}+$F{n1ereCNRG}+$F{nTleA1NRG}+$F{nTleA2NRG}+$F{nTleDNRG}+$F{nTlCNRG}]]></textFieldExpression>
@@ -4628,7 +4631,7 @@ $F{n2ndANRG}+$F{n2ndCNRG}+$F{n1ereANRG}+$F{n1ereDNRG}+$F{n1ereCNRG}+$F{nTleA1NRG
 											<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 										</box>
 										<textElement textAlignment="Center" verticalAlignment="Middle">
-											<font fontName="SansSerif"/>
+											<font fontName="SansSerif" isBold="true"/>
 										</textElement>
 										<textFieldExpression><![CDATA[$F{n2ndARF}+$F{n2ndCRF}+$F{n1ereARF}+$F{n1ereDRF}+$F{n1ereCRF}+$F{nTleA1RF}+$F{nTleA2RF}+$F{nTleDRF}+$F{nTleCRF}+
 $F{n2ndARG}+$F{n2ndCRG}+$F{n1ereARG}+$F{n1ereDRG}+$F{n1ereCRG}+$F{nTleA1RG}+$F{nTleA2RG}+$F{nTleDRF}+$F{nTleCRG}]]></textFieldExpression>
@@ -4651,7 +4654,7 @@ $F{n2ndARG}+$F{n2ndCRG}+$F{n1ereARG}+$F{n1ereDRG}+$F{n1ereCRG}+$F{nTleA1RG}+$F{n
 											<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 										</box>
 										<textElement textAlignment="Center" verticalAlignment="Middle">
-											<font fontName="SansSerif"/>
+											<font fontName="SansSerif" isBold="true"/>
 										</textElement>
 										<textFieldExpression><![CDATA[$F{n2ndANRF}+$F{n2ndCNRF}+$F{n1ereANRF}+$F{n1ereDNRF}+$F{n1ereCNRF}+$F{nTleA1NRF}+$F{nTleA2NRF}+$F{nTleDNRF}+$F{nTleCNRF}+
 $F{n2ndANRG}+$F{n2ndCNRG}+$F{n1ereANRG}+$F{n1ereDNRG}+$F{n1ereCNRG}+$F{nTleA1NRG}+$F{nTleA2NRG}+$F{nTleDNRG}+$F{nTlCNRG}]]></textFieldExpression>
@@ -4674,7 +4677,7 @@ $F{n2ndANRG}+$F{n2ndCNRG}+$F{n1ereANRG}+$F{n1ereDNRG}+$F{n1ereCNRG}+$F{nTleA1NRG
 											<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 										</box>
 										<textElement textAlignment="Center" verticalAlignment="Middle">
-											<font fontName="SansSerif"/>
+											<font fontName="SansSerif" isBold="true"/>
 										</textElement>
 										<textFieldExpression><![CDATA[$F{n2ndARF}+$F{n2ndCRF}+$F{n1ereARF}+$F{n1ereDRF}+$F{n1ereCRF}+$F{nTleA1RF}+$F{nTleA2RF}+$F{nTleDRF}+$F{nTleCRF}+
 $F{n2ndARG}+$F{n2ndCRG}+$F{n1ereARG}+$F{n1ereDRG}+$F{n1ereCRG}+$F{nTleA1RG}+$F{nTleA2RG}+$F{nTleDRF}+$F{nTleCRG}+
@@ -4691,10 +4694,10 @@ $F{n2ndANRG}+$F{n2ndCNRG}+$F{n1ereANRG}+$F{n1ereDNRG}+$F{n1ereCNRG}+$F{nTleA1NRG
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 					</reportElement>
 					<box>
-						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<staticText>
 						<reportElement style="titre" x="0" y="0" width="80" height="30" uuid="adc34cc7-c14f-40bd-a907-d7389ce986ee">
@@ -4736,7 +4739,7 @@ $F{n2ndANRG}+$F{n2ndCNRG}+$F{n1ereANRG}+$F{n1ereDNRG}+$F{n1ereCNRG}+$F{nTleA1NRG
 							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textElement textAlignment="Center" verticalAlignment="Middle">
-							<font fontName="SansSerif"/>
+							<font fontName="SansSerif" isBold="true"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{n2ndARF}+$F{n2ndCRF}+$F{n1ereARF}+$F{n1ereDRF}+$F{n1ereCRF}+$F{nTleA1RF}+$F{nTleA2RF}+$F{nTleDRF}+$F{nTleCRF}
 +$F{n6RF}+$F{n5RF}+$F{n4RF}+$F{n3RF}]]></textFieldExpression>
@@ -4759,7 +4762,7 @@ $F{n2ndANRG}+$F{n2ndCNRG}+$F{n1ereANRG}+$F{n1ereDNRG}+$F{n1ereCNRG}+$F{nTleA1NRG
 							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textElement textAlignment="Center" verticalAlignment="Middle">
-							<font fontName="SansSerif"/>
+							<font fontName="SansSerif" isBold="true"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{n2ndANRF}+$F{n2ndCNRF}+$F{n1ereANRF}+$F{n1ereDNRF}+$F{n1ereCNRF}+$F{nTleA1NRF}+$F{nTleA2NRF}+$F{nTleDNRF}+$F{nTleCNRF}
 +$F{n6NRF}+$F{n5NRF}+$F{n4NRF}+$F{n3NRF}]]></textFieldExpression>
@@ -4782,7 +4785,7 @@ $F{n2ndANRG}+$F{n2ndCNRG}+$F{n1ereANRG}+$F{n1ereDNRG}+$F{n1ereCNRG}+$F{nTleA1NRG
 							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textElement textAlignment="Center" verticalAlignment="Middle">
-							<font fontName="SansSerif"/>
+							<font fontName="SansSerif" isBold="true"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{n2ndARF}+$F{n2ndCRF}+$F{n2ndCNRF}+$F{n2ndANRF}+
 $F{n1ereARF}+$F{n1ereDRF}+$F{n1ereCRF}+$F{n1ereANRF}+$F{n1ereDNRF}+$F{n1ereCNRF}+
@@ -4807,7 +4810,7 @@ $F{n6RF}+$F{n6NRF}+$F{n5RF}+$F{n5NRF}+$F{n4RF}+$F{n4NRF}+$F{n3RF}+$F{n3NRF}]]></
 							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textElement textAlignment="Center" verticalAlignment="Middle">
-							<font fontName="SansSerif"/>
+							<font fontName="SansSerif" isBold="true"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{n2ndARG}+$F{n2ndCRG}+$F{n1ereARG}+$F{n1ereDRG}+$F{n1ereCRG}+$F{nTleA1RG}+$F{nTleA2RG}+$F{nTleDRF}+$F{nTleCRG}
 +$F{n6RG}+$F{n5RG}+$F{n4RG}+$F{n3RG}]]></textFieldExpression>
@@ -4830,7 +4833,7 @@ $F{n6RF}+$F{n6NRF}+$F{n5RF}+$F{n5NRF}+$F{n4RF}+$F{n4NRF}+$F{n3RF}+$F{n3NRF}]]></
 							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textElement textAlignment="Center" verticalAlignment="Middle">
-							<font fontName="SansSerif"/>
+							<font fontName="SansSerif" isBold="true"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{n2ndANRG}+$F{n2ndCNRG}+$F{n1ereANRG}+$F{n1ereDNRG}+$F{n1ereCNRG}+$F{nTleA1NRG}+$F{nTleA2NRG}+$F{nTleDNRG}+$F{nTlCNRG}
 +$F{n6NRG}+$F{n5NRG}+$F{n4NRG}+$F{n3NRG}]]></textFieldExpression>
@@ -4853,7 +4856,7 @@ $F{n6RF}+$F{n6NRF}+$F{n5RF}+$F{n5NRF}+$F{n4RF}+$F{n4NRF}+$F{n3RF}+$F{n3NRF}]]></
 							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textElement textAlignment="Center" verticalAlignment="Middle">
-							<font fontName="SansSerif"/>
+							<font fontName="SansSerif" isBold="true"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{n2ndARG}+$F{n2ndCRG}+$F{n1ereARG}+$F{n1ereDRG}+$F{n1ereCRG}+$F{nTleA1RG}+$F{nTleA2RG}+$F{nTleDRF}+$F{nTleCRG}
 +$F{n6RG}+$F{n5RG}+$F{n4RG}+$F{n3RG}+
@@ -4878,7 +4881,7 @@ $F{n2ndANRG}+$F{n2ndCNRG}+$F{n1ereANRG}+$F{n1ereDNRG}+$F{n1ereCNRG}+$F{nTleA1NRG
 							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textElement textAlignment="Center" verticalAlignment="Middle">
-							<font fontName="SansSerif"/>
+							<font fontName="SansSerif" isBold="true"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{n2ndARF}+$F{n2ndCRF}+$F{n1ereARF}+$F{n1ereDRF}+$F{n1ereCRF}+$F{nTleA1RF}+$F{nTleA2RF}+$F{nTleDRF}+$F{nTleCRF}+
 $F{n2ndARG}+$F{n2ndCRG}+$F{n1ereARG}+$F{n1ereDRG}+$F{n1ereCRG}+$F{nTleA1RG}+$F{nTleA2RG}+$F{nTleDRF}+$F{nTleCRG}+
@@ -4902,7 +4905,7 @@ $F{n6RF}+$F{n6RG}+$F{n5RF}+$F{n5RG}+$F{n4RF}+$F{n4RG}+$F{n3RF}+$F{n3RG}]]></text
 							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textElement textAlignment="Center" verticalAlignment="Middle">
-							<font fontName="SansSerif"/>
+							<font fontName="SansSerif" isBold="true"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{n2ndANRF}+$F{n2ndCNRF}+$F{n1ereANRF}+$F{n1ereDNRF}+$F{n1ereCNRF}+$F{nTleA1NRF}+$F{nTleA2NRF}+$F{nTleDNRF}+$F{nTleCNRF}+
 $F{n2ndANRG}+$F{n2ndCNRG}+$F{n1ereANRG}+$F{n1ereDNRG}+$F{n1ereCNRG}+$F{nTleA1NRG}+$F{nTleA2NRG}+$F{nTleDNRG}+$F{nTlCNRG}+
@@ -4926,7 +4929,7 @@ $F{n6NRF}+$F{n6NRG}+$F{n5NRF}+$F{n5NRG}+$F{n4NRF}+$F{n4NRG}+$F{n3NRF}+$F{n3NRG}]
 							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textElement textAlignment="Center" verticalAlignment="Middle">
-							<font fontName="SansSerif"/>
+							<font fontName="SansSerif" isBold="true"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{n2ndARF}+$F{n2ndCRF}+$F{n1ereARF}+$F{n1ereDRF}+$F{n1ereCRF}+$F{nTleA1RF}+$F{nTleA2RF}+$F{nTleDRF}+$F{nTleCRF}+
 $F{n2ndARG}+$F{n2ndCRG}+$F{n1ereARG}+$F{n1ereDRG}+$F{n1ereCRG}+$F{nTleA1RG}+$F{nTleA2RG}+$F{nTleDRF}+$F{nTleCRG}+

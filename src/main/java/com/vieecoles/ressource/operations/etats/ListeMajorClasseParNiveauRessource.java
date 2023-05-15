@@ -89,7 +89,7 @@ public class ListeMajorClasseParNiveauRessource {
        List<MajorParClasseNiveauDto> detailsBull = new ArrayList<>() ;
 
         detailsBull= resultatsServices.MajorParNiveauClasse(idEcole) ;
-        System.out.println("detailsBull "+detailsBull);
+
 
         if(type.toUpperCase().equals("PDF")){
             JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(detailsBull) ;

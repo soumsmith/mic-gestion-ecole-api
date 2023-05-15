@@ -12,6 +12,15 @@ public class MajorParClasseNiveauDto {
     private String redoublant;
     private Double moyGeneral;
     private String lv2 ;
+    private  Integer ordre_niveau ;
+
+    public Integer getOrdre_niveau() {
+        return ordre_niveau;
+    }
+
+    public void setOrdre_niveau(Integer ordre_niveau) {
+        this.ordre_niveau = ordre_niveau;
+    }
 
     public MajorParClasseNiveauDto() {
     }
@@ -43,7 +52,8 @@ public class MajorParClasseNiveauDto {
                                    String nature,
                                    String redoublant,
                                    Double moyGeneral,
-                                   String lv2) {
+                                   String lv2,
+                                   Integer ordre_niveau) {
         this.niveau = niveau;
         this.classeLibelle = classeLibelle;
         this.matricule = matricule;
@@ -55,6 +65,7 @@ public class MajorParClasseNiveauDto {
         this.redoublant = redoublant;
         this.moyGeneral = moyGeneral;
         this.lv2 = lv2;
+        this.ordre_niveau = ordre_niveau ;
     }
 
     public String getNiveau() {

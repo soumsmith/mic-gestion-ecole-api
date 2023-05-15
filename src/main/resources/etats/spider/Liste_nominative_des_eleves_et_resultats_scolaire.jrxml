@@ -41,7 +41,7 @@
 	<field name="rang" class="java.lang.Integer"/>
 	<field name="observat" class="java.lang.String"/>
 	<field name="nomEducateur" class="java.lang.String"/>
-	<field name="ordre_niveau" class="java.lang.String"/>
+	<field name="ordre_niveau" class="java.lang.Integer"/>
 	<sortField name="ordre_niveau"/>
 	<sortField name="classeLibelle"/>
 	<variable name="Compteur" class="java.lang.Integer" resetType="Group" resetGroup="classe" calculation="DistinctCount">
@@ -53,10 +53,11 @@
 		<groupHeader>
 			<band height="62">
 				<frame>
-					<reportElement x="-17" y="42" width="587" height="20" uuid="0fa358b6-77d4-44ad-a41d-4d26fea48e52">
+					<reportElement x="-8" y="42" width="570" height="20" uuid="0fa358b6-77d4-44ad-a41d-4d26fea48e52">
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 					</reportElement>
 					<box>
+						<pen lineWidth="0.25"/>
 						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -79,7 +80,7 @@
 							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textElement>
-							<font fontName="SansSerif" isBold="true"/>
+							<font fontName="SansSerif" size="6" isBold="true"/>
 						</textElement>
 						<text><![CDATA[N°]]></text>
 					</staticText>
@@ -100,7 +101,7 @@
 							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textElement>
-							<font fontName="SansSerif" isBold="true"/>
+							<font fontName="SansSerif" size="6" isBold="true"/>
 						</textElement>
 						<text><![CDATA[MATRICULE]]></text>
 					</staticText>
@@ -121,7 +122,7 @@
 							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textElement>
-							<font fontName="SansSerif" isBold="true"/>
+							<font fontName="SansSerif" size="6" isBold="true"/>
 						</textElement>
 						<text><![CDATA[NOM ET PRENOMS]]></text>
 					</staticText>
@@ -142,7 +143,7 @@
 							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textElement>
-							<font fontName="SansSerif" isBold="true"/>
+							<font fontName="SansSerif" size="6" isBold="true"/>
 						</textElement>
 						<text><![CDATA[SEXE]]></text>
 					</staticText>
@@ -163,7 +164,7 @@
 							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textElement>
-							<font fontName="SansSerif" isBold="true"/>
+							<font fontName="SansSerif" size="6" isBold="true"/>
 						</textElement>
 						<text><![CDATA[AN]]></text>
 					</staticText>
@@ -184,7 +185,7 @@
 							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textElement>
-							<font fontName="SansSerif" isBold="true"/>
+							<font fontName="SansSerif" size="6" isBold="true"/>
 						</textElement>
 						<text><![CDATA[NAT]]></text>
 					</staticText>
@@ -205,7 +206,7 @@
 							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textElement>
-							<font fontName="SansSerif" isBold="true"/>
+							<font fontName="SansSerif" size="6" isBold="true"/>
 						</textElement>
 						<text><![CDATA[R]]></text>
 					</staticText>
@@ -226,7 +227,7 @@
 							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textElement>
-							<font fontName="SansSerif" isBold="true"/>
+							<font fontName="SansSerif" size="6" isBold="true"/>
 						</textElement>
 						<text><![CDATA[STATUT]]></text>
 					</staticText>
@@ -247,7 +248,7 @@
 							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textElement>
-							<font fontName="SansSerif" isBold="true"/>
+							<font fontName="SansSerif" size="6" isBold="true"/>
 						</textElement>
 						<text><![CDATA[N° DEC AFF]]></text>
 					</staticText>
@@ -268,7 +269,7 @@
 							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textElement>
-							<font fontName="SansSerif" isBold="true"/>
+							<font fontName="SansSerif" size="6" isBold="true"/>
 						</textElement>
 						<text><![CDATA[MOY]]></text>
 					</staticText>
@@ -289,12 +290,12 @@
 							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textElement>
-							<font fontName="SansSerif" isBold="true"/>
+							<font fontName="SansSerif" size="6" isBold="true"/>
 						</textElement>
 						<text><![CDATA[RANG]]></text>
 					</staticText>
 					<staticText>
-						<reportElement style="contenuTableau" x="493" y="0" width="94" height="20" uuid="9461c8b0-37c9-4639-a61a-3d5b4966d8e4">
+						<reportElement style="contenuTableau" x="493" y="0" width="77" height="20" uuid="9461c8b0-37c9-4639-a61a-3d5b4966d8e4">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -310,7 +311,7 @@
 							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textElement>
-							<font fontName="SansSerif" isBold="true"/>
+							<font fontName="SansSerif" size="6" isBold="true"/>
 						</textElement>
 						<text><![CDATA[OBSERVATION]]></text>
 					</staticText>
@@ -427,19 +428,20 @@
 		</band>
 	</title>
 	<detail>
-		<band height="20" splitType="Stretch">
+		<band height="15" splitType="Stretch">
 			<frame>
-				<reportElement x="-17" y="0" width="587" height="20" uuid="22e370ef-ced8-44e1-9304-732cf065e79c">
+				<reportElement x="-8" y="0" width="570" height="15" uuid="22e370ef-ced8-44e1-9304-732cf065e79c">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 				</reportElement>
 				<box>
+					<pen lineWidth="0.25"/>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textField>
-					<reportElement style="contenuTableau" x="0" y="0" width="20" height="20" uuid="0323ddb8-afe0-4004-ac04-1493c803a519">
+				<textField textAdjust="ScaleFont">
+					<reportElement style="contenuTableau" x="0" y="0" width="20" height="15" uuid="0323ddb8-afe0-4004-ac04-1493c803a519">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -447,9 +449,10 @@
 						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
 						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<box>
-						<pen lineWidth="0.5"/>
+						<pen lineWidth="0.25"/>
 						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -460,8 +463,8 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{Compteur}]]></textFieldExpression>
 				</textField>
-				<textField>
-					<reportElement style="contenuTableau" x="20" y="0" width="48" height="20" uuid="c4a798d8-36a6-408e-8071-c1b94f64d1fc">
+				<textField textAdjust="ScaleFont">
+					<reportElement style="contenuTableau" x="20" y="0" width="48" height="15" uuid="c4a798d8-36a6-408e-8071-c1b94f64d1fc">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -469,6 +472,7 @@
 						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
 						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<box>
 						<pen lineWidth="0.25"/>
@@ -483,7 +487,7 @@
 					<textFieldExpression><![CDATA[$F{matricule}]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement stretchType="ContainerHeight" isPrintRepeatedValues="false" x="68" y="0" width="82" height="20" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true" uuid="c261646c-a0f2-444c-b27e-b86d6bbfe1d3">
+					<reportElement stretchType="ContainerHeight" isPrintRepeatedValues="false" x="68" y="0" width="82" height="15" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true" uuid="c261646c-a0f2-444c-b27e-b86d6bbfe1d3">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -491,6 +495,7 @@
 						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
 						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<box>
 						<pen lineWidth="0.25"/>
@@ -505,8 +510,8 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{nomEleve}+" "+$F{prenomEleve}]]></textFieldExpression>
 				</textField>
-				<textField>
-					<reportElement style="contenuTableau" x="150" y="0" width="27" height="20" uuid="7810bc17-d131-4923-84bf-e68dce202682">
+				<textField textAdjust="ScaleFont">
+					<reportElement style="contenuTableau" x="150" y="0" width="27" height="15" uuid="7810bc17-d131-4923-84bf-e68dce202682">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -514,6 +519,7 @@
 						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
 						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<box>
 						<pen lineWidth="0.25"/>
@@ -527,8 +533,8 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{sexe}]]></textFieldExpression>
 				</textField>
-				<textField>
-					<reportElement style="contenuTableau" x="177" y="0" width="36" height="20" uuid="10f257f7-6d39-40a8-a3b3-8f16f70e9395">
+				<textField textAdjust="ScaleFont">
+					<reportElement style="contenuTableau" x="177" y="0" width="36" height="15" uuid="10f257f7-6d39-40a8-a3b3-8f16f70e9395">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -536,6 +542,7 @@
 						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
 						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<box>
 						<pen lineWidth="0.25"/>
@@ -549,8 +556,8 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{anneeNaissance}]]></textFieldExpression>
 				</textField>
-				<textField>
-					<reportElement style="contenuTableau" x="213" y="0" width="64" height="20" uuid="ebab6b07-b025-4328-b869-157b6dc5db1a">
+				<textField textAdjust="ScaleFont">
+					<reportElement style="contenuTableau" x="213" y="0" width="64" height="15" uuid="ebab6b07-b025-4328-b869-157b6dc5db1a">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -558,6 +565,7 @@
 						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
 						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<box>
 						<pen lineWidth="0.25"/>
@@ -571,8 +579,8 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{nationnalite}]]></textFieldExpression>
 				</textField>
-				<textField>
-					<reportElement style="contenuTableau" x="277" y="0" width="22" height="20" uuid="31c8dabc-b65c-4614-b3ff-64d97e4ecb84">
+				<textField textAdjust="ScaleFont">
+					<reportElement style="contenuTableau" x="277" y="0" width="22" height="15" uuid="31c8dabc-b65c-4614-b3ff-64d97e4ecb84">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -580,6 +588,7 @@
 						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
 						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<box>
 						<pen lineWidth="0.25"/>
@@ -593,8 +602,8 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{redoublan}]]></textFieldExpression>
 				</textField>
-				<textField>
-					<reportElement style="contenuTableau" x="299" y="0" width="47" height="20" uuid="632ea928-cf40-454d-9e36-c3fe1ac96b65">
+				<textField textAdjust="ScaleFont">
+					<reportElement style="contenuTableau" x="299" y="0" width="47" height="15" uuid="632ea928-cf40-454d-9e36-c3fe1ac96b65">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -602,6 +611,7 @@
 						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
 						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<box>
 						<pen lineWidth="0.25"/>
@@ -615,8 +625,8 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{affecte}]]></textFieldExpression>
 				</textField>
-				<textField>
-					<reportElement style="contenuTableau" x="346" y="0" width="47" height="20" uuid="a36ba6fb-da8b-4717-8c31-f09e93b7d43a">
+				<textField textAdjust="ScaleFont">
+					<reportElement style="contenuTableau" x="346" y="0" width="47" height="15" uuid="a36ba6fb-da8b-4717-8c31-f09e93b7d43a">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -624,6 +634,7 @@
 						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
 						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<box>
 						<pen lineWidth="0.25"/>
@@ -637,8 +648,8 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{numDecisionAffecte}]]></textFieldExpression>
 				</textField>
-				<textField>
-					<reportElement style="contenuTableau" x="393" y="0" width="50" height="20" uuid="5b6ff692-537c-4c59-a8d6-a3635a218794">
+				<textField textAdjust="ScaleFont">
+					<reportElement style="contenuTableau" x="393" y="0" width="50" height="15" uuid="5b6ff692-537c-4c59-a8d6-a3635a218794">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -646,6 +657,7 @@
 						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
 						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<box>
 						<pen lineWidth="0.25"/>
@@ -659,8 +671,8 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{moyeGeneral}]]></textFieldExpression>
 				</textField>
-				<textField>
-					<reportElement style="contenuTableau" x="443" y="0" width="50" height="20" uuid="d2f6a259-f48d-49fa-b5d5-e716ae777b8e">
+				<textField textAdjust="ScaleFont">
+					<reportElement style="contenuTableau" x="443" y="0" width="50" height="15" uuid="d2f6a259-f48d-49fa-b5d5-e716ae777b8e">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -668,6 +680,7 @@
 						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
 						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<box>
 						<pen lineWidth="0.25"/>
@@ -681,8 +694,8 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{rang}]]></textFieldExpression>
 				</textField>
-				<textField>
-					<reportElement style="contenuTableau" x="493" y="0" width="94" height="20" uuid="579c561c-9ce9-4663-b229-766afb4a8b1f">
+				<textField textAdjust="ScaleFont">
+					<reportElement style="contenuTableau" x="493" y="0" width="77" height="15" uuid="579c561c-9ce9-4663-b229-766afb4a8b1f">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -690,6 +703,7 @@
 						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
 						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<box>
 						<pen lineWidth="0.25"/>
