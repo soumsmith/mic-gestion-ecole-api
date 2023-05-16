@@ -138,6 +138,10 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 	public List<Notes> getByEvaluation(long evaluationId) {
 		return Notes.find("evaluation.id = ?1", evaluationId).list();
 	}
+	
+	public List<Notes> getByEvaluationAndPec(long evaluationId, Integer pec) {
+		return Notes.find("evaluation.id = ?1 and pec = ?2", evaluationId, pec).list();
+	}
 
 	public List<Notes> getNotesClasse(String evalCode) {
 //	    	logger.info("++++++++++"+evalCode);
@@ -148,7 +152,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				evaluation.getAnnee().getId());
 		// logger.info(gson.toJson(classeEleves));
 		// obtenir la liste des notes pour une évaluation
-		List<Notes> notesList = getByEvaluation(evaluation.getId());
+		List<Notes> notesList = getByEvaluationAndPec(evaluation.getId(),1);
 		List<Notes> noteListTemp = new ArrayList<Notes>();
 		Boolean flat = true;
 		Notes notemp;
@@ -299,10 +303,19 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				}
 				moyenneEleveDto.setNotesMatiereMap(notesMatiereGroup);
 //			logger.info(g.toJson(moyenneEleveDto));
-//			moyenneEleveDto.setMatiere(null);
+//			moyenneEleveDto.setMatiere(null);file:///home/stephane/Documents/projets/my_Eclipse_Ws/.metadata/.plugins/org.eclipse.jdt.ui/jdt-images/0.png
 //			moyenneEleveDto.setNotes(entry.getValue());
 				moyenneList.add(moyenneEleveDto);
 			}
+			// Code pour visualiser les niveaux des matieres utilisées crant souvent des bugs
+//			System.out.println("Matiere et niveau");
+//			for(MoyenneEleveDto m : moyenneList) {
+//				for(Map.Entry<Matiere,List<Notes>>  n : m.getNotesMatiereMap().entrySet()) {
+//					System.out.println(String.format("matiere %s - %s ; niveau: %s",n.getKey().getCode(), n.getKey().getLibelle(), n.getKey().getNiveauEnseignement().getId()) );
+//				}
+//			}
+//			periode.getCode().equals("1");
+			
 //		calculMoyenneMatiere(moyenneList);
 //		logger.info(moyenneList.toString());
 //		logger.info("-------------------------------------------");
@@ -653,6 +666,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			mapt = new HashMap<Double, MoyenneEleveDto>();
 			for (MoyenneEleveDto me : moyEleve) {
 				logger.info("eleve - " + me.getEleve().getNom());
+				//logger.info(".getNotesMatiereMap() - " + me.getNotesMatiereMap());
 				if (me.getNotesMatiereMap() != null) {
 					for (Map.Entry<EcoleHasMatiere, List<Notes>> map : me.getNotesMatiereMap().entrySet()) {
 						if (map.getKey().getCode().equals(cm.getMatiere().getCode())) {
@@ -745,5 +759,6 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				eleve.setRang(String.valueOf(i));
 		}
 
+		
 	}
 }

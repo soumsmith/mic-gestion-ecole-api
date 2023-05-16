@@ -167,6 +167,65 @@ public class InscriptionService implements PanacheRepositoryBase<Inscriptions, L
    }
 
     @Transactional
+    public String updateinscriptionImporter(Long idInscrip ,InscriptionDto inscriptionDto) {
+        Inscriptions inscr = new Inscriptions() ;
+        inscr = Inscriptions.findById(idInscrip) ;
+        List<Libellehandicap> libellehandicapList= new ArrayList<>() ;
+
+        System.out.println("Mon objet1");
+
+
+
+        System.out.println("Mon objet74444545545445//"+inscriptionDto.getIdentifiantEleve());
+
+        System.out.println("Mon objet3");
+        eleve  eleve1= eleve.findById(inscriptionDto.getIdentifiantEleve());
+        System.out.println("Mon objet////");
+        ecole ecole1= ecole.findById(inscriptionDto.getIdentifiantEcole()) ;
+        System.out.println("Mon objet4");
+        Annee_Scolaire annee_scolaire= Annee_Scolaire.findById(inscriptionDto.getIdentifiantAnnee_scolaire()) ;
+        System.out.println("Mon objet5 ");
+        Branche myBranche = Branche.findById(inscriptionDto.getIdentifiantBranche());
+
+        if (inscriptionDto.getInscriptions_type() == Inscriptions.typeOperation.INSCRIPTION) {
+
+            inscr.setInscriptions_type(inscriptionDto.getInscriptions_type());
+            inscr.setInscriptions_statut_eleve(inscriptionDto.getInscriptions_statut_eleve());
+
+            inscr.setInscriptions_boursier(inscriptionDto.getInscriptions_boursier());
+            inscr.setInscriptions_redoublant(inscriptionDto.getInscriptions_redoublant());
+            inscr.setInscriptions_contact1(inscriptionDto.getInscriptions_contact1());
+            inscr.setInscriptions_contact2(inscriptionDto.getInscriptions_contact2());
+            inscr.setInscriptions_code_interne(inscriptionDto.getInscriptions_code_interne());
+            inscr.setInscriptions_langue_vivante(inscriptionDto.getInscriptions_langue_vivante());
+            inscr.setInscriptions_classe_actuelle(inscriptionDto.getInscriptions_classe_actuelle());
+            inscr.setInscriptions_derniereclasse_religieuse(inscriptionDto.getInscriptions_derniereclasse_religieuse());
+            inscr.setInscriptions_classe_precedente(inscriptionDto.getInscriptions_classe_precedente());
+            inscr.setInscriptions_ecole_origine(inscriptionDto.getInscriptions_ecole_origine());
+            inscr.setBranche(myBranche);
+
+        } else {
+            inscr.setInscriptions_type(inscriptionDto.getInscriptions_type());
+            inscr.setInscriptions_statut_eleve(inscriptionDto.getInscriptions_statut_eleve());
+            inscr.setInscriptions_contact1(inscriptionDto.getInscriptions_contact1());
+            inscr.setInscriptions_contact2(inscriptionDto.getInscriptions_contact2());
+            inscr.setInscriptions_code_interne(inscriptionDto.getInscriptions_code_interne());
+            inscr.setInscriptions_langue_vivante(inscriptionDto.getInscriptions_langue_vivante());
+            inscr.setInscriptions_classe_actuelle(inscriptionDto.getInscriptions_classe_actuelle());
+            inscr.setInscriptions_derniereclasse_religieuse(inscriptionDto.getInscriptions_derniereclasse_religieuse());
+            inscr.setInscriptions_classe_precedente(inscriptionDto.getInscriptions_classe_precedente());
+            inscr.setInscriptions_ecole_origine(inscriptionDto.getInscriptions_ecole_origine());
+            inscr.setAnnee_scolaire(annee_scolaire);
+            inscr.setBranche(myBranche);
+
+        }
+
+        return "INSCRIPTION MODIFIEE AVEC SUCCES!" ;
+
+    }
+
+
+    @Transactional
     public String createinscriptionImporter(InscriptionDto inscriptionDto) {
         Inscriptions inscr = new Inscriptions() ;
         List<Libellehandicap> libellehandicapList= new ArrayList<>() ;
@@ -333,6 +392,29 @@ public class InscriptionService implements PanacheRepositoryBase<Inscriptions, L
         System.out.println("messageRetour** "+ messageRetour);
         return messageRetour ;
     }
+
+    @Transactional
+    public  String verifmodifierInscription(InscriptionDto inscriptionDto,  Long idEcole , String matricule, Long idAnnee){
+        eleve myeleve = new eleve() ;
+        Inscriptions minScription = new Inscriptions() ;
+        String messageRetour = null;
+        minScription = checkInscrit(idEcole,matricule,idAnnee) ;
+        System.out.println("minScription** "+ minScription);
+
+        Long idInscrip= minScription.getInscriptionsid();
+
+        if(minScription==null){
+            messageRetour = "Elève pas encore inscrit!" ;
+
+        } else {
+            messageRetour =  updateinscriptionImporter(idInscrip,inscriptionDto);
+        }
+        System.out.println("messageRetour** "+ messageRetour);
+        return messageRetour ;
+    }
+
+
+
 
 
     @Transactional

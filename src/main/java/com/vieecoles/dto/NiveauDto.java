@@ -14,4 +14,11 @@ public class NiveauDto {
     public void setNiveau(String niveau) {
         this.niveau = niveau;
     }
+
+    @Override
+    public String toString() {
+        return "NiveauDto{" +
+                "niveau='" + niveau + '\'' +
+                '}';
+    }
 }

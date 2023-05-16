@@ -135,17 +135,18 @@
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[B/REPARTITION DES ELEVES PAR ANNEE DE NAISSANCE]]></text>
+				<text><![CDATA[B/REPARTITION DES ELEVES PAR ANNEE DE NAISSANCE-----]]></text>
 			</staticText>
 		</band>
 	</title>
 	<columnHeader>
-		<band height="48" splitType="Stretch">
+		<band height="46" splitType="Stretch">
 			<frame>
-				<reportElement x="20" y="8" width="500" height="40" uuid="e9d95c51-5c05-423f-8591-263cd9037de3">
+				<reportElement x="20" y="6" width="500" height="40" uuid="e9d95c51-5c05-423f-8591-263cd9037de3">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 				</reportElement>
 				<box>
+					<pen lineWidth="0.25"/>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -161,6 +162,13 @@
 						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 					</reportElement>
+					<box>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
 					<textElement>
 						<font fontName="SansSerif" isBold="true"/>
 					</textElement>
@@ -464,16 +472,17 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="41" splitType="Stretch">
+		<band height="40" splitType="Stretch">
 			<frame>
-				<reportElement x="20" y="1" width="500" height="40" uuid="41666770-1b44-42f9-8ad4-2738a23b01a6">
+				<reportElement x="20" y="0" width="500" height="40" uuid="41666770-1b44-42f9-8ad4-2738a23b01a6">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 				</reportElement>
 				<box>
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textField>
 					<reportElement style="contenu" x="0" y="0" width="40" height="40" uuid="b6fdd13a-de91-495a-9b1f-9596d0ddc20a">
@@ -487,10 +496,10 @@
 					</reportElement>
 					<box>
 						<pen lineWidth="0.25" lineStyle="Dotted"/>
-						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<topPen lineWidth="0.25" lineStyle="Dotted" lineColor="#000000"/>
+						<leftPen lineWidth="0.25" lineStyle="Dotted" lineColor="#000000"/>
+						<bottomPen lineWidth="0.25" lineStyle="Dotted" lineColor="#000000"/>
+						<rightPen lineWidth="0.25" lineStyle="Dotted" lineColor="#000000"/>
 					</box>
 					<textElement>
 						<font fontName="SansSerif"/>
@@ -1253,10 +1262,11 @@
 		</band>
 	</detail>
 	<summary>
-		<band height="67" splitType="Stretch">
+		<band height="20" splitType="Stretch">
 			<frame>
 				<reportElement x="20" y="0" width="500" height="20" uuid="0814586b-86a7-481a-93cd-8aa6b44e2394"/>
 				<box>
+					<pen lineWidth="0.25"/>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1265,10 +1275,10 @@
 				<staticText>
 					<reportElement x="0" y="0" width="70" height="20" uuid="97ac2e41-5211-4017-bad2-c585869db652"/>
 					<box>
-						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="SansSerif"/>

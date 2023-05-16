@@ -19,6 +19,7 @@ public class EleveAffecteParClasseServices {
 
     public List<eleveAffecteParClasseDto>  eleveAffecteParClasse(Long idEcole){
         int LongTableau;
+        Integer orderNiv ;
 
         List<NiveauDto> classeNiveauDtoList = new ArrayList<>() ;
         TypedQuery<NiveauDto> q = em.createQuery( "SELECT new com.vieecoles.dto.NiveauDto(b.libelleClasse) from Bulletin b  where b.ecoleId =:idEcole  " +
@@ -44,13 +45,23 @@ public class EleveAffecteParClasseServices {
 
 
 
-
+    public  Integer getOrderNiveau(String niveau){
+        Integer ordNiveau;
+        try {
+            ordNiveau = (Integer) em.createQuery("select distinct cast(o.ordre_niveau as integer ) from Bulletin o where  o.niveau=:niveau ")
+                    .setParameter("niveau",niveau)
+                    .getSingleResult();
+        } catch (NoResultException e){
+            return 0 ;
+        }
+        return  ordNiveau ;
+    }
 
 
     public List<eleveAffecteParClasseDto> getListEleveNonAffectParClassDto(Long idEcole , String classe){
         List<eleveAffecteParClasseDto> classeNiveauDtoList = new ArrayList<>() ;
         try {
-            TypedQuery<eleveAffecteParClasseDto> q= em.createQuery("select new com.vieecoles.dto.eleveAffecteParClasseDto(o.libelleClasse,o.nomPrenomProfPrincipal,o.matricule,o.nom,o.prenoms,o.sexe,o.dateNaissance,o.nationalite,o.redoublant,o.affecte,o.numDecisionAffecte,o.moyGeneral,o.rang,o.appreciation,o.nomPrenomEducateur) from Bulletin o where  o.ecoleId=:idEcole and o.libelleClasse=:classe and o.affecte=:affecte", eleveAffecteParClasseDto.class);
+            TypedQuery<eleveAffecteParClasseDto> q= em.createQuery("select new com.vieecoles.dto.eleveAffecteParClasseDto(o.libelleClasse,o.nomPrenomProfPrincipal,o.matricule,o.nom,o.prenoms,o.sexe,o.dateNaissance,o.nationalite,o.redoublant,o.affecte,o.numDecisionAffecte,o.moyGeneral,o.rang,o.appreciation,o.nomPrenomEducateur,cast(o.ordre_niveau as integer )) from Bulletin o where  o.ecoleId=:idEcole and o.libelleClasse=:classe and o.affecte=:affecte", eleveAffecteParClasseDto.class);
             classeNiveauDtoList = q.setParameter("idEcole",idEcole)
                                  .setParameter("classe",classe)
                                  .setParameter("affecte","AFFECTE")

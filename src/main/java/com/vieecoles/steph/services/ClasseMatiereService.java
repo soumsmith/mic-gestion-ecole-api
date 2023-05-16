@@ -1,5 +1,6 @@
 package com.vieecoles.steph.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -11,6 +12,10 @@ import javax.transaction.Transactional;
 import com.vieecoles.steph.entities.Branche;
 import com.vieecoles.steph.entities.Classe;
 import com.vieecoles.steph.entities.ClasseMatiere;
+import com.vieecoles.steph.entities.Constants;
+import com.vieecoles.steph.entities.Ecole;
+import com.vieecoles.steph.entities.EcoleHasMatiere;
+import com.vieecoles.steph.entities.Matiere;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
@@ -21,7 +26,13 @@ public class ClasseMatiereService implements PanacheRepositoryBase<ClasseMatiere
 	ClasseService classeService;
 	
 	@Inject
+	EcoleService ecoleService;
+	
+	@Inject
 	BrancheService brancheService;
+	
+	@Inject
+	MatiereService matiereService;
 
 	Logger logger = Logger.getLogger(ClasseMatiereService.class.getName());
 
@@ -33,19 +44,59 @@ public class ClasseMatiereService implements PanacheRepositoryBase<ClasseMatiere
 		return ClasseMatiere.findAll().list();
 	}
 
-	public List<ClasseMatiere> getByBranche(long brancheId, long anneeId, long ecoleId) {
+	public List<ClasseMatiere> getByBranche(long brancheId, long ecoleId) {
 		return ClasseMatiere.find("branche.id = ?1 and ecole.id=?2", brancheId, ecoleId).list();
 	}
+	
+	public ClasseMatiere getByMatiereAndBranche(long matiereId, long brancheId, long ecoleId) {
+		ClasseMatiere cm = null;
+		
+		try {
+			cm = ClasseMatiere.find("branche.id = ?1 and ecole.id=?2 and matiere.id = ?3", brancheId, ecoleId, matiereId).singleResult();
+		}catch(RuntimeException ex) {
+			return null;
+		}
+		return cm;
+	}
 
-	public List<ClasseMatiere> getByBrancheViaClasse(long classeId, long anneeId, long ecoleId) {
+	public List<ClasseMatiere> getByBrancheViaClasse(long classeId, long ecoleId) {
 		Classe classe = classeService.findById(classeId);
-		return getByBranche(classe.getBranche().getId(), anneeId, ecoleId);
+		return getByBranche(classe.getBranche().getId(),  ecoleId);
 	}
 	
 	@Transactional
 	public void create(ClasseMatiere classeMatiere) {
 		 classeMatiere.persist();
 	}
+	
+	/*
+	 * Creéer les coefficients de chaque matières pour chaque école avec la valeur 1 par defaut
+	 * OBSOLETE
+	 */
+	@Transactional
+	public void generateDefaultCoeficientsByEcole(Long ecoleId) {
+		//Obtenir le niveau de l'école
+		Ecole ecole = ecoleService.getById(ecoleId) ;
+		
+		List<Matiere> matieres = matiereService.getByNiveauEnseignement(ecole.getNiveauEnseignement().getId());
+		
+		List<Branche> branches = brancheService.findByNiveauEnseignementViaEcole(ecoleId);		
+		for(Branche b : branches) {
+			for(Matiere mat : matieres) {
+				if(null == getByMatiereAndBranche(mat.getId(),b.getId(), ecoleId)) {
+					ClasseMatiere cm = new ClasseMatiere();
+					cm.setBranche(b);
+					cm.setEcole(ecole);
+					//cm.setMatiere(mat);
+					cm.setCoef("1");
+					cm.persist();
+					System.out.println(String.format("---> Création ecole %s ; matiere %s ; branche %s ; coef 1",ecole.getLibelle(),mat.getLibelle(), b.getLibelle()));
+				}
+			}
+		}
+		
+	}
+	
 	/*
 	 * Créer pour chaque ecole les coeficients de la matière et pour chaque branche
 	 * lors de la création d'une matière en centrale

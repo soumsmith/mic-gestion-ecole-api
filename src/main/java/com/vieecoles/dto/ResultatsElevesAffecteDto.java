@@ -23,8 +23,53 @@ public class ResultatsElevesAffecteDto {
     private Double pourMoyInf85F;
     private Double moyClasseF ;
     private Double moyClasseG ;
+    private  Integer ordre_niveau ;
+    private  Double moyClasse ;
+    private Double moyClasseFniv ;
+    private Double moyClasseGniv ;
+    private Double moyClasseniv ;
+
+    public Double getMoyClasseniv() {
+        return moyClasseniv;
+    }
+
+    public void setMoyClasseniv(Double moyClasseniv) {
+        this.moyClasseniv = moyClasseniv;
+    }
+
+    public Double getMoyClasseFniv() {
+        return moyClasseFniv;
+    }
+
+    public void setMoyClasseFniv(Double moyClasseFniv) {
+        this.moyClasseFniv = moyClasseFniv;
+    }
+
+    public Double getMoyClasseGniv() {
+        return moyClasseGniv;
+    }
+
+    public void setMoyClasseGniv(Double moyClasseGniv) {
+        this.moyClasseGniv = moyClasseGniv;
+    }
 
     public ResultatsElevesAffecteDto() {
+    }
+
+    public Integer getOrdre_niveau() {
+        return ordre_niveau;
+    }
+
+    public void setOrdre_niveau(Integer ordre_niveau) {
+        this.ordre_niveau = ordre_niveau;
+    }
+
+    public Double getMoyClasse() {
+        return moyClasse;
+    }
+
+    public void setMoyClasse(Double moyClasse) {
+        this.moyClasse = moyClasse;
     }
 
     public ResultatsElevesAffecteDto(String niveau,
@@ -48,7 +93,13 @@ public class ResultatsElevesAffecteDto {
                                      Long nbreMoyInf85F,
                                      Double pourMoyInf85F,
                                      Double moyClasseF,
-                                     Double moyClasseG) {
+                                     Double moyClasseG,
+                                     Integer ordre_niveau,
+                                     Double moyClasse,
+                                     Double moyClasseFniv,
+                                     Double moyClasseGniv,
+                                     Double moyClasseniv
+                                     ) {
         this.niveau = niveau;
         this.classe = classe;
 
@@ -72,6 +123,11 @@ public class ResultatsElevesAffecteDto {
         this.pourMoyInf85F = pourMoyInf85F;
         this.moyClasseF = moyClasseF;
         this.moyClasseG = moyClasseG;
+        this.ordre_niveau = ordre_niveau ;
+        this.moyClasse = moyClasse;
+        this.moyClasseGniv =moyClasseGniv;
+        this.moyClasseFniv =moyClasseFniv;
+        this.moyClasseniv =moyClasseniv;
     }
 
     public String getNiveau() {

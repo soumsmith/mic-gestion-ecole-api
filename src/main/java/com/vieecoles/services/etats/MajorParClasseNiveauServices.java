@@ -27,7 +27,7 @@ public class MajorParClasseNiveauServices {
                           .setParameter("affecte", "AFFECTE")
                            . getResultList() ;
 
-  //System.out.println("classeNiveauDtoList "+classeNiveauDtoList.toString());
+  System.out.println("classeNiveauDtoList "+classeNiveauDtoList.toString());
         System.out.println("Longueur Tableau" +classeNiveauDtoList.size());
       int LongTableau =classeNiveauDtoList.size() ;
 
@@ -35,29 +35,47 @@ public class MajorParClasseNiveauServices {
         Double pourMoySup10F ,pourMoySup10G,pourMoyInf999F,pourMoyInf999G,pourMoyInf85G,pourMoyInf85F,moyClasseF,moyClasseG;
        Integer effectifClasse ;
         List<MajorParClasseNiveauDto> resultatsListElevesDto = new ArrayList<>(LongTableau);
-       // System.out.println("resultatsListElevesDto Size "+ resultatsListElevesDto.size());
+        List<MajorParClasseNiveauDto> majorExeco = new ArrayList<>();
         for (int i=0; i< LongTableau;i++) {
             MajorParClasseNiveauDto resultatsListEleves= new MajorParClasseNiveauDto();
-            Double moyMajor;
+            Double moyMajor = null;
+            System.out.println(" Debut calcul Moyenne Major " + moyMajor);
             moyMajor = getMajorDto(idEcole,classeNiveauDtoList.get(i).getNiveau(),classeNiveauDtoList.get(i).getClasse()) ;
+            System.out.println("Moyenne Major  " + moyMajor);
+            System.out.println("Niveau   " + classeNiveauDtoList.get(i).getNiveau());
+            System.out.println("Classe   " + classeNiveauDtoList.get(i).getClasse());
+            majorExeco = getListMajorParClasseNiveau(idEcole,classeNiveauDtoList.get(i).getNiveau(),classeNiveauDtoList.get(i).getClasse(),moyMajor) ;
 
-            resultatsListEleves = getListMajorParClasseNiveau(idEcole,classeNiveauDtoList.get(i).getNiveau(),classeNiveauDtoList.get(i).getClasse(),moyMajor) ;
-            resultatsListElevesDto.add(resultatsListEleves) ;
+            if(majorExeco.size() >1){
+                System.out.println("Mojor et execo   " + majorExeco.toString());
+                for (int k=0 ;k< majorExeco.size(); k++){
+                    resultatsListEleves = majorExeco.get(k);
+                    resultatsListElevesDto.add(resultatsListEleves) ;
+                }
+            }else {
+                resultatsListEleves = majorExeco.get(0);
+                resultatsListElevesDto.add(resultatsListEleves) ;
+            }
+
+           // resultatsListEleves = getListMajorParClasseNiveau(idEcole,classeNiveauDtoList.get(i).getNiveau(),classeNiveauDtoList.get(i).getClasse(),moyMajor) ;
+
+
+           // resultatsListElevesDto.add(resultatsListEleves) ;
         }
 
         return  resultatsListElevesDto ;
     }
 
 
-    public MajorParClasseNiveauDto getListMajorParClasseNiveau(Long idEcole , String niveau,String classe,Double moy){
-        MajorParClasseNiveauDto classeNiveauDtoList = new MajorParClasseNiveauDto();
+    public List<MajorParClasseNiveauDto>  getListMajorParClasseNiveau(Long idEcole , String niveau,String classe,Double moy){
+        List<MajorParClasseNiveauDto> classeNiveauDtoList = new ArrayList<>();
         try {
-            TypedQuery<MajorParClasseNiveauDto> q= em.createQuery("select new com.vieecoles.dto.MajorParClasseNiveauDto(o.niveau,o.libelleClasse,o.matricule,o.nom,o.prenoms,SUBSTRING(o.dateNaissance,1,4) ,o.sexe,o.appreciation,o.redoublant,o.moyGeneral,o.lv2) from Bulletin o where  o.ecoleId =:idEcole and  o.niveau=:niveau and o.libelleClasse=:libelleClasse and o.moyGeneral=:moy ", MajorParClasseNiveauDto.class);
+            TypedQuery  q= em.createQuery("select new com.vieecoles.dto.MajorParClasseNiveauDto(o.niveau,o.libelleClasse,o.matricule,o.nom,o.prenoms,SUBSTRING(o.dateNaissance,1,4) ,o.sexe,o.appreciation,o.redoublant,o.moyGeneral,o.lv2,cast(o.ordre_niveau as integer )) from Bulletin o where  o.ecoleId =:idEcole and  o.niveau=:niveau and o.libelleClasse=:libelleClasse and o.moyGeneral=:moy ", MajorParClasseNiveauDto.class);
             classeNiveauDtoList = q.setParameter("idEcole",idEcole)
                     .setParameter("niveau",niveau)
                     .setParameter("libelleClasse",classe)
                     .setParameter("moy",moy)
-                    .getSingleResult() ;
+                    .getResultList() ;
             return classeNiveauDtoList ;
         } catch (NoResultException e){
             return null ;

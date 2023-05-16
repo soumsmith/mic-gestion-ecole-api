@@ -6,6 +6,8 @@ import com.vieecoles.entities.*;
 import com.vieecoles.entities.operations.eleve;
 import com.vieecoles.entities.operations.personnel;
 
+import com.vieecoles.projection.InfosConnexionSelect;
+import com.vieecoles.projection.panier_personnelSelect;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -110,8 +112,33 @@ public class PersonnelService implements PanacheRepositoryBase<personnel, Long> 
 
     }
 
+    public List<InfosConnexionSelect> getConnexionInfos(){
+        List<InfosConnexionSelect>  mesPaniers = new ArrayList<>()  ;
+        try {
+            mesPaniers=  em.createQuery("SELECT new com.vieecoles.projection.InfosConnexionSelect(p.personnelnom ,p.personnelprenom, e.ecoleclibelle ,t.utilisateu_email ,t.utilisateur_mot_de_passe) from personnel p , ecole  e ,utilisateur_has_personnel u,utilisateur t" +
+                            " where p.ecole.ecoleid =e.ecoleid and u.personnel_personnelid= p.personnelid and u.utilisateur.utilisateurid = t.utilisateurid ")
+                    .getResultList() ;
+        } catch (Exception e) {
+            mesPaniers=  null;
+        }
+        System.out.println("InfosConnexionPersonnel"+ mesPaniers);
+        return mesPaniers ;
+    }
 
 
+    public List<InfosConnexionSelect> getConnexionInfosByEcole(Long idEcole){
+        List<InfosConnexionSelect>  mesPaniers = new ArrayList<>()  ;
+        try {
+            mesPaniers=  em.createQuery("SELECT new com.vieecoles.projection.InfosConnexionSelect(p.personnelnom ,p.personnelprenom, e.ecoleclibelle ,t.utilisateu_email ,t.utilisateur_mot_de_passe) from personnel p , ecole  e ,utilisateur_has_personnel u,utilisateur t" +
+                            " where p.ecole.ecoleid =e.ecoleid and u.personnel_personnelid= p.personnelid and u.utilisateur.utilisateurid = t.utilisateurid and e.ecoleid=: idEcole ")
+                    .setParameter("idEcole",idEcole)
+                    .getResultList() ;
+        } catch (Exception e) {
+            mesPaniers=  null;
+        }
+        System.out.println("InfosConnexionPersonnel"+ mesPaniers);
+        return mesPaniers ;
+    }
 
 
 

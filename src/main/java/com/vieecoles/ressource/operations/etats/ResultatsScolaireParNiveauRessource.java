@@ -91,7 +91,7 @@ public class ResultatsScolaireParNiveauRessource {
        List<ResultatsElevesAffecteDto> detailsBull = new ArrayList<>() ;
 
         detailsBull= resultatsServices.CalculResultatsEleveAffecte(idEcole) ;
-        System.out.println("detailsBull "+detailsBull);
+        //System.out.println("detailsBull "+detailsBull);
 
         if(type.toUpperCase().equals("PDF")){
             JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(detailsBull) ;

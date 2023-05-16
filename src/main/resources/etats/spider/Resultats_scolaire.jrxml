@@ -37,29 +37,33 @@
 	<field name="pourMoyInf85F" class="java.lang.Double"/>
 	<field name="moyClasseF" class="java.lang.Double"/>
 	<field name="moyClasseG" class="java.lang.Double"/>
+	<field name="ordre_niveau" class="java.lang.Integer"/>
+	<field name="moyClasse" class="java.lang.Double"/>
+	<field name="moyClasseGniv" class="java.lang.Double"/>
+	<field name="moyClasseFniv" class="java.lang.Double"/>
+	<field name="moyClasseniv" class="java.lang.Double"/>
+	<sortField name="ordre_niveau"/>
 	<sortField name="niveau"/>
 	<sortField name="classe"/>
 	<variable name="ToNF" class="java.lang.Long" resetType="Group" resetGroup="GroupeNiveau" calculation="Sum">
 		<variableExpression><![CDATA[$F{effeF}]]></variableExpression>
-		<initialValueExpression><![CDATA[0]]></initialValueExpression>
 	</variable>
 	<variable name="ToNG" class="java.lang.Long" resetType="Group" resetGroup="GroupeNiveau" calculation="Sum">
 		<variableExpression><![CDATA[$F{effeG}]]></variableExpression>
-		<initialValueExpression><![CDATA[0]]></initialValueExpression>
 	</variable>
-	<variable name="ToNClassF" class="java.lang.Long" resetType="Group" resetGroup="GroupeNiveau" calculation="Sum">
+	<variable name="ToNClassF" class="java.lang.Integer" resetType="Group" resetGroup="GroupeNiveau" calculation="Sum">
 		<variableExpression><![CDATA[$F{classF}]]></variableExpression>
 		<initialValueExpression><![CDATA[0]]></initialValueExpression>
 	</variable>
-	<variable name="ToNClassG" class="java.lang.Long" resetType="Group" resetGroup="GroupeNiveau" calculation="Sum">
+	<variable name="ToNClassG" class="java.lang.Integer" resetType="Group" resetGroup="GroupeNiveau" calculation="Sum">
 		<variableExpression><![CDATA[$F{classG}]]></variableExpression>
 		<initialValueExpression><![CDATA[0]]></initialValueExpression>
 	</variable>
-	<variable name="ToNnonClassF" class="java.lang.Long" resetType="Group" resetGroup="GroupeNiveau" calculation="Sum">
+	<variable name="ToNnonClassF" class="java.lang.Integer" resetType="Group" resetGroup="GroupeNiveau" calculation="Sum">
 		<variableExpression><![CDATA[$F{nonclassF}]]></variableExpression>
 		<initialValueExpression><![CDATA[0]]></initialValueExpression>
 	</variable>
-	<variable name="ToNnonClassG" class="java.lang.Long" resetType="Group" resetGroup="GroupeNiveau" calculation="Sum">
+	<variable name="ToNnonClassG" class="java.lang.Integer" resetType="Group" resetGroup="GroupeNiveau" calculation="Sum">
 		<variableExpression><![CDATA[$F{nonclassG}]]></variableExpression>
 		<initialValueExpression><![CDATA[0]]></initialValueExpression>
 	</variable>
@@ -67,16 +71,17 @@
 		<variableExpression><![CDATA[$F{nbreMoySup10F}]]></variableExpression>
 		<initialValueExpression><![CDATA[0]]></initialValueExpression>
 	</variable>
-	<variable name="ToNnbreMoySup10G" class="java.lang.Long" resetType="Group" resetGroup="GroupeNiveau" calculation="Sum">
+	<variable name="ToNnbreMoySup10G" class="java.lang.Double" resetType="Group" resetGroup="GroupeNiveau" calculation="Sum">
 		<variableExpression><![CDATA[$F{nbreMoySup10G}]]></variableExpression>
 		<initialValueExpression><![CDATA[0]]></initialValueExpression>
 	</variable>
-	<variable name="ToNpourMoySup10F" class="java.lang.Double" resetType="Group" resetGroup="GroupeNiveau" calculation="Average">
-		<variableExpression><![CDATA[$F{pourMoySup10F}]]></variableExpression>
-		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	<variable name="ToNpourMoySup10F" class="java.lang.Double" resetType="Group" resetGroup="GroupeNiveau">
+		<variableExpression><![CDATA[$V{ToNClassF}==0? 0 :
+($V{ToNnbreMoySup10F}.doubleValue())/($V{ToNClassF}.doubleValue())*100]]></variableExpression>
 	</variable>
-	<variable name="ToNpourMoySup10g" class="java.lang.Double" resetType="Group" resetGroup="GroupeNiveau" calculation="Average">
-		<variableExpression><![CDATA[$F{pourMoySup10G}]]></variableExpression>
+	<variable name="ToNpourMoySup10g" class="java.lang.Double" resetType="Group" resetGroup="GroupeNiveau">
+		<variableExpression><![CDATA[$V{ToNClassG}==0? 0 :
+($V{ToNnbreMoySup10G}.doubleValue())/($V{ToNClassG}.doubleValue())*100]]></variableExpression>
 		<initialValueExpression><![CDATA[0]]></initialValueExpression>
 	</variable>
 	<variable name="ToNnbreMoyInf999F" class="java.lang.Long" resetType="Group" resetGroup="GroupeNiveau" calculation="Sum">
@@ -87,12 +92,14 @@
 		<variableExpression><![CDATA[$F{nbreMoyInf999G}]]></variableExpression>
 		<initialValueExpression><![CDATA[0]]></initialValueExpression>
 	</variable>
-	<variable name="ToNpourMoyInf999F" class="java.lang.Double" resetType="Group" resetGroup="GroupeNiveau" calculation="Average">
-		<variableExpression><![CDATA[$F{pourMoyInf999F}]]></variableExpression>
+	<variable name="ToNpourMoyInf999F" class="java.lang.Double" resetType="Group" resetGroup="GroupeNiveau">
+		<variableExpression><![CDATA[$V{ToNClassF}==0? 0 :
+($V{ToNnbreMoyInf999F}.doubleValue())/($V{ToNClassF}.doubleValue())*100]]></variableExpression>
 		<initialValueExpression><![CDATA[0]]></initialValueExpression>
 	</variable>
-	<variable name="ToNpourMoyInf999G" class="java.lang.Double" resetType="Group" resetGroup="GroupeNiveau" calculation="Average">
-		<variableExpression><![CDATA[$F{pourMoyInf999G}]]></variableExpression>
+	<variable name="ToNpourMoyInf999G" class="java.lang.Double" resetType="Group" resetGroup="GroupeNiveau">
+		<variableExpression><![CDATA[$V{ToNClassG}==0? 0 :
+($V{ToNnbreMoyInf999G}.doubleValue())/($V{ToNClassG}.doubleValue())*100]]></variableExpression>
 		<initialValueExpression><![CDATA[0]]></initialValueExpression>
 	</variable>
 	<variable name="ToNnbreMoyInf85F" class="java.lang.Long" resetType="Group" resetGroup="GroupeNiveau" calculation="Sum">
@@ -103,13 +110,14 @@
 		<variableExpression><![CDATA[$F{nbreMoyInf85G}]]></variableExpression>
 		<initialValueExpression><![CDATA[0]]></initialValueExpression>
 	</variable>
-	<variable name="ToNpourMoyInf85F" class="java.lang.Double" resetType="Group" resetGroup="GroupeNiveau" calculation="Average">
-		<variableExpression><![CDATA[$F{pourMoyInf85F}]]></variableExpression>
+	<variable name="ToNpourMoyInf85F" class="java.lang.Double" resetType="Group" resetGroup="GroupeNiveau">
+		<variableExpression><![CDATA[$V{ToNClassF}==0? 0 :
+($V{ToNnbreMoyInf85F}.doubleValue())/($V{ToNClassF}.doubleValue())*100]]></variableExpression>
 		<initialValueExpression><![CDATA[0]]></initialValueExpression>
 	</variable>
-	<variable name="ToNpourMoyInf85G" class="java.lang.Double" resetType="Group" resetGroup="GroupeNiveau" calculation="Average">
-		<variableExpression><![CDATA[$F{pourMoyInf85G}]]></variableExpression>
-		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	<variable name="ToNpourMoyInf85G" class="java.lang.Double" resetType="Group" resetGroup="GroupeNiveau">
+		<variableExpression><![CDATA[$V{ToNClassG}==0? 0 :
+($V{ToNnbreMoyInf85G}.doubleValue())/($V{ToNClassG}.doubleValue())*100]]></variableExpression>
 	</variable>
 	<variable name="ToNmoyClasseF" class="java.lang.Double" resetType="Group" resetGroup="GroupeNiveau" calculation="Average">
 		<variableExpression><![CDATA[$F{moyClasseF}]]></variableExpression>
@@ -119,7 +127,54 @@
 		<variableExpression><![CDATA[$F{moyClasseG}]]></variableExpression>
 		<initialValueExpression><![CDATA[0]]></initialValueExpression>
 	</variable>
-	<group name="GroupeNiveau">
+	<variable name="pourMoySup10" class="java.lang.Double" resetType="Group" resetGroup="GroupeClasse">
+		<variableExpression><![CDATA[($F{nbreMoySup10F}.doubleValue()+$F{nbreMoySup10G}.doubleValue())/($F{classF}.doubleValue()+$F{classG}.doubleValue())*100]]></variableExpression>
+	</variable>
+	<variable name="pourMoyInf_9_99" class="java.lang.Double" resetType="Group" resetGroup="GroupeClasse">
+		<variableExpression><![CDATA[($F{nbreMoyInf999F}.doubleValue()+$F{nbreMoyInf999G}.doubleValue())/($F{classF}.doubleValue()+$F{classG}.doubleValue())*100]]></variableExpression>
+	</variable>
+	<variable name="pourMoyInf_08_50" class="java.lang.Double" resetType="Group" resetGroup="GroupeClasse">
+		<variableExpression><![CDATA[($F{nbreMoyInf85F}.doubleValue()+$F{nbreMoyInf85G}.doubleValue())/($F{classF}.doubleValue()+$F{classG}.doubleValue())*100]]></variableExpression>
+	</variable>
+	<variable name="ToNpourMoySup10" class="java.lang.Double" resetType="Group" resetGroup="GroupeNiveau">
+		<variableExpression><![CDATA[$V{ToNnbreMoySup10}/Double.valueOf($V{ToNClassF}+$V{ToNClassG})*100]]></variableExpression>
+	</variable>
+	<variable name="ToNClass" class="java.lang.Double" resetType="Group" resetGroup="GroupeNiveau" calculation="Sum">
+		<variableExpression><![CDATA[$V{ToNClassF}+$V{ToNClassG}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="ToNnbreMoySup10" class="java.lang.Double" resetType="Group" resetGroup="GroupeNiveau" calculation="Sum">
+		<variableExpression><![CDATA[$F{nbreMoySup10F}.doubleValue()+$F{nbreMoySup10G}.doubleValue()]]></variableExpression>
+	</variable>
+	<variable name="ToNpourMoySup9_99" class="java.lang.Double" resetType="Group" resetGroup="GroupeNiveau">
+		<variableExpression><![CDATA[($V{ToNnbreMoySup9_99})/($V{ToNClass})*100]]></variableExpression>
+	</variable>
+	<variable name="ToNnbreMoySup9_99" class="java.lang.Double" resetType="Group" resetGroup="GroupeNiveau" calculation="Sum">
+		<variableExpression><![CDATA[$F{nbreMoyInf999F}+$F{nbreMoyInf999G}]]></variableExpression>
+	</variable>
+	<variable name="ToNnbreMoyInf_08_5" class="java.lang.Double" resetType="Group" resetGroup="GroupeNiveau" calculation="Sum">
+		<variableExpression><![CDATA[$F{nbreMoyInf85G}+$F{nbreMoyInf85F}]]></variableExpression>
+	</variable>
+	<variable name="ToNpourMoy8_5" class="java.lang.Double" resetType="Group" resetGroup="GroupeNiveau">
+		<variableExpression><![CDATA[($V{ToNnbreMoyInf_08_5})/($V{ToNClass})*100]]></variableExpression>
+	</variable>
+	<variable name="ToNmoyClassenIVEAU" class="java.lang.Double" resetType="Group" resetGroup="GroupeNiveau" calculation="Average">
+		<variableExpression><![CDATA[$F{moyClasse}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="V_moyClasseF" class="java.lang.Double" resetType="Group" resetGroup="GroupeClasse" calculation="Average">
+		<variableExpression><![CDATA[$F{moyClasseF}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="V_moyClasseG" class="java.lang.Double" resetType="Group" resetGroup="GroupeClasse" calculation="Average">
+		<variableExpression><![CDATA[$F{moyClasseG}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="V_moyClasse" class="java.lang.Double" resetType="Group" resetGroup="GroupeClasse" calculation="Average">
+		<variableExpression><![CDATA[$F{moyClasse}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<group name="GroupeNiveau" isStartNewPage="true" isReprintHeaderOnEachPage="true" keepTogether="true">
 		<groupExpression><![CDATA[$F{niveau}]]></groupExpression>
 		<groupHeader>
 			<band/>
@@ -311,7 +366,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="SansSerif" isBold="true"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$V{ToNnbreMoySup10F}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[new DecimalFormat("###").format(Double.valueOf($V{ToNnbreMoySup10F}))]]></textFieldExpression>
 							</textField>
 							<textField evaluationTime="Group" evaluationGroup="GroupeNiveau" pattern="#,#00.00#;(#,#00.00#-)">
 								<reportElement style="contenu2" x="165" y="0" width="45" height="40" uuid="cb47bf1a-e54d-44ad-b51f-3625a43cb9a4">
@@ -332,7 +387,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="SansSerif" isBold="true"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$V{ToNpourMoySup10F}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf($V{ToNpourMoySup10F}))+"%"]]></textFieldExpression>
 							</textField>
 							<textField evaluationTime="Group" evaluationGroup="GroupeNiveau">
 								<reportElement style="contenu2" x="210" y="0" width="45" height="40" uuid="ca3ed565-d591-490c-96d9-ead053149bd0">
@@ -353,7 +408,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="SansSerif" isBold="true"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$V{ToNnbreMoyInf999F}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[new DecimalFormat("###").format(Double.valueOf($V{ToNnbreMoyInf999F}))]]></textFieldExpression>
 							</textField>
 							<textField evaluationTime="Group" evaluationGroup="GroupeNiveau" pattern="#,#00.00#;(#,#00.00#-)">
 								<reportElement style="contenu2" x="255" y="0" width="45" height="40" uuid="059e63b7-0e3c-4fe2-a1b4-9c7f39ee4231">
@@ -374,7 +429,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="SansSerif" isBold="true"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$V{ToNpourMoyInf999F}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf($V{ToNpourMoyInf999F}))+"%"]]></textFieldExpression>
 							</textField>
 							<textField evaluationTime="Group" evaluationGroup="GroupeNiveau">
 								<reportElement style="contenu2" x="300" y="0" width="50" height="40" uuid="4b97067c-7e1d-4484-b3c7-62618dce8a99">
@@ -395,7 +450,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="SansSerif" isBold="true"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$V{ToNnbreMoyInf85F}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[new DecimalFormat("###").format(Double.valueOf($V{ToNnbreMoyInf85F}))]]></textFieldExpression>
 							</textField>
 							<textField evaluationTime="Group" evaluationGroup="GroupeNiveau" pattern="#,#00.00#;(#,#00.00#-)">
 								<reportElement style="contenu2" x="350" y="0" width="50" height="40" uuid="d04f68b4-c978-45bc-8457-54ef6054bf44">
@@ -416,7 +471,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="SansSerif" isBold="true"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$V{ToNpourMoyInf85F}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf($V{ToNpourMoyInf85F}))+"%"]]></textFieldExpression>
 							</textField>
 							<textField evaluationTime="Group" evaluationGroup="GroupeNiveau" pattern="#,#00.00#;(#,#00.00#-)">
 								<reportElement style="contenu2" x="400" y="0" width="100" height="40" uuid="ef34568d-a13e-41a8-8357-9f117459ecba"/>
@@ -429,7 +484,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="SansSerif" isBold="true"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$V{ToNmoyClasseF}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf($F{moyClasseFniv}))]]></textFieldExpression>
 							</textField>
 							<textField textAdjust="ScaleFont" evaluationTime="Group" evaluationGroup="GroupeNiveau">
 								<reportElement x="0" y="40" width="40" height="40" uuid="95acac45-d754-4dd8-81d1-bde980bbfa6a">
@@ -513,7 +568,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="SansSerif" isBold="true"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$V{ToNnbreMoySup10G}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[new DecimalFormat("###").format(Double.valueOf($V{ToNnbreMoySup10G}))]]></textFieldExpression>
 							</textField>
 							<textField evaluationTime="Group" evaluationGroup="GroupeNiveau" pattern="#,#00.00#;(#,#00.00#-)">
 								<reportElement style="contenu2" x="165" y="40" width="45" height="40" uuid="e20a6a7f-de6c-45b1-8899-56bf68e881d1">
@@ -534,7 +589,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="SansSerif" isBold="true"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$V{ToNpourMoySup10g}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf($V{ToNpourMoySup10g}))+"%"]]></textFieldExpression>
 							</textField>
 							<textField>
 								<reportElement style="contenu2" x="210" y="40" width="45" height="40" uuid="6ea403a4-8a7a-4c51-88b0-9df83fedae28">
@@ -555,7 +610,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="SansSerif" isBold="true"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$V{ToNnbreMoyInf999G}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[new DecimalFormat("###").format(Double.valueOf($V{ToNnbreMoyInf999G}))]]></textFieldExpression>
 							</textField>
 							<textField evaluationTime="Group" evaluationGroup="GroupeNiveau" pattern="#,#00.00#;(#,#00.00#-)">
 								<reportElement style="contenu2" x="255" y="40" width="45" height="40" uuid="1c4c73d4-5ec0-45d9-9e96-4b4069e8d761">
@@ -576,7 +631,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="SansSerif" isBold="true"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$V{ToNpourMoyInf999G}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf($V{ToNpourMoyInf999G}))+"%"]]></textFieldExpression>
 							</textField>
 							<textField evaluationTime="Group" evaluationGroup="GroupeNiveau">
 								<reportElement style="contenu2" x="300" y="40" width="50" height="40" uuid="28f43384-ecdc-4ee4-98f0-1df51132d01e">
@@ -597,7 +652,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="SansSerif" isBold="true"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$V{ToNnbreMoyInf85G}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[new DecimalFormat("###").format(Double.valueOf($V{ToNnbreMoyInf85G}))]]></textFieldExpression>
 							</textField>
 							<textField evaluationTime="Group" evaluationGroup="GroupeNiveau" pattern="#,#00.00#;(#,#00.00#-)">
 								<reportElement style="contenu2" x="350" y="40" width="50" height="40" uuid="219e93d2-d89d-4280-a9c0-4c84fbd80ddc">
@@ -618,7 +673,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="SansSerif" isBold="true"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$V{ToNpourMoyInf85G}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf($V{ToNpourMoyInf85G}))+"%"]]></textFieldExpression>
 							</textField>
 							<textField evaluationTime="Group" evaluationGroup="GroupeNiveau" pattern="#,#00.00#;(#,#00.00#-)">
 								<reportElement style="contenu2" x="400" y="40" width="100" height="40" uuid="7bbb1a90-44be-4fc9-a244-eee44deb7011">
@@ -639,7 +694,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="SansSerif" isBold="true"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$V{ToNmoyClasseG}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf($F{moyClasseGniv}))]]></textFieldExpression>
 							</textField>
 							<textField textAdjust="ScaleFont" evaluationTime="Group" evaluationGroup="GroupeNiveau">
 								<reportElement x="0" y="80" width="40" height="40" uuid="1ae196e5-8595-400d-9323-04a05ba23fbb">
@@ -723,9 +778,9 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="SansSerif" isBold="true"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$V{ToNnbreMoySup10F}+$V{ToNnbreMoySup10G}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[new DecimalFormat("###").format(Double.valueOf($V{ToNnbreMoySup10F}+$V{ToNnbreMoySup10G}))]]></textFieldExpression>
 							</textField>
-							<textField textAdjust="ScaleFont" evaluationTime="Group" evaluationGroup="GroupeNiveau" pattern="#,#00.00#;(#,#00.00#-)">
+							<textField textAdjust="ScaleFont" evaluationTime="Band" pattern="#,#00.00#;(#,#00.00#-)">
 								<reportElement x="165" y="80" width="45" height="40" uuid="523be7cd-fcac-41c9-9b75-2cf4176d5a7b">
 									<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 									<property name="com.jaspersoft.layout.grid.y" value="2"/>
@@ -744,7 +799,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="SansSerif" isBold="true"/>
 								</textElement>
-								<textFieldExpression><![CDATA[($V{ToNpourMoySup10F}+$V{ToNpourMoySup10g})/2]]></textFieldExpression>
+								<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf(Double.valueOf($V{ToNnbreMoySup10F}+$V{ToNnbreMoySup10G})/(Double.valueOf($V{ToNClassF}+$V{ToNClassG}))*100))+"%"]]></textFieldExpression>
 							</textField>
 							<textField evaluationTime="Group" evaluationGroup="GroupeNiveau">
 								<reportElement style="contenu2" x="210" y="80" width="45" height="40" uuid="a815aa60-64d3-4716-8ae6-5f6489dbe68e">
@@ -765,9 +820,9 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="SansSerif" isBold="true"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$V{ToNnbreMoyInf999F}+$V{ToNnbreMoyInf999G}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[new DecimalFormat("###").format(Double.valueOf($V{ToNnbreMoyInf999F}+$V{ToNnbreMoyInf999G}))]]></textFieldExpression>
 							</textField>
-							<textField textAdjust="ScaleFont" evaluationTime="Group" evaluationGroup="GroupeNiveau" pattern="#,#00.00#;(#,#00.00#-)">
+							<textField textAdjust="ScaleFont" evaluationTime="Band" pattern="#,#00.00#;(#,#00.00#-)">
 								<reportElement style="contenu2" x="255" y="80" width="45" height="40" uuid="ee7acedf-ca63-4211-9e61-9ea0900296a6">
 									<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 									<property name="com.jaspersoft.layout.grid.y" value="2"/>
@@ -786,7 +841,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="SansSerif" isBold="true"/>
 								</textElement>
-								<textFieldExpression><![CDATA[($V{ToNpourMoyInf999F}+$V{ToNpourMoyInf999G})/2]]></textFieldExpression>
+								<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf(Double.valueOf($V{ToNnbreMoyInf999F}+$V{ToNnbreMoyInf999G})/(Double.valueOf($V{ToNClassF}+$V{ToNClassG}))*100))+"%"]]></textFieldExpression>
 							</textField>
 							<textField evaluationTime="Group" evaluationGroup="GroupeNiveau">
 								<reportElement style="contenu2" x="300" y="80" width="50" height="40" uuid="1389e832-86a8-4819-ae86-c9bb2fdae26f">
@@ -807,9 +862,9 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="SansSerif" isBold="true"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$V{ToNnbreMoyInf85F}+$V{ToNnbreMoyInf85G}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[new DecimalFormat("###").format(Double.valueOf($V{ToNnbreMoyInf85F}+$V{ToNnbreMoyInf85G}))]]></textFieldExpression>
 							</textField>
-							<textField evaluationTime="Group" evaluationGroup="GroupeNiveau" pattern="#,#00.00#;(#,#00.00#-)">
+							<textField evaluationTime="Band" pattern="#,#00.00#;(#,#00.00#-)">
 								<reportElement style="contenu2" x="350" y="80" width="50" height="40" uuid="4225c45d-7e88-4f3e-b8d1-8d96c09507a2">
 									<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 									<property name="com.jaspersoft.layout.grid.y" value="2"/>
@@ -828,7 +883,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="SansSerif" isBold="true"/>
 								</textElement>
-								<textFieldExpression><![CDATA[($V{ToNpourMoyInf85F}+$V{ToNpourMoyInf85G})/2]]></textFieldExpression>
+								<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf(Double.valueOf($V{ToNnbreMoyInf85F}+$V{ToNnbreMoyInf85G})/(Double.valueOf($V{ToNClassF}+$V{ToNClassG}))*100))+"%"]]></textFieldExpression>
 							</textField>
 							<textField textAdjust="ScaleFont" evaluationTime="Group" evaluationGroup="GroupeNiveau" pattern="#,#00.00#;(#,#00.00#-)" isBlankWhenNull="true">
 								<reportElement x="400" y="80" width="100" height="40" uuid="e3290fe4-7509-4c45-aa95-a1075a0d53c0">
@@ -850,7 +905,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="SansSerif" isBold="true"/>
 								</textElement>
-								<textFieldExpression><![CDATA[($V{ToNmoyClasseF}+$V{ToNmoyClasseG})/2]]></textFieldExpression>
+								<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf($F{moyClasseniv}))]]></textFieldExpression>
 							</textField>
 						</frame>
 					</frame>
@@ -921,9 +976,9 @@
 		</band>
 	</title>
 	<columnHeader>
-		<band height="61">
+		<band height="60">
 			<frame>
-				<reportElement style="Titrecadre" x="-10" y="20" width="570" height="40" uuid="6694805e-2152-4bc2-bb68-89ecfd2be137">
+				<reportElement style="Titrecadre" x="-10" y="20" width="570" height="40" uuid="2e797479-eeb9-4ac7-adf4-c076aa1d4e26">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 				</reportElement>
 				<box>
@@ -933,7 +988,7 @@
 					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<frame>
-					<reportElement x="0" y="0" width="50" height="40" uuid="4083e369-c5f6-425c-979b-525d536389af">
+					<reportElement x="0" y="0" width="50" height="40" uuid="81209416-c05c-474f-b643-4de82bb587ce">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -943,7 +998,7 @@
 						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 					</reportElement>
 					<staticText>
-						<reportElement x="0" y="0" width="50" height="40" uuid="12b47d1b-71a8-4ddb-80d8-aa0633ce1374">
+						<reportElement x="0" y="0" width="50" height="40" uuid="dc942dca-952a-41b3-8ff8-e4e3d04c80d1">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -965,7 +1020,7 @@
 					</staticText>
 				</frame>
 				<frame>
-					<reportElement x="50" y="0" width="140" height="40" uuid="5bd4b94a-5c1a-4782-8991-38aeb95cd639">
+					<reportElement x="50" y="0" width="140" height="40" uuid="ec4c92f9-47b8-4360-8978-553d8bb6d372">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -976,7 +1031,7 @@
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 					</reportElement>
 					<staticText>
-						<reportElement style="Titrecadre" x="0" y="0" width="20" height="40" uuid="088b8c51-75f7-4d93-96fa-3a446d933474">
+						<reportElement style="Titrecadre" x="0" y="0" width="20" height="40" uuid="c403dd29-cc85-424b-a9ed-6678d54ae214">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -991,7 +1046,7 @@
 						<text><![CDATA[S]]></text>
 					</staticText>
 					<staticText>
-						<reportElement style="Titrecadre" x="20" y="0" width="40" height="40" uuid="02f8b13b-8795-4291-96a2-dee1f2cfa17e">
+						<reportElement style="Titrecadre" x="20" y="0" width="40" height="40" uuid="3004c287-1219-4607-a369-a1906cf6b069">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1006,7 +1061,7 @@
 						<text><![CDATA[Effectif]]></text>
 					</staticText>
 					<staticText>
-						<reportElement style="Titrecadre" x="60" y="0" width="40" height="40" uuid="d391cda9-8ba3-48ea-a9df-4c11b56f8798">
+						<reportElement style="Titrecadre" x="60" y="0" width="40" height="40" uuid="49cb7635-232e-467c-bbb0-c94fe779225c">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1021,7 +1076,7 @@
 						<text><![CDATA[Classé]]></text>
 					</staticText>
 					<staticText>
-						<reportElement style="Titrecadre" x="100" y="0" width="40" height="40" uuid="928da581-323c-4056-b581-7c206539a4a3">
+						<reportElement style="Titrecadre" x="100" y="0" width="40" height="40" uuid="5daa85e8-e872-443c-b406-d730dcb0b4f1">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1037,7 +1092,7 @@
 					</staticText>
 				</frame>
 				<frame>
-					<reportElement x="190" y="0" width="90" height="40" uuid="aec697b5-a611-48ad-90ef-b137e2dd9d62">
+					<reportElement x="190" y="0" width="90" height="40" uuid="971ec59b-bef5-40c8-b867-90af063148cb">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1048,7 +1103,7 @@
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 					</reportElement>
 					<staticText>
-						<reportElement x="0" y="0" width="90" height="20" uuid="ccd22262-1a2e-41d7-94b6-e6a6d11bb9d8">
+						<reportElement x="0" y="0" width="90" height="20" uuid="e334c045-53e5-4daf-b62a-f1340a81ff36">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1069,7 +1124,7 @@
 						<text><![CDATA[Moy.sup.ou=10]]></text>
 					</staticText>
 					<staticText>
-						<reportElement style="Titrecadre" x="0" y="20" width="45" height="20" uuid="63199e64-057b-4aab-8fc9-23795b7e5660">
+						<reportElement style="Titrecadre" x="0" y="20" width="45" height="20" uuid="b3df4b1d-a5ed-4c4d-8338-646e85d98186">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1084,7 +1139,7 @@
 						<text><![CDATA[Nbre]]></text>
 					</staticText>
 					<staticText>
-						<reportElement style="Titrecadre" x="45" y="20" width="45" height="20" uuid="0016fff1-9c65-4070-a0f8-bc9facf06202"/>
+						<reportElement style="Titrecadre" x="45" y="20" width="45" height="20" uuid="508a0ded-f443-4d59-a626-4606dc318abf"/>
 						<textElement textAlignment="Center" verticalAlignment="Middle">
 							<font fontName="SansSerif"/>
 						</textElement>
@@ -1092,7 +1147,7 @@
 					</staticText>
 				</frame>
 				<frame>
-					<reportElement x="280" y="0" width="90" height="40" uuid="590d8194-5f1b-41e6-980b-14bb040f9b0c">
+					<reportElement x="280" y="0" width="90" height="40" uuid="88e97807-0e18-4cc0-9cd2-995d089fee3c">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1103,7 +1158,7 @@
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 					</reportElement>
 					<staticText>
-						<reportElement style="Titrecadre" x="0" y="0" width="90" height="20" uuid="af74ebf8-c8d0-4f35-ac18-f9dc657d849b">
+						<reportElement style="Titrecadre" x="0" y="0" width="90" height="20" uuid="13d24b67-599e-4470-a480-a9e4c181ce08">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1118,7 +1173,7 @@
 						<text><![CDATA[Moy.entre 8.5 et 9.99]]></text>
 					</staticText>
 					<staticText>
-						<reportElement style="Titrecadre" x="0" y="20" width="45" height="20" uuid="8192872c-2383-4ad8-9109-95ef6f51b5d6">
+						<reportElement style="Titrecadre" x="0" y="20" width="45" height="20" uuid="363c4e77-2607-4f39-8d44-a24c437a986a">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1133,7 +1188,7 @@
 						<text><![CDATA[Nbre]]></text>
 					</staticText>
 					<staticText>
-						<reportElement style="Titrecadre" x="45" y="20" width="45" height="20" uuid="0f41439b-91dc-484c-a6ae-64c88403e123"/>
+						<reportElement style="Titrecadre" x="45" y="20" width="45" height="20" uuid="cfb48012-c60c-46f4-846d-d4fae663947e"/>
 						<textElement textAlignment="Center" verticalAlignment="Middle">
 							<font fontName="SansSerif"/>
 						</textElement>
@@ -1141,7 +1196,7 @@
 					</staticText>
 				</frame>
 				<frame>
-					<reportElement x="370" y="0" width="100" height="40" uuid="6bde0650-623e-48bd-a987-acd8ae6caa17">
+					<reportElement x="370" y="0" width="100" height="40" uuid="3af863d9-e11a-4b2c-bf96-9c7f22e0ef4f">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1152,7 +1207,7 @@
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 					</reportElement>
 					<staticText>
-						<reportElement style="Titrecadre" x="0" y="0" width="100" height="20" uuid="d727e068-2c94-46a8-ba70-f67092c2fa97">
+						<reportElement style="Titrecadre" x="0" y="0" width="100" height="20" uuid="50900a3b-d041-4d5b-a71e-970bfc298c5e">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1167,7 +1222,7 @@
 						<text><![CDATA[Moy.inf.à 08.50]]></text>
 					</staticText>
 					<staticText>
-						<reportElement style="Titrecadre" x="0" y="20" width="50" height="20" uuid="4998401a-21eb-4183-821c-65a6b17c1b26">
+						<reportElement style="Titrecadre" x="0" y="20" width="50" height="20" uuid="d3bfae51-11c6-40b6-8397-872e26a5fcb6">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1182,7 +1237,7 @@
 						<text><![CDATA[Nbre]]></text>
 					</staticText>
 					<staticText>
-						<reportElement style="Titrecadre" x="50" y="20" width="50" height="20" uuid="482ec3f7-31d0-4ebf-ad88-eeda1ddefdd9"/>
+						<reportElement style="Titrecadre" x="50" y="20" width="50" height="20" uuid="04c71620-fcdf-42d4-9ba6-eed6d09b8b6d"/>
 						<textElement textAlignment="Center" verticalAlignment="Middle">
 							<font fontName="SansSerif"/>
 						</textElement>
@@ -1190,7 +1245,7 @@
 					</staticText>
 				</frame>
 				<frame>
-					<reportElement x="470" y="0" width="100" height="40" uuid="353966fd-4542-402e-80e8-0e010d8662d8">
+					<reportElement x="470" y="0" width="100" height="40" uuid="48ae630f-bce7-40eb-932e-6df0a0141917">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1201,7 +1256,7 @@
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 					</reportElement>
 					<staticText>
-						<reportElement style="Titrecadre" x="0" y="0" width="100" height="40" uuid="8c17a179-2027-4c1b-b9cc-a0fe154026eb">
+						<reportElement style="Titrecadre" x="0" y="0" width="100" height="40" uuid="9a1ebcd0-906b-4c35-8207-abea378dbb25">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1225,7 +1280,7 @@
 				</frame>
 			</frame>
 			<textField textAdjust="ScaleFont">
-				<reportElement x="0" y="0" width="130" height="14" uuid="02ae369c-6278-4edb-8074-f593d1d66fe6"/>
+				<reportElement x="-9" y="3" width="130" height="14" uuid="7c487a69-f4e0-43d5-b3ab-a1e68d90be46"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
@@ -1447,7 +1502,7 @@
 							<textElement textAlignment="Center" verticalAlignment="Middle">
 								<font fontName="SansSerif"/>
 							</textElement>
-							<textFieldExpression><![CDATA[$F{pourMoySup10F}]]></textFieldExpression>
+							<textFieldExpression><![CDATA[$F{nbreMoySup10F}==0? new DecimalFormat("#.##").format(Double.valueOf(0))+"%" : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoySup10F}))+"%"]]></textFieldExpression>
 						</textField>
 						<textField>
 							<reportElement style="contenu2" x="210" y="0" width="45" height="40" uuid="f177ca66-e321-44e8-8256-bfe69287cef2">
@@ -1489,7 +1544,7 @@
 							<textElement textAlignment="Center" verticalAlignment="Middle">
 								<font fontName="SansSerif"/>
 							</textElement>
-							<textFieldExpression><![CDATA[$F{pourMoyInf999F}]]></textFieldExpression>
+							<textFieldExpression><![CDATA[$F{nbreMoyInf999F}==0?new DecimalFormat("#.##").format(Double.valueOf(0))+"%":new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf999F}))+"%"]]></textFieldExpression>
 						</textField>
 						<textField>
 							<reportElement style="contenu2" x="300" y="0" width="50" height="40" uuid="fe1bd437-90dd-4392-b826-93fc852a262c">
@@ -1531,9 +1586,9 @@
 							<textElement textAlignment="Center" verticalAlignment="Middle">
 								<font fontName="SansSerif"/>
 							</textElement>
-							<textFieldExpression><![CDATA[$F{pourMoyInf85F}]]></textFieldExpression>
+							<textFieldExpression><![CDATA[$F{nbreMoyInf85F}==0?new DecimalFormat("#.##").format(Double.valueOf(0))+"%":new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf85F}))+"%"]]></textFieldExpression>
 						</textField>
-						<textField pattern="#,#00.00#;(#,#00.00#-)">
+						<textField evaluationTime="Group" evaluationGroup="GroupeClasse" pattern="#,#00.00#;(#,#00.00#-)">
 							<reportElement style="contenu2" x="400" y="0" width="100" height="40" uuid="a76c06c7-cc77-46d6-a96e-77db7129e248"/>
 							<box>
 								<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
@@ -1544,7 +1599,7 @@
 							<textElement textAlignment="Center" verticalAlignment="Middle">
 								<font fontName="SansSerif"/>
 							</textElement>
-							<textFieldExpression><![CDATA[$F{moyClasseF}]]></textFieldExpression>
+							<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf($F{moyClasseF}))]]></textFieldExpression>
 						</textField>
 						<textField>
 							<reportElement x="0" y="40" width="40" height="40" uuid="d97a5228-6be8-4836-9f7d-78fc488a11e9">
@@ -1630,7 +1685,7 @@
 							</textElement>
 							<textFieldExpression><![CDATA[$F{nbreMoySup10G}]]></textFieldExpression>
 						</textField>
-						<textField pattern="#,#00.###;(#,#00.###-)">
+						<textField pattern="#,#00.00#;(#,#00.00#-)">
 							<reportElement style="contenu2" x="165" y="40" width="45" height="40" uuid="bdee91cc-d7cf-47af-b851-6261b3202572">
 								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 								<property name="com.jaspersoft.layout.grid.y" value="1"/>
@@ -1649,7 +1704,7 @@
 							<textElement textAlignment="Center" verticalAlignment="Middle">
 								<font fontName="SansSerif"/>
 							</textElement>
-							<textFieldExpression><![CDATA[$F{pourMoySup10G}]]></textFieldExpression>
+							<textFieldExpression><![CDATA[$F{nbreMoySup10G}==0? new DecimalFormat("#.##").format(Double.valueOf(0))+"%":new DecimalFormat("#.##").format(Double.valueOf($F{pourMoySup10G}))+"%"]]></textFieldExpression>
 						</textField>
 						<textField>
 							<reportElement style="contenu2" x="210" y="40" width="45" height="40" uuid="c7805e7a-20b6-4d28-a5e4-91d83bb9956e">
@@ -1672,7 +1727,7 @@
 							</textElement>
 							<textFieldExpression><![CDATA[$F{nbreMoyInf999G}]]></textFieldExpression>
 						</textField>
-						<textField pattern="#,#00.###;(#,#00.###-)">
+						<textField pattern="#,#00.00#;(#,#00.00#-)">
 							<reportElement style="contenu2" x="255" y="40" width="45" height="40" uuid="5894b8ea-6f27-43af-8678-8c5a348a931f">
 								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 								<property name="com.jaspersoft.layout.grid.y" value="1"/>
@@ -1691,7 +1746,7 @@
 							<textElement textAlignment="Center" verticalAlignment="Middle">
 								<font fontName="SansSerif"/>
 							</textElement>
-							<textFieldExpression><![CDATA[$F{pourMoyInf999G}]]></textFieldExpression>
+							<textFieldExpression><![CDATA[$F{nbreMoyInf999G}==0?new DecimalFormat("#.##").format(Double.valueOf(0))+"%":new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf999G}))+"%"]]></textFieldExpression>
 						</textField>
 						<textField>
 							<reportElement style="contenu2" x="300" y="40" width="50" height="40" uuid="2bf2ca4a-3265-4a14-8ddc-5b65f1dfd84a">
@@ -1714,7 +1769,7 @@
 							</textElement>
 							<textFieldExpression><![CDATA[$F{nbreMoyInf85G}]]></textFieldExpression>
 						</textField>
-						<textField pattern="#,#00.###;(#,#00.###-)">
+						<textField pattern="#,#00.00#;(#,#00.00#-)">
 							<reportElement style="contenu2" x="350" y="40" width="50" height="40" uuid="aa88fabc-8f8b-4d9a-926d-7e6de1f4421e">
 								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 								<property name="com.jaspersoft.layout.grid.y" value="1"/>
@@ -1733,9 +1788,9 @@
 							<textElement textAlignment="Center" verticalAlignment="Middle">
 								<font fontName="SansSerif"/>
 							</textElement>
-							<textFieldExpression><![CDATA[$F{pourMoyInf85G}]]></textFieldExpression>
+							<textFieldExpression><![CDATA[$F{nbreMoyInf85G}==0?new DecimalFormat("#.##").format(Double.valueOf(0))+"%":new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf85G}))+"%"]]></textFieldExpression>
 						</textField>
-						<textField pattern="#,#00.00#;(#,#00.00#-)">
+						<textField evaluationTime="Group" evaluationGroup="GroupeClasse" pattern="#,#00.00#;(#,#00.00#-)">
 							<reportElement style="contenu2" x="400" y="40" width="100" height="40" uuid="7f67d09e-7985-4adf-ab3a-b767baf4ea7b">
 								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 								<property name="com.jaspersoft.layout.grid.y" value="1"/>
@@ -1754,7 +1809,7 @@
 							<textElement textAlignment="Center" verticalAlignment="Middle">
 								<font fontName="SansSerif"/>
 							</textElement>
-							<textFieldExpression><![CDATA[$F{moyClasseG}]]></textFieldExpression>
+							<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf($F{moyClasseG}))]]></textFieldExpression>
 						</textField>
 						<textField evaluationTime="Group" evaluationGroup="GroupeClasse">
 							<reportElement x="0" y="80" width="40" height="40" uuid="cdbd27ea-07fb-44e4-8e22-e45aa6eb2f14">
@@ -1864,7 +1919,7 @@
 							<textElement textAlignment="Center" verticalAlignment="Middle">
 								<font fontName="SansSerif" isBold="true"/>
 							</textElement>
-							<textFieldExpression><![CDATA[($F{pourMoySup10F}+$F{pourMoySup10G})/2]]></textFieldExpression>
+							<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf($V{pourMoySup10}))+"%"]]></textFieldExpression>
 						</textField>
 						<textField evaluationTime="Group" evaluationGroup="GroupeClasse">
 							<reportElement x="210" y="80" width="45" height="40" uuid="6de53cbf-8b9e-415c-8d14-7fd8494f348b">
@@ -1908,7 +1963,7 @@
 							<textElement textAlignment="Center" verticalAlignment="Middle">
 								<font fontName="SansSerif" isBold="true"/>
 							</textElement>
-							<textFieldExpression><![CDATA[($F{pourMoyInf999F}+$F{pourMoyInf999G})/2]]></textFieldExpression>
+							<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf($V{pourMoyInf_9_99}))+"%"]]></textFieldExpression>
 						</textField>
 						<textField evaluationTime="Group" evaluationGroup="GroupeClasse">
 							<reportElement x="300" y="80" width="50" height="40" uuid="18bf1670-c411-4839-bb3b-1d97be34c248">
@@ -1952,7 +2007,7 @@
 							<textElement textAlignment="Center" verticalAlignment="Middle">
 								<font fontName="SansSerif" isBold="true"/>
 							</textElement>
-							<textFieldExpression><![CDATA[($F{pourMoyInf85F}+$F{pourMoyInf85G})/2]]></textFieldExpression>
+							<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf($V{pourMoyInf_08_50}))+"%"]]></textFieldExpression>
 						</textField>
 						<textField textAdjust="ScaleFont" evaluationTime="Group" evaluationGroup="GroupeClasse" pattern="#,#00.00#;(#,#00.00#-)" isBlankWhenNull="true">
 							<reportElement x="400" y="80" width="100" height="40" uuid="e41bd64d-7dc7-4a07-951b-d8f680486240">
@@ -1974,7 +2029,7 @@
 							<textElement textAlignment="Center" verticalAlignment="Middle">
 								<font fontName="SansSerif"/>
 							</textElement>
-							<textFieldExpression><![CDATA[($F{moyClasseF}+$F{moyClasseG})/2]]></textFieldExpression>
+							<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf($F{moyClasse}))]]></textFieldExpression>
 						</textField>
 					</frame>
 				</frame>
