@@ -440,7 +440,6 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 							notesMatiereGroup.put(matiereTemp, notesTemp);
 							logger.info(String.format("%s - %s - %s", entry.getKey().getMatricule(),
 									note.getEvaluation().getMatiereEcole().getCode(), note.getNote()));
-							;
 
 						}
 //					logger.info(g.toJson(notesMatiereGroup));
@@ -457,8 +456,17 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 //		logger.info("-------------------------------------------");
 			classementEleveParMatiere(calculMoyenneMatiere(moyenneList), classe.getBranche().getId(),
 					classe.getEcole().getId());
-			//calculMoyenneGeneralEleve(moyenneList);
-			//Collections.sort(moyenneList);
+			
+			for (MoyenneEleveDto eleve : moyenneList) {
+
+				ClasseEleveMatiere cep = classeEleveMatiereService.findByClasseAndMatiereAndEleveAndAnneeAndPeriode(
+						eleve.getClasse().getId(),Long.parseLong(matiereId) ,eleve.getEleve().getId(), eleve.getAnnee().getId(),
+						eleve.getPeriode().getId());
+				if (cep == null)
+					eleve.setIsClassed(Constants.OUI);
+				else
+					eleve.setIsClassed(cep.getIsClassed());
+				}
 //	    logger.info(g.toJson(moyenneList));
 			return moyenneList;
 		} catch (RuntimeException r) {
