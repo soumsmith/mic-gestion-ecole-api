@@ -8,6 +8,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.transaction.Transactional;
 import javax.ws.rs.NotFoundException;
 import com.vieecoles.steph.entities.ClasseEleveMatiere;
+import com.vieecoles.steph.entities.ClasseElevePeriode;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
@@ -50,6 +51,24 @@ public class ClasseEleveMatiereService implements PanacheRepositoryBase<ClasseEl
 		}
 		entity.setIsClassed(classeEleveMatiere.getIsClassed());
 		return entity;
+	}
+	
+	@Transactional
+	public void handleMarquageClassement(ClasseEleveMatiere classeEleveMatiere) {
+		
+		logger.info(String.format("%s %s %s %s %s", classeEleveMatiere.getClasse().getId(),classeEleveMatiere.getMatiere(),
+					classeEleveMatiere.getEleve().getId(), classeEleveMatiere.getAnnee().getId(),
+					classeEleveMatiere.getPeriode().getId()));
+	
+		ClasseEleveMatiere cem = findByClasseAndMatiereAndEleveAndAnneeAndPeriode(classeEleveMatiere.getClasse().getId(),classeEleveMatiere.getMatiere().getId(),
+					classeEleveMatiere.getEleve().getId(), classeEleveMatiere.getAnnee().getId(),
+					classeEleveMatiere.getPeriode().getId());
+
+			if(cem!=null) {
+				cem.setIsClassed(classeEleveMatiere.getIsClassed());
+			} else {
+				create(classeEleveMatiere);
+			}
 	}
 
 }

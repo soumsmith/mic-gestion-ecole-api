@@ -61,6 +61,14 @@ public class NotesResource {
     public Response getNotesByClasseAndPeriode(@PathParam("classe") String classe,@PathParam("annee") String annee, @PathParam("periode") String periode) {
     	return  Response.ok(noteService.moyennesAndNotesHandle(classe, annee, periode)).build()  ;
     }
+    
+    @GET
+    @Path("/list-classe-matiere-notes/{classe}/{matiere}/{annee}/{periode}")
+    @Operation(description = "Obtenir les notes des eleves d une classe par periode ", summary = "")
+	@Tag(name = "Notes")
+    public List<MoyenneEleveDto> getNotesByClasseAndMatiereAndPeriode(@PathParam("classe") String classe,@PathParam("matiere") String matiere,@PathParam("annee") String annee, @PathParam("periode") String periode) {
+    	return noteService.moyennesAndMatiereAndNotesHandle(classe,matiere, annee, periode);
+    }
 
     @POST
     @Path("/save")
