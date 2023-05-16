@@ -16,16 +16,19 @@ public class MigrationResource {
 	
 	@Inject
 	MigrationService migrationService;
-	@Produces(MediaType.TEXT_PLAIN)
+	
+	
 	@GET
 	@Tag(name = "Migration", description = "Processus de migration des matieres vers les matieres écoles")
+	@Path("/new-matiere-release")
+	@Produces(MediaType.TEXT_PLAIN)
 	public Response migrationToMatiereEcoleDatas() {
 		try {
 		 migrationService.doHandleMigrationMatereEcole();
-		 return Response.ok().build();
+		 return Response.ok("Migration bien effectuée").build();
 		}catch (RuntimeException e) {
 			e.printStackTrace();
-			return Response.serverError().build();
+			return Response.serverError().entity("Une erreur s'est produite voir le log").build();
 		}
 		
 	}

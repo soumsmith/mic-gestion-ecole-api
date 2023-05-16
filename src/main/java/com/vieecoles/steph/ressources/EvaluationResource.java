@@ -44,6 +44,17 @@ public class EvaluationResource {
 
 		return Response.ok().entity(evaluationService.getCountByClasseAndMatiere(anneeId, classeId, matiereId)).build();
 	}
+	
+	@GET
+	@Path("/get-by-classe-and-matiere")
+	@Operation(description = "Obtenir par classe an la matiere", summary = "")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Tag(name = "Evaluation")
+	public Response getByClasseAndMatiere(@QueryParam("anneeId") Long anneeId, @QueryParam("classeId") Long classeId,@QueryParam("matiereId") Long matiereId) {
+		//logger.info("--------> get count ------>");
+
+		return Response.ok().entity(evaluationService.getByClasseAndMatiere(anneeId, classeId, matiereId)).build();
+	}
 
 
 	@GET

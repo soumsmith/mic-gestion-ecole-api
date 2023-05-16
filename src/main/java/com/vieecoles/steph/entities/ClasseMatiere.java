@@ -6,6 +6,9 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 /**
  * Renommer en BrancheMatiere et y ajouter l 'école au cas où la branche est créee de façon locale (niveau ecole)
  * @author stephane
@@ -23,6 +26,7 @@ public class ClasseMatiere extends PanacheEntityBase{
 	private String coef;
 	@ManyToOne
 	@JoinColumn(name = "matiereid")
+	@NotFound(action = NotFoundAction.IGNORE)
 	private EcoleHasMatiere matiere;
 	@Transient
 //	@ManyToOne

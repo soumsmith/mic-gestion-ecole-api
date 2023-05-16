@@ -5,6 +5,10 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import java.util.Date;
 
 @Entity
@@ -25,6 +29,7 @@ public class PersonnelMatiereClasse extends PanacheEntityBase {
 	private Classe classe;
 	@ManyToOne
 	@JoinColumn(name = "matiere_matiereid")
+	@NotFound(action = NotFoundAction.IGNORE)
 	private EcoleHasMatiere matiere;
 	@ManyToOne
 	@JoinColumn(name = "annee_scolaire_annee_scolaireid")
