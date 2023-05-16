@@ -359,9 +359,11 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 					noteGroup.put(note.getClasseEleve().getInscription().getEleve(), notesTemp);
 				}
 			}
+			System.out.println("---> "+classeId);
 			classe = classeService.findById(Long.parseLong(classeId));
-//		logger.info(g.toJson(classe));
 
+			Gson g = new Gson();
+			logger.info(g.toJson(classe));
 			// Formatage des dto
 			AnneeScolaire anneeScolaire = new AnneeScolaire();
 			Periode periode = new Periode();
@@ -376,7 +378,6 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				notesMatiereGroup = new HashMap<EcoleHasMatiere, List<Notes>>();
 				EcoleHasMatiere matiereTemp;
 				List<String> filter = new ArrayList<>();
-				Gson g = new Gson();
 //			logger.info(String.format("Eleve - %s - %s", entry.getKey().getMatricule(),entry.getKey().getNom()));
 				for (Notes note : entry.getValue()) {
 					logger.info("note id --->" + note.getId());
@@ -440,7 +441,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				moyenneList.add(moyenneEleveDto);
 			}
 //		calculMoyenneMatiere(moyenneList);
-//		logger.info(moyenneList.toString());
+		logger.info(g.toJson(classe));
 //		logger.info("-------------------------------------------");
 			classementEleveParMatiere(calculMoyenneMatiere(moyenneList), classe.getBranche().getId(),
 					classe.getEcole().getId());

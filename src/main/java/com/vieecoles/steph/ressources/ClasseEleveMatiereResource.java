@@ -8,12 +8,15 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 import com.vieecoles.steph.entities.ClasseEleveMatiere;
+import com.vieecoles.steph.entities.ClasseElevePeriode;
 import com.vieecoles.steph.entities.Message;
 import com.vieecoles.steph.services.ClasseEleveMatiereService;
 
@@ -89,6 +92,20 @@ public class ClasseEleveMatiereResource {
 		}catch (RuntimeException e) {
 			e.printStackTrace();
 			return Response.serverError().entity(e.getMessage()).build();
+		}
+	}
+	
+	@Path("/marquage-classement")
+	@Produces(MediaType.TEXT_PLAIN)
+	@Tag(name = "ClasseElevePeriode")
+	@POST
+	public Response handleMarquageClassementStatut(ClasseEleveMatiere classeEleveMatiere) {
+		try {
+			classeEleveMatiereService.handleMarquageClassement(classeEleveMatiere);
+			return Response.ok(classeEleveMatiere.getIsClassed()).build();
+		}catch (RuntimeException e) {
+			e.printStackTrace();
+			return Response.serverError().entity(String.format("Marquage matiere non effectué pour l'élève %s - %s %s", classeEleveMatiere.getEleve().getMatricule(), classeEleveMatiere.getEleve().getNom(), classeEleveMatiere.getEleve().getPrenom())).build();
 		}
 	}
 }
