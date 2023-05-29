@@ -13,19 +13,23 @@ import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Response;
 
 import com.google.gson.Gson;
+import com.mysql.cj.x.protobuf.MysqlxCrud.Collection;
 import com.vieecoles.steph.dto.MoyenneEleveDto;
 import com.vieecoles.steph.entities.AnneeScolaire;
+import com.vieecoles.steph.entities.Bulletin;
 import com.vieecoles.steph.entities.Classe;
 import com.vieecoles.steph.entities.ClasseEleve;
 import com.vieecoles.steph.entities.ClasseEleveMatiere;
 import com.vieecoles.steph.entities.ClasseElevePeriode;
 import com.vieecoles.steph.entities.ClasseMatiere;
 import com.vieecoles.steph.entities.Constants;
+import com.vieecoles.steph.entities.DetailBulletin;
 import com.vieecoles.steph.entities.EcoleHasMatiere;
 import com.vieecoles.steph.entities.Eleve;
 import com.vieecoles.steph.entities.Evaluation;
@@ -52,6 +56,12 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 	ClasseEleveMatiereService classeEleveMatiereService;
 	@Inject
 	ClasseElevePeriodeService classeElevePeriodeService;
+
+	@Inject
+	BulletinService bulletinService;
+
+	@Inject
+	DetailBulletinService detailBulletinService;
 
 	Logger logger = Logger.getLogger(NoteService.class.getName());
 
@@ -82,8 +92,8 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 		}
 		entity.setClasseEleve(notes.getClasseEleve());
 		entity.setEvaluation(notes.getEvaluation());
-		System.out.println("Note --> " + notes.getNote());
-		System.out.println("Note --> " + notes.getNote().toString());
+//		System.out.println("Note --> " + notes.getNote());
+//		System.out.println("Note --> " + notes.getNote().toString());
 		entity.setNote(notes.getNote());
 		return entity;
 	}
@@ -138,7 +148,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 	public List<Notes> getByEvaluation(long evaluationId) {
 		return Notes.find("evaluation.id = ?1", evaluationId).list();
 	}
-	
+
 	public List<Notes> getByEvaluationAndPec(long evaluationId, Integer pec) {
 		return Notes.find("evaluation.id = ?1 and pec = ?2", evaluationId, pec).list();
 	}
@@ -152,7 +162,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				evaluation.getAnnee().getId());
 		// logger.info(gson.toJson(classeEleves));
 		// obtenir la liste des notes pour une évaluation
-		List<Notes> notesList = getByEvaluationAndPec(evaluation.getId(),1);
+		List<Notes> notesList = getByEvaluationAndPec(evaluation.getId(), 1);
 		List<Notes> noteListTemp = new ArrayList<Notes>();
 		Boolean flat = true;
 		Notes notemp;
@@ -160,7 +170,8 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			flat = true;
 			for (Notes note : notesList) {
 				if (ce.getInscription().getEleve().getMatricule()
-						.equals(note.getClasseEleve().getInscription().getEleve().getMatricule()) && note.getPec()!= null && note.getPec() == 1) {
+						.equals(note.getClasseEleve().getInscription().getEleve().getMatricule())
+						&& note.getPec() != null && note.getPec() == 1) {
 					noteListTemp.add(note);
 					flat = false;
 					break;
@@ -307,7 +318,8 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 //			moyenneEleveDto.setNotes(entry.getValue());
 				moyenneList.add(moyenneEleveDto);
 			}
-			// Code pour visualiser les niveaux des matieres utilisées crant souvent des bugs
+			// Code pour visualiser les niveaux des matieres utilisées crant souvent des
+			// bugs
 //			System.out.println("Matiere et niveau");
 //			for(MoyenneEleveDto m : moyenneList) {
 //				for(Map.Entry<Matiere,List<Notes>>  n : m.getNotesMatiereMap().entrySet()) {
@@ -315,13 +327,21 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 //				}
 //			}
 //			periode.getCode().equals("1");
-			
+
 //		calculMoyenneMatiere(moyenneList);
 //		logger.info(moyenneList.toString());
 //		logger.info("-------------------------------------------");
 			classementEleveParMatiere(calculMoyenneMatiere(moyenneList), classe.getBranche().getId(),
 					classe.getEcole().getId());
 			calculMoyenneGeneralEleve(moyenneList);
+			
+			//Vérifie si la période est la denière. si oui calcul des moyennes et rang annuels
+			Periode periodeCtrl = Periode.findById(periodeId) ;
+			if(periodeCtrl != null) {
+				if(periodeCtrl.getIsfinal().equals("O"))
+					classementAnnuelEleveParMatiere(moyenneList, classe.getBranche().getId(), classe.getEcole().getId());
+			}
+			
 			Collections.sort(moyenneList);
 //	    logger.info(g.toJson(moyenneList));
 			return moyenneList;
@@ -330,16 +350,22 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			return null;
 		}
 	}
-	
-	
-	public List<MoyenneEleveDto> moyennesAndMatiereAndNotesHandle(String classeId,String matiereId, String anneeId, String periodeId) {
-		// Obtenir la liste des evaluations dans une classe et une matiere au cours de l année pour une
+
+	public void calculAndClassementAnnuels(List<MoyenneEleveDto> moyenneEleveDtos) {
+
+	}
+
+	public List<MoyenneEleveDto> moyennesAndMatiereAndNotesHandle(String classeId, String matiereId, String anneeId,
+			String periodeId) {
+		// Obtenir la liste des evaluations dans une classe et une matiere au cours de l
+		// année pour une
 		// période
 		logger.info("---> Processus de Calcul des moyennes des éleves d une matiere");
 		try {
 			Map<Eleve, List<Notes>> noteGroup = new HashMap<Eleve, List<Notes>>();
-			Parameters params = Parameters.with("classeId", Long.parseLong(classeId)).and("matiereId", Long.parseLong(matiereId))
-					.and("anneeId", Long.parseLong(anneeId)).and("periodeId", Long.parseLong(periodeId)).and("pok", 1);
+			Parameters params = Parameters.with("classeId", Long.parseLong(classeId))
+					.and("matiereId", Long.parseLong(matiereId)).and("anneeId", Long.parseLong(anneeId))
+					.and("periodeId", Long.parseLong(periodeId)).and("pok", 1);
 			String criteria = "classe.id = :classeId and matiereEcole.id= :matiereId and annee.id = :anneeId and periode.id = :periodeId and pec = :pok";
 			List<Evaluation> evalList = evaluationService.search(criteria, params);
 			List<Notes> noteList = new ArrayList<Notes>();
@@ -371,7 +397,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 					noteGroup.put(note.getClasseEleve().getInscription().getEleve(), notesTemp);
 				}
 			}
-			System.out.println("---> "+classeId);
+//			System.out.println("---> " + classeId);
 			classe = classeService.findById(Long.parseLong(classeId));
 
 			Gson g = new Gson();
@@ -452,21 +478,21 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				moyenneList.add(moyenneEleveDto);
 			}
 //		calculMoyenneMatiere(moyenneList);
-		logger.info(g.toJson(classe));
+			logger.info(g.toJson(classe));
 //		logger.info("-------------------------------------------");
 			classementEleveParMatiere(calculMoyenneMatiere(moyenneList), classe.getBranche().getId(),
 					classe.getEcole().getId());
-			
+
 			for (MoyenneEleveDto eleve : moyenneList) {
 
 				ClasseEleveMatiere cep = classeEleveMatiereService.findByClasseAndMatiereAndEleveAndAnneeAndPeriode(
-						eleve.getClasse().getId(),Long.parseLong(matiereId) ,eleve.getEleve().getId(), eleve.getAnnee().getId(),
-						eleve.getPeriode().getId());
+						eleve.getClasse().getId(), Long.parseLong(matiereId), eleve.getEleve().getId(),
+						eleve.getAnnee().getId(), eleve.getPeriode().getId());
 				if (cep == null)
 					eleve.setIsClassed(Constants.OUI);
 				else
 					eleve.setIsClassed(cep.getIsClassed());
-				}
+			}
 //	    logger.info(g.toJson(moyenneList));
 			return moyenneList;
 		} catch (RuntimeException r) {
@@ -674,7 +700,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			mapt = new HashMap<Double, MoyenneEleveDto>();
 			for (MoyenneEleveDto me : moyEleve) {
 				logger.info("eleve - " + me.getEleve().getNom());
-				//logger.info(".getNotesMatiereMap() - " + me.getNotesMatiereMap());
+				// logger.info(".getNotesMatiereMap() - " + me.getNotesMatiereMap());
 				if (me.getNotesMatiereMap() != null) {
 					for (Map.Entry<EcoleHasMatiere, List<Notes>> map : me.getNotesMatiereMap().entrySet()) {
 						if (map.getKey().getCode().equals(cm.getMatiere().getCode())) {
@@ -746,6 +772,148 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 
 	}
 
+	void classementAnnuelEleveParMatiere(List<MoyenneEleveDto> moyEleve, Long brancheId, Long ecoleId) {
+		logger.info("---> Classement des eleves par matiere");
+		List<ClasseMatiere> classeMatList = ClasseMatiere.find("branche.id = ?1 and ecole.id =?2", brancheId, ecoleId)
+				.list();
+		Map<Double, MoyenneEleveDto> mapt;
+//		Gson g = new Gson();
+//		int i = 0;
+		// recuperer et classer les moyennes pour les classements annuels
+		List<Double> classeurAnnuelList = new ArrayList<Double>();
+		// recuperer et classer les moyennes pour les classements annuels au niveau des
+		// matieres
+		Map<Long, List<Double>> classeurAnnuelMatiereMap = new HashMap<Long, List<Double>>();
+//---- WARNING mettre un try catch
+		Periode per = Periode.find("final = 'O'").singleResult();
+		List<Periode> periodes = Periode.find("niveau <= ?1", per.getNiveau()).list();
+
+		for (MoyenneEleveDto me : moyEleve) {
+			// recup la moyenne de la matiere dans les details bulletins (par classe,
+			// matiere et periode)
+
+			// recuperer la liste des bulletins de l'élève
+			List<Bulletin> bulletinsElevesList = bulletinService.getBulletinsEleveByAnnee(me.getAnnee().getId(),
+					me.getEleve().getMatricule(), me.getClasse().getId());
+//			Integer rangAn = 0;
+			Double moyAn = 0.0;
+			Double coef = 0.0;
+			for (Bulletin bul : bulletinsElevesList) {
+
+				for (Periode p : periodes) {
+					if (bul.getPeriodeId().equals(p.getId())) {
+						if (p.getIsfinal() != null && p.getIsfinal().equals("O"))
+							moyAn = moyAn + me.getMoyenne() * Double.parseDouble(p.getCoef());
+						else
+							moyAn = moyAn + bul.getMoyGeneral() * Double.parseDouble(p.getCoef());
+						coef = coef + Double.parseDouble(p.getCoef());
+						break;
+					}
+				}
+				// recuperer le coeficient dans bulletin (a creer dans bulletin coefperiode)
+			}
+			moyAn = CommonUtils.roundDouble(moyAn / coef, 2);
+//			System.out.println(">Moyenne Annuelle = " + moyAn + " (eleve " + me.getEleve().getMatricule() + ")");
+			me.setMoyenneAnnuelle(moyAn);
+			classeurAnnuelList.add(moyAn);
+			// calcul moyenne annuelle pour chaque eleve et dans chaque matiere
+			for (ClasseMatiere cml : classeMatList) {
+				coef = 0.0;
+				Double moyMatiereAnnuelle = 0.0;
+
+				List<DetailBulletin> detailsBulletinsElevesList = detailBulletinService
+						.getDetailBulletinsEleveByAnneeAndClasseAndMatiere(me.getAnnee().getId(),
+								me.getClasse().getId(), me.getEleve().getMatricule(), cml.getMatiere().getCode());
+				for (DetailBulletin dtb : detailsBulletinsElevesList) {
+					for (Periode p : periodes) {
+						if (dtb.getBulletin().getPeriodeId().equals(p.getId())) {
+							if (p.getIsfinal() != null && p.getIsfinal().equals("O"))
+								for (Map.Entry<EcoleHasMatiere, List<Notes>> entry : me.getNotesMatiereMap()
+										.entrySet()) {
+									if (entry.getKey().getCode().equals(cml.getMatiere().getCode())) {
+										moyMatiereAnnuelle = moyMatiereAnnuelle
+												+ entry.getKey().getMoyenne() * Double.parseDouble(p.getCoef());
+
+//										System.out.println("getMoyenne : " + entry.getKey().getMoyenne());
+									}
+								}
+							else
+								moyMatiereAnnuelle = moyMatiereAnnuelle
+										+ dtb.getMoyenne() * Double.parseDouble(p.getCoef());
+							coef = coef + Double.parseDouble(p.getCoef());
+//							System.out.println("moy : " + moyMatiereAnnuelle + " coef : " + coef);
+
+							break;
+						}
+					}
+				}
+				// Le if evite le risque de division par 0
+				if (detailsBulletinsElevesList != null && detailsBulletinsElevesList.size() != 0) {
+//					System.out.println("___>" + (moyMatiereAnnuelle / coef));
+					moyMatiereAnnuelle = CommonUtils.roundDouble(moyMatiereAnnuelle / coef, 2);
+					for (Map.Entry<EcoleHasMatiere, List<Notes>> entry : me.getNotesMatiereMap().entrySet()) {
+						if (entry.getKey().getCode().equals(cml.getMatiere().getCode())) {
+							entry.getKey().setMoyenneAnnuelle(moyMatiereAnnuelle);
+
+							if (classeurAnnuelMatiereMap.containsKey(cml.getMatiere().getId())) {
+								classeurAnnuelMatiereMap.get(cml.getMatiere().getId()).add(moyMatiereAnnuelle);
+							} else {
+								List<Double> classeurMatiereTemp = new ArrayList<Double>();
+								classeurMatiereTemp.add(moyMatiereAnnuelle);
+								classeurAnnuelMatiereMap.put(cml.getMatiere().getId(), classeurMatiereTemp);
+							}
+						}
+					}
+				}
+			}
+		}
+		// Tri descendant de chaque liste de moyenne des matieres
+		for (Map.Entry<Long, List<Double>> entry : classeurAnnuelMatiereMap.entrySet()) {
+			Collections.sort(entry.getValue());
+			Collections.reverse(entry.getValue());
+		}
+//		System.out.println("++++++++++++++");
+//		System.out.println(g.toJson(classeurAnnuelMatiereMap));
+//		System.out.println("++++++++++++++");
+		// classement annuel des eleves par matiere
+		for (MoyenneEleveDto me : moyEleve) {
+//			System.out.println("+ Eleve: " + me.getEleve().getNom());
+			for (EcoleHasMatiere matEleve : me.getNotesMatiereMap().keySet()) {
+//				System.out.println("++ Matiere: " + matEleve.getLibelle());
+//				System.out.println("_____>"+matEleve.getId());
+				if (classeurAnnuelMatiereMap.containsKey(matEleve.getId())) {
+					//System.out.println(
+//							"+++ Moy ann :" + matEleve.getMoyenneAnnuelle() + " Rang :" + matEleve.getRangAnnuel());
+					matEleve.setRangAnnuel(
+							String.valueOf(getIndexByValue(classeurAnnuelMatiereMap.get(matEleve.getId()),
+									matEleve.getMoyenneAnnuelle())));
+				}
+			}
+		}
+
+		Collections.sort(classeurAnnuelList);
+		Collections.reverse(classeurAnnuelList);
+		
+//		Classsement Annuel des élèves
+		for (MoyenneEleveDto eleveObj : moyEleve) {
+			//System.out.println("rang moy an " + eleveObj.getMoyenne() + " = "
+//					+ getIndexByValue(classeurAnnuelList, eleveObj.getMoyenneAnnuelle()));
+			eleveObj.setRangAnnuel(String.valueOf(getIndexByValue(classeurAnnuelList, eleveObj.getMoyenneAnnuelle())));
+		}
+
+	}
+
+	public Integer getIndexByValue(List<Double> list, Double value) {
+		int i = 1;
+		for (Double elmt : list) {
+			if (elmt == value) {
+				return i; // Retourne l'index si la valeur est trouvée
+			}
+			i++;
+		}
+		return -1; // Retourne -1 si la valeur n'est pas trouvée dans le tableau
+	}
+
 	void classementElevePeriode(List<MoyenneEleveDto> eleves) {
 
 		Collections.sort(eleves, new Comparator<MoyenneEleveDto>() {
@@ -767,6 +935,5 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				eleve.setRang(String.valueOf(i));
 		}
 
-		
 	}
 }

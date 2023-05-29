@@ -34,6 +34,11 @@ public class DetailBulletin extends PanacheEntityBase{
 	private String  categorie;
     private Integer  num_ordre;
 	private String nom_prenom_professeur ;
+	
+	@Column(name = "moy_An")
+	private Double moyAn;
+	@Column(name = "rang_An")
+	private String rangAn;
 
 	private Integer pec;
 	private Integer bonus;

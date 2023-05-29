@@ -24,8 +24,8 @@ public class AnneeScolaire extends PanacheEntityBase{
 	@Id
 	@Column(name = "annee_scolaireid")
 	private long id;
-	@Column(name = "annee_scolaire_code")
-	private String code;
+//	@Column(name = "annee_scolaire_code")
+//	private String code;
 	@Column(name = "annee_scolaire_libelle")
 	private String libelle;
 	private String periodicite;
@@ -34,6 +34,10 @@ public class AnneeScolaire extends PanacheEntityBase{
 	@ManyToOne
 	@JoinColumn(name = "niveau_enseignement_id")
 	private NiveauEnseignement niveauEnseignement;
+	private String statut;
+	@ManyToOne
+	@JoinColumn(name = "ecole_id")
+	private Ecole ecole;
 	
 //	@Transient
 //	private List<AnneePeriode> anneePeriodes;

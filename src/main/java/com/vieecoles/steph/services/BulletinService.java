@@ -64,6 +64,26 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 		bulletin.setDateCreation(new Date());
 		bulletin.persist();
 	}
+	
+	/*
+	 * Obténir la liste des bulletins d'un élève pour une année
+	 */
+	public List<Bulletin> getBulletinsEleveByAnnee(Long anneeId, String matricule, Long classeId){
+		
+		List<Bulletin> myBulletins = new ArrayList<Bulletin>();
+		
+		try {
+			myBulletins = Bulletin.find("anneeId = ?1 and matricule = ?2 and classeId = ?3 ", anneeId, matricule,classeId).list();
+			logger.info(myBulletins.size()+" bulletin(s) trouvé(s) l'élève de matricule "+matricule);
+		}catch(RuntimeException ex) {
+			if(ex.getClass().getName().equals(NoResultException.class.getName()))
+				logger.info("Aucun bulletin trouvé pour l'année pour l'élève de matricule "+matricule);
+			else
+				ex.printStackTrace();
+		}
+		
+		return myBulletins;
+	}
 
 	public void update(Bulletin bulletin) {
 		Bulletin b = Bulletin.findById(bulletin.getId());
@@ -247,6 +267,8 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 					flag.setAppreciation(entry.getKey().getAppreciation());
 					flag.setCoef(Double.valueOf(entry.getKey().getCoef()));
 					flag.setParentMatiere(entry.getKey().getParentMatiereLibelle());
+					flag.setMoyAn(entry.getKey().getMoyenneAnnuelle());
+					flag.setRangAn(entry.getKey().getRangAnnuel());
 
 					// Inscrire si oui ou non l'élève est classé dans la matiere
 					if (cem != null)
@@ -295,6 +317,8 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 					flag.setBonus(entry.getKey().getBonus());
 					flag.setPec(entry.getKey().getPec());
 					flag.setParentMatiere(entry.getKey().getParentMatiereLibelle());
+					flag.setMoyAn(entry.getKey().getMoyenneAnnuelle());
+					flag.setRangAn(entry.getKey().getRangAnnuel());
 					// Inscrire si oui ou non l'élève est classé dans la matiere
 					if (cem != null)
 						flag.setIsRanked(cem.getIsClassed());
@@ -361,8 +385,17 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 		logger.info(String.format("Max= %s , Min = %s, Sum = %s, Avg = %s, effectif %s", maxMoy, minMoy, sumMoy, avgMoy,
 				effectif));
 
+		//to do: vérifier si dernière période (trimestre/semestre)
+		
 		// Mise à jour des bulletins
 		bulletin = new Bulletin();
+		
+		//Obtenir le nombre de période à prendre en compte
+		Periode per = Periode.find("final = 'O'").singleResult();
+		List<Periode> periodes = Periode.find("niveau <= ?1", per.getNiveau()).list();
+		
+		System.out.println(periodes);
+		
 		for (String id : bulletinIdList) {
 			bulletin = Bulletin.findById(id);
 			bulletin.setMoyMax(CommonUtils.roundDouble(maxMoy, 2));
@@ -372,6 +405,9 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 			bulletin.setEffectifNonClasse(String.valueOf(countNonClasses));
 //			logger.info(String.format("m a j du bulletin %s [effectif : % . smoy max : %s . moy min : %s . moy avg : %s", id,
 //					effectif, bulletin.getMoyMax().toString(), bulletin.getMoyMin(), bulletin.getMoyAvg()));
+			
+			//to do: Calcul de la moyenne annuelle si dernier trimestre ou semestre (periode)
+			
 
 		}
 		return moyenneParEleve != null ? moyenneParEleve.size() : 0;
@@ -404,8 +440,8 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 		bul.setLieuNaissance(me.getEleve().getLieuNaissance());
 		bul.setMatricule(me.getEleve().getMatricule());
 		bul.setRang(Integer.parseInt(me.getRang()));
-//		bul.setMoyAn(null);
-//		bul.setRangAn(null);
+		bul.setMoyAn(me.getMoyenneAnnuelle());
+		bul.setRangAn(me.getRangAnnuel());
 //		bul.setMoyAvg(null);
 //		bul.setMoyGeneral(me.getMoyenne().toString());
 		bul.setMoyGeneral(me.getMoyenne());

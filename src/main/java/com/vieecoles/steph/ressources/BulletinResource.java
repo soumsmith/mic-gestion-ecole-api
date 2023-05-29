@@ -23,8 +23,8 @@ public class BulletinResource {
 	@Path("/handle-save")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
-	@Operation(description = "Obtenir la liste des années", summary = "")
-	@Tag(name = "Année scolaire")
+	@Operation(description = "Calcul des moyennes des élève d'une classe", summary = "")
+	@Tag(name = "Bulletins")
 	public Response handleSave(@QueryParam("classe") String classe ,@QueryParam("annee") String  annee, @QueryParam("periode") String periode) {
 		int nbreEleve = 0;
 		try {
@@ -34,5 +34,15 @@ public class BulletinResource {
 			return Response.serverError().entity(e.getMessage()).build();
 		}
 		return Response.ok(nbreEleve == 0 ? "Aucun bulletin sauvegardé" : String.format("%s Bulletin(s) sauvegardé(s)",nbreEleve)).build();
+	}
+	
+	@GET
+	@Path("/get-bulletins-eleve-annee")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	@Operation(description = "Obtenir la liste des bulletins au cours d'une année scolaire", summary = "")
+	@Tag(name = "Bulletins")
+	public Response getBulletinsElevesByAnnee(@QueryParam("annee") Long annee ,@QueryParam("matricule") String  matricule, @QueryParam("classe") Long classe) {
+		return Response.ok(bulletinService.getBulletinsEleveByAnnee(annee, matricule, classe)).build();
 	}
 }

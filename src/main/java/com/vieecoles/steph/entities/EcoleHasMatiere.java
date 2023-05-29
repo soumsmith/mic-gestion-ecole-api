@@ -54,6 +54,12 @@ public class EcoleHasMatiere extends PanacheEntityBase{
     private String  coef ;
     @Transient
     private String appreciation;
+    
+    @Transient
+    private Double moyenneAnnuelle;
+    @Transient
+    private String rangAnnuel;
+    
     @ManyToOne
     @JoinColumn(name = "matiere_parent_id")
     private EcoleHasMatiere matiereParent;

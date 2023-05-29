@@ -1,5 +1,7 @@
 package com.vieecoles.steph.entities;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -21,10 +23,16 @@ public class AnneePeriode {
 	@JoinColumn(name = "id")
 	private AnneeScolaire anneeScolaire;
 	@Column(name = "time_debut")
-	private String timeStampDebut;
+	private LocalDateTime dateDebut;
 	@Column(name = "time_fin")
-	private String timeStampFin;
+	private LocalDateTime dateFin;
+	@Column(name = "date_limite")
+	private LocalDateTime dateLimite;
 	@Transient
 	private String userId;
+	@Transient
+	private LocalDateTime dateCreation;
+	@Transient
+	private LocalDateTime dateUpdate;
 
 }
