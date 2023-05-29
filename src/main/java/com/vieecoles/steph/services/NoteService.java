@@ -337,11 +337,12 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 
 			// Vérifie si la période est la denière. si oui calcul des moyennes et rang
 			// annuels
-//			Periode periodeCtrl = Periode.findById(Long.parseLong(periodeId)) ;
-//			if(periodeCtrl != null) {
-//				if(periodeCtrl.getIsfinal()!=null && periodeCtrl.getIsfinal().equals("O"))
-			classementAnnuelEleveParMatiere(moyenneList, classe.getBranche().getId(), classe.getEcole().getId());
-//			}
+			Periode periodeCtrl = Periode.findById(Long.parseLong(periodeId));
+			if (periodeCtrl != null) {
+				if (periodeCtrl.getIsfinal() != null && periodeCtrl.getIsfinal().equals(Constants.OUI))
+					classementAnnuelEleveParMatiere(moyenneList, classe.getBranche().getId(),
+							classe.getEcole().getId());
+			}
 
 			Collections.sort(moyenneList);
 //	    logger.info(g.toJson(moyenneList));
@@ -350,10 +351,6 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			r.printStackTrace();
 			return null;
 		}
-	}
-
-	public void calculAndClassementAnnuels(List<MoyenneEleveDto> moyenneEleveDtos) {
-
 	}
 
 	public List<MoyenneEleveDto> moyennesAndMatiereAndNotesHandle(String classeId, String matiereId, String anneeId,
@@ -815,7 +812,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				}
 				// recuperer le coeficient dans bulletin (a creer dans bulletin coefperiode)
 			}
-			moyAn = CommonUtils.roundDouble(moyAn / (coef==0.0 ? 1.0 : coef), 2);
+			moyAn = CommonUtils.roundDouble(moyAn / (coef == 0.0 ? 1.0 : coef), 2);
 //			System.out.println(">Moyenne Annuelle = " + moyAn + " (eleve " + me.getEleve().getMatricule() + ")");
 			me.setMoyenneAnnuelle(moyAn);
 			classeurAnnuelList.add(moyAn);
@@ -831,20 +828,20 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 					for (Periode p : periodes) {
 						if (dtb.getBulletin().getPeriodeId().equals(p.getId())) {
 							if (dtb.getIsRanked() != null && dtb.getIsRanked().equals(Constants.OUI)) {
-							if (p.getIsfinal() != null && p.getIsfinal().equals("O"))
-								for (Map.Entry<EcoleHasMatiere, List<Notes>> entry : me.getNotesMatiereMap()
-										.entrySet()) {
-									if (entry.getKey().getCode().equals(cml.getMatiere().getCode())) {
-										moyMatiereAnnuelle = moyMatiereAnnuelle
-												+ entry.getKey().getMoyenne() * Double.parseDouble(p.getCoef());
+								if (p.getIsfinal() != null && p.getIsfinal().equals("O"))
+									for (Map.Entry<EcoleHasMatiere, List<Notes>> entry : me.getNotesMatiereMap()
+											.entrySet()) {
+										if (entry.getKey().getCode().equals(cml.getMatiere().getCode())) {
+											moyMatiereAnnuelle = moyMatiereAnnuelle
+													+ entry.getKey().getMoyenne() * Double.parseDouble(p.getCoef());
 
 //										System.out.println("getMoyenne : " + entry.getKey().getMoyenne());
+										}
 									}
-								}
-							else
-								moyMatiereAnnuelle = moyMatiereAnnuelle
-										+ dtb.getMoyenne() * Double.parseDouble(p.getCoef());
-							coef = coef + Double.parseDouble(p.getCoef());
+								else
+									moyMatiereAnnuelle = moyMatiereAnnuelle
+											+ dtb.getMoyenne() * Double.parseDouble(p.getCoef());
+								coef = coef + Double.parseDouble(p.getCoef());
 //							System.out.println("moy : " + moyMatiereAnnuelle + " coef : " + coef);
 							}
 							break;
@@ -854,7 +851,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				// Le if evite le risque de division par 0
 				if (detailsBulletinsElevesList != null && detailsBulletinsElevesList.size() != 0) {
 //					System.out.println("___>" + (moyMatiereAnnuelle / coef));
-					moyMatiereAnnuelle = CommonUtils.roundDouble(moyMatiereAnnuelle / (coef==0.0 ? 1.0 : coef), 2);
+					moyMatiereAnnuelle = CommonUtils.roundDouble(moyMatiereAnnuelle / (coef == 0.0 ? 1.0 : coef), 2);
 					for (Map.Entry<EcoleHasMatiere, List<Notes>> entry : me.getNotesMatiereMap().entrySet()) {
 						if (entry.getKey().getCode().equals(cml.getMatiere().getCode())) {
 							entry.getKey().setMoyenneAnnuelle(moyMatiereAnnuelle);
