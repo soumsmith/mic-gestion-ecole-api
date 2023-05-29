@@ -336,9 +336,9 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			calculMoyenneGeneralEleve(moyenneList);
 			
 			//Vérifie si la période est la denière. si oui calcul des moyennes et rang annuels
-			Periode periodeCtrl = Periode.findById(periodeId) ;
+			Periode periodeCtrl = Periode.findById(Long.parseLong(periodeId)) ;
 			if(periodeCtrl != null) {
-				if(periodeCtrl.getIsfinal().equals("O"))
+				if(periodeCtrl.getIsfinal()!=null && periodeCtrl.getIsfinal().equals("O"))
 					classementAnnuelEleveParMatiere(moyenneList, classe.getBranche().getId(), classe.getEcole().getId());
 			}
 			
