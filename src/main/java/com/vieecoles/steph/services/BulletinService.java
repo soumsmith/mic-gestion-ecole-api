@@ -137,6 +137,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 		b.setNature(bulletin.getNature());
 		b.setNiveau(bulletin.getNiveau());
 		b.setNiveauLibelle(bulletin.getNiveauLibelle());
+		b.setOrdreNiveau(bulletin.getOrdreNiveau());
 		b.setEcoleOrigine(bulletin.getEcoleOrigine());
 		b.setNomSignataire(bulletin.getNomSignataire());
 		b.setTransfert(bulletin.getTransfert());
@@ -461,6 +462,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 //		bul.setUrlLogo(null);
 		bul.setNiveau(me.getClasse().getBranche().getNiveau().getLibelle());
 		bul.setNiveauLibelle(me.getClasse().getBranche().getNiveau().getLibelle());
+		bul.setOrdreNiveau(me.getClasse().getBranche().getNiveau().getOrdre());
 //		bul.setLv2(null);
 //		bul.setNumDecisionAffecte(null);
 //		bul.setNature(null);

@@ -17,5 +17,6 @@ public class Niveau extends PanacheEntityBase {
     private  String code;
     @Column(name = "niveaulibelle")
     private  String libelle;
+    private Integer ordre;
 
 }

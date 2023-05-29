@@ -102,13 +102,13 @@ public class Bulletin extends PanacheEntityBase{
 	private String statut;
 	private Integer rang;
 	private String niveau ;
+	@Column(name = "ordre_niveau")
+	private Integer ordreNiveau;
 	@Column(name = "ecole_origine")
 	private String ecoleOrigine;
 	@Column(name = "nom_signataire")
 	private String nomSignataire;
 	private String transfert;
-	private  String ordre_niveau ;
-
 
 	@Lob
 	@Basic(fetch = FetchType.LAZY)
