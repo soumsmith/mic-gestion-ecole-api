@@ -4,6 +4,7 @@ import com.vieecoles.dto.BoursierDto;
 import com.vieecoles.dto.MatriculeClasseDto;
 import com.vieecoles.dto.NiveauDto;
 import com.vieecoles.projection.BulletinSelectDto;
+import com.vieecoles.steph.entities.Bulletin;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -78,8 +79,55 @@ public List<MatriculeClasseDto> getMatriculeClasse(String classe, Long idEcole){
     System.out.println("classeNiveauDtoList "+classeNiveauDtoList.toString());
     return  classeNiveauDtoList ;
 }
+    @Transactional
+public Bulletin miseAjoursHeureAbsence(String matricule , String libelleAnnee , String libelleTrimetre ,Long idEcole ,String heureAbsJus ,String heureAbsNonJus ) {
+    Bulletin detailsBull = new Bulletin() ;
+       System.out.println("matricule"+matricule);
+        System.out.println("libelleAnnee"+libelleAnnee);
+        System.out.println("libelleTrimetre"+libelleTrimetre);
+        System.out.println("idEcole"+idEcole);
 
 
+try {
+    TypedQuery<Bulletin> q = em.createQuery( " select  b from Bulletin b where  b.matricule=:matricule and  b.libellePeriode=:libelleTrimetre and b.anneeLibelle=:libelleAnnee and b.ecoleId=:idEcole", Bulletin.class);
+    detailsBull = q.setParameter("matricule", matricule)
+            .setParameter("libelleAnnee", libelleAnnee)
+            .setParameter("libelleTrimetre", libelleTrimetre)
+            .setParameter("idEcole", idEcole)
+            .getSingleResult() ;
+    detailsBull.toString() ;
+    detailsBull.setHeuresAbsJustifiees(heureAbsJus);
+    detailsBull.setHeuresAbsNonJustifiees(heureAbsNonJus);
+} catch (Exception e) {
+    System.out.println("Aucun bulletin Trouvé");
+    return  null ;
+}
+    return detailsBull ;
+}
 
+
+    @Transactional
+    public List<Bulletin> listeBulletinGenereParClasse(String classe , String libelleAnnee , String libelleTrimetre ,Long idEcole  ) {
+        ArrayList<Bulletin> detailsBull = new ArrayList<>();
+        System.out.println("matricule"+classe);
+        System.out.println("libelleAnnee"+libelleAnnee);
+        System.out.println("libelleTrimetre"+libelleTrimetre);
+        System.out.println("idEcole"+idEcole);
+
+        try {
+            TypedQuery<Bulletin> q = em.createQuery( " select  b from Bulletin b where  b.libelleClasse=:classe and  b.libellePeriode=:libelleTrimetre and b.anneeLibelle=:libelleAnnee and b.ecoleId=:idEcole order by b.nom asc ", Bulletin.class);
+            detailsBull = (ArrayList<Bulletin>) q.setParameter("classe", classe)
+                    .setParameter("libelleAnnee", libelleAnnee)
+                    .setParameter("libelleTrimetre", libelleTrimetre)
+                    .setParameter("idEcole", idEcole)
+                            .getResultList();
+            detailsBull.toString() ;
+
+        } catch (Exception e) {
+            System.out.println("Aucun bulletin Trouvé");
+            return  null ;
+        }
+        return detailsBull ;
+    }
 
 }

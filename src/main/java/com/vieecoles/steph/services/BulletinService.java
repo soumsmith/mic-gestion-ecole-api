@@ -64,14 +64,14 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 		bulletin.setDateCreation(new Date());
 		bulletin.persist();
 	}
-	
+
 	/*
 	 * Obténir la liste des bulletins d'un élève pour une année
 	 */
 	public List<Bulletin> getBulletinsEleveByAnnee(Long anneeId, String matricule, Long classeId){
-		
+
 		List<Bulletin> myBulletins = new ArrayList<Bulletin>();
-		
+
 		try {
 			myBulletins = Bulletin.find("anneeId = ?1 and matricule = ?2 and classeId = ?3 ", anneeId, matricule,classeId).list();
 			logger.info(myBulletins.size()+" bulletin(s) trouvé(s) l'élève de matricule "+matricule);
@@ -81,7 +81,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 			else
 				ex.printStackTrace();
 		}
-		
+
 		return myBulletins;
 	}
 
@@ -154,7 +154,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 		List<Double> moyGenElevesList = new ArrayList<Double>();
 		List<String> bulletinIdList = new ArrayList<String>();
 		Integer countNonClasses = 0;
-		
+
 		logger.info(String.format("Nombre d'élèves concerné %s ", moyenneParEleve.size()));
 
 		for (MoyenneEleveDto me : moyenneParEleve) {
@@ -387,16 +387,17 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 				effectif));
 
 		//to do: vérifier si dernière période (trimestre/semestre)
-		
+
 		// Mise à jour des bulletins
 		bulletin = new Bulletin();
-		
+
 		//Obtenir le nombre de période à prendre en compte
 		Periode per = Periode.find("final = 'O'").singleResult();
+
 		List<Periode> periodes = Periode.find("niveau <= ?1", per.getNiveau()).list();
-		
+
 		System.out.println(periodes);
-		
+
 		for (String id : bulletinIdList) {
 			bulletin = Bulletin.findById(id);
 			bulletin.setMoyMax(CommonUtils.roundDouble(maxMoy, 2));
@@ -406,9 +407,9 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 			bulletin.setEffectifNonClasse(String.valueOf(countNonClasses));
 //			logger.info(String.format("m a j du bulletin %s [effectif : % . smoy max : %s . moy min : %s . moy avg : %s", id,
 //					effectif, bulletin.getMoyMax().toString(), bulletin.getMoyMin(), bulletin.getMoyAvg()));
-			
+
 			//to do: Calcul de la moyenne annuelle si dernier trimestre ou semestre (periode)
-			
+
 
 		}
 		return moyenneParEleve != null ? moyenneParEleve.size() : 0;
