@@ -16,6 +16,7 @@ import javax.transaction.Transactional;
 
 import com.google.gson.Gson;
 import com.vieecoles.steph.dto.MoyenneEleveDto;
+import com.vieecoles.steph.entities.AbsenceEleve;
 import com.vieecoles.steph.entities.AnneeScolaire;
 import com.vieecoles.steph.entities.Bulletin;
 import com.vieecoles.steph.entities.ClasseEleveMatiere;
@@ -54,6 +55,9 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 
 	@Inject
 	ClasseEleveMatiereService classeEleveMatiereService;
+	
+	@Inject
+	AbsenceService absenceService;
 
 	Logger logger = Logger.getLogger(BulletinService.class.getName());
 	Gson g = new Gson();
@@ -142,6 +146,8 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 		b.setNomSignataire(bulletin.getNomSignataire());
 		b.setTransfert(bulletin.getTransfert());
 		b.setRang(bulletin.getRang());
+		b.setHeuresAbsJustifiees(bulletin.getHeuresAbsJustifiees());
+		b.setHeuresAbsNonJustifiees(bulletin.getHeuresAbsNonJustifiees());
 	}
 
 	@Transactional
@@ -156,6 +162,9 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 		Integer countNonClasses = 0;
 
 		logger.info(String.format("Nombre d'élèves concerné %s ", moyenneParEleve.size()));
+		
+		// Pour les prochaine versions nous allons avant tout opération vider les enregistrements des bulletins, des détails bulletins et des notes bulletins.
+		// Pour éviter que si une matiere n existe plus pour une classe, il ne puisse pas avoir des enregistrement caduque dans la base de données.
 
 		for (MoyenneEleveDto me : moyenneParEleve) {
 //			 logger.info(g.toJson(me));
@@ -204,10 +213,18 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 			else
 				bulletin.setIsClassed(cep.getIsClassed());
 
-			// A la fin d'une annee scolaire
-//			bulletin.setMoyAn(null);
-//			bulletin.setRangAn(null);
-
+			// Mise à jour des heures d'absence
+			
+			AbsenceEleve absenceEleve = absenceService.getByAnneeAndEleveAndPeriode(Long.parseLong(annee), me.getEleve().getId(), Long.parseLong(periode));
+			
+			if(absenceEleve != null) {
+				bulletin.setHeuresAbsJustifiees(absenceEleve.getAbsJustifiee() != null ? absenceEleve.getAbsJustifiee().toString() : "0");
+				bulletin.setHeuresAbsNonJustifiees(absenceEleve.getAbsNonJustifiee() != null ? absenceEleve.getAbsNonJustifiee().toString() : "0");
+			}else {
+				bulletin.setHeuresAbsJustifiees("0");
+				bulletin.setHeuresAbsNonJustifiees("0");
+			}
+			
 			if (infosInscriptionsEleve != null) {
 //				System.out.println("affecté ::: " + infosInscriptionsEleve.getAfecte());
 				bulletin.setAffecte(infosInscriptionsEleve.getAfecte());
@@ -241,6 +258,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 				bulletinIdList.add(bulletin.getId());
 			}
 
+			
 			Double moyCoef = (double) 0;
 			for (Map.Entry<EcoleHasMatiere, List<Notes>> entry : me.getNotesMatiereMap().entrySet()) {
 				logger.info(String.format("bulletin id %s - matiere %s", bulletin.getId(), entry.getKey().getCode()));
@@ -251,7 +269,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 									.with("bulletinId", bulletin.getId()).and("matiereCode", entry.getKey().getCode()))
 							.singleResult();
 				} catch (NoResultException ex) {
-					logger.info("Aucun detail de bulletin trouvé");
+					logger.info("Aucun detail de bulletin trouvé pour la matiere "+entry.getKey().getLibelle());
 				}
 
 				// marquer que l eleve est classé dans une matiere ou non

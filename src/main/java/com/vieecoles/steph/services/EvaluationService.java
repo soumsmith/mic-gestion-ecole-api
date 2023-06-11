@@ -151,6 +151,7 @@ public class EvaluationService implements PanacheRepositoryBase<Evaluation, Long
 		try {
 			evaList = Evaluation.find(query, params).list();
 		} catch (RuntimeException ex) {
+			ex.printStackTrace();
 			logger.warning("Probably no result found");
 		}
 		return evaList;
