@@ -66,7 +66,7 @@ public class BulletinSelectDto {
 
 	private Double moy_annuelle;
 
-	private Integer rang_annuelle;
+	private String rang_annuelle;
 
 	private String appreciation_conseil;
 
@@ -219,9 +219,10 @@ public class BulletinSelectDto {
                              String redoublant, String boursier, String affecte, String libelle_classe, Integer effectif_classe,
                              Double total_coef, Double total_moy_coef, String nom_prof_princ, String heures_abs_just,
                              String heures_abs_non_just, Double moy_general, Double moy_max, Double moy_min, Double moy_avg,
-                             Double moy_annuelle, Integer rang_annuelle, String appreciation_conseil, Date date_creation, String code_qr,
+                             Double moy_annuelle, String rang_annuelle, String appreciation_conseil, Date date_creation, String code_qr,
                              String statut, String libelle_matiere, Double moyenne, Integer rang, Double coef, Double moy_coef,
-                             String appreciation, String categorie, int num_ordre, String rangBulletin, String nom_prenom_professeur, String libelle_categorie,String signataire,String bonus ,String pec,String parent_matiere,
+                             String appreciation, String categorie, int num_ordre, String rangBulletin, String nom_prenom_professeur,
+                             String libelle_categorie,String signataire,String bonus ,String pec,String parent_matiere,
                              String is_classed_mat , String is_classed_periode, Integer effectif_non_classe) {
         this.id_ecole = id_ecole;
         this.nom_ecole = nom_ecole;
@@ -724,14 +725,14 @@ public class BulletinSelectDto {
     /**
      * @return String return the rang_annuelle
      */
-    public Integer getRang_annuelle() {
+    public String getRang_annuelle() {
         return rang_annuelle;
     }
 
     /**
      * @param rang_annuelle the rang_annuelle to set
      */
-    public void setRang_annuelle(Integer rang_annuelle) {
+    public void setRang_annuelle(String rang_annuelle) {
         this.rang_annuelle = rang_annuelle;
     }
 

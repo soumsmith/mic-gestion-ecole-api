@@ -21,6 +21,7 @@ import java.net.URL;
 import java.nio.file.Files;
 
 import com.vieecoles.services.souscription.SousceecoleService;
+import com.vieecoles.steph.entities.Bulletin;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -74,27 +75,45 @@ public class bulletinRessource {
 
     private static String UPLOAD_DIR = "/data/";
     @GET
-    @Path("/list-matricule-par-classe/{idEcole}/{classe}")
+    @Path("/list-matricule-par-classe/{idEcole}/{classe}/{periode}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     @Transactional
-    public List<NiveauDto>  getMatriculeByClasse(@PathParam("idEcole") Long idEcole,@PathParam("classe") String classe)  {
+    public List<NiveauDto>  getMatriculeByClasse(@PathParam("idEcole") Long idEcole,@PathParam("classe") String classe ,@PathParam("periode") String periode)  {
       List<NiveauDto> matricule= new ArrayList<>() ;
-        matricule=  getMatriculeParClasse(idEcole,classe) ;
+        matricule=  getMatriculeParClasse(idEcole,classe,periode) ;
         return matricule;
     }
 
+    @PUT
+    @Path("/mise-a-jours-heures-absences/{matricule}/{idEcole}/{libelleAnnee}/{libelleTrimetre}/{heureAbsenJusti}/{heureAbsenNonJusti}")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Bulletin miseAjourBulletin(@PathParam("matricule") String matricule, @PathParam("idEcole") Long idEcole, @PathParam("libelleAnnee") String libelleAnnee,
+                                       @PathParam("libelleTrimetre") String libelleTrimetre, @PathParam("heureAbsenJusti") String heureAbsenJusti , @PathParam("heureAbsenNonJusti") String heureAbsenNonJusti)  {
+        return  bulletinClasseServices.miseAjoursHeureAbsence(matricule,libelleAnnee,libelleTrimetre,idEcole,heureAbsenJusti,heureAbsenNonJusti);
+    }
 
     @GET
+    @Path("/bulletin-genere-par-classe/{classe}/{idEcole}/{libelleAnnee}/{libelleTrimetre}")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public List<Bulletin> listeBulletinGenereParClasse(@PathParam("classe") String classe, @PathParam("idEcole") Long idEcole, @PathParam("libelleAnnee") String libelleAnnee,
+                                      @PathParam("libelleTrimetre") String libelleTrimetre)  {
+        return  bulletinClasseServices.listeBulletinGenereParClasse(classe,libelleAnnee,libelleTrimetre,idEcole);
+    }
+
+
+
+        @GET
     @Path("/details-bulletin/{type}/{matricule}/{idEcole}/{libelleAnnee}/{libelleTrimetre}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     @Transactional
     public ResponseEntity<byte[]>  getdetailsBulletin(@PathParam("type") String type,@PathParam("matricule") String matricule,@PathParam("idEcole") Long idEcole,@PathParam("libelleAnnee") String libelleAnnee,
                                                       @PathParam("libelleTrimetre") String libelleTrimetre) throws Exception, JRException {
 
-
-
         InputStream myInpuStream ;
-        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/BulletinNobel.jrxml");
+        if(libelleTrimetre.equals("Troisième Trimestre"))
+        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/BulletinTroisiemeTrimetre.jrxml");
+        else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/BulletinNobel.jrxml");
+
         //  myInpuStream = this.getClass().getClassLoader().getResourceAsStream("spider/test.jrxml");
         List<BulletinSelectDto>  detailsBull = new ArrayList<>() ;
 
@@ -144,8 +163,6 @@ public class bulletinRessource {
         }
 
 
-
-
         System.out.println("myEcoleImage "+imagebytes2.toString());
         TypedQuery<BulletinSelectDto> q = em.createQuery( "SELECT new com.vieecoles.projection.BulletinSelectDto(b.ecoleId,b.nomEcole,b.statutEcole,b.urlLogo,b.adresseEcole,b.telEcole,b.anneeLibelle, b.libellePeriode,b.matricule,b.nom, b.prenoms, b.sexe,b.dateNaissance,b.lieuNaissance,b.nationalite,b.redoublant,b.boursier,b.affecte,b.libelleClasse,b.effectif,b.totalCoef,b.totalMoyCoef,b.nomPrenomProfPrincipal,b.heuresAbsJustifiees,b.heuresAbsNonJustifiees,b.moyGeneral,b.moyMax,b.moyMin,b.moyAvg,b.moyAn,b.rangAn,b.appreciation,b.dateCreation,b.codeQr,b.statut,d.matiereLibelle,d.moyenne,d.rang,d.coef ,d.moyCoef,d.appreciation,d.categorie,d.num_ordre,CAST(b.rang as string ) ,d.nom_prenom_professeur,d.categorieMatiere,b.nomSignataire,CAST(d.bonus as string ),cast(d.pec as string),d.parentMatiere,d.isRanked,b.isClassed,cast(b.effectifNonClasse as integer ) ) from DetailBulletin  d join d.bulletin b where b.matricule=:matricule " +
                 "and b.ecoleId=:idEcole and b.anneeLibelle=:libelleAnnee and b.libellePeriode=:libelleTrimetre order by d.num_ordre ASC  ", BulletinSelectDto.class);
@@ -159,9 +176,25 @@ public class bulletinRessource {
 
         Double TcoefFr = calculcoefFran(matricule,libelleAnnee,libelleTrimetre,idEcole) ;
         Double  TmoyCoefFr = calculMoycoefFran(matricule,libelleAnnee,libelleTrimetre,idEcole) ;
-        System.out.println("Moyene en Francais: "+TmoyCoefFr/4);
+        //System.out.println("Moyene en Francais: "+TmoyCoefFr/4);
         Double TrangFr1 = calculRangFran(matricule,libelleAnnee,libelleTrimetre,idEcole) ;
-        int TrangFr = TrangFr1.intValue() ;
+
+
+        Double moy_1er_trim = calculmoyenTrimesPasse(matricule,libelleAnnee,"Premier Trimestre",idEcole) ;
+        Double moy_2eme_trim = calculmoyenTrimesPasse(matricule,libelleAnnee,"Deuxième Trimestre",idEcole) ;
+        Double moy_3eme_trim = calculmoyenTrimesPasse(matricule,libelleAnnee,"Troisième Trimestre",idEcole) ;
+
+        Integer rang_1er_trim = calculRangTrimesPasse(matricule,libelleAnnee,"Premier Trimestre",idEcole) ;
+        Integer rang_2eme_trim = calculRangTrimesPasse(matricule,libelleAnnee,"Deuxième Trimestre",idEcole) ;
+        Integer rang_3eme_trim = calculRangTrimesPasse(matricule,libelleAnnee,"Troisième Trimestre",idEcole) ;
+
+        String is_class_1er_trim = calculIsClassTrimesPasse(matricule,libelleAnnee,"Premier Trimestre",idEcole) ;
+        String is_class_2e_trim = calculIsClassTrimesPasse(matricule,libelleAnnee,"Deuxième Trimestre",idEcole) ;
+        String is_class_3e_trim = calculIsClassTrimesPasse(matricule,libelleAnnee,"Troisième Trimestre",idEcole) ;
+        int TrangFr = 0;
+         if(TrangFr1 !=null)
+         TrangFr = TrangFr1.intValue() ;
+
         if(type.toUpperCase().equals("PDF")){
 
 
@@ -180,6 +213,18 @@ public class bulletinRessource {
             map.put("codeEcole",codeEcole);
             map.put("statut",statut);
             map.put("DateNaiss",DateNaiss);
+
+            map.put("moy_1er_trim",moy_1er_trim);
+            map.put("moy_2eme_trim",moy_2eme_trim);
+            map.put("moy_3eme_trim",moy_3eme_trim);
+
+            map.put("rang_1er_trim",rang_1er_trim);
+            map.put("rang_2eme_trim",rang_2eme_trim);
+            map.put("rang_3eme_trim",rang_3eme_trim);
+
+            map.put("is_class_1er_trim",is_class_1er_trim);
+            map.put("is_class_2e_trim",is_class_2e_trim);
+            map.put("is_class_3e_trim",is_class_3e_trim);
 
 
             JasperPrint report = JasperFillManager.fillReport(compileReport, map, beanCollectionDataSource);
@@ -214,12 +259,13 @@ public class bulletinRessource {
 
 
 
-    List<NiveauDto> getMatriculeParClasse(Long idEcole ,String libelleClasse){
+    List<NiveauDto> getMatriculeParClasse(Long idEcole ,String libelleClasse,String periode){
         List<NiveauDto> classeNiveauDtoList = new ArrayList<>() ;
-        TypedQuery<NiveauDto> q = em.createQuery( "SELECT new com.vieecoles.dto.NiveauDto(b.matricule) from Bulletin b  where b.ecoleId =:idEcole  and b.libelleClasse=:classe  "
+        TypedQuery<NiveauDto> q = em.createQuery( "SELECT new com.vieecoles.dto.NiveauDto(b.matricule) from Bulletin b  where b.ecoleId =:idEcole  and b.libelleClasse=:classe and b.libellePeriode=:periode "
                 , NiveauDto.class);
         classeNiveauDtoList = q.setParameter("idEcole", idEcole)
                 .setParameter("classe", libelleClasse)
+                .setParameter("periode", periode)
                 .getResultList() ;
         return  classeNiveauDtoList ;
     }
@@ -319,6 +365,52 @@ public class bulletinRessource {
             return 0D ;
         }
     }
+
+    public  Double calculmoyenTrimesPasse(String matricule, String annee,String periode,Long idEcole){
+        try {
+            Double  moyTfr = (Double) em.createQuery("select b.moyGeneral from Bulletin b where b.matricule=:matricule and b.libellePeriode=:periode and b.ecoleId=:idEcole and b.anneeLibelle=:annee  ")
+                    .setParameter("matricule",matricule)
+                    .setParameter("annee",annee)
+                    .setParameter("periode",periode)
+                    .setParameter("idEcole",idEcole)
+                    .getSingleResult();
+            return  moyTfr ;
+        } catch (NoResultException e){
+            return 0D ;
+        }
+    }
+
+    public  Integer calculRangTrimesPasse(String matricule, String annee,String periode,Long idEcole){
+        try {
+            Integer  moyTfr = (Integer) em.createQuery("select b.rang from Bulletin b where b.matricule=:matricule and b.libellePeriode=:periode and b.ecoleId=:idEcole and b.anneeLibelle=:annee  ")
+                    .setParameter("matricule",matricule)
+                    .setParameter("annee",annee)
+                    .setParameter("periode",periode)
+                    .setParameter("idEcole",idEcole)
+                    .getSingleResult();
+            return  moyTfr ;
+        } catch (NoResultException e){
+            return 0;
+        }
+    }
+
+
+
+
+    public  String calculIsClassTrimesPasse(String matricule, String annee,String periode,Long idEcole){
+        try {
+            String  isclass = (String) em.createQuery("select b.isClassed from Bulletin b where b.matricule=:matricule and b.libellePeriode=:periode and b.ecoleId=:idEcole and b.anneeLibelle=:annee  ")
+                    .setParameter("matricule",matricule)
+                    .setParameter("annee",annee)
+                    .setParameter("periode",periode)
+                    .setParameter("idEcole",idEcole)
+                    .getSingleResult();
+            return  isclass ;
+        } catch (NoResultException e){
+            return null;
+        }
+    }
+
 
 
 }
