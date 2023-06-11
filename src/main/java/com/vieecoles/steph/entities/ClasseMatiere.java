@@ -25,8 +25,8 @@ public class ClasseMatiere extends PanacheEntityBase{
 	private long id;
 	private String coef;
 	@ManyToOne
+//	@NotFound(action = NotFoundAction.IGNORE)
 	@JoinColumn(name = "matiereid")
-	@NotFound(action = NotFoundAction.IGNORE)
 	private EcoleHasMatiere matiere;
 	@Transient
 //	@ManyToOne

@@ -12,6 +12,7 @@ import javax.transaction.Transactional;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Response;
 
+import com.google.gson.Gson;
 import com.vieecoles.steph.dto.EcoleMatiereDto;
 import com.vieecoles.steph.dto.MatiereDto;
 import com.vieecoles.steph.entities.ClasseMatiere;
@@ -84,8 +85,8 @@ public class EcoleHasMatiereService implements PanacheRepositoryBase<EcoleHasMat
 				try {
 					// Retrouver le parent par rapport à la matière source de l'école
 //					logger.info("Matiere parent id : "+matiere.getMatiereParent()+ "ecole id : "+ ecole.getId());
-					matiereParent = EcoleHasMatiere.find("matiere.id = ?1 and ecole.id=?2",Long.parseLong(matiere.getMatiereParent()),ecole.getId())
-							.singleResult();
+					matiereParent = EcoleHasMatiere.find("matiere.id = ?1 and ecole.id=?2",
+							Long.parseLong(matiere.getMatiereParent()), ecole.getId()).singleResult();
 				} catch (RuntimeException e) {
 					matiereParent = null;
 					logger.warning(
@@ -94,7 +95,8 @@ public class EcoleHasMatiereService implements PanacheRepositoryBase<EcoleHasMat
 				}
 			}
 			matiereEcole.setMatiereParent(matiereParent);
-			matiereEcole.setParentMatiereLibelle(matiereParent==null ? matiereEcole.getLibelle() : matiereParent.getLibelle());
+			matiereEcole.setParentMatiereLibelle(
+					matiereParent == null ? matiereEcole.getLibelle() : matiereParent.getLibelle());
 			create(matiereEcole);
 
 			// Pour chaque matiere créee il faut obligatoirement créer le coeficient avec
@@ -110,43 +112,44 @@ public class EcoleHasMatiereService implements PanacheRepositoryBase<EcoleHasMat
 	/*
 	 * Process de création de matiere pour une ecole
 	 */
-	
+
 	@Transactional
 	public void createMatiereToOneEcole(Matiere matiere, Ecole ecole) {
 
-			logger.info("-> Création de matiere pour l'ecole : " + ecole.getLibelle());
-			EcoleHasMatiere matiereEcole = new EcoleHasMatiere();
-			EcoleHasMatiere matiereParent = null;
-			ClasseMatiere classeMatiere = new ClasseMatiere();
+		logger.info("-> Création de matiere pour l'ecole : " + ecole.getLibelle());
+		EcoleHasMatiere matiereEcole = new EcoleHasMatiere();
+		EcoleHasMatiere matiereParent = null;
+		ClasseMatiere classeMatiere = new ClasseMatiere();
 
-			matiereEcole = buildMatiereToEcoleMatiere(matiere);
-			matiereEcole.setEcole(ecole);
-			if (matiere.getMatiereParent() != null) {
-				try {
-					// Retrouver le parent par rapport à la matière source de l'école
+		matiereEcole = buildMatiereToEcoleMatiere(matiere);
+		matiereEcole.setEcole(ecole);
+		if (matiere.getMatiereParent() != null) {
+			try {
+				// Retrouver le parent par rapport à la matière source de l'école
 //					logger.info("Matiere parent id : "+matiere.getMatiereParent()+ "ecole id : "+ ecole.getId());
-					matiereParent = EcoleHasMatiere.find("matiere.id = ?1 and ecole.id=?2",Long.parseLong(matiere.getMatiereParent()),ecole.getId())
-							.singleResult();
-				} catch (RuntimeException e) {
-					matiereParent = null;
-					logger.warning(
-							"Something wrong in the panache find request, to get matiere parent by code matiere source");
+				matiereParent = EcoleHasMatiere.find("matiere.id = ?1 and ecole.id=?2",
+						Long.parseLong(matiere.getMatiereParent()), ecole.getId()).singleResult();
+			} catch (RuntimeException e) {
+				matiereParent = null;
+				logger.warning(
+						"Something wrong in the panache find request, to get matiere parent by code matiere source");
 //					e.printStackTrace();
-				}
 			}
-			matiereEcole.setMatiereParent(matiereParent);
-			matiereEcole.setParentMatiereLibelle(matiereParent==null ? matiereEcole.getLibelle() : matiereParent.getLibelle());
-			create(matiereEcole);
+		}
+		matiereEcole.setMatiereParent(matiereParent);
+		matiereEcole.setParentMatiereLibelle(
+				matiereParent == null ? matiereEcole.getLibelle() : matiereParent.getLibelle());
+		create(matiereEcole);
 
-			// Pour chaque matiere créee il faut obligatoirement créer le coeficient avec
-			// "1" comme valeur par defaut
-			// classeMatiere.setBranche(null);
-			classeMatiere.setCoef(Constants.DEFAULT_COEFFICIENT);
-			classeMatiere.setEcole(ecole);
-			classeMatiere.setMatiere(matiereEcole);
-			classeMatiereService.handleCreateMatiereToBranche(classeMatiere);
+		// Pour chaque matiere créee il faut obligatoirement créer le coeficient avec
+		// "1" comme valeur par defaut
+		// classeMatiere.setBranche(null);
+		classeMatiere.setCoef(Constants.DEFAULT_COEFFICIENT);
+		classeMatiere.setEcole(ecole);
+		classeMatiere.setMatiere(matiereEcole);
+		classeMatiereService.handleCreateMatiereToBranche(classeMatiere);
 	}
-	
+
 	public List<EcoleHasMatiere> getByNiveauEnseignement(Long ecole, Long niveau) {
 		return find("matiere.niveauEnseignement.id = ?1 and ecole.id=?2", niveau, ecole).list();
 	}
@@ -166,7 +169,7 @@ public class EcoleHasMatiereService implements PanacheRepositoryBase<EcoleHasMat
 		dto.setBonus(ecoleMatiere.getBonus());
 		dto.setCategorie(ecoleMatiere.getCategorie());
 		dto.setMatiereParent(ecoleMatiere.getMatiereParent());
-		
+
 		// Maj la matiere parentlibelle
 
 		return dto;
@@ -174,7 +177,7 @@ public class EcoleHasMatiereService implements PanacheRepositoryBase<EcoleHasMat
 
 	public EcoleHasMatiere buildMatiereToEcoleMatiere(Matiere matiere) {
 		EcoleHasMatiere matiereEcole = new EcoleHasMatiere();
-		
+
 		matiereEcole.setLibelle(matiere.getLibelle());
 		matiereEcole.setMatiere(matiere);
 		matiereEcole.setPec(matiere.getPec());
@@ -192,6 +195,9 @@ public class EcoleHasMatiereService implements PanacheRepositoryBase<EcoleHasMat
 	@Transactional
 	public EcoleHasMatiere update(EcoleHasMatiere ecoleHasMatiere) {
 		EcoleHasMatiere entity = EcoleHasMatiere.findById(ecoleHasMatiere.getId());
+		System.out.println("-----");
+		System.out.println(ecoleHasMatiere.getMatiereParent() == null);
+		
 		if (entity == null) {
 			throw new NotFoundException();
 		}
@@ -199,22 +205,24 @@ public class EcoleHasMatiereService implements PanacheRepositoryBase<EcoleHasMat
 //		
 		entity.setCode(ecoleHasMatiere.getCode());
 		entity.setLibelle(ecoleHasMatiere.getLibelle());
-		entity.setMatiereParent(ecoleHasMatiere.getMatiereParent());
+		entity.setMatiereParent((ecoleHasMatiere.getMatiereParent()!= null && ecoleHasMatiere.getMatiereParent().getId() != null) ? ecoleHasMatiere.getMatiereParent() : null);
 		entity.setCategorie(ecoleHasMatiere.getCategorie());
 		entity.setPec(ecoleHasMatiere.getPec());
 		entity.setBonus(ecoleHasMatiere.getBonus());
 		entity.setDateUpdate(LocalDateTime.now());
-		
-		
 
 		return entity;
 	}
 
 	public EcoleHasMatiere updateAndDisplay(EcoleHasMatiere ecoleHasMatiere) {
 		EcoleHasMatiere em;
-		if (update(ecoleHasMatiere) != null) {
-			em = findById(ecoleHasMatiere.getId());
-			return em;
+		try {
+			if (update(ecoleHasMatiere) != null) {
+				em = findById(ecoleHasMatiere.getId());
+				return em;
+			}
+		} catch (RuntimeException ex) {
+			ex.printStackTrace();
 		}
 
 		return null;

@@ -24,6 +24,9 @@ public class MoyenneEleveDto implements Comparable<MoyenneEleveDto> {
 	
 	private Double moyenneAnnuelle;
 	private String rangAnnuel;
+	
+	private Integer absJust;
+	private Integer absNonJust;
 
 	@Override
 	public int compareTo(MoyenneEleveDto o) {
