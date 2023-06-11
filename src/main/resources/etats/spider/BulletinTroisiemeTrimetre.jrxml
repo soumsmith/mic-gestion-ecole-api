@@ -513,8 +513,7 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 						<textElement verticalAlignment="Middle">
 							<font fontName="SansSerif" size="8"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":($F{parent_matiere}.equals("FRANCAIS")&&$P{TrangFr}==1) ?$P{TrangFr}+" er":($F{parent_matiere}.equals("FRANCAIS")&& $P{TrangFr}!=1) ?$P{TrangFr}+" e" 
-:($F{parent_matiere}.equals("EMR")&&$P{TrangEMR}==1) ?$P{TrangEMR}+" er":($F{parent_matiere}.equals("EMR")&& $P{TrangEMR}!=1) ?$P{TrangEMR}+" e": $F{rang}==1 ?  $F{rang}+" er" :$F{rang}!=1? $F{rang} +" e": $F{rang} +" e"]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":($F{parent_matiere}.equals("FRANCAIS")&&$P{TrangFr}==1) ?$P{TrangFr}+" er":($F{parent_matiere}.equals("FRANCAIS")&& $P{TrangFr}!=1) ?$P{TrangFr}+" e" : $F{rang}==1 ?  $F{rang}+" er" :$F{rang}!=1? $F{rang} +" e": $F{rang} +" e"]]></textFieldExpression>
 					</textField>
 					<textField isBlankWhenNull="true">
 						<reportElement style="champsLibelle" x="360" y="0" width="117" height="15" isRemoveLineWhenBlank="true" uuid="b4200066-a206-4e5c-b3ee-1c1c3d9c5fde">

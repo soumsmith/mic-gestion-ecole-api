@@ -146,7 +146,7 @@ public class resultatsServices {
     public  Integer getOrderNiveau(String niveau){
         Integer ordNiveau;
         try {
-            ordNiveau = (Integer) em.createQuery("select distinct cast(o.ordre_niveau as integer ) from Bulletin o where  o.niveau=:niveau")
+            ordNiveau = (Integer) em.createQuery("select distinct o.ordreNiveau from Bulletin o where  o.niveau=:niveau")
                      .setParameter("niveau",niveau)
                     .getSingleResult();
         } catch (NoResultException e){

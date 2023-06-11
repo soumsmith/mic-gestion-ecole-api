@@ -50,7 +50,7 @@ public class EleveNonAffecteParClasseServices {
     public List<eleveNonAffecteParClasseDto> getListEleveNonAffectParClassDto(Long idEcole , String classe){
         List<eleveNonAffecteParClasseDto> classeNiveauDtoList = new ArrayList<>() ;
         try {
-            TypedQuery<eleveNonAffecteParClasseDto> q= em.createQuery("select new com.vieecoles.dto.eleveNonAffecteParClasseDto(o.libelleClasse,o.nomPrenomProfPrincipal,o.matricule,o.nom,o.prenoms,o.sexe,o.dateNaissance,o.nationalite,o.redoublant,o.affecte,o.numDecisionAffecte,o.moyGeneral,o.rang,o.appreciation,o.nomPrenomEducateur,cast(o.ordre_niveau as integer )) from Bulletin o where  o.ecoleId=:idEcole and o.libelleClasse=:classe and o.affecte=:affecte", eleveNonAffecteParClasseDto.class);
+            TypedQuery<eleveNonAffecteParClasseDto> q= em.createQuery("select new com.vieecoles.dto.eleveNonAffecteParClasseDto(o.libelleClasse,o.nomPrenomProfPrincipal,o.matricule,o.nom,o.prenoms,o.sexe,o.dateNaissance,o.nationalite,o.redoublant,o.affecte,o.numDecisionAffecte,o.moyGeneral,o.rang,o.appreciation,o.nomPrenomEducateur,o.ordreNiveau) from Bulletin o where  o.ecoleId=:idEcole and o.libelleClasse=:classe and o.affecte=:affecte", eleveNonAffecteParClasseDto.class);
             classeNiveauDtoList = q.setParameter("idEcole",idEcole)
                                  .setParameter("classe",classe)
                                  .setParameter("affecte","NON_AFFECTE")
