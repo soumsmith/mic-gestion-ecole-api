@@ -10,8 +10,10 @@ import com.vieecoles.entities.operations.eleve;
 import com.vieecoles.entities.parametre;
 import com.vieecoles.entities.profil;
 import com.vieecoles.projection.BulletinSelectDto;
+import com.vieecoles.projection.LivretScolaireSelectDto;
 import com.vieecoles.services.eleves.InscriptionService;
 import com.vieecoles.services.etats.BulletinClasseServices;
+import com.vieecoles.services.etats.LivretScolaireServices;
 import com.vieecoles.services.profilService;
 
 import java.awt.image.BufferedImage;
@@ -73,6 +75,9 @@ public class bulletinRessource {
     @Inject
     BulletinClasseServices bulletinClasseServices ;
 
+    @Inject
+    LivretScolaireServices livretScolaireServices ;
+
     private static String UPLOAD_DIR = "/data/";
     @GET
     @Path("/list-matricule-par-classe/{idEcole}/{classe}/{periode}")
@@ -82,6 +87,17 @@ public class bulletinRessource {
       List<NiveauDto> matricule= new ArrayList<>() ;
         matricule=  getMatriculeParClasse(idEcole,classe,periode) ;
         return matricule;
+    }
+
+    @GET
+    @Path("/livret-scolaire/{matricule}/{idEcole}/{libelleAnnee}/{libelleTrimetre}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<LivretScolaireSelectDto> livretScolaire(@PathParam("matricule") String matricule,
+                                                        @PathParam("idEcole") Long idEcole,
+                                                        @PathParam("libelleAnnee") String libelleAnnee,
+                                                        @PathParam("libelleTrimetre") String libelleTrimetre)  {
+        return  livretScolaireServices.livretScolaire(idEcole,libelleTrimetre,matricule,libelleAnnee);
+
     }
 
     @PUT

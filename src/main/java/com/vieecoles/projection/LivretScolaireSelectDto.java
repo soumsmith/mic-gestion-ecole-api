@@ -1,70 +1,52 @@
-package com.vieecoles.dto;
+package com.vieecoles.projection;
 import java.awt.image.BufferedImage;
 import java.util.Date;
 
 
-public class LivretScolaireDto {
+public class LivretScolaireSelectDto {
 	public Long id_ecole;
-    private  String pec ;
 	public String nom_ecole;
 	public String statut_ecole;
-
 	public String url_logo;
-
 	public String adresse_ecole;
-
 	public String tel_ecole;
-
 	public String annee_libelle;
-
-	private String libelle_periode;
-
+    private String libelle_periode;
 	public String matricule;
 	public String nom;
 	public String prenoms;
 	public String sexe;
-	private String date_naissance;
+    private String date_naissance;
 	private String lieu_naissance;
 	private String nationalite;
 	private String redoublant;
 	private String boursier;
 	private String affecte;
-
 	private String libelle_classe;
-
 	private Integer effectif_classe;
 
+    private Integer rangMatAn;
+    private Double moyMatAn;
 	private String nom_prof_princ;
-
 	private String heures_abs_just;
-
 	private String heures_abs_non_just;
-
 	private Double moy_general;
-
 	private Double moy_max;
-
 	private Double moy_min;
-
 	private Double moy_avg;
-
 	private Double moy_annuelle;
-
 	private String rang_annuelle;
-
 	private String appreciation_conseil;
-
 	private Date date_creation;
-
+	private String code_qr;
 	private String statut;
 	private String libelle_matiere;
 	private Double moyenne;
 	private Integer rang;
-    private Double moy_An ;
-    private Integer rang_An ;
-
+	private Double coef;
+	private Double moy_coef;
 	private String appreciation;
-
+    private String  categorie;
     private int  num_ordre;
     private String  rangBulletin;
     private String nom_prenom_professeur ;
@@ -72,26 +54,84 @@ public class LivretScolaireDto {
 
     private String signataire ;
     private  String bonus ;
-
+    private  String pec ;
     private  String parent_matiere ;
     private String is_classed_mat ;
     private String is_classed_periode ;
     private Integer effectif_non_classe ;
 
-    public Double getMoy_An() {
-        return moy_An;
+    private Double moyennePremier;
+    private Integer rangPremier;
+    private Double moyenneDeuxieme;
+    private Integer rangDeuxieme;
+
+    private Double moy_anMat;
+    private Integer rang_anMat;
+
+
+    public Integer getRang_anMat() {
+        return rang_anMat;
     }
 
-    public void setMoy_An(Double moy_An) {
-        this.moy_An = moy_An;
+    public void setRang_anMat(Integer rang_anMat) {
+        this.rang_anMat = rang_anMat;
     }
 
-    public Integer getRang_An() {
-        return rang_An;
+    public Double getMoy_anMat() {
+        return moy_anMat;
     }
 
-    public void setRang_An(Integer rang_An) {
-        this.rang_An = rang_An;
+    public void setMoy_anMat(Double moy_anMat) {
+        this.moy_anMat = moy_anMat;
+    }
+
+    public Double getMoyennePremier() {
+        return moyennePremier;
+    }
+
+    public void setMoyennePremier(Double moyennePremier) {
+        this.moyennePremier = moyennePremier;
+    }
+
+    public Integer getRangPremier() {
+        return rangPremier;
+    }
+
+    public void setRangPremier(Integer rangPremier) {
+        this.rangPremier = rangPremier;
+    }
+
+    public Double getMoyenneDeuxieme() {
+        return moyenneDeuxieme;
+    }
+
+    public void setMoyenneDeuxieme(Double moyenneDeuxieme) {
+        this.moyenneDeuxieme = moyenneDeuxieme;
+    }
+
+    public Integer getRangDeuxieme() {
+        return rangDeuxieme;
+    }
+
+    public void setRangDeuxieme(Integer rangDeuxieme) {
+        this.rangDeuxieme = rangDeuxieme;
+    }
+
+
+    public Integer getRangMatAn() {
+        return rangMatAn;
+    }
+
+    public void setRangMatAn(Integer rangMatAn) {
+        this.rangMatAn = rangMatAn;
+    }
+
+    public Double getMoyMatAn() {
+        return moyMatAn;
+    }
+
+    public void setMoyMatAn(Double moyMatAn) {
+        this.moyMatAn = moyMatAn;
     }
 
     public Integer getEffectif_non_classe() {
@@ -127,26 +167,97 @@ public class LivretScolaireDto {
 
     }
 
-    public LivretScolaireDto(Long id_ecole, String pec, String nom_ecole,
-                             String statut_ecole, String url_logo, String adresse_ecole,
-                             String tel_ecole, String annee_libelle, String libelle_periode,
-                             String matricule, String nom, String prenoms, String sexe,
-                             String date_naissance, String lieu_naissance, String nationalite,
-                             String redoublant, String boursier, String affecte, String libelle_classe,
-                             Integer effectif_classe, String nom_prof_princ, String heures_abs_just,
-                             String heures_abs_non_just, Double moy_general,
-                             Double moy_max, Double moy_min, Double moy_avg,
-                             Double moy_annuelle, String rang_annuelle,
-                             String appreciation_conseil, Date date_creation,
-                             String statut, String libelle_matiere, Double moyenne,
-                             Integer rang, Double moy_An, Integer rang_An,
-                             String appreciation, int num_ordre, String rangBulletin,
-                             String nom_prenom_professeur, String libelle_categorie,
-                             String signataire, String bonus, String parent_matiere,
-                             String is_classed_mat, String is_classed_periode,
-                             Integer effectif_non_classe) {
-        this.id_ecole = id_ecole;
+    public String getSignataire() {
+        return signataire;
+    }
+
+    public void setSignataire(String signataire) {
+        this.signataire = signataire;
+    }
+
+    public LivretScolaireSelectDto() {
+    }
+
+    public String getBonus() {
+        return bonus;
+    }
+
+    public void setBonus(String bonus) {
+        this.bonus = bonus;
+    }
+
+    public String getPec() {
+        return pec;
+    }
+
+    public void setPec(String pec) {
         this.pec = pec;
+    }
+
+
+
+
+    @Override
+    public String toString() {
+        return "LivretScolaireSelectDto{" +
+                "id_ecole=" + id_ecole +
+                ", nom_ecole='" + nom_ecole + '\'' +
+                ", statut_ecole='" + statut_ecole + '\'' +
+                ", url_logo='" + url_logo + '\'' +
+                ", adresse_ecole='" + adresse_ecole + '\'' +
+                ", tel_ecole='" + tel_ecole + '\'' +
+                ", annee_libelle='" + annee_libelle + '\'' +
+                ", libelle_periode='" + libelle_periode + '\'' +
+                ", matricule='" + matricule + '\'' +
+                ", nom='" + nom + '\'' +
+                ", prenoms='" + prenoms + '\'' +
+                ", sexe='" + sexe + '\'' +
+                ", date_naissance='" + date_naissance + '\'' +
+                ", lieu_naissance='" + lieu_naissance + '\'' +
+                ", nationalite='" + nationalite + '\'' +
+                ", redoublant='" + redoublant + '\'' +
+                ", boursier='" + boursier + '\'' +
+                ", affecte='" + affecte + '\'' +
+                ", libelle_classe='" + libelle_classe + '\'' +
+                ", effectif_classe=" + effectif_classe +
+
+                ", nom_prof_princ='" + nom_prof_princ + '\'' +
+                ", heures_abs_just='" + heures_abs_just + '\'' +
+                ", heures_abs_non_just='" + heures_abs_non_just + '\'' +
+                ", moy_general=" + moy_general +
+                ", moy_max=" + moy_max +
+                ", moy_min=" + moy_min +
+                ", moy_avg=" + moy_avg +
+                ", moy_annuelle=" + moy_annuelle +
+                ", rang_annuelle='" + rang_annuelle + '\'' +
+                ", appreciation_conseil='" + appreciation_conseil + '\'' +
+                ", date_creation=" + date_creation +
+                ", code_qr='" + code_qr + '\'' +
+                ", statut='" + statut + '\'' +
+                ", libelle_matiere='" + libelle_matiere + '\'' +
+                ", moyenne=" + moyenne +
+                ", rang=" + rang +
+                ", coef=" + coef +
+                ", moy_coef=" + moy_coef +
+                ", appreciation='" + appreciation + '\'' +
+                ", categorie='" + categorie + '\'' +
+                ", num_ordre=" + num_ordre +
+                ", rangBulletin='" + rangBulletin + '\'' +
+                ", nom_prenom_professeur='" + nom_prenom_professeur + '\'' +
+                ", libelle_categorie='" + libelle_categorie + '\'' +
+
+                ", signataire='" + signataire + '\'' +
+                ", bonus='" + bonus + '\'' +
+                ", pec='" + pec + '\'' +
+                ", parent_matiere='" + parent_matiere + '\'' +
+                ", is_classed_mat='" + is_classed_mat + '\'' +
+                ", is_classed_periode='" + is_classed_periode + '\'' +
+                ", effectif_non_classe=" + effectif_non_classe +
+                '}';
+    }
+
+    public LivretScolaireSelectDto(Long id_ecole, String nom_ecole, String statut_ecole, String url_logo, String adresse_ecole, String tel_ecole, String annee_libelle, String libelle_periode, String matricule, String nom, String prenoms, String sexe, String date_naissance, String lieu_naissance, String nationalite, String redoublant, String boursier, String affecte, String libelle_classe, Integer effectif_classe, Integer rangMatAn, Double moyMatAn, String nom_prof_princ, String heures_abs_just, String heures_abs_non_just, Double moy_general, Double moy_max, Double moy_min, Double moy_avg, Double moy_annuelle, String rang_annuelle, String appreciation_conseil, Date date_creation, String code_qr, String statut, String libelle_matiere, Double moyenne, Integer rang, Double coef, Double moy_coef, String appreciation, String categorie, int num_ordre, String rangBulletin, String nom_prenom_professeur, String libelle_categorie, BufferedImage photo_eleve, String signataire, String bonus, String pec, String parent_matiere, String is_classed_mat, String is_classed_periode, Integer effectif_non_classe, Double moyennePremier, Integer rangPremier, Double moyenneDeuxieme, Integer rangDeuxieme) {
+        this.id_ecole = id_ecole;
         this.nom_ecole = nom_ecole;
         this.statut_ecole = statut_ecole;
         this.url_logo = url_logo;
@@ -166,6 +277,9 @@ public class LivretScolaireDto {
         this.affecte = affecte;
         this.libelle_classe = libelle_classe;
         this.effectif_classe = effectif_classe;
+
+        this.rangMatAn = rangMatAn;
+        this.moyMatAn = moyMatAn;
         this.nom_prof_princ = nom_prof_princ;
         this.heures_abs_just = heures_abs_just;
         this.heures_abs_non_just = heures_abs_non_just;
@@ -177,57 +291,39 @@ public class LivretScolaireDto {
         this.rang_annuelle = rang_annuelle;
         this.appreciation_conseil = appreciation_conseil;
         this.date_creation = date_creation;
+        this.code_qr = code_qr;
         this.statut = statut;
         this.libelle_matiere = libelle_matiere;
         this.moyenne = moyenne;
         this.rang = rang;
-        this.moy_An = moy_An;
-        this.rang_An = rang_An;
+        this.coef = coef;
+        this.moy_coef = moy_coef;
         this.appreciation = appreciation;
+        this.categorie = categorie;
         this.num_ordre = num_ordre;
         this.rangBulletin = rangBulletin;
         this.nom_prenom_professeur = nom_prenom_professeur;
         this.libelle_categorie = libelle_categorie;
         this.signataire = signataire;
         this.bonus = bonus;
+        this.pec = pec;
         this.parent_matiere = parent_matiere;
         this.is_classed_mat = is_classed_mat;
         this.is_classed_periode = is_classed_periode;
         this.effectif_non_classe = effectif_non_classe;
+        this.moyennePremier = moyennePremier;
+        this.rangPremier = rangPremier;
+        this.moyenneDeuxieme = moyenneDeuxieme;
+        this.rangDeuxieme = rangDeuxieme;
     }
 
-    public String getSignataire() {
-        return signataire;
-    }
-
-    public void setSignataire(String signataire) {
-        this.signataire = signataire;
-    }
-
-    public LivretScolaireDto() {
-    }
-
-    public String getBonus() {
-        return bonus;
-    }
-
-    public void setBonus(String bonus) {
-        this.bonus = bonus;
-    }
-
-    public String getPec() {
-        return pec;
-    }
-
-    public void setPec(String pec) {
-        this.pec = pec;
+    public int getNum_ordre() {
+        return num_ordre;
     }
 
     public void setNum_ordre(int num_ordre) {
         this.num_ordre = num_ordre;
     }
-
-
 
     /**
      * @return Long return the id_ecole
@@ -525,6 +621,12 @@ public class LivretScolaireDto {
 
     /**
      * @return String return the total_coef
+     */
+
+
+    /**
+     * @param total_coef the total_coef to set
+     */
 
 
     /**
@@ -733,6 +835,33 @@ public class LivretScolaireDto {
         this.rang = rang;
     }
 
+    /**
+     * @return String return the coef
+     */
+    public Double getCoef() {
+        return coef;
+    }
+
+    /**
+     * @param coef the coef to set
+     */
+    public void setCoef(Double coef) {
+        this.coef = coef;
+    }
+
+    /**
+     * @return String return the moy_coef
+     */
+    public Double getMoy_coef() {
+        return moy_coef;
+    }
+
+    /**
+     * @param moy_coef the moy_coef to set
+     */
+    public void setMoy_coef(Double moy_coef) {
+        this.moy_coef = moy_coef;
+    }
 
     /**
      * @return String return the appreciation
@@ -765,22 +894,40 @@ public class LivretScolaireDto {
 
 
 
+
+    /**
+     * @return String return the categorie
+     */
+    public String getCategorie() {
+        return categorie;
+    }
+
+    /**
+     * @param categorie the categorie to set
+     */
+    public void setCategorie(String categorie) {
+        this.categorie = categorie;
+    }
+
     /**
      * @return String return the num_ordre
      */
-    public Integer getNum_ordre() {
-        return num_ordre;
+
+
+
+    /**
+     * @return String return the code_qr
+     */
+    public String getCode_qr() {
+        return code_qr;
     }
 
     /**
-     * @param num_ordre the num_ordre to set
+     * @param code_qr the code_qr to set
      */
-    public void setNum_ordre(Integer num_ordre) {
-        this.num_ordre = num_ordre;
+    public void setCode_qr(String code_qr) {
+        this.code_qr = code_qr;
     }
-
-
-
 
     /**
      * @return String return the libelle_matiere

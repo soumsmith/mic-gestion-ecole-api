@@ -39,14 +39,19 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 	<parameter name="is_class_3e_trim" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="TrangEMR" class="java.lang.Integer" isForPrompting="false"/>
 	<parameter name="TmoyCoefEMR" class="java.lang.Double" isForPrompting="false"/>
+	<parameter name="TmoyFrPremier" class="java.lang.Double" isForPrompting="false"/>
+	<parameter name="TrangFrPremier" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="TrangFrDeuxieme" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="TmoyFrDeuxieme" class="java.lang.Double" isForPrompting="false"/>
+	<parameter name="TmoyCoefEMRPremier" class="java.lang.Double" isForPrompting="false"/>
+	<parameter name="TmoyCoefEMRDeuxieme" class="java.lang.Double" isForPrompting="false"/>
+	<parameter name="TrangEMRPremier" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="TrangEMRDeuxieme" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="TmoyFrAnn" class="java.lang.Double" isForPrompting="false"/>
+	<parameter name="TmoyEMRANN" class="java.lang.Double" isForPrompting="false"/>
 	<queryString language="SQL">
 		<![CDATA[]]>
 	</queryString>
-	<field name="id_ecole" class="java.lang.Long">
-		<property name="com.jaspersoft.studio.field.name" value="id_ecole"/>
-		<property name="com.jaspersoft.studio.field.label" value="id_ecole"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value=""/>
-	</field>
 	<field name="nom_ecole" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="nom_ecole"/>
 		<property name="com.jaspersoft.studio.field.label" value="nom_ecole"/>
@@ -55,11 +60,6 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 	<field name="statut_ecole" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="statut_ecole"/>
 		<property name="com.jaspersoft.studio.field.label" value="statut_ecole"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value=""/>
-	</field>
-	<field name="url_logo" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="url_logo"/>
-		<property name="com.jaspersoft.studio.field.label" value="url_logo"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value=""/>
 	</field>
 	<field name="adresse_ecole" class="java.lang.String">
@@ -142,16 +142,6 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 		<property name="com.jaspersoft.studio.field.label" value="effectif_classe"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value=""/>
 	</field>
-	<field name="total_coef" class="java.lang.Double">
-		<property name="com.jaspersoft.studio.field.name" value="total_coef"/>
-		<property name="com.jaspersoft.studio.field.label" value="total_coef"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value=""/>
-	</field>
-	<field name="total_moy_coef" class="java.lang.Double">
-		<property name="com.jaspersoft.studio.field.name" value="total_moy_coef"/>
-		<property name="com.jaspersoft.studio.field.label" value="total_moy_coef"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value=""/>
-	</field>
 	<field name="nom_prof_princ" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="nom_prof_princ"/>
 		<property name="com.jaspersoft.studio.field.label" value="nom_prof_princ"/>
@@ -207,11 +197,6 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 		<property name="com.jaspersoft.studio.field.label" value="date_creation"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value=""/>
 	</field>
-	<field name="code_qr" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="code_qr"/>
-		<property name="com.jaspersoft.studio.field.label" value="code_qr"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value=""/>
-	</field>
 	<field name="statut" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="statut"/>
 		<property name="com.jaspersoft.studio.field.label" value="statut"/>
@@ -230,16 +215,6 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 	<field name="rang" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.name" value="rang"/>
 		<property name="com.jaspersoft.studio.field.label" value="rang"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value=""/>
-	</field>
-	<field name="coef" class="java.lang.Double">
-		<property name="com.jaspersoft.studio.field.name" value="coef"/>
-		<property name="com.jaspersoft.studio.field.label" value="coef"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value=""/>
-	</field>
-	<field name="moy_coef" class="java.lang.Double">
-		<property name="com.jaspersoft.studio.field.name" value="moy_coef"/>
-		<property name="com.jaspersoft.studio.field.label" value="moy_coef"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value=""/>
 	</field>
 	<field name="appreciation" class="java.lang.String">
@@ -270,42 +245,23 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 	<field name="libelle_categorie" class="java.lang.String"/>
 	<field name="signataire" class="java.lang.String"/>
 	<field name="bonus" class="java.lang.String"/>
-	<field name="pec" class="java.lang.String"/>
 	<field name="parent_matiere" class="java.lang.String"/>
 	<field name="is_classed_mat" class="java.lang.String"/>
 	<field name="is_classed_periode" class="java.lang.String"/>
 	<field name="effectif_non_classe" class="java.lang.Integer"/>
+	<field name="moyennePremier" class="java.lang.Double"/>
+	<field name="rangPremier" class="java.lang.Integer"/>
+	<field name="moyenneDeuxieme" class="java.lang.Double"/>
+	<field name="rangDeuxieme" class="java.lang.Integer"/>
+	<field name="moy_anMat" class="java.lang.Double"/>
+	<field name="rang_anMat" class="java.lang.Integer"/>
 	<sortField name="num_ordre"/>
 	<sortField name="parent_matiere"/>
 	<sortField name="matricule"/>
-	<variable name="TotalMoyenParCategParMatier" class="java.lang.Double" resetType="Group" resetGroup="MyCategorie">
-		<initialValueExpression><![CDATA[0]]></initialValueExpression>
-	</variable>
-	<variable name="TotalCoeffParCategParMatier" class="java.lang.Double" resetType="Group" resetGroup="MyCategorie" calculation="Sum">
-		<variableExpression><![CDATA[$F{is_classed_mat}.equals("O")&&$F{bonus}.equals("0")? $F{coef} : 0]]></variableExpression>
-	</variable>
 	<variable name="imageEcole" class="java.awt.Image"/>
 	<variable name="ImageEleve" class="java.awt.Image"/>
-	<variable name="TotalMoyeCoefParCategorie" class="java.lang.Double" resetType="Group" resetGroup="MyCategorie" calculation="Sum">
-		<variableExpression><![CDATA[$F{is_classed_mat}.equals("O")?$F{moyenne}*$F{coef}:0]]></variableExpression>
-	</variable>
-	<variable name="moyenXcoef" class="java.lang.Double" resetType="Group" resetGroup="MyCategorie" calculation="Sum">
-		<variableExpression><![CDATA[$F{moyenne}*$F{coef}]]></variableExpression>
-	</variable>
-	<variable name="TotauxCoefficient" class="java.lang.Double" calculation="Sum">
-		<variableExpression><![CDATA[$F{pec}.equals("1")? $F{coef} : 0]]></variableExpression>
-	</variable>
-	<variable name="TotauxMoyenCoef" class="java.lang.Double" calculation="Sum">
-		<variableExpression><![CDATA[$F{pec}.equals("1")? $F{moyenne}*$F{coef} : $F{moyenne}]]></variableExpression>
-	</variable>
 	<variable name="FrTmoy" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[($F{libelle_matiere}.equals("COMPOSITION FRANCAISE")||$F{libelle_matiere}.equals("EXPRESSION ORALE")|| $F{libelle_matiere}.equals("ORTHOGRAPHE ET GRAMMAIRE"))  ? $F{moyenne} : 0]]></variableExpression>
-	</variable>
-	<variable name="FrTcoef" class="java.lang.Double" calculation="Sum">
-		<variableExpression><![CDATA[($F{libelle_matiere}.equals("COMPOSITION FRANCAISE")||$F{libelle_matiere}.equals("EXPRESSION ORALE")||$F{libelle_matiere}.equals("ORTHOGRAPHE ET GRAMMAIRE"))? $F{coef} : 0]]></variableExpression>
-	</variable>
-	<variable name="FrTmoyCoef" class="java.lang.Double" calculation="Sum">
-		<variableExpression><![CDATA[($F{libelle_matiere}.equals("COMPOSITION FRANCAISE")||$F{libelle_matiere}.equals("EXPRESSION ORALE")||$F{libelle_matiere}.equals("ORTHOGRAPHE ET GRAMMAIRE"))? $F{moyenne}*$F{coef} : 0]]></variableExpression>
 	</variable>
 	<variable name="FrTRang" class="java.lang.Integer" resetType="Group" resetGroup="MyCategorie" calculation="Average">
 		<variableExpression><![CDATA[($F{libelle_matiere}.equals("COMPOSITION FRANCAISE")||$F{libelle_matiere}.equals("EXPRESSION ORALE")||$F{libelle_matiere}.equals("ORTHOGRAPHE ET GRAMMAIRE"))? $F{rang} : 0]]></variableExpression>
@@ -317,6 +273,12 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 	<variable name="moy_2eme_trim" class="java.lang.Double"/>
 	<variable name="moy_3eme_trim" class="java.lang.Double"/>
 	<variable name="moyAnnParMatiere" class="java.lang.Double"/>
+	<variable name="moyANNFr" class="java.lang.Double">
+		<variableExpression><![CDATA[($P{TmoyFrPremier}+($P{TmoyFrDeuxieme}+$P{TmoyFr})*2)/5]]></variableExpression>
+	</variable>
+	<variable name="moyANNEMR" class="java.lang.Double">
+		<variableExpression><![CDATA[($P{TmoyCoefEMRPremier}+($P{TmoyCoefEMRDeuxieme}+$P{TmoyCoefEMR})*2)/5]]></variableExpression>
+	</variable>
 	<group name="InfosPersonnelEleve"/>
 	<group name="DisciplineLettre"/>
 	<group name="BilanScientifique"/>
@@ -368,7 +330,7 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{parent_matiere}.equals("HISTOIRE-GEOGAPHIE")&&$F{libelle_periode}.equals("Troisième Trimestre")? "Histoire-Géographie":$F{parent_matiere}.equals("MATHEMATIQUES")&&$F{libelle_periode}.equals("Troisième Trimestre")? "Mathématiques" :$F{parent_matiere}.equals("SVT")&&$F{libelle_periode}.equals("Troisième Trimestre")? "SVT" :$F{parent_matiere}.equals("EDHC")&&$F{libelle_periode}.equals("Troisième Trimestre")? "EDHC"  :$F{parent_matiere}.equals("EPS")&&$F{libelle_periode}.equals("Troisième Trimestre")? "EPS"  :$F{parent_matiere}.substring(0,1).toUpperCase() + $F{parent_matiere}.substring(1).toLowerCase()]]></textFieldExpression>
 					</textField>
-					<textField isBlankWhenNull="true">
+					<textField textAdjust="ScaleFont" isBlankWhenNull="true">
 						<reportElement style="champsLibelle" x="90" y="0" width="25" height="15" isRemoveLineWhenBlank="true" uuid="77755e98-e926-48eb-b10f-1c8eafbdbba7">
 							<property name="com.jaspersoft.layout.grid.x" value="1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
@@ -381,13 +343,13 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 						<box>
 							<pen lineWidth="0.5"/>
 						</box>
-						<textElement textAlignment="Center" verticalAlignment="Middle">
-							<font fontName="SansSerif" size="8"/>
+						<textElement textAlignment="Left" verticalAlignment="Middle">
+							<font fontName="SansSerif" size="7"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")&&$F{libelle_periode}.equals("Premier Trimestre")? "NC":$F{parent_matiere}.equals("FRANCAIS")&&$F{libelle_periode}.equals("Premier Trimestre")?$P{TmoyFr}:$F{parent_matiere}.equals("EMR")&&$F{libelle_periode}.equals("Premier Trimestre")?$P{TmoyCoefEMR}:$F{moyenne}]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{parent_matiere}.equals("FRANCAIS")?$P{TmoyFrPremier}:$F{parent_matiere}.equals("EMR")?$P{TmoyCoefEMRPremier}:$F{moyennePremier}]]></textFieldExpression>
 						<patternExpression><![CDATA[$F{bonus}.equals("1") ? "+#.##": "##.##"]]></patternExpression>
 					</textField>
-					<textField isBlankWhenNull="true">
+					<textField textAdjust="ScaleFont" isBlankWhenNull="true">
 						<reportElement style="champsLibelle" x="115" y="0" width="24" height="15" isRemoveLineWhenBlank="true" uuid="5777905c-6a5a-4450-af83-0cb270796a96">
 							<property name="com.jaspersoft.layout.grid.x" value="2"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
@@ -400,11 +362,11 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 						<box>
 							<pen lineWidth="0.5"/>
 						</box>
-						<textElement verticalAlignment="Middle">
-							<font fontName="SansSerif" size="8"/>
+						<textElement textAlignment="Left" verticalAlignment="Middle">
+							<font fontName="SansSerif" size="7"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")&&$F{libelle_periode}.equals("Premier Trimestre")? "NC":($F{parent_matiere}.equals("FRANCAIS")&&$P{TrangFr}==1)&&$F{libelle_periode}.equals("Premier Trimestre") ?$P{TrangFr}+" er":($F{parent_matiere}.equals("FRANCAIS")&& $P{TrangFr}!=1) &&$F{libelle_periode}.equals("Premier Trimestre")?$P{TrangFr}+" e" 
-:($F{parent_matiere}.equals("EMR")&&$P{TrangEMR}==1) &&$F{libelle_periode}.equals("Premier Trimestre")?$P{TrangEMR}+" er":($F{parent_matiere}.equals("EMR")&& $P{TrangEMR}!=1) &&$F{libelle_periode}.equals("Premier Trimestre")?$P{TrangEMR}+" e": $F{rang}==1&&$F{libelle_periode}.equals("Premier Trimestre") ?  $F{rang}+" er" :$F{rang}!=1&&$F{libelle_periode}.equals("Premier Trimestre")? $F{rang} +" e": $F{rang} +" e"]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":($F{parent_matiere}.equals("FRANCAIS")&&$P{TrangFrPremier}==1) ?$P{TrangFrPremier}+" er":($F{parent_matiere}.equals("FRANCAIS")&& $P{TrangFrPremier}!=1) ?$P{TrangFrPremier}+" e" 
+:($F{parent_matiere}.equals("EMR")&&$P{TrangEMRPremier}==1) ?$P{TrangEMRPremier}+" er":($F{parent_matiere}.equals("EMR")&& $P{TrangEMRPremier}!=1) ?$P{TrangEMRPremier}+" e": $F{rangPremier}==1 ?  $F{rangPremier}+" er" :$F{rangPremier}!=1? $F{rangPremier} +" e": $F{rangPremier} +" e"]]></textFieldExpression>
 					</textField>
 					<textField isBlankWhenNull="true">
 						<reportElement style="champsLibelle" x="286" y="0" width="64" height="15" isRemoveLineWhenBlank="true" uuid="b4200066-a206-4e5c-b3ee-1c1c3d9c5fde">
@@ -444,9 +406,9 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 						<textElement textAlignment="Left" verticalAlignment="Middle">
 							<font fontName="SansSerif" size="6" isItalic="true"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{appreciation}]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{moy_anMat}>=17?"Excellent":$F{moy_anMat}>=16?"Très Bien":$F{moy_anMat}>=14? "Bien":$F{moy_anMat}>=12? " Assez Bien": $F{moy_anMat}>=10?"Passable":$F{moy_anMat}>=6?"Faible":"Très Faible"]]></textFieldExpression>
 					</textField>
-					<textField isBlankWhenNull="true">
+					<textField textAdjust="ScaleFont" isBlankWhenNull="true">
 						<reportElement style="champsLibelle" x="139" y="0" width="25" height="15" isRemoveLineWhenBlank="true" uuid="a1b99343-d814-4bb2-9583-ae4144cdbe63">
 							<property name="com.jaspersoft.layout.grid.x" value="3"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
@@ -459,13 +421,13 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 						<box>
 							<pen lineWidth="0.5"/>
 						</box>
-						<textElement textAlignment="Center" verticalAlignment="Middle">
-							<font fontName="SansSerif" size="8"/>
+						<textElement textAlignment="Left" verticalAlignment="Middle">
+							<font fontName="SansSerif" size="7"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")&&$F{libelle_periode}.equals("Deuxième Trimestre")? "NC":$F{parent_matiere}.equals("FRANCAIS")&&$F{libelle_periode}.equals("Deuxième Trimestre")?$P{TmoyFr}:$F{parent_matiere}.equals("EMR")&&$F{libelle_periode}.equals("Deuxième Trimestre")?$P{TmoyCoefEMR}:$F{moyenne}]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{parent_matiere}.equals("FRANCAIS")?$P{TmoyFrDeuxieme}:$F{parent_matiere}.equals("EMR")?$P{TmoyCoefEMRDeuxieme}:$F{moyenneDeuxieme}]]></textFieldExpression>
 						<patternExpression><![CDATA[$F{bonus}.equals("1") ? "+#.##": "##.##"]]></patternExpression>
 					</textField>
-					<textField isBlankWhenNull="true">
+					<textField textAdjust="ScaleFont" isBlankWhenNull="true">
 						<reportElement style="champsLibelle" x="164" y="0" width="24" height="15" isRemoveLineWhenBlank="true" uuid="cef4381f-8ead-4f81-82a3-b57cee0d4110">
 							<property name="com.jaspersoft.layout.grid.x" value="4"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
@@ -478,13 +440,13 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 						<box>
 							<pen lineWidth="0.5"/>
 						</box>
-						<textElement verticalAlignment="Middle">
-							<font fontName="SansSerif" size="8"/>
+						<textElement textAlignment="Left" verticalAlignment="Middle">
+							<font fontName="SansSerif" size="7"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")&&$F{libelle_periode}.equals("Deuxième Trimestre")? "NC":($F{parent_matiere}.equals("FRANCAIS")&&$P{TrangFr}==1) &&$F{libelle_periode}.equals("Deuxième Trimestre")?$P{TrangFr}+" er":($F{parent_matiere}.equals("FRANCAIS")&& $P{TrangFr}!=1) &&$F{libelle_periode}.equals("Deuxième Trimestre")?$P{TrangFr}+" e" 
-:($F{parent_matiere}.equals("EMR")&&$P{TrangEMR}==1) &&$F{libelle_periode}.equals("Deuxième Trimestre")?$P{TrangEMR}+" er":($F{parent_matiere}.equals("EMR")&& $P{TrangEMR}!=1) &&$F{libelle_periode}.equals("Deuxième Trimestre")?$P{TrangEMR}+" e": $F{rang}==1&&$F{libelle_periode}.equals("Deuxième Trimestre") ?  $F{rang}+" er" :$F{rang}!=1&&$F{libelle_periode}.equals("Deuxième Trimestre")? $F{rang} +" e": $F{rang} +" e"]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":($F{parent_matiere}.equals("FRANCAIS")&&$P{TrangFrDeuxieme}==1) ?$P{TrangFrDeuxieme}+" er":($F{parent_matiere}.equals("FRANCAIS")&& $P{TrangFrDeuxieme}!=1) ?$P{TrangFrDeuxieme}+" e" 
+:($F{parent_matiere}.equals("EMR")&&$P{TrangEMRDeuxieme}==1) ?$P{TrangEMRDeuxieme}+" er":($F{parent_matiere}.equals("EMR")&& $P{TrangEMRDeuxieme}!=1) ?$P{TrangEMRDeuxieme}+" e": $F{rangDeuxieme}==1 ?  $F{rangDeuxieme}+" er" :$F{rangDeuxieme}!=1? $F{rangDeuxieme} +" e": $F{rangPremier} +" e"]]></textFieldExpression>
 					</textField>
-					<textField isBlankWhenNull="true">
+					<textField textAdjust="ScaleFont" isBlankWhenNull="true">
 						<reportElement style="champsLibelle" x="188" y="0" width="25" height="15" isRemoveLineWhenBlank="true" uuid="97be6057-1243-4e8e-90b2-a7d6bea42234">
 							<property name="com.jaspersoft.layout.grid.x" value="5"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
@@ -497,13 +459,13 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 						<box>
 							<pen lineWidth="0.5"/>
 						</box>
-						<textElement textAlignment="Center" verticalAlignment="Middle">
-							<font fontName="SansSerif" size="8"/>
+						<textElement textAlignment="Left" verticalAlignment="Middle">
+							<font fontName="SansSerif" size="7"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")&&$F{libelle_periode}.equals("Troisième Trimestre")? "NC":$F{parent_matiere}.equals("FRANCAIS")&&$F{libelle_periode}.equals("Troisième Trimestre")?$P{TmoyFr}:$F{parent_matiere}.equals("EMR")&&$F{libelle_periode}.equals("Troisième Trimestre")?$P{TmoyCoefEMR}:$F{moyenne}]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{parent_matiere}.equals("FRANCAIS")?$P{TmoyFr}:$F{parent_matiere}.equals("EMR")?$P{TmoyCoefEMR}:$F{moyenne}]]></textFieldExpression>
 						<patternExpression><![CDATA[$F{bonus}.equals("1") ? "+#.##": "##.##"]]></patternExpression>
 					</textField>
-					<textField isBlankWhenNull="true">
+					<textField textAdjust="ScaleFont" isBlankWhenNull="true">
 						<reportElement style="champsLibelle" x="213" y="0" width="24" height="15" isRemoveLineWhenBlank="true" uuid="e599ce77-5886-4ec2-8d42-83037d5f8b17">
 							<property name="com.jaspersoft.layout.grid.x" value="6"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
@@ -516,13 +478,13 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 						<box>
 							<pen lineWidth="0.5"/>
 						</box>
-						<textElement verticalAlignment="Middle">
-							<font fontName="SansSerif" size="8"/>
+						<textElement textAlignment="Left" verticalAlignment="Middle">
+							<font fontName="SansSerif" size="7"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")&&$F{libelle_periode}.equals("Troisième Trimestre")? "NC":($F{parent_matiere}.equals("FRANCAIS")&&$P{TrangFr}==1) &&$F{libelle_periode}.equals("Troisième Trimestre")?$P{TrangFr}+" er":($F{parent_matiere}.equals("FRANCAIS")&& $P{TrangFr}!=1)&&$F{libelle_periode}.equals("Troisième Trimestre") ?$P{TrangFr}+" e" 
-:($F{parent_matiere}.equals("EMR")&&$P{TrangEMR}==1)&&$F{libelle_periode}.equals("Troisième Trimestre") ?$P{TrangEMR}+" er":($F{parent_matiere}.equals("EMR")&& $P{TrangEMR}!=1) &&$F{libelle_periode}.equals("Troisième Trimestre")?$P{TrangEMR}+" e": $F{rang}==1&&$F{libelle_periode}.equals("Troisième Trimestre") ?  $F{rang}+" er" :$F{rang}!=1&&$F{libelle_periode}.equals("Troisième Trimestre")? $F{rang} +" e": $F{rang} +" e"]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":($F{parent_matiere}.equals("FRANCAIS")&&$P{TrangFr}==1) ?$P{TrangFr}+" er":($F{parent_matiere}.equals("FRANCAIS")&& $P{TrangFr}!=1) ?$P{TrangFr}+" e" 
+:($F{parent_matiere}.equals("EMR")&&$P{TrangEMR}==1) ?$P{TrangEMR}+" er":($F{parent_matiere}.equals("EMR")&& $P{TrangEMR}!=1) ?$P{TrangEMR}+" e": $F{rang}==1 ?  $F{rang}+" er" :$F{rang}!=1? $F{rang} +" e": $F{rang} +" e"]]></textFieldExpression>
 					</textField>
-					<textField>
+					<textField textAdjust="ScaleFont" pattern="##0.00">
 						<reportElement x="237" y="0" width="25" height="15" uuid="b6fcda76-ec51-4aa9-b97a-aeebe8eddd79">
 							<property name="com.jaspersoft.layout.grid.x" value="7"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
@@ -533,9 +495,19 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 							<property name="com.jaspersoft.studio.unit.width" value="px"/>
 						</reportElement>
-						<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
+						<box>
+							<pen lineWidth="0.25"/>
+							<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textElement textAlignment="Center" verticalAlignment="Middle">
+							<font fontName="SansSerif" size="7"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{parent_matiere}.equals("FRANCAIS")?$P{TmoyFrAnn}:$F{parent_matiere}.equals("EMR")?$P{TmoyEMRANN}:$F{moy_anMat}]]></textFieldExpression>
 					</textField>
-					<textField>
+					<textField textAdjust="ScaleFont" isBlankWhenNull="true">
 						<reportElement x="262" y="0" width="24" height="15" uuid="64d8a15b-a418-434b-a293-b49699060e6f">
 							<property name="com.jaspersoft.layout.grid.x" value="8"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
@@ -546,7 +518,17 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 							<property name="com.jaspersoft.studio.unit.width" value="px"/>
 						</reportElement>
-						<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
+						<box>
+							<pen lineWidth="0.25"/>
+							<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textElement textAlignment="Center" verticalAlignment="Middle">
+							<font fontName="SansSerif" size="7"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{parent_matiere}.equals("FRANCAIS")||$F{parent_matiere}.equals("EMR")?"":$F{is_classed_mat}.equals("N")? "NC":$F{rang_anMat}==1? $F{rang_anMat}+" er" :$F{rang_anMat}+" e"]]></textFieldExpression>
 					</textField>
 				</frame>
 			</band>
@@ -1483,7 +1465,29 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 					<textElement>
 						<font fontName="SansSerif" size="8" isBold="true"/>
 					</textElement>
-					<text><![CDATA[Appréciation Prof Signature]]></text>
+					<text><![CDATA[Appréciation Prof]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="TitreLibelle" x="464" y="0" width="125" height="12" uuid="60d18945-b765-41a8-972f-0267d8212dae">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement>
+						<font fontName="SansSerif" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Signature Prof ]]></text>
 				</staticText>
 			</frame>
 		</band>
@@ -1525,7 +1529,7 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{libelle_periode}.equals("Troisième Trimestre")?$F{libelle_matiere}.substring(0,1).toUpperCase() + $F{libelle_matiere}.substring(1).toLowerCase() :""]]></textFieldExpression>
 				</textField>
-				<textField isBlankWhenNull="true">
+				<textField textAdjust="ScaleFont" isBlankWhenNull="true">
 					<reportElement style="champsLibelle" x="90" y="0" width="25" height="15" isRemoveLineWhenBlank="true" uuid="e3b274cc-2210-494d-bffa-4e77ac0537ff">
 						<property name="com.jaspersoft.layout.grid.x" value="1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
@@ -1539,13 +1543,13 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 					<box>
 						<pen lineWidth="0.5"/>
 					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="SansSerif" size="8"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="7"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")&&$F{libelle_periode}.equals("Premier Trimestre")? "NC": $F{moyenne}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")&&$F{libelle_periode}.equals("Premier Trimestre")? "NC": $F{moyennePremier}]]></textFieldExpression>
 					<patternExpression><![CDATA[$F{bonus}.equals("1") ? "+#.##": "##.##"]]></patternExpression>
 				</textField>
-				<textField isBlankWhenNull="true">
+				<textField textAdjust="ScaleFont" isBlankWhenNull="true">
 					<reportElement style="champsLibelle" x="115" y="0" width="24" height="15" isRemoveLineWhenBlank="true" uuid="5c314687-6996-4f2b-a4f6-28bcc25ec57c">
 						<property name="com.jaspersoft.layout.grid.x" value="2"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
@@ -1558,10 +1562,10 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 					<box>
 						<pen lineWidth="0.5"/>
 					</box>
-					<textElement verticalAlignment="Middle">
-						<font fontName="SansSerif" size="8"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="7"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")&&$F{libelle_periode}.equals("Premier Trimestre")? "NC":$F{rang}.equals("1") &&$F{libelle_periode}.equals("Premier Trimestre")?  $F{rang}+" er" :$F{rang}+" e"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{rangPremier}==1?  $F{rangPremier}+" er" :$F{rangPremier}+" e"]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
 					<reportElement style="champsLibelle" x="287" y="0" width="63" height="15" isRemoveLineWhenBlank="true" uuid="9b56321e-a818-455c-8464-c33caa23381e">
@@ -1601,9 +1605,9 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font fontName="SansSerif" size="6" isItalic="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{appreciation}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{moy_anMat}>=17?"Excellent":$F{moy_anMat}>=16?"Très Bien":$F{moy_anMat}>=14? "Bien":$F{moy_anMat}>=12? " Assez Bien": $F{moy_anMat}>=10?"Passable":$F{moy_anMat}>=6?"Faible":"Très Faible"]]></textFieldExpression>
 				</textField>
-				<textField isBlankWhenNull="true">
+				<textField textAdjust="ScaleFont" isBlankWhenNull="true">
 					<reportElement style="champsLibelle" x="139" y="0" width="25" height="15" isRemoveLineWhenBlank="true" uuid="3057e649-a536-425f-9d63-4e6213cf274c">
 						<property name="com.jaspersoft.layout.grid.x" value="3"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
@@ -1617,13 +1621,13 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 					<box>
 						<pen lineWidth="0.5"/>
 					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="SansSerif" size="8"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="7"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")&&$F{libelle_periode}.equals("Deuxième Trimestre")? "NC": $F{moyenne}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC": $F{moyenneDeuxieme}]]></textFieldExpression>
 					<patternExpression><![CDATA[$F{bonus}.equals("1") ? "+#.##": "##.##"]]></patternExpression>
 				</textField>
-				<textField isBlankWhenNull="true">
+				<textField textAdjust="ScaleFont" isBlankWhenNull="true">
 					<reportElement style="champsLibelle" x="164" y="0" width="24" height="15" isRemoveLineWhenBlank="true" uuid="2e6914de-e976-4dfb-aac3-d6569104bddf">
 						<property name="com.jaspersoft.layout.grid.x" value="4"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
@@ -1636,12 +1640,12 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 					<box>
 						<pen lineWidth="0.5"/>
 					</box>
-					<textElement verticalAlignment="Middle">
-						<font fontName="SansSerif" size="8"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="7"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")&&$F{libelle_periode}.equals("Deuxième Trimestre")? "NC":$F{rang}.equals("1") &&$F{libelle_periode}.equals("Deuxième Trimestre")?  $F{rang}+" er" :$F{rang}+" e"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{rangDeuxieme}==1?  $F{rangDeuxieme}+" er" :$F{rangDeuxieme}+" e"]]></textFieldExpression>
 				</textField>
-				<textField isBlankWhenNull="true">
+				<textField textAdjust="ScaleFont" isBlankWhenNull="true">
 					<reportElement style="champsLibelle" x="188" y="0" width="25" height="15" isRemoveLineWhenBlank="true" uuid="8a867537-a75d-4157-a5b2-4316745b0c03">
 						<property name="com.jaspersoft.layout.grid.x" value="5"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
@@ -1655,13 +1659,13 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 					<box>
 						<pen lineWidth="0.5"/>
 					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="SansSerif" size="8"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="7"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")&&$F{libelle_periode}.equals("Troisième Trimestre")? "NC": $F{moyenne}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC": $F{moyenne}]]></textFieldExpression>
 					<patternExpression><![CDATA[$F{bonus}.equals("1") ? "+#.##": "##.##"]]></patternExpression>
 				</textField>
-				<textField isBlankWhenNull="true">
+				<textField textAdjust="ScaleFont" isBlankWhenNull="true">
 					<reportElement style="champsLibelle" x="213" y="0" width="24" height="15" isRemoveLineWhenBlank="true" uuid="8f001e7f-3976-4522-9a67-0ab8f62bf17e">
 						<property name="com.jaspersoft.layout.grid.x" value="6"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
@@ -1674,12 +1678,12 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 					<box>
 						<pen lineWidth="0.5"/>
 					</box>
-					<textElement verticalAlignment="Middle">
-						<font fontName="SansSerif" size="8"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="7"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")&&$F{libelle_periode}.equals("Troisième Trimestre")? "NC":$F{rang}.equals("1") &&$F{libelle_periode}.equals("Troisième Trimestre")?  $F{rang}+" er" :$F{rang}+" e"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{rang}==1? $F{rang}+" er" :$F{rang}+" e"]]></textFieldExpression>
 				</textField>
-				<textField>
+				<textField textAdjust="ScaleFont">
 					<reportElement x="237" y="0" width="25" height="15" uuid="89ea02ec-32dd-47aa-9cf3-eb98823cee6b">
 						<property name="com.jaspersoft.layout.grid.x" value="7"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
@@ -1690,9 +1694,19 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
-					<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
+					<box>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="7"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{moy_anMat}]]></textFieldExpression>
 				</textField>
-				<textField>
+				<textField textAdjust="ScaleFont">
 					<reportElement x="262" y="0" width="25" height="15" uuid="7ce2ee69-b7d5-4b3f-8e7f-cd8b9c86a199">
 						<property name="com.jaspersoft.layout.grid.x" value="8"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
@@ -1703,7 +1717,17 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
-					<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
+					<box>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="7"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{rang_anMat}==1? $F{rang_anMat}+" er" :$F{rang_anMat}+" e"]]></textFieldExpression>
 				</textField>
 			</frame>
 		</band>

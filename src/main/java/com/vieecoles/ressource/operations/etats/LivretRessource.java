@@ -10,8 +10,10 @@ import com.vieecoles.entities.operations.eleve;
 import com.vieecoles.entities.parametre;
 import com.vieecoles.entities.profil;
 import com.vieecoles.projection.BulletinSelectDto;
+import com.vieecoles.projection.LivretScolaireSelectDto;
 import com.vieecoles.services.eleves.InscriptionService;
 import com.vieecoles.services.etats.BulletinClasseServices;
+import com.vieecoles.services.etats.LivretScolaireServices;
 import com.vieecoles.services.profilService;
 
 import java.awt.image.BufferedImage;
@@ -69,9 +71,10 @@ public class LivretRessource {
     InscriptionService inscriptionService ;
     @Inject
     SousceecoleService sousceecoleService ;
-
     @Inject
-    BulletinClasseServices bulletinClasseServices ;
+    LivretScolaireServices livretScolaireServices ;
+    @Inject
+    LivretScolaireServices bulletinClasseServices ;
 
     private static String UPLOAD_DIR = "/data/";
 
@@ -79,18 +82,19 @@ public class LivretRessource {
 
 
 
+
         @GET
-    @Path("/livret-scolaire/{type}/{matricule}/{idEcole}/{libelleAnnee}/{libelleTrimetre}")
+    @Path("/livret-scolaire/{matricule}/{idEcole}/{libelleAnnee}/{libelleTrimetre}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     @Transactional
-    public ResponseEntity<byte[]>  getdetailsLivret(@PathParam("type") String type,@PathParam("matricule") String matricule,@PathParam("idEcole") Long idEcole,@PathParam("libelleAnnee") String libelleAnnee,
+    public ResponseEntity<byte[]>  getdetailsLivret(@PathParam("matricule") String matricule,@PathParam("idEcole") Long idEcole,@PathParam("libelleAnnee") String libelleAnnee,
                                                       @PathParam("libelleTrimetre") String libelleTrimetre) throws Exception, JRException {
 
         InputStream myInpuStream ;
             myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/Livret_scolaire.jrxml");
 
         //  myInpuStream = this.getClass().getClassLoader().getResourceAsStream("spider/test.jrxml");
-        List<BulletinSelectDto>  detailsBull = new ArrayList<>() ;
+        List<LivretScolaireSelectDto>  detailsBull = new ArrayList<>() ;
 
         Inscriptions myIns= new Inscriptions() ;
         ecole myEcole= new ecole() ;
@@ -137,25 +141,34 @@ public class LivretRessource {
             bg = ImageIO.read(new ByteArrayInputStream(imagebytes4)) ;
         }
 
+        detailsBull = livretScolaireServices.livretScolaire(idEcole,libelleTrimetre,matricule,libelleAnnee);
 
-        System.out.println("myEcoleImage "+imagebytes2.toString());
-        TypedQuery<BulletinSelectDto> q = em.createQuery( "SELECT new com.vieecoles.projection.BulletinSelectDto(b.ecoleId,b.nomEcole,b.statutEcole,b.urlLogo,b.adresseEcole,b.telEcole,b.anneeLibelle, b.libellePeriode,b.matricule,b.nom, b.prenoms, b.sexe,b.dateNaissance,b.lieuNaissance,b.nationalite,b.redoublant,b.boursier,b.affecte,b.libelleClasse,b.effectif,b.totalCoef,b.totalMoyCoef,b.nomPrenomProfPrincipal,b.heuresAbsJustifiees,b.heuresAbsNonJustifiees,b.moyGeneral,b.moyMax,b.moyMin,b.moyAvg,b.moyAn,b.rangAn,b.appreciation,b.dateCreation,b.codeQr,b.statut,d.matiereLibelle,d.moyenne,d.rang,d.coef ,d.moyCoef,d.appreciation,d.categorie,d.num_ordre,CAST(b.rang as string ) ,d.nom_prenom_professeur,d.categorieMatiere,b.nomSignataire,CAST(d.bonus as string ),cast(d.pec as string),d.parentMatiere,d.isRanked,b.isClassed,cast(b.effectifNonClasse as integer ) ) from DetailBulletin  d join d.bulletin b where b.matricule=:matricule " +
-                "and b.ecoleId=:idEcole and b.anneeLibelle=:libelleAnnee  order by d.num_ordre ASC  ", BulletinSelectDto.class);
-        detailsBull = q.setParameter("matricule", matricule)
-                .setParameter("libelleAnnee", libelleAnnee)
-                .setParameter("idEcole", idEcole)
-                . getResultList() ;
         Double TmoyFr= calculTMoyFran(matricule,libelleAnnee,libelleTrimetre,idEcole) ;
 
 
         Double TcoefFr = calculcoefFran(matricule,libelleAnnee,libelleTrimetre,idEcole) ;
         Double  TmoyCoefFr = calculMoycoefFran(matricule,libelleAnnee,libelleTrimetre,idEcole) ;
-        //System.out.println("Moyene en Francais: "+TmoyCoefFr/4);
+        Double TmoyCoefFrPermier= calculMoycoefFran(matricule,libelleAnnee,"Premier Trimestre",idEcole) ;
+        Double TmoyCoefFrDeuxieme= calculMoycoefFran(matricule,libelleAnnee,"Deuxième Trimestre",idEcole) ;
+        Double TmoyFrAnn ;
+
+            TmoyFrAnn= ( (TmoyCoefFrPermier/TcoefFr) + (TmoyCoefFrDeuxieme/TcoefFr)*2 + (TmoyCoefFr/TcoefFr)*2 )/5 ;
+
+
         Double TrangFr1 = calculRangFran(matricule,libelleAnnee,libelleTrimetre,idEcole) ;
+        Double TrangFrPremier1 = calculRangFran(matricule,libelleAnnee,"Premier Trimestre",idEcole) ;
+        Double TrangFrDeuxieme1 = calculRangFran(matricule,libelleAnnee,"Deuxième Trimestre",idEcole) ;
 
         Integer TrangEMR =calculRangEMR(matricule,libelleAnnee,libelleTrimetre,idEcole) ;
+        Integer TrangEMRPremier =calculRangEMR(matricule,libelleAnnee,"Premier Trimestre",idEcole) ;
+        Integer TrangEMRDeuxieme =calculRangEMR(matricule,libelleAnnee,"Deuxième Trimestre",idEcole) ;
         Double TmoyCoefEMR = calculMoycoefEMR(matricule,libelleAnnee,libelleTrimetre,idEcole);
+        Double TmoyCoefEMRPremier = calculMoycoefEMR(matricule,libelleAnnee,"Premier Trimestre",idEcole);
+        Double TmoyCoefEMRDeuxieme = calculMoycoefEMR(matricule,libelleAnnee,"Deuxième Trimestre",idEcole);
         Double TcoefEMR  = calculcoefEMR(matricule,libelleAnnee,libelleTrimetre,idEcole);
+        Double TmoyEMRANN ;
+
+            TmoyEMRANN = ( TmoyCoefEMRPremier + (TmoyCoefEMRDeuxieme * 2) + (TmoyCoefEMR*2) )/5 ;
 
 
         Double moy_1er_trim = calculmoyenTrimesPasse(matricule,libelleAnnee,"Premier Trimestre",idEcole) ;
@@ -170,10 +183,17 @@ public class LivretRessource {
         String is_class_2e_trim = calculIsClassTrimesPasse(matricule,libelleAnnee,"Deuxième Trimestre",idEcole) ;
         String is_class_3e_trim = calculIsClassTrimesPasse(matricule,libelleAnnee,"Troisième Trimestre",idEcole) ;
         int TrangFr = 0;
+        int TrangFrPremier = 0;
+        int TrangFrDeuxieme = 0;
+
          if(TrangFr1 !=null)
          TrangFr = TrangFr1.intValue() ;
 
-        if(type.toUpperCase().equals("PDF")){
+        if(TrangFrPremier1 !=null)
+            TrangFrPremier = TrangFrPremier1.intValue() ;
+
+            if(TrangFrDeuxieme1 !=null)
+                TrangFrDeuxieme = TrangFrDeuxieme1.intValue() ;
 
 
             JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(detailsBull) ;
@@ -185,13 +205,23 @@ public class LivretRessource {
             map.put("amoirie",amoirie);
             map.put("bg",bg);
             map.put("TmoyFr",TmoyCoefFr/TcoefFr);
+            map.put("TmoyFrPremier",TmoyCoefFrPermier/TcoefFr);
+            map.put("TmoyFrDeuxieme",TmoyCoefFrDeuxieme/TcoefFr);
             map.put("TcoefFr",TcoefFr);
+            map.put("TmoyFrAnn",TmoyFrAnn);
+            map.put("TmoyEMRANN",TmoyEMRANN);
             map.put("TmoyCoefFr",TmoyCoefFr);
             map.put("TrangFr",TrangFr);
+            map.put("TrangFrPremier",TrangFrPremier);
+            map.put("TrangFrDeuxieme",TrangFrDeuxieme);
+            map.put("TrangEMRPremier",TrangEMRPremier);
+            map.put("TrangEMRDeuxieme",TrangEMRDeuxieme);
             map.put("codeEcole",codeEcole);
             map.put("statut",statut);
             map.put("DateNaiss",DateNaiss);
             map.put("TmoyCoefEMR",TmoyCoefEMR);
+            map.put("TmoyCoefEMRPremier",TmoyCoefEMRPremier);
+            map.put("TmoyCoefEMRDeuxieme",TmoyCoefEMRDeuxieme);
             map.put("TrangEMR",TrangEMR);
             map.put("moy_1er_trim",moy_1er_trim);
             map.put("moy_2eme_trim",moy_2eme_trim);
@@ -211,27 +241,10 @@ public class LivretRessource {
             //to pdf ;
             byte[] data =JasperExportManager.exportReportToPdf(report);
             HttpHeaders headers= new HttpHeaders();
-            headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=BulletinBean.pdf");
+            headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Livret-scolaire.pdf");
 
             return    ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.APPLICATION_PDF).body(data);
-        } else {
-            JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(detailsBull) ;
-            JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
-            //   JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");
-            Map<String, Object> map = new HashMap<>();
-            // map.put("title", type);
-            JasperPrint report = JasperFillManager.fillReport(compileReport, map, beanCollectionDataSource);
-            JRDocxExporter exporter = new JRDocxExporter();
-            exporter.setExporterInput(new SimpleExporterInput(report));
-            // File exportReportFile = new File("profils" + ".docx");
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(baos));
-            exporter.exportReport();
-            byte[] data = baos.toByteArray() ;
-            HttpHeaders headers= new HttpHeaders();
-            headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=BulletinBean.docx");
-            return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.MULTIPART_FORM_DATA).body(data);
-        }
+
 
 
     }
