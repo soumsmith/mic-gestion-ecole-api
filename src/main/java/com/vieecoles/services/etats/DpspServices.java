@@ -21,7 +21,7 @@ public class DpspServices {
         int LongTableau;
 
         List<NiveauDto> classeNiveauDtoList = new ArrayList<>() ;
-        TypedQuery<NiveauDto> q = em.createQuery( "SELECT new com.vieecoles.dto.NiveauDto(b.matricule) from Bulletin b  where b.ecoleId =:idEcole and b.ordreNiveau = 4 and b.libellePeriode=:periode  order by b.nom asc, b.prenoms asc ,b.ordreNiveau"
+        TypedQuery<NiveauDto> q = em.createQuery( "SELECT new com.vieecoles.dto.NiveauDto(b.matricule) from Bulletin b  where b.ecoleId =:idEcole and b.ordreNiveau < 5 and b.libellePeriode=:periode  order by b.nom asc, b.prenoms asc ,b.ordreNiveau"
                , NiveauDto.class);
         classeNiveauDtoList = q.setParameter("idEcole", idEcole)
                                 .setParameter("periode", libellePeriode)
