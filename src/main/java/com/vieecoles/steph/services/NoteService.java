@@ -80,12 +80,13 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 	}
 
 	@Transactional
-	public Response create(Notes notes) {
+	public void create(Notes notes) {
 		logger.info("--> Création de note pour " + notes.getClasseEleve().getInscription().getEleve().getNom());
+		logger.info(gson.toJson(notes));
 		// pec dans le calcul de moyenne par defaut
-		notes.setPec(1);
+		notes.setPec(notes.getPec()!= null ? notes.getPec() : 0);
+		notes.setNote(notes.getNote() != null ? notes.getNote() : 0);
 		notes.persist();
-		return Response.created(URI.create("/notes/" + notes.getId())).build();
 	}
 
 	@Transactional
@@ -96,9 +97,10 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 		}
 		entity.setClasseEleve(notes.getClasseEleve());
 		entity.setEvaluation(notes.getEvaluation());
-//		System.out.println("Note --> " + notes.getNote());
-//		System.out.println("Note --> " + notes.getNote().toString());
+		System.out.println("Note --> " + notes.getNote());
+		System.out.println("Note --> " + notes.getPec());
 		entity.setNote(notes.getNote());
+		entity.setPec(notes.getPec());
 		return entity;
 	}
 
@@ -140,7 +142,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				logger.info("--> Creation de note ...");
 				create(note);
 
-			}
+			}else
 			if (note.getId() != 0 && note.getStatut() != null && note.getStatut().equals("M")) {
 				logger.info(gson.toJson(note));
 				logger.info("--> Maj de note ...");
@@ -166,16 +168,18 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				evaluation.getAnnee().getId());
 		// logger.info(gson.toJson(classeEleves));
 		// obtenir la liste des notes pour une évaluation
-		List<Notes> notesList = getByEvaluationAndPec(evaluation.getId(), 1);
+		// getByEvaluationAndPec anciennement utilisé avec pec = 1 
+		List<Notes> notesList = getByEvaluation(evaluation.getId());
 		List<Notes> noteListTemp = new ArrayList<Notes>();
 		Boolean flat = true;
 		Notes notemp;
 		for (ClasseEleve ce : classeEleves) {
 			flat = true;
 			for (Notes note : notesList) {
+				// nous avons supprimer note.getPec() == 1 dans la condition ci apres
 				if (ce.getInscription().getEleve().getMatricule()
 						.equals(note.getClasseEleve().getInscription().getEleve().getMatricule())
-						&& note.getPec() != null && note.getPec() == 1) {
+						&& note.getPec() != null ) {
 					noteListTemp.add(note);
 					flat = false;
 					break;
@@ -193,6 +197,41 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 //		logger.info(gson.toJson(noteListTemp));
 		return noteListTemp;
 	}
+	
+	public List<Notes> getNotesClasseWithPec(String evalCode, Integer pec) {
+//    	logger.info("++++++++++"+evalCode);
+	Evaluation evaluation = evaluationService.findByCode(evalCode);
+	// Gson gson = new Gson();
+	// obtenir la liste des eleves d une classe
+	List<ClasseEleve> classeEleves = classeEleveService.getByClasseAnnee(evaluation.getClasse().getId(),
+			evaluation.getAnnee().getId());
+	// logger.info(gson.toJson(classeEleves));
+	// obtenir la liste des notes pour une évaluation
+	List<Notes> notesList = getByEvaluationAndPec(evaluation.getId(), pec);
+	List<Notes> noteListTemp = new ArrayList<Notes>();
+	Boolean flat = true;
+	Notes notemp;
+	for (ClasseEleve ce : classeEleves) {
+		flat = true;
+		for (Notes note : notesList) {
+			if (ce.getInscription().getEleve().getMatricule()
+					.equals(note.getClasseEleve().getInscription().getEleve().getMatricule())
+					&& note.getPec() != null && note.getPec() == pec) {
+				noteListTemp.add(note);
+				flat = false;
+				break;
+			}
+		}
+		if (flat) {
+			notemp = new Notes();
+			notemp.setClasseEleve(ce);
+			notemp.setEvaluation(evaluation);
+			noteListTemp.add(notemp);
+		}
+	}
+
+	return noteListTemp;
+}
 
 	List<MoyenneEleveDto> formatMoyenneMatieres(Map<Eleve, List<Notes>> param) {
 
@@ -208,10 +247,10 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 		// période
 		logger.info("---> Processus de Calcul des moyennes des éleves d une classe");
 		try {
-			System.out.println(String.format("%s %s %s", classeId, anneeId, periodeId));
+//			System.out.println(String.format("%s %s %s", classeId, anneeId, periodeId));
 			Map<Eleve, List<Notes>> noteGroup = new HashMap<Eleve, List<Notes>>();
 			Parameters params = Parameters.with("classeId", Long.parseLong(classeId))
-					.and("anneeId", Long.parseLong(anneeId)).and("periodeId", Long.parseLong(periodeId)).and("pok", 1);
+					.and("anneeId", Long.parseLong(anneeId)).and("periodeId", Long.parseLong(periodeId)).and("pok", Constants.PEC_1);
 			String criteria = "classe.id = :classeId and annee.id = :anneeId and periode.id = :periodeId and pec = :pok";
 			List<Evaluation> evalList = evaluationService.search(criteria, params);
 			List<Notes> noteList = new ArrayList<Notes>();
@@ -226,7 +265,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			for (Evaluation ev : evalList) {
 				logger.info(ev.getPec().toString());
 				if (ev.getPec() != null && ev.getPec() == 1)
-					noteList.addAll(getNotesClasse(ev.getCode()));
+					noteList.addAll(getNotesClasseWithPec(ev.getCode(), Constants.PEC_1));
 			}
 //		logger.info("note size " + noteList.size());
 //		logger.info(gson.toJson(noteList));
@@ -383,7 +422,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			for (Evaluation ev : evalList) {
 				logger.info(ev.getPec().toString());
 				if (ev.getPec() != null && ev.getPec() == 1)
-					noteList.addAll(getNotesClasse(ev.getCode()));
+					noteList.addAll(getNotesClasseWithPec(ev.getCode(), Constants.PEC_1));
 			}
 //		logger.info("note size " + noteList.size());
 //		logger.info(gson.toJson(noteList));

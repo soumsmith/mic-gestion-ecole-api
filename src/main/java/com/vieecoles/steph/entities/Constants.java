@@ -23,6 +23,11 @@ public class Constants {
 	public static final String DEFAULT_COEFFICIENT = "1";
 
 	public static final Double MOYENNE_ELEVE_NON_CLASSE_MATIERE = -1.00;
+	
+	public static final int PEC_1 = 1;
+	
+	public static final int PEC_0 = 0;
+	
 
 
 }
