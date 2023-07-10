@@ -17,12 +17,14 @@ public class resultatsRecapAffEtNonAffServices {
     @Inject
     EntityManager em;
 
-    public List<RecapResultatsElevesAffeEtNonAffDto> RecapCalculResultatsEleveAffecte(Long idEcole){
+    public List<RecapResultatsElevesAffeEtNonAffDto> RecapCalculResultatsEleveAffecte(Long idEcole ,String libelleAnnee , String libelleTrimestre){
 
         List<NiveauDto> classeNiveauDtoList = new ArrayList<>() ;
-        TypedQuery<NiveauDto> q = em.createQuery( "SELECT new com.vieecoles.dto.NiveauDto(b.niveau) from Bulletin b  where b.ecoleId =:idEcole " +
+        TypedQuery<NiveauDto> q = em.createQuery( "SELECT new com.vieecoles.dto.NiveauDto(b.niveau) from Bulletin b  where b.ecoleId =:idEcole and b.libellePeriode=:periode and b.anneeLibelle=:annee " +
                 "group by b.niveau ", NiveauDto.class);
         classeNiveauDtoList = q.setParameter("idEcole", idEcole)
+                                .setParameter("annee", libelleAnnee)
+                                .setParameter("periode", libelleTrimestre)
                               . getResultList() ;
 
   //System.out.println("classeNiveauDtoList "+classeNiveauDtoList.toString());
@@ -37,43 +39,43 @@ public class resultatsRecapAffEtNonAffServices {
        // System.out.println("resultatsListElevesDto Size "+ resultatsListElevesDto.size());
         for (int i=0; i< LongTableau;i++) {
             RecapResultatsElevesAffeEtNonAffDto resultatsListEleves= new RecapResultatsElevesAffeEtNonAffDto();
-            orderNiveau = getOrderNiveau(classeNiveauDtoList.get(i).getNiveau());
-            effectifClasse= getEffectifParClasse(idEcole,classeNiveauDtoList.get(i).getNiveau());
+            orderNiveau = getOrderNiveau(classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre);
+            effectifClasse= getEffectifParClasse(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre);
             System.out.println("effectifClasse "+effectifClasse);
-            effeG = geteffeG(idEcole,classeNiveauDtoList.get(i).getNiveau());
+            effeG = geteffeG(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre);
             System.out.println("effeG "+effeG);
-            effeF = geteffeF(idEcole,classeNiveauDtoList.get(i).getNiveau());
+            effeF = geteffeF(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre);
             System.out.println("effeF "+effeF);
-            classF =getclassF(idEcole,classeNiveauDtoList.get(i).getNiveau());
+            classF =getclassF(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre);
             System.out.println("classF "+classF);
-            classG= getclassG(idEcole,classeNiveauDtoList.get(i).getNiveau());
+            classG= getclassG(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre);
             System.out.println("classG "+classG);
-            nonclassF= getNonClasseF(idEcole,classeNiveauDtoList.get(i).getNiveau());
+            nonclassF= getNonClasseF(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre);
 
             System.out.println("nonclassF "+nonclassF);
-            nonclassG= getNonClasseG(idEcole,classeNiveauDtoList.get(i).getNiveau());
+            nonclassG= getNonClasseG(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre);
             System.out.println("nonclassG "+nonclassG);
-            nbreMoySup10F = getnbreMoySup10F(idEcole,classeNiveauDtoList.get(i).getNiveau());
+            nbreMoySup10F = getnbreMoySup10F(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre);
             System.out.println("nbreMoySup10F "+nbreMoySup10F);
-            nbreMoySup10G= getnbreMoySup10G(idEcole,classeNiveauDtoList.get(i).getNiveau());
+            nbreMoySup10G= getnbreMoySup10G(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre);
             System.out.println("nbreMoySup10G "+nbreMoySup10G);
-            nbreMoyInf999F= getnbreMoyInf999F(idEcole,classeNiveauDtoList.get(i).getNiveau());
+            nbreMoyInf999F= getnbreMoyInf999F(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre);
             System.out.println("nbreMoyInf999F "+nbreMoyInf999F);
-            nbreMoyInf999G= getnbreMoyInf999G(idEcole,classeNiveauDtoList.get(i).getNiveau());
+            nbreMoyInf999G= getnbreMoyInf999G(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre);
             System.out.println("nbreMoyInf999G "+nbreMoyInf999G);
-            nbreMoyInf85F= getnbreMoyInf85F(idEcole,classeNiveauDtoList.get(i).getNiveau());
+            nbreMoyInf85F= getnbreMoyInf85F(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre);
             System.out.println("nbreMoyInf85F "+nbreMoyInf85F);
-            nbreMoyInf85G= getnbreMoyInf85G(idEcole,classeNiveauDtoList.get(i).getNiveau());
+            nbreMoyInf85G= getnbreMoyInf85G(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre);
             System.out.println("nbreMoyInf85G "+nbreMoyInf85G);
-            moyClasseF=getmoyClasseF(idEcole,classeNiveauDtoList.get(i).getNiveau());
+            moyClasseF=getmoyClasseF(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre);
             System.out.println("moyClasseF "+moyClasseF);
-            moyClasseG=getmoyClasseG(idEcole,classeNiveauDtoList.get(i).getNiveau());
+            moyClasseG=getmoyClasseG(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre);
             System.out.println("moyClasseG "+moyClasseG);
 
-            moyClasse = getmoyClasse(idEcole,classeNiveauDtoList.get(i).getNiveau()) ;
-            moyClasse_ET = getmoyClasseET(idEcole,classeNiveauDtoList.get(i).getNiveau()) ;
-            moyClasseG_ET = getmoyClasseGET(idEcole,classeNiveauDtoList.get(i).getNiveau()) ;
-            moyClasseF_ET = getmoyClasseFET(idEcole,classeNiveauDtoList.get(i).getNiveau()) ;
+            moyClasse = getmoyClasse(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre) ;
+            moyClasse_ET = getmoyClasseET(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre) ;
+            moyClasseG_ET = getmoyClasseGET(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre) ;
+            moyClasseF_ET = getmoyClasseFET(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre) ;
             //calcul pourcentage
             if(classG !=0)
                 pourMoyInf85G= (double) ((nbreMoyInf85G*100d)/classG);
@@ -143,25 +145,29 @@ public class resultatsRecapAffEtNonAffServices {
 
         return  resultatsListElevesDto ;
     }
-    public  Integer getOrderNiveau(String niveau){
+    public  Integer getOrderNiveau(String niveau ,String libelleAnnee , String libelleTrimestre){
         Integer ordNiveau;
         try {
-            ordNiveau = (Integer) em.createQuery("select distinct o.ordreNiveau from Bulletin o where  o.niveau=:niveau ")
+            ordNiveau = (Integer) em.createQuery("select distinct o.ordreNiveau from Bulletin o where  o.niveau=:niveau and o.libellePeriode=:periode and o.anneeLibelle=:annee ")
                     .setParameter("niveau",niveau)
+                    .setParameter("annee", libelleAnnee)
+                    .setParameter("periode", libelleTrimestre)
                     .getSingleResult();
         } catch (NoResultException e){
             return 0 ;
         }
         return  ordNiveau ;
     }
-  public  Integer getEffectifParClasse(Long idEcole , String niveau){
+  public  Integer getEffectifParClasse(Long idEcole , String niveau ,String libelleAnnee , String libelleTrimestre){
        Long effectifClasse;
       List<Integer> effecArray =new ArrayList<>();
       Integer sum = 0;
       try {
-          effecArray = (List<Integer>) em.createQuery("select o.effectif from Bulletin o where  o.ecoleId=:idEcole  group by  o.niveau,o.effectif having  o.niveau=:niveau ")
+          effecArray = (List<Integer>) em.createQuery("select o.effectif from Bulletin o where  o.ecoleId=:idEcole  and o.libellePeriode=:periode and o.anneeLibelle=:annee group by  o.niveau,o.effectif having  o.niveau=:niveau ")
                   .setParameter("idEcole",idEcole)
                   .setParameter("niveau",niveau)
+                  .setParameter("annee", libelleAnnee)
+                  .setParameter("periode", libelleTrimestre)
                   .getResultList() ;
 
           for (Integer value : effecArray) {
@@ -174,13 +180,15 @@ public class resultatsRecapAffEtNonAffServices {
 
   return  sum ;
   }
-  public  Long geteffeF(Long idEcole , String niveau){
+  public  Long geteffeF(Long idEcole , String niveau ,String libelleAnnee , String libelleTrimestre){
       Long effeF ;
       try {
-          return  effeF = (Long) em.createQuery("select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole  group by  o.niveau having  o.niveau=:niveau")
+          return  effeF = (Long) em.createQuery("select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole  and o.libellePeriode=:periode and o.anneeLibelle=:annee  group by  o.niveau having  o.niveau=:niveau")
                   .setParameter("sexe","FEMININ")
                   .setParameter("idEcole",idEcole)
                   .setParameter("niveau",niveau)
+                  .setParameter("annee", libelleAnnee)
+                  .setParameter("periode", libelleTrimestre)
                   .getSingleResult();
       } catch (NoResultException e){
           return 0L ;
@@ -189,14 +197,16 @@ public class resultatsRecapAffEtNonAffServices {
 
   }
 
-  public  Long geteffeG(Long idEcole , String niveau){
+  public  Long geteffeG(Long idEcole , String niveau ,String libelleAnnee , String libelleTrimestre){
 
       Long  effeG ;
       try {
-          effeG= (Long) em.createQuery("select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole  group by o.niveau having  o.niveau=:niveau")
+          effeG= (Long) em.createQuery("select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole   and o.libellePeriode=:periode and o.anneeLibelle=:annee group by o.niveau having  o.niveau=:niveau")
                   .setParameter("sexe","MASCULIN")
                   .setParameter("idEcole",idEcole)
                   .setParameter("niveau",niveau)
+                  .setParameter("annee", libelleAnnee)
+                  .setParameter("periode", libelleTrimestre)
                   .getSingleResult();
           return  effeG ;
       } catch (NoResultException e){
@@ -206,14 +216,16 @@ public class resultatsRecapAffEtNonAffServices {
 
   }
 
-  public  Long getclassF(Long idEcole , String niveau){
+  public  Long getclassF(Long idEcole , String niveau ,String libelleAnnee , String libelleTrimestre){
       Long classF;
       try {
-          classF = (Long) em.createQuery("select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole  and o.isClassed=:isClass group by  o.niveau having o.niveau=:niveau")
+          classF = (Long) em.createQuery("select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole  and o.isClassed=:isClass and o.libellePeriode=:periode and o.anneeLibelle=:annee group by  o.niveau having o.niveau=:niveau")
                   .setParameter("sexe","FEMININ")
                   .setParameter("idEcole",idEcole)
                   .setParameter("isClass","O")
                   .setParameter("niveau",niveau)
+                  .setParameter("annee", libelleAnnee)
+                  .setParameter("periode", libelleTrimestre)
                   .getSingleResult();
 
           return  classF ;
@@ -223,14 +235,16 @@ public class resultatsRecapAffEtNonAffServices {
 
 
   }
-    public Long getclassG(Long idEcole , String niveau){
+    public Long getclassG(Long idEcole , String niveau ,String libelleAnnee , String libelleTrimestre){
         Long classG;
         try {
-            classG = (Long) em.createQuery("select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole  and o.isClassed =:isClass group by o.niveau having  o.niveau=:niveau")
+            classG = (Long) em.createQuery("select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole  and o.isClassed =:isClass  and o.libellePeriode=:periode and o.anneeLibelle=:annee group by o.niveau having  o.niveau=:niveau")
                     .setParameter("sexe","MASCULIN")
                     .setParameter("idEcole",idEcole)
                     .setParameter("isClass","O")
                     .setParameter("niveau",niveau)
+                    .setParameter("annee", libelleAnnee)
+                    .setParameter("periode", libelleTrimestre)
                     .getSingleResult();
             return classG ;
         } catch (NoResultException e){
@@ -238,13 +252,15 @@ public class resultatsRecapAffEtNonAffServices {
         }
 
     }
-    public  Long getNonClasseF(Long idEcole , String niveau){
+    public  Long getNonClasseF(Long idEcole , String niveau ,String libelleAnnee , String libelleTrimestre){
         try {
-            Long nonclassF = (Long) em.createQuery("select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole  and o.isClassed=:isClass group by o.niveau having  o.niveau=:niveau")
+            Long nonclassF = (Long) em.createQuery("select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole  and o.isClassed=:isClass and o.libellePeriode=:periode and o.anneeLibelle=:annee group by o.niveau having  o.niveau=:niveau")
                     .setParameter("sexe","FEMININ")
                     .setParameter("idEcole",idEcole)
                     .setParameter("isClass","N")
                     .setParameter("niveau",niveau)
+                    .setParameter("annee", libelleAnnee)
+                    .setParameter("periode", libelleTrimestre)
                     .getSingleResult();
 
             return  nonclassF ;
@@ -255,13 +271,15 @@ public class resultatsRecapAffEtNonAffServices {
 
     }
 
-    public  Long getNonClasseG(Long idEcole , String niveau){
+    public  Long getNonClasseG(Long idEcole , String niveau ,String libelleAnnee , String libelleTrimestre){
         try {
-            Long    nonclassG = (Long) em.createQuery("select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole  and o.isClassed=:isClass group by o.niveau having o.niveau=:niveau")
+            Long    nonclassG = (Long) em.createQuery("select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole  and o.isClassed=:isClass and o.libellePeriode=:periode and o.anneeLibelle=:annee group by o.niveau having o.niveau=:niveau")
                     .setParameter("sexe","MASCULIN")
                     .setParameter("idEcole",idEcole)
                     .setParameter("isClass","N")
                     .setParameter("niveau",niveau)
+                    .setParameter("annee", libelleAnnee)
+                    .setParameter("periode", libelleTrimestre)
                     .getSingleResult();
             return  nonclassG ;
         } catch (NoResultException e){
@@ -269,14 +287,16 @@ public class resultatsRecapAffEtNonAffServices {
         }
 
     }
-    public  Long getnbreMoySup10F(Long idEcole , String niveau){
+    public  Long getnbreMoySup10F(Long idEcole , String niveau ,String libelleAnnee , String libelleTrimestre){
         try {
-            Long   nbreMoySup10F = (Long) em.createQuery("select count(o.id) from Bulletin o where o.isClassed=:isClass and  o.sexe=:sexe and o.ecoleId=:idEcole  and o.moyGeneral>=:moy  group by  o.niveau having o.niveau=:niveau")
+            Long   nbreMoySup10F = (Long) em.createQuery("select count(o.id) from Bulletin o where o.isClassed=:isClass and  o.sexe=:sexe and o.ecoleId=:idEcole  and o.moyGeneral>=:moy and o.isClassed=:isClass and o.libellePeriode=:periode and o.anneeLibelle=:annee group by  o.niveau having o.niveau=:niveau")
                     .setParameter("sexe","FEMININ")
                     .setParameter("idEcole",idEcole)
                     .setParameter("isClass","O")
                     .setParameter("moy",10.0)
                     .setParameter("niveau",niveau)
+                    .setParameter("annee", libelleAnnee)
+                    .setParameter("periode", libelleTrimestre)
                     .getSingleResult();
             return  nbreMoySup10F;
         } catch (NoResultException e){
@@ -284,14 +304,16 @@ public class resultatsRecapAffEtNonAffServices {
         }
 
     }
-    public Long getnbreMoySup10G(Long idEcole , String niveau){
+    public Long getnbreMoySup10G(Long idEcole , String niveau ,String libelleAnnee , String libelleTrimestre){
         try {
-            Long    nbreMoySup10G = (Long) em.createQuery("select count(o.id) from Bulletin o where o.isClassed=:isClass and o.sexe=:sexe and o.ecoleId=:idEcole  and o.moyGeneral>=:moy  group by  o.niveau having  o.niveau=:niveau")
+            Long    nbreMoySup10G = (Long) em.createQuery("select count(o.id) from Bulletin o where o.isClassed=:isClass and o.sexe=:sexe and o.ecoleId=:idEcole  and o.moyGeneral>=:moy and o.libellePeriode=:periode and o.anneeLibelle=:annee  group by  o.niveau having  o.niveau=:niveau")
                     .setParameter("sexe","MASCULIN")
                     .setParameter("idEcole",idEcole)
                     .setParameter("isClass","O")
                     .setParameter("moy",10.0)
                     .setParameter("niveau",niveau)
+                    .setParameter("annee", libelleAnnee)
+                    .setParameter("periode", libelleTrimestre)
                     .getSingleResult();
             return  nbreMoySup10G ;
         } catch (NoResultException e){
@@ -299,15 +321,17 @@ public class resultatsRecapAffEtNonAffServices {
         }
 
     }
-    public Long getnbreMoyInf999F(Long idEcole , String niveau){
+    public Long getnbreMoyInf999F(Long idEcole , String niveau ,String libelleAnnee , String libelleTrimestre){
         try {
-            Long nbreMoyInf999F = (Long) em.createQuery("select count(o.id) from Bulletin o where o.isClassed=:isClass and o.sexe=:sexe and o.ecoleId=:idEcole  and o.moyGeneral>=:moy and o.moyGeneral <=:moy2 group by  o.niveau having  o.niveau=:niveau")
+            Long nbreMoyInf999F = (Long) em.createQuery("select count(o.id) from Bulletin o where o.isClassed=:isClass and o.sexe=:sexe and o.ecoleId=:idEcole  and o.moyGeneral>=:moy and o.moyGeneral <=:moy2 and o.libellePeriode=:periode and o.anneeLibelle=:annee  group by  o.niveau having  o.niveau=:niveau")
                     .setParameter("sexe","FEMININ")
                     .setParameter("idEcole",idEcole)
                     .setParameter("moy",8.5)
                     .setParameter("moy2",9.99)
                     .setParameter("isClass","O")
                     .setParameter("niveau",niveau)
+                    .setParameter("annee", libelleAnnee)
+                    .setParameter("periode", libelleTrimestre)
                     .getSingleResult();
             return  nbreMoyInf999F    ;
         } catch (NoResultException e){
@@ -316,15 +340,17 @@ public class resultatsRecapAffEtNonAffServices {
 
     }
 
-    public Long getnbreMoyInf999G(Long idEcole , String niveau){
+    public Long getnbreMoyInf999G(Long idEcole , String niveau ,String libelleAnnee , String libelleTrimestre){
         try {
-            Long nbreMoyInf999G = (Long) em.createQuery("select count(o.id) from Bulletin o where o.isClassed=:isClass and o.sexe=:sexe and o.ecoleId=:idEcole  and o.moyGeneral>=:moy and o.moyGeneral <=:moy2 group by  o.niveau having  o.niveau=:niveau")
+            Long nbreMoyInf999G = (Long) em.createQuery("select count(o.id) from Bulletin o where o.isClassed=:isClass and o.sexe=:sexe and o.ecoleId=:idEcole  and o.moyGeneral>=:moy and o.moyGeneral <=:moy2 and o.libellePeriode=:periode and o.anneeLibelle=:annee group by  o.niveau having  o.niveau=:niveau")
                     .setParameter("sexe","MASCULIN")
                     .setParameter("idEcole",idEcole)
                     .setParameter("moy",8.5)
                     .setParameter("moy2",9.99)
                     .setParameter("niveau",niveau)
                     .setParameter("isClass","O")
+                    .setParameter("annee", libelleAnnee)
+                    .setParameter("periode", libelleTrimestre)
                     .getSingleResult();
             return  nbreMoyInf999G ;
         } catch (NoResultException e){
@@ -332,14 +358,16 @@ public class resultatsRecapAffEtNonAffServices {
         }
 
     }
-    public Long getnbreMoyInf85G(Long idEcole , String niveau){
+    public Long getnbreMoyInf85G(Long idEcole , String niveau ,String libelleAnnee , String libelleTrimestre){
         try {
-            Long   nbreMoyInf85G = (Long) em.createQuery("select count(o.id) from Bulletin o where o.isClassed=:isClass and o.sexe=:sexe and o.ecoleId=:idEcole  and o.moyGeneral<:moy  group by  o.niveau having  o.niveau=:niveau")
+            Long   nbreMoyInf85G = (Long) em.createQuery("select count(o.id) from Bulletin o where o.isClassed=:isClass and o.sexe=:sexe and o.ecoleId=:idEcole  and o.moyGeneral<:moy and o.libellePeriode=:periode and o.anneeLibelle=:annee group by  o.niveau having  o.niveau=:niveau")
                     .setParameter("sexe","MASCULIN")
                     .setParameter("idEcole",idEcole)
                     .setParameter("moy",8.5)
                     .setParameter("niveau",niveau)
                     .setParameter("isClass","O")
+                    .setParameter("annee", libelleAnnee)
+                    .setParameter("periode", libelleTrimestre)
                     .getSingleResult();
             return  nbreMoyInf85G ;
         } catch (NoResultException e){
@@ -348,14 +376,16 @@ public class resultatsRecapAffEtNonAffServices {
 
     }
 
-    public Long getnbreMoyInf85F(Long idEcole , String niveau){
+    public Long getnbreMoyInf85F(Long idEcole , String niveau ,String libelleAnnee , String libelleTrimestre){
         try {
-            Long  nbreMoyInf85F = (Long) em.createQuery("select count(o.id) from Bulletin o where o.isClassed=:isClass and o.sexe=:sexe and o.ecoleId=:idEcole  and o.moyGeneral<:moy  group by  o.niveau having o.niveau=:niveau")
+            Long  nbreMoyInf85F = (Long) em.createQuery("select count(o.id) from Bulletin o where o.isClassed=:isClass and o.sexe=:sexe and o.ecoleId=:idEcole  and o.moyGeneral<:moy and o.libellePeriode=:periode and o.anneeLibelle=:annee group by  o.niveau having o.niveau=:niveau")
                     .setParameter("sexe","FEMININ")
                     .setParameter("idEcole",idEcole)
                     .setParameter("moy",8.5)
                     .setParameter("niveau",niveau)
                     .setParameter("isClass","O")
+                    .setParameter("annee", libelleAnnee)
+                    .setParameter("periode", libelleTrimestre)
                     .getSingleResult();
             return  nbreMoyInf85F ;
         } catch (NoResultException e){
@@ -364,13 +394,15 @@ public class resultatsRecapAffEtNonAffServices {
 
     }
 
-    public  Double getmoyClasseF(Long idEcole ,String niveau){
+    public  Double getmoyClasseF(Long idEcole ,String niveau ,String libelleAnnee , String libelleTrimestre){
         try {
-            Double   moyClasseF = (Double) em.createQuery("select AVG(o.moyGeneral) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole  and o.isClassed=:isClass group by  o.niveau having  o.niveau=:niveau")
+            Double   moyClasseF = (Double) em.createQuery("select AVG(o.moyGeneral) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole  and o.isClassed=:isClass and o.libellePeriode=:periode and o.anneeLibelle=:annee group by  o.niveau having  o.niveau=:niveau")
                     .setParameter("sexe","FEMININ")
                     .setParameter("idEcole",idEcole)
                     .setParameter("isClass","O")
                     .setParameter("niveau",niveau)
+                    .setParameter("annee", libelleAnnee)
+                    .setParameter("periode", libelleTrimestre)
                     .getSingleResult();
             return  moyClasseF ;
         } catch (NoResultException e){
@@ -378,13 +410,15 @@ public class resultatsRecapAffEtNonAffServices {
         }
 
     }
-    public  Double  getmoyClasseG(Long idEcole ,String niveau){
+    public  Double  getmoyClasseG(Long idEcole ,String niveau ,String libelleAnnee , String libelleTrimestre){
         try {
-            Double  moyClasseG = (Double) em.createQuery("select AVG(o.moyGeneral) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole  and o.isClassed=:isClass group by  o.niveau having  o.niveau=:niveau")
+            Double  moyClasseG = (Double) em.createQuery("select AVG(o.moyGeneral) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole  and o.isClassed=:isClass and o.libellePeriode=:periode and o.anneeLibelle=:annee group by  o.niveau having  o.niveau=:niveau")
                     .setParameter("sexe","MASCULIN")
                     .setParameter("idEcole",idEcole)
                     .setParameter("isClass","O")
                     .setParameter("niveau",niveau)
+                    .setParameter("annee", libelleAnnee)
+                    .setParameter("periode", libelleTrimestre)
                     .getSingleResult();
             return  moyClasseG ;
         } catch (NoResultException e){
@@ -392,12 +426,14 @@ public class resultatsRecapAffEtNonAffServices {
         }
 
     }
-    public  Double getmoyClasse(Long idEcole ,String niveau){
+    public  Double getmoyClasse(Long idEcole ,String niveau ,String libelleAnnee , String libelleTrimestre){
         try {
-            Double   moyClasseF = (Double) em.createQuery("select AVG(o.moyGeneral) from Bulletin o where  o.ecoleId=:idEcole  and o.isClassed=:isClass group by  o.niveau having  o.niveau=:niveau")
+            Double   moyClasseF = (Double) em.createQuery("select AVG(o.moyGeneral) from Bulletin o where  o.ecoleId=:idEcole  and o.isClassed=:isClass  and o.libellePeriode=:periode and o.anneeLibelle=:annee group by  o.niveau having  o.niveau=:niveau")
                     .setParameter("idEcole",idEcole)
                     .setParameter("isClass","O")
                     .setParameter("niveau",niveau)
+                    .setParameter("annee", libelleAnnee)
+                    .setParameter("periode", libelleTrimestre)
                     .getSingleResult();
             return  moyClasseF ;
         } catch (NoResultException e){
@@ -406,12 +442,14 @@ public class resultatsRecapAffEtNonAffServices {
 
     }
 
-    public  Double  getmoyClasseGET(Long idEcole ,String niveau){
+    public  Double  getmoyClasseGET(Long idEcole ,String niveau ,String libelleAnnee , String libelleTrimestre){
         try {
-            Double  moyClasseG = (Double) em.createQuery("select AVG(o.moyGeneral) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole  and o.isClassed=:isClass")
+            Double  moyClasseG = (Double) em.createQuery("select AVG(o.moyGeneral) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole  and o.isClassed=:isClass and o.libellePeriode=:periode and o.anneeLibelle=:annee")
                     .setParameter("sexe","MASCULIN")
                     .setParameter("idEcole",idEcole)
                      .setParameter("isClass","O")
+                    .setParameter("annee", libelleAnnee)
+                    .setParameter("periode", libelleTrimestre)
                     .getSingleResult();
             return  moyClasseG ;
         } catch (NoResultException e){
@@ -420,12 +458,14 @@ public class resultatsRecapAffEtNonAffServices {
 
     }
 
-    public  Double  getmoyClasseFET(Long idEcole ,String niveau){
+    public  Double  getmoyClasseFET(Long idEcole ,String niveau ,String libelleAnnee , String libelleTrimestre){
         try {
-            Double  moyClasseG = (Double) em.createQuery("select AVG(o.moyGeneral) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole  and o.isClassed=:isClass")
+            Double  moyClasseG = (Double) em.createQuery("select AVG(o.moyGeneral) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole  and o.isClassed=:isClass and o.libellePeriode=:periode and o.anneeLibelle=:annee")
                     .setParameter("sexe","FEMININ")
                     .setParameter("idEcole",idEcole)
                      .setParameter("isClass","O")
+                    .setParameter("annee", libelleAnnee)
+                    .setParameter("periode", libelleTrimestre)
                     .getSingleResult();
             return  moyClasseG ;
         } catch (NoResultException e){
@@ -434,11 +474,13 @@ public class resultatsRecapAffEtNonAffServices {
 
     }
 
-    public  Double  getmoyClasseET(Long idEcole ,String niveau){
+    public  Double  getmoyClasseET(Long idEcole ,String niveau  ,String libelleAnnee , String libelleTrimestre){
         try {
-            Double  moyClasseG = (Double) em.createQuery("select AVG(o.moyGeneral) from Bulletin o where  o.ecoleId=:idEcole  and o.isClassed=:isClass")
+            Double  moyClasseG = (Double) em.createQuery("select AVG(o.moyGeneral) from Bulletin o where  o.ecoleId=:idEcole  and o.isClassed=:isClass and o.libellePeriode=:periode and o.anneeLibelle=:annee")
                     .setParameter("idEcole",idEcole)
                     .setParameter("isClass","O")
+                    .setParameter("annee", libelleAnnee)
+                    .setParameter("periode", libelleTrimestre)
                     .getSingleResult();
             return  moyClasseG ;
         } catch (NoResultException e){

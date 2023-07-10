@@ -67,19 +67,20 @@ public class RecapsScolaireNonAffParNiveauRessource {
     @Transactional
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/list-recap-non-affecte-par-classe-par-niveau/{idEcole}")
-    public List<RecapDesResultatsElevesNonAffecteDto>  repartiParAnn(@PathParam("idEcole") Long idEcole) throws Exception, JRException {
+    @Path("/list-recap-non-affecte-par-classe-par-niveau/{idEcole}/{libelleAnnee}/{libelleTrimetre}")
+    public List<RecapDesResultatsElevesNonAffecteDto>  repartiParAnn(@PathParam("idEcole") Long idEcole
+            ,@PathParam("libelleAnnee") String libelleAnnee,@PathParam("libelleTrimetre") String libelleTrimetre) throws Exception, JRException {
         List<RecapDesResultatsElevesNonAffecteDto>  detailsBull = new ArrayList<>() ;
         System.out.println("classeNiveauDtoList entree");
-        detailsBull= resultatsServices.RecapCalculResultatsEleveAffecte(idEcole)  ;
+        detailsBull= resultatsServices.RecapCalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre)  ;
         return detailsBull ;
 
     }
 
     @GET
-    @Path("/imprimer-recap-non-affecte-par-classe-par-niveau/{idEcole}/{type}")
+    @Path("/imprimer-recap-non-affecte-par-classe-par-niveau/{idEcole}/{type}/{libelleAnnee}/{libelleTrimetre}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    public ResponseEntity<byte[]>  getDtoRapport(@PathParam("idEcole") Long idEcole ,@PathParam("type") String type) throws Exception, JRException {
+    public ResponseEntity<byte[]>  getDtoRapport(@PathParam("idEcole") Long idEcole ,@PathParam("type") String type ,@PathParam("libelleAnnee") String libelleAnnee,@PathParam("libelleTrimetre") String libelleTrimetre) throws Exception, JRException {
         InputStream myInpuStream ;
         /*myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/BulletinBean.jrxml");*/
         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Recap_resultats_scolaire_non_aff.jrxml");
@@ -88,7 +89,7 @@ public class RecapsScolaireNonAffParNiveauRessource {
 
        List<RecapDesResultatsElevesNonAffecteDto> detailsBull = new ArrayList<>() ;
 
-        detailsBull= resultatsServices.RecapCalculResultatsEleveAffecte(idEcole) ;
+        detailsBull= resultatsServices.RecapCalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre) ;
         System.out.println("detailsBull "+detailsBull);
 
         if(type.toUpperCase().equals("PDF")){

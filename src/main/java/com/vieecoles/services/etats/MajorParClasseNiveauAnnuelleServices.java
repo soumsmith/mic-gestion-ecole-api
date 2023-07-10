@@ -2,8 +2,6 @@ package com.vieecoles.services.etats;
 
 import com.vieecoles.dto.ClasseNiveauDto;
 import com.vieecoles.dto.MajorParClasseNiveauDto;
-import com.vieecoles.dto.ResultatsElevesAffecteDto;
-import com.vieecoles.dto.TransfertsDto;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -14,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @ApplicationScoped
-public class MajorParClasseNiveauServices {
+public class MajorParClasseNiveauAnnuelleServices {
     @Inject
     EntityManager em;
 
@@ -72,7 +70,7 @@ public class MajorParClasseNiveauServices {
     public List<MajorParClasseNiveauDto>  getListMajorParClasseNiveau(Long idEcole , String niveau,String classe,Double moy ,String libelleAnnee , String libelleTrimestre ){
         List<MajorParClasseNiveauDto> classeNiveauDtoList = new ArrayList<>();
         try {
-            TypedQuery  q= em.createQuery("select new com.vieecoles.dto.MajorParClasseNiveauDto(o.niveau,o.libelleClasse,o.matricule,o.nom,o.prenoms,SUBSTRING(o.dateNaissance,1,4) ,o.sexe,o.appreciation,o.redoublant,o.moyGeneral,o.lv2,o.ordreNiveau) from Bulletin o where  o.ecoleId =:idEcole and  o.niveau=:niveau and o.libelleClasse=:libelleClasse and o.moyGeneral=:moy and o.libellePeriode=:periode and o.anneeLibelle=:annee ", MajorParClasseNiveauDto.class);
+            TypedQuery  q= em.createQuery("select new com.vieecoles.dto.MajorParClasseNiveauDto(o.niveau,o.libelleClasse,o.matricule,o.nom,o.prenoms,SUBSTRING(o.dateNaissance,1,4) ,o.sexe,o.appreciation,o.redoublant,o.moyGeneral,o.lv2,o.ordreNiveau) from Bulletin o where  o.ecoleId =:idEcole and  o.niveau=:niveau and o.libelleClasse=:libelleClasse and o.moyAn =:moy and o.libellePeriode=:periode and o.anneeLibelle=:annee ", MajorParClasseNiveauDto.class);
             classeNiveauDtoList = q.setParameter("idEcole",idEcole)
                     .setParameter("niveau",niveau)
                     .setParameter("libelleClasse",classe)
@@ -90,7 +88,7 @@ public class MajorParClasseNiveauServices {
     public Double getMajorDto(Long idEcole , String niveau,String classe ,String libelleAnnee , String libelleTrimestre){
         Double classeNiveauDtoList ;
         try {
-            TypedQuery<Double> q= (TypedQuery<Double>) em.createQuery("select MAX(o.moyGeneral) from Bulletin o where  o.ecoleId =:idEcole and  o.niveau=:niveau and o.libelleClasse=:libelleClasse and o.libellePeriode=:periode and o.anneeLibelle=:annee");
+            TypedQuery<Double> q= (TypedQuery<Double>) em.createQuery("select MAX(o.moyAn) from Bulletin o where  o.ecoleId =:idEcole and  o.niveau=:niveau and o.libelleClasse=:libelleClasse and o.libellePeriode=:periode and o.anneeLibelle=:annee");
             classeNiveauDtoList = q.setParameter("idEcole",idEcole)
                     .setParameter("niveau",niveau)
                     .setParameter("libelleClasse",classe)

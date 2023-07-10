@@ -3,9 +3,7 @@ package com.vieecoles.ressource.operations.etats;
 
 import com.vieecoles.dto.*;
 import com.vieecoles.entities.operations.ecole;
-import com.vieecoles.projection.BulletinSelectDto;
 import com.vieecoles.services.etats.*;
-import com.vieecoles.steph.entities.Ecole;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.ooxml.JRDocxExporter;
@@ -16,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -24,25 +21,20 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.InputStream;
-import java.net.URL;
-import java.nio.file.Paths;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-@Path("/imprimer-rapport")
+@Path("/imprimer-rapport-annuelle")
 //@Produces(MediaType.APPLICATION_JSON)
 //@Consumes(MediaType.APPLICATION_JSON)
 
-public class spiderRessource {
+public class spiderAnnuelleRessource {
     @Inject
     EntityManager em;
     @Inject
     IdentiteEtatService identiteEtatService ;
     @Inject
-    resultatsServices resultatsServices ;
+    resultatsAnnuelleServices resultatsServices ;
 
     @Inject
     RepartitionElevParAnNaissServices repartitionElevParAnNaissServices ;
@@ -59,22 +51,22 @@ public class spiderRessource {
     @Inject
     TransfertsServices transfertsServices ;
     @Inject
-    MajorParClasseNiveauServices majorServices ;
+    MajorParClasseNiveauAnnuelleServices majorServices ;
 
     @Inject
-    EleveNonAffecteParClasseServices eleveNonAffecteParClasseServices ;
+    EleveNonAffecteParClasseAnnuelleServices eleveNonAffecteParClasseServices ;
 
     @Inject
-    EleveAffecteParClasseServices eleveAffecteParClasseServices ;
+    EleveAffecteParClasseAnnulleServices eleveAffecteParClasseServices ;
 
     @Inject
-    resultatsRecapServices resultatsRecapServices ;
+    resultatsRecapAnnuelleServices resultatsRecapServices ;
     @Inject
-    resultatsNonAffecteServices resultatsNonAffecteServices ;
+    resultatsNonAffecteAnnuelleServices resultatsNonAffecteServices ;
     @Inject
-    resultatsRecapNonAffServices resultatsRecapNonAffServices ;
+    resultatsRecapNonAffAnnuelleServices resultatsRecapNonAffServices ;
     @Inject
-    resultatsRecapAffEtNonAffServices resultatsRecapAffEtNonAffServices ;
+    resultatsRecapAffEtNonAffAnnuelleServices resultatsRecapAffEtNonAffServices ;
 
 
 
@@ -91,144 +83,6 @@ public class spiderRessource {
 
     }
 
-
-
-    @Transactional
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("/recape-resultats-affecte-par-niveau/{idEcole}/{libelleAnnee}/{libelleTrimetre}")
-    public List<RecapDesResultatsElevesAffecteDto>  recap(@PathParam("idEcole") Long idEcole ,
-                                                          @PathParam("libelleAnnee") String libelleAnnee,
-                                                          @PathParam("libelleTrimetre") String libelleTrimetre) throws Exception, JRException {
-        List<RecapDesResultatsElevesAffecteDto>  detailsBull = new ArrayList<>() ;
-        System.out.println("classeNiveauDtoList entree");
-        detailsBull= resultatsRecapServices.RecapCalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre) ;
-        return detailsBull ;
-
-    }
-
-
-    @Transactional
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("/Eleve-affecte-par-classe/{idEcole}/{libelleAnnee}/{libelleTrimetre}")
-    public List<eleveAffecteParClasseDto>  eleveAffecteParClasse(@PathParam("idEcole") Long idEcole ,@PathParam("libelleAnnee") String libelleAnnee,
-                                                                 @PathParam("libelleTrimetre") String libelleTrimetre) throws Exception, JRException {
-        List<eleveAffecteParClasseDto>  detailsBull = new ArrayList<>() ;
-        System.out.println("classeNiveauDtoList entree");
-        detailsBull= eleveAffecteParClasseServices.eleveAffecteParClasse(idEcole ,libelleAnnee,libelleTrimetre) ;
-        return detailsBull ;
-
-    }
-
-    @Transactional
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("/Eleve-non-affecte-par-classe/{idEcole}/{libelleAnnee}/{libelleTrimetre}")
-    public List<eleveNonAffecteParClasseDto>  eleveNonAffecteParClasse(@PathParam("idEcole") Long idEcole ,@PathParam("libelleAnnee") String libelleAnnee,
-                                                                       @PathParam("libelleTrimetre") String libelleTrimetre) throws Exception, JRException {
-        List<eleveNonAffecteParClasseDto>  detailsBull = new ArrayList<>() ;
-        System.out.println("classeNiveauDtoList entree");
-        detailsBull= eleveNonAffecteParClasseServices.eleveNonAffecteParClasse(idEcole ,libelleAnnee,libelleTrimetre) ;
-        return detailsBull ;
-
-    }
-
-    @Transactional
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("/Major/{idEcole}/{libelleAnnee}/{libelleTrimetre}")
-    public List<MajorParClasseNiveauDto>  majorParClasseNiveau(@PathParam("idEcole") Long idEcole ,@PathParam("libelleAnnee") String libelleAnnee,
-                                                               @PathParam("libelleTrimetre") String libelleTrimetre) throws Exception, JRException {
-        List<MajorParClasseNiveauDto>  detailsBull = new ArrayList<>() ;
-        System.out.println("classeNiveauDtoList entree");
-        detailsBull= majorServices.MajorParNiveauClasse(idEcole ,libelleAnnee,libelleTrimetre) ;
-        return detailsBull ;
-
-    }
-
-    @Transactional
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("/Transfert/{idEcole}")
-    public List<TransfertsDto>  transferts(@PathParam("idEcole") Long idEcole) throws Exception, JRException {
-        List<TransfertsDto>  detailsBull = new ArrayList<>() ;
-        System.out.println("classeNiveauDtoList entree");
-        detailsBull= transfertsServices.transferts(idEcole) ;
-        return detailsBull ;
-
-    }
-    @Transactional
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("/resultat_eleve_affecte_par_classe_par_niveau/{idEcole}/{libelleAnnee}/{libelleTrimetre}")
-    public List<ResultatsElevesAffecteDto>  detailBulletinInfos(@PathParam("idEcole") Long idEcole ,
-                                                                @PathParam("libelleAnnee") String libelleAnnee,
-                                                                @PathParam("libelleTrimetre") String libelleTrimetre) throws Exception, JRException {
-        List<ResultatsElevesAffecteDto>  detailsBull = new ArrayList<>() ;
-        System.out.println("classeNiveauDtoList entree");
-        detailsBull= resultatsServices.CalculResultatsEleveAffecte(idEcole,libelleAnnee,libelleTrimetre) ;
-        return detailsBull ;
-
-    }
-
-    @Transactional
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("/boursiers-demi-boursiers/{idEcole}/{libelleAnnee}/{libelleTrimetre}")
-    public List<BoursierDto>  boursier(@PathParam("idEcole") Long idEcole  ,
-                                       @PathParam("libelleAnnee") String libelleAnnee,
-                                       @PathParam("libelleTrimetre") String libelleTrimetre) throws Exception, JRException {
-        List<BoursierDto>  detailsBull = new ArrayList<>() ;
-        System.out.println("classeNiveauDtoList entree");
-        detailsBull= boursiersServices.boursier(idEcole ,libelleAnnee,libelleTrimetre);
-        return detailsBull ;
-
-    }
-
-
-    @Transactional
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("/EffApprocheNiveauGenre/{idEcole}/{libelleAnnee}/{libelleTrimetre}")
-    public EffApprocheNiveauGenreDto effApprocheNiveauGenreDto(@PathParam("idEcole") Long idEcole ,
-                                                               @PathParam("libelleAnnee") String libelleAnnee,
-                                                               @PathParam("libelleTrimetre") String libelleTrimetre) throws Exception, JRException {
-        EffApprocheNiveauGenreDto detailsBull = new EffApprocheNiveauGenreDto()  ;
-        System.out.println("classeNiveauDtoList entree");
-        detailsBull= approcheParNiveauParGenreServices.EffApprocheNiveauGenre(idEcole ,libelleAnnee,libelleTrimetre) ;
-        return detailsBull ;
-
-    }
-
-    @Transactional
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("/recapitulatif-par-classe-pedagogique-Affcete-non-affecte/{idEcole}/{libelleAnnee}/{libelleTrimetre}")
-    public RecapitulatifClassePedagoAffectNonAffect recapAffecNonAffecte(@PathParam("idEcole") Long idEcole ,
-                                                                         @PathParam("libelleAnnee") String libelleAnnee,
-                                                                         @PathParam("libelleTrimetre") String libelleTrimetre) throws Exception, JRException {
-        RecapitulatifClassePedagoAffectNonAffect detailsBull = new RecapitulatifClassePedagoAffectNonAffect()  ;
-        System.out.println("classeNiveauDtoList entree");
-        detailsBull= recapClassePedaAffNonAffecServices.RecapClassePedagoAffecNonAffect(idEcole ,libelleAnnee,libelleTrimetre) ;
-        return detailsBull ;
-
-    }
-
-
-    @Transactional
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("/repartition-par-annee-naissance/{idEcole}/{libelleAnnee}/{libelleTrimetre}")
-    public List<RepartitionEleveParAnNaissDto>  repartiParAnn(@PathParam("idEcole") Long idEcole ,
-                                                              @PathParam("libelleAnnee") String libelleAnnee,
-                                                              @PathParam("libelleTrimetre") String libelleTrimetre) throws Exception, JRException {
-        List<RepartitionEleveParAnNaissDto>  detailsBull = new ArrayList<>() ;
-        System.out.println("classeNiveauDtoList entree");
-        detailsBull= repartitionElevParAnNaissServices.CalculRepartElevParAnnNaiss(idEcole ,libelleAnnee,libelleTrimetre) ;
-        return detailsBull ;
-
-    }
 
 
 
@@ -321,7 +175,7 @@ public class spiderRessource {
     //to pdf ;
       byte[] data =JasperExportManager.exportReportToPdf(report);
       HttpHeaders headers= new HttpHeaders();
-      headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=RapportPouls.pdf");
+      headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Rapport-Pouls-Annuelle.pdf");
         return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.APPLICATION_PDF).body(data);
     } else {
         JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(Collections.singleton(detailsBull)) ;
@@ -339,7 +193,7 @@ public class spiderRessource {
         byte[] data = baos.toByteArray() ;
         HttpHeaders headers= new HttpHeaders();
      // headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Rapport"+myScole.getEcoleclibelle()+".docx");
-            headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Rapport Pouls-Scolaire.docx");
+            headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Rapport Pouls-Scolaire-Annuelle.docx");
         return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.MULTIPART_FORM_DATA).body(data);
     }
 

@@ -2,7 +2,6 @@ package com.vieecoles.services.etats;
 
 import com.vieecoles.dto.NiveauDto;
 import com.vieecoles.dto.eleveAffecteParClasseDto;
-import com.vieecoles.dto.eleveNonAffecteParClasseDto;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -13,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @ApplicationScoped
-public class EleveAffecteParClasseServices {
+public class EleveAffecteParClasseAnnulleServices {
     @Inject
     EntityManager em;
 
@@ -63,7 +62,7 @@ public class EleveAffecteParClasseServices {
     public List<eleveAffecteParClasseDto> getListEleveNonAffectParClassDto(Long idEcole , String classe,String libelleAnnee , String libelleTrimestre){
         List<eleveAffecteParClasseDto> classeNiveauDtoList = new ArrayList<>() ;
         try {
-            TypedQuery<eleveAffecteParClasseDto> q= em.createQuery("select new com.vieecoles.dto.eleveAffecteParClasseDto(o.libelleClasse,o.nomPrenomProfPrincipal,o.matricule,o.nom,o.prenoms,o.sexe,o.dateNaissance,o.nationalite,o.redoublant,o.affecte,o.numDecisionAffecte,o.moyGeneral,o.rang,o.appreciation,o.nomPrenomEducateur,o.ordreNiveau) from Bulletin o where  o.ecoleId=:idEcole and o.libelleClasse=:classe and o.affecte=:affecte and o.libellePeriode=:periode and o.anneeLibelle=:annee", eleveAffecteParClasseDto.class);
+            TypedQuery<eleveAffecteParClasseDto> q= em.createQuery("select new com.vieecoles.dto.eleveAffecteParClasseDto(o.libelleClasse,o.nomPrenomProfPrincipal,o.matricule,o.nom,o.prenoms,o.sexe,o.dateNaissance,o.nationalite,o.redoublant,o.affecte,o.numDecisionAffecte,o.moyAn,o.rang,o.appreciation,o.nomPrenomEducateur,o.ordreNiveau) from Bulletin o where  o.ecoleId=:idEcole and o.libelleClasse=:classe and o.affecte=:affecte and o.libellePeriode=:periode and o.anneeLibelle=:annee", eleveAffecteParClasseDto.class);
             classeNiveauDtoList = q.setParameter("idEcole",idEcole)
                                  .setParameter("classe",classe)
                                  .setParameter("affecte","AFFECTE")

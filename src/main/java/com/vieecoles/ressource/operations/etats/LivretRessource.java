@@ -144,18 +144,40 @@ public class LivretRessource {
         detailsBull = livretScolaireServices.livretScolaire(idEcole,libelleTrimetre,matricule,libelleAnnee);
 
         Double TmoyFr= calculTMoyFran(matricule,libelleAnnee,libelleTrimetre,idEcole) ;
+            Double TcoefFr=0D;
+            Double  TmoyCoefFr=0D;
 
-
-        Double TcoefFr = calculcoefFran(matricule,libelleAnnee,libelleTrimetre,idEcole) ;
-        Double  TmoyCoefFr = calculMoycoefFran(matricule,libelleAnnee,libelleTrimetre,idEcole) ;
+         TcoefFr = calculcoefFran(matricule,libelleAnnee,libelleTrimetre,idEcole) ;
+         TmoyCoefFr = calculMoycoefFran(matricule,libelleAnnee,libelleTrimetre,idEcole) ;
         Double TmoyCoefFrPermier= calculMoycoefFran(matricule,libelleAnnee,"Premier Trimestre",idEcole) ;
         Double TmoyCoefFrDeuxieme= calculMoycoefFran(matricule,libelleAnnee,"Deuxième Trimestre",idEcole) ;
-        Double TmoyFrAnn ;
+        Double TmoyFrAnn = null;
+            String is_class_1er_trim = calculIsClassTrimesPasse(matricule,libelleAnnee,"Premier Trimestre",idEcole) ;
+            String is_class_2e_trim = calculIsClassTrimesPasse(matricule,libelleAnnee,"Deuxième Trimestre",idEcole) ;
+            String is_class_3e_trim = calculIsClassTrimesPasse(matricule,libelleAnnee,"Troisième Trimestre",idEcole) ;
 
+           /* String is_class_mat_1er_trim = calculIsClassMatiere(matricule,libelleAnnee,"Premier Trimestre",idEcole) ;
+            String is_class_mat_2e_trim = calculIsClassMatiere(matricule,libelleAnnee,"Deuxième Trimestre",idEcole) ;
+            String is_class_mat_3e_trim = calculIsClassMatiere(matricule,libelleAnnee,"Troisième Trimestre",idEcole) ;*/
+            if(is_class_1er_trim.equals("N")) {
+                TmoyCoefFrPermier=0D ;
+            }
+
+            if(is_class_2e_trim.equals("N")) {
+                TmoyCoefFrDeuxieme=0D ;
+
+            }
+            if(is_class_3e_trim.equals("N")||TmoyCoefFr==null) {
+                TmoyCoefFr=0D ;
+            }
+
+            if(TcoefFr!=null)
             TmoyFrAnn= ( (TmoyCoefFrPermier/TcoefFr) + (TmoyCoefFrDeuxieme/TcoefFr)*2 + (TmoyCoefFr/TcoefFr)*2 )/5 ;
 
 
+
         Double TrangFr1 = calculRangFran(matricule,libelleAnnee,libelleTrimetre,idEcole) ;
+        Double TrangFrAnnuel1 = calculRangFranAnnuel(matricule,libelleAnnee,libelleTrimetre,idEcole) ;
         Double TrangFrPremier1 = calculRangFran(matricule,libelleAnnee,"Premier Trimestre",idEcole) ;
         Double TrangFrDeuxieme1 = calculRangFran(matricule,libelleAnnee,"Deuxième Trimestre",idEcole) ;
 
@@ -179,12 +201,16 @@ public class LivretRessource {
         Integer rang_2eme_trim = calculRangTrimesPasse(matricule,libelleAnnee,"Deuxième Trimestre",idEcole) ;
         Integer rang_3eme_trim = calculRangTrimesPasse(matricule,libelleAnnee,"Troisième Trimestre",idEcole) ;
 
-        String is_class_1er_trim = calculIsClassTrimesPasse(matricule,libelleAnnee,"Premier Trimestre",idEcole) ;
-        String is_class_2e_trim = calculIsClassTrimesPasse(matricule,libelleAnnee,"Deuxième Trimestre",idEcole) ;
-        String is_class_3e_trim = calculIsClassTrimesPasse(matricule,libelleAnnee,"Troisième Trimestre",idEcole) ;
-        int TrangFr = 0;
+
+
+
+
+            int TrangFr = 0;
         int TrangFrPremier = 0;
         int TrangFrDeuxieme = 0;
+        int TrangFrAnnuel = 0 ;
+            if(TrangFrAnnuel1 !=null)
+                TrangFrAnnuel = TrangFrAnnuel1.intValue() ;
 
          if(TrangFr1 !=null)
          TrangFr = TrangFr1.intValue() ;
@@ -204,11 +230,12 @@ public class LivretRessource {
             map.put("logo",logo);
             map.put("amoirie",amoirie);
             map.put("bg",bg);
-            map.put("TmoyFr",TmoyCoefFr/TcoefFr);
-            map.put("TmoyFrPremier",TmoyCoefFrPermier/TcoefFr);
-            map.put("TmoyFrDeuxieme",TmoyCoefFrDeuxieme/TcoefFr);
+            map.put("TmoyFr",TcoefFr == null?TmoyCoefFr/1:TmoyCoefFr/TcoefFr);
+            map.put("TmoyFrPremier", TcoefFr == null? TmoyCoefFrPermier/1: TmoyCoefFrPermier/TcoefFr);
+            map.put("TmoyFrDeuxieme",TcoefFr == null?TmoyCoefFrDeuxieme/1: TmoyCoefFrDeuxieme/TcoefFr);
             map.put("TcoefFr",TcoefFr);
             map.put("TmoyFrAnn",TmoyFrAnn);
+            map.put("TrangFrAnnuel",TrangFrAnnuel);
             map.put("TmoyEMRANN",TmoyEMRANN);
             map.put("TmoyCoefFr",TmoyCoefFr);
             map.put("TrangFr",TrangFr);
@@ -234,6 +261,8 @@ public class LivretRessource {
             map.put("is_class_1er_trim",is_class_1er_trim);
             map.put("is_class_2e_trim",is_class_2e_trim);
             map.put("is_class_3e_trim",is_class_3e_trim);
+
+
 
 
             JasperPrint report = JasperFillManager.fillReport(compileReport, map, beanCollectionDataSource);
@@ -388,6 +417,19 @@ public class LivretRessource {
             return 0D ;
         }
     }
+    public  Double calculRangFranAnnuel(String matricule, String annee,String periode,Long idEcole){
+        try {
+            Double  moyTfr = (Double) em.createQuery("select AVG(d.rangAn) from DetailBulletin d join d.bulletin b where b.matricule=:matricule and b.libellePeriode=:periode and b.ecoleId=:idEcole and b.anneeLibelle=:annee  and d.matiereLibelle in ('COMPOSITION FRANCAISE','ORTHOGRAPHE ET GRAMMAIRE','EXPRESSION ORALE') ")
+                    .setParameter("matricule",matricule)
+                    .setParameter("annee",annee)
+                    .setParameter("periode",periode)
+                    .setParameter("idEcole",idEcole)
+                    .getSingleResult();
+            return  moyTfr ;
+        } catch (NoResultException e){
+            return 0D ;
+        }
+    }
 
     public  Integer calculRangEMR(String matricule, String annee,String periode,Long idEcole){
         try {
@@ -438,6 +480,20 @@ public class LivretRessource {
     public  String calculIsClassTrimesPasse(String matricule, String annee,String periode,Long idEcole){
         try {
             String  isclass = (String) em.createQuery("select b.isClassed from Bulletin b where b.matricule=:matricule and b.libellePeriode=:periode and b.ecoleId=:idEcole and b.anneeLibelle=:annee  ")
+                    .setParameter("matricule",matricule)
+                    .setParameter("annee",annee)
+                    .setParameter("periode",periode)
+                    .setParameter("idEcole",idEcole)
+                    .getSingleResult();
+            return  isclass ;
+        } catch (NoResultException e){
+            return null;
+        }
+    }
+
+    public  String calculIsClassMatiere(String matricule, String annee,String periode,Long idEcole){
+        try {
+            String  isclass = (String) em.createQuery("select d.isRanked from DetailBulletin d join d.bulletin b where b.matricule=:matricule and b.libellePeriode=:periode and b.ecoleId=:idEcole and b.anneeLibelle=:annee  ")
                     .setParameter("matricule",matricule)
                     .setParameter("annee",annee)
                     .setParameter("periode",periode)

@@ -195,6 +195,7 @@ public class bulletinRessource {
         //System.out.println("Moyene en Francais: "+TmoyCoefFr/4);
         Double TrangFr1 = calculRangFran(matricule,libelleAnnee,libelleTrimetre,idEcole) ;
 
+
         Integer TrangEMR =calculRangEMR(matricule,libelleAnnee,libelleTrimetre,idEcole) ;
         Double TmoyCoefEMR = calculMoycoefEMR(matricule,libelleAnnee,libelleTrimetre,idEcole);
         Double TcoefEMR  = calculcoefEMR(matricule,libelleAnnee,libelleTrimetre,idEcole);
@@ -212,8 +213,11 @@ public class bulletinRessource {
         String is_class_2e_trim = calculIsClassTrimesPasse(matricule,libelleAnnee,"Deuxième Trimestre",idEcole) ;
         String is_class_3e_trim = calculIsClassTrimesPasse(matricule,libelleAnnee,"Troisième Trimestre",idEcole) ;
         int TrangFr = 0;
+
+
          if(TrangFr1 !=null)
          TrangFr = TrangFr1.intValue() ;
+
 
         if(type.toUpperCase().equals("PDF")){
 
@@ -418,6 +422,8 @@ public class bulletinRessource {
         }
     }
 
+
+
     public  Integer calculRangEMR(String matricule, String annee,String periode,Long idEcole){
         try {
             Integer  moyTfr = (Integer) em.createQuery("select d.rang from DetailBulletin d join d.bulletin b where b.matricule=:matricule and b.libellePeriode=:periode and b.ecoleId=:idEcole and b.anneeLibelle=:annee  and d.matiereLibelle =:libelle ")
@@ -432,6 +438,8 @@ public class bulletinRessource {
             return 0 ;
         }
     }
+
+
 
     public  Double calculmoyenTrimesPasse(String matricule, String annee,String periode,Long idEcole){
         try {

@@ -46,26 +46,29 @@ public class ListeBoursiersEtDemiBoursiersRessource {
     @Transactional
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/liste-boursier-demi-boursier/{idEcole}")
-    public List<BoursierDto>  repartiParAnn(@PathParam("idEcole") Long idEcole) throws Exception, JRException {
+    @Path("/liste-boursier-demi-boursier/{idEcole}/{libelleAnnee}/{libelleTrimetre}")
+    public List<BoursierDto>  repartiParAnn(@PathParam("idEcole") Long idEcole ,@PathParam("libelleAnnee") String libelleAnnee,
+                                            @PathParam("libelleTrimetre") String libelleTrimetre) throws Exception, JRException {
         List<BoursierDto>  detailsBull = new ArrayList<>() ;
         System.out.println("classeNiveauDtoList entree");
-        detailsBull= resultatsServices.boursier(idEcole)  ;
+        detailsBull= resultatsServices.boursier(idEcole ,libelleAnnee,libelleTrimetre)  ;
         return detailsBull ;
 
     }
 
     @GET
-    @Path("/imprimer-liste-boursier-demi-boursier/{idEcole}/{type}")
+    @Path("/imprimer-liste-boursier-demi-boursier/{idEcole}/{type}/{libelleAnnee}/{libelleTrimetre}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    public ResponseEntity<byte[]>  getDtoRapport(@PathParam("idEcole") Long idEcole ,@PathParam("type") String type) throws Exception, JRException {
+    public ResponseEntity<byte[]>  getDtoRapport(@PathParam("idEcole") Long idEcole ,@PathParam("type") String type
+                                                      ,@PathParam("libelleAnnee") String libelleAnnee,
+                                                 @PathParam("libelleTrimetre") String libelleTrimetre) throws Exception, JRException {
         InputStream myInpuStream ;
         /*myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/BulletinBean.jrxml");*/
         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Liste_des_boursiers_et_demi_boursiers.jrxml");
 
        List<BoursierDto> detailsBull = new ArrayList<>() ;
 
-        detailsBull= resultatsServices.boursier(idEcole) ;
+        detailsBull= resultatsServices.boursier(idEcole ,libelleAnnee,libelleTrimetre) ;
         System.out.println("detailsBull "+detailsBull);
 
         if(type.toUpperCase().equals("PDF")){

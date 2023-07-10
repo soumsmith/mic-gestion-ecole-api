@@ -18,12 +18,14 @@ public class ApprocheParNiveauParGenreServices {
     @Inject
     EntityManager em;
 
-    public EffApprocheNiveauGenreDto EffApprocheNiveauGenre(Long idEcole){
+    public EffApprocheNiveauGenreDto EffApprocheNiveauGenre(Long idEcole ,String libelleAnnee , String libelleTrimestre){
         int LongTableau;
         List<NiveauDto> classeNiveauDtoList = new ArrayList<>() ;
-        TypedQuery<NiveauDto> q = em.createQuery( "SELECT new com.vieecoles.dto.NiveauDto(b.niveau) from Bulletin b  where b.ecoleId =:idEcole  " +
+        TypedQuery<NiveauDto> q = em.createQuery( "SELECT new com.vieecoles.dto.NiveauDto(b.niveau) from Bulletin b  where b.ecoleId =:idEcole and b.libellePeriode=:periode and b.anneeLibelle=:annee  " +
                 "group by b.niveau ", NiveauDto.class);
         classeNiveauDtoList = q.setParameter("idEcole", idEcole)
+                                .setParameter("annee", libelleAnnee)
+                                .setParameter("periode", libelleTrimestre)
                               . getResultList() ;
 
         LongTableau = classeNiveauDtoList.size();
@@ -51,84 +53,84 @@ public class ApprocheParNiveauParGenreServices {
 
         EffApprocheNiveauGenreDto resultatsListEleves= new EffApprocheNiveauGenreDto();
 
-        n6 = getBase(idEcole,"Sixième") ;
-        n6RF= getNbreParGenreParNiveau(idEcole,"Sixième","FEMININ","OUI");
-        n6NRF= getNbreParGenreParNiveau(idEcole,"Sixième","FEMININ","NON");
-        n6RG= getNbreParGenreParNiveau(idEcole,"Sixième","MASCULIN","OUI");
-        n6NRG= getNbreParGenreParNiveau(idEcole,"Sixième","MASCULIN","NON");
+        n6 = getBase(idEcole,"Sixième" ,libelleAnnee , libelleTrimestre) ;
+        n6RF= getNbreParGenreParNiveau(idEcole,"Sixième","FEMININ","OUI" ,libelleAnnee , libelleTrimestre);
+        n6NRF= getNbreParGenreParNiveau(idEcole,"Sixième","FEMININ","NON" ,libelleAnnee , libelleTrimestre);
+        n6RG= getNbreParGenreParNiveau(idEcole,"Sixième","MASCULIN","OUI" ,libelleAnnee , libelleTrimestre);
+        n6NRG= getNbreParGenreParNiveau(idEcole,"Sixième","MASCULIN","NON" ,libelleAnnee , libelleTrimestre);
 
-        n5 = getBase(idEcole,"Cinquième") ;
-        n5RF= getNbreParGenreParNiveau(idEcole,"Cinquième","FEMININ","OUI");
-        n5NRF= getNbreParGenreParNiveau(idEcole,"Cinquième","FEMININ","NON");
-        n5RG= getNbreParGenreParNiveau(idEcole,"Cinquième","MASCULIN","OUI");
-        n5NRG= getNbreParGenreParNiveau(idEcole,"Cinquième","MASCULIN","NON");
+        n5 = getBase(idEcole,"Cinquième" ,libelleAnnee , libelleTrimestre) ;
+        n5RF= getNbreParGenreParNiveau(idEcole,"Cinquième","FEMININ","OUI" ,libelleAnnee , libelleTrimestre);
+        n5NRF= getNbreParGenreParNiveau(idEcole,"Cinquième","FEMININ","NON" ,libelleAnnee , libelleTrimestre);
+        n5RG= getNbreParGenreParNiveau(idEcole,"Cinquième","MASCULIN","OUI" ,libelleAnnee , libelleTrimestre);
+        n5NRG= getNbreParGenreParNiveau(idEcole,"Cinquième","MASCULIN","NON" ,libelleAnnee , libelleTrimestre);
 
 
-        n4 = getBase(idEcole,"Quatrième") ;
-        n4RF= getNbreParGenreParNiveau(idEcole,"Quatrième","FEMININ","OUI");
-        n4NRF= getNbreParGenreParNiveau(idEcole,"Quatrième","FEMININ","NON");
-        n4RG= getNbreParGenreParNiveau(idEcole,"Quatrième","MASCULIN","OUI");
-        n4NRG= getNbreParGenreParNiveau(idEcole,"Quatrième","MASCULIN","NON");
+        n4 = getBase(idEcole,"Quatrième" ,libelleAnnee , libelleTrimestre) ;
+        n4RF= getNbreParGenreParNiveau(idEcole,"Quatrième","FEMININ","OUI" ,libelleAnnee , libelleTrimestre);
+        n4NRF= getNbreParGenreParNiveau(idEcole,"Quatrième","FEMININ","NON" ,libelleAnnee , libelleTrimestre);
+        n4RG= getNbreParGenreParNiveau(idEcole,"Quatrième","MASCULIN","OUI",libelleAnnee , libelleTrimestre);
+        n4NRG= getNbreParGenreParNiveau(idEcole,"Quatrième","MASCULIN","NON" ,libelleAnnee , libelleTrimestre);
 
-        n3 = getBase(idEcole,"Troisième") ;
-        n3RF= getNbreParGenreParNiveau(idEcole,"Troisième","FEMININ","OUI");
-        n3NRF= getNbreParGenreParNiveau(idEcole,"Troisième","FEMININ","NON");
-        n3RG= getNbreParGenreParNiveau(idEcole,"Troisième","MASCULIN","OUI");
-        n3NRG= getNbreParGenreParNiveau(idEcole,"Troisième","MASCULIN","NON");
+        n3 = getBase(idEcole,"Troisième" ,libelleAnnee , libelleTrimestre) ;
+        n3RF= getNbreParGenreParNiveau(idEcole,"Troisième","FEMININ","OUI" ,libelleAnnee , libelleTrimestre);
+        n3NRF= getNbreParGenreParNiveau(idEcole,"Troisième","FEMININ","NON" ,libelleAnnee , libelleTrimestre);
+        n3RG= getNbreParGenreParNiveau(idEcole,"Troisième","MASCULIN","OUI" ,libelleAnnee , libelleTrimestre);
+        n3NRG= getNbreParGenreParNiveau(idEcole,"Troisième","MASCULIN","NON" ,libelleAnnee , libelleTrimestre);
 
-        n2ndA = getBase(idEcole,"Seconde A") ;
-        n2ndARF= getNbreParGenreParNiveau(idEcole,"Seconde A","FEMININ","OUI");
-        n2ndANRF= getNbreParGenreParNiveau(idEcole,"Seconde A","FEMININ","NON");
-        n2ndARG= getNbreParGenreParNiveau(idEcole,"Seconde A","MASCULIN","OUI");
-        n2ndANRG= getNbreParGenreParNiveau(idEcole,"Seconde A","MASCULIN","NON");
+        n2ndA = getBase(idEcole,"Seconde A" ,libelleAnnee , libelleTrimestre) ;
+        n2ndARF= getNbreParGenreParNiveau(idEcole,"Seconde A","FEMININ","OUI" ,libelleAnnee , libelleTrimestre);
+        n2ndANRF= getNbreParGenreParNiveau(idEcole,"Seconde A","FEMININ","NON" ,libelleAnnee , libelleTrimestre);
+        n2ndARG= getNbreParGenreParNiveau(idEcole,"Seconde A","MASCULIN","OUI" ,libelleAnnee , libelleTrimestre);
+        n2ndANRG= getNbreParGenreParNiveau(idEcole,"Seconde A","MASCULIN","NON" ,libelleAnnee , libelleTrimestre);
 
-        n2ndC = getBase(idEcole,"Seconde C") ;
-        n2ndCRF= getNbreParGenreParNiveau(idEcole,"Seconde C","FEMININ","OUI");
-        n2ndCNRF= getNbreParGenreParNiveau(idEcole,"Seconde C","FEMININ","NON");
-        n2ndCRG= getNbreParGenreParNiveau(idEcole,"Seconde C","MASCULIN","OUI");
-        n2ndCNRG= getNbreParGenreParNiveau(idEcole,"Seconde C","MASCULIN","NON");
+        n2ndC = getBase(idEcole,"Seconde C" ,libelleAnnee , libelleTrimestre) ;
+        n2ndCRF= getNbreParGenreParNiveau(idEcole,"Seconde C","FEMININ","OUI" ,libelleAnnee , libelleTrimestre);
+        n2ndCNRF= getNbreParGenreParNiveau(idEcole,"Seconde C","FEMININ","NON" ,libelleAnnee , libelleTrimestre);
+        n2ndCRG= getNbreParGenreParNiveau(idEcole,"Seconde C","MASCULIN","OUI" ,libelleAnnee , libelleTrimestre);
+        n2ndCNRG= getNbreParGenreParNiveau(idEcole,"Seconde C","MASCULIN","NON" ,libelleAnnee , libelleTrimestre);
 
-        n1ereA = getBase(idEcole,"Première A") ;
-        n1ereARF= getNbreParGenreParNiveau(idEcole,"Première A","FEMININ","OUI");
-        n1ereANRF= getNbreParGenreParNiveau(idEcole,"Première A","FEMININ","NON");
-        n1ereARG= getNbreParGenreParNiveau(idEcole,"Première A","MASCULIN","OUI");
-        n1ereANRG= getNbreParGenreParNiveau(idEcole,"Première A","MASCULIN","NON");
+        n1ereA = getBase(idEcole,"Première A" ,libelleAnnee , libelleTrimestre) ;
+        n1ereARF= getNbreParGenreParNiveau(idEcole,"Première A","FEMININ","OUI" ,libelleAnnee , libelleTrimestre);
+        n1ereANRF= getNbreParGenreParNiveau(idEcole,"Première A","FEMININ","NON" ,libelleAnnee , libelleTrimestre);
+        n1ereARG= getNbreParGenreParNiveau(idEcole,"Première A","MASCULIN","OUI" ,libelleAnnee , libelleTrimestre);
+        n1ereANRG= getNbreParGenreParNiveau(idEcole,"Première A","MASCULIN","NON" ,libelleAnnee , libelleTrimestre);
 
-        n1ereC = getBase(idEcole,"Première C") ;
-        n1ereCRF= getNbreParGenreParNiveau(idEcole,"Première C","FEMININ","OUI");
-        n1ereCNRF= getNbreParGenreParNiveau(idEcole,"Première C","FEMININ","NON");
-        n1ereCRG= getNbreParGenreParNiveau(idEcole,"Première C","MASCULIN","OUI");
-        n1ereCNRG= getNbreParGenreParNiveau(idEcole,"Première C","MASCULIN","NON");
+        n1ereC = getBase(idEcole,"Première C" ,libelleAnnee , libelleTrimestre) ;
+        n1ereCRF= getNbreParGenreParNiveau(idEcole,"Première C","FEMININ","OUI" ,libelleAnnee , libelleTrimestre);
+        n1ereCNRF= getNbreParGenreParNiveau(idEcole,"Première C","FEMININ","NON" ,libelleAnnee , libelleTrimestre);
+        n1ereCRG= getNbreParGenreParNiveau(idEcole,"Première C","MASCULIN","OUI" ,libelleAnnee , libelleTrimestre);
+        n1ereCNRG= getNbreParGenreParNiveau(idEcole,"Première C","MASCULIN","NON" ,libelleAnnee , libelleTrimestre);
 
-        n1ereD = getBase(idEcole,"Première D") ;
-        n1ereDRF= getNbreParGenreParNiveau(idEcole,"Première D","FEMININ","OUI");
-        n1ereDNRF= getNbreParGenreParNiveau(idEcole,"Première D","FEMININ","NON");
-        n1ereDRG= getNbreParGenreParNiveau(idEcole,"Première D","MASCULIN","OUI");
-        n1ereDNRG= getNbreParGenreParNiveau(idEcole,"Première D","MASCULIN","NON");
+        n1ereD = getBase(idEcole,"Première D" ,libelleAnnee , libelleTrimestre) ;
+        n1ereDRF= getNbreParGenreParNiveau(idEcole,"Première D","FEMININ","OUI" ,libelleAnnee , libelleTrimestre);
+        n1ereDNRF= getNbreParGenreParNiveau(idEcole,"Première D","FEMININ","NON" ,libelleAnnee , libelleTrimestre);
+        n1ereDRG= getNbreParGenreParNiveau(idEcole,"Première D","MASCULIN","OUI" ,libelleAnnee , libelleTrimestre);
+        n1ereDNRG= getNbreParGenreParNiveau(idEcole,"Première D","MASCULIN","NON" ,libelleAnnee , libelleTrimestre);
 
-        nTleA1 = getBase(idEcole,"Terminale A1") ;
-        nTleA1RF= getNbreParGenreParNiveau(idEcole,"Terminale A1","FEMININ","OUI");
-        nTleA1NRF= getNbreParGenreParNiveau(idEcole,"Terminale A1","FEMININ","NON");
-        nTleA1RG= getNbreParGenreParNiveau(idEcole,"Terminale A1","MASCULIN","OUI");
-        nTleA1NRG= getNbreParGenreParNiveau(idEcole,"Terminale A1","MASCULIN","NON");
+        nTleA1 = getBase(idEcole,"Terminale A1" ,libelleAnnee , libelleTrimestre) ;
+        nTleA1RF= getNbreParGenreParNiveau(idEcole,"Terminale A1","FEMININ","OUI" ,libelleAnnee , libelleTrimestre);
+        nTleA1NRF= getNbreParGenreParNiveau(idEcole,"Terminale A1","FEMININ","NON" ,libelleAnnee , libelleTrimestre);
+        nTleA1RG= getNbreParGenreParNiveau(idEcole,"Terminale A1","MASCULIN","OUI" ,libelleAnnee , libelleTrimestre);
+        nTleA1NRG= getNbreParGenreParNiveau(idEcole,"Terminale A1","MASCULIN","NON" ,libelleAnnee , libelleTrimestre);
 
-        nTleA2 = getBase(idEcole,"Terminale A2") ;
-        nTleA2RF= getNbreParGenreParNiveau(idEcole,"Terminale A2","FEMININ","OUI");
-        nTleA2NRF= getNbreParGenreParNiveau(idEcole,"Terminale A2","FEMININ","NON");
-        nTleA2RG= getNbreParGenreParNiveau(idEcole,"Terminale A2","MASCULIN","OUI");
-        nTleA2NRG= getNbreParGenreParNiveau(idEcole,"Terminale A2","MASCULIN","NON");
+        nTleA2 = getBase(idEcole,"Terminale A2" ,libelleAnnee , libelleTrimestre) ;
+        nTleA2RF= getNbreParGenreParNiveau(idEcole,"Terminale A2","FEMININ","OUI" ,libelleAnnee , libelleTrimestre);
+        nTleA2NRF= getNbreParGenreParNiveau(idEcole,"Terminale A2","FEMININ","NON" ,libelleAnnee , libelleTrimestre);
+        nTleA2RG= getNbreParGenreParNiveau(idEcole,"Terminale A2","MASCULIN","OUI" ,libelleAnnee , libelleTrimestre);
+        nTleA2NRG= getNbreParGenreParNiveau(idEcole,"Terminale A2","MASCULIN","NON" ,libelleAnnee , libelleTrimestre);
 
-        nTleC = getBase(idEcole,"Terminale C") ;
-        nTleCRF= getNbreParGenreParNiveau(idEcole,"Terminale C","FEMININ","OUI");
-        nTleCNRF= getNbreParGenreParNiveau(idEcole,"Terminale C","FEMININ","NON");
-        nTleCRG= getNbreParGenreParNiveau(idEcole,"Terminale C","MASCULIN","OUI");
-        nTleCNRG= getNbreParGenreParNiveau(idEcole,"Terminale C","MASCULIN","NON");
+        nTleC = getBase(idEcole,"Terminale C" ,libelleAnnee , libelleTrimestre) ;
+        nTleCRF= getNbreParGenreParNiveau(idEcole,"Terminale C","FEMININ","OUI" ,libelleAnnee , libelleTrimestre);
+        nTleCNRF= getNbreParGenreParNiveau(idEcole,"Terminale C","FEMININ","NON" ,libelleAnnee , libelleTrimestre);
+        nTleCRG= getNbreParGenreParNiveau(idEcole,"Terminale C","MASCULIN","OUI" ,libelleAnnee , libelleTrimestre);
+        nTleCNRG= getNbreParGenreParNiveau(idEcole,"Terminale C","MASCULIN","NON" ,libelleAnnee , libelleTrimestre);
 
-        nTleD = getBase(idEcole,"Terminale D") ;
-        nTleDRF= getNbreParGenreParNiveau(idEcole,"Terminale D","FEMININ","OUI");
-        nTleDNRF= getNbreParGenreParNiveau(idEcole,"Terminale D","FEMININ","NON");
-        nTleDRG= getNbreParGenreParNiveau(idEcole,"Terminale D","MASCULIN","OUI");
-        nTleDNRG= getNbreParGenreParNiveau(idEcole,"Terminale D","MASCULIN","NON");
+        nTleD = getBase(idEcole,"Terminale D" ,libelleAnnee , libelleTrimestre) ;
+        nTleDRF= getNbreParGenreParNiveau(idEcole,"Terminale D","FEMININ","OUI" ,libelleAnnee , libelleTrimestre);
+        nTleDNRF= getNbreParGenreParNiveau(idEcole,"Terminale D","FEMININ","NON" ,libelleAnnee , libelleTrimestre);
+        nTleDRG= getNbreParGenreParNiveau(idEcole,"Terminale D","MASCULIN","OUI" ,libelleAnnee , libelleTrimestre);
+        nTleDNRG= getNbreParGenreParNiveau(idEcole,"Terminale D","MASCULIN","NON" ,libelleAnnee , libelleTrimestre);
 
         resultatsListEleves.setnTleD(nTleD);
         resultatsListEleves.setnTleDRF(nTleDRF);
@@ -222,16 +224,18 @@ public class ApprocheParNiveauParGenreServices {
         return  resultatsListEleves ;
     }
 
-    public Long getBase(Long idEcole , String niveau){
+    public Long getBase(Long idEcole , String niveau ,String libelleAnnee , String libelleTrimestre){
         Long classG;
 
         List<ClasseNiveauDto> classeNiveauDtoList = new ArrayList<>() ;
         try {
 
-            TypedQuery<ClasseNiveauDto> q = em.createQuery( "SELECT new com.vieecoles.dto.ClasseNiveauDto(b.libelleClasse ,b.niveau) from Bulletin b  where b.ecoleId =:idEcole and  b.niveau=:niveau " +
-                    "group by b.libelleClasse ,b.niveau ", ClasseNiveauDto.class);
+            TypedQuery<ClasseNiveauDto> q = em.createQuery( "SELECT new com.vieecoles.dto.ClasseNiveauDto(b.libelleClasse ,b.niveau) from Bulletin b  where b.ecoleId =:idEcole and  b.niveau=:niveau  and b.libellePeriode=:periode and b.anneeLibelle=:annee" +
+                    " group by b.libelleClasse ,b.niveau ", ClasseNiveauDto.class);
             classeNiveauDtoList = q.setParameter("idEcole", idEcole)
                     .setParameter("niveau",niveau)
+                    .setParameter("annee", libelleAnnee)
+                    .setParameter("periode", libelleTrimestre)
                     . getResultList() ;
             classG= (long) classeNiveauDtoList.size();
         }   catch (NoResultException e){
@@ -241,14 +245,16 @@ public class ApprocheParNiveauParGenreServices {
 
     }
 
-    public Long getNbreParGenreParNiveau(Long idEcole , String niveau,String sexe,String redoublant){
+    public Long getNbreParGenreParNiveau(Long idEcole , String niveau,String sexe,String redoublant ,String libelleAnnee , String libelleTrimestre){
         Long classG;
         try {
-            classG = (Long) em.createQuery("select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole and o.redoublant=:redoublant and  o.niveau=:niveau group by  o.niveau ")
+            classG = (Long) em.createQuery("select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole and o.redoublant=:redoublant and  o.niveau=:niveau and o.libellePeriode=:periode and o.anneeLibelle=:annee group by  o.niveau ")
                     .setParameter("sexe",sexe)
                     .setParameter("redoublant",redoublant)
                     .setParameter("idEcole",idEcole)
                     .setParameter("niveau",niveau)
+                    .setParameter("annee", libelleAnnee)
+                    .setParameter("periode", libelleTrimestre)
                     .getSingleResult();
             return classG ;
         } catch (NoResultException e){
