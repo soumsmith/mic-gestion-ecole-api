@@ -1,6 +1,5 @@
 package com.vieecoles.services.etats;
 
-import com.vieecoles.dto.BoursierDto;
 import com.vieecoles.dto.NiveauDto;
 import com.vieecoles.dto.eleveNonAffecteParClasseDto;
 
@@ -13,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @ApplicationScoped
-public class EleveNonAffecteParClasseServices {
+public class EleveNonAffecteParClasseAnnuelleServices {
     @Inject
     EntityManager em;
 
@@ -52,7 +51,7 @@ public class EleveNonAffecteParClasseServices {
     public List<eleveNonAffecteParClasseDto> getListEleveNonAffectParClassDto(Long idEcole , String classe ,String libelleAnnee , String libelleTrimestre){
         List<eleveNonAffecteParClasseDto> classeNiveauDtoList = new ArrayList<>() ;
         try {
-            TypedQuery<eleveNonAffecteParClasseDto> q= em.createQuery("select new com.vieecoles.dto.eleveNonAffecteParClasseDto(o.libelleClasse,o.nomPrenomProfPrincipal,o.matricule,o.nom,o.prenoms,o.sexe,o.dateNaissance,o.nationalite,o.redoublant,o.affecte,o.numDecisionAffecte,o.moyGeneral,o.rang,o.appreciation,o.nomPrenomEducateur,o.ordreNiveau) from Bulletin o where  o.ecoleId=:idEcole and o.libelleClasse=:classe and o.affecte=:affecte and o.libellePeriode=:periode and o.anneeLibelle=:annee", eleveNonAffecteParClasseDto.class);
+            TypedQuery<eleveNonAffecteParClasseDto> q= em.createQuery("select new com.vieecoles.dto.eleveNonAffecteParClasseDto(o.libelleClasse,o.nomPrenomProfPrincipal,o.matricule,o.nom,o.prenoms,o.sexe,o.dateNaissance,o.nationalite,o.redoublant,o.affecte,o.numDecisionAffecte,o.moyAn,o.rang,o.appreciation,o.nomPrenomEducateur,o.ordreNiveau) from Bulletin o where  o.ecoleId=:idEcole and o.libelleClasse=:classe and o.affecte=:affecte and o.libellePeriode=:periode and o.anneeLibelle=:annee", eleveNonAffecteParClasseDto.class);
             classeNiveauDtoList = q.setParameter("idEcole",idEcole)
                                  .setParameter("classe",classe)
                                  .setParameter("affecte","NON_AFFECTE")

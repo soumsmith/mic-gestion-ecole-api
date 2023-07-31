@@ -394,7 +394,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 	}
 
 	public List<MoyenneEleveDto> moyennesAndMatiereAndNotesHandle(String classeId, String matiereId, String anneeId,
-			String periodeId) {
+																  String periodeId) {
 		// Obtenir la liste des evaluations dans une classe et une matiere au cours de l
 		// année pour une
 		// période

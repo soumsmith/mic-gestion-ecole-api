@@ -49,25 +49,25 @@ public class ResultatsScolaireNonAffecteParNiveauRessource {
     @Transactional
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/list-eleve-affecte-par-classe-par-niveau/{idEcole}")
-    public List<ResultatsElevesNonAffecteDto>  repartiParAnn(@PathParam("idEcole") Long idEcole) throws Exception, JRException {
+    @Path("/list-eleve-affecte-par-classe-par-niveau/{idEcole}/{libelleAnnee}/{libelleTrimetre}")
+    public List<ResultatsElevesNonAffecteDto>  repartiParAnn(@PathParam("idEcole") Long idEcole  ,@PathParam("libelleAnnee") String libelleAnnee,@PathParam("libelleTrimetre") String libelleTrimetre) throws Exception, JRException {
         List<ResultatsElevesNonAffecteDto>  detailsBull = new ArrayList<>() ;
         System.out.println("classeNiveauDtoList entree");
-        detailsBull= resultatsnonServices.CalculResultatsEleveAffecte(idEcole)  ;
+        detailsBull= resultatsnonServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre)  ;
         return detailsBull ;
 
     }
 
     @GET
-    @Path("/imprimer-list-eleve-non-affecte-par-classe-par-niveau/{idEcole}/{type}")
+    @Path("/imprimer-list-eleve-non-affecte-par-classe-par-niveau/{idEcole}/{type}/{libelleAnnee}/{libelleTrimetre}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    public ResponseEntity<byte[]>  getDtoRapport(@PathParam("idEcole") Long idEcole ,@PathParam("type") String type) throws Exception, JRException {
+    public ResponseEntity<byte[]>  getDtoRapport(@PathParam("idEcole") Long idEcole ,@PathParam("type") String type ,@PathParam("libelleAnnee") String libelleAnnee,@PathParam("libelleTrimetre") String libelleTrimetre) throws Exception, JRException {
         InputStream myInpuStream ;
         /*myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/BulletinBean.jrxml");*/
         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Resultats_scolaire_non_aff.jrxml");
        List<ResultatsElevesNonAffecteDto> detailsBull = new ArrayList<>() ;
 
-        detailsBull= resultatsnonServices.CalculResultatsEleveAffecte(idEcole) ;
+        detailsBull= resultatsnonServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre) ;
 
         if(type.toUpperCase().equals("PDF")){
             JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(detailsBull) ;

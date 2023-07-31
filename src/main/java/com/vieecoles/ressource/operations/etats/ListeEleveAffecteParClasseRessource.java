@@ -68,19 +68,21 @@ public class ListeEleveAffecteParClasseRessource {
     @Transactional
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/list-eleve-affecte-par-classe/{idEcole}")
-    public List<eleveAffecteParClasseDto>  repartiParAnn(@PathParam("idEcole") Long idEcole) throws Exception, JRException {
+    @Path("/list-eleve-affecte-par-classe/{idEcole}/{libelleAnnee}/{libelleTrimetre}")
+    public List<eleveAffecteParClasseDto>  repartiParAnn(@PathParam("idEcole") Long idEcole ,@PathParam("libelleAnnee") String libelleAnnee,
+                                                         @PathParam("libelleTrimetre") String libelleTrimetre) throws Exception, JRException {
         List<eleveAffecteParClasseDto>  detailsBull = new ArrayList<>() ;
         System.out.println("classeNiveauDtoList entree");
-        detailsBull= resultatsServices.eleveAffecteParClasse(idEcole)  ;
+        detailsBull= resultatsServices.eleveAffecteParClasse(idEcole ,libelleAnnee,libelleTrimetre)  ;
         return detailsBull ;
 
     }
 
     @GET
-    @Path("/imprimer-list-eleve-affecte-par-classe/{idEcole}/{type}")
+    @Path("/imprimer-list-eleve-affecte-par-classe/{idEcole}/{type}/{libelleAnnee}/{libelleTrimetre}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    public ResponseEntity<byte[]>  getDtoRapport(@PathParam("idEcole") Long idEcole ,@PathParam("type") String type) throws Exception, JRException {
+    public ResponseEntity<byte[]>  getDtoRapport(@PathParam("idEcole") Long idEcole ,@PathParam("type") String type,@PathParam("libelleAnnee") String libelleAnnee,
+                                                 @PathParam("libelleTrimetre") String libelleTrimetre) throws Exception, JRException {
         InputStream myInpuStream ;
         /*myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/BulletinBean.jrxml");*/
         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Liste_nominative_des_eleves_et_resultats_scolaire.jrxml");
@@ -89,7 +91,7 @@ public class ListeEleveAffecteParClasseRessource {
 
        List<eleveAffecteParClasseDto> detailsBull = new ArrayList<>() ;
 
-        detailsBull= resultatsServices.eleveAffecteParClasse(idEcole) ;
+        detailsBull= resultatsServices.eleveAffecteParClasse(idEcole ,libelleAnnee,libelleTrimetre) ;
         System.out.println("detailsBull "+detailsBull);
 
         if(type.toUpperCase().equals("PDF")){

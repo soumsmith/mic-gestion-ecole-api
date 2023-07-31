@@ -64,19 +64,20 @@ public class EffectifApprocheParNiveauGenreRessource {
     @Transactional
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/list-effectif-approche-par-niveau-par-genre/{idEcole}")
-    public EffApprocheNiveauGenreDto  repartiParAnn(@PathParam("idEcole") Long idEcole) throws Exception, JRException {
+    @Path("/list-effectif-approche-par-niveau-par-genre/{idEcole}/{libelleAnnee}/{libelleTrimetre}")
+    public EffApprocheNiveauGenreDto  repartiParAnn(@PathParam("idEcole") Long idEcole ,@PathParam("libelleAnnee") String libelleAnnee,@PathParam("libelleTrimetre") String libelleTrimetre) throws Exception, JRException {
         EffApprocheNiveauGenreDto detailsBull = new EffApprocheNiveauGenreDto() ;
         System.out.println("classeNiveauDtoList entree");
-        detailsBull= resultatsServices.EffApprocheNiveauGenre(idEcole)  ;
+        detailsBull= resultatsServices.EffApprocheNiveauGenre(idEcole ,libelleAnnee,libelleTrimetre)  ;
         return detailsBull ;
 
     }
 
     @GET
-    @Path("/imprimer-effectif-approche-par-niveau-par-genre/{idEcole}/{type}")
+    @Path("/imprimer-effectif-approche-par-niveau-par-genre/{idEcole}/{type}/{libelleAnnee}/{libelleTrimetre}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    public ResponseEntity<byte[]>  getDtoRapport(@PathParam("idEcole") Long idEcole ,@PathParam("type") String type) throws Exception, JRException {
+    public ResponseEntity<byte[]>  getDtoRapport(@PathParam("idEcole") Long idEcole ,@PathParam("type") String type ,
+                                                 @PathParam("libelleAnnee") String libelleAnnee,@PathParam("libelleTrimetre") String libelleTrimetre) throws Exception, JRException {
         InputStream myInpuStream ;
         /*myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/BulletinBean.jrxml");*/
         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/effectif_avec_approche_par_niveau_et_par_genre.jrxml");
@@ -85,7 +86,7 @@ public class EffectifApprocheParNiveauGenreRessource {
 
         EffApprocheNiveauGenreDto detailsBull = new EffApprocheNiveauGenreDto() ;
 
-        detailsBull= resultatsServices.EffApprocheNiveauGenre(idEcole) ;
+        detailsBull= resultatsServices.EffApprocheNiveauGenre(idEcole ,libelleAnnee,libelleTrimetre) ;
         System.out.println("detailsBull "+detailsBull);
 
         if(type.toUpperCase().equals("PDF")){

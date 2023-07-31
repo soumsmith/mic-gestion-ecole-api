@@ -19,12 +19,14 @@ public class RecapClassePedaAffNonAffecServices {
     @Inject
     EntityManager em;
 
-    public RecapitulatifClassePedagoAffectNonAffect RecapClassePedagoAffecNonAffect(Long idEcole){
+    public RecapitulatifClassePedagoAffectNonAffect RecapClassePedagoAffecNonAffect(Long idEcole ,String libelleAnnee , String libelleTrimestre){
         int LongTableau;
         List<NiveauDto> classeNiveauDtoList = new ArrayList<>() ;
-        TypedQuery<NiveauDto> q = em.createQuery( "SELECT new com.vieecoles.dto.NiveauDto(b.niveau) from Bulletin b  where b.ecoleId =:idEcole  " +
+        TypedQuery<NiveauDto> q = em.createQuery( "SELECT new com.vieecoles.dto.NiveauDto(b.niveau) from Bulletin b  where b.ecoleId =:idEcole and b.libellePeriode=:periode and b.anneeLibelle=:annee " +
                 "group by b.niveau ", NiveauDto.class);
         classeNiveauDtoList = q.setParameter("idEcole", idEcole)
+                                .setParameter("annee", libelleAnnee)
+                                .setParameter("periode", libelleTrimestre)
                               . getResultList() ;
 
         LongTableau = classeNiveauDtoList.size();
@@ -68,138 +70,138 @@ public class RecapClassePedaAffNonAffecServices {
 
         RecapitulatifClassePedagoAffectNonAffect resultatsListEleves= new RecapitulatifClassePedagoAffectNonAffect();
 
-        n6F= getNbrePedag(idEcole,"Sixième","FEMININ") ;
-        n6G= getNbrePedag(idEcole,"Sixième","MASCULIN") ;
-        n6AF= getNbreAffect(idEcole,"Sixième","AFFECTE");
-        n6NAF= getNbreAffect(idEcole,"Sixième","NON_AFFECTE");
-        n6NCLA= getNbreClasse(idEcole,"Sixième");
+        n6F= getNbrePedag(idEcole,"Sixième","FEMININ" ,libelleAnnee , libelleTrimestre) ;
+        n6G= getNbrePedag(idEcole,"Sixième","MASCULIN" ,libelleAnnee , libelleTrimestre) ;
+        n6AF= getNbreAffect(idEcole,"Sixième","AFFECTE" ,libelleAnnee , libelleTrimestre);
+        n6NAF= getNbreAffect(idEcole,"Sixième","NON_AFFECTE" ,libelleAnnee , libelleTrimestre);
+        n6NCLA= getNbreClasse(idEcole,"Sixième" ,libelleAnnee , libelleTrimestre);
 
-        n5F= getNbrePedag(idEcole,"Cinquième","FEMININ") ;
-        n5G= getNbrePedag(idEcole,"Cinquième","MASCULIN") ;
-        n5AF= getNbreAffect(idEcole,"Cinquième","AFFECTE");
-        n5NAF= getNbreAffect(idEcole,"Cinquième","NON_AFFECTE");
-        n5NCLA= getNbreClasse(idEcole,"Cinquième");
+        n5F= getNbrePedag(idEcole,"Cinquième","FEMININ" ,libelleAnnee , libelleTrimestre) ;
+        n5G= getNbrePedag(idEcole,"Cinquième","MASCULIN" ,libelleAnnee , libelleTrimestre) ;
+        n5AF= getNbreAffect(idEcole,"Cinquième","AFFECTE" ,libelleAnnee , libelleTrimestre);
+        n5NAF= getNbreAffect(idEcole,"Cinquième","NON_AFFECTE" ,libelleAnnee , libelleTrimestre);
+        n5NCLA= getNbreClasse(idEcole,"Cinquième" ,libelleAnnee , libelleTrimestre);
 
-        n4espF= getNbrePedagLang(idEcole,"Quatrième","FEMININ","ESP");
-        n4espG= getNbrePedagLang(idEcole,"Quatrième","MASCULIN","ESP");
-        n4espAF= getNbreAffectLang(idEcole,"Quatrième","AFFECTE","ESP");
-        n4espNAF= getNbreAffectLang(idEcole,"Quatrième","NON_AFFECTE","ESP");
-        n4espNCLA = getNbreClasseLang(idEcole,"Quatrième","ESP");
+        n4espF= getNbrePedagLang(idEcole,"Quatrième","FEMININ","ESP" ,libelleAnnee , libelleTrimestre);
+        n4espG= getNbrePedagLang(idEcole,"Quatrième","MASCULIN","ESP" ,libelleAnnee , libelleTrimestre);
+        n4espAF= getNbreAffectLang(idEcole,"Quatrième","AFFECTE","ESP" ,libelleAnnee , libelleTrimestre);
+        n4espNAF= getNbreAffectLang(idEcole,"Quatrième","NON_AFFECTE","ESP" ,libelleAnnee , libelleTrimestre);
+        n4espNCLA = getNbreClasseLang(idEcole,"Quatrième","ESP" ,libelleAnnee , libelleTrimestre);
 
-        n4allF= getNbrePedagLang(idEcole,"Quatrième","FEMININ","ALL");
-        n4allG= getNbrePedagLang(idEcole,"Quatrième","MASCULIN","ALL");
-        n4allAF= getNbreAffectLang(idEcole,"Quatrième","AFFECTE","ALL");
-        n4allNAF= getNbreAffectLang(idEcole,"Quatrième","NON_AFFECTE","ALL");
-        n4allNCLA = getNbreClasseLang(idEcole,"Quatrième","ALL");
+        n4allF= getNbrePedagLang(idEcole,"Quatrième","FEMININ","ALL" ,libelleAnnee , libelleTrimestre);
+        n4allG= getNbrePedagLang(idEcole,"Quatrième","MASCULIN","ALL" ,libelleAnnee , libelleTrimestre);
+        n4allAF= getNbreAffectLang(idEcole,"Quatrième","AFFECTE","ALL" ,libelleAnnee , libelleTrimestre);
+        n4allNAF= getNbreAffectLang(idEcole,"Quatrième","NON_AFFECTE","ALL" ,libelleAnnee , libelleTrimestre);
+        n4allNCLA = getNbreClasseLang(idEcole,"Quatrième","ALL" ,libelleAnnee , libelleTrimestre);
 
 
-        n3espF= getNbrePedagLang(idEcole,"Troisième","FEMININ","ESP");
-        n3espG= getNbrePedagLang(idEcole,"Troisième","MASCULIN","ESP");
-        n3espAF= getNbreAffectLang(idEcole,"Troisième","AFFECTE","ESP");
-        n3espNAF= getNbreAffectLang(idEcole,"Troisième","NON_AFFECTE","ESP");
-        n3espNCLA = getNbreClasseLang(idEcole,"Troisième","ESP");
+        n3espF= getNbrePedagLang(idEcole,"Troisième","FEMININ","ESP" ,libelleAnnee , libelleTrimestre);
+        n3espG= getNbrePedagLang(idEcole,"Troisième","MASCULIN","ESP" ,libelleAnnee , libelleTrimestre);
+        n3espAF= getNbreAffectLang(idEcole,"Troisième","AFFECTE","ESP" ,libelleAnnee , libelleTrimestre);
+        n3espNAF= getNbreAffectLang(idEcole,"Troisième","NON_AFFECTE","ESP" ,libelleAnnee , libelleTrimestre);
+        n3espNCLA = getNbreClasseLang(idEcole,"Troisième","ESP" ,libelleAnnee , libelleTrimestre);
 
-        n3allF= getNbrePedagLang(idEcole,"Troisième","FEMININ","ALL");
-        n3allG= getNbrePedagLang(idEcole,"Troisième","MASCULIN","ALL");
-        n3allAF= getNbreAffectLang(idEcole,"Troisième","AFFECTE","ALL");
-        n3allNAF= getNbreAffectLang(idEcole,"Troisième","NON_AFFECTE","ALL");
-        n3allNCLA = getNbreClasseLang(idEcole,"Troisième","ALL");
+        n3allF= getNbrePedagLang(idEcole,"Troisième","FEMININ","ALL" ,libelleAnnee , libelleTrimestre);
+        n3allG= getNbrePedagLang(idEcole,"Troisième","MASCULIN","ALL" ,libelleAnnee , libelleTrimestre);
+        n3allAF= getNbreAffectLang(idEcole,"Troisième","AFFECTE","ALL" ,libelleAnnee , libelleTrimestre);
+        n3allNAF= getNbreAffectLang(idEcole,"Troisième","NON_AFFECTE","ALL" ,libelleAnnee , libelleTrimestre);
+        n3allNCLA = getNbreClasseLang(idEcole,"Troisième","ALL" ,libelleAnnee , libelleTrimestre);
 
-        n2ndAespF= getNbrePedagLang(idEcole,"Seconde A","FEMININ","ESP");
-        n2ndAespG= getNbrePedagLang(idEcole,"Seconde A","MASCULIN","ESP");
-        n2ndAespAF= getNbreAffectLang(idEcole,"Seconde A","AFFECTE","ESP");
-        n2ndAespNAF= getNbreAffectLang(idEcole,"Seconde A","NON_AFFECTE","ESP");
-        n2ndAespNCLA = getNbreClasseLang(idEcole,"Seconde A","ESP");
+        n2ndAespF= getNbrePedagLang(idEcole,"Seconde A","FEMININ","ESP" ,libelleAnnee , libelleTrimestre);
+        n2ndAespG= getNbrePedagLang(idEcole,"Seconde A","MASCULIN","ESP" ,libelleAnnee , libelleTrimestre);
+        n2ndAespAF= getNbreAffectLang(idEcole,"Seconde A","AFFECTE","ESP" ,libelleAnnee , libelleTrimestre);
+        n2ndAespNAF= getNbreAffectLang(idEcole,"Seconde A","NON_AFFECTE","ESP" ,libelleAnnee , libelleTrimestre);
+        n2ndAespNCLA = getNbreClasseLang(idEcole,"Seconde A","ESP" ,libelleAnnee , libelleTrimestre);
 
-        n2ndAallF= getNbrePedagLang(idEcole,"Seconde A","FEMININ","ALL");
-        n2ndAallG= getNbrePedagLang(idEcole,"Seconde A","MASCULIN","ALL");
-        n2ndAallAF= getNbreAffectLang(idEcole,"Seconde A","AFFECTE","ALL");
-        n2ndAallNAF= getNbreAffectLang(idEcole,"Seconde A","NON_AFFECTE","ALL");
-        n2ndAallNCLA = getNbreClasseLang(idEcole,"Seconde A","ALL");
+        n2ndAallF= getNbrePedagLang(idEcole,"Seconde A","FEMININ","ALL" ,libelleAnnee , libelleTrimestre);
+        n2ndAallG= getNbrePedagLang(idEcole,"Seconde A","MASCULIN","ALL" ,libelleAnnee , libelleTrimestre);
+        n2ndAallAF= getNbreAffectLang(idEcole,"Seconde A","AFFECTE","ALL" ,libelleAnnee , libelleTrimestre);
+        n2ndAallNAF= getNbreAffectLang(idEcole,"Seconde A","NON_AFFECTE","ALL" ,libelleAnnee , libelleTrimestre);
+        n2ndAallNCLA = getNbreClasseLang(idEcole,"Seconde A","ALL" ,libelleAnnee , libelleTrimestre);
 
-        n2ndCespF= getNbrePedagLang(idEcole,"Seconde C","FEMININ","ESP");
-        n2ndCespG= getNbrePedagLang(idEcole,"Seconde C","MASCULIN","ESP");
-        n2ndCespAF= getNbreAffectLang(idEcole,"Seconde C","AFFECTE","ESP");
-        n2ndCespNAF= getNbreAffectLang(idEcole,"Seconde C","NON_AFFECTE","ESP");
-        n2ndCespNCLA = getNbreClasseLang(idEcole,"Seconde C","ESP");
+        n2ndCespF= getNbrePedagLang(idEcole,"Seconde C","FEMININ","ESP" ,libelleAnnee , libelleTrimestre);
+        n2ndCespG= getNbrePedagLang(idEcole,"Seconde C","MASCULIN","ESP" ,libelleAnnee , libelleTrimestre);
+        n2ndCespAF= getNbreAffectLang(idEcole,"Seconde C","AFFECTE","ESP" ,libelleAnnee , libelleTrimestre);
+        n2ndCespNAF= getNbreAffectLang(idEcole,"Seconde C","NON_AFFECTE","ESP" ,libelleAnnee , libelleTrimestre);
+        n2ndCespNCLA = getNbreClasseLang(idEcole,"Seconde C","ESP" ,libelleAnnee , libelleTrimestre);
 
-        n2ndCallF= getNbrePedagLang(idEcole,"Seconde C","FEMININ","ALL");
-        n2ndCallG= getNbrePedagLang(idEcole,"Seconde C","MASCULIN","ALL");
-        n2ndCallAF= getNbreAffectLang(idEcole,"Seconde C","AFFECTE","ALL");
-        n2ndCallNAF= getNbreAffectLang(idEcole,"Seconde C","NON_AFFECTE","ALL");
-        n2ndCallNCLA = getNbreClasseLang(idEcole,"Seconde C","ALL");
+        n2ndCallF= getNbrePedagLang(idEcole,"Seconde C","FEMININ","ALL" ,libelleAnnee , libelleTrimestre);
+        n2ndCallG= getNbrePedagLang(idEcole,"Seconde C","MASCULIN","ALL" ,libelleAnnee , libelleTrimestre);
+        n2ndCallAF= getNbreAffectLang(idEcole,"Seconde C","AFFECTE","ALL" ,libelleAnnee , libelleTrimestre);
+        n2ndCallNAF= getNbreAffectLang(idEcole,"Seconde C","NON_AFFECTE","ALL" ,libelleAnnee , libelleTrimestre);
+        n2ndCallNCLA = getNbreClasseLang(idEcole,"Seconde C","ALL" ,libelleAnnee , libelleTrimestre);
 
-        n1ereAespF= getNbrePedagLang(idEcole,"Première A","FEMININ","ESP");
-        n1ereAespG= getNbrePedagLang(idEcole,"Première A","MASCULIN","ESP");
-        n1ereAespAF= getNbreAffectLang(idEcole,"Première A","AFFECTE","ESP");
-        n1ereAespNAF= getNbreAffectLang(idEcole,"Première A","NON_AFFECTE","ESP");
-        n1ereAespNCLA = getNbreClasseLang(idEcole,"Première A","ESP");
+        n1ereAespF= getNbrePedagLang(idEcole,"Première A","FEMININ","ESP" ,libelleAnnee , libelleTrimestre);
+        n1ereAespG= getNbrePedagLang(idEcole,"Première A","MASCULIN","ESP" ,libelleAnnee , libelleTrimestre);
+        n1ereAespAF= getNbreAffectLang(idEcole,"Première A","AFFECTE","ESP" ,libelleAnnee , libelleTrimestre);
+        n1ereAespNAF= getNbreAffectLang(idEcole,"Première A","NON_AFFECTE","ESP" ,libelleAnnee , libelleTrimestre);
+        n1ereAespNCLA = getNbreClasseLang(idEcole,"Première A","ESP" ,libelleAnnee , libelleTrimestre);
 
-        n1ereAallF= getNbrePedagLang(idEcole,"Première A","FEMININ","ALL");
-        n1ereAallG= getNbrePedagLang(idEcole,"Première A","MASCULIN","ALL");
-        n1ereAallAF= getNbreAffectLang(idEcole,"Première A","AFFECTE","ALL");
-        n1ereAallNAF= getNbreAffectLang(idEcole,"Première A","NON_AFFECTE","ALL");
-        n1ereAallNCLA = getNbreClasseLang(idEcole,"Première A","ALL");
+        n1ereAallF= getNbrePedagLang(idEcole,"Première A","FEMININ","ALL" ,libelleAnnee , libelleTrimestre);
+        n1ereAallG= getNbrePedagLang(idEcole,"Première A","MASCULIN","ALL" ,libelleAnnee , libelleTrimestre);
+        n1ereAallAF= getNbreAffectLang(idEcole,"Première A","AFFECTE","ALL" ,libelleAnnee , libelleTrimestre);
+        n1ereAallNAF= getNbreAffectLang(idEcole,"Première A","NON_AFFECTE","ALL" ,libelleAnnee , libelleTrimestre);
+        n1ereAallNCLA = getNbreClasseLang(idEcole,"Première A","ALL" ,libelleAnnee , libelleTrimestre);
 
-        n1ereCespF= getNbrePedagLang(idEcole,"Première C","FEMININ","ESP");
-        n1ereCespG= getNbrePedagLang(idEcole,"Première C","MASCULIN","ESP");
-        n1ereCespAF= getNbreAffectLang(idEcole,"Première C","AFFECTE","ESP");
-        n1ereCespNAF= getNbreAffectLang(idEcole,"Première C","NON_AFFECTE","ESP");
-        n1ereCespNCLA = getNbreClasseLang(idEcole,"Première C","ESP");
+        n1ereCespF= getNbrePedagLang(idEcole,"Première C","FEMININ","ESP" ,libelleAnnee , libelleTrimestre);
+        n1ereCespG= getNbrePedagLang(idEcole,"Première C","MASCULIN","ESP" ,libelleAnnee , libelleTrimestre);
+        n1ereCespAF= getNbreAffectLang(idEcole,"Première C","AFFECTE","ESP" ,libelleAnnee , libelleTrimestre);
+        n1ereCespNAF= getNbreAffectLang(idEcole,"Première C","NON_AFFECTE","ESP" ,libelleAnnee , libelleTrimestre);
+        n1ereCespNCLA = getNbreClasseLang(idEcole,"Première C","ESP"  ,libelleAnnee , libelleTrimestre);
 
-        n1ereCallF= getNbrePedagLang(idEcole,"Première C","FEMININ","ALL");
-        n1ereCallG= getNbrePedagLang(idEcole,"Première C","MASCULIN","ALL");
-        n1ereCallAF= getNbreAffectLang(idEcole,"Première C","AFFECTE","ALL");
-        n1ereCallNAF= getNbreAffectLang(idEcole,"Première C","NON_AFFECTE","ALL");
-        n1ereCallNCLA = getNbreClasseLang(idEcole,"Première C","ALL");
+        n1ereCallF= getNbrePedagLang(idEcole,"Première C","FEMININ","ALL"  ,libelleAnnee , libelleTrimestre);
+        n1ereCallG= getNbrePedagLang(idEcole,"Première C","MASCULIN","ALL"  ,libelleAnnee , libelleTrimestre);
+        n1ereCallAF= getNbreAffectLang(idEcole,"Première C","AFFECTE","ALL"  ,libelleAnnee , libelleTrimestre);
+        n1ereCallNAF= getNbreAffectLang(idEcole,"Première C","NON_AFFECTE","ALL"  ,libelleAnnee , libelleTrimestre);
+        n1ereCallNCLA = getNbreClasseLang(idEcole,"Première C","ALL"  ,libelleAnnee , libelleTrimestre);
 
-        n1ereDespF= getNbrePedagLang(idEcole,"Première D","FEMININ","ESP");
-        n1ereDespG= getNbrePedagLang(idEcole,"Première D","MASCULIN","ESP");
-        n1ereDespAF= getNbreAffectLang(idEcole,"Première D","AFFECTE","ESP");
-        n1ereDespNAF= getNbreAffectLang(idEcole,"Première D","NON_AFFECTE","ESP");
-        n1ereDespNCLA = getNbreClasseLang(idEcole,"Première D","ESP");
+        n1ereDespF= getNbrePedagLang(idEcole,"Première D","FEMININ","ESP"  ,libelleAnnee , libelleTrimestre);
+        n1ereDespG= getNbrePedagLang(idEcole,"Première D","MASCULIN","ESP"  ,libelleAnnee , libelleTrimestre);
+        n1ereDespAF= getNbreAffectLang(idEcole,"Première D","AFFECTE","ESP"  ,libelleAnnee , libelleTrimestre);
+        n1ereDespNAF= getNbreAffectLang(idEcole,"Première D","NON_AFFECTE","ESP"  ,libelleAnnee , libelleTrimestre);
+        n1ereDespNCLA = getNbreClasseLang(idEcole,"Première D","ESP"  ,libelleAnnee , libelleTrimestre);
 
-        n1ereDallF= getNbrePedagLang(idEcole,"Première D","FEMININ","ALL");
-        n1ereDallG= getNbrePedagLang(idEcole,"Première D","MASCULIN","ALL");
-        n1ereDallAF= getNbreAffectLang(idEcole,"Première D","AFFECTE","ALL");
-        n1ereDallNAF= getNbreAffectLang(idEcole,"Première D","NON_AFFECTE","ALL");
-        n1ereDallNCLA = getNbreClasseLang(idEcole,"Première D","ALL");
+        n1ereDallF= getNbrePedagLang(idEcole,"Première D","FEMININ","ALL"  ,libelleAnnee , libelleTrimestre);
+        n1ereDallG= getNbrePedagLang(idEcole,"Première D","MASCULIN","ALL"  ,libelleAnnee , libelleTrimestre);
+        n1ereDallAF= getNbreAffectLang(idEcole,"Première D","AFFECTE","ALL"  ,libelleAnnee , libelleTrimestre);
+        n1ereDallNAF= getNbreAffectLang(idEcole,"Première D","NON_AFFECTE","ALL"  ,libelleAnnee , libelleTrimestre);
+        n1ereDallNCLA = getNbreClasseLang(idEcole,"Première D","ALL"  ,libelleAnnee , libelleTrimestre);
 
-        nTleAespF= getNbrePedagLang(idEcole,"Terminale A","FEMININ","ESP");
-        nTleAespG= getNbrePedagLang(idEcole,"Terminale A","MASCULIN","ESP");
-        nTleAespAF= getNbreAffectLang(idEcole,"Terminale A","AFFECTE","ESP");
-        nTleAespNAF= getNbreAffectLang(idEcole,"Terminale A","NON_AFFECTE","ESP");
-        nTleAespNCLA = getNbreClasseLang(idEcole,"Terminale A","ESP");
+        nTleAespF= getNbrePedagLang(idEcole,"Terminale A","FEMININ","ESP"  ,libelleAnnee , libelleTrimestre);
+        nTleAespG= getNbrePedagLang(idEcole,"Terminale A","MASCULIN","ESP"  ,libelleAnnee , libelleTrimestre);
+        nTleAespAF= getNbreAffectLang(idEcole,"Terminale A","AFFECTE","ESP"  ,libelleAnnee , libelleTrimestre);
+        nTleAespNAF= getNbreAffectLang(idEcole,"Terminale A","NON_AFFECTE","ESP"  ,libelleAnnee , libelleTrimestre);
+        nTleAespNCLA = getNbreClasseLang(idEcole,"Terminale A","ESP"  ,libelleAnnee , libelleTrimestre);
 
-        nTleAallF= getNbrePedagLang(idEcole,"Terminale A","FEMININ","ALL");
-        nTleAallG= getNbrePedagLang(idEcole,"Terminale A","MASCULIN","ALL");
-        nTleAallAF= getNbreAffectLang(idEcole,"Terminale A","AFFECTE","ALL");
-        nTleAallNAF= getNbreAffectLang(idEcole,"Terminale A","NON_AFFECTE","ALL");
-        nTleAallNCLA = getNbreClasseLang(idEcole,"Terminale A","ALL");
+        nTleAallF= getNbrePedagLang(idEcole,"Terminale A","FEMININ","ALL"  ,libelleAnnee , libelleTrimestre);
+        nTleAallG= getNbrePedagLang(idEcole,"Terminale A","MASCULIN","ALL"  ,libelleAnnee , libelleTrimestre);
+        nTleAallAF= getNbreAffectLang(idEcole,"Terminale A","AFFECTE","ALL"  ,libelleAnnee , libelleTrimestre);
+        nTleAallNAF= getNbreAffectLang(idEcole,"Terminale A","NON_AFFECTE","ALL"  ,libelleAnnee , libelleTrimestre);
+        nTleAallNCLA = getNbreClasseLang(idEcole,"Terminale A","ALL"  ,libelleAnnee , libelleTrimestre);
 
-        nTleCespF= getNbrePedagLang(idEcole,"Terminale C","FEMININ","ESP");
-        nTleCespG= getNbrePedagLang(idEcole,"Terminale C","MASCULIN","ESP");
-        nTleCespAF= getNbreAffectLang(idEcole,"Terminale C","AFFECTE","ESP");
-        nTleCespNAF= getNbreAffectLang(idEcole,"Terminale C","NON_AFFECTE","ESP");
-        nTleCespNCLA = getNbreClasseLang(idEcole,"Terminale C","ESP");
+        nTleCespF= getNbrePedagLang(idEcole,"Terminale C","FEMININ","ESP"  ,libelleAnnee , libelleTrimestre);
+        nTleCespG= getNbrePedagLang(idEcole,"Terminale C","MASCULIN","ESP" ,libelleAnnee , libelleTrimestre);
+        nTleCespAF= getNbreAffectLang(idEcole,"Terminale C","AFFECTE","ESP" ,libelleAnnee , libelleTrimestre);
+        nTleCespNAF= getNbreAffectLang(idEcole,"Terminale C","NON_AFFECTE","ESP" ,libelleAnnee , libelleTrimestre);
+        nTleCespNCLA = getNbreClasseLang(idEcole,"Terminale C","ESP" ,libelleAnnee , libelleTrimestre);
 
-        nTleCallF = getNbrePedagLang(idEcole,"Terminale C","FEMININ","ALL");
-        nTleCallG = getNbrePedagLang(idEcole,"Terminale C","MASCULIN","ALL");
-        nTleCallAF = getNbreAffectLang(idEcole,"Terminale C","AFFECTE","ALL");
-        nTleCallNAF = getNbreAffectLang(idEcole,"Terminale C","NON_AFFECTE","ALL");
-        nTleCallNCLA = getNbreClasseLang(idEcole,"Terminale C","ALL");
+        nTleCallF = getNbrePedagLang(idEcole,"Terminale C","FEMININ","ALL" ,libelleAnnee , libelleTrimestre);
+        nTleCallG = getNbrePedagLang(idEcole,"Terminale C","MASCULIN","ALL" ,libelleAnnee , libelleTrimestre);
+        nTleCallAF = getNbreAffectLang(idEcole,"Terminale C","AFFECTE","ALL" ,libelleAnnee , libelleTrimestre);
+        nTleCallNAF = getNbreAffectLang(idEcole,"Terminale C","NON_AFFECTE","ALL" ,libelleAnnee , libelleTrimestre);
+        nTleCallNCLA = getNbreClasseLang(idEcole,"Terminale C","ALL" ,libelleAnnee , libelleTrimestre);
 
-        nTleDespF = getNbrePedagLang(idEcole,"Terminale D","FEMININ","ESP");
-        nTleDespG= getNbrePedagLang(idEcole,"Terminale D","MASCULIN","ESP");
-        nTleDespAF= getNbreAffectLang(idEcole,"Terminale D","AFFECTE","ESP");
-        nTleDespNAF= getNbreAffectLang(idEcole,"Terminale D","NON_AFFECTE","ESP");
-        nTleDespNCLA = getNbreClasseLang(idEcole,"Terminale D","ESP");
+        nTleDespF = getNbrePedagLang(idEcole,"Terminale D","FEMININ","ESP" ,libelleAnnee , libelleTrimestre);
+        nTleDespG= getNbrePedagLang(idEcole,"Terminale D","MASCULIN","ESP" ,libelleAnnee , libelleTrimestre);
+        nTleDespAF= getNbreAffectLang(idEcole,"Terminale D","AFFECTE","ESP" ,libelleAnnee , libelleTrimestre);
+        nTleDespNAF= getNbreAffectLang(idEcole,"Terminale D","NON_AFFECTE","ESP" ,libelleAnnee , libelleTrimestre);
+        nTleDespNCLA = getNbreClasseLang(idEcole,"Terminale D","ESP" ,libelleAnnee , libelleTrimestre);
 
-        nTleDallF = getNbrePedagLang(idEcole,"Terminale D","FEMININ","ALL");
-        nTleDallG= getNbrePedagLang(idEcole,"Terminale D","MASCULIN","ALL");
-        nTleDallAF= getNbreAffectLang(idEcole,"Terminale D","AFFECTE","ALL");
-        nTleDallNAF= getNbreAffectLang(idEcole,"Terminale D","NON_AFFECTE","ALL");
-        nTleDallNCLA = getNbreClasseLang(idEcole,"Terminale D","ALL");
+        nTleDallF = getNbrePedagLang(idEcole,"Terminale D","FEMININ","ALL" ,libelleAnnee , libelleTrimestre);
+        nTleDallG= getNbrePedagLang(idEcole,"Terminale D","MASCULIN","ALL" ,libelleAnnee , libelleTrimestre);
+        nTleDallAF= getNbreAffectLang(idEcole,"Terminale D","AFFECTE","ALL" ,libelleAnnee , libelleTrimestre);
+        nTleDallNAF= getNbreAffectLang(idEcole,"Terminale D","NON_AFFECTE","ALL" ,libelleAnnee , libelleTrimestre);
+        nTleDallNCLA = getNbreClasseLang(idEcole,"Terminale D","ALL" ,libelleAnnee , libelleTrimestre);
 
         resultatsListEleves.setnTleDallF(nTleDallF);
         resultatsListEleves.setnTleDallG(nTleDallG);
@@ -352,13 +354,15 @@ public class RecapClassePedaAffNonAffecServices {
     }
 
 
-    public Long getNbrePedag(Long idEcole , String niveau,String sexe){
+    public Long getNbrePedag(Long idEcole , String niveau,String sexe ,String libelleAnnee , String libelleTrimestre){
         Long classG;
         try {
-            classG = (Long) em.createQuery("select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole   group by  o.niveau having  o.niveau=:niveau")
+            classG = (Long) em.createQuery("select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole and o.libellePeriode=:periode and o.anneeLibelle=:annee   group by  o.niveau having  o.niveau=:niveau")
                     .setParameter("sexe",sexe)
                     .setParameter("idEcole",idEcole)
                     .setParameter("niveau",niveau)
+                    .setParameter("annee", libelleAnnee)
+                    .setParameter("periode", libelleTrimestre)
                     .getSingleResult();
             return classG ;
         } catch (NoResultException e){
@@ -369,14 +373,16 @@ public class RecapClassePedaAffNonAffecServices {
 
 
 
-    public Long getNbrePedagLang(Long idEcole , String niveau,String sexe,String lv2){
+    public Long getNbrePedagLang(Long idEcole , String niveau,String sexe,String lv2 ,String libelleAnnee , String libelleTrimestre){
         Long classG;
         try {
-            classG = (Long) em.createQuery("select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole and  o.lv2=:lv2 group by  o.niveau having  o.niveau=:niveau")
+            classG = (Long) em.createQuery("select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole and  o.lv2=:lv2 and o.libellePeriode=:periode and o.anneeLibelle=:annee group by  o.niveau having  o.niveau=:niveau")
                     .setParameter("sexe",sexe)
                     .setParameter("idEcole",idEcole)
                     .setParameter("niveau",niveau)
                     .setParameter("lv2",lv2)
+                    .setParameter("annee", libelleAnnee)
+                    .setParameter("periode", libelleTrimestre)
                     .getSingleResult();
             return classG ;
         } catch (NoResultException e){
@@ -386,13 +392,15 @@ public class RecapClassePedaAffNonAffecServices {
     }
 
 
-    public Long getNbreAffect(Long idEcole , String niveau, String affecte){
+    public Long getNbreAffect(Long idEcole , String niveau, String affecte ,String libelleAnnee , String libelleTrimestre){
         Long classG;
         try {
-            classG = (Long) em.createQuery("select count(o.id) from Bulletin o where  o.ecoleId=:idEcole and o.affecte=:affecte  group by  o.niveau having o.niveau=:niveau")
+            classG = (Long) em.createQuery("select count(o.id) from Bulletin o where  o.ecoleId=:idEcole and o.affecte=:affecte and o.libellePeriode=:periode and o.anneeLibelle=:annee group by  o.niveau having o.niveau=:niveau")
                     .setParameter("idEcole",idEcole)
                     .setParameter("niveau",niveau)
                     .setParameter("affecte",affecte)
+                    .setParameter("annee", libelleAnnee)
+                    .setParameter("periode", libelleTrimestre)
                     .getSingleResult();
             return classG ;
         } catch (NoResultException e){
@@ -401,14 +409,16 @@ public class RecapClassePedaAffNonAffecServices {
 
     }
 
-    public Long getNbreAffectLang(Long idEcole , String niveau, String affecte,String lv2){
+    public Long getNbreAffectLang(Long idEcole , String niveau, String affecte,String lv2 ,String libelleAnnee , String libelleTrimestre){
         Long classG;
         try {
-            classG = (Long) em.createQuery("select count(o.id) from Bulletin o where  o.ecoleId=:idEcole and o.affecte=:affecte and  o.lv2=:lv2 group by  o.niveau having o.niveau=:niveau")
+            classG = (Long) em.createQuery("select count(o.id) from Bulletin o where  o.ecoleId=:idEcole and o.affecte=:affecte and  o.lv2=:lv2 and o.libellePeriode=:periode and o.anneeLibelle=:annee group by  o.niveau having o.niveau=:niveau")
                     .setParameter("idEcole",idEcole)
                     .setParameter("niveau",niveau)
                     .setParameter("affecte",affecte)
                     .setParameter("lv2",lv2)
+                    .setParameter("annee", libelleAnnee)
+                    .setParameter("periode", libelleTrimestre)
                     .getSingleResult();
             return classG ;
         } catch (NoResultException e){
@@ -419,12 +429,14 @@ public class RecapClassePedaAffNonAffecServices {
 
 
 
-    public Long getNbreClasse(Long idEcole , String niveau){
+    public Long getNbreClasse(Long idEcole , String niveau ,String libelleAnnee , String libelleTrimestre){
         Long classG;
         try {
-            classG = (Long) em.createQuery("select count(o.id) from Bulletin o where  o.ecoleId=:idEcole  group by  o.niveau having  o.niveau=:niveau")
+            classG = (Long) em.createQuery("select count(o.id) from Bulletin o where  o.ecoleId=:idEcole and o.libellePeriode=:periode and o.anneeLibelle=:annee  group by  o.niveau having  o.niveau=:niveau")
                     .setParameter("idEcole",idEcole)
                     .setParameter("niveau",niveau)
+                    .setParameter("annee", libelleAnnee)
+                    .setParameter("periode", libelleTrimestre)
                     .getSingleResult();
             return classG ;
         } catch (NoResultException e){
@@ -433,13 +445,15 @@ public class RecapClassePedaAffNonAffecServices {
 
     }
 
-    public Long getNbreClasseLang(Long idEcole , String niveau ,String lv2){
+    public Long getNbreClasseLang(Long idEcole , String niveau ,String lv2 ,String libelleAnnee , String libelleTrimestre){
         Long classG;
         try {
-            classG = (Long) em.createQuery("select count(o.id) from Bulletin o where  o.ecoleId=:idEcole and o.lv2=:lv2  group by  o.niveau having  o.niveau=:niveau")
+            classG = (Long) em.createQuery("select count(o.id) from Bulletin o where  o.ecoleId=:idEcole and o.lv2=:lv2 and o.libellePeriode=:periode and o.anneeLibelle=:annee  group by  o.niveau having  o.niveau=:niveau")
                     .setParameter("idEcole",idEcole)
                     .setParameter("niveau",niveau)
                     .setParameter("lv2",lv2)
+                    .setParameter("annee", libelleAnnee)
+                    .setParameter("periode", libelleTrimestre)
                     .getSingleResult();
             return classG ;
         } catch (NoResultException e){

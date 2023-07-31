@@ -68,19 +68,20 @@ public class RepartitionParAnneeNaissRessource {
     @Transactional
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/list-repartition-par-annee-naissance/{idEcole}")
-    public List<RepartitionEleveParAnNaissDto>  repartiParAnn(@PathParam("idEcole") Long idEcole) throws Exception, JRException {
+    @Path("/list-repartition-par-annee-naissance/{idEcole}/{libelleAnnee}/{libelleTrimetre}")
+    public List<RepartitionEleveParAnNaissDto>  repartiParAnn(@PathParam("idEcole") Long idEcole ,@PathParam("libelleAnnee") String libelleAnnee,@PathParam("libelleTrimetre") String libelleTrimetre) throws Exception, JRException {
         List<RepartitionEleveParAnNaissDto>  detailsBull = new ArrayList<>() ;
         System.out.println("classeNiveauDtoList entree");
-        detailsBull= resultatsServices.CalculRepartElevParAnnNaiss(idEcole)  ;
+        detailsBull= resultatsServices.CalculRepartElevParAnnNaiss(idEcole ,libelleAnnee,libelleTrimetre)  ;
         return detailsBull ;
 
     }
 
     @GET
-    @Path("/imprimer-repartition-par-annee-naissance/{idEcole}/{type}")
+    @Path("/imprimer-repartition-par-annee-naissance/{idEcole}/{type}/{libelleAnnee}/{libelleTrimetre}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    public ResponseEntity<byte[]>  getDtoRapport(@PathParam("idEcole") Long idEcole ,@PathParam("type") String type) throws Exception, JRException {
+    public ResponseEntity<byte[]>  getDtoRapport(@PathParam("idEcole") Long idEcole ,@PathParam("type") String type
+            ,@PathParam("libelleAnnee") String libelleAnnee,@PathParam("libelleTrimetre") String libelleTrimetre) throws Exception, JRException {
         InputStream myInpuStream ;
         /*myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/BulletinBean.jrxml");*/
         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Repartition_Des_eleves_par_annee_naissance.jrxml");
@@ -89,7 +90,7 @@ public class RepartitionParAnneeNaissRessource {
 
        List<RepartitionEleveParAnNaissDto> detailsBull = new ArrayList<>() ;
 
-        detailsBull= resultatsServices.CalculRepartElevParAnnNaiss(idEcole) ;
+        detailsBull= resultatsServices.CalculRepartElevParAnnNaiss(idEcole ,libelleAnnee,libelleTrimetre) ;
        // System.out.println("detailsBull "+detailsBull);
 
         if(type.toUpperCase().equals("PDF")){

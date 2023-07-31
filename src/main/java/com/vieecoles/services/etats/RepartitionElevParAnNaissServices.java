@@ -15,13 +15,15 @@ public class RepartitionElevParAnNaissServices {
     @Inject
     EntityManager em;
 
-    public List<RepartitionEleveParAnNaissDto> CalculRepartElevParAnnNaiss(Long idEcole){
+    public List<RepartitionEleveParAnNaissDto> CalculRepartElevParAnnNaiss(Long idEcole ,String libelleAnnee , String libelleTrimestre){
 
         List<DateNaissNiveauDto> dateNiveauDtoList = new ArrayList<>() ;
-        TypedQuery<DateNaissNiveauDto> q = em.createQuery( "SELECT new com.vieecoles.dto.DateNaissNiveauDto(SUBSTRING(b.dateNaissance,1,4)) from Bulletin b  where b.ecoleId =:idEcole " +
+        TypedQuery<DateNaissNiveauDto> q = em.createQuery( "SELECT new com.vieecoles.dto.DateNaissNiveauDto(SUBSTRING(b.dateNaissance,1,4)) from Bulletin b  where b.ecoleId =:idEcole and b.libellePeriode=:periode and b.anneeLibelle=:annee " +
                 "group by SUBSTRING(b.dateNaissance,1,4)  ", DateNaissNiveauDto.class);
 
         dateNiveauDtoList = q.setParameter("idEcole", idEcole)
+                                .setParameter("annee", libelleAnnee)
+                                .setParameter("periode", libelleTrimestre)
                              . getResultList() ;
 
   System.out.println("dateNiveauDtoList "+dateNiveauDtoList.toString());
@@ -40,54 +42,54 @@ public class RepartitionElevParAnNaissServices {
         for (int i=0; i< LongTableau;i++) {
             RepartitionEleveParAnNaissDto repartParElevParNiveau= new RepartitionEleveParAnNaissDto();
 
-            an6F = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Sixième","FEMININ");
+            an6F = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Sixième","FEMININ" , libelleTrimestre);
             //System.out.println("DateNaissance "+dateNiveauDtoList.get(i).getDateNaiss());
-            an6G = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Sixième","MASCULIN");
-            t6 = geTotaltRepartiParAnneeParNiveau(idEcole,"Sixième") ;
+            an6G = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Sixième","MASCULIN" , libelleTrimestre);
+            t6 = geTotaltRepartiParAnneeParNiveau(idEcole,"Sixième" ,libelleAnnee , libelleTrimestre) ;
 
-            an5F = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Cinquième","FEMININ");
-            an5G = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Cinquième","MASCULIN");
-            t5 = geTotaltRepartiParAnneeParNiveau(idEcole,"Cinquième") ;
+            an5F = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Cinquième","FEMININ" , libelleTrimestre);
+            an5G = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Cinquième","MASCULIN" , libelleTrimestre);
+            t5 = geTotaltRepartiParAnneeParNiveau(idEcole,"Cinquième" ,libelleAnnee , libelleTrimestre) ;
 
-            an4G = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Quatrième","MASCULIN");
-            an4F = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Quatrième","FEMININ");
-            t4 = geTotaltRepartiParAnneeParNiveau(idEcole,"Quatrième") ;
+            an4G = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Quatrième","MASCULIN" , libelleTrimestre);
+            an4F = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Quatrième","FEMININ" , libelleTrimestre);
+            t4 = geTotaltRepartiParAnneeParNiveau(idEcole,"Quatrième" ,libelleAnnee , libelleTrimestre) ;
 
-            an3G = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Troisième","MASCULIN");
-            an3F = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Troisième","FEMININ");
-            t3 = geTotaltRepartiParAnneeParNiveau(idEcole,"Troisième") ;
+            an3G = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Troisième","MASCULIN" , libelleTrimestre);
+            an3F = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Troisième","FEMININ" , libelleTrimestre);
+            t3 = geTotaltRepartiParAnneeParNiveau(idEcole,"Troisième" ,libelleAnnee , libelleTrimestre) ;
 
-            an2AG = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Seconde A","MASCULIN");
-            an2AF = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Seconde A","FEMININ");
-            t2A = geTotaltRepartiParAnneeParNiveau(idEcole,"Seconde A") ;
+            an2AG = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Seconde A","MASCULIN" , libelleTrimestre);
+            an2AF = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Seconde A","FEMININ" , libelleTrimestre);
+            t2A = geTotaltRepartiParAnneeParNiveau(idEcole,"Seconde A" ,libelleAnnee , libelleTrimestre) ;
 
-            an2CG = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Seconde C","MASCULIN");
-            an2CF = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Seconde C","FEMININ");
-            t2C = geTotaltRepartiParAnneeParNiveau(idEcole,"Seconde C") ;
+            an2CG = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Seconde C","MASCULIN" , libelleTrimestre);
+            an2CF = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Seconde C","FEMININ" , libelleTrimestre);
+            t2C = geTotaltRepartiParAnneeParNiveau(idEcole,"Seconde C" ,libelleAnnee , libelleTrimestre) ;
 
-            an1AG = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Première A","MASCULIN");
-            an1AF = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Première A","FEMININ");
-            t1A = geTotaltRepartiParAnneeParNiveau(idEcole,"Première A") ;
+            an1AG = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Première A","MASCULIN" , libelleTrimestre);
+            an1AF = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Première A","FEMININ" , libelleTrimestre);
+            t1A = geTotaltRepartiParAnneeParNiveau(idEcole,"Première A" ,libelleAnnee , libelleTrimestre) ;
 
-            an1CG = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Première C","MASCULIN");
-            an1CF = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Première C","FEMININ");
-            t1C = geTotaltRepartiParAnneeParNiveau(idEcole,"Première C") ;
+            an1CG = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Première C","MASCULIN" , libelleTrimestre);
+            an1CF = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Première C","FEMININ" , libelleTrimestre);
+            t1C = geTotaltRepartiParAnneeParNiveau(idEcole,"Première C" ,libelleAnnee , libelleTrimestre) ;
 
-            an1DG = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Première D","MASCULIN");
-            an1DF = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Première D","FEMININ");
-            t1D = geTotaltRepartiParAnneeParNiveau(idEcole,"Première D") ;
+            an1DG = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Première D","MASCULIN" , libelleTrimestre);
+            an1DF = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Première D","FEMININ" , libelleTrimestre);
+            t1D = geTotaltRepartiParAnneeParNiveau(idEcole,"Première D" ,libelleAnnee , libelleTrimestre) ;
 
-            anTAG = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Terminale A","MASCULIN");
-            anTAF = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Terminale A","FEMININ");
-            tTA = geTotaltRepartiParAnneeParNiveau(idEcole,"Terminale A") ;
+            anTAG = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Terminale A","MASCULIN" , libelleTrimestre);
+            anTAF = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Terminale A","FEMININ" , libelleTrimestre);
+            tTA = geTotaltRepartiParAnneeParNiveau(idEcole,"Terminale A" ,libelleAnnee , libelleTrimestre) ;
 
-            anTDG = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Terminale D","MASCULIN");
-            anTDF = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Terminale D","FEMININ");
-            tTD = geTotaltRepartiParAnneeParNiveau(idEcole,"Terminale D") ;
+            anTDG = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Terminale D","MASCULIN" , libelleTrimestre);
+            anTDF = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Terminale D","FEMININ" , libelleTrimestre);
+            tTD = geTotaltRepartiParAnneeParNiveau(idEcole,"Terminale D" ,libelleAnnee , libelleTrimestre) ;
 
-            anTCG = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Terminale C","MASCULIN");
-            anTCF = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Terminale C","FEMININ");
-            tTC = geTotaltRepartiParAnneeParNiveau(idEcole,"Terminale C") ;
+            anTCG = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Terminale C","MASCULIN" , libelleTrimestre);
+            anTCF = getRepartiParAnneeParNiveau(idEcole,dateNiveauDtoList.get(i).getDateNaiss(),"Terminale C","FEMININ" , libelleTrimestre);
+            tTC = geTotaltRepartiParAnneeParNiveau(idEcole,"Terminale C" ,libelleAnnee , libelleTrimestre) ;
 
             repartParElevParNiveau.setAn6F(an6F);
             repartParElevParNiveau.setAn6G(an6G);
@@ -146,15 +148,16 @@ public class RepartitionElevParAnNaissServices {
     }
 
 
-  public  Long getRepartiParAnneeParNiveau(Long idEcole ,String annee, String niveau, String sexe){
+  public  Long getRepartiParAnneeParNiveau(Long idEcole ,String annee, String niveau, String sexe , String libelleTrimestre){
       Long repartParAnneParNiv ;
       try {
           NbreAnneeDto dateNiveauDtoList = new NbreAnneeDto() ;
-          TypedQuery<NbreAnneeDto> q = em.createQuery( "SELECT new com.vieecoles.dto.NbreAnneeDto(count(b.id),SUBSTRING(b.dateNaissance,1,4) )  from Bulletin as b  where b.sexe=:sexe and b.ecoleId=:idEcole and b.niveau=:niveau and SUBSTRING(b.dateNaissance,1,4) =:annee  group by SUBSTRING(b.dateNaissance,1,4)  "
+          TypedQuery<NbreAnneeDto> q = em.createQuery( "SELECT new com.vieecoles.dto.NbreAnneeDto(count(b.id),SUBSTRING(b.dateNaissance,1,4) )  from Bulletin as b  where b.sexe=:sexe and b.ecoleId=:idEcole and b.libellePeriode=:periode and b.niveau=:niveau and SUBSTRING(b.dateNaissance,1,4) =:annee  group by SUBSTRING(b.dateNaissance,1,4)  "
                   , NbreAnneeDto.class);
           dateNiveauDtoList =  q.setParameter("sexe",sexe)
                   .setParameter("idEcole",idEcole)
                   .setParameter("annee",annee)
+                  .setParameter("periode", libelleTrimestre)
                   .setParameter("niveau",niveau)
                   .getSingleResult();
 
@@ -167,14 +170,16 @@ public class RepartitionElevParAnNaissServices {
 
 
 
-    public  Long geTotaltRepartiParAnneeParNiveau(Long idEcole , String niveau){
+    public  Long geTotaltRepartiParAnneeParNiveau(Long idEcole , String niveau ,String libelleAnnee , String libelleTrimestre){
         Long repartParAnneParNiv = null;
         try {
             Long dateNiveauDtoList  ;
-            TypedQuery<Long> q = (TypedQuery<Long>) em.createQuery( "SELECT count(b.id)  from Bulletin as b  where  b.ecoleId=:idEcole and b.niveau=:niveau  group by  b.niveau  "
+            TypedQuery<Long> q = (TypedQuery<Long>) em.createQuery( "SELECT count(b.id)  from Bulletin as b  where  b.ecoleId=:idEcole and b.niveau=:niveau and b.libellePeriode=:periode and b.anneeLibelle=:annee  group by  b.niveau  "
                     );
             dateNiveauDtoList =  q.setParameter("idEcole",idEcole)
                                   .setParameter("niveau",niveau)
+                                    .setParameter("annee", libelleAnnee)
+                                    .setParameter("periode", libelleTrimestre)
                                    .getSingleResult();
 
             return  dateNiveauDtoList  ;

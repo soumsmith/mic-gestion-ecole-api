@@ -17,7 +17,7 @@ public class TransfertsServices {
     @Inject
     EntityManager em;
 
-    public List<TransfertsDto>  transferts(Long idEcole){
+    public List<TransfertsDto>  transferts(Long idEcole ){
         int LongTableau;
 
         List<NiveauDto> classeNiveauDtoList = new ArrayList<>() ;

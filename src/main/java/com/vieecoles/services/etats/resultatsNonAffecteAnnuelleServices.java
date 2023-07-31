@@ -1,7 +1,6 @@
 package com.vieecoles.services.etats;
 
 import com.vieecoles.dto.ClasseNiveauDto;
-import com.vieecoles.dto.ResultatsElevesAffecteDto;
 import com.vieecoles.dto.ResultatsElevesNonAffecteDto;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -13,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @ApplicationScoped
-public class resultatsNonAffecteServices {
+public class resultatsNonAffecteAnnuelleServices {
     @Inject
     EntityManager em;
 
@@ -292,7 +291,7 @@ public class resultatsNonAffecteServices {
     }
     public  Long getnbreMoySup10F(Long idEcole ,String classe, String niveau ,String annee , String periode){
         try {
-            Long   nbreMoySup10F = (Long) em.createQuery("select count(o.id) from Bulletin o where  o.isClassed=:isClass and  o.sexe=:sexe and o.ecoleId=:idEcole and o.affecte=:affecte and o.moyGeneral>=:moy and o.anneeLibelle=:annee and o.libellePeriode=: periode group by o.libelleClasse , o.niveau having o.libelleClasse=:classe and o.niveau=:niveau")
+            Long   nbreMoySup10F = (Long) em.createQuery("select count(o.id) from Bulletin o where  o.isClassed=:isClass and  o.sexe=:sexe and o.ecoleId=:idEcole and o.affecte=:affecte and o.moyAn>=:moy and o.anneeLibelle=:annee and o.libellePeriode=: periode group by o.libelleClasse , o.niveau having o.libelleClasse=:classe and o.niveau=:niveau")
                     .setParameter("sexe","FEMININ")
                     .setParameter("idEcole",idEcole)
                     .setParameter("affecte","NON_AFFECTE")
@@ -311,7 +310,7 @@ public class resultatsNonAffecteServices {
     }
     public Long getnbreMoySup10G(Long idEcole ,String classe, String niveau ,String annee , String periode){
         try {
-            Long    nbreMoySup10G = (Long) em.createQuery("select count(o.id) from Bulletin o where o.isClassed=:isClass and o.sexe=:sexe and o.ecoleId=:idEcole and o.affecte=:affecte and o.moyGeneral>=:moy and o.anneeLibelle=:annee and o.libellePeriode=: periode group by o.libelleClasse , o.niveau having o.libelleClasse=:classe and o.niveau=:niveau")
+            Long    nbreMoySup10G = (Long) em.createQuery("select count(o.id) from Bulletin o where o.isClassed=:isClass and o.sexe=:sexe and o.ecoleId=:idEcole and o.affecte=:affecte and o.moyAn>=:moy and o.anneeLibelle=:annee and o.libellePeriode=: periode group by o.libelleClasse , o.niveau having o.libelleClasse=:classe and o.niveau=:niveau")
                     .setParameter("sexe","MASCULIN")
                     .setParameter("idEcole",idEcole)
                     .setParameter("affecte","NON_AFFECTE")
@@ -330,7 +329,7 @@ public class resultatsNonAffecteServices {
     }
     public Long getnbreMoyInf999F(Long idEcole ,String classe, String niveau ,String annee , String periode){
         try {
-            Long nbreMoyInf999F = (Long) em.createQuery("select count(o.id) from Bulletin o where o.isClassed=:isClass and o.sexe=:sexe and o.ecoleId=:idEcole and o.affecte=:affecte and o.moyGeneral>=:moy and o.moyGeneral <=:moy2 and o.anneeLibelle=:annee and o.libellePeriode=: periode group by o.libelleClasse , o.niveau having o.libelleClasse=:classe and o.niveau=:niveau")
+            Long nbreMoyInf999F = (Long) em.createQuery("select count(o.id) from Bulletin o where o.isClassed=:isClass and o.sexe=:sexe and o.ecoleId=:idEcole and o.affecte=:affecte and o.moyAn>=:moy and o.moyAn <=:moy2 and o.anneeLibelle=:annee and o.libellePeriode=: periode group by o.libelleClasse , o.niveau having o.libelleClasse=:classe and o.niveau=:niveau")
                     .setParameter("sexe","FEMININ")
                     .setParameter("idEcole",idEcole)
                     .setParameter("affecte","NON_AFFECTE")
@@ -351,7 +350,7 @@ public class resultatsNonAffecteServices {
 
     public Long getnbreMoyInf999G(Long idEcole ,String classe, String niveau ,String annee , String periode){
         try {
-            Long nbreMoyInf999G = (Long) em.createQuery("select count(o.id) from Bulletin o where o.isClassed=:isClass and  o.sexe=:sexe and o.ecoleId=:idEcole and o.affecte=:affecte and o.moyGeneral>=:moy and o.moyGeneral <=:moy2 and o.anneeLibelle=:annee and o.libellePeriode=: periode group by o.libelleClasse , o.niveau having o.libelleClasse=:classe and o.niveau=:niveau")
+            Long nbreMoyInf999G = (Long) em.createQuery("select count(o.id) from Bulletin o where o.isClassed=:isClass and  o.sexe=:sexe and o.ecoleId=:idEcole and o.affecte=:affecte and o.moyAn>=:moy and o.moyAn <=:moy2 and o.anneeLibelle=:annee and o.libellePeriode=: periode group by o.libelleClasse , o.niveau having o.libelleClasse=:classe and o.niveau=:niveau")
                     .setParameter("sexe","MASCULIN")
                     .setParameter("idEcole",idEcole)
                     .setParameter("affecte","NON_AFFECTE")
@@ -371,7 +370,7 @@ public class resultatsNonAffecteServices {
     }
     public Long getnbreMoyInf85G(Long idEcole ,String classe, String niveau ,String annee , String periode){
         try {
-            Long   nbreMoyInf85G = (Long) em.createQuery("select count(o.id) from Bulletin o where o.isClassed=:isClass and o.sexe=:sexe and o.ecoleId=:idEcole and o.affecte=:affecte and o.moyGeneral<:moy and o.anneeLibelle=:annee and o.libellePeriode=: periode group by o.libelleClasse , o.niveau having o.libelleClasse=:classe and o.niveau=:niveau")
+            Long   nbreMoyInf85G = (Long) em.createQuery("select count(o.id) from Bulletin o where o.isClassed=:isClass and o.sexe=:sexe and o.ecoleId=:idEcole and o.affecte=:affecte and o.moyAn<:moy and o.anneeLibelle=:annee and o.libellePeriode=: periode group by o.libelleClasse , o.niveau having o.libelleClasse=:classe and o.niveau=:niveau")
                     .setParameter("sexe","MASCULIN")
                     .setParameter("idEcole",idEcole)
                     .setParameter("affecte","NON_AFFECTE")
@@ -391,7 +390,7 @@ public class resultatsNonAffecteServices {
 
     public Long getnbreMoyInf85F(Long idEcole ,String classe, String niveau ,String annee , String periode){
         try {
-            Long  nbreMoyInf85F = (Long) em.createQuery("select count(o.id) from Bulletin o where o.isClassed=:isClass and  o.sexe=:sexe and o.ecoleId=:idEcole and o.affecte=:affecte and o.moyGeneral<:moy and o.anneeLibelle=:annee and o.libellePeriode=: periode  group by o.libelleClasse , o.niveau having o.libelleClasse=:classe and o.niveau=:niveau")
+            Long  nbreMoyInf85F = (Long) em.createQuery("select count(o.id) from Bulletin o where o.isClassed=:isClass and  o.sexe=:sexe and o.ecoleId=:idEcole and o.affecte=:affecte and o.moyAn<:moy and o.anneeLibelle=:annee and o.libellePeriode=: periode  group by o.libelleClasse , o.niveau having o.libelleClasse=:classe and o.niveau=:niveau")
                     .setParameter("sexe","FEMININ")
                     .setParameter("idEcole",idEcole)
                     .setParameter("affecte","NON_AFFECTE")
@@ -411,7 +410,7 @@ public class resultatsNonAffecteServices {
 
     public  Double getmoyClasseF(Long idEcole ,String classe, String niveau ,String annee , String periode){
         try {
-            Double   moyClasseF = (Double) em.createQuery("select AVG(o.moyGeneral) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole and o.affecte=:affecte and o.isClassed =:isClass and o.anneeLibelle=:annee and o.libellePeriode=: periode group by o.libelleClasse , o.niveau having o.libelleClasse=:classe and o.niveau=:niveau")
+            Double   moyClasseF = (Double) em.createQuery("select AVG(o.moyAn) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole and o.affecte=:affecte and o.isClassed =:isClass and o.anneeLibelle=:annee and o.libellePeriode=: periode group by o.libelleClasse , o.niveau having o.libelleClasse=:classe and o.niveau=:niveau")
                     .setParameter("sexe","FEMININ")
                     .setParameter("idEcole",idEcole)
                     .setParameter("affecte","NON_AFFECTE")
@@ -429,7 +428,7 @@ public class resultatsNonAffecteServices {
     }
     public  Double  getmoyClasseG(Long idEcole ,String classe, String niveau ,String annee , String periode){
         try {
-            Double  moyClasseG = (Double) em.createQuery("select AVG(o.moyGeneral) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole and o.affecte=:affecte and o.isClassed =:isClass and o.anneeLibelle=:annee and o.libellePeriode=: periode group by o.libelleClasse , o.niveau having o.libelleClasse=:classe and o.niveau=:niveau")
+            Double  moyClasseG = (Double) em.createQuery("select AVG(o.moyAn) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole and o.affecte=:affecte and o.isClassed =:isClass and o.anneeLibelle=:annee and o.libellePeriode=: periode group by o.libelleClasse , o.niveau having o.libelleClasse=:classe and o.niveau=:niveau")
                     .setParameter("sexe","MASCULIN")
                     .setParameter("idEcole",idEcole)
                     .setParameter("affecte","NON_AFFECTE")
@@ -447,7 +446,7 @@ public class resultatsNonAffecteServices {
     }
     public  Double getmoyClasse(Long idEcole ,String classe, String niveau ,String annee , String periode){
         try {
-            Double   moyClasseF = (Double) em.createQuery("select AVG(o.moyGeneral) from Bulletin o where   o.ecoleId=:idEcole and o.affecte=:affecte and o.isClassed=:isClass and o.anneeLibelle=:annee and o.libellePeriode=: periode group by o.libelleClasse , o.niveau having o.libelleClasse=:classe and o.niveau=:niveau")
+            Double   moyClasseF = (Double) em.createQuery("select AVG(o.moyAn) from Bulletin o where   o.ecoleId=:idEcole and o.affecte=:affecte and o.isClassed=:isClass and o.anneeLibelle=:annee and o.libellePeriode=: periode group by o.libelleClasse , o.niveau having o.libelleClasse=:classe and o.niveau=:niveau")
                     .setParameter("idEcole",idEcole)
                     .setParameter("affecte","NON_AFFECTE")
                     .setParameter("isClass","O")
@@ -465,7 +464,7 @@ public class resultatsNonAffecteServices {
 
     public  Double  getmoyClasseGNiv(Long idEcole ,String classe, String niveau ,String annee , String periode){
         try {
-            Double  moyClasseG = (Double) em.createQuery("select AVG(o.moyGeneral) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole and o.affecte=:affecte and o.isClassed=:isClass and o.anneeLibelle=:annee and o.libellePeriode=: periode group by  o.niveau having  o.niveau=:niveau")
+            Double  moyClasseG = (Double) em.createQuery("select AVG(o.moyAn) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole and o.affecte=:affecte and o.isClassed=:isClass and o.anneeLibelle=:annee and o.libellePeriode=: periode group by  o.niveau having  o.niveau=:niveau")
                     .setParameter("sexe","MASCULIN")
                     .setParameter("idEcole",idEcole)
                     .setParameter("affecte","NON_AFFECTE")
@@ -483,7 +482,7 @@ public class resultatsNonAffecteServices {
 
     public  Double  getmoyClasseFNiv(Long idEcole ,String classe, String niveau ,String annee , String periode){
         try {
-            Double  moyClasseG = (Double) em.createQuery("select AVG(o.moyGeneral) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole and o.affecte=:affecte and o.isClassed=:isClass and o.anneeLibelle=:annee and o.libellePeriode=: periode group by  o.niveau having  o.niveau=:niveau")
+            Double  moyClasseG = (Double) em.createQuery("select AVG(o.moyAn) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole and o.affecte=:affecte and o.isClassed=:isClass and o.anneeLibelle=:annee and o.libellePeriode=: periode group by  o.niveau having  o.niveau=:niveau")
                     .setParameter("sexe","FEMININ")
                     .setParameter("idEcole",idEcole)
                     .setParameter("affecte","NON_AFFECTE")
@@ -500,7 +499,7 @@ public class resultatsNonAffecteServices {
     }
     public  Double  getmoyClasseNiv(Long idEcole ,String classe, String niveau ,String annee , String periode){
         try {
-            Double  moyClasseG = (Double) em.createQuery("select AVG(o.moyGeneral) from Bulletin o where   o.ecoleId=:idEcole and o.affecte=:affecte and o.isClassed=:isClass and o.anneeLibelle=:annee and o.libellePeriode=: periode group by  o.niveau having  o.niveau=:niveau")
+            Double  moyClasseG = (Double) em.createQuery("select AVG(o.moyAn) from Bulletin o where   o.ecoleId=:idEcole and o.affecte=:affecte and o.isClassed=:isClass and o.anneeLibelle=:annee and o.libellePeriode=: periode group by  o.niveau having  o.niveau=:niveau")
                     .setParameter("idEcole",idEcole)
                     .setParameter("affecte","NON_AFFECTE")
                     .setParameter("isClass","O")

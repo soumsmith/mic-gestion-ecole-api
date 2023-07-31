@@ -38,6 +38,7 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 	<parameter name="is_class_2e_trim" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="is_class_3e_trim" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="TrangEMR" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="TmoyCoefEMR" class="java.lang.Double" isForPrompting="false"/>
 	<queryString language="SQL">
 		<![CDATA[]]>
 	</queryString>
@@ -365,7 +366,7 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 						<textElement textAlignment="Center">
 							<font fontName="SansSerif" size="8" isBold="true"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$V{TotalMoyeCoefParCategorie}/$V{TotalCoeffParCategParMatier}]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$F{libelle_categorie}.equals("Religion")? $P{TmoyCoefEMR}:$V{TotalMoyeCoefParCategorie}/$V{TotalCoeffParCategParMatier}]]></textFieldExpression>
 						<patternExpression><![CDATA["##.##"]]></patternExpression>
 					</textField>
 					<textField pattern="#,#00.00#;(#,#00.00#-)" isBlankWhenNull="true">
@@ -381,7 +382,7 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 						<textElement textAlignment="Center">
 							<font fontName="SansSerif" size="8" isBold="true"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$V{TotalCoeffParCategParMatier}]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$F{libelle_categorie}.equals("Religion")? 1:$V{TotalCoeffParCategParMatier}]]></textFieldExpression>
 					</textField>
 					<textField pattern="#,#00.00#;(#,#00.00#-)" isBlankWhenNull="true">
 						<reportElement style="TotalCateg" x="274" y="0" width="43" height="15" uuid="1bd18bef-51b3-45e0-90c0-bf067ba41b58">
@@ -397,7 +398,7 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 						<textElement textAlignment="Center">
 							<font fontName="SansSerif" size="8" isBold="true"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$V{TotalMoyeCoefParCategorie}]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$F{libelle_categorie}.equals("Religion")? $P{TmoyCoefEMR}:$V{TotalMoyeCoefParCategorie}]]></textFieldExpression>
 					</textField>
 				</frame>
 			</band>
@@ -457,7 +458,7 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 						<textElement textAlignment="Center" verticalAlignment="Middle">
 							<font fontName="SansSerif" size="8"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{parent_matiere}.equals("FRANCAIS")?$P{TmoyFr}:$F{parent_matiere}.equals("EMR")? 1:$F{moyenne}]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{parent_matiere}.equals("FRANCAIS")?$P{TmoyFr}:$F{parent_matiere}.equals("EMR")?$P{TmoyCoefEMR}:$F{moyenne}]]></textFieldExpression>
 						<patternExpression><![CDATA[$F{bonus}.equals("1") ? "+#.##": "##.##"]]></patternExpression>
 					</textField>
 					<textField isBlankWhenNull="true">
@@ -476,7 +477,7 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 						<textElement textAlignment="Center" verticalAlignment="Middle">
 							<font fontName="SansSerif" size="8"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{parent_matiere}.equals("FRANCAIS")?$P{TcoefFr}:$F{parent_matiere}.equals("EMR")? 1:$F{coef}]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{parent_matiere}.equals("FRANCAIS")?$P{TcoefFr}:$F{coef}]]></textFieldExpression>
 					</textField>
 					<textField evaluationTime="Band" isBlankWhenNull="true">
 						<reportElement style="champsLibelle" x="274" y="0" width="43" height="15" isRemoveLineWhenBlank="true" uuid="4863f765-b56c-4e96-b748-68ff7b46689c">
@@ -494,7 +495,7 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 						<textElement textAlignment="Center" verticalAlignment="Middle">
 							<font fontName="SansSerif" size="8"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{parent_matiere}.equals("FRANCAIS")?$P{TmoyCoefFr}:$F{parent_matiere}.equals("EMR")? 1 :$F{bonus}.equals("0")?$F{moyenne}*$F{coef}:$F{moyenne}]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{parent_matiere}.equals("FRANCAIS")?$P{TmoyCoefFr}:$F{parent_matiere}.equals("EMR")?$P{TmoyCoefEMR}:$F{bonus}.equals("0")?$F{moyenne}*$F{coef}:$F{moyenne}]]></textFieldExpression>
 					</textField>
 					<textField isBlankWhenNull="true">
 						<reportElement style="champsLibelle" x="317" y="0" width="43" height="15" isRemoveLineWhenBlank="true" uuid="5777905c-6a5a-4450-af83-0cb270796a96">
@@ -512,7 +513,8 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 						<textElement verticalAlignment="Middle">
 							<font fontName="SansSerif" size="8"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":($F{parent_matiere}.equals("FRANCAIS")&&$P{TrangFr}==1) ?$P{TrangFr}+" er":($F{parent_matiere}.equals("EMR")&&$P{TrangEMR}==1) ?$P{TrangEMR}+" er" : ($F{parent_matiere}.equals("EMR")&&$P{TrangEMR}!=1) ?$P{TrangEMR}+" e" : ($F{parent_matiere}.equals("FRANCAIS")&& $P{TrangFr}!=1) ?$P{TrangFr}+" e" : $F{rang}==1 ?  $F{rang}+" er" :$F{rang}!=1? $F{rang} +" e": $F{rang} +" e"]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":($F{parent_matiere}.equals("FRANCAIS")&&$P{TrangFr}==1) ?$P{TrangFr}+" er":($F{parent_matiere}.equals("FRANCAIS")&& $P{TrangFr}!=1) ?$P{TrangFr}+" e" 
+:($F{parent_matiere}.equals("EMR")&&$P{TrangEMR}==1) ?$P{TrangEMR}+" er":($F{parent_matiere}.equals("EMR")&& $P{TrangEMR}!=1) ?$P{TrangEMR}+" e": $F{rang}==1 ?  $F{rang}+" er" :$F{rang}!=1? $F{rang} +" e": $F{rang} +" e"]]></textFieldExpression>
 					</textField>
 					<textField isBlankWhenNull="true">
 						<reportElement style="champsLibelle" x="360" y="0" width="117" height="15" isRemoveLineWhenBlank="true" uuid="b4200066-a206-4e5c-b3ee-1c1c3d9c5fde">
@@ -2254,7 +2256,7 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 								</textElement>
 								<text><![CDATA[1]]></text>
 							</staticText>
-							<textField>
+							<textField evaluationTime="Band" pattern="#,#00.00#;(#,#00.00#-)">
 								<reportElement x="110" y="20" width="58" height="20" uuid="4dd6f514-4158-43aa-b057-a00fd689dfcc"/>
 								<box>
 									<pen lineWidth="0.25"/>
@@ -2310,7 +2312,7 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 								</textElement>
 								<text><![CDATA[2]]></text>
 							</staticText>
-							<textField>
+							<textField evaluationTime="Band" pattern="#,#00.00#;(#,#00.00#-)">
 								<reportElement x="110" y="40" width="58" height="20" uuid="83bc934f-3653-44a3-a565-17e14dc59ea3"/>
 								<box>
 									<pen lineWidth="0.25"/>
@@ -2366,7 +2368,7 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 								</textElement>
 								<text><![CDATA[2]]></text>
 							</staticText>
-							<textField>
+							<textField evaluationTime="Band" pattern="#,#00.00#;(#,#00.00#-)">
 								<reportElement x="110" y="60" width="58" height="20" uuid="040235ec-e91f-4cfb-8ed9-9a6ade626f89"/>
 								<box>
 									<pen lineWidth="0.25"/>
@@ -2378,7 +2380,7 @@ NjViMy04YTNiLTQxOGItYjFlOS01Y2ZhYjQyMjQxNDY7]]>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font size="8" isBold="true"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$P{moy_3eme_trim}*3]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$P{moy_3eme_trim}*2]]></textFieldExpression>
 							</textField>
 							<textField>
 								<reportElement x="168" y="60" width="34" height="20" uuid="9828e85a-a6da-45c0-b8be-aa30ddded9e9"/>
