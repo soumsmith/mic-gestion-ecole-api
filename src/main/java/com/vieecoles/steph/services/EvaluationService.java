@@ -8,6 +8,11 @@ import io.quarkus.panache.common.Parameters;
 import javax.enterprise.context.RequestScoped;
 import javax.transaction.Transactional;
 import javax.ws.rs.NotFoundException;
+
+import java.sql.Time;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -34,7 +39,7 @@ public class EvaluationService implements PanacheRepositoryBase<Evaluation, Long
 		} catch (RuntimeException ex) {
 			logger.warning("Probably no result found");
 		}
-		return  evaList;
+		return evaList;
 	}
 
 	Integer setPecValue() {
@@ -43,15 +48,15 @@ public class EvaluationService implements PanacheRepositoryBase<Evaluation, Long
 
 	@Transactional
 	public Evaluation create(Evaluation ev) {
-//		Gson gson = new Gson();
-//		logger.info(gson.toJson(ev));
+		Gson gson = new Gson();
+		logger.info(gson.toJson(ev));
 		try {
 			UUID uuid = UUID.randomUUID();
 			logger.info("Creation de l'evaluation " + uuid.toString());
 			ev.setCode(uuid.toString());
 			ev.setDateCreation(new Date());
 			ev.setPec(setPecValue());
-			ev.persist();
+			 ev.persist();
 		} catch (RuntimeException e) {
 			e.printStackTrace();
 		}
@@ -139,8 +144,7 @@ public class EvaluationService implements PanacheRepositoryBase<Evaluation, Long
 	}
 
 	public Long getCountByClasseAndMatiere(Long anneeId, Long classeId, Long matiereId) {
-		return Evaluation
-				.find("annee.id=?1 and classe.id=?2 and matiereEcole.id=?3", anneeId, classeId, matiereId)
+		return Evaluation.find("annee.id=?1 and classe.id=?2 and matiereEcole.id=?3", anneeId, classeId, matiereId)
 				.count();
 	}
 

@@ -1,11 +1,13 @@
 package com.vieecoles.steph.services;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 
@@ -13,6 +15,7 @@ import org.hibernate.internal.build.AllowSysOut;
 
 import com.vieecoles.steph.entities.PersonnelMatiereClasse;
 import com.vieecoles.steph.dto.ProfEducDto;
+import com.vieecoles.steph.entities.ClasseMatiere;
 import com.vieecoles.steph.entities.Ecole;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 /*
@@ -23,6 +26,9 @@ import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 @ApplicationScoped
 public class PersonnelMatiereClasseService implements PanacheRepositoryBase<PersonnelMatiereClasse, Long> {
 
+	@Inject
+	ClasseMatiereService cmService;
+	
 	Logger logger = Logger.getLogger(PersonnelMatiereClasseService.class.getName());
 	// A modifer avec le bon parametre de session
 	private Long getAnneeScolaire = Long.parseLong("1");
@@ -77,8 +83,7 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 	public List<PersonnelMatiereClasse> findByBranche(long brancheId, long annee) {
 		logger.info(String.format("find by Branche id :: %s", brancheId));
 		return PersonnelMatiereClasse
-				.find("classe.branche.id = ?1 and annee.id = ?2 and matiere is not null", brancheId, annee)
-				.list();
+				.find("classe.branche.id = ?1 and annee.id = ?2 and matiere is not null", brancheId, annee).list();
 	}
 
 	// modifier l annee avec le parametre quand disponible
@@ -122,8 +127,24 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 	}
 
 	public List<PersonnelMatiereClasse> findListByClasse(long annee, long classe) {
-		return PersonnelMatiereClasse.find("annee.id = ?1 and classe.id =?2 and matiere is not null", annee, classe)
-				.list();
+		List<PersonnelMatiereClasse> list = new ArrayList<PersonnelMatiereClasse>();
+		try {
+			list = PersonnelMatiereClasse.find("annee.id = ?1 and classe.id =?2 and matiere is not null", annee, classe)
+					.list();
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+		}
+		return addCoefficientMatiere(list);
+	}
+	
+	List<PersonnelMatiereClasse> addCoefficientMatiere(List<PersonnelMatiereClasse> listPersonnels) {
+		for(PersonnelMatiereClasse ps : listPersonnels) {
+			ClasseMatiere cm = cmService.getByMatiereAndBranche(ps.getMatiere().getId(), ps.getClasse().getBranche().getId(), ps.getClasse().getEcole().getId());
+			if(cm != null) {
+				ps.getMatiere().setCoef(cm.getCoef());
+			}
+		}
+		return listPersonnels;
 	}
 
 // Attention ne pas utiliser pour determiner les matieres enseignees par un professeur
@@ -268,6 +289,5 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 		persMatClasse.delete();
 
 	}
-
 
 }

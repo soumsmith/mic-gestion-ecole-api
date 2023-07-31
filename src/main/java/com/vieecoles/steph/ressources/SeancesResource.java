@@ -101,8 +101,8 @@ public class SeancesResource {
 	@GET
     @Path("/get-list-statut")
     @Tag(name = "Seances")
-    public Response getListByStatut(@QueryParam("statut") String statut) {
-		List<Seances> seances = seanceService.getListByStatut(1,statut);
+    public Response getListByStatut(@QueryParam("annee") String annee,@QueryParam("statut") String statut, @QueryParam("ecole") Long ecole) {
+		List<Seances> seances = seanceService.getListByStatut(annee,statut,ecole);
         return Response.ok().entity(seances).build();
     }
 

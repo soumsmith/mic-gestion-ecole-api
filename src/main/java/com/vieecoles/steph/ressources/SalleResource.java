@@ -17,7 +17,7 @@ public class SalleResource {
 
 	@GET
     @Path("/list")
-    @Tag(name = "Seances")
+    @Tag(name = "Salle")
     public Response list() {
         return Response.ok().entity(salleService.list()).build();
     }

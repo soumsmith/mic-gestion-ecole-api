@@ -2,7 +2,6 @@ package com.vieecoles.steph.services;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -13,13 +12,9 @@ import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 import javax.ws.rs.NotFoundException;
-import javax.ws.rs.core.Response;
-
 import com.google.gson.Gson;
-import com.mysql.cj.x.protobuf.MysqlxCrud.Collection;
 import com.vieecoles.steph.dto.MoyenneEleveDto;
 import com.vieecoles.steph.entities.AbsenceEleve;
 import com.vieecoles.steph.entities.AnneeScolaire;

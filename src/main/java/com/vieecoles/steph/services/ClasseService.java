@@ -4,6 +4,7 @@ import com.vieecoles.steph.entities.Classe;
 import com.vieecoles.steph.entities.Ecole;
 import com.vieecoles.steph.entities.LangueVivante;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
+import io.quarkus.panache.common.Sort;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
@@ -28,7 +29,7 @@ public class ClasseService implements PanacheRepositoryBase<Classe,Integer> {
 	public List<Classe> getListClasseByEcole(Long ecoleId) {
 		try {
 		//	logger.info("........ in list <<<<>>>>>");
-			return Classe.find("ecole.id =?1", ecoleId).list();
+			return Classe.find("ecole.id =?1", Sort.by("libelle").descending(), ecoleId).list();
 		}catch(Exception e) {
 			e.printStackTrace();
 			return null ;

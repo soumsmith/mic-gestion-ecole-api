@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @ApplicationScoped
@@ -31,7 +32,7 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 	@Inject
 	PersonnelMatiereClasseService personnelMatiereClasseService;
 
-	//Logger logger = Logger.getLogger(SeanceService.class.getName());
+	Logger logger = Logger.getLogger(SeanceService.class.getName());
 
 	public List<Seances> getList() {
 		try {
@@ -75,9 +76,9 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 		return Seances.find("dateSeance = ?1 and professeur.id= ?2", date, profId).list();
 	}
 
-	public List<Seances> getListByStatut(long anneeId, String statut) {
+	public List<Seances> getListByStatut(String anneeId, String statut, long ecoleId) {
 		//logger.info(String.format("Annee %s - statut %s", anneeId, statut));
-		return Seances.find("statut = ?1", statut).list();
+		return Seances.find("statut = ?1 and classe.ecole.id=?2 and annee =?3", statut,ecoleId, anneeId).list();
 	}
 
 	public List<Seances> getDistinctListByDate(Date date) {
@@ -90,7 +91,13 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 
 	public List<Seances> getListByDateAndClasse(long anneeId, Date date, Long classeId) {
 		//logger.info(String.format("Annee %s - date %s - classe %s", anneeId, date,classeId));
-		return Seances.find("dateSeance = ?1 and classe.id = ?2", date, classeId).list();
+		List<Seances> seances = new ArrayList<Seances>();
+		try {
+				seances = Seances.find("dateSeance = ?1 and classe.id = ?2", date, classeId).list();
+		} catch(RuntimeException ex) {
+			logger.log(Level.WARNING, "Error ::: {0} ", ex);
+		}
+		return seances;
 	}
 
 	public Seances findById(long id) {
