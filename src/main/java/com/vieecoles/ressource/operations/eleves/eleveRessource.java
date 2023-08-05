@@ -69,8 +69,9 @@ public class eleveRessource {
 
 
     @POST
+
     @Path("/{idEcole}/{idAnneeScolaire}/{statutEleve}/{typeOperation}/{idBranche}")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_JSON)
 
     public String  CreerNewEleve(EleveDto eleveDto ,@PathParam("idEcole") Long idEcole , @PathParam("idAnneeScolaire") Long idAnneeScolaire,@PathParam("statutEleve") String statutEleve ,
