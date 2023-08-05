@@ -25,4 +25,8 @@ public class Personnel extends PanacheEntityBase {
 	@ManyToOne
 	@JoinColumn(name="ecole_ecoleid")
 	private Ecole ecole;
+	@Column(name="sous_attent_personn_sous_attent_personnid")
+	private Long souscriptionAttenteId;
+	@Column(name = "personnel_contact")
+	private String contact;
 }

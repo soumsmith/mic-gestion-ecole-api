@@ -27,7 +27,7 @@ public class Evaluation extends PanacheEntityBase{
 	@Column(name = "evaluationdate")
 	private Date date;
 //	@Transient
-//	private Date heure;
+//	private String heure;
 	private String duree;
 	private String noteSur;
 	private String etat;
@@ -39,6 +39,7 @@ public class Evaluation extends PanacheEntityBase{
 	@ManyToOne
 	@JoinColumn(name = "periode_periodeid")
 	private Periode periode;
+	private Integer pec;
 //	@ManyToOne
 //	@JoinColumn(name = "classe_annee_id")
 //	private ClasseAnnee classeAnnee;
@@ -53,6 +54,8 @@ public class Evaluation extends PanacheEntityBase{
 	private EcoleHasMatiere matiereEcole;
 	@Column(name = "date_creation")
 	private Date dateCreation;
+	@Column(name = "date_update")
+	private Date dateUpdate;
+	private String user;
 
-	private Integer pec;
 }
