@@ -79,8 +79,11 @@ public class BulletinSpiderRessource {
     public ResponseEntity<byte[]>  getDtoRapport(@PathParam("idEcole") Long idEcole ,@PathParam("libellePeriode") String libellePeriode ,
                                                  @PathParam("libelleAnnee") String libelleAnnee , @PathParam("libelleClasse") String libelleClasse) throws Exception, JRException {
         InputStream myInpuStream ;
-        /*myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/BulletinBean.jrxml");*/
-        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderBulletin.jrxml");
+
+        if(libellePeriode.equals("Troisième Trimestre"))
+            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderBulletin.jrxml");
+        else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderNobel.jrxml");
+
         spiderBulletinDto detailsBull= new spiderBulletinDto() ;
         List<parametreDto>  dspsDto = new ArrayList<>() ;
 

@@ -404,6 +404,15 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.libelle_classe like  $P{c
 					<subreportParameter name="matricule">
 						<subreportParameterExpression><![CDATA[$F{matricule}]]></subreportParameterExpression>
 					</subreportParameter>
+					<subreportParameter name="annee">
+						<subreportParameterExpression><![CDATA[$F{annee_libelle}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="idEcole">
+						<subreportParameterExpression><![CDATA[$F{id_ecole}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="libellePeriode">
+						<subreportParameterExpression><![CDATA[$F{libelle_periode}]]></subreportParameterExpression>
+					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					<subreportExpression><![CDATA["etats/spider/BulletinTroisiemeTrimetreSpider.jasper"]]></subreportExpression>
 				</subreport>
