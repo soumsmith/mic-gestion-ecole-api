@@ -19,6 +19,7 @@ import com.vieecoles.steph.entities.Matiere;
 import com.vieecoles.steph.entities.Notes;
 import com.vieecoles.steph.entities.NotesLoader;
 import com.vieecoles.steph.entities.Periode;
+import com.vieecoles.steph.entities.TypeActivite;
 import com.vieecoles.steph.entities.TypeEvaluation;
 import com.vieecoles.steph.util.CommonUtils;
 import com.vieecoles.steph.util.DateUtils;
@@ -124,8 +125,8 @@ public class EvaluationLoaderService implements PanacheRepositoryBase<Evaluation
 	@Transactional
 	public void appliquerChargement(List<EvaluationLoader> evals, Long matiere, Long periode, Long annee) {
 
-		TypeEvaluation typeEvaluation = new TypeEvaluation();
-		typeEvaluation.setId(1);
+		TypeActivite typeActivite = new TypeActivite();
+		typeActivite.setId(1);
 //		evaluation.setAnnee(null);
 		EcoleHasMatiere mat = new EcoleHasMatiere();
 		mat.setId(matiere);
@@ -157,7 +158,7 @@ public class EvaluationLoaderService implements PanacheRepositoryBase<Evaluation
 				evaluation.setMatiereEcole(mat);
 				evaluation.setPeriode(per);
 				evaluation.setAnnee(ann);
-				evaluation.setType(typeEvaluation);
+				evaluation.setType(typeActivite);
 				evaluation.setClasse(classe);
 				evaluation.setDate(DateUtils.asDate(LocalDate.now()));
 				evaluation.setNoteSur(Constants.DEFAULT_NOTE_SUR);
