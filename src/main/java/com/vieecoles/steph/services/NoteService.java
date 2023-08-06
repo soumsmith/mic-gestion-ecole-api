@@ -79,7 +79,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 		logger.info("--> Création de note pour " + notes.getClasseEleve().getInscription().getEleve().getNom());
 		logger.info(gson.toJson(notes));
 		// pec dans le calcul de moyenne par defaut
-		notes.setPec(notes.getPec()!= null ? notes.getPec() : 0);
+		notes.setPec(notes.getPec() != null ? notes.getPec() : 0);
 		notes.setNote(notes.getNote() != null ? notes.getNote() : 0);
 		notes.persist();
 	}
@@ -137,8 +137,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				logger.info("--> Creation de note ...");
 				create(note);
 
-			}else
-			if (note.getId() != 0 && note.getStatut() != null && note.getStatut().equals("M")) {
+			} else if (note.getId() != 0 && note.getStatut() != null && note.getStatut().equals("M")) {
 				logger.info(gson.toJson(note));
 				logger.info("--> Maj de note ...");
 				update(note);
@@ -163,7 +162,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				evaluation.getAnnee().getId());
 		// logger.info(gson.toJson(classeEleves));
 		// obtenir la liste des notes pour une évaluation
-		// getByEvaluationAndPec anciennement utilisé avec pec = 1 
+		// getByEvaluationAndPec anciennement utilisé avec pec = 1
 		List<Notes> notesList = getByEvaluation(evaluation.getId());
 		List<Notes> noteListTemp = new ArrayList<Notes>();
 		Boolean flat = true;
@@ -172,9 +171,8 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			flat = true;
 			for (Notes note : notesList) {
 				// nous avons supprimer note.getPec() == 1 dans la condition ci apres
-				if (ce.getInscription().getEleve().getMatricule()
-						.equals(note.getClasseEleve().getInscription().getEleve().getMatricule())
-						&& note.getPec() != null ) {
+				if (ce.getInscription().getEleve().getMatricule().equals(
+						note.getClasseEleve().getInscription().getEleve().getMatricule()) && note.getPec() != null) {
 					noteListTemp.add(note);
 					flat = false;
 					break;
@@ -192,41 +190,41 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 //		logger.info(gson.toJson(noteListTemp));
 		return noteListTemp;
 	}
-	
+
 	public List<Notes> getNotesClasseWithPec(String evalCode, Integer pec) {
 //    	logger.info("++++++++++"+evalCode);
-	Evaluation evaluation = evaluationService.findByCode(evalCode);
-	// Gson gson = new Gson();
-	// obtenir la liste des eleves d une classe
-	List<ClasseEleve> classeEleves = classeEleveService.getByClasseAnnee(evaluation.getClasse().getId(),
-			evaluation.getAnnee().getId());
-	// logger.info(gson.toJson(classeEleves));
-	// obtenir la liste des notes pour une évaluation
-	List<Notes> notesList = getByEvaluationAndPec(evaluation.getId(), pec);
-	List<Notes> noteListTemp = new ArrayList<Notes>();
-	Boolean flat = true;
-	Notes notemp;
-	for (ClasseEleve ce : classeEleves) {
-		flat = true;
-		for (Notes note : notesList) {
-			if (ce.getInscription().getEleve().getMatricule()
-					.equals(note.getClasseEleve().getInscription().getEleve().getMatricule())
-					&& note.getPec() != null && note.getPec() == pec) {
-				noteListTemp.add(note);
-				flat = false;
-				break;
+		Evaluation evaluation = evaluationService.findByCode(evalCode);
+		// Gson gson = new Gson();
+		// obtenir la liste des eleves d une classe
+		List<ClasseEleve> classeEleves = classeEleveService.getByClasseAnnee(evaluation.getClasse().getId(),
+				evaluation.getAnnee().getId());
+		// logger.info(gson.toJson(classeEleves));
+		// obtenir la liste des notes pour une évaluation
+		List<Notes> notesList = getByEvaluationAndPec(evaluation.getId(), pec);
+		List<Notes> noteListTemp = new ArrayList<Notes>();
+		Boolean flat = true;
+		Notes notemp;
+		for (ClasseEleve ce : classeEleves) {
+			flat = true;
+			for (Notes note : notesList) {
+				if (ce.getInscription().getEleve().getMatricule()
+						.equals(note.getClasseEleve().getInscription().getEleve().getMatricule())
+						&& note.getPec() != null && note.getPec() == pec) {
+					noteListTemp.add(note);
+					flat = false;
+					break;
+				}
+			}
+			if (flat) {
+				notemp = new Notes();
+				notemp.setClasseEleve(ce);
+				notemp.setEvaluation(evaluation);
+				noteListTemp.add(notemp);
 			}
 		}
-		if (flat) {
-			notemp = new Notes();
-			notemp.setClasseEleve(ce);
-			notemp.setEvaluation(evaluation);
-			noteListTemp.add(notemp);
-		}
-	}
 
-	return noteListTemp;
-}
+		return noteListTemp;
+	}
 
 	List<MoyenneEleveDto> formatMoyenneMatieres(Map<Eleve, List<Notes>> param) {
 
@@ -245,7 +243,8 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 //			System.out.println(String.format("%s %s %s", classeId, anneeId, periodeId));
 			Map<Eleve, List<Notes>> noteGroup = new HashMap<Eleve, List<Notes>>();
 			Parameters params = Parameters.with("classeId", Long.parseLong(classeId))
-					.and("anneeId", Long.parseLong(anneeId)).and("periodeId", Long.parseLong(periodeId)).and("pok", Constants.PEC_1);
+					.and("anneeId", Long.parseLong(anneeId)).and("periodeId", Long.parseLong(periodeId))
+					.and("pok", Constants.PEC_1);
 			String criteria = "classe.id = :classeId and annee.id = :anneeId and periode.id = :periodeId and pec = :pok";
 			List<Evaluation> evalList = evaluationService.search(criteria, params);
 			List<Notes> noteList = new ArrayList<Notes>();
@@ -394,7 +393,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 	}
 
 	public List<MoyenneEleveDto> moyennesAndMatiereAndNotesHandle(String classeId, String matiereId, String anneeId,
-																  String periodeId) {
+			String periodeId) {
 		// Obtenir la liste des evaluations dans une classe et une matiere au cours de l
 		// année pour une
 		// période
@@ -993,5 +992,35 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				eleve.setRang(String.valueOf(i));
 		}
 
+	}
+
+	public List<Notes> getListNotesByEleveAndClasseAndAnneeAndPeriode(String matricule, Long classeId, Long anneeId,
+			Long periodeId) {
+
+		List<Notes> notesByEleve = new ArrayList<Notes>();
+		try {
+			logger.info(matricule + " " + classeId + " " + anneeId + " " + periodeId);
+			notesByEleve = Notes.find(
+					"classeEleve.inscription.eleve.matricule = ?1 and classeEleve.classe.id = ?2 and evaluation.annee.id =?3 and evaluation.periode.id = ?4 and pec = 1",
+					matricule, classeId, anneeId, periodeId).list();
+		} catch (RuntimeException e) {
+			logger.warning("Erreur ::: " + e.getMessage());
+		}
+		return notesByEleve;
+	}
+
+	public List<Notes> getListNotesByEleveAndClasseAndAnneeAndPeriodeAndMatiere(String matricule, Long classeId,
+			Long anneeId, Long periodeId, Long matiereId) {
+
+		List<Notes> notesByEleve = new ArrayList<Notes>();
+		try {
+			logger.info(matricule + " " + classeId + " " + anneeId + " " + periodeId);
+			notesByEleve = Notes.find(
+					"classeEleve.inscription.eleve.matricule = ?1 and classeEleve.classe.id = ?2 and evaluation.annee.id =?3 and evaluation.periode.id = ?4 and evaluation.matiereEcole.id = ?5 and pec = 1",
+					matricule, classeId, anneeId, periodeId, matiereId).list();
+		} catch (RuntimeException e) {
+			logger.warning("Erreur ::: " + e.getMessage());
+		}
+		return notesByEleve;
 	}
 }

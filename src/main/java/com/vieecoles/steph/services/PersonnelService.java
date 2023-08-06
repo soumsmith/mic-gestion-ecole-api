@@ -37,7 +37,7 @@ public class PersonnelService {
 	
 	
 	public List<Personnel> getListByFonction(int fonctionId, Long ecole) {
-		logger.info("---> list by fonction id ::: "+fonctionId);
+		logger.info("---> list by fonction id ::: "+fonctionId+" Ecole ::: "+ecole);
 		return Personnel.find("fonction.id = ?1 and ecole.id=?2", fonctionId, ecole)
 				.list();
 	}	
@@ -51,7 +51,20 @@ public class PersonnelService {
 		utilisateur user = utilisateur.findById(id);
 		if(user != null) {
 			try {
-				return Personnel.find("sous_attent_personn_sous_attent_personnid = ?1", user.getSous_attent_personn_sous_attent_personnid()).singleResult();
+				return Personnel.find("sous_attent_personn_sous_attent_personnid = ?1", user.getSous_attent_personn_sous_attent_personnid()).firstResult();
+			}catch (RuntimeException e) {
+				logger.log(Level.WARNING, "Erreur getByUserId {0}", e.getMessage());
+			}
+		}
+		return null;
+	}
+	
+	public Personnel getByUserAndEcole(Long userId, Long ecoleId) {
+		logger.info("find by user id ::: "+userId+" and ecole id ::: "+ecoleId);
+		utilisateur user = utilisateur.findById(userId);
+		if(user != null) {
+			try {
+				return Personnel.find("sous_attent_personn_sous_attent_personnid = ?1 and ecole.ecoleid = ?2", user.getSous_attent_personn_sous_attent_personnid(), ecoleId).firstResult();
 			}catch (RuntimeException e) {
 				logger.log(Level.WARNING, "Erreur getByUserId {0}", e.getMessage());
 			}

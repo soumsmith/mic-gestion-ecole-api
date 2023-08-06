@@ -34,4 +34,15 @@ public class TypeActiviteService implements PanacheRepositoryBase<TypeActivite, 
 		}
 		return types;
 	}
+	
+	public List<TypeActivite> getByEcoleAndTypeSeane(Long ecoleId, String typeSeance) {
+		Ecole ecole = ecoleService.getById(ecoleId);
+		List<TypeActivite> types = new ArrayList<TypeActivite>();
+		try {
+			types = TypeActivite.find("niveauEnseignement = ?1 and typeSeance = ?2", ecole.getNiveauEnseignement().getId(), typeSeance).list();
+		}catch (RuntimeException e) {
+			logger.log(Level.WARNING, "Erreur ::: {0}", e.getCause());
+		}
+		return types;
+	}
 }

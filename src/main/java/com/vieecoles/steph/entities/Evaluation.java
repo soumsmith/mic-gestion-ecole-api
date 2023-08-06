@@ -35,7 +35,8 @@ public class Evaluation extends PanacheEntityBase{
 	private String dateLimite;
 	@ManyToOne
 	@JoinColumn(name = "type_evaluation_type_evaluationid")
-	private TypeEvaluation type;
+//	private TypeEvaluation type;	
+	private TypeActivite type;
 	@ManyToOne
 	@JoinColumn(name = "periode_periodeid")
 	private Periode periode;
@@ -52,6 +53,7 @@ public class Evaluation extends PanacheEntityBase{
 	@ManyToOne
 	@JoinColumn(name = "matiere_matiereid")
 	private EcoleHasMatiere matiereEcole;
+	
 	@Column(name = "date_creation")
 	private Date dateCreation;
 	@Column(name = "date_update")

@@ -29,6 +29,8 @@ public class Seances extends PanacheEntityBase {
 	private String heureFin;
 	@Column(name = "date_seance")
 	private Date dateSeance;
+	@Column(name = "evaluation_indicator")
+	private Integer evaluationIndicator;
 	@ManyToOne
 	@JoinColumn(name = "professeur_id")
 	private Personnel professeur;
@@ -50,8 +52,15 @@ public class Seances extends PanacheEntityBase {
 	@ManyToOne
 	@JoinColumn(name = "type_activite_id")
 	private TypeActivite typeActivite;
+	// Pour assurer le traitement automatique des evaluation lors de la generation
+	// des séances
+	@ManyToOne
+	@JoinColumn(name = "evaluation_id")
+	private Evaluation evaluation;
 	@Column(name = "date_creation")
 	private Date dateCreation;
 	@Column(name = "date_update")
 	private Date dateUpdate;
+	@Column(name = "user")
+	private String user;
 }

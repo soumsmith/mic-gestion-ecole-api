@@ -55,8 +55,9 @@ public class EvaluationService implements PanacheRepositoryBase<Evaluation, Long
 			logger.info("Creation de l'evaluation " + uuid.toString());
 			ev.setCode(uuid.toString());
 			ev.setDateCreation(new Date());
+			ev.setDateUpdate(new Date());
 			ev.setPec(setPecValue());
-			 ev.persist();
+			ev.persist();
 		} catch (RuntimeException e) {
 			e.printStackTrace();
 		}
@@ -78,6 +79,8 @@ public class EvaluationService implements PanacheRepositoryBase<Evaluation, Long
 		entity.setEtat(ev.getEtat());
 		entity.setPec(ev.getPec());
 		entity.setType(ev.getType());
+		entity.setDateUpdate(new Date());
+		entity.setUser(ev.getUser());
 		// entity.setHeure(ev.getHeure());
 		entity.setNoteSur(ev.getNoteSur());
 		return entity;

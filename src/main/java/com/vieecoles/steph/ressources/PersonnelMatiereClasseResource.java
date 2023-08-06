@@ -91,6 +91,15 @@ public class PersonnelMatiereClasseResource {
     }
     
     @GET
+    @Path("/get-by-prof-classe-where-coef-is")
+    @Operation(description = "Obtenir les matieres enseignées d un prof dans une classe dont les coefficient ont été définis", summary = "")
+	@Tag(name = "PersonnelMatiereClasse")
+    public List<PersonnelMatiereClasse> findByProfesseurAndClasseWhereCoeficientDefine(@QueryParam("prof") long profId, @QueryParam("classe") long classe, @QueryParam("annee") long anneeId) {
+    	List<PersonnelMatiereClasse> personnels = persMatClasService.findByProfesseurAndClasseWhereCoefDefine(profId,classe, anneeId);
+    	return personnels;
+    }
+    
+    @GET
     @Path("/get-by-fonction")
     @Operation(description = "Obtenir les classes assignées à un personnel(prof princ. ou educateur)", summary = "")
 	@Tag(name = "PersonnelMatiereClasse")
