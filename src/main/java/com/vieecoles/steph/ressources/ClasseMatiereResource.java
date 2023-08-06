@@ -47,11 +47,18 @@ public class ClasseMatiereResource {
 	@GET
 	@Path("/get-by-branche-via-classe")
 	@Tag(name = "ClasseMatiere")
-	public Response getByBrancheViaClasse(@QueryParam("classe") long classeId, @QueryParam("annee") long anneeId,
-			@QueryParam("ecole") long ecoleId) {
-		return Response.ok().entity(classeMatiereService.getByBrancheViaClasse(classeId, ecoleId)).build();
+	public Response getByBrancheViaClasse(@QueryParam("classe") long classeId, @QueryParam("annee") long anneeId) {
+		System.out.println(classeId+" - "+anneeId);
+		return Response.ok().entity(classeMatiereService.getByBrancheViaClasse(classeId)).build();
 	}
-
+	
+	@GET
+	@Path("/get-all-by-branche-via-classe")
+	@Tag(name = "ClasseMatiere")
+	public Response getAllMatiereByBrancheViaClasse(@QueryParam("branche") long brancheId, @QueryParam("ecole") long ecoleId) {
+		return Response.ok().entity(classeMatiereService.getAllMatieresByBrancheViaClasse(brancheId,ecoleId)).build();
+	}
+	
 	@POST
 	@Path("/maj-coefficients")
 	@Tag(name = "ClasseMatiere")

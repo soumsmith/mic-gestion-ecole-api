@@ -1,7 +1,9 @@
 package com.vieecoles.steph.services;
 
 import com.google.gson.Gson;
+import java.util.logging.Logger;
 import com.vieecoles.steph.entities.Activite;
+import com.vieecoles.steph.entities.Classe;
 import com.vieecoles.steph.entities.Salle;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
@@ -13,7 +15,7 @@ import java.net.URI;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.logging.Level;
 
 @ApplicationScoped
 public class SalleService implements PanacheRepositoryBase<Salle, Long> {
@@ -21,26 +23,44 @@ public class SalleService implements PanacheRepositoryBase<Salle, Long> {
 	@Inject
 	ActiviteService activiteService;
 
-	//Logger logger = Logger.getLogger(SalleService.class.getName());
+	@Inject
+	ClasseService classeService;
+
+	Logger logger = Logger.getLogger(SalleService.class.getName());
 
 	public List<Salle> list() {
 		return Salle.findAll().list();
 	}
 
+	public List<Salle> getSallesByEcole(Long ecoleId) {
+		List<Salle> salles = new ArrayList<Salle>();
+		try {
+			salles = Salle.find("ecole.id = ?1", ecoleId).list();
+		} catch (RuntimeException ex) {
+			logger.log(Level.WARNING, " Error getSallesByEcole {0}", ex);
+		}
+
+		return salles;
+	}
+
 	public List<Salle> getWithSallesDisponibles(long anneeId, long classeId, int jourId, String heureDeb,
 			String heureFin) {
 		List<Activite> activites = activiteService.getListByClasseAndJour(classeId, jourId);
-		List<Salle> salles = list();
+
+		List<Salle> salles = new ArrayList<Salle>();
+		Classe classe = classeService.findById(classeId);
+		if (classe != null)
+			salles = getSallesByEcole(classe.getEcole().getId());
 		LocalTime timeDeb = LocalTime.parse(heureDeb);
 		LocalTime timeFin = LocalTime.parse(heureFin);
 		List<Activite> atvCart = new ArrayList<Activite>();
 		List<Salle> salleCopy = new ArrayList<Salle>();
-		Gson gson = new Gson();
-		System.out.println(gson.toJson(salles));
+//		Gson gson = new Gson();
+//		System.out.println(gson.toJson(salles));
 		Boolean flag = true;
 		// liste des activités de la plage horaire
 		for (Activite atv : activites) {
-			System.out.println("______________");
+//			System.out.println("______________");
 			flag = true;
 			if (!timeDeb.isBefore(LocalTime.parse(atv.getHeureDeb()))
 					&& timeDeb.isBefore(LocalTime.parse(atv.getHeureFin())) && flag) {
@@ -75,9 +95,9 @@ public class SalleService implements PanacheRepositoryBase<Salle, Long> {
 
 	@Transactional
 	public Response save(Salle salle) {
-		Gson gson = new Gson();
-		//logger.info("persist activite ...");
-		//logger.info(gson.toJson(salle));
+//		Gson gson = new Gson();
+		// logger.info("persist activite ...");
+		// logger.info(gson.toJson(salle));
 
 		salle.persist();
 		return Response.created(URI.create("/salle/" + salle.getId())).build();
@@ -85,7 +105,7 @@ public class SalleService implements PanacheRepositoryBase<Salle, Long> {
 
 	@Transactional
 	public Salle update(Salle salle) {
-		//logger.info("updating salle ...");
+		// logger.info("updating salle ...");
 		Salle sl = Salle.findById(salle.getId());
 		if (salle != null) {
 			sl.setCode(salle.getCode());
@@ -114,7 +134,7 @@ public class SalleService implements PanacheRepositoryBase<Salle, Long> {
 	@Transactional
 	public void delete(String id) {
 
-	//	logger.info("delete Salle id " + id);
+		// logger.info("delete Salle id " + id);
 		Salle sl = findById(Long.parseLong(id));
 		if (isDeletable(id))
 			sl.delete();

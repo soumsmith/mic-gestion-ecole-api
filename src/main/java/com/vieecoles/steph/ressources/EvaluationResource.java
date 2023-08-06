@@ -183,6 +183,7 @@ public class EvaluationResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Tag(name = "Evaluation")
     public Response updateAndDisplay(Evaluation evaluation) {
+    	System.out.println(evaluation);
 
     	Evaluation ev = evaluationService.updateAndDisplay(evaluation);
 		if(ev==null) {

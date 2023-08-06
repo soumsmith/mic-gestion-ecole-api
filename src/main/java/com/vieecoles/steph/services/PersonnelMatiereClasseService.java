@@ -125,6 +125,33 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 						annee != 0 ? annee : getAnneeScolaire, classe)
 				.list();
 	}
+	
+	public List<PersonnelMatiereClasse> findByProfesseurAndClasseWhereCoefDefine(long profId, long classe, long annee) {
+		logger.info(String.format("find by Prof id :: %s and annee :: %s", profId, annee));
+		List<PersonnelMatiereClasse> personnelMatiereClasseList = null;
+		List<PersonnelMatiereClasse> pmcListTmp = null;
+		try {
+		personnelMatiereClasseList =  PersonnelMatiereClasse
+				.find("personnel.id = ?1 and annee.id = ?2 and classe.id = ?3 and matiere is not null", profId,
+						annee != 0 ? annee : getAnneeScolaire, classe)
+				.list();
+		}catch (Exception e) {
+			logger.warning("Erreur [List<PersonnelMatiereClasse> findByProfesseurAndClasseWhereCoefDefine] ::: "+e.getMessage());
+		}
+		if(personnelMatiereClasseList != null) {
+			List<ClasseMatiere> matiereCoefDefineList = cmService.getByBrancheViaClasse(classe);
+			if(matiereCoefDefineList != null && matiereCoefDefineList.size()>0)
+				pmcListTmp = new ArrayList<PersonnelMatiereClasse>();
+			for(PersonnelMatiereClasse pmc:personnelMatiereClasseList) {
+				for(ClasseMatiere cm: matiereCoefDefineList) {
+					if(pmc.getMatiere().getId() == cm.getMatiere().getId()) {
+						pmcListTmp.add(pmc);
+					}
+				}
+			}
+		}
+		return pmcListTmp;
+	}
 
 	public List<PersonnelMatiereClasse> findListByClasse(long annee, long classe) {
 		List<PersonnelMatiereClasse> list = new ArrayList<PersonnelMatiereClasse>();

@@ -63,6 +63,22 @@ public class NotesResource {
     }
     
     @GET
+    @Path("/list-notes-eleve-by-periode/{matricule}/{classe}/{annee}/{periode}")
+    @Operation(description = "Obtenir les notes d'un eleve d une classe par periode ", summary = "")
+	@Tag(name = "Notes")
+    public Response getNotesByClasseAndPeriode(@PathParam("matricule") String matricule, @PathParam("classe") Long classe,@PathParam("annee") Long annee, @PathParam("periode") Long periode) {
+    	return  Response.ok(noteService.getListNotesByEleveAndClasseAndAnneeAndPeriode(matricule,classe, annee, periode)).build();
+    }
+    
+    @GET
+    @Path("/list-notes-eleve-by-periode/{matricule}/{classe}/{annee}/{periode}/{matiere}")
+    @Operation(description = "Obtenir les notes d'un eleve d une classe par periode ", summary = "")
+	@Tag(name = "Notes")
+    public Response getNotesByClasseAndPeriode(@PathParam("matricule") String matricule, @PathParam("classe") Long classe,@PathParam("annee") Long annee, @PathParam("periode") Long periode,  @PathParam("matiere") Long matiere) {
+    	return  Response.ok(noteService.getListNotesByEleveAndClasseAndAnneeAndPeriodeAndMatiere(matricule,classe, annee, periode, matiere)).build();
+    }
+    
+    @GET
     @Path("/list-classe-matiere-notes/{classe}/{matiere}/{annee}/{periode}")
     @Operation(description = "Obtenir les notes des eleves d une classe par periode ", summary = "")
 	@Tag(name = "Notes")

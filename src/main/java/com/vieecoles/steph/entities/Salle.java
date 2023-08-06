@@ -20,6 +20,9 @@ public class Salle extends PanacheEntityBase {
 	private String code;
 	@Column(name = "sallelibelle")
 	private String libelle;
+	@ManyToOne
+	@JoinColumn(name = "ecole_id")
+	private Ecole ecole;
 
 //	@ManyToOne
 //	@JoinColumn(name = "niveau_tage_niveau_etageid")

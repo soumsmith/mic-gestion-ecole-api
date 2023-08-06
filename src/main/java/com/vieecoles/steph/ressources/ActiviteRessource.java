@@ -42,6 +42,13 @@ public class ActiviteRessource {
 			@QueryParam("jour") int jourId) {
 		return Response.ok().entity(activiteService.getListByClasseAndJour(classeId, jourId)).build();
 	}
+	
+	@GET
+	@Path("/list-by-classe")
+	@Tag(name = "Activite")
+	public Response getByClasse(@QueryParam("classe") long classeId) {
+		return Response.ok().entity(activiteService.getListByClasse(classeId)).build();
+	}
 
 	@GET
 	@Path("/is-plage-horaire-valid")

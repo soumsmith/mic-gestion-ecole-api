@@ -1,5 +1,9 @@
 package com.vieecoles.steph.ressources;
 
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.inject.Inject;
 import javax.print.attribute.standard.MediaSize.NA;
 import javax.ws.rs.GET;
@@ -12,14 +16,17 @@ import javax.ws.rs.core.Response;
 
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
+import com.vieecoles.steph.entities.Personnel;
 import com.vieecoles.steph.services.PersonnelService;
 
 @Path("/personnels")
 public class PersonnelResource {
-	
+
 	@Inject
 	PersonnelService personnelService;
-	
+
+	Logger logger = Logger.getLogger(this.getClass().getName());
+
 	@GET
 	@Path("/get-by-id/{id}")
 	@Tag(name = "Personnel")
@@ -34,27 +41,43 @@ public class PersonnelResource {
 	public Response list() {
 		return Response.ok().entity(personnelService.getList()).build();
 	}
-	
+
 	@GET
 	@Path("/get-by-fonction")
 	@Tag(name = "Personnel")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response listProf(@QueryParam("fonction") int fonctionId, @QueryParam("ecole") Long ecoleId) {
-		return Response.ok().entity(personnelService.getListByFonction(fonctionId, ecoleId)).build();
+		List<Personnel> personnels = null;
+		try {
+			logger.log(Level.INFO, "Param - listProf ::: {0} ", fonctionId+" "+ecoleId);
+			personnels = personnelService.getListByFonction(fonctionId, ecoleId);
+			logger.log(Level.INFO, "Param - listProf size ::: {0} ", personnels.size());
+		} catch (RuntimeException e) {
+			logger.log(Level.WARNING, "Error - listProf :::{0} ", e);
+		}
+		return Response.ok().entity(personnels).build();
 	}
-	
+
 	@GET
 	@Path("/get-by-fonction-and-classe")
 	@Tag(name = "Personnel")
 	public Response listProfByClasse(@QueryParam("fonction") Long fonctionId, Long classeId) {
 		return Response.ok().entity(personnelService.getListByFonctionAndClasse(fonctionId, classeId)).build();
 	}
-	
+
 	@GET
 	@Path("/get-by-user-id/{id}")
 	@Tag(name = "Personnel")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getByUserId(@PathParam("id") Long userId) {
 		return Response.ok().entity(personnelService.getByUserId(userId)).build();
+	}
+	
+	@GET
+	@Path("/get-by-user-ecole/{userId}/{ecoleId}")
+	@Tag(name = "Personnel")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getByUserAndEcole(@PathParam("userId") Long userId, @PathParam("ecoleId") Long ecoleId) {
+		return Response.ok().entity(personnelService.getByUserAndEcole(userId, ecoleId)).build();
 	}
 }
