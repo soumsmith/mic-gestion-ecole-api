@@ -56,7 +56,7 @@ public class ActiviteService implements PanacheRepositoryBase<Activite, Integer>
 	
 	public List<Activite> getListByClasse(long classeId) {
 		//logger.info(String.format("Annee %s - classe %s - jour %s", anneeId, classeId, jourId));
-		return Activite.find("classe.id = ?1 and statut = ?3", classeId, Constants.ACTIF)
+		return Activite.find("classe.id = ?1 and statut = ?2", classeId, Constants.ACTIF)
 				.list();
 	}
 
