@@ -19,12 +19,17 @@ public class BrancheService implements PanacheRepositoryBase<Branche, Long>{
 	   public  Branche findById(Long id){
 	       return Branche.findById(id);
 	   }
-	   
+
 	   public  List<Branche> findByNiveauEnseignementViaEcole(Long id){
 		   Ecole ecole = Ecole.findById(id);
 		   System.out.println(ecole);
 	       return Branche.find("niveauEnseignement.id =?1 order by libelle desc", ecole.getNiveauEnseignement().getId()).list();
 	   }
+
+	public  List<Branche> findByNiveauEnseignement(Long id){
+
+		return Branche.find("niveauEnseignement.id =?1",id).list();
+	}
 
 	   public Response create(Branche branche) {
 	       branche.persist();

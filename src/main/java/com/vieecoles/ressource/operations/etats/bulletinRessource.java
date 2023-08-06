@@ -144,8 +144,12 @@ public class bulletinRessource {
         myEcole=sousceecoleService.getInffosEcoleByID(idEcole);
         //System.out.println("myEcole "+myEcole.toString());
         myIns = inscriptionService.checkInscrit(idEcole,matricule,1L);
-        // System.out.println("Inscription "+ myIns.toString());
-        byte[] imagebytes = myIns.getPhoto_eleve() ;
+        System.out.println("Inscription "+ myIns.toString());
+            byte[] imagebytes = new byte[0];
+            if(myIns!=null){
+                 imagebytes = myIns.getPhoto_eleve() ;
+            }
+
         byte[] imagebytes2 = myEcole.getLogoBlob() ;
         byte[] imagebytes3 = mpara.getImage() ;
         byte[] imagebytes4 = myEcole.getFiligramme() ;
@@ -212,6 +216,7 @@ public class bulletinRessource {
         String is_class_1er_trim = calculIsClassTrimesPasse(matricule,libelleAnnee,"Premier Trimestre",idEcole) ;
         String is_class_2e_trim = calculIsClassTrimesPasse(matricule,libelleAnnee,"Deuxième Trimestre",idEcole) ;
         String is_class_3e_trim = calculIsClassTrimesPasse(matricule,libelleAnnee,"Troisième Trimestre",idEcole) ;
+
         int TrangFr = 0;
 
 

@@ -23,7 +23,7 @@ public class BrancheResource {
 	public Response list() {
 		return Response.ok().entity(brancheService.getList()).build();
 	}
-	
+
 	@GET
 	@Path("/get-by-niveau-enseignement")
 	@Operation(description = "Obtenir la liste des branches", summary = "")
@@ -31,4 +31,13 @@ public class BrancheResource {
 	public Response getByNiveauEnseignement(@QueryParam("ecole") Long ecoleId) {
 		return Response.ok().entity(brancheService.findByNiveauEnseignementViaEcole(ecoleId)).build();
 	}
+
+	@GET
+	@Path("/get-by-niveau-enseignement-only")
+	@Operation(description = "Obtenir la liste des branches", summary = "")
+	@Tag(name = "Branche")
+	public Response getByNiveauEnseignementOnly(@QueryParam("id") Long id) {
+		return Response.ok().entity(brancheService.findByNiveauEnseignement(id)).build();
+	}
+
 }
