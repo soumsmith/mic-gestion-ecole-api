@@ -69,10 +69,10 @@ public class eleveRessource {
 
 
     @POST
-
-    @Path("/{idEcole}/{idAnneeScolaire}/{statutEleve}/{typeOperation}/{idBranche}")
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_JSON)
+
+    @Path("/{idEcole}/{idAnneeScolaire}/{statutEleve}/{typeOperation}/{idBranche}")
 
     public String  CreerNewEleve(EleveDto eleveDto ,@PathParam("idEcole") Long idEcole , @PathParam("idAnneeScolaire") Long idAnneeScolaire,@PathParam("statutEleve") String statutEleve ,
                                 @PathParam("typeOperation") String typeOperation , @PathParam("idBranche") Long idBranche  ) {
