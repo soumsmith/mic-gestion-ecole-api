@@ -80,4 +80,28 @@ public class PersonnelResource {
 	public Response getByUserAndEcole(@PathParam("userId") Long userId, @PathParam("ecoleId") Long ecoleId) {
 		return Response.ok().entity(personnelService.getByUserAndEcole(userId, ecoleId)).build();
 	}
+	
+	@GET
+	@Path("/get-by-ecole/{ecoleId}")
+	@Tag(name = "Personnel")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getByEcole(@PathParam("ecoleId") Long ecoleId) {
+		return Response.ok().entity(personnelService.getByEcole(ecoleId)).build();
+	}
+	
+	@GET
+	@Path("/count-by-ecole/{ecoleId}")
+	@Tag(name = "Personnel")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response countByEcole(@PathParam("ecoleId") Long ecoleId) {
+		return Response.ok().entity(personnelService.countByEcole(ecoleId)).build();
+	}
+	
+	@GET
+	@Path("/count-by-ecole-genre/{ecoleId}")
+	@Tag(name = "Personnel")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response countByEcoleAndGenre(@PathParam("ecoleId") Long ecoleId) {
+		return Response.ok().entity(personnelService.countByEcole(ecoleId)).build();
+	}
 }

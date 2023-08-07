@@ -71,5 +71,25 @@ public class PersonnelService {
 		}
 		return null;
 	}
+	
+	public List<Personnel> getByEcole(Long ecoleId) {
+		logger.info("find by ecole id ::: "+ecoleId);
+			try {
+				return Personnel.find("ecole.id = ?1", ecoleId).list();
+			}catch (RuntimeException e) {
+				logger.log(Level.WARNING, "Erreur getByUserId {0}", e.getMessage());
+			}
+		return null;
+	}
+	
+	public Long countByEcole(Long ecoleId) {
+		logger.info("find by ecole id ::: "+ecoleId);
+			try {
+				return Personnel.find("ecole.id = ?1", ecoleId).count();
+			}catch (RuntimeException e) {
+				logger.log(Level.WARNING, "Erreur getByUserId {0}", e.getMessage());
+			}
+		return (long) 0;
+	}
 
 }

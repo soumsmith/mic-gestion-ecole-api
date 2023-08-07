@@ -4,6 +4,13 @@ public class Constants {
 
 	public static final String ACTIF = "ACT";
 	public static final String INACTIF = "INA";
+	
+	public static final String VALIDEE = "VALIDEE";
+	public static final String AFFECTE = "AFFECTE";
+	public static final String NON_AFFECTE = "NON_AFFECTE";
+	
+	public static final String MASCULIN = "MASCULIN";
+	public static final String FEMININ = "FEMININ";
 
 	public static final String AUTOMATIQUE = "AUTO";
 	public static final String MANUEL = "MAN";

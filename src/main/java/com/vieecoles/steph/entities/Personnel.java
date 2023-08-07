@@ -4,7 +4,30 @@ import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Data;
 
 import javax.persistence.*;
-
+@NamedNativeQueries({
+    @NamedNativeQuery(
+            name = "Personnel.countbyEcoleAndGenre",
+            query = "SELECT * FROM personnel p "
+            		+ "LEFT JOIN sous_attent_personn ss on "
+            		+ "p.sous_attent_personn_sous_attent_personnid = ss.sous_attent_personnid "
+            		+ "WHERE p.ecole_ecoleid = :ecoleId and ss.sous_attent_personn_sexe = :sexeId"
+    ),
+    @NamedNativeQuery(
+            name = "Personnel.countbyEcoleAndGenreAndFonction",
+            query = "SELECT * FROM personnel p "
+            		+ "LEFT JOIN sous_attent_personn ss on "
+            		+ "p.sous_attent_personn_sous_attent_personnid = ss.sous_attent_personnid "
+            		+ "WHERE p.ecole_ecoleid = :ecoleId and ss.sous_attent_personn_sexe = :sexeId and p.fonction_fonctionid= :fonctionId"
+    ),
+    @NamedNativeQuery(
+            name = "Personnel.countbyEcoleAndGenreAndFonctionAndStatut",
+            query = "SELECT * FROM personnel p "
+            		+ " LEFT JOIN sous_attent_personn ss on "
+            		+ " p.sous_attent_personn_sous_attent_personnid = ss.sous_attent_personnid "
+            		+ " WHERE p.ecole_ecoleid = :ecoleId and ss.sous_attent_personn_sexe = :sexeId and p.fonction_fonctionid= :fonctionId "
+            		+ " and p.personnel_status_personnel_statusid = :statut"
+    )
+})
 @Entity
 @Table(name = "personnel")
 @Data

@@ -117,6 +117,16 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 		// logger.info(String.format("find by id :: %s", id));
 		return Seances.findById(id);
 	}
+	
+	public Long countSallesUtiliseInSeanceByEcoleAndDate(Long ecoleId, Date date) {
+		try {
+			return Seances.find("select distinct s.salle.id from Seances s where s.classe.ecole.id = ?1 and s.dateSeance =?2", ecoleId, date).count();
+		} catch (RuntimeException ex) {
+			logger.log(Level.WARNING, " Error getSallesByEcole {0}", ex);
+			return (long) 0;
+		}
+
+	}
 
 	@Transactional
 	public Response save(Seances seances) {

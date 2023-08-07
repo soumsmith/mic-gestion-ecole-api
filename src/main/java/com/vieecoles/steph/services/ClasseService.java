@@ -35,6 +35,16 @@ public class ClasseService implements PanacheRepositoryBase<Classe,Integer> {
 			return null ;
 		}
 	}
+	
+	public long countClassesByEcole(Long ecoleId) {
+		try {
+		//	logger.info("........ in list <<<<>>>>>");
+			return Classe.find("ecole.id =?1", ecoleId).count();		
+		}catch(Exception e) {
+			e.printStackTrace();
+			return 0 ;
+		}
+	}
 
 	public List<Classe> getListClasseAllFields() {
 		try {

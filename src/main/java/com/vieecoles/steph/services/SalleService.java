@@ -14,6 +14,7 @@ import javax.ws.rs.core.Response;
 import java.net.URI;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -42,6 +43,18 @@ public class SalleService implements PanacheRepositoryBase<Salle, Long> {
 
 		return salles;
 	}
+	
+	public Long countSallesByEcole(Long ecoleId) {
+		try {
+			return Salle.find("ecole.id = ?1", ecoleId).count();
+		} catch (RuntimeException ex) {
+			logger.log(Level.WARNING, " Error getSallesByEcole {0}", ex);
+			return (long) 0;
+		}
+
+	}
+	
+	
 
 	public List<Salle> getWithSallesDisponibles(long anneeId, long classeId, int jourId, String heureDeb,
 			String heureFin) {

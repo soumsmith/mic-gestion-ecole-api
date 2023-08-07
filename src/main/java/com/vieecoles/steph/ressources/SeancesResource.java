@@ -117,6 +117,20 @@ public class SeancesResource {
 		System.out.println(gson.toJson(seances));
         return Response.ok().entity(seances).build();
     }
+	
+	@GET
+    @Path("/count-salles-used")
+    @Tag(name = "Seances")
+	@Consumes(MediaType.TEXT_PLAIN)
+    public Response countSallesUtiliseInSeanceByEcoleAndDate(@QueryParam("date") String date, @QueryParam("ecole") long ecoleId) {
+		LocalDate ld = DateUtils.getDateWithString(date);
+		Date ourDate = DateUtils.asDate(ld);
+		System.out.println(ourDate);
+		Long seances = seanceService.countSallesUtiliseInSeanceByEcoleAndDate(ecoleId, ourDate);
+		Gson gson = new Gson();
+		System.out.println(gson.toJson(seances));
+        return Response.ok().entity(seances).build();
+    }
 
 	@POST
     @Path("/saveAndDisplay")
