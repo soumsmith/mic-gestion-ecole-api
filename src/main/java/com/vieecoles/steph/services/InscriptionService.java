@@ -1,5 +1,6 @@
 package com.vieecoles.steph.services;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,10 +65,67 @@ public class InscriptionService implements PanacheRepositoryBase<Inscription, In
 				.count();
 	}
 	
+	// nombre de nouveaux élèves dans l 'ecole
 	public long countNewEleve(Long ecoleId) {
         Query query = em.createNamedQuery("Inscription.getNewEleveCount");
         query.setParameter("ecoleId", ecoleId);
-//        query.setParameter("statutAffecte", query)
+        try{
+        	System.out.println(query.getSingleResult());
+        	BigInteger count = (BigInteger) query.getSingleResult();
+            return Long.parseLong(count.toString());
+        }catch(NoResultException ex){
+            ex.getMessage();
+            return 0;
+        }
+    }
+	// Nombre des anciens élèves dans l'ecole
+	public long countOldEleve(Long ecoleId) {
+        Query query = em.createNamedQuery("Inscription.getOldEleveCount");
+        query.setParameter("ecoleId", ecoleId);
+        try{
+        	System.out.println(query.getSingleResult());
+        	BigInteger count = (BigInteger) query.getSingleResult();
+            return Long.parseLong(count.toString());
+        }catch(NoResultException ex){
+            ex.getMessage();
+            return 0;
+        }
+    }
+	
+	public long getNewEleveAffCountBySexe(Long ecoleId, String sexe, String statut) {
+        Query query = em.createNamedQuery("Inscription.getNewEleveCountBySexeAndAffecte");
+        query.setParameter("ecoleId", ecoleId);
+        query.setParameter("sexe", sexe);
+        query.setParameter("statutAffecte", statut);
+        try{
+        	System.out.println(query.getSingleResult());
+        	BigInteger count = (BigInteger) query.getSingleResult();
+            return Long.parseLong(count.toString());
+        }catch(NoResultException ex){
+            ex.getMessage();
+            return 0;
+        }
+    }
+	
+	
+	public BigDecimal getAvgEffectifbyClasse(Long ecoleId, Long anneeId) {
+        Query query = em.createNamedQuery("Inscription.getAvgEffectifbyClasse");
+        query.setParameter("ecoleId", ecoleId);
+        query.setParameter("anneeId", anneeId);
+        try{
+        	BigDecimal count = (BigDecimal) query.getSingleResult();
+            return count;
+        }catch(NoResultException ex){
+            ex.getMessage();
+            return BigDecimal.ZERO;
+        }
+    }
+	
+	public long getOldEleveAffCountBySexe(Long ecoleId, String sexe, String statut) {
+        Query query = em.createNamedQuery("Inscription.getOldEleveCountBySexeAndAffecte");
+        query.setParameter("ecoleId", ecoleId);
+        query.setParameter("sexe", sexe);
+        query.setParameter("statutAffecte", statut);
         try{
         	System.out.println(query.getSingleResult());
         	BigInteger count = (BigInteger) query.getSingleResult();

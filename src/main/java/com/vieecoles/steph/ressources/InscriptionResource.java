@@ -4,8 +4,6 @@ import com.vieecoles.steph.entities.Inscription;
 import com.vieecoles.steph.services.InscriptionService;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
-import org.jboss.resteasy.annotations.Query;
-
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.GET;

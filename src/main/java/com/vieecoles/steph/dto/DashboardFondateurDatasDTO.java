@@ -1,5 +1,7 @@
 package com.vieecoles.steph.dto;
 
+import java.math.BigDecimal;
+
 import lombok.Data;
 
 @Data
@@ -29,7 +31,7 @@ public class DashboardFondateurDatasDTO {
 	private long nombreEleveAncNonAffFilles;
 	private long nombreEleveAncNonAffGarcons;
 
-	private long effectifMoyenClasse;
+	private BigDecimal effectifMoyenClasse;
 
 	private long nombreClasses;
 	private long sallesDispo;

@@ -12,6 +12,8 @@ import javax.persistence.Table;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 
 @NamedNativeQueries({
@@ -28,35 +30,35 @@ import lombok.EqualsAndHashCode;
             		+ "SELECT COUNT(ins.eleve_eleveid) as nbreOcc, ins.eleve_eleveid  FROM inscriptions ins left join eleve elv on ins.eleve_eleveid = elv.eleveid "
             		+ "  where ins.ecole_ecoleid = :ecoleId and  elv.eleve_sexe = :sexe"
             		+ "GROUP BY ins.eleve_eleveid, ins.eleve_eleveid) c "
-            		+ "where c.nbreOcc = 1)"
+            		+ "where c.nbreOcc = 1"
     ),@NamedNativeQuery(
             name = "Inscription.getNewEleveCountBySexeAndAffecte",
             query = "select count(c.nbreOcc) from ( "
             		+ " SELECT COUNT(ins.eleve_eleveid) as nbreOcc, ins.eleve_eleveid  FROM inscriptions ins left join eleve elv on ins.eleve_eleveid = elv.eleveid "
             		+ " where ins.ecole_ecoleid = :ecoleId and  elv.eleve_sexe = :sexe AND ins.inscriptions_statut_eleve = :statutAffecte"
             		+ " GROUP BY ins.eleve_eleveid, ins.eleve_eleveid) c "
-            		+ " where c.nbreOcc = 1)"
+            		+ " where c.nbreOcc = 1"
     ),@NamedNativeQuery(
             name = "Inscription.getOldEleveCount",
             query = "select count(c.nbreOcc) from ( "
             		+ "SELECT COUNT(ins.eleve_eleveid) as nbreOcc, ins.eleve_eleveid  FROM inscriptions ins"
             		+ "  where ins.ecole_ecoleid = :ecoleId "
             		+ "GROUP BY ins.eleve_eleveid, ins.eleve_eleveid) c "
-            		+ "where c.nbreOcc > 1)"
+            		+ "where c.nbreOcc > 1"
     ),@NamedNativeQuery(
             name = "Inscription.getOldEleveCountBySexe",
             query = "select count(c.nbreOcc) from ( "
             		+ "SELECT COUNT(ins.eleve_eleveid) as nbreOcc, ins.eleve_eleveid  FROM inscriptions ins left join eleve elv on ins.eleve_eleveid = elv.eleveid "
             		+ "  where ins.ecole_ecoleid = :ecoleId and  elv.eleve_sexe = :sexe"
             		+ "GROUP BY ins.eleve_eleveid, ins.eleve_eleveid) c "
-            		+ "where c.nbreOcc > 1)"
+            		+ "where c.nbreOcc > 1"
     ),@NamedNativeQuery(
             name = "Inscription.getOldEleveCountBySexeAndAffecte",
             query = "select count(c.nbreOcc) from ( "
             		+ " SELECT COUNT(ins.eleve_eleveid) as nbreOcc, ins.eleve_eleveid  FROM inscriptions ins left join eleve elv on ins.eleve_eleveid = elv.eleveid "
             		+ " where ins.ecole_ecoleid = :ecoleId and  elv.eleve_sexe = :sexe AND ins.inscriptions_statut_eleve = :statutAffecte"
             		+ " GROUP BY ins.eleve_eleveid, ins.eleve_eleveid) c "
-            		+ " where c.nbreOcc > 1)"
+            		+ " where c.nbreOcc > 1"
     ),@NamedNativeQuery(
             name = "Inscription.getAvgEffectifbyClasse",
             query = "select AVG(c.nbreEleve) FROM "
@@ -69,8 +71,8 @@ import lombok.EqualsAndHashCode;
 })
 @Entity
 @Table(name = "inscriptions")
-@Data
-@EqualsAndHashCode(callSuper = false)
+@Getter
+@Setter
 public class Inscription extends PanacheEntityBase{
 
 	@Id
