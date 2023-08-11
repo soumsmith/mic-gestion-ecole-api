@@ -27,11 +27,11 @@ import com.vieecoles.steph.services.EcoleHasMatiereService;
 
 @Path("/matiere-ecole")
 @Tag(name = "Matiere Ecole")
-public class EcoleHasMatiereResources  {
+public class EcoleHasMatiereResources {
 	@Inject
 	EcoleHasMatiereService matiereEcoleService;
 
-	//Logger logger = Logger.getLogger(MatiereResource.class.getName());
+	// Logger logger = Logger.getLogger(MatiereResource.class.getName());
 
 	/*
 	 * A MODIFIER matiereDto
@@ -42,23 +42,23 @@ public class EcoleHasMatiereResources  {
 	public Response list() {
 		List<EcoleHasMatiere> matieres = matiereEcoleService.getList();
 		List<EcoleMatiereDto> ecoleMatieresDto = new ArrayList<EcoleMatiereDto>();
-		for(EcoleHasMatiere m: matieres) {
+		for (EcoleHasMatiere m : matieres) {
 			ecoleMatieresDto.add(matiereEcoleService.buildEntityToDto(m));
 		}
-		
+
 		return Response.ok().entity(ecoleMatieresDto).build();
 	}
-	
+
 	@GET
 	@Path("/list-by-ecole/{ecole}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response listByEcole(@PathParam("ecole") Long ecoleId) {
 		List<EcoleHasMatiere> matieres = matiereEcoleService.getListByEcole(ecoleId);
 		List<EcoleMatiereDto> ecoleMatieresDto = new ArrayList<EcoleMatiereDto>();
-		for(EcoleHasMatiere m: matieres) {
+		for (EcoleHasMatiere m : matieres) {
 			ecoleMatieresDto.add(matiereEcoleService.buildEntityToDto(m));
 		}
-		
+
 		return Response.ok().entity(ecoleMatieresDto).build();
 	}
 
@@ -68,15 +68,18 @@ public class EcoleHasMatiereResources  {
 	public Response getById(@QueryParam("id") long id) {
 		return Response.ok().entity(matiereEcoleService.findById(id)).build();
 	}
-	
-	// Quand le niveau d enseignement sera pris en compte dans les variables  d env alors remplacer le param ecole par niveau enseign
+
+	// Quand le niveau d enseignement sera pris en compte dans les variables d env
+	// alors remplacer le param ecole par niveau enseign
 	@GET
 	@Path("/get-by-niveau-enseignement")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getByNiveau(@QueryParam("id") Long ecoleId) {
 		Ecole ecole = Ecole.findById(ecoleId);
-		
-		return Response.ok().entity(matiereEcoleService.getByNiveauEnseignement(ecoleId, ecole.getNiveauEnseignement().getId())).build();
+
+		return Response.ok()
+				.entity(matiereEcoleService.getByNiveauEnseignement(ecoleId, ecole.getNiveauEnseignement().getId()))
+				.build();
 	}
 
 	@POST
@@ -100,7 +103,7 @@ public class EcoleHasMatiereResources  {
 
 	public Response create(EcoleHasMatiere matiereEcole) {
 		try {
-		//	logger.info("Saving ...");
+			// logger.info("Saving ...");
 			matiereEcoleService.create(matiereEcole);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -125,21 +128,32 @@ public class EcoleHasMatiereResources  {
 
 	}
 
-	   @POST
-	    @Path("/saveAndDisplay")
-	    @Consumes(MediaType.APPLICATION_JSON)
-	    @Produces(MediaType.APPLICATION_JSON)
+	@POST
+	@Path("/saveAndDisplay")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 
-	    public Response createAndDisplay(EcoleHasMatiere matiere) {
-	    	try {
-	    	//	logger.info("Saving and display ...");
-	    		matiereEcoleService.create(matiere);
-	    		EcoleHasMatiere entity = matiereEcoleService.findById(matiere.getId());
-	    		return Response.ok().entity(matiereEcoleService.buildEntityToDto(entity)).build();
-	    		
-	    	} catch(Exception e) {
-	    		 e.printStackTrace();
-	    		 return Response.serverError().entity(new Evaluation()).build();
-	    	 }
-	    }
+	public Response createAndDisplay(EcoleHasMatiere matiere) {
+		try {
+			// logger.info("Saving and display ...");
+			matiereEcoleService.create(matiere);
+			EcoleHasMatiere entity = matiereEcoleService.findById(matiere.getId());
+			return Response.ok().entity(matiereEcoleService.buildEntityToDto(entity)).build();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Response.serverError().entity(new Evaluation()).build();
+		}
+	}
+	
+	@GET
+	@Path("/generate-by-ecole")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response generateByEcole(@QueryParam("id") Long ecoleId) {
+		
+		Ecole ecole = Ecole.findById(ecoleId);
+		
+		return Response.ok().entity(matiereEcoleService.generateMatieres(ecole)).build();
+	}
+
 }

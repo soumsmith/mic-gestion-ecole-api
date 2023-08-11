@@ -123,6 +123,7 @@ public class SeancesResource {
     @Tag(name = "Seances")
 	@Consumes(MediaType.TEXT_PLAIN)
     public Response countSallesUtiliseInSeanceByEcoleAndDate(@QueryParam("date") String date, @QueryParam("ecole") long ecoleId) {
+		//Pattern date is yyyy-mm-dd. ex: 2023-08-10
 		LocalDate ld = DateUtils.getDateWithString(date);
 		Date ourDate = DateUtils.asDate(ld);
 		System.out.println(ourDate);
