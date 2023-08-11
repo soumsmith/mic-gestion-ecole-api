@@ -21,6 +21,13 @@ public class SalleResource {
     public Response list() {
         return Response.ok().entity(salleService.list()).build();
     }
+	
+	@GET
+    @Path("/list-by-ecole")
+    @Tag(name = "Salle")
+    public Response listByEcole(@QueryParam("ecole") Long ecoleId) {
+        return Response.ok().entity(salleService.getSallesByEcole(ecoleId)).build();
+    }
 
 	@POST
     @Path("/saveAndDisplay")

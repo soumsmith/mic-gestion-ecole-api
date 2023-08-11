@@ -86,7 +86,13 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 
 	public List<Seances> getListByStatut(String anneeId, String statut, long ecoleId) {
 		// logger.info(String.format("Annee %s - statut %s", anneeId, statut));
-		return Seances.find("statut = ?1 and classe.ecole.id=?2 and annee =?3", statut, ecoleId, anneeId).list();
+		try {
+			return Seances.find("statut = ?1 and classe.ecole.id=?2 and annee =?3", statut, ecoleId, anneeId).list();
+			
+		}catch(RuntimeException r) {
+			r.printStackTrace();
+			return null;
+		}
 	}
 
 	public List<Seances> getDistinctListByDate(Date date) {
@@ -156,6 +162,8 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 			seances.getEvaluation().setUser(seances.getUser());
 			logger.info(gson.toJson(seances.getEvaluation()));
 			evaluationService.create(seances.getEvaluation());
+		}else {
+			seances.setEvaluation(null);
 		}
 		 seances.persist();
 		return Response.created(URI.create("/seances/" + seances.getId())).build();

@@ -70,10 +70,12 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 
 	public PersonnelMatiereClasse findProfesseurByMatiereAndClasse(Long annee, Long classe, Long matiere) {
 		PersonnelMatiereClasse pmc = null;
+		logger.info(String.format("Annee: %s  Classe: %s Matiere: %s", annee, classe, matiere));
 		try {
 			pmc = PersonnelMatiereClasse
 					.find("classe.id = ?1 and annee.id= ?2 and matiere.id = ?3", classe, annee, matiere).singleResult();
 		} catch (RuntimeException e) {
+			e.printStackTrace();
 			logger.warning("Erreur de type : " + e.getClass().getName());
 		}
 		return pmc;
