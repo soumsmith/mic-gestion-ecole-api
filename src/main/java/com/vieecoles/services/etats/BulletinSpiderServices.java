@@ -75,7 +75,7 @@ public class BulletinSpiderServices {
             if(TrangFr1 !=null)
                 TrangFr = TrangFr1.intValue() ;
 
-
+           TmoyFr = calculTMoyFran(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,libelleTrimestre,idEcole);
             TrangEMR =calculRangEMR(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,libelleTrimestre,idEcole) ;
             System.out.println("TrangEMR "+TrangEMR);
             TmoyCoefEMR = calculMoycoefEMR(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,libelleTrimestre,idEcole);
@@ -100,7 +100,7 @@ public class BulletinSpiderServices {
 
             if(l==null) {
                 InfosPersoBulletins k = new InfosPersoBulletins();
-
+                k.setTmoyFr(TmoyCoefFr==null? null:TmoyCoefFr/TcoefFr);
                 k.setTrangFr(TrangFr);
                 k.setTrangEMR(TrangEMR);
                 k.setTmoyCoefEMR(TmoyCoefEMR);
@@ -130,6 +130,7 @@ public class BulletinSpiderServices {
                 mlist.add(k);
             } else {
                // System.out.println(l.toString());
+                l.setTmoyFr(TmoyCoefFr==null? null:TmoyCoefFr/TcoefFr);
                 l.setTrangFr(TrangFr);
                 l.setTrangEMR(TrangEMR);
                 l.setTmoyCoefEMR(TmoyCoefEMR);
@@ -164,7 +165,19 @@ public class BulletinSpiderServices {
         return  mlist ;
     }
 
-
+    public  Double calculTMoyFran(String matricule, String annee,String periode,Long idEcole){
+        try {
+            Double  moyTfr = (Double) em.createQuery("select SUM(d.moyenne) from DetailBulletin d join d.bulletin b where b.matricule=:matricule and b.libellePeriode=:periode and b.ecoleId=:idEcole and b.anneeLibelle=:annee  and d.matiereLibelle in ('COMPOSITION FRANCAISE','ORTHOGRAPHE ET GRAMMAIRE','EXPRESSION ORALE') ")
+                    .setParameter("matricule",matricule)
+                    .setParameter("annee",annee)
+                    .setParameter("periode",periode)
+                    .setParameter("idEcole",idEcole)
+                    .getSingleResult();
+            return  moyTfr ;
+        } catch (NoResultException e){
+            return 0D ;
+        }
+    }
 
     public  String getIdBulletin(String matricule, String annee,String periode,Long idEcole){
         try {

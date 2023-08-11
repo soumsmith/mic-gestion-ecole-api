@@ -11,11 +11,10 @@
 	<queryString>
 		<![CDATA[select *
 from  `ecoleviedbv2`.ve_details_infos_bulletins_spider
-where `ecoleviedbv2`.ve_details_infos_bulletins_spider.libelle_classe like  $P{classe} || '%' OR
-  `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule like  $P{matricule}  || '%'  and
-   `ecoleviedbv2`.ve_details_infos_bulletins_spider.id_ecole  like  $P{idEcole} || '%' and
-    `ecoleviedbv2`.ve_details_infos_bulletins_spider.annee_libelle  like  $P{libelleAnnee} || '%'
-    and  `ecoleviedbv2`.ve_details_infos_bulletins_spider.libelle_periode like  $P{libellePeriode} || '%']]>
+where `ecoleviedbv2`.ve_details_infos_bulletins_spider.libelle_classe = $P{classe}  and
+ `ecoleviedbv2`.ve_details_infos_bulletins_spider.id_ecole =  $P{idEcole}  and
+    `ecoleviedbv2`.ve_details_infos_bulletins_spider.annee_libelle  =  $P{libelleAnnee}
+    and  `ecoleviedbv2`.ve_details_infos_bulletins_spider.libelle_periode =  $P{libellePeriode}]]>
 	</queryString>
 	<field name="id_ecole" class="java.lang.Long">
 		<property name="com.jaspersoft.studio.field.name" value="id_ecole"/>

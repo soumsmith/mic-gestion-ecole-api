@@ -60,19 +60,7 @@ public class BulletinSpiderRessource {
 
     private static String UPLOAD_DIR = "/data/";
 
-    @GET
-    @Transactional
-    @Path("/spider-bulletin-infos/{idEcole}/{libellePeriode}/{libelleAnnee}/{libelleClasse}")
-    @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    public List<InfosPersoBulletins> getDtoRapportInformation(@PathParam("idEcole") Long idEcole , @PathParam("libellePeriode") String libellePeriode ,
-                                                   @PathParam("libelleAnnee") String libelleAnnee , @PathParam("libelleClasse") String libelleClasse) throws Exception, JRException {
-
-   return      bulletinSpider.bulletinInfos(idEcole ,libelleAnnee ,libellePeriode ,libelleClasse) ;
-
-
-
-        }
-    @GET
+     @GET
 
     @Path("/spider-bulletin/{idEcole}/{libellePeriode}/{libelleAnnee}/{libelleClasse}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
@@ -80,7 +68,7 @@ public class BulletinSpiderRessource {
                                                  @PathParam("libelleAnnee") String libelleAnnee , @PathParam("libelleClasse") String libelleClasse) throws Exception, JRException {
         InputStream myInpuStream ;
 
-        if(libellePeriode.equals("Troisième Trimestre"))
+       if(libellePeriode.equals("Troisième Trimestre"))
             myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderBulletin.jrxml");
         else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderNobel.jrxml");
 
@@ -105,19 +93,10 @@ public class BulletinSpiderRessource {
 
         HttpHeaders headers= new HttpHeaders();
         // headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Rapport"+myScole.getEcoleclibelle()+".docx");
-        headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Bulletin-spider.pdf");
+        headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Bulletin-spider"+libelleClasse+".pdf");
         return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.MULTIPART_FORM_DATA).body(data);
     }
 
-    @GET
-    @Path("/infos-spider-bulletin/{idEcole}/{libellePeriode}/{libelleAnnee}/{libelleClasse}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<InfosPersoBulletins>  getInfosSpider(@PathParam("idEcole") Long idEcole ,@PathParam("libellePeriode") String libellePeriode ,
-                                                 @PathParam("libelleAnnee") String libelleAnnee , @PathParam("libelleClasse") String libelleClasse) throws Exception, JRException {
-
-
-       return bulletinSpider.bulletinInfos(idEcole ,libelleAnnee ,libellePeriode ,libelleClasse) ;
-      }
     @GET
     @Path("/spider-bulletin-matricule/{idEcole}/{libellePeriode}/{libelleAnnee}/{libelleClasse}/{matricule}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
@@ -126,8 +105,8 @@ public class BulletinSpiderRessource {
         InputStream myInpuStream ;
 
         if(libellePeriode.equals("Troisième Trimestre"))
-            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderBulletin.jrxml");
-        else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderNobel.jrxml");
+            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinTroisiemeTrimetreSpider.jrxml");
+        else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinNobelSpider.jrxml");
 
 
         spiderBulletinDto detailsBull= new spiderBulletinDto() ;
@@ -139,14 +118,11 @@ public class BulletinSpiderRessource {
 
         Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecoleviedbv2", USER, PASS);
         JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
-       // compileReport.setProperty("REPORT_CONNECTION", "jdbc:mysql://127.0.0.1:3308/ecolevie_dbProd?user=root&password=root");
-     //   compileReport.setProperty("REPORT_CONNECTION", String.valueOf(connection));
 
 
         Map<String, Object> map = new HashMap<>();
          map.put("idEcole", idEcole);
-         map.put("classe", "");
-        map.put("libelleAnnee", libelleAnnee);
+        map.put("annee", libelleAnnee);
         map.put("libellePeriode", libellePeriode);
         map.put("matricule",matricule);
       JasperPrint report = JasperFillManager.fillReport(compileReport, map, connection);
@@ -155,7 +131,7 @@ public class BulletinSpiderRessource {
 
         HttpHeaders headers= new HttpHeaders();
         // headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Rapport"+myScole.getEcoleclibelle()+".docx");
-        headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Bulletin-spider-matricule.pdf");
+        headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Bulletin-spider-"+matricule+".pdf");
         return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.MULTIPART_FORM_DATA).body(data);
     }
 
