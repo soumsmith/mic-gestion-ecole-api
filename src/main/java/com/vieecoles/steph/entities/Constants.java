@@ -11,6 +11,9 @@ public class Constants {
 	
 	public static final String MASCULIN = "MASCULIN";
 	public static final String FEMININ = "FEMININ";
+	
+	public static final Integer VACATAIRE = 2;
+	public static final Integer PERMANENT = 1;
 
 	public static final String AUTOMATIQUE = "AUTO";
 	public static final String MANUEL = "MAN";
