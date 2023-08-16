@@ -10,6 +10,8 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -59,7 +61,14 @@ public class NotesResource {
     @Operation(description = "Obtenir les notes des eleves d une classe par periode ", summary = "")
 	@Tag(name = "Notes")
     public Response getNotesByClasseAndPeriode(@PathParam("classe") String classe,@PathParam("annee") String annee, @PathParam("periode") String periode) {
-    	return  Response.ok(noteService.moyennesAndNotesHandle(classe, annee, periode)).build()  ;
+    	List<MoyenneEleveDto> medtos = new ArrayList<MoyenneEleveDto>();
+    	
+    	try {
+    		medtos = noteService.moyennesAndNotesHandle(classe, annee, periode);
+    	}catch(RuntimeException r) {
+    		return Response.serverError().entity(r).build();
+    	}
+    	return  Response.ok(medtos).build()  ;
     }
     
     @GET

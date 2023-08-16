@@ -26,6 +26,7 @@ import com.vieecoles.steph.entities.DetailBulletin;
 import com.vieecoles.steph.entities.EcoleHasMatiere;
 import com.vieecoles.steph.entities.Inscription;
 import com.vieecoles.steph.entities.Matiere;
+import com.vieecoles.steph.entities.Message;
 import com.vieecoles.steph.entities.NoteBulletin;
 import com.vieecoles.steph.entities.Notes;
 import com.vieecoles.steph.entities.Periode;
@@ -55,7 +56,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 
 	@Inject
 	ClasseEleveMatiereService classeEleveMatiereService;
-	
+
 	@Inject
 	AbsenceService absenceService;
 
@@ -72,16 +73,17 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 	/*
 	 * Obténir la liste des bulletins d'un élève pour une année
 	 */
-	public List<Bulletin> getBulletinsEleveByAnnee(Long anneeId, String matricule, Long classeId){
+	public List<Bulletin> getBulletinsEleveByAnnee(Long anneeId, String matricule, Long classeId) {
 
 		List<Bulletin> myBulletins = new ArrayList<Bulletin>();
 
 		try {
-			myBulletins = Bulletin.find("anneeId = ?1 and matricule = ?2 and classeId = ?3 ", anneeId, matricule,classeId).list();
-			logger.info(myBulletins.size()+" bulletin(s) trouvé(s) l'élève de matricule "+matricule);
-		}catch(RuntimeException ex) {
-			if(ex.getClass().getName().equals(NoResultException.class.getName()))
-				logger.info("Aucun bulletin trouvé pour l'année pour l'élève de matricule "+matricule);
+			myBulletins = Bulletin
+					.find("anneeId = ?1 and matricule = ?2 and classeId = ?3 ", anneeId, matricule, classeId).list();
+			logger.info(myBulletins.size() + " bulletin(s) trouvé(s) l'élève de matricule " + matricule);
+		} catch (RuntimeException ex) {
+			if (ex.getClass().getName().equals(NoResultException.class.getName()))
+				logger.info("Aucun bulletin trouvé pour l'année pour l'élève de matricule " + matricule);
 			else
 				ex.printStackTrace();
 		}
@@ -151,9 +153,57 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 	}
 
 	@Transactional
+	public void removeAllBulletinsByClasseProcess(String classe, String annee, String periode) {
+
+		List<Bulletin> bulletins = new ArrayList<Bulletin>();
+		Long bulletinsArchives = 0L;
+		try {
+
+			bulletins = Bulletin.find("classeId = ?1 and anneeId= ?2 and periodeId = ?3 and statut =?4",
+					Long.parseLong(classe), Long.parseLong(annee), Long.parseLong(periode), Constants.MODIFIABLE)
+					.list();
+			for (Bulletin bulletin : bulletins) {
+				List<DetailBulletin> details = DetailBulletin.find("bulletin.id = ?1", bulletin.getId()).list();
+				for (DetailBulletin detail : details) {
+					List<NoteBulletin> notesBulletin = NoteBulletin.find("detailBulletin.id", detail.getId()).list();
+					for (NoteBulletin note : notesBulletin) {
+						NoteBulletin.delete("id", note.getId());
+					}
+					DetailBulletin.delete("id", detail.getId());
+					logger.info((notesBulletin != null ? notesBulletin.size() : 0) + " Notes de bulletins supprimées");
+				}
+				Bulletin.delete("id", bulletin.getId());
+				logger.info((details != null ? details.size() : 0) + " details de bulletins supprimés");
+			}
+			logger.info((bulletins != null ? bulletins.size() : 0) + " bulletins supprimés");
+
+		} catch (RuntimeException e) {
+			if (e.getClass() == NoResultException.class) {
+				logger.info("Aucun Bulletin à supprimer trouvé");
+				bulletinsArchives = Bulletin.find("classeId = ?1 and anneeId= ?2 and periodeId = ?3 and statut =?4",
+						Long.parseLong(classe), Long.parseLong(annee), Long.parseLong(periode), Constants.ARCHIVE)
+						.count();
+				if (bulletinsArchives == 0L) {
+					throw new RuntimeException(String
+							.format("Les bulletins sont archivés, aucune modification possible!", e.getMessage()));
+				}
+			} else
+				throw new RuntimeException(
+						String.format("Erreur dans le process de suppression des bulletins [%s]", e.getMessage()));
+		}
+
+	}
+
+	@Transactional
 	public int handleSave(String classe, String annee, String periode) {
 		logger.info(String.format("classe %s  annee %s  periode  %s", classe, annee, periode));
-		List<MoyenneEleveDto> moyenneParEleve = noteService.moyennesAndNotesHandle(classe, annee, periode);
+		List<MoyenneEleveDto> moyenneParEleve = new ArrayList<MoyenneEleveDto>();
+		try {
+			moyenneParEleve = noteService.moyennesAndNotesHandle(classe, annee, periode);
+		} catch (RuntimeException r) {
+			throw r;
+		}
+//		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 		Bulletin bulletin;
 		List<NoteBulletin> notesBulletin;
 		NoteBulletin noteBulletin;
@@ -161,11 +211,15 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 		List<String> bulletinIdList = new ArrayList<String>();
 		Integer countNonClasses = 0;
 
-		logger.info(String.format("Nombre d'élèves concerné %s ", moyenneParEleve.size()));
-		
-		// Pour les prochaine versions nous allons avant tout opération vider les enregistrements des bulletins, des détails bulletins et des notes bulletins.
-		// Pour éviter que si une matiere n existe plus pour une classe, il ne puisse pas avoir des enregistrement caduque dans la base de données.
+		List<Message> messages = new ArrayList<Message>();
 
+		logger.info(String.format("Nombre d'élèves concerné %s ", moyenneParEleve.size()));
+
+		// Nous allons avant toute opération vider les enregistrements des bulletins,
+		// des détails bulletins et des notes bulletins.
+		// Pour éviter que si une matiere n existe plus pour une classe, il ne puisse
+		// pas avoir des enregistrement caduque dans la base de données.
+		removeAllBulletinsByClasseProcess(classe, annee, periode);
 		for (MoyenneEleveDto me : moyenneParEleve) {
 //			 logger.info(g.toJson(me));
 			logger.info(String.format("%s %s  %s  %s ", me.getClasse().getEcole().getId(), me.getClasse().getLibelle(),
@@ -182,7 +236,6 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 
 			bulletin = new Bulletin();
 			bulletin = convert(me);
-			// Paramètres de la variable de session
 			bulletin.setAnneeId(Long.parseLong(annee));
 			AnneeScolaire anDb = AnneeScolaire.findById(Long.parseLong(annee));
 			Periode periodeDb = Periode.findById(Long.parseLong(periode));
@@ -200,7 +253,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 			}
 			// Ajout de l'éducateur
 			PersonnelMatiereClasse educ = personnelMatiereClasseService
-					.getPersonnelByClasseAndAnneeAndFonction(Long.parseLong(classe),Long.parseLong(annee) , 2);
+					.getPersonnelByClasseAndAnneeAndFonction(Long.parseLong(classe), Long.parseLong(annee), 2);
 			if (educ != null) {
 				bulletin.setCodeEducateur(educ.getPersonnel().getCode());
 				bulletin.setNomPrenomEducateur(educ.getPersonnel().getNom() + " " + educ.getPersonnel().getPrenom());
@@ -214,17 +267,20 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 				bulletin.setIsClassed(cep.getIsClassed());
 
 			// Mise à jour des heures d'absence
-			
-			AbsenceEleve absenceEleve = absenceService.getByAnneeAndEleveAndPeriode(Long.parseLong(annee), me.getEleve().getId(), Long.parseLong(periode));
-			
-			if(absenceEleve != null) {
-				bulletin.setHeuresAbsJustifiees(absenceEleve.getAbsJustifiee() != null ? absenceEleve.getAbsJustifiee().toString() : "0");
-				bulletin.setHeuresAbsNonJustifiees(absenceEleve.getAbsNonJustifiee() != null ? absenceEleve.getAbsNonJustifiee().toString() : "0");
-			}else {
+
+			AbsenceEleve absenceEleve = absenceService.getByAnneeAndEleveAndPeriode(Long.parseLong(annee),
+					me.getEleve().getId(), Long.parseLong(periode));
+
+			if (absenceEleve != null) {
+				bulletin.setHeuresAbsJustifiees(
+						absenceEleve.getAbsJustifiee() != null ? absenceEleve.getAbsJustifiee().toString() : "0");
+				bulletin.setHeuresAbsNonJustifiees(
+						absenceEleve.getAbsNonJustifiee() != null ? absenceEleve.getAbsNonJustifiee().toString() : "0");
+			} else {
 				bulletin.setHeuresAbsJustifiees("0");
 				bulletin.setHeuresAbsNonJustifiees("0");
 			}
-			
+
 			if (infosInscriptionsEleve != null) {
 //				System.out.println("affecté ::: " + infosInscriptionsEleve.getAfecte());
 				bulletin.setAffecte(infosInscriptionsEleve.getAfecte());
@@ -238,6 +294,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 
 			Bulletin bltDb = null;
 			try {
+
 				bltDb = Bulletin.find(
 						"matricule = :matricule and classeId = :classe and periodeId= :periode and anneeId= :annee",
 						Parameters.with("matricule", bulletin.getMatricule()).and("classe", Long.parseLong(classe))
@@ -248,17 +305,22 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 			}
 //			logger.info("bulletin find ::: %s "+ g.toJson(bltDb));
 			if (bltDb != null && bltDb.getId() != null) {
-				bulletin.setId(bltDb.getId());
-				bulletinIdList.add(bltDb.getId());
-				logger.info("Mise à jour bulletin id [ " + bltDb.getId() + "] ...");
-				update(bulletin);
+				if (bltDb.getStatut() != null && bltDb.getStatut().equals(Constants.MODIFIABLE)) {
+					// Condition qui ne devrait plus être vériffiée - A supprimer pour la suite
+					bulletin.setId(bltDb.getId());
+					bulletinIdList.add(bltDb.getId());
+					logger.info("Mise à jour bulletin id [ " + bltDb.getId() + "] ...");
+					update(bulletin);
+				} else if (bltDb.getStatut() != null && bltDb.getStatut().equals(Constants.ARCHIVE)) {
+					logger.info(String.format("Bulletin archivé [%s]", bltDb.getId()));
+				}
+
 			} else {
 				logger.info("Création bulletin ...");
 				save(bulletin);
 				bulletinIdList.add(bulletin.getId());
 			}
 
-			
 			Double moyCoef = (double) 0;
 			for (Map.Entry<EcoleHasMatiere, List<Notes>> entry : me.getNotesMatiereMap().entrySet()) {
 				logger.info(String.format("bulletin id %s - matiere %s", bulletin.getId(), entry.getKey().getCode()));
@@ -269,13 +331,13 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 									.with("bulletinId", bulletin.getId()).and("matiereCode", entry.getKey().getCode()))
 							.singleResult();
 				} catch (NoResultException ex) {
-					logger.info("Aucun detail de bulletin trouvé pour la matiere "+entry.getKey().getLibelle());
+					logger.info("Aucun detail de bulletin trouvé pour la matiere " + entry.getKey().getLibelle());
 				}
 
 				// marquer que l eleve est classé dans une matiere ou non
 				ClasseEleveMatiere cem = classeEleveMatiereService.findByClasseAndMatiereAndEleveAndAnneeAndPeriode(
-						Long.parseLong(classe), entry.getKey().getId(), me.getEleve().getId(),
-						Long.parseLong(annee), Long.parseLong(periode));
+						Long.parseLong(classe), entry.getKey().getId(), me.getEleve().getId(), Long.parseLong(annee),
+						Long.parseLong(periode));
 
 				if (flag != null) {
 					logger.info("--> Modification de detail bulletin");
@@ -404,17 +466,17 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 		logger.info(String.format("Max= %s , Min = %s, Sum = %s, Avg = %s, effectif %s", maxMoy, minMoy, sumMoy, avgMoy,
 				effectif));
 
-		//to do: vérifier si dernière période (trimestre/semestre)
+		// to do: vérifier si dernière période (trimestre/semestre)
 
 		// Mise à jour des bulletins
 		bulletin = new Bulletin();
 
-		//Obtenir le nombre de période à prendre en compte
+		// Obtenir le nombre de période à prendre en compte
 		Periode per = Periode.find("final = 'O'").singleResult();
 
 		List<Periode> periodes = Periode.find("niveau <= ?1", per.getNiveau()).list();
 
-		System.out.println(periodes);
+//		System.out.println(periodes);
 
 		for (String id : bulletinIdList) {
 			bulletin = Bulletin.findById(id);
@@ -426,8 +488,8 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 //			logger.info(String.format("m a j du bulletin %s [effectif : % . smoy max : %s . moy min : %s . moy avg : %s", id,
 //					effectif, bulletin.getMoyMax().toString(), bulletin.getMoyMin(), bulletin.getMoyAvg()));
 
-			//to do: Calcul de la moyenne annuelle si dernier trimestre ou semestre (periode)
-
+			// to do: Calcul de la moyenne annuelle si dernier trimestre ou semestre
+			// (periode)
 
 		}
 		return moyenneParEleve != null ? moyenneParEleve.size() : 0;

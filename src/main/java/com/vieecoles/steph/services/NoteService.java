@@ -388,7 +388,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			return moyenneList;
 		} catch (RuntimeException r) {
 			r.printStackTrace();
-			return null;
+			throw r;
 		}
 	}
 
@@ -515,7 +515,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				moyenneList.add(moyenneEleveDto);
 			}
 //		calculMoyenneMatiere(moyenneList);
-			logger.info(g.toJson(classe));
+//			logger.info(g.toJson(classe));
 //		logger.info("-------------------------------------------");
 			classementEleveParMatiere(calculMoyenneMatiere(moyenneList), classe.getBranche().getId(),
 					classe.getEcole().getId());
@@ -663,7 +663,10 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 //				System.out.println(matiere);
 				// Vérifier si la note doit être prise en compte et si l'élève est classé dans
 				// la matière concernée ou même pour la période
-				logger.info(matiere + "+++");
+//				logger.info(matiere + "+++");
+				if(matiere.getEleveMatiereIsClassed() == null) {
+					throw new RuntimeException(String.format("Veuillez vérifier que le coeficient de la matiere %s est défini pour la branche %s", matiere.getLibelle(), eleve.getClasse().getBranche().getLibelle()));
+				}
 				if (matiere.getPec() == 1 && !matiere.getEleveMatiereIsClassed().equals(Constants.NON)
 						&& !eleve.getIsClassed().equals(Constants.NON)) {
 					moy = matiere.getMoyenne();
@@ -681,7 +684,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				} else if (matiere.getBonus() != null && matiere.getBonus() == 1
 						&& !matiere.getEleveMatiereIsClassed().equals("N") && !eleve.getIsClassed().equals("N")) {
 					moy = matiere.getMoyenne();
-					logger.info(matiere + "+++ is matiere bonus");
+//					logger.info(matiere + "+++ is matiere bonus");
 					coef = Double.parseDouble(matiere.getCoef() == null ? "1" : matiere.getCoef());
 					if (matiere.getCoef() == null) {
 						matiere.setCoef("1");
@@ -774,7 +777,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 
 							logger.info("Matiere : " + map.getKey().getLibelle() + " " + map.getKey().getMoyenne() + " "
 									+ map.getKey().getEleveMatiereIsClassed());
-							logger.info(g.toJson(map.getKey()));
+//							logger.info(g.toJson(map.getKey()));
 
 							break;
 						}
