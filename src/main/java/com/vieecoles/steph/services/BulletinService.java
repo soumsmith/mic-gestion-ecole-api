@@ -191,6 +191,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 				throw new RuntimeException(
 						String.format("Erreur dans le process de suppression des bulletins [%s]", e.getMessage()));
 		}
+//		throw new RuntimeException("COUCOU !!!!!");
 
 	}
 
