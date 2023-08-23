@@ -13,7 +13,6 @@ import javax.persistence.Query;
 
 import com.vieecoles.steph.entities.ClasseEleve;
 import com.vieecoles.steph.entities.Inscription;
-import com.vieecoles.steph.entities.Inscription;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 @ApplicationScoped
