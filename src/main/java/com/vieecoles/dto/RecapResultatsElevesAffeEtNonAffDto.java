@@ -29,6 +29,43 @@ public class RecapResultatsElevesAffeEtNonAffDto {
     private Double moyClasseF_ET ;
     private Double moyClasseG_ET ;
     private Double moyClasse_ET ;
+    private String cycle ;
+    private Double pourMoySup10;
+    private Double pourMoyInf999;
+    private Double  pourMoyInf85 ;
+
+
+    public Double getPourMoySup10() {
+        return pourMoySup10;
+    }
+
+    public void setPourMoySup10(Double pourMoySup10) {
+        this.pourMoySup10 = pourMoySup10;
+    }
+
+    public Double getPourMoyInf999() {
+        return pourMoyInf999;
+    }
+
+    public void setPourMoyInf999(Double pourMoyInf999) {
+        this.pourMoyInf999 = pourMoyInf999;
+    }
+
+    public Double getPourMoyInf85() {
+        return pourMoyInf85;
+    }
+
+    public void setPourMoyInf85(Double pourMoyInf85) {
+        this.pourMoyInf85 = pourMoyInf85;
+    }
+
+    public String getCycle() {
+        return cycle;
+    }
+
+    public void setCycle(String cycle) {
+        this.cycle = cycle;
+    }
 
     public Double getMoyClasse() {
         return moyClasse;
@@ -99,7 +136,11 @@ public class RecapResultatsElevesAffeEtNonAffDto {
                                                Double moyClasse,
                                                Double moyClasseF_ET,
                                                Double moyClasseG_ET,
-                                               Double moyClasse_ET) {
+                                               Double moyClasse_ET,
+                                               String cycle,
+                                               Double pourMoySup10,
+                                               Double pourMoyInf999,
+                                               Double pourMoyInf85) {
         this.niveau = niveau;
         this.classe = classe;
 
@@ -128,6 +169,10 @@ public class RecapResultatsElevesAffeEtNonAffDto {
         this.moyClasseF_ET = moyClasseF_ET ;
         this.moyClasseG_ET = moyClasseG_ET;
         this.moyClasse_ET = moyClasse_ET ;
+        this.cycle = cycle ;
+        this.pourMoySup10 = pourMoySup10 ;
+        this.pourMoyInf999 = pourMoyInf999 ;
+        this.pourMoyInf85 = pourMoyInf85 ;
     }
 
     public String getNiveau() {
@@ -312,10 +357,9 @@ public class RecapResultatsElevesAffeEtNonAffDto {
 
     @Override
     public String toString() {
-        return "ResultatsElevesAffecteDto{" +
+        return "RecapResultatsElevesAffeEtNonAffDto{" +
                 "niveau='" + niveau + '\'' +
                 ", classe='" + classe + '\'' +
-
                 ", effeF=" + effeF +
                 ", effeG=" + effeG +
                 ", classF=" + classF +
@@ -336,6 +380,12 @@ public class RecapResultatsElevesAffeEtNonAffDto {
                 ", pourMoyInf85F=" + pourMoyInf85F +
                 ", moyClasseF=" + moyClasseF +
                 ", moyClasseG=" + moyClasseG +
+                ", ordre_niveau=" + ordre_niveau +
+                ", moyClasse=" + moyClasse +
+                ", moyClasseF_ET=" + moyClasseF_ET +
+                ", moyClasseG_ET=" + moyClasseG_ET +
+                ", moyClasse_ET=" + moyClasse_ET +
+                ", cycle='" + cycle + '\'' +
                 '}';
     }
 }
