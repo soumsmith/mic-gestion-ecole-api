@@ -6,6 +6,8 @@ import com.vieecoles.entities.*;
 import com.vieecoles.entities.operations.*;
 
 import com.vieecoles.services.connexion.connexionService;
+import com.vieecoles.steph.entities.Ecole;
+import com.vieecoles.steph.services.EcoleHasMatiereService;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -22,6 +24,8 @@ import java.util.List;
 public class SousceecoleService implements PanacheRepositoryBase<sousc_atten_etabliss, Long> {
     @Inject
     EntityManager em;
+    @Inject
+    EcoleHasMatiereService matiereEcoleService;
     @Inject
     connexionService myconnexionService ;
     @Inject
@@ -497,6 +501,18 @@ return  listEcoleDto;
     public void creerEtValiderEcole(souscriptionValidationDto mysouscription){
         validerSouscriptionEcole(mysouscription) ;
         creerEcoleBySouscrip(mysouscription.getIdsouscrip()) ;
+        generateMatiereByEcole(mysouscription.getIdsouscrip()) ;
+
+    }
+    @Transactional
+    public  void generateMatiereByEcole(Long idSouscrip){
+        ecole  myecole = new ecole() ;
+        myecole = (ecole) em.createQuery(" select e from ecole e   where e.sousc_atten_etabliss_idSOUS_ATTENT_ETABLISSEMENT =:souscripId "
+                        ,ecole.class )
+                .setParameter("souscripId",idSouscrip)
+                .getSingleResult();
+        Ecole ecole = Ecole.findById(myecole.getEcoleid());
+        matiereEcoleService.generateMatieres(ecole) ;
 
     }
 

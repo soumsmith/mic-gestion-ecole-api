@@ -32,9 +32,10 @@ public class resultatsRecapAffEtNonAffServices {
       int LongTableau =classeNiveauDtoList.size() ;
 
         Long  effeG,effeF,classF,classG,nonclassF,nonclassG,nbreMoySup10F,nbreMoySup10G,nbreMoyInf999F,nbreMoyInf999G,nbreMoyInf85G,nbreMoyInf85F;
-        Double pourMoySup10F =0d ,pourMoySup10G =0d,pourMoyInf999F =0d,pourMoyInf999G =0d,pourMoyInf85G =0d,pourMoyInf85F =0d,
+        Double pourMoySup10=0d,pourMoyInf999=0d,pourMoyInf85=0d, pourMoySup10F =0d ,pourMoySup10G =0d,pourMoyInf999F =0d,pourMoyInf999G =0d,pourMoyInf85G =0d,pourMoyInf85F =0d,
                 moyClasseF =0d,moyClasseG =0d , moyClasse , moyClasseF_ET,moyClasse_ET,moyClasseG_ET ;
        Integer effectifClasse ,orderNiveau;
+        String cycle ;
         List<RecapResultatsElevesAffeEtNonAffDto> resultatsListElevesDto = new ArrayList<>(LongTableau);
        // System.out.println("resultatsListElevesDto Size "+ resultatsListElevesDto.size());
         for (int i=0; i< LongTableau;i++) {
@@ -77,6 +78,12 @@ public class resultatsRecapAffEtNonAffServices {
             moyClasseG_ET = getmoyClasseGET(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre) ;
             moyClasseF_ET = getmoyClasseFET(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre) ;
             //calcul pourcentage
+            if(orderNiveau<=4){
+                cycle="1er";
+            } else {
+                cycle="2nd";
+            }
+
             if(classG !=0)
                 pourMoyInf85G= (double) ((nbreMoyInf85G*100d)/classG);
 
@@ -86,6 +93,9 @@ public class resultatsRecapAffEtNonAffServices {
                 pourMoyInf85F= (double) ((nbreMoyInf85F*100d)/classF);
             System.out.println("pourMoyInf85F "+pourMoyInf85G);
 
+            if(classG !=0||classF !=0)
+                pourMoyInf85 = (double)((nbreMoyInf85F+nbreMoyInf85G)*100d/(classG+classF)) ;
+
             if(classG !=0)
                 pourMoyInf999G=(double) ((nbreMoyInf999G*100d)/classG);
             System.out.println("pourMoyInf999G "+pourMoyInf999G);
@@ -94,6 +104,9 @@ public class resultatsRecapAffEtNonAffServices {
                 pourMoyInf999F=(double) ((nbreMoyInf999F*100d)/classF);
             System.out.println("pourMoyInf999F "+pourMoyInf999F);
 
+            if(classG !=0||classF !=0)
+                pourMoyInf999 = (double)((nbreMoyInf999G + nbreMoyInf999F)*100d/(classG+classF)) ;
+
             if(classF !=0)
                 pourMoySup10F = (double) ((nbreMoySup10F*100d)/classF);
             System.out.println("pourMoySup10F "+pourMoySup10F);
@@ -101,6 +114,10 @@ public class resultatsRecapAffEtNonAffServices {
             if(classG !=0)
                 pourMoySup10G = (double) ((nbreMoySup10G*100d)/classG);
             System.out.println("pourMoySup10G "+pourMoySup10G);
+
+            if(classG !=0||classF !=0)
+                pourMoySup10 = (double)((nbreMoySup10G+nbreMoySup10F)*100d/(classG+classF)) ;
+
             //System.out.println("resultatsListElevesDto "+resultatsListElevesDto.toString());
 
             System.out.println("resultats0 ");
@@ -113,6 +130,7 @@ public class resultatsRecapAffEtNonAffServices {
             resultatsListEleves.setClassF(classF);
             resultatsListEleves.setNonclassF(nonclassF);
             resultatsListEleves.setNonclassG(nonclassG);
+            resultatsListEleves.setCycle(cycle);
 
             resultatsListEleves.setNbreMoySup10F(nbreMoySup10F);
             resultatsListEleves.setNbreMoySup10G(nbreMoySup10G);
@@ -138,7 +156,11 @@ public class resultatsRecapAffEtNonAffServices {
             resultatsListEleves.setMoyClasse_ET(moyClasse_ET);
             resultatsListEleves.setMoyClasseF_ET(moyClasseF_ET);
             resultatsListEleves.setMoyClasseG_ET(moyClasseG_ET);
+            resultatsListEleves.setPourMoyInf85(pourMoyInf85);
+            resultatsListEleves.setPourMoyInf999(pourMoyInf999);
+            resultatsListEleves.setPourMoySup10(pourMoySup10);
             resultatsListElevesDto.add(resultatsListEleves) ;
+
 
 
         }
