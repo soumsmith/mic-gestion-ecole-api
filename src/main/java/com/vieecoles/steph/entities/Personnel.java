@@ -47,4 +47,8 @@ public class Personnel extends PanacheEntityBase {
 	
 	@Column(name = "personnel_status_personnel_statusid")
 	private Integer statut;
+	@Column(name = "personnel_sexe")
+	private String sexe;
+	@Column(name = "niveau_etude_niveau_etudeid")
+	private Integer niveauEtude;
 }
