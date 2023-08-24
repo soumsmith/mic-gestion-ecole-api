@@ -1,97 +1,102 @@
 package com.vieecoles.dto;
 
-public class BoursierDto {
-    private String matricule ;
-    private String nom ;
-    private String prenoms;
-    private String sexe ;
-    private String dateNaiss;
-    private String lieuNaiss;
-    private String niveau ;
-    private  Integer ordre_niveau ;
+public class RapportRentreeDto {
+    private String libelleMatiere ;
+    private Long nbreBac2G;
+    private Long nbreBac2F;
+    private Long nbreCMG;
+    private Long nbreCMF;
+    private Long nbreCPLG;
+    private Long nbreCPLF;
+    private Long nbreMaitriseG;
+    private Long nbreMaitriseF;
+    private Long nbreCAPESG;
+    private Long nbreCAPESF;
 
-    public Integer getOrdre_niveau() {
-        return ordre_niveau;
+    public RapportRentreeDto() {
     }
 
-    public void setOrdre_niveau(Integer ordre_niveau) {
-        this.ordre_niveau = ordre_niveau;
+    public String getLibelleMatiere() {
+        return libelleMatiere;
     }
 
-    public BoursierDto() {
+    public Long getNbreBac2G() {
+        return nbreBac2G;
     }
 
-    public BoursierDto(String matricule,
-                       String nom,
-                       String prenoms,
-                       String sexe,
-                       String dateNaiss,
-                       String lieuNaiss,
-                       String niveau,
-                        Integer  ordre_niveau) {
-        this.matricule = matricule;
-        this.nom = nom;
-        this.prenoms = prenoms;
-        this.sexe = sexe;
-        this.dateNaiss = dateNaiss;
-        this.lieuNaiss = lieuNaiss;
-        this.niveau = niveau;
-        this.ordre_niveau = ordre_niveau ;
+    public void setNbreBac2G(Long nbreBac2G) {
+        this.nbreBac2G = nbreBac2G;
     }
 
-    public String getMatricule() {
-        return matricule;
+    public Long getNbreBac2F() {
+        return nbreBac2F;
     }
 
-    public void setMatricule(String matricule) {
-        this.matricule = matricule;
+    public void setNbreBac2F(Long nbreBac2F) {
+        this.nbreBac2F = nbreBac2F;
     }
 
-    public String getNom() {
-        return nom;
+    public Long getNbreCMG() {
+        return nbreCMG;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setNbreCMG(Long nbreCMG) {
+        this.nbreCMG = nbreCMG;
     }
 
-    public String getPrenoms() {
-        return prenoms;
+    public Long getNbreCMF() {
+        return nbreCMF;
     }
 
-    public void setPrenoms(String prenoms) {
-        this.prenoms = prenoms;
+    public void setNbreCMF(Long nbreCMF) {
+        this.nbreCMF = nbreCMF;
     }
 
-    public String getSexe() {
-        return sexe;
+    public Long getNbreCPLG() {
+        return nbreCPLG;
     }
 
-    public void setSexe(String sexe) {
-        this.sexe = sexe;
+    public void setNbreCPLG(Long nbreCPLG) {
+        this.nbreCPLG = nbreCPLG;
     }
 
-    public String getDateNaiss() {
-        return dateNaiss;
+    public Long getNbreCPLF() {
+        return nbreCPLF;
     }
 
-    public void setDateNaiss(String dateNaiss) {
-        this.dateNaiss = dateNaiss;
+    public void setNbreCPLF(Long nbreCPLF) {
+        this.nbreCPLF = nbreCPLF;
     }
 
-    public String getLieuNaiss() {
-        return lieuNaiss;
+    public Long getNbreMaitriseG() {
+        return nbreMaitriseG;
     }
 
-    public void setLieuNaiss(String lieuNaiss) {
-        this.lieuNaiss = lieuNaiss;
+    public void setNbreMaitriseG(Long nbreMaitriseG) {
+        this.nbreMaitriseG = nbreMaitriseG;
     }
 
-    public String getNiveau() {
-        return niveau;
+    public Long getNbreMaitriseF() {
+        return nbreMaitriseF;
     }
 
-    public void setNiveau(String niveau) {
-        this.niveau = niveau;
+    public void setNbreMaitriseF(Long nbreMaitriseF) {
+        this.nbreMaitriseF = nbreMaitriseF;
+    }
+
+    public Long getNbreCAPESG() {
+        return nbreCAPESG;
+    }
+
+    public void setNbreCAPESG(Long nbreCAPESG) {
+        this.nbreCAPESG = nbreCAPESG;
+    }
+
+    public Long getNbreCAPESF() {
+        return nbreCAPESF;
+    }
+
+    public void setNbreCAPESF(Long nbreCAPESF) {
+        this.nbreCAPESF = nbreCAPESF;
     }
 }

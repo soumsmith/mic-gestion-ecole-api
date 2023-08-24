@@ -1,12 +1,11 @@
 package com.vieecoles.ressource.operations.etats;
 
 
-import com.vieecoles.dto.DspsDto;
 import com.vieecoles.dto.MatriceMoyenneDto;
+import com.vieecoles.dto.RapportRentreeDto;
 import com.vieecoles.dto.matriceDspsDto;
-import com.vieecoles.dto.spiderDspsDto;
-import com.vieecoles.services.etats.DpspServices;
 import com.vieecoles.services.etats.MatriceMoyenneServices;
+import com.vieecoles.services.etats.RapportRentreeServices;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRXlsExporter;
@@ -27,15 +26,18 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.*;
 
-@Path("/imprimer-matrice")
+@Path("/rapport-rentree")
 //@Produces(MediaType.APPLICATION_JSON)
 //@Consumes(MediaType.APPLICATION_JSON)
 
-public class MatriceMoyenneRessource {
+public class RapportRentreeRessource {
     @Inject
     EntityManager em;
     @Inject
     MatriceMoyenneServices moyenneServices ;
+
+    @Inject
+    RapportRentreeServices rapportRentree ;
 
 
     private static String UPLOAD_DIR = "/data/";
@@ -86,6 +88,13 @@ public class MatriceMoyenneRessource {
     }
 
 
+    @GET
+    @Transactional
+    @Path("/infos/{idEcole}")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public List<RapportRentreeDto>  getInfos(@PathParam("idEcole") Long idEcole ){
+    return  rapportRentree.rapportRentree(idEcole);
+    }
 
 
 

@@ -21,6 +21,8 @@ public class personnel extends PanacheEntityBase {
 
     private  String personnel_emprunte ;
     private  String  personnel_contact ;
+    private String personnel_sexe ;
+
    private  Long personnel_status_personnel_statusid;
    private  Long type_personnel_type_personnelid ;
     @ManyToOne(fetch = FetchType.LAZY)
@@ -70,6 +72,14 @@ public class personnel extends PanacheEntityBase {
 
     public void setDomaine_formation_domaine_formationid(domaine_formation domaine_formation_domaine_formationid) {
         this.domaine_formation_domaine_formationid = domaine_formation_domaine_formationid;
+    }
+
+    public String getPersonnel_sexe() {
+        return personnel_sexe;
+    }
+
+    public void setPersonnel_sexe(String personnel_sexe) {
+        this.personnel_sexe = personnel_sexe;
     }
 
     public Long getPersonnelid() {
