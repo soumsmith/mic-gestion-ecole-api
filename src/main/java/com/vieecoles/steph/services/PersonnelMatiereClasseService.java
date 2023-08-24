@@ -318,5 +318,16 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 		persMatClasse.delete();
 
 	}
+	
+	public long countProfByMatiereAndEcole(Long ecoleId, Long matiereId, Long anneeId) {
+		try {
+		 return PersonnelMatiereClasse.find("select distinct p.personnel from PersonnelMatiereClasse p where p.classe.ecole.id = ?1 and p.matiere.id =?2 and p.annee.id= ?3",
+				ecoleId, matiereId, anneeId)
+				.count();
+		 }catch(RuntimeException r) {
+			 r.printStackTrace();
+			 return 0;
+		 }
+	}
 
 }

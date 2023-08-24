@@ -128,10 +128,15 @@ public class PersonnelMatiereClasseResource {
     @Operation(description = "Obtenir le personnel (prof princ. ou educateur) assignées à une classe", summary = "")
 	@Tag(name = "PersonnelMatiereClasse")
 	public PersonnelMatiereClasse getPpOrEduc( @QueryParam("annee") Long annee,@QueryParam("fonction") int fonction, @QueryParam("classe") long classe) {
-		
-		PersonnelMatiereClasse personnel = persMatClasService.getPersonnelByClasseAndAnneeAndFonction(classe, annee,fonction );
-    	return personnel;
-    	
+    	return persMatClasService.getPersonnelByClasseAndAnneeAndFonction(classe, annee,fonction );
+	}
+    
+    @GET
+    @Path("/count-prof-by-matiere")
+    @Operation(description = "Obtenir le nombre de professeurs enseignant une matiere dans une ecole", summary = "")
+	@Tag(name = "PersonnelMatiereClasse")
+	public long countProfByMatiere( @QueryParam("ecole") Long ecole,@QueryParam("matiere") long matiere, @QueryParam("annee") long annee) {
+    	return persMatClasService.countProfByMatiereAndEcole(ecole, matiere, annee);
 	}
     
     @GET
