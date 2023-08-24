@@ -4,6 +4,8 @@ import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import javax.json.bind.annotation.JsonbProperty;
@@ -26,9 +28,15 @@ public class AnneeScolaire extends PanacheEntityBase{
 	private long id;
 //	@Column(name = "annee_scolaire_code")
 //	private String code;
+	@Column(name = "annee")
+	private Integer anneeDebut;
+	@Transient
+	private Integer anneeFin;
 	@Column(name = "annee_scolaire_libelle")
 	private String libelle;
-	private String periodicite;
+	@ManyToOne
+	@JoinColumn(name = "periodicite")
+	private Periodicite periodicite;
 	@Column(name = "nbre_eval")
 	private Integer nbreEval;
 	@ManyToOne
@@ -38,6 +46,10 @@ public class AnneeScolaire extends PanacheEntityBase{
 	@ManyToOne
 	@JoinColumn(name = "ecole_id")
 	private Ecole ecole;
+	
+	private String user;
+	private Date dateCreation;
+	private Date dateUpdate;
 	
 //	@Transient
 //	private List<AnneePeriode> anneePeriodes;

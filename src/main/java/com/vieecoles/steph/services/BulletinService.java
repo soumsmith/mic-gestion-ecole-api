@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.UUID;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.enterprise.context.RequestScoped;
@@ -15,6 +16,7 @@ import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 
 import com.google.gson.Gson;
+import com.vieecoles.entities.InfosPersoBulletins;
 import com.vieecoles.steph.dto.MoyenneEleveDto;
 import com.vieecoles.steph.entities.AbsenceEleve;
 import com.vieecoles.steph.entities.AnneeScolaire;
@@ -171,6 +173,19 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 					}
 					DetailBulletin.delete("id", detail.getId());
 					logger.info((notesBulletin != null ? notesBulletin.size() : 0) + " Notes de bulletins supprimées");
+				}
+				try {
+				List<InfosPersoBulletins> infoBul = InfosPersoBulletins.find("idBulletin", bulletin.getId()).list();
+				for(InfosPersoBulletins info: infoBul) {
+					InfosPersoBulletins.deleteById(info.getId());
+				}
+				logger.info(String.format("%s informations personnelles de bulletin supprimées", infoBul.size()));
+				}catch (RuntimeException e) {
+					if(e.getClass().equals(NoResultException.class))
+						logger.info(bulletin.getId()+" inexistant dans InfosPersoBulletins");
+					else {
+						e.printStackTrace();
+					}
 				}
 				Bulletin.delete("id", bulletin.getId());
 				logger.info((details != null ? details.size() : 0) + " details de bulletins supprimés");

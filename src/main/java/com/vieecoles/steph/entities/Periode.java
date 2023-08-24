@@ -7,6 +7,8 @@ import lombok.EqualsAndHashCode;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Data
@@ -17,8 +19,9 @@ public class Periode extends PanacheEntityBase {
 	@Id
 	@Column(name = "periodeid")
 	private long id;
-	@Column(name = "periodecode")
-	private String code;
+	@ManyToOne
+	@JoinColumn(name = "periodicite_id")
+	private Periodicite periodicite;
 	@Column(name = "periodelibelle")
 	private String libelle;
 	private String niveau;

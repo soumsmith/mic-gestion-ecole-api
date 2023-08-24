@@ -28,11 +28,15 @@ public class AnneePeriode {
 	private LocalDateTime dateFin;
 	@Column(name = "date_limite")
 	private LocalDateTime dateLimite;
-	@Transient
-	private String userId;
-	@Transient
+	@Column(name = "nbre_eval")
+	private Integer nbreEval;
+	@ManyToOne
+	@JoinColumn(name = "ecole_id")
+	private Ecole ecole;
+	private String niveau;
+	
+	private String user;
 	private LocalDateTime dateCreation;
-	@Transient
 	private LocalDateTime dateUpdate;
-
+	
 }
