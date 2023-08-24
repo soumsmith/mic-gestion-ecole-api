@@ -43,6 +43,13 @@ public class ClasseMatiereResource {
 			@QueryParam("ecole") long ecoleId) {
 		return Response.ok().entity(classeMatiereService.getByBranche(brancheId, ecoleId)).build();
 	}
+	
+	@GET
+	@Path("/get-by-ecole")
+	@Tag(name = "ClasseMatiere")
+	public Response getByEcole(@QueryParam("ecole") long ecoleId) {
+		return Response.ok().entity(classeMatiereService.getByEcole(ecoleId)).build();
+	}
 
 	@GET
 	@Path("/get-by-branche-via-classe")

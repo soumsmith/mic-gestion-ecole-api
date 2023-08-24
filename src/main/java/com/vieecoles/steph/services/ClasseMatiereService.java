@@ -103,6 +103,11 @@ public class ClasseMatiereService implements PanacheRepositoryBase<ClasseMatiere
 		cmTmpWithCoef.addAll(cmTmp);
 		return cmTmpWithCoef;
 	}
+	
+	public List<ClasseMatiere> getByEcole(long ecoleId) {
+		System.out.println("Ecole ::: " + ecoleId);
+		return ClasseMatiere.find("select distinct m.matiere.libelle from ClasseMatiere m where m.matiere.ecole.id = ?1", ecoleId).list();
+	}
 
 	public List<ClasseMatiere> getByBranche(long brancheId, long ecoleId) {
 		System.out.println("branche :: " + brancheId + " ecole ::: " + ecoleId);
