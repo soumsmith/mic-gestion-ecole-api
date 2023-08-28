@@ -1,7 +1,10 @@
 package com.vieecoles.steph.services;
 
+import com.vieecoles.steph.entities.AnneePeriode;
 import com.vieecoles.steph.entities.AnneeScolaire;
 import com.vieecoles.steph.entities.Constants;
+import com.vieecoles.steph.pojos.AnneePeriodePojo;
+import com.vieecoles.steph.util.DateUtils;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
@@ -14,6 +17,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Logger;
 
 @RequestScoped
 public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> {
@@ -22,11 +26,45 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 	AnneePeriodeService anneePeriodeService;
 
 	public List<AnneeScolaire> getList() {
-		return AnneeScolaire.listAll();
+
+		List<AnneeScolaire> annees = AnneeScolaire.listAll();
+		try {
+		if (annees != null && annees.size() > 0)
+			for (AnneeScolaire ans : annees)
+				populateEntity(ans);
+		}catch(RuntimeException r) {
+			r.printStackTrace();
+		}
+		return annees;
 	}
 
-	public AnneeScolaire findById(Long id) {
-		return AnneeScolaire.findById(id);
+	public AnneeScolaire getById(Long id) {
+		AnneeScolaire annee = AnneeScolaire.findById(id);
+		if (annee != null)
+			return populateEntity(annee);
+		else
+			return annee;
+	}
+
+	AnneeScolaire populateEntity(AnneeScolaire anneeScolaire) {
+		List<AnneePeriode> apList = anneePeriodeService.listByAnneeAndNiveauEnseignement(anneeScolaire.getId(),
+				anneeScolaire.getNiveauEnseignement().getId());
+		List<AnneePeriodePojo> anneePojoList = new ArrayList<AnneePeriodePojo>();
+		for (AnneePeriode ap : apList) {
+			AnneePeriodePojo aPojoDeb = new AnneePeriodePojo();
+			AnneePeriodePojo aPojoFin = new AnneePeriodePojo();
+			aPojoDeb.setId("deb_" + ap.getPeriode().getId());
+			aPojoDeb.setValue(DateUtils.asDate(ap.getDateDebut()));
+			anneePojoList.add(aPojoDeb);
+
+			aPojoFin.setId("fin_" + ap.getPeriode().getId());
+			aPojoFin.setValue(DateUtils.asDate(ap.getDateFin()));
+			anneePojoList.add(aPojoFin);
+		}
+		System.out.println(String.format("Liste de %s annee-periode-pojos", anneePojoList.size()));
+		anneeScolaire.setAnneePeriodes(anneePojoList);
+		anneeScolaire.setAnneeFin(anneeScolaire.getAnneeDebut() + 1);
+		return anneeScolaire;
 	}
 
 	public List<AnneeScolaire> getByStatut(String statut) {
@@ -67,8 +105,11 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 		// save annee
 		annee.setLibelle(annee.getCustomLibelle());
 		annee.setStatut(Constants.INITIALISE);
+		if (annee.getId() != 0)
+			update(annee.getId(), annee);
+		else
+			create(annee);
 
-		create(annee);
 		// save annee periode
 		anneePeriodeService.handleAnneeToPeriode(annee);
 		return AnneeScolaire.findById(annee.getId());

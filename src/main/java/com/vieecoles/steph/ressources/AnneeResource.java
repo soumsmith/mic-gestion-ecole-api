@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
 
 @Path("/annee")
@@ -27,11 +28,20 @@ public class AnneeResource {
 	public Response list() {
 		return Response.ok().entity(anneeService.getList()).build();
 	}
-
-	@POST
-	@Path("/save")
+	
+	
+	@GET
+	@Path("/get-by-id/{id}")
+	@Operation(description = "Obtenir une année scolaire via son id", summary = "")
 	@Tag(name = "Année scolaire")
-	public Response saveAndUpdateDisplay(AnneeScolaire classeMatieres) {
+	public Response getById(@PathParam("id") Long id) {
+		return Response.ok().entity(anneeService.getById(id)).build();
+	}
+	
+	@POST
+	@Path("/save-update")
+	@Tag(name = "Année scolaire")
+	public Response saveOrDisplayAndDisplay(AnneeScolaire classeMatieres) {
 		Gson g = new Gson();
 		try {
 			System.out.println(g.toJson(classeMatieres));
@@ -42,4 +52,5 @@ public class AnneeResource {
 			return Response.serverError().entity(e).build();
 		}
 	}
+	
 }

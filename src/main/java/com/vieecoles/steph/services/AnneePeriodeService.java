@@ -31,6 +31,14 @@ public class AnneePeriodeService implements PanacheRepositoryBase<AnneePeriode, 
 	public AnneePeriode findById(Long id) {
 		return AnneePeriode.findById(id);
 	}
+	
+	public List<AnneePeriode> listByAnneeAndEcole(Long anneeId, Long ecoleId) {
+		return AnneePeriode.find("anneeScolaire.id=?1 and ecole.id=?2",anneeId, ecoleId).list();
+	}
+	
+	public List<AnneePeriode> listByAnneeAndNiveauEnseignement(Long anneeId, Long niveauEnseignement) {
+		return AnneePeriode.find("anneeScolaire.id=?1 and anneeScolaire.niveauEnseignement.id=?2 and ecole is null",anneeId, niveauEnseignement).list();
+	}
 
 	@Transactional
 	public AnneePeriode create(AnneePeriode anneePeriode) {
@@ -104,6 +112,7 @@ public class AnneePeriodeService implements PanacheRepositoryBase<AnneePeriode, 
 		return index;
 	}
 
+	@Transactional
 	public void handleAnneeToPeriode(AnneeScolaire annee) {
 		List<AnneePeriode> anneePeriodesBuilder = new ArrayList<AnneePeriode>();
 		int index = -1;
@@ -123,7 +132,14 @@ public class AnneePeriodeService implements PanacheRepositoryBase<AnneePeriode, 
 					anneePeriodesBuilder.set(index, setDateFromPojo(ap, apToMaj));
 				}
 			}
-
+			
+			// Suppression des enregistrements existant spécifiques
+			List<AnneePeriode> anneesPeriodes = listByAnneeAndNiveauEnseignement(annee.getId(), annee.getNiveauEnseignement().getId());
+			for(AnneePeriode anPer : anneesPeriodes) {
+				logger.info(String.format("--> Suppression annee periode [id : %s]",anPer.getId()));
+				anPer.delete();
+			}
+			
 			// persist
 			 manyCreate(anneePeriodesBuilder);
 
