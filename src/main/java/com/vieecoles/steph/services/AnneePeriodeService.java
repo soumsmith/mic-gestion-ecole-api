@@ -31,18 +31,20 @@ public class AnneePeriodeService implements PanacheRepositoryBase<AnneePeriode, 
 	public AnneePeriode findById(Long id) {
 		return AnneePeriode.findById(id);
 	}
-	
+
 	public List<AnneePeriode> listByAnneeAndEcole(Long anneeId, Long ecoleId) {
-		return AnneePeriode.find("anneeScolaire.id=?1 and ecole.id=?2",anneeId, ecoleId).list();
+		return AnneePeriode.find("anneeScolaire.id=?1 and ecole.id=?2", anneeId, ecoleId).list();
 	}
-	
+// CENTRAL
 	public List<AnneePeriode> listByAnneeAndNiveauEnseignement(Long anneeId, Long niveauEnseignement) {
-		return AnneePeriode.find("anneeScolaire.id=?1 and anneeScolaire.niveauEnseignement.id=?2 and ecole is null",anneeId, niveauEnseignement).list();
+		return AnneePeriode.find("anneeScolaire.id=?1 and anneeScolaire.niveauEnseignement.id=?2 and ecole is null",
+				anneeId, niveauEnseignement).list();
 	}
 
 	@Transactional
 	public AnneePeriode create(AnneePeriode anneePeriode) {
 		anneePeriode.setDateCreation(LocalDateTime.now());
+		anneePeriode.setDateUpdate(LocalDateTime.now());
 		anneePeriode.persist();
 		return anneePeriode;
 	}
@@ -132,22 +134,64 @@ public class AnneePeriodeService implements PanacheRepositoryBase<AnneePeriode, 
 					anneePeriodesBuilder.set(index, setDateFromPojo(ap, apToMaj));
 				}
 			}
-			
+
 			// Suppression des enregistrements existant spécifiques
-			List<AnneePeriode> anneesPeriodes = listByAnneeAndNiveauEnseignement(annee.getId(), annee.getNiveauEnseignement().getId());
-			for(AnneePeriode anPer : anneesPeriodes) {
-				logger.info(String.format("--> Suppression annee periode [id : %s]",anPer.getId()));
+			List<AnneePeriode> anneesPeriodes = listByAnneeAndNiveauEnseignement(annee.getId(),
+					annee.getNiveauEnseignement().getId());
+			for (AnneePeriode anPer : anneesPeriodes) {
+				logger.info(String.format("--> Suppression annee periode [id : %s]", anPer.getId()));
 				anPer.delete();
 			}
-			
+
 			// persist
-			 manyCreate(anneePeriodesBuilder);
+			manyCreate(anneePeriodesBuilder);
 
 //			Gson g = new Gson();
 //			logger.info(g.toJson(anneePeriodesBuilder));
 
 		} else
 			logger.info("Aucune liste de périodes à traiter");
+	}
+
+	@Transactional
+	public void delete(Long id) {
+		AnneePeriode annee = findById(id);
+		if (annee == null)
+			throw new NotFoundException();
+		annee.delete();
+	}
+
+	// Pour CENTRAL
+	@Transactional
+	public void handleAnneeDelete(AnneeScolaire anneeScolaire) {
+		List<AnneePeriode> anneesPeriodes = listByAnneeAndNiveauEnseignement(anneeScolaire.getId(),
+				anneeScolaire.getNiveauEnseignement().getId());
+
+		if (anneesPeriodes != null)
+			for (AnneePeriode an : anneesPeriodes)
+				an.delete();
+	}
+	//Pour ECOLE
+	@Transactional
+	public void handleSharing(Long centralId, AnneeScolaire anneeScolaire) {
+		List<AnneePeriode> anneesPeriodes = listByAnneeAndNiveauEnseignement(centralId,
+				anneeScolaire.getNiveauEnseignement().getId());
+		
+		for(AnneePeriode ap : anneesPeriodes) {
+			AnneePeriode apTemp = new AnneePeriode();
+			apTemp.setAnneeScolaire(ap.getAnneeScolaire());
+			apTemp.setDateDebut(ap.getDateDebut());
+			apTemp.setDateFin(ap.getDateFin());
+			apTemp.setDateLimite(ap.getDateLimite());
+			apTemp.setEcole(anneeScolaire.getEcole());
+			apTemp.setNbreEval(ap.getNbreEval());
+			apTemp.setNiveau(anneeScolaire.getNiveau());
+			apTemp.setPeriode(ap.getPeriode());
+			apTemp.setUser(ap.getUser());
+			apTemp.setDateUpdate(LocalDateTime.now());
+			create(apTemp);
+		}
+		System.out.println(String.format("----> %s annee periode crees", anneesPeriodes.size()));
 	}
 
 }

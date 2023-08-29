@@ -6,6 +6,10 @@ public class Constants {
 	public static final String INACTIF = "INA";
 	
 	public static final String INITIALISE = "INIT";
+	public static final String DIFFUSE = "DIFFUSE";
+	public static final String OUVERT = "OUVERT";
+	public static final String CLOTURE = "CLOTURE";
+	public static final String EN_ATTENTE = "EN_ATTENTE";
 	
 	public static final String VALIDEE = "VALIDEE";
 	public static final String AFFECTE = "AFFECTE";
@@ -33,6 +37,9 @@ public class Constants {
 	
 	public static final String DEFAULT_NOTE_SUR = "20";
 	public static final String DEFAULT_COEFFICIENT = "1";
+	
+	public static final String CENTRAL = "CENTRAL";
+	public static final String ECOLE = "ECOLE";
 
 	public static final Double MOYENNE_ELEVE_NON_CLASSE_MATIERE = -1.00;
 	

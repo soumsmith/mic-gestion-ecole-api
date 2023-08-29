@@ -3,6 +3,7 @@ package com.vieecoles.steph.services;
 import com.vieecoles.steph.entities.AnneePeriode;
 import com.vieecoles.steph.entities.AnneeScolaire;
 import com.vieecoles.steph.entities.Constants;
+import com.vieecoles.steph.entities.Ecole;
 import com.vieecoles.steph.pojos.AnneePeriodePojo;
 import com.vieecoles.steph.util.DateUtils;
 
@@ -12,12 +13,9 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.NotFoundException;
-import javax.ws.rs.core.Response;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Logger;
 
 @RequestScoped
 public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> {
@@ -25,14 +23,30 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 	@Inject
 	AnneePeriodeService anneePeriodeService;
 
+	@Inject
+	EcoleService ecoleService;
+
 	public List<AnneeScolaire> getList() {
 
 		List<AnneeScolaire> annees = AnneeScolaire.listAll();
 		try {
-		if (annees != null && annees.size() > 0)
-			for (AnneeScolaire ans : annees)
-				populateEntity(ans);
-		}catch(RuntimeException r) {
+			if (annees != null && annees.size() > 0)
+				for (AnneeScolaire ans : annees)
+					populateEntity(ans);
+		} catch (RuntimeException r) {
+			r.printStackTrace();
+		}
+		return annees;
+	}
+	
+	public List<AnneeScolaire> getListByCentral() {
+
+		List<AnneeScolaire> annees = AnneeScolaire.find("ecole is null").list();
+		try {
+			if (annees != null && annees.size() > 0)
+				for (AnneeScolaire ans : annees)
+					populateEntity(ans);
+		} catch (RuntimeException r) {
 			r.printStackTrace();
 		}
 		return annees;
@@ -61,7 +75,7 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 			aPojoFin.setValue(DateUtils.asDate(ap.getDateFin()));
 			anneePojoList.add(aPojoFin);
 		}
-		System.out.println(String.format("Liste de %s annee-periode-pojos", anneePojoList.size()));
+//		System.out.println(String.format("Liste de %s annee-periode-pojos", anneePojoList.size()));
 		anneeScolaire.setAnneePeriodes(anneePojoList);
 		anneeScolaire.setAnneeFin(anneeScolaire.getAnneeDebut() + 1);
 		return anneeScolaire;
@@ -137,9 +151,48 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 	public void delete(long id) {
 		AnneeScolaire entity = AnneeScolaire.findById(id);
 		if (entity == null) {
-			throw new NotFoundException();
+			throw new NotFoundException(String.format("[id : %s] non trouvé", id));
 		}
 		entity.delete();
+	}
+
+	public AnneeScolaire sharing(AnneeScolaire annee) {
+		List<Ecole> ecoles = ecoleService.getByNiveauEnseignement(annee.getNiveauEnseignement().getId());
+		System.out.println("annee ids " + annee.getId());
+		
+		annee.setStatut(Constants.DIFFUSE);
+		update(annee.getId(), annee);
+
+		if (ecoles != null && ecoles.size() > 0)
+			for (Ecole ecole : ecoles) {
+				System.out.println(String.format("==> %s", ecole.getLibelle()));
+				AnneeScolaire anneeTemp = new AnneeScolaire();
+				anneeTemp.setLibelle(annee.getCustomLibelle());
+				anneeTemp.setAnneeDebut(annee.getAnneeDebut());
+				anneeTemp.setNbreEval(annee.getNbreEval());
+				anneeTemp.setNiveauEnseignement(annee.getNiveauEnseignement());
+				anneeTemp.setPeriodicite(annee.getPeriodicite());
+				anneeTemp.setStatut(Constants.DIFFUSE);
+				anneeTemp.setEcole(ecole);
+				anneeTemp.setUser(annee.getUser());
+				anneeTemp.setNiveau(Constants.ECOLE);
+				create(anneeTemp);
+				System.out.println(String.format("----> %s - %s", anneeTemp.getId(), anneeTemp.getLibelle()));
+				anneePeriodeService.handleSharing(annee.getId(), anneeTemp);
+			}
+		else
+			throw new RuntimeException("Aucune école détectée - veuillez procéder à leur création");
+		System.out.println("Diffusion effectuee pour " + ecoles.size() + " ecoles");
+		return annee;
+	}
+
+	@Transactional
+	public void handleDelete(long id) {
+		AnneeScolaire annee = getById(id);
+		// Suppression des années periode correspondantes
+		anneePeriodeService.handleAnneeDelete(annee);
+		// Suppression de l'année
+		delete(annee);
 	}
 
 	public List<AnneeScolaire> search(String libelle) {
