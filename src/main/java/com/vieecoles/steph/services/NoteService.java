@@ -380,7 +380,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			if (periodeCtrl != null) {
 				if (periodeCtrl.getIsfinal() != null && periodeCtrl.getIsfinal().equals(Constants.OUI))
 					classementAnnuelEleveParMatiere(moyenneList, classe.getBranche().getId(),
-							classe.getEcole().getId());
+							classe.getEcole().getId(), periodeCtrl);
 			}
 
 			Collections.sort(moyenneList);
@@ -823,7 +823,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 
 	}
 
-	void classementAnnuelEleveParMatiere(List<MoyenneEleveDto> moyEleve, Long brancheId, Long ecoleId) {
+	void classementAnnuelEleveParMatiere(List<MoyenneEleveDto> moyEleve, Long brancheId, Long ecoleId, Periode periode) {
 		logger.info("---> Classement des eleves par matiere");
 		List<ClasseMatiere> classeMatList = ClasseMatiere.find("branche.id = ?1 and ecole.id =?2", brancheId, ecoleId)
 				.list();
@@ -836,7 +836,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 		// matieres
 		Map<Long, List<Double>> classeurAnnuelMatiereMap = new HashMap<Long, List<Double>>();
 //---- WARNING mettre un try catch
-		Periode per = Periode.find("final = 'O'").singleResult();
+		Periode per = Periode.find("periodicite.id=?1 and final = 'O'", periode.getPeriodicite().getId()).singleResult();
 		List<Periode> periodes = Periode.find("niveau <= ?1", per.getNiveau()).list();
 
 		for (MoyenneEleveDto me : moyEleve) {

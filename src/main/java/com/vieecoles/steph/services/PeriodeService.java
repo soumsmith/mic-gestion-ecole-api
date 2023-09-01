@@ -16,5 +16,14 @@ public class PeriodeService {
 			return new ArrayList<Periode>() ;
 		}
 	}
+	
+	public List<Periode> getListByPeriodicite(Integer periodiciteId) {
+		try {
+			return Periode.list("periodicite.id", periodiciteId);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new ArrayList<Periode>() ;
+		}
+	}
 
 }
