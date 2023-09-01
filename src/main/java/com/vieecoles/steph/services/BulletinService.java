@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.UUID;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.enterprise.context.RequestScoped;
@@ -69,6 +70,25 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 		bulletin.setId(uuid.toString());
 		bulletin.setDateCreation(new Date());
 		bulletin.persist();
+	}
+
+	public void updateBulletinStatut(Long ecoleId, Long anneeId, String statut) {
+		List<Bulletin> bulletinsToUpdate = new ArrayList<Bulletin>();
+		try {
+			bulletinsToUpdate = Bulletin.find("ecoleId =?1 and anneeId = ?2", ecoleId, anneeId).list();
+			for(Bulletin bul : bulletinsToUpdate) {
+				Bulletin b =  Bulletin.findById(bul.getId());
+				bul.setStatut(statut);
+			}
+			logger.info(String.format("%s bulletin(s) archivés", bulletinsToUpdate.size()));
+		} catch (RuntimeException r) {
+			if (NoResultException.class.getName().equals(r.getClass().getName()))
+				logger.info("Aucun blletin à mettre à jour trouvé");
+			else {
+				r.printStackTrace();
+				throw new RuntimeException("Erreur ::: "+r.getMessage());
+			}
+		}
 	}
 
 	/*
