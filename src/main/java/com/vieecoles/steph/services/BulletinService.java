@@ -72,6 +72,25 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 		bulletin.persist();
 	}
 
+	public void updateBulletinStatut(Long ecoleId, Long anneeId, String statut) {
+		List<Bulletin> bulletinsToUpdate = new ArrayList<Bulletin>();
+		try {
+			bulletinsToUpdate = Bulletin.find("ecoleId =?1 and anneeId = ?2", ecoleId, anneeId).list();
+			for(Bulletin bul : bulletinsToUpdate) {
+				Bulletin b =  Bulletin.findById(bul.getId());
+				bul.setStatut(statut);
+			}
+			logger.info(String.format("%s bulletin(s) archivés", bulletinsToUpdate.size()));
+		} catch (RuntimeException r) {
+			if (NoResultException.class.getName().equals(r.getClass().getName()))
+				logger.info("Aucun blletin à mettre à jour trouvé");
+			else {
+				r.printStackTrace();
+				throw new RuntimeException("Erreur ::: "+r.getMessage());
+			}
+		}
+	}
+
 	/*
 	 * Obténir la liste des bulletins d'un élève pour une année
 	 */
@@ -175,14 +194,14 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 					logger.info((notesBulletin != null ? notesBulletin.size() : 0) + " Notes de bulletins supprimées");
 				}
 				try {
-				List<InfosPersoBulletins> infoBul = InfosPersoBulletins.find("idBulletin", bulletin.getId()).list();
-				for(InfosPersoBulletins info: infoBul) {
-					InfosPersoBulletins.deleteById(info.getId());
-				}
-				logger.info(String.format("%s informations personnelles de bulletin supprimées", infoBul.size()));
-				}catch (RuntimeException e) {
-					if(e.getClass().equals(NoResultException.class))
-						logger.info(bulletin.getId()+" inexistant dans InfosPersoBulletins");
+					List<InfosPersoBulletins> infoBul = InfosPersoBulletins.find("idBulletin", bulletin.getId()).list();
+					for (InfosPersoBulletins info : infoBul) {
+						InfosPersoBulletins.deleteById(info.getId());
+					}
+					logger.info(String.format("%s informations personnelles de bulletin supprimées", infoBul.size()));
+				} catch (RuntimeException e) {
+					if (e.getClass().equals(NoResultException.class))
+						logger.info(bulletin.getId() + " inexistant dans InfosPersoBulletins");
 					else {
 						e.printStackTrace();
 					}

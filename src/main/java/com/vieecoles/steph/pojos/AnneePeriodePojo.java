@@ -11,4 +11,5 @@ public class AnneePeriodePojo {
 
 	private String id;
 	private Date value;
+	private Integer nbEval;
 }

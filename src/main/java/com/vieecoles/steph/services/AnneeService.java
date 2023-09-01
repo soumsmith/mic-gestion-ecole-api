@@ -25,6 +25,8 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 
 	@Inject
 	EcoleService ecoleService;
+	@Inject
+	BulletinService bulletinService;
 
 	public List<AnneeScolaire> getList() {
 
@@ -38,7 +40,7 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 		}
 		return annees;
 	}
-	
+
 	public List<AnneeScolaire> getListByCentral() {
 
 		List<AnneeScolaire> annees = AnneeScolaire.find("ecole is null").list();
@@ -46,6 +48,20 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 			if (annees != null && annees.size() > 0)
 				for (AnneeScolaire ans : annees)
 					populateEntity(ans);
+		} catch (RuntimeException r) {
+			r.printStackTrace();
+		}
+		return annees;
+	}
+
+	public List<AnneeScolaire> getListByEcole(Long ecoleId) {
+
+		List<AnneeScolaire> annees = AnneeScolaire.find("ecole.id = ?1 and niveau =?2", ecoleId, Constants.ECOLE)
+				.list();
+		try {
+			if (annees != null && annees.size() > 0)
+				for (AnneeScolaire ans : annees)
+					populateEntityEcole(ans);
 		} catch (RuntimeException r) {
 			r.printStackTrace();
 		}
@@ -61,7 +77,7 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 	}
 
 	AnneeScolaire populateEntity(AnneeScolaire anneeScolaire) {
-		List<AnneePeriode> apList = anneePeriodeService.listByAnneeAndNiveauEnseignement(anneeScolaire.getId(),
+		List<AnneePeriode> apList = anneePeriodeService.listByAnneeAndNiveauEnseignementToCentral(anneeScolaire.getId(),
 				anneeScolaire.getNiveauEnseignement().getId());
 		List<AnneePeriodePojo> anneePojoList = new ArrayList<AnneePeriodePojo>();
 		for (AnneePeriode ap : apList) {
@@ -74,6 +90,38 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 			aPojoFin.setId("fin_" + ap.getPeriode().getId());
 			aPojoFin.setValue(DateUtils.asDate(ap.getDateFin()));
 			anneePojoList.add(aPojoFin);
+		}
+//		System.out.println(String.format("Liste de %s annee-periode-pojos", anneePojoList.size()));
+		anneeScolaire.setAnneePeriodes(anneePojoList);
+		anneeScolaire.setAnneeFin(anneeScolaire.getAnneeDebut() + 1);
+		return anneeScolaire;
+	}
+
+	AnneeScolaire populateEntityEcole(AnneeScolaire anneeScolaire) {
+		List<AnneePeriode> apList = anneePeriodeService.listByAnneeAndEcole(anneeScolaire.getId(),
+				anneeScolaire.getEcole().getId());
+		List<AnneePeriodePojo> anneePojoList = new ArrayList<AnneePeriodePojo>();
+//		List<AnneePeriodePojo> anneePojoList = new ArrayList<AnneePeriodePojo>();
+		for (AnneePeriode ap : apList) {
+			AnneePeriodePojo aPojoDeb = new AnneePeriodePojo();
+			AnneePeriodePojo aPojoFin = new AnneePeriodePojo();
+			AnneePeriodePojo aPojoLim = new AnneePeriodePojo();
+			AnneePeriodePojo aPojoNbEval = new AnneePeriodePojo();
+			aPojoDeb.setId("deb_" + ap.getPeriode().getId());
+			aPojoDeb.setValue(DateUtils.asDate(ap.getDateDebut()));
+			anneePojoList.add(aPojoDeb);
+
+			aPojoFin.setId("fin_" + ap.getPeriode().getId());
+			aPojoFin.setValue(DateUtils.asDate(ap.getDateFin()));
+			anneePojoList.add(aPojoFin);
+
+			aPojoLim.setId("limite_" + ap.getPeriode().getId());
+			aPojoLim.setValue(DateUtils.asDate(ap.getDateLimite()));
+			anneePojoList.add(aPojoLim);
+
+			aPojoNbEval.setId("nbeval_" + ap.getPeriode().getId());
+			aPojoNbEval.setNbEval(ap.getNbreEval());
+			anneePojoList.add(aPojoNbEval);
 		}
 //		System.out.println(String.format("Liste de %s annee-periode-pojos", anneePojoList.size()));
 		anneeScolaire.setAnneePeriodes(anneePojoList);
@@ -130,6 +178,14 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 	}
 
 	@Transactional
+	public AnneeScolaire handleOpenAnneeToEcole(AnneeScolaire annee) {
+
+		// Update annee periode
+		anneePeriodeService.handleUpdateAnneePeriodeToEcole(annee);
+		return AnneeScolaire.findById(annee.getId());
+	}
+
+	@Transactional
 	public AnneeScolaire update(long id, AnneeScolaire annee) {
 		AnneeScolaire entity = AnneeScolaire.findById(id);
 		if (entity == null) {
@@ -156,10 +212,44 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 		entity.delete();
 	}
 
+	@Transactional
+	public AnneeScolaire openAnnee(AnneeScolaire annee) {
+		annee.setStatut(Constants.OUVERT);
+		update(annee.getId(), annee);
+		return annee;
+	}
+
+	public AnneeScolaire findCentralAnneeReference(AnneeScolaire ecoleAnneeOuvert) {
+		AnneeScolaire centralAnnee = new AnneeScolaire();
+		try {
+			centralAnnee = AnneeScolaire
+					.find("anneeDebut =?1 and niveauEnseignement.id=?2 and periodicite.id =?3 and ecole is null",
+							ecoleAnneeOuvert.getAnneeDebut(), ecoleAnneeOuvert.getNiveauEnseignement().getId(),
+							ecoleAnneeOuvert.getPeriodicite().getId())
+					.singleResult();
+
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+		}
+		return centralAnnee;
+	}
+
+	@Transactional
+	public AnneeScolaire clotureAnnee(AnneeScolaire annee) {
+		// Archivage des bulletins
+		AnneeScolaire anneeCentrale = findCentralAnneeReference(annee);
+		bulletinService.updateBulletinStatut(annee.getEcole().getId(), anneeCentrale.getId(), Constants.ARCHIVE);
+
+		annee.setStatut(Constants.CLOTURE);
+		update(annee.getId(), annee);
+		return annee;
+	}
+
+	@Transactional
 	public AnneeScolaire sharing(AnneeScolaire annee) {
 		List<Ecole> ecoles = ecoleService.getByNiveauEnseignement(annee.getNiveauEnseignement().getId());
 		System.out.println("annee ids " + annee.getId());
-		
+
 		annee.setStatut(Constants.DIFFUSE);
 		update(annee.getId(), annee);
 
@@ -178,7 +268,7 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 				anneeTemp.setNiveau(Constants.ECOLE);
 				create(anneeTemp);
 				System.out.println(String.format("----> %s - %s", anneeTemp.getId(), anneeTemp.getLibelle()));
-				anneePeriodeService.handleSharing(annee.getId(), anneeTemp);
+				anneePeriodeService.handleSharingToEcole(annee.getId(), anneeTemp);
 			}
 		else
 			throw new RuntimeException("Aucune école détectée - veuillez procéder à leur création");
@@ -190,7 +280,7 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 	public void handleDelete(long id) {
 		AnneeScolaire annee = getById(id);
 		// Suppression des années periode correspondantes
-		anneePeriodeService.handleAnneeDelete(annee);
+		anneePeriodeService.handleAnneeDeleteToCentral(annee);
 		// Suppression de l'année
 		delete(annee);
 	}

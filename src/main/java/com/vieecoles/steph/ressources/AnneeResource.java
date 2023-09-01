@@ -11,6 +11,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
 @Path("/annee")
@@ -28,10 +29,18 @@ public class AnneeResource {
 	
 	@GET
 	@Path("/list-to-central")
-	@Operation(description = "Obtenir la liste des années", summary = "")
+	@Operation(description = "Obtenir la liste des années en central", summary = "")
 	@Tag(name = "Année scolaire")
 	public Response listCentral() {
 		return Response.ok().entity(anneeService.getListByCentral()).build();
+	}
+	
+	@GET
+	@Path("/list-to-ecole")
+	@Operation(description = "Obtenir la liste des années pour une école", summary = "")
+	@Tag(name = "Année scolaire")
+	public Response listCentral(@QueryParam("ecole") Long ecoleId) {
+		return Response.ok().entity(anneeService.getListByEcole(ecoleId)).build();
 	}
 
 	@GET
@@ -86,11 +95,52 @@ public class AnneeResource {
 	}
 	
 	@POST
+	@Path("/save-update-ecole")
+	@Tag(name = "Année scolaire")
+	public Response updateAndDisplayToEcole(AnneeScolaire anneeScolaire) {
+		Gson g = new Gson();
+		try {
+			System.out.println(g.toJson(anneeScolaire));
+			AnneeScolaire annee = anneeService.handleOpenAnneeToEcole(anneeScolaire);
+			return Response.ok(annee).build();
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+			return Response.serverError().entity(e).build();
+		}
+	}
+	
+	@POST
 	@Path("/sharing")
 	@Tag(name = "Année scolaire")
 	public Response sharingAnneeProcess(AnneeScolaire anneeScolaire) {
 		try {
 			AnneeScolaire annee = anneeService.sharing(anneeScolaire);
+			return Response.ok(annee).build();
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+			return Response.serverError().entity(e).build();
+		}
+	}
+	
+	@POST
+	@Path("/cloture-process")
+	@Tag(name = "Année scolaire")
+	public Response clotureAnneeProcess(AnneeScolaire anneeScolaire) {
+		try {
+			AnneeScolaire annee = anneeService.clotureAnnee(anneeScolaire);
+			return Response.ok(annee).build();
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+			return Response.serverError().entity(e).build();
+		}
+	}
+	
+	@POST
+	@Path("/open")
+	@Tag(name = "Année scolaire")
+	public Response openAnneeProcess(AnneeScolaire anneeScolaire) {
+		try {
+			AnneeScolaire annee = anneeService.openAnnee(anneeScolaire);
 			return Response.ok(annee).build();
 		} catch (RuntimeException e) {
 			e.printStackTrace();
