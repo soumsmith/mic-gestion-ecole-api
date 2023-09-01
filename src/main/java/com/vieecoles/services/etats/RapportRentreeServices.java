@@ -1,9 +1,14 @@
 package com.vieecoles.services.etats;
 
+import com.vieecoles.dto.ClasseMatiereDto;
 import com.vieecoles.dto.MatriceMoyenneDto;
 import com.vieecoles.dto.NiveauDto;
 import com.vieecoles.dto.RapportRentreeDto;
+import com.vieecoles.entities.fonction;
+import com.vieecoles.entities.matiere;
+import com.vieecoles.entities.niveau_etude;
 import com.vieecoles.steph.entities.ClasseMatiere;
+import com.vieecoles.steph.entities.PersonnelMatiereClasse;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -18,7 +23,7 @@ public class RapportRentreeServices {
     @Inject
     EntityManager em;
 
-    public List<RapportRentreeDto>  rapportRentree(Long idEcole ){
+    public List<RapportRentreeDto>  rapportRentree(Long idEcole ,Long  AnneeId){
         int LongTableau;
 
         List<NiveauDto> classeNiveauDtoList = new ArrayList<>() ;
@@ -26,39 +31,51 @@ public class RapportRentreeServices {
 
        // System.out.println("Ecole ::: " + ecoleId);
        List<ClasseMatiere>  classeMatiereList = new ArrayList<>() ;
-        classeMatiereList = ClasseMatiere.find("select distinct m.matiere.libelle from ClasseMatiere m where m.matiere.ecole.id = ?1", idEcole).list();
-
-        //System.out.println("classeMatiere "+classeMatiereList.get(0));
-
-        //classeNiveauDtoList = classeMatiereList ;
+        classeMatiereList = ClasseMatiere.find("select distinct m.matiere.id from ClasseMatiere m where m.matiere.ecole.id = ?1", idEcole).list();
 
         LongTableau= classeMatiereList.size() ;
         List<RapportRentreeDto> resultatsListElevesDto = new ArrayList<>();
 
-        String libelleMatiere = null;
+        long idMatiere = 0;
         Long nbreBac2G,nbreBac2F ,nbreCMG,nbreCMF,nbreCPLG,nbreCPLF ,nbreMaitriseG,nbreMaitriseF,nbreCAPESG ,nbreCAPESF;
-        classeNiveauDtoList.toString() ;
-        System.out.println("classeMatiere "+classeMatiereList.get(1));
+       // classeNiveauDtoList.toString() ;
+        String libelleMatiere = null;
+
         for (int i=0; i< LongTableau;i++) {
             RapportRentreeDto m = new RapportRentreeDto();
+           String id = String.valueOf(classeMatiereList.get(i));
+            idMatiere = Long.parseLong(id);
 
-           libelleMatiere= String.valueOf(classeMatiereList.get(i));
-           System.out.print("libelleMatiere "+libelleMatiere);
-            nbreBac2G = getNombre(libelleMatiere ,"MASCULIN","BAC + 2");
-            nbreBac2F = getNombre(libelleMatiere ,"FEMININ","BAC + 2");
+            System.out.print("idMatiere "+idMatiere);
+         libelleMatiere= getLibelleMatiere(idMatiere) ;
 
-            nbreCMF =  getNombre(libelleMatiere ,"FEMININ","CAP/CM");
-            nbreCMG =  getNombre(libelleMatiere ,"MASCULIN","CAP/CM");
+           //System.out.print("libelleMatiere "+idMatiere);
 
-            nbreCPLF =  getNombre(libelleMatiere ,"FEMININ","CAP/CPL");
-            nbreCPLG =  getNombre(libelleMatiere ,"MASCULIN","CAP/CPL");
+            niveau_etude n = new niveau_etude() ;
+           Integer nivBac2 = getNiveauEtudeLibelle("BAC + 2");
+           System.out.println("nivBac2 "+ nivBac2);
+            Integer nivCM = getNiveauEtudeLibelle("CAP/CM");
+            Integer nivCPL = getNiveauEtudeLibelle("CAP/CPL");
+            Integer nivMaitrise = getNiveauEtudeLibelle("LIC/MAITRISE");
+            Integer nivCapes = getNiveauEtudeLibelle("CAPES");
 
-            nbreMaitriseF =  getNombre(libelleMatiere ,"FEMININ","LIC/MAITRISE");
-            nbreMaitriseG =  getNombre(libelleMatiere ,"MASCULIN","LIC/MAITRISE");
+           nbreBac2G = countProfByMatiereAndEcole(idEcole ,idMatiere ,AnneeId,"MASCULIN",nivBac2);
+            System.out.println("nbreBac2G "+ nbreBac2G);
+           nbreBac2F = countProfByMatiereAndEcole(idEcole ,idMatiere ,AnneeId,"FEMININ",nivBac2);
 
-            nbreCAPESF =  getNombre(libelleMatiere ,"FEMININ","CAPES");
-            nbreCAPESG =  getNombre(libelleMatiere ,"MASCULIN","CAPES");
+            nbreCMF =  countProfByMatiereAndEcole(idEcole ,idMatiere ,AnneeId,"FEMININ",nivCM);
+            nbreCMG =  countProfByMatiereAndEcole(idEcole ,idMatiere ,AnneeId,"MASCULIN",nivCM);
 
+            nbreCPLF =  countProfByMatiereAndEcole(idEcole ,idMatiere ,AnneeId,"FEMININ",nivCPL);
+            nbreCPLG =  countProfByMatiereAndEcole(idEcole ,idMatiere ,AnneeId,"MASCULIN",nivCPL);
+
+            nbreMaitriseF =  countProfByMatiereAndEcole(idEcole ,idMatiere ,AnneeId,"FEMININ",nivMaitrise);
+            nbreMaitriseG =  countProfByMatiereAndEcole(idEcole ,idMatiere ,AnneeId,"MASCULIN",nivMaitrise);
+
+            nbreCAPESF =  countProfByMatiereAndEcole(idEcole ,idMatiere ,AnneeId,"FEMININ",nivCapes);
+            nbreCAPESG =  countProfByMatiereAndEcole(idEcole ,idMatiere ,AnneeId,"MASCULIN",nivCapes);
+
+            m.setLibelleMatiere(libelleMatiere);
             m.setNbreBac2F(nbreBac2F);
             m.setNbreBac2G(nbreBac2G);
             m.setNbreCAPESF(nbreCAPESF);
@@ -71,6 +88,7 @@ public class RapportRentreeServices {
             m.setNbreMaitriseF(nbreMaitriseF);
 
 
+
            resultatsListElevesDto.add(m);
 
         }
@@ -78,23 +96,43 @@ public class RapportRentreeServices {
         return  resultatsListElevesDto ;
     }
 
-    public  Long  getNombre(String libelleMatiere,String sexe ,String diplome){
+
+
+    public Long countProfByMatiereAndEcole(Long ecoleId, Long matiereId, Long anneeId,String sexe ,Integer niveauEtude) {
         try {
-            Long   appreci = (Long) em.createQuery("select count (p.id) from  personnel p ,niveau_etude n , Personnel_matiere_classe   m where p.niveau_etude.id=n.niveau_etudeid and p.personnelid= m.personnel.personnelid and m.matiere.matierelibelle =:matiere and " +
-                            " n.niveau_etude_libelle=:diplome and p.personnel_sexe=:sexe")
-                    .setParameter("matiere",libelleMatiere)
-                    .setParameter("sexe",sexe)
-                    .setParameter("diplome",diplome)
-                    .getSingleResult();
-            return  appreci ;
-        } catch (NoResultException e){
+            return PersonnelMatiereClasse.find("select distinct p.personnel from PersonnelMatiereClasse p where p.classe.ecole.id = ?1 and p.matiere.id =?2 and p.annee.id=?3 and p.personnel.sexe =?4 and p.personnel.niveauEtude =?5 ",
+                            ecoleId, matiereId,anneeId,sexe , niveauEtude)
+                    .count();
+        }catch(RuntimeException r) {
+            r.printStackTrace();
             return 0L;
+        }
+    }
+
+
+    public   Integer  getNiveauEtudeLibelle(String libelle ){
+        try {
+            TypedQuery<niveau_etude> q = (TypedQuery<niveau_etude>) em.createQuery( "SELECT  o from niveau_etude o where o.niveau_etude_libelle =:libelle ");
+            niveau_etude niv = q.setParameter("libelle" ,libelle).getSingleResult() ;
+
+            return Math.toIntExact(niv.getNiveau_etudeid());
+        } catch (NoResultException e) {
+            return 0 ;
         }
 
     }
 
+    public   String  getLibelleMatiere(Long id ){
+        try {
+            TypedQuery<String> q = (TypedQuery<String>) em.createQuery( "SELECT  o.libelle from EcoleHasMatiere o where o.id=:id");
+            String libelle = q.setParameter("id" ,id).getSingleResult() ;
 
+            return libelle;
+        } catch (NoResultException e) {
+            return null ;
+        }
 
+    }
 
 
 

@@ -327,7 +327,10 @@ public class InscriptionService implements PanacheRepositoryBase<Inscriptions, L
         List <InscriptionAvaliderDto> minScription ;
         try {
             System.out.println("entree1");
-            return  minScription = em.createQuery("SELECT new com.vieecoles.dto.InscriptionAvaliderDto(q.eleveid,o.inscriptionsid,q.elevenom,q.eleveprenom,q.eleve_matricule,q.elevedate_naissance,q.eleve_sexe,q.elevecellulaire,o.inscriptions_statut_eleve,o.inscriptions_status,o.inscriptions_type ,o.inscriptions_processus, o.branche.id ,o.branche.libelle) from Inscriptions o join  o.ecole e  join  o.eleve q join o.annee_scolaire n " +
+            return  minScription = em.createQuery("SELECT new com.vieecoles.dto.InscriptionAvaliderDto(q.eleveid,o.inscriptionsid,q.elevenom,q.eleveprenom,q.eleve_matricule,q.elevedate_naissance,q.eleve_sexe,q.elevecellulaire,o.inscriptions_statut_eleve,o.inscriptions_status,o.inscriptions_type ,o.inscriptions_processus, o.branche.id ,o.branche.libelle ,o.nom_prenoms_pere ,o.nom_prenoms_mere,o.nom_prenoms_tuteur,o.commune ,o.handicap, o.moteur,o.visuel ," +
+                            " o.auditif ,o.reaffecte ,o.regularisation ,o.reintegration ,o.prise_en_charge ,o.origine_prise_en_charge ,o.profession_pere,o.boite_postal_pere," +
+                            "o.tel1_pere ,o.tel2_pere , o.profession_mere ,o.boite_postal_mere,o.tel1_mere,o.tel2_mere ,o.profession_tuteur,o.boite_postal_tuteur,o.tel1_tuteur," +
+                            " o.tel2_tuteur ,o.profession_pers_en_charge ,o.boite_postale_pers_en_charge ,o.tel1_pers_en_charge , o.tel2_pers_en_charge ,o.autre_handicap ,o.nom_prenom_pers_en_charge ,o.classe_arabe , o.inscriptions_ecole_origine ,o.transfert ,o.num_decision_affecte ,o.inscriptions_langue_vivante ,o.inscriptions_redoublant , o.inscriptions_boursier) from Inscriptions o join  o.ecole e  join  o.eleve q join o.annee_scolaire n " +
                             " where o.ecole.ecoleid =:idecole and o.annee_scolaire.annee_scolaireid =:idAnnee  and o.inscriptions_type=: typeInscrip ",InscriptionAvaliderDto.class )
                     .setParameter("idecole", idEcole)
                     .setParameter("typeInscrip", typeOperation)
@@ -345,7 +348,10 @@ public class InscriptionService implements PanacheRepositoryBase<Inscriptions, L
         List <InscriptionAvaliderDto> minScription ;
         try {
             System.out.println("entree1");
-            return  minScription = em.createQuery("SELECT new com.vieecoles.dto.InscriptionAvaliderDto(q.eleveid,o.inscriptionsid,q.elevenom,q.eleveprenom,q.eleve_matricule,q.elevedate_naissance,q.eleve_sexe,q.elevecellulaire,o.inscriptions_statut_eleve,o.inscriptions_status,o.inscriptions_type ,o.inscriptions_processus, o.branche.id ,o.branche.libelle) from Inscriptions o join  o.ecole e  join  o.eleve q join o.annee_scolaire n " +
+            return  minScription = em.createQuery("SELECT new com.vieecoles.dto.InscriptionAvaliderDto(q.eleveid,o.inscriptionsid,q.elevenom,q.eleveprenom,q.eleve_matricule,q.elevedate_naissance,q.eleve_sexe,q.elevecellulaire,o.inscriptions_statut_eleve,o.inscriptions_status,o.inscriptions_type ,o.inscriptions_processus, o.branche.id ,o.branche.libelle ,o.nom_prenoms_pere ,o.nom_prenoms_mere,o.nom_prenoms_tuteur,o.commune ,o.handicap, o.moteur,o.visuel ,\" +\n" +
+                            "                            \" o.auditif ,o.reaffecte ,o.regularisation ,o.reintegration ,o.prise_en_charge ,o.origine_prise_en_charge ,o.profession_pere,o.boite_postal_pere,\" +\n" +
+                            "                            \"o.tel1_pere ,o.tel2_pere , o.profession_mere ,o.boite_postal_mere,o.tel1_mere,o.tel2_mere ,o.profession_tuteur,o.boite_postal_tuteur,o.tel1_tuteur,\" +\n" +
+                            "                            \" o.tel2_tuteur ,o.profession_pers_en_charge ,o.boite_postale_pers_en_charge ,o.tel1_pers_en_charge , o.tel2_pers_en_charge ,o.autre_handicap ,o.nom_prenom_pers_en_charge ,o.classe_arabe , o.inscriptions_ecole_origine ,o.transfert ,o.num_decision_affecte,o.inscriptions_langue_vivante ,o.inscriptions_redoublant ,o.inscriptions_boursier) from Inscriptions o join  o.ecole e  join  o.eleve q join o.annee_scolaire n " +
                                         " where o.ecole.ecoleid =:idecole and o.annee_scolaire.annee_scolaireid =:idAnnee  and o.inscriptions_status =:status and o.inscriptions_type=: typeInscrip ",InscriptionAvaliderDto.class )
                                 .setParameter("idecole", idEcole)
                           .setParameter("typeInscrip", typeOperation)
@@ -495,16 +501,52 @@ public  void updatelibelleHandicap_inscrip (Long InscriptionId , Long oldHandica
 
     public  void updateInfosComplementaire( InscriptionDto inscriptionDto){
         Inscriptions myIns= new Inscriptions() ;
+        Branche myB = new Branche() ;
+        myB = Branche.findById(inscriptionDto.getIdentifiantBranche()) ;
         myIns =Inscriptions.findById(inscriptionDto.getInscriptionsid()) ;
+
+        myIns.setBranche(myB);
+        myIns.setInscriptions_classe_actuelle(myB.getLibelle());
         myIns.setInscriptions_ecole_origine(inscriptionDto.getInscriptions_ecole_origine());
         myIns.setInscriptions_boursier(inscriptionDto.getInscriptions_boursier());
         myIns.setInscriptions_redoublant(inscriptionDto.getInscriptions_redoublant());
-        myIns.setInscriptions_classe_actuelle(inscriptionDto.getInscriptions_classe_actuelle());
+       // myIns.setInscriptions_classe_actuelle(inscriptionDto.getInscriptions_classe_actuelle());
         myIns.setInscriptions_classe_precedente(inscriptionDto.getInscriptions_classe_precedente());
         myIns.setInscriptions_derniereclasse_religieuse(inscriptionDto.getInscriptions_derniereclasse_religieuse());
         myIns.setInscriptionsdate_modification(LocalDate.now());
         myIns.setTransfert(inscriptionDto.getTransfert());
         myIns.setNum_decision_affecte(inscriptionDto.getNum_decision_affecte());
+        myIns.setNom_prenoms_pere(inscriptionDto.getNom_prenoms_pere());
+        myIns.setNom_prenoms_mere(inscriptionDto.getNom_prenoms_mere());
+        myIns.setNom_prenoms_tuteur(inscriptionDto.getNom_prenoms_tuteur());
+        myIns.setCommune(inscriptionDto.getCommune());
+        myIns.setHandicap(inscriptionDto.getHandicap());
+        myIns.setMoteur(inscriptionDto.getMoteur());
+        myIns.setVisuel(inscriptionDto.getVisuel());
+        myIns.setAuditif(inscriptionDto.getAuditif());
+        myIns.setReaffecte(inscriptionDto.getReaffecte());
+        myIns.setRegularisation(inscriptionDto.getRegularisation());
+        myIns.setReintegration(inscriptionDto.getReintegration());
+        myIns.setPrise_en_charge(inscriptionDto.getPrise_en_charge());
+        myIns.setProfession_pere(inscriptionDto.getProfession_pere());
+        myIns.setBoite_postal_pere(inscriptionDto.getBoite_postal_pere());
+        myIns.setTel1_pere(inscriptionDto.getTel1_pere());
+        myIns.setTel2_pere(inscriptionDto.getTel2_pere());
+        myIns.setProfession_mere(inscriptionDto.getProfession_mere());
+        myIns.setBoite_postal_mere(inscriptionDto.getBoite_postal_mere());
+        myIns.setTel1_mere(inscriptionDto.getTel1_mere());
+        myIns.setTel2_mere(inscriptionDto.getTel2_mere());
+        myIns.setProfession_tuteur(inscriptionDto.getProfession_tuteur());
+        myIns.setBoite_postal_tuteur(inscriptionDto.getBoite_postal_tuteur());
+        myIns.setTel1_tuteur(inscriptionDto.getTel1_tuteur());
+        myIns.setTel2_tuteur(inscriptionDto.getTel2_tuteur());
+        myIns.setProfession_pers_en_charge(inscriptionDto.getProfession_pers_en_charge());
+        myIns.setBoite_postale_pers_en_charge(inscriptionDto.getBoite_postale_pers_en_charge());
+        myIns.setTel1_pers_en_charge(inscriptionDto.getTel1_pers_en_charge());
+        myIns.setTel2_pers_en_charge(inscriptionDto.getTel2_pers_en_charge());
+        myIns.setAutre_handicap(inscriptionDto.getAutre_handicap());
+        myIns.setNom_prenom_pers_en_charge(inscriptionDto.getNom_prenom_pers_en_charge());
+        myIns.setClasse_arabe(inscriptionDto.getClasse_arabe());
 
     }
 
