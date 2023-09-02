@@ -2,7 +2,10 @@ package com.vieecoles.steph.ressources;
 
 import com.google.gson.Gson;
 import com.vieecoles.steph.entities.AnneeScolaire;
+import com.vieecoles.steph.entities.Ecole;
 import com.vieecoles.steph.services.AnneeService;
+import com.vieecoles.steph.services.EcoleService;
+
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
@@ -18,6 +21,9 @@ import javax.ws.rs.core.Response;
 public class AnneeResource {
 	@Inject
 	AnneeService anneeService;
+	
+	@Inject
+	EcoleService ecoleService;
 
 	@GET
 	@Path("/list")
@@ -78,7 +84,35 @@ public class AnneeResource {
 			return Response.serverError().build();
 		}
 	}
+	
+	@GET
+	@Path("/get-main-annee-by-ecole/{ecoleId}")
+	@Operation(description = "Obtenir année scolaire à utiliser pour toute action dans le systeme si année ouverte", summary = "")
+	@Tag(name = "Année scolaire")
+	public Response getMainAnnee(@PathParam("ecoleId") Long ecoleId) {
+		try {
+			Ecole ecole = ecoleService.getById(ecoleId);
+			return Response.ok(anneeService.findMainAnneeByEcole(ecole)).build();
+		} catch (RuntimeException r) {
+			r.printStackTrace();
+			return Response.serverError().build();
+		}
+	}
 
+	@GET
+	@Path("/init-annee-for-ecole/{ecoleId}")
+	@Operation(description = "Initialiser les années scolaires pour une nouvelle école créee", summary = "")
+	@Tag(name = "Année scolaire")
+	public Response initAnnee(@PathParam("ecoleId") Long ecoleId) {
+		try {
+			anneeService.initAnneeEcole(ecoleId);
+			return Response.ok("Initialisation complete!").build();
+		} catch (RuntimeException r) {
+			r.printStackTrace();
+			return Response.serverError().build();
+		}
+	}
+	
 	@POST
 	@Path("/save-update")
 	@Tag(name = "Année scolaire")
