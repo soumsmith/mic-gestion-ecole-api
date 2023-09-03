@@ -141,11 +141,11 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 		return annees;
 	}
 
-	public List<AnneeScolaire> getByEcoleAndStatut(String ecoleId, String statut) {
+	public List<AnneeScolaire> getByEcoleAndStatut(Long ecoleId, String statut) {
 
 		List<AnneeScolaire> annees = new ArrayList<AnneeScolaire>();
 		try {
-			annees = AnneeScolaire.find("ecole.id = ?1 statut = ?2", ecoleId, statut).list();
+			annees = AnneeScolaire.find("ecole.id = ?1 and statut = ?2", ecoleId, statut).list();
 		} catch (RuntimeException e) {
 			e.printStackTrace();
 
@@ -218,6 +218,14 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 		update(annee.getId(), annee);
 		return annee;
 	}
+	
+	public AnneeScolaire findMainAnneeByEcole(Ecole ecole) {
+		//find annee ouverte by ecole
+		List<AnneeScolaire> anneeOuverte = getByEcoleAndStatut(ecole.getId(),Constants.OUVERT);
+		if(anneeOuverte.size()>=1)
+			return findCentralAnneeReference(anneeOuverte.get(0));
+		return new AnneeScolaire();
+	}
 
 	public AnneeScolaire findCentralAnneeReference(AnneeScolaire ecoleAnneeOuvert) {
 		AnneeScolaire centralAnnee = new AnneeScolaire();
@@ -243,6 +251,39 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 		annee.setStatut(Constants.CLOTURE);
 		update(annee.getId(), annee);
 		return annee;
+	}
+	
+	@Transactional
+	public void initAnneeEcole(Long ecoleId) {
+		Ecole ecole = ecoleService.getById(ecoleId);
+		if(ecole != null) {
+			List<AnneeScolaire> annees = getCentralByStatutAndNiveauEnseignement(Constants.DIFFUSE, ecole.getNiveauEnseignement().getId());
+			for(AnneeScolaire an : annees) {
+				AnneeScolaire anneeTemp = new AnneeScolaire();
+				anneeTemp.setLibelle(an.getCustomLibelle());
+				anneeTemp.setAnneeDebut(an.getAnneeDebut());
+				anneeTemp.setNbreEval(an.getNbreEval());
+				anneeTemp.setNiveauEnseignement(an.getNiveauEnseignement());
+				anneeTemp.setPeriodicite(an.getPeriodicite());
+				anneeTemp.setStatut(Constants.DIFFUSE);
+				anneeTemp.setEcole(ecole);
+				anneeTemp.setUser(an.getUser());
+				anneeTemp.setNiveau(Constants.ECOLE);
+				create(anneeTemp);
+				System.out.println(String.format("Init----> %s - %s", anneeTemp.getId(), anneeTemp.getLibelle()));
+				anneePeriodeService.handleSharingToEcole(an.getId(), anneeTemp);
+			}
+		}
+	}
+	
+	public List<AnneeScolaire> getCentralByStatutAndNiveauEnseignement(String statutId, Long niveauId){
+		List<AnneeScolaire> list = new ArrayList<AnneeScolaire>();
+		try {
+			list = AnneeScolaire.find("statut =?1 and niveauEnseignement.id = ?2 and ecole is null", statutId, niveauId).list();
+		}catch(RuntimeException r) {
+			r.printStackTrace();
+		}
+		return list;
 	}
 
 	@Transactional
