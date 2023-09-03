@@ -68,6 +68,37 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 		return annees;
 	}
 
+	public List<AnneeScolaire> getListOpenOrCloseByEcole(Long ecoleId) {
+
+		List<AnneeScolaire> annees = new ArrayList<AnneeScolaire>();
+		AnneeScolaire anneeCentrale = new AnneeScolaire();
+		List<AnneeScolaire> anneesCentrales = new ArrayList<AnneeScolaire>();
+		try {
+			annees = AnneeScolaire
+					.find("ecole.id = ?1 and niveau =?2 and statut <> ?3", ecoleId, Constants.ECOLE, Constants.DIFFUSE)
+					.list();
+
+			if (annees != null && annees.size() > 0)
+				for (AnneeScolaire ans : annees) {
+					Boolean flat = false;
+					anneeCentrale = findCentralAnneeReference(ans);
+					if(anneesCentrales.size()>0)
+					for (AnneeScolaire annee : anneesCentrales) {
+						if (annee.getId() == anneeCentrale.getId()) {
+							flat = true;
+							break;
+						}
+					}else
+						flat = true;
+					if(flat)
+						anneesCentrales.add(populateEntity(anneeCentrale));
+				}
+		} catch (RuntimeException r) {
+			r.printStackTrace();
+		}
+		return anneesCentrales;
+	}
+
 	public AnneeScolaire getById(Long id) {
 		AnneeScolaire annee = AnneeScolaire.findById(id);
 		if (annee != null)
@@ -218,11 +249,11 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 		update(annee.getId(), annee);
 		return annee;
 	}
-	
+
 	public AnneeScolaire findMainAnneeByEcole(Ecole ecole) {
-		//find annee ouverte by ecole
-		List<AnneeScolaire> anneeOuverte = getByEcoleAndStatut(ecole.getId(),Constants.OUVERT);
-		if(anneeOuverte.size()>=1)
+		// find annee ouverte by ecole
+		List<AnneeScolaire> anneeOuverte = getByEcoleAndStatut(ecole.getId(), Constants.OUVERT);
+		if (anneeOuverte.size() >= 1)
 			return findCentralAnneeReference(anneeOuverte.get(0));
 		return new AnneeScolaire();
 	}
@@ -252,13 +283,14 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 		update(annee.getId(), annee);
 		return annee;
 	}
-	
+
 	@Transactional
 	public void initAnneeEcole(Long ecoleId) {
 		Ecole ecole = ecoleService.getById(ecoleId);
-		if(ecole != null) {
-			List<AnneeScolaire> annees = getCentralByStatutAndNiveauEnseignement(Constants.DIFFUSE, ecole.getNiveauEnseignement().getId());
-			for(AnneeScolaire an : annees) {
+		if (ecole != null) {
+			List<AnneeScolaire> annees = getCentralByStatutAndNiveauEnseignement(Constants.DIFFUSE,
+					ecole.getNiveauEnseignement().getId());
+			for (AnneeScolaire an : annees) {
 				AnneeScolaire anneeTemp = new AnneeScolaire();
 				anneeTemp.setLibelle(an.getCustomLibelle());
 				anneeTemp.setAnneeDebut(an.getAnneeDebut());
@@ -275,12 +307,13 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 			}
 		}
 	}
-	
-	public List<AnneeScolaire> getCentralByStatutAndNiveauEnseignement(String statutId, Long niveauId){
+
+	public List<AnneeScolaire> getCentralByStatutAndNiveauEnseignement(String statutId, Long niveauId) {
 		List<AnneeScolaire> list = new ArrayList<AnneeScolaire>();
 		try {
-			list = AnneeScolaire.find("statut =?1 and niveauEnseignement.id = ?2 and ecole is null", statutId, niveauId).list();
-		}catch(RuntimeException r) {
+			list = AnneeScolaire.find("statut =?1 and niveauEnseignement.id = ?2 and ecole is null", statutId, niveauId)
+					.list();
+		} catch (RuntimeException r) {
 			r.printStackTrace();
 		}
 		return list;
