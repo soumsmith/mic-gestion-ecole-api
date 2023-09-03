@@ -48,6 +48,14 @@ public class AnneeResource {
 	public Response listCentral(@QueryParam("ecole") Long ecoleId) {
 		return Response.ok().entity(anneeService.getListByEcole(ecoleId)).build();
 	}
+	
+	@GET
+	@Path("/list-opened-or-closed-to-ecole")
+	@Operation(description = "Obtenir la liste des années au moins ouvertes pour une école", summary = "")
+	@Tag(name = "Année scolaire")
+	public Response listEcole(@QueryParam("ecole") Long ecoleId) {
+		return Response.ok().entity(anneeService.getListOpenOrCloseByEcole(ecoleId)).build();
+	}
 
 	@GET
 	@Path("/get-by-id/{id}")
