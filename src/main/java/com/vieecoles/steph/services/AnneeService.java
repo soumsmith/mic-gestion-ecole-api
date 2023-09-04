@@ -1,5 +1,6 @@
 package com.vieecoles.steph.services;
 
+import com.google.gson.Gson;
 import com.vieecoles.steph.entities.AnneePeriode;
 import com.vieecoles.steph.entities.AnneeScolaire;
 import com.vieecoles.steph.entities.Constants;
@@ -69,27 +70,27 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 	}
 
 	public List<AnneeScolaire> getListOpenOrCloseByEcole(Long ecoleId) {
-
+Gson g = new Gson();
 		List<AnneeScolaire> annees = new ArrayList<AnneeScolaire>();
-		AnneeScolaire anneeCentrale = new AnneeScolaire();
 		List<AnneeScolaire> anneesCentrales = new ArrayList<AnneeScolaire>();
 		try {
 			annees = AnneeScolaire
 					.find("ecole.id = ?1 and niveau =?2 and statut <> ?3", ecoleId, Constants.ECOLE, Constants.DIFFUSE)
 					.list();
+			System.out.println(g.toJson(annees));
 
 			if (annees != null && annees.size() > 0)
 				for (AnneeScolaire ans : annees) {
-					Boolean flat = false;
+					AnneeScolaire anneeCentrale = new AnneeScolaire();
+					Boolean flat = true;
 					anneeCentrale = findCentralAnneeReference(ans);
 					if(anneesCentrales.size()>0)
 					for (AnneeScolaire annee : anneesCentrales) {
 						if (annee.getId() == anneeCentrale.getId()) {
-							flat = true;
+							flat = false;
 							break;
 						}
-					}else
-						flat = true;
+					}
 					if(flat)
 						anneesCentrales.add(populateEntity(anneeCentrale));
 				}
