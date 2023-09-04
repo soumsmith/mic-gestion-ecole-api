@@ -22,7 +22,7 @@ public class InscriptionDto {
     private  String  inscriptions_langue_vivante ;
     private  String inscriptions_contact1 ;
     private  String inscriptions_contact2 ;
-    private  String transfert ;
+    private  Boolean transfert ;
     private String num_decision_affecte ;
     @Enumerated(EnumType.STRING)
     private Inscriptions.statusEleve inscriptions_statut_eleve ;
@@ -39,12 +39,300 @@ public class InscriptionDto {
     private  Long identifiantEcole ;
     private  Long identifiantAnnee_scolaire ;
     private Long identifiantBranche ;
+    private  String nom_prenoms_pere ;
+    private  String nom_prenoms_mere ;
+    private String nom_prenoms_tuteur ;
+    private String commune ;
+    private Boolean handicap ;
+    private  Boolean moteur ;
+    private Boolean visuel ;
+    private  Boolean auditif ;
+    private  Boolean reaffecte ;
+    private  Boolean regularisation ;
+    private  Boolean reintegration ;
+    private  Boolean prise_en_charge ;
+    private  String origine_prise_en_charge ;
+    private  String profession_pere ;
+    private String boite_postal_pere ;
+    private String tel1_pere ;
+    private String tel2_pere ;
+    private String profession_mere ;
+    private String boite_postal_mere ;
+    private String tel1_mere ;
+    private String tel2_mere ;
+    private String profession_tuteur ;
+    private String boite_postal_tuteur ;
+    private String tel1_tuteur ;
+    private String tel2_tuteur ;
+    private String profession_pers_en_charge ;
+    private String boite_postale_pers_en_charge ;
+    private String tel1_pers_en_charge ;
+    private String tel2_pers_en_charge ;
+    private String autre_handicap ;
+    private String nom_prenom_pers_en_charge ;
+    private String classe_arabe ;
 
-    public String getTransfert() {
+    public String getNom_prenoms_pere() {
+        return nom_prenoms_pere;
+    }
+
+    public void setNom_prenoms_pere(String nom_prenoms_pere) {
+        this.nom_prenoms_pere = nom_prenoms_pere;
+    }
+
+    public String getNom_prenoms_mere() {
+        return nom_prenoms_mere;
+    }
+
+    public void setNom_prenoms_mere(String nom_prenoms_mere) {
+        this.nom_prenoms_mere = nom_prenoms_mere;
+    }
+
+    public String getNom_prenoms_tuteur() {
+        return nom_prenoms_tuteur;
+    }
+
+    public void setNom_prenoms_tuteur(String nom_prenoms_tuteur) {
+        this.nom_prenoms_tuteur = nom_prenoms_tuteur;
+    }
+
+    public String getCommune() {
+        return commune;
+    }
+
+    public void setCommune(String commune) {
+        this.commune = commune;
+    }
+
+    public Boolean getHandicap() {
+        return handicap;
+    }
+
+    public void setHandicap(Boolean handicap) {
+        this.handicap = handicap;
+    }
+
+    public Boolean getMoteur() {
+        return moteur;
+    }
+
+    public void setMoteur(Boolean moteur) {
+        this.moteur = moteur;
+    }
+
+    public Boolean getVisuel() {
+        return visuel;
+    }
+
+    public void setVisuel(Boolean visuel) {
+        this.visuel = visuel;
+    }
+
+    public Boolean getAuditif() {
+        return auditif;
+    }
+
+    public void setAuditif(Boolean auditif) {
+        this.auditif = auditif;
+    }
+
+    public Boolean getReaffecte() {
+        return reaffecte;
+    }
+
+    public void setReaffecte(Boolean reaffecte) {
+        this.reaffecte = reaffecte;
+    }
+
+    public Boolean getRegularisation() {
+        return regularisation;
+    }
+
+    public void setRegularisation(Boolean regularisation) {
+        this.regularisation = regularisation;
+    }
+
+    public Boolean getReintegration() {
+        return reintegration;
+    }
+
+    public void setReintegration(Boolean reintegration) {
+        this.reintegration = reintegration;
+    }
+
+    public Boolean getPrise_en_charge() {
+        return prise_en_charge;
+    }
+
+    public void setPrise_en_charge(Boolean prise_en_charge) {
+        this.prise_en_charge = prise_en_charge;
+    }
+
+    public String getOrigine_prise_en_charge() {
+        return origine_prise_en_charge;
+    }
+
+    public void setOrigine_prise_en_charge(String origine_prise_en_charge) {
+        this.origine_prise_en_charge = origine_prise_en_charge;
+    }
+
+    public String getProfession_pere() {
+        return profession_pere;
+    }
+
+    public void setProfession_pere(String profession_pere) {
+        this.profession_pere = profession_pere;
+    }
+
+    public String getBoite_postal_pere() {
+        return boite_postal_pere;
+    }
+
+    public void setBoite_postal_pere(String boite_postal_pere) {
+        this.boite_postal_pere = boite_postal_pere;
+    }
+
+    public String getTel1_pere() {
+        return tel1_pere;
+    }
+
+    public void setTel1_pere(String tel1_pere) {
+        this.tel1_pere = tel1_pere;
+    }
+
+    public String getTel2_pere() {
+        return tel2_pere;
+    }
+
+    public void setTel2_pere(String tel2_pere) {
+        this.tel2_pere = tel2_pere;
+    }
+
+    public String getProfession_mere() {
+        return profession_mere;
+    }
+
+    public void setProfession_mere(String profession_mere) {
+        this.profession_mere = profession_mere;
+    }
+
+    public String getBoite_postal_mere() {
+        return boite_postal_mere;
+    }
+
+    public void setBoite_postal_mere(String boite_postal_mere) {
+        this.boite_postal_mere = boite_postal_mere;
+    }
+
+    public String getTel1_mere() {
+        return tel1_mere;
+    }
+
+    public void setTel1_mere(String tel1_mere) {
+        this.tel1_mere = tel1_mere;
+    }
+
+    public String getTel2_mere() {
+        return tel2_mere;
+    }
+
+    public void setTel2_mere(String tel2_mere) {
+        this.tel2_mere = tel2_mere;
+    }
+
+    public String getProfession_tuteur() {
+        return profession_tuteur;
+    }
+
+    public void setProfession_tuteur(String profession_tuteur) {
+        this.profession_tuteur = profession_tuteur;
+    }
+
+    public String getBoite_postal_tuteur() {
+        return boite_postal_tuteur;
+    }
+
+    public void setBoite_postal_tuteur(String boite_postal_tuteur) {
+        this.boite_postal_tuteur = boite_postal_tuteur;
+    }
+
+    public String getTel1_tuteur() {
+        return tel1_tuteur;
+    }
+
+    public void setTel1_tuteur(String tel1_tuteur) {
+        this.tel1_tuteur = tel1_tuteur;
+    }
+
+    public String getTel2_tuteur() {
+        return tel2_tuteur;
+    }
+
+    public void setTel2_tuteur(String tel2_tuteur) {
+        this.tel2_tuteur = tel2_tuteur;
+    }
+
+    public String getProfession_pers_en_charge() {
+        return profession_pers_en_charge;
+    }
+
+    public void setProfession_pers_en_charge(String profession_pers_en_charge) {
+        this.profession_pers_en_charge = profession_pers_en_charge;
+    }
+
+    public String getBoite_postale_pers_en_charge() {
+        return boite_postale_pers_en_charge;
+    }
+
+    public void setBoite_postale_pers_en_charge(String boite_postale_pers_en_charge) {
+        this.boite_postale_pers_en_charge = boite_postale_pers_en_charge;
+    }
+
+    public String getTel1_pers_en_charge() {
+        return tel1_pers_en_charge;
+    }
+
+    public void setTel1_pers_en_charge(String tel1_pers_en_charge) {
+        this.tel1_pers_en_charge = tel1_pers_en_charge;
+    }
+
+    public String getTel2_pers_en_charge() {
+        return tel2_pers_en_charge;
+    }
+
+    public void setTel2_pers_en_charge(String tel2_pers_en_charge) {
+        this.tel2_pers_en_charge = tel2_pers_en_charge;
+    }
+
+    public String getAutre_handicap() {
+        return autre_handicap;
+    }
+
+    public void setAutre_handicap(String autre_handicap) {
+        this.autre_handicap = autre_handicap;
+    }
+
+    public String getNom_prenom_pers_en_charge() {
+        return nom_prenom_pers_en_charge;
+    }
+
+    public void setNom_prenom_pers_en_charge(String nom_prenom_pers_en_charge) {
+        this.nom_prenom_pers_en_charge = nom_prenom_pers_en_charge;
+    }
+
+    public String getClasse_arabe() {
+        return classe_arabe;
+    }
+
+    public void setClasse_arabe(String classe_arabe) {
+        this.classe_arabe = classe_arabe;
+    }
+
+    public Boolean getTransfert() {
         return transfert;
     }
 
-    public void setTransfert(String transfert) {
+    public void setTransfert(Boolean transfert) {
         this.transfert = transfert;
     }
 

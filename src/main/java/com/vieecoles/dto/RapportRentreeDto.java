@@ -13,6 +13,10 @@ public class RapportRentreeDto {
     private Long nbreCAPESG;
     private Long nbreCAPESF;
 
+    public void setLibelleMatiere(String libelleMatiere) {
+        this.libelleMatiere = libelleMatiere;
+    }
+
     public RapportRentreeDto() {
     }
 

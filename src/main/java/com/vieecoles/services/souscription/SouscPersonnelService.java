@@ -351,6 +351,7 @@ public class SouscPersonnelService implements PanacheRepositoryBase<sous_attent_
             //person2.setCivilite(mycivilite);
             person2.setDomaine_formation_domaine_formationid(sous_attent.getDomaine_formation());
             person2.setNiveau_etude(sous_attent.getNiveau_etude());
+            person2.setPersonnel_sexe(sous_attent.getSous_attent_personn_sexe());
             person2.persist();
             messageRetour ="ENREGISTREMENT EFFECTUE AVEC SUCCES";
         } else {
