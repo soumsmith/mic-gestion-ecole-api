@@ -505,9 +505,9 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 
 		// Mise à jour des bulletins
 		bulletin = new Bulletin();
-
+		Periode perTmp = Periode.findById(Long.parseLong(periode));
 		// Obtenir le nombre de période à prendre en compte
-		Periode per = Periode.find("final = 'O'").singleResult();
+		Periode per = Periode.find("final = 'O' and periodicite.id =?1", perTmp.getPeriodicite().getId()).singleResult();
 
 		List<Periode> periodes = Periode.find("niveau <= ?1", per.getNiveau()).list();
 

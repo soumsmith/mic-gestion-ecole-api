@@ -70,7 +70,7 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 	}
 
 	public List<AnneeScolaire> getListOpenOrCloseByEcole(Long ecoleId) {
-Gson g = new Gson();
+		Gson g = new Gson();
 		List<AnneeScolaire> annees = new ArrayList<AnneeScolaire>();
 		List<AnneeScolaire> anneesCentrales = new ArrayList<AnneeScolaire>();
 		try {
@@ -84,14 +84,14 @@ Gson g = new Gson();
 					AnneeScolaire anneeCentrale = new AnneeScolaire();
 					Boolean flat = true;
 					anneeCentrale = findCentralAnneeReference(ans);
-					if(anneesCentrales.size()>0)
-					for (AnneeScolaire annee : anneesCentrales) {
-						if (annee.getId() == anneeCentrale.getId()) {
-							flat = false;
-							break;
+					if (anneesCentrales.size() > 0)
+						for (AnneeScolaire annee : anneesCentrales) {
+							if (annee.getId() == anneeCentrale.getId()) {
+								flat = false;
+								break;
+							}
 						}
-					}
-					if(flat)
+					if (flat)
 						anneesCentrales.add(populateEntity(anneeCentrale));
 				}
 		} catch (RuntimeException r) {
@@ -109,23 +109,28 @@ Gson g = new Gson();
 	}
 
 	AnneeScolaire populateEntity(AnneeScolaire anneeScolaire) {
-		List<AnneePeriode> apList = anneePeriodeService.listByAnneeAndNiveauEnseignementToCentral(anneeScolaire.getId(),
-				anneeScolaire.getNiveauEnseignement().getId());
-		List<AnneePeriodePojo> anneePojoList = new ArrayList<AnneePeriodePojo>();
-		for (AnneePeriode ap : apList) {
-			AnneePeriodePojo aPojoDeb = new AnneePeriodePojo();
-			AnneePeriodePojo aPojoFin = new AnneePeriodePojo();
-			aPojoDeb.setId("deb_" + ap.getPeriode().getId());
-			aPojoDeb.setValue(DateUtils.asDate(ap.getDateDebut()));
-			anneePojoList.add(aPojoDeb);
+		try {
+			List<AnneePeriode> apList = anneePeriodeService.listByAnneeAndNiveauEnseignementToCentral(
+					anneeScolaire.getId(), anneeScolaire.getNiveauEnseignement().getId());
+//			System.out.println(apList);
+			List<AnneePeriodePojo> anneePojoList = new ArrayList<AnneePeriodePojo>();
+			for (AnneePeriode ap : apList) {
+				AnneePeriodePojo aPojoDeb = new AnneePeriodePojo();
+				AnneePeriodePojo aPojoFin = new AnneePeriodePojo();
+				aPojoDeb.setId("deb_" + ap.getPeriode().getId());
+				aPojoDeb.setValue(DateUtils.asDate(ap.getDateDebut()));
+				anneePojoList.add(aPojoDeb);
 
-			aPojoFin.setId("fin_" + ap.getPeriode().getId());
-			aPojoFin.setValue(DateUtils.asDate(ap.getDateFin()));
-			anneePojoList.add(aPojoFin);
-		}
+				aPojoFin.setId("fin_" + ap.getPeriode().getId());
+				aPojoFin.setValue(DateUtils.asDate(ap.getDateFin()));
+				anneePojoList.add(aPojoFin);
+			}
 //		System.out.println(String.format("Liste de %s annee-periode-pojos", anneePojoList.size()));
-		anneeScolaire.setAnneePeriodes(anneePojoList);
-		anneeScolaire.setAnneeFin(anneeScolaire.getAnneeDebut() + 1);
+			anneeScolaire.setAnneePeriodes(anneePojoList);
+			anneeScolaire.setAnneeFin(anneeScolaire.getAnneeDebut() + 1);
+		} catch (RuntimeException r) {
+			r.printStackTrace();
+		}
 		return anneeScolaire;
 	}
 
@@ -192,6 +197,12 @@ Gson g = new Gson();
 		annee.persist();
 		return annee;
 	}
+	// vérifier si la contrainte avoir un element d un niveau d'enseignement, periodicite et d'année est UNIQUE
+	public Boolean isUniqueContraintValid(Long niveauEnseignement, Integer periodicite, Integer annee) {
+		long nbre = AnneeScolaire.find("niveauEnseignement.id =?1 and periodicite.id =?2 and annee=?3 and ecole is null", niveauEnseignement,periodicite,annee).count();
+		System.out.println("isUniqueContraintValid "+nbre);
+		return nbre == 0;
+	}
 
 	@Transactional
 	public AnneeScolaire handleOpenAnnee(AnneeScolaire annee) {
@@ -201,8 +212,11 @@ Gson g = new Gson();
 		annee.setStatut(Constants.INITIALISE);
 		if (annee.getId() != 0)
 			update(annee.getId(), annee);
-		else
+		else {
+			if(!isUniqueContraintValid(annee.getNiveauEnseignement().getId(), annee.getPeriodicite().getId(), annee.getAnneeDebut()))
+				throw new RuntimeException("Enregistrement existant déjà!!!");
 			create(annee);
+		}
 
 		// save annee periode
 		anneePeriodeService.handleAnneeToPeriode(annee);

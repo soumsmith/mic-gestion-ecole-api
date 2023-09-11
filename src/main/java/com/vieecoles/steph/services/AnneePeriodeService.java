@@ -38,8 +38,18 @@ public class AnneePeriodeService implements PanacheRepositoryBase<AnneePeriode, 
 
 // CENTRAL
 	public List<AnneePeriode> listByAnneeAndNiveauEnseignementToCentral(Long anneeId, Long niveauEnseignement) {
-		return AnneePeriode.find("anneeScolaire.id=?1 and anneeScolaire.niveauEnseignement.id=?2 and ecole is null",
-				anneeId, niveauEnseignement).list();
+//		System.out.println(anneeId);
+//		System.out.println(niveauEnseignement);
+		List<AnneePeriode> anPerList = new ArrayList<AnneePeriode>();
+		try {
+			anPerList = AnneePeriode
+					.find("anneeScolaire.id=?1 and anneeScolaire.niveauEnseignement.id=?2 and ecole is null", anneeId,
+							niveauEnseignement)
+					.list();
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+		}
+		return anPerList;
 	}
 
 	@Transactional
@@ -214,7 +224,7 @@ public class AnneePeriodeService implements PanacheRepositoryBase<AnneePeriode, 
 					}
 				} catch (RuntimeException e) {
 					e.printStackTrace();
-					throw new RuntimeException("Erreur :"+e.getMessage());
+					throw new RuntimeException("Erreur :" + e.getMessage());
 				}
 			}
 
