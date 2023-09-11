@@ -15,12 +15,13 @@
 	<style name="TotalCateg" hTextAlign="Center" fontName="Serif" fontSize="10"/>
 	<parameter name="matricule" class="java.lang.String"/>
 	<parameter name="annee" class="java.lang.String"/>
+	<parameter name="ecoleId" class="java.lang.Long"/>
 	<queryString language="SQL">
 		<![CDATA[SELECT *
 FROM `ecoleviedbv2`.fiche_inscription_reinscription
 where `ecoleviedbv2`.fiche_inscription_reinscription.eleve_matricule = $P{matricule} and
-`ecoleviedbv2`.fiche_inscription_reinscription.annee_scolaire_libelle =  $P{annee}
-]]>
+`ecoleviedbv2`.fiche_inscription_reinscription.annee_scolaire_libelle =  $P{annee} and
+`ecoleviedbv2`.fiche_inscription_reinscription.ecoleId =   $P{ecoleId} ]]>
 	</queryString>
 	<field name="ecoleclibelle" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="ecoleclibelle"/>
@@ -354,6 +355,7 @@ where `ecoleviedbv2`.fiche_inscription_reinscription.eleve_matricule = $P{matric
 		<property name="com.jaspersoft.studio.field.label" value="inscriptions_statut_eleve"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="fiche_inscription_reinscription"/>
 	</field>
+	<field name="ecoleId" class="java.lang.Long"/>
 	<variable name="V_inscription" class="java.lang.Boolean"/>
 	<variable name="redoublant" class="java.lang.Boolean">
 		<variableExpression><![CDATA[$F{inscriptions_redoublant}=="OUI"? 1:0]]></variableExpression>
@@ -409,7 +411,7 @@ where `ecoleviedbv2`.fiche_inscription_reinscription.eleve_matricule = $P{matric
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA["Extrait de naissance N°:  "+$F{eleve_numero_extrait_naiss} +"  établit le : "+$F{elevedate_etabli_extrait_naiss}]]></textFieldExpression>
+					<textFieldExpression><![CDATA["Extrait de naissance N°:  "+$F{eleve_numero_extrait_naiss}  +"  établit le : "+$F{elevedate_etabli_extrait_naiss}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="20" y="60" width="590" height="20" uuid="2351f277-de33-4e46-9d67-76d5c6a18dcd"/>
@@ -421,7 +423,7 @@ where `ecoleviedbv2`.fiche_inscription_reinscription.eleve_matricule = $P{matric
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA["Adresse:  "+$F{eleveadresse}  +"  Cel. "+$F{elevecellulaire}]]></textFieldExpression>
+					<textFieldExpression><![CDATA["Adresse:  "+$F{eleveadresse} +"  Cel. "+$F{elevecellulaire}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="20" y="80" width="590" height="20" uuid="5d10998f-f72d-48ce-848f-f0ee40c384d2"/>
@@ -495,7 +497,7 @@ where `ecoleviedbv2`.fiche_inscription_reinscription.eleve_matricule = $P{matric
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA["Matricule Nationale :"+ $F{eleve_matricule} +" Niveau scolaire (arabe) : "+$F{classe_arabe}]]></textFieldExpression>
+					<textFieldExpression><![CDATA["Matricule Nationale :"+ $F{eleve_matricule}==null?"":$F{eleve_matricule} +" Niveau scolaire (arabe) : "+$F{classe_arabe}==null?"":$F{classe_arabe}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="20" y="220" width="590" height="20" uuid="e6705e96-6ef4-4cf6-bde5-9c8e736a5898"/>
@@ -553,7 +555,7 @@ where `ecoleviedbv2`.fiche_inscription_reinscription.eleve_matricule = $P{matric
 						</reportElement>
 						<text><![CDATA[Handicap :]]></text>
 					</staticText>
-					<textField>
+					<textField isBlankWhenNull="true">
 						<reportElement x="80" y="0" width="40" height="20" uuid="d2cc3893-7bca-4bfe-8f5b-6fcb9ace53b7">
 							<property name="com.jaspersoft.layout.grid.x" value="1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
@@ -585,7 +587,7 @@ where `ecoleviedbv2`.fiche_inscription_reinscription.eleve_matricule = $P{matric
 						<textElement textAlignment="Right"/>
 						<text><![CDATA[moteur]]></text>
 					</staticText>
-					<textField>
+					<textField isBlankWhenNull="true">
 						<reportElement x="340" y="0" width="40" height="20" uuid="d3d46f39-9f0a-4346-878f-9aa7accde99e">
 							<property name="com.jaspersoft.layout.grid.x" value="5"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
@@ -617,7 +619,7 @@ where `ecoleviedbv2`.fiche_inscription_reinscription.eleve_matricule = $P{matric
 						<textElement textAlignment="Right"/>
 						<text><![CDATA[visuel]]></text>
 					</staticText>
-					<textField>
+					<textField isBlankWhenNull="true">
 						<reportElement x="460" y="0" width="40" height="20" uuid="29019c0f-2d1b-4f38-8570-524ef64642a1">
 							<property name="com.jaspersoft.layout.grid.x" value="7"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
@@ -649,7 +651,7 @@ where `ecoleviedbv2`.fiche_inscription_reinscription.eleve_matricule = $P{matric
 						<textElement textAlignment="Right"/>
 						<text><![CDATA[auditif]]></text>
 					</staticText>
-					<textField>
+					<textField isBlankWhenNull="true">
 						<reportElement x="550" y="0" width="40" height="20" uuid="7056aff9-1541-40af-9fe6-8f196529d302">
 							<property name="com.jaspersoft.layout.grid.x" value="9"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
@@ -681,7 +683,7 @@ where `ecoleviedbv2`.fiche_inscription_reinscription.eleve_matricule = $P{matric
 					<textElement verticalAlignment="Middle"/>
 					<textFieldExpression><![CDATA["redoublant(e):"]]></textFieldExpression>
 				</textField>
-				<textField>
+				<textField isBlankWhenNull="true">
 					<reportElement x="160" y="263" width="30" height="20" uuid="a09db49a-63ab-46e4-8787-40fde8f3f1dd"/>
 					<box>
 						<pen lineWidth="0.5" lineStyle="Solid"/>
@@ -719,7 +721,7 @@ where `ecoleviedbv2`.fiche_inscription_reinscription.eleve_matricule = $P{matric
 					<textElement verticalAlignment="Middle"/>
 					<textFieldExpression><![CDATA["Affecté"]]></textFieldExpression>
 				</textField>
-				<textField>
+				<textField isBlankWhenNull="true">
 					<reportElement x="113" y="290" width="30" height="20" uuid="b0b3716f-50fb-486c-a8f9-9958975a5721"/>
 					<box>
 						<pen lineWidth="0.5" lineStyle="Solid"/>
@@ -743,7 +745,7 @@ where `ecoleviedbv2`.fiche_inscription_reinscription.eleve_matricule = $P{matric
 					<textElement verticalAlignment="Middle"/>
 					<textFieldExpression><![CDATA["Réaffecté"]]></textFieldExpression>
 				</textField>
-				<textField>
+				<textField isBlankWhenNull="true">
 					<reportElement x="212" y="290" width="30" height="20" uuid="4ef12af3-2871-47e8-86f2-a3e9433fe539"/>
 					<box>
 						<pen lineWidth="0.5" lineStyle="Solid"/>
@@ -755,7 +757,7 @@ where `ecoleviedbv2`.fiche_inscription_reinscription.eleve_matricule = $P{matric
 					<textElement verticalAlignment="Middle"/>
 					<textFieldExpression><![CDATA[$F{reaffecte}? "OUI ":"NON"]]></textFieldExpression>
 				</textField>
-				<textField>
+				<textField isBlankWhenNull="true">
 					<reportElement x="310" y="290" width="40" height="20" uuid="132c98fc-68ba-4286-8ba6-93a2be88a37a"/>
 					<box>
 						<pen lineWidth="0.5" lineStyle="Solid"/>
@@ -791,7 +793,7 @@ where `ecoleviedbv2`.fiche_inscription_reinscription.eleve_matricule = $P{matric
 					<textElement verticalAlignment="Middle"/>
 					<textFieldExpression><![CDATA["Régularisation"]]></textFieldExpression>
 				</textField>
-				<textField>
+				<textField isBlankWhenNull="true">
 					<reportElement x="527" y="290" width="30" height="20" uuid="01267b3a-257f-4cc6-a39b-b42c2c946722"/>
 					<box>
 						<pen lineWidth="0.5" lineStyle="Solid"/>
@@ -839,7 +841,7 @@ where `ecoleviedbv2`.fiche_inscription_reinscription.eleve_matricule = $P{matric
 					<textElement verticalAlignment="Middle"/>
 					<textFieldExpression><![CDATA["Prise en charge"]]></textFieldExpression>
 				</textField>
-				<textField>
+				<textField isBlankWhenNull="true">
 					<reportElement x="160" y="338" width="30" height="20" uuid="b1ac65a7-3a79-4945-943d-003421c0378c"/>
 					<box>
 						<pen lineWidth="0.5" lineStyle="Solid"/>
@@ -861,7 +863,7 @@ where `ecoleviedbv2`.fiche_inscription_reinscription.eleve_matricule = $P{matric
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA["Origine de la prise en charge :  "+$F{origine_prise_en_charge}]]></textFieldExpression>
+					<textFieldExpression><![CDATA["Origine de la prise en charge :  "+$F{origine_prise_en_charge}==null?"":$F{origine_prise_en_charge}]]></textFieldExpression>
 				</textField>
 				<frame>
 					<reportElement x="46" y="360" width="507" height="240" uuid="3f1f8a81-af14-4810-8f65-57336bb7f1dc">
@@ -1126,7 +1128,7 @@ where `ecoleviedbv2`.fiche_inscription_reinscription.eleve_matricule = $P{matric
 								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 							</reportElement>
 							<textElement verticalAlignment="Middle"/>
-							<textFieldExpression><![CDATA["Boîte postale: "+$F{boite_postal_tuteur}]]></textFieldExpression>
+							<textFieldExpression><![CDATA["Boîte postale: "+$F{boite_postal_tuteur} ]]></textFieldExpression>
 						</textField>
 						<textField>
 							<reportElement x="0" y="80" width="241" height="20" uuid="be0d1f98-740a-4199-b542-ec81ee53fab0">
@@ -1139,7 +1141,7 @@ where `ecoleviedbv2`.fiche_inscription_reinscription.eleve_matricule = $P{matric
 								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 							</reportElement>
 							<textElement verticalAlignment="Middle"/>
-							<textFieldExpression><![CDATA["Tél. / Cel. : "+$F{tel1_tuteur}]]></textFieldExpression>
+							<textFieldExpression><![CDATA["Tél. / Cel. : "+$F{tel1_tuteur} ]]></textFieldExpression>
 						</textField>
 						<textField>
 							<reportElement x="0" y="100" width="241" height="20" uuid="e435a78d-3413-4898-a908-f41440c54a50">
@@ -1152,7 +1154,7 @@ where `ecoleviedbv2`.fiche_inscription_reinscription.eleve_matricule = $P{matric
 								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 							</reportElement>
 							<textElement verticalAlignment="Middle"/>
-							<textFieldExpression><![CDATA["Tél. / Cel. : "+$F{tel2_tuteur}]]></textFieldExpression>
+							<textFieldExpression><![CDATA["Tél. / Cel. : "+$F{tel2_tuteur} ]]></textFieldExpression>
 						</textField>
 					</frame>
 					<frame>
@@ -1209,7 +1211,7 @@ where `ecoleviedbv2`.fiche_inscription_reinscription.eleve_matricule = $P{matric
 								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 							</reportElement>
 							<textElement verticalAlignment="Middle"/>
-							<textFieldExpression><![CDATA["Profession: "+$F{profession_pers_en_charge}]]></textFieldExpression>
+							<textFieldExpression><![CDATA["Profession: "+$F{profession_pers_en_charge} ]]></textFieldExpression>
 						</textField>
 						<textField>
 							<reportElement x="0" y="60" width="246" height="20" uuid="ae0d58dc-5308-465c-b344-aeb1b9349343">
@@ -1235,7 +1237,7 @@ where `ecoleviedbv2`.fiche_inscription_reinscription.eleve_matricule = $P{matric
 								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 							</reportElement>
 							<textElement verticalAlignment="Middle"/>
-							<textFieldExpression><![CDATA["Tél. / Cel. : "+$F{tel1_pers_en_charge}]]></textFieldExpression>
+							<textFieldExpression><![CDATA["Tél. / Cel. : "+$F{tel1_pers_en_charge} ]]></textFieldExpression>
 						</textField>
 						<textField>
 							<reportElement x="0" y="100" width="246" height="20" uuid="6f2869d6-42e6-4fe2-b62c-9edeff556afb">
@@ -1577,7 +1579,7 @@ where `ecoleviedbv2`.fiche_inscription_reinscription.eleve_matricule = $P{matric
 						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 					</reportElement>
-					<image scaleImage="FillFrame" onErrorType="Icon">
+					<image scaleImage="FillFrame" onErrorType="Blank">
 						<reportElement x="508" y="0" width="83" height="65" uuid="ead8d2cf-965c-4bfa-a420-f2630105d2a3">
 							<property name="com.jaspersoft.layout.grid.x" value="4"/>
 							<property name="com.jaspersoft.layout.grid.y" value="0"/>
