@@ -197,10 +197,15 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 		annee.persist();
 		return annee;
 	}
-	// vérifier si la contrainte avoir un element d un niveau d'enseignement, periodicite et d'année est UNIQUE
+
+	// vérifier si la contrainte avoir un element d un niveau d'enseignement,
+	// periodicite et d'année est UNIQUE
 	public Boolean isUniqueContraintValid(Long niveauEnseignement, Integer periodicite, Integer annee) {
-		long nbre = AnneeScolaire.find("niveauEnseignement.id =?1 and periodicite.id =?2 and annee=?3 and ecole is null", niveauEnseignement,periodicite,annee).count();
-		System.out.println("isUniqueContraintValid "+nbre);
+		long nbre = AnneeScolaire
+				.find("niveauEnseignement.id =?1 and periodicite.id =?2 and annee=?3 and ecole is null",
+						niveauEnseignement, periodicite, annee)
+				.count();
+		System.out.println("isUniqueContraintValid " + nbre);
 		return nbre == 0;
 	}
 
@@ -213,7 +218,8 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 		if (annee.getId() != 0)
 			update(annee.getId(), annee);
 		else {
-			if(!isUniqueContraintValid(annee.getNiveauEnseignement().getId(), annee.getPeriodicite().getId(), annee.getAnneeDebut()))
+			if (!isUniqueContraintValid(annee.getNiveauEnseignement().getId(), annee.getPeriodicite().getId(),
+					annee.getAnneeDebut()))
 				throw new RuntimeException("Enregistrement existant déjà!!!");
 			create(annee);
 		}
@@ -226,6 +232,12 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 	@Transactional
 	public AnneeScolaire handleOpenAnneeToEcole(AnneeScolaire annee) {
 
+		// Update delai
+		if (annee.getDelaiNotes() != null && annee.getDelaiNotes() != 0) {
+			AnneeScolaire an = AnneeScolaire.findById(annee.getId());
+			if (annee.getDelaiNotes() != an.getDelaiNotes())
+				an.setDelaiNotes(annee.getDelaiNotes());
+		}
 		// Update annee periode
 		anneePeriodeService.handleUpdateAnneePeriodeToEcole(annee);
 		return AnneeScolaire.findById(annee.getId());

@@ -258,7 +258,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 //			System.out.println("ealist "+evalList);
 			for (Evaluation ev : evalList) {
 				logger.info(ev.getPec().toString());
-				if (ev.getPec() != null && ev.getPec() == 1)
+				if (ev.getPec() != null && ev.getPec() == Constants.PEC_1)
 					noteList.addAll(getNotesClasseWithPec(ev.getCode(), Constants.PEC_1));
 			}
 //		logger.info("note size " + noteList.size());
