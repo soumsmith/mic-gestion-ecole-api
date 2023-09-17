@@ -55,9 +55,9 @@ public class FicheInscriptionRessource {
 
      @GET
 
-    @Path("/inscription/{libelleAnnee}/{matricule}")
+    @Path("/inscription/{libelleAnnee}/{matricule}/{IdEcole}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    public ResponseEntity<byte[]>  getDtoRapport(@PathParam("libelleAnnee") String libelleAnnee , @PathParam("matricule") String matricule) throws Exception, JRException {
+    public ResponseEntity<byte[]>  getDtoRapport(@PathParam("libelleAnnee") String libelleAnnee , @PathParam("matricule") String matricule,@PathParam("IdEcole") Long IdEcole) throws Exception, JRException {
         InputStream myInpuStream ;
 
          myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/FicheInscription.jrxml");
@@ -70,6 +70,7 @@ public class FicheInscriptionRessource {
 
         map.put("matricule", matricule);
         map.put("annee", libelleAnnee);
+         map.put("ecoleId", IdEcole);
         JasperPrint report = JasperFillManager.fillReport(compileReport, map, connection);
         byte[] data =JasperExportManager.exportReportToPdf(report);
 
@@ -82,9 +83,9 @@ public class FicheInscriptionRessource {
 
     @GET
 
-    @Path("/identification/{libelleAnnee}/{matricule}")
+    @Path("/identification/{libelleAnnee}/{matricule}/{IdEcole}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    public ResponseEntity<byte[]>  getDtoRapport2(@PathParam("libelleAnnee") String libelleAnnee , @PathParam("matricule") String matricule) throws Exception, JRException {
+    public ResponseEntity<byte[]>  getDtoRapport2(@PathParam("libelleAnnee") String libelleAnnee , @PathParam("matricule") String matricule,@PathParam("IdEcole") Long IdEcole) throws Exception, JRException {
         InputStream myInpuStream ;
 
         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/FicheIdentificationEleve.jrxml");
@@ -97,6 +98,7 @@ public class FicheInscriptionRessource {
 
         map.put("matricule", matricule);
         map.put("annee", libelleAnnee);
+        map.put("ecoleId", IdEcole);
         JasperPrint report = JasperFillManager.fillReport(compileReport, map, connection);
         byte[] data =JasperExportManager.exportReportToPdf(report);
 

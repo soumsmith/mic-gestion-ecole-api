@@ -21,6 +21,7 @@ public class classe extends PanacheEntityBase {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "niveau_niveauid")
     private Niveau niveau ;
+    private Long ecole_ecoleid ;
 
     @ManyToOne
     private LangueVivante langueVivante;
