@@ -177,6 +177,16 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 		}
 		return annees;
 	}
+	
+	public AnneeScolaire getByEcoleAndAnneeDebut(Long ecole, Integer anneeDebut) {
+		AnneeScolaire anneeScolaire = new AnneeScolaire();
+		try {
+			anneeScolaire = AnneeScolaire.find("ecole.id=?1 and anneeDebut =?2", ecole,anneeDebut).singleResult();
+		}catch (RuntimeException e) {
+			e.printStackTrace();
+		}
+		return anneeScolaire;
+	}
 
 	public List<AnneeScolaire> getByEcoleAndStatut(Long ecoleId, String statut) {
 

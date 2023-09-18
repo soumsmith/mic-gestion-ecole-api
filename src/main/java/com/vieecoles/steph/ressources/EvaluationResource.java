@@ -96,6 +96,15 @@ public class EvaluationResource {
     		return ev;
     	}
     }
+	
+	@GET
+    @Path("/is-locked/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+    @Operation(description = "info de verrouillage potentiel de la saisie d une évaluation", summary = "")
+	@Tag(name = "Evaluation")
+    public Response isLocked(@PathParam("id") long id) {
+    		return Response.ok(evaluationService.isLockable(id)).build() ;
+    }
 
 	@GET
     @Path("/code/{code}")
