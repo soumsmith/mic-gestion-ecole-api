@@ -35,8 +35,8 @@ public class ClasseMatiereService implements PanacheRepositoryBase<ClasseMatiere
 
 	@Inject
 	MatiereService matiereService;
-	
-	@Inject 
+
+	@Inject
 	EcoleHasMatiereService ecoleHasMatiereService;
 
 	Logger logger = Logger.getLogger(ClasseMatiereService.class.getName());
@@ -73,7 +73,7 @@ public class ClasseMatiereService implements PanacheRepositoryBase<ClasseMatiere
 			}
 			if(!isDefined) {
 				ClasseMatiere cmat = new ClasseMatiere();
-				
+
 				cmat.setBranche(branche);
 //				cmat.setCoef(null);
 				cmat.setEcole(ecole);
@@ -93,7 +93,7 @@ public class ClasseMatiereService implements PanacheRepositoryBase<ClasseMatiere
 	public List<ClasseMatiere> sortedClasseMatiereList(List<ClasseMatiere> cmToReturn) {
 		List<ClasseMatiere> cmTmp = new ArrayList<ClasseMatiere>();
 		List<ClasseMatiere> cmTmpWithCoef = new ArrayList<ClasseMatiere>();
-		
+
 		for(ClasseMatiere cm: cmToReturn) {
 			if(cm.getCoef()!=null)
 				cmTmpWithCoef.add(cm);
@@ -103,7 +103,7 @@ public class ClasseMatiereService implements PanacheRepositoryBase<ClasseMatiere
 		cmTmpWithCoef.addAll(cmTmp);
 		return cmTmpWithCoef;
 	}
-	
+
 	public List<ClasseMatiere> getByEcole(long ecoleId) {
 		System.out.println("Ecole ::: " + ecoleId);
 		return ClasseMatiere.find("select distinct m.matiere.libelle from ClasseMatiere m where m.matiere.ecole.id = ?1", ecoleId).list();

@@ -66,4 +66,17 @@ public class EtatNominatifEnseignatDto {
     public void setClassesTenuesDto(List<ClassesTenuesDto> classesTenuesDto) {
         this.classesTenuesDto = classesTenuesDto;
     }
+
+    @Override
+    public String toString() {
+        return "EtatNominatifEnseignatDto{" +
+                "nom='" + nom + '\'' +
+                ", prenoms='" + prenoms + '\'' +
+                ", dateNaiss='" + dateNaiss + '\'' +
+                ", diplome='" + diplome + '\'' +
+                ", statutVacPer='" + statutVacPer + '\'' +
+                ", contact='" + contact + '\'' +
+                ", classesTenuesDto=" + classesTenuesDto +
+                '}';
+    }
 }

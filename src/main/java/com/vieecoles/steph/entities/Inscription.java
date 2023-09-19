@@ -102,9 +102,28 @@ public class Inscription extends PanacheEntityBase{
 	@Column(name="inscriptions_redoublant")
 	private String redoublant;
 	@Column(name = "inscriptions_ecole_origine")
-	private String ecoleOrigine; 
+	private String ecoleOrigine;
 	@Column(name = "transfert")
 	private String transfert;
+
+	@Column(name = "reaffecte")
+	private Boolean reaffecte;
+	@Column(name = "internes")
+	private Boolean internes;
+	@Column(name = "demi_pension")
+	private Boolean demi_pension;
+	@Column(name = "externes")
+	private Boolean externes;
+	@Column(name = "ivoirien")
+	private Boolean ivoirien;
+	@Column(name = "etranger_africain")
+	private Boolean etranger_africain;
+
+	@Column(name = "etranger_non_africain")
+	private Boolean etranger_non_africain;
+
+
+
 	@ManyToOne
 	@JoinColumn(name = "ecole_ecoleid")
 	private Ecole ecole;

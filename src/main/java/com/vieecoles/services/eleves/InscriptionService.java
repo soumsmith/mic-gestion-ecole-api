@@ -330,7 +330,7 @@ public class InscriptionService implements PanacheRepositoryBase<Inscriptions, L
             return  minScription = em.createQuery("SELECT new com.vieecoles.dto.InscriptionAvaliderDto(q.eleveid,o.inscriptionsid,q.elevenom,q.eleveprenom,q.eleve_matricule,q.elevedate_naissance,q.eleve_sexe,q.elevecellulaire,o.inscriptions_statut_eleve,o.inscriptions_status,o.inscriptions_type ,o.inscriptions_processus, o.branche.id ,o.branche.libelle ,o.nom_prenoms_pere ,o.nom_prenoms_mere,o.nom_prenoms_tuteur,o.commune ,o.handicap, o.moteur,o.visuel ," +
                             " o.auditif ,o.reaffecte ,o.regularisation ,o.reintegration ,o.prise_en_charge ,o.origine_prise_en_charge ,o.profession_pere,o.boite_postal_pere," +
                             "o.tel1_pere ,o.tel2_pere , o.profession_mere ,o.boite_postal_mere,o.tel1_mere,o.tel2_mere ,o.profession_tuteur,o.boite_postal_tuteur,o.tel1_tuteur," +
-                            " o.tel2_tuteur ,o.profession_pers_en_charge ,o.boite_postale_pers_en_charge ,o.tel1_pers_en_charge , o.tel2_pers_en_charge ,o.autre_handicap ,o.nom_prenom_pers_en_charge ,o.classe_arabe , o.inscriptions_ecole_origine ,o.transfert ,o.num_decision_affecte ,o.inscriptions_langue_vivante ,o.inscriptions_redoublant , o.inscriptions_boursier) from Inscriptions o join  o.ecole e  join  o.eleve q join o.annee_scolaire n " +
+                            " o.tel2_tuteur ,o.profession_pers_en_charge ,o.boite_postale_pers_en_charge ,o.tel1_pers_en_charge , o.tel2_pers_en_charge ,o.autre_handicap ,o.nom_prenom_pers_en_charge ,o.classe_arabe , o.inscriptions_ecole_origine ,o.transfert ,o.num_decision_affecte ,o.inscriptions_langue_vivante ,o.inscriptions_redoublant , o.inscriptions_boursier ,o.internes ,o.demi_pension ,o.externes,o.ivoirien ,o.etranger_africain ,o.etranger_non_africain) from Inscriptions o join  o.ecole e  join  o.eleve q join o.annee_scolaire n " +
                             " where o.ecole.ecoleid =:idecole and o.annee_scolaire.annee_scolaireid =:idAnnee  and o.inscriptions_type=: typeInscrip ",InscriptionAvaliderDto.class )
                     .setParameter("idecole", idEcole)
                     .setParameter("typeInscrip", typeOperation)
@@ -547,6 +547,14 @@ public  void updatelibelleHandicap_inscrip (Long InscriptionId , Long oldHandica
         myIns.setAutre_handicap(inscriptionDto.getAutre_handicap());
         myIns.setNom_prenom_pers_en_charge(inscriptionDto.getNom_prenom_pers_en_charge());
         myIns.setClasse_arabe(inscriptionDto.getClasse_arabe());
+        myIns.setExternes(inscriptionDto.getExternes());
+        myIns.setInternes(inscriptionDto.getInternes());
+        myIns.setDemi_pension(inscriptionDto.getDemi_pension());
+
+        myIns.setIvoirien(inscriptionDto.getIvoirien());
+        myIns.setEtranger_africain(inscriptionDto.getEtranger_africain());
+        myIns.setEtranger_non_africain(inscriptionDto.getEtranger_non_africain());
+
 
     }
 

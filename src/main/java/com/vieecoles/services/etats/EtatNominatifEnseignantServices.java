@@ -30,26 +30,28 @@ public class EtatNominatifEnseignantServices {
         List<EnseignantSelectDto> listPers = new ArrayList<>() ;
         List<EtatNominatifEnseignatDto> listEtatNomina = new ArrayList<>() ;
         listPers= getInfosEnseignant(idEcole,AnneeId) ;
+        //System.out.println("listPers AAAAA "+listPers.toString());
+        System.out.println("listPers size "+listPers.size());
 
         for (int k=0; k< listPers.size();k++){
             EtatNominatifEnseignatDto m = new EtatNominatifEnseignatDto() ;
             List<ClassesTenuesDto> classesTenuesDto = new ArrayList<>() ;
+           // System.out.println("classesTenuesDto***** "+listPers.get(k).getId());
             classesTenuesDto = getClasseProf(listPers.get(k).getId(),AnneeId) ;
-
+           // System.out.println("classesTenuesDto "+ classesTenuesDto.toString());
             m.setNom(listPers.get(k).getNom());
             m.setPrenoms(listPers.get(k).getPrenoms());
             m.setContact(listPers.get(k).getContact());
             m.setStatutVacPer(listPers.get(k).getStatutVacPer());
             m.setDiplome(listPers.get(k).getDiplome());
+            m.setClassesTenuesDto(classesTenuesDto);
             String dateNaissPer = null;
             // Create a DateTimeFormatter object.
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYY-MM-DD");
             if(listPers.get(k).getDateNaiss()!=null)
            dateNaissPer = listPers.get(k).getDateNaiss().format(formatter);
             m.setDateNaiss(dateNaissPer);
-
-
-
+            listEtatNomina.add(m) ;
         }
 
 
@@ -79,7 +81,7 @@ public class EtatNominatifEnseignantServices {
     public  List<ClassesTenuesDto> getClasseProf(Long idPersonn , Long idAnn) {
 
         List<ClassesTenuesDto> classeNiveauDtoList = new ArrayList<>() ;
-        TypedQuery<ClassesTenuesDto> q = em.createQuery( "SELECT DISTINCT new com.vieecoles.dto.ClassesTenuesDto(c.classelibelle) FROM Personnel_matiere_classe pm , classe c , ecole e  ,personnel p , niveau_etude n ,Annee_Scolaire an " +
+        TypedQuery<ClassesTenuesDto> q = em.createQuery( "SELECT DISTINCT new com.vieecoles.dto.ClassesTenuesDto(c.classelibelle,pm.personnel.personnelid ,an.annee_scolaireid ) FROM Personnel_matiere_classe pm , classe c , ecole e  ,personnel p , niveau_etude n ,Annee_Scolaire an " +
                         "where pm.classe.classeid = c.classeid and c.ecole_ecoleid = e.ecoleid  and pm.personnel.personnelid = p.personnelid" +
                         " and p.niveau_etude.niveau_etudeid  = n.niveau_etudeid and pm.annee_scolaire.annee_scolaireid= an.annee_scolaireid and " +
                         " p.personnelid =:idPersonn and an.annee_scolaireid =:idAnn "

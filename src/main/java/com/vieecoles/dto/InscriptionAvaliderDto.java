@@ -66,6 +66,61 @@ public class InscriptionAvaliderDto {
     private String  inscriptions_langue_vivante ;
     private  String inscriptions_redoublant ;
     private String  inscriptions_boursier ;
+    private  Boolean internes ;
+    private  Boolean demi_pension ;
+    private  Boolean externes ;
+    private  Boolean ivoirien ;
+    private  Boolean etranger_africain ;
+    private  Boolean etranger_non_africain ;
+
+    public Boolean getInternes() {
+        return internes;
+    }
+
+    public void setInternes(Boolean internes) {
+        this.internes = internes;
+    }
+
+    public Boolean getDemi_pension() {
+        return demi_pension;
+    }
+
+    public void setDemi_pension(Boolean demi_pension) {
+        this.demi_pension = demi_pension;
+    }
+
+    public Boolean getExternes() {
+        return externes;
+    }
+
+    public void setExternes(Boolean externes) {
+        this.externes = externes;
+    }
+
+    public Boolean getIvoirien() {
+        return ivoirien;
+    }
+
+    public void setIvoirien(Boolean ivoirien) {
+        this.ivoirien = ivoirien;
+    }
+
+    public Boolean getEtranger_africain() {
+        return etranger_africain;
+    }
+
+    public void setEtranger_africain(Boolean etranger_africain) {
+        this.etranger_africain = etranger_africain;
+    }
+
+    public Boolean getEtranger_non_africain() {
+        return etranger_non_africain;
+    }
+
+    public void setEtranger_non_africain(Boolean etranger_non_africain) {
+        this.etranger_non_africain = etranger_non_africain;
+    }
+
     public String getEcole_origine() {
         return ecole_origine;
     }
@@ -424,7 +479,13 @@ public class InscriptionAvaliderDto {
                                   String num_decision_affectation ,
                                   String inscriptions_langue_vivante ,
                                   String inscriptions_redoublant ,
-                                  String inscriptions_boursier
+                                  String inscriptions_boursier ,
+                                  Boolean internes ,
+                                  Boolean demi_pension ,
+                                  Boolean externes ,
+                                  Boolean ivoirien ,
+                                  Boolean etranger_africain ,
+                                  Boolean etranger_non_africain
 
     ) {
         this.idEleveInscrit = idEleveInscrit ;
@@ -479,6 +540,12 @@ public class InscriptionAvaliderDto {
         this.inscriptions_langue_vivante = inscriptions_langue_vivante ;
         this.inscriptions_redoublant = inscriptions_redoublant ;
         this.inscriptions_boursier = inscriptions_boursier ;
+        this.internes = internes ;
+        this.demi_pension = demi_pension ;
+        this.externes = externes ;
+        this.ivoirien = ivoirien ;
+        this.etranger_africain = etranger_africain ;
+        this.etranger_non_africain = etranger_non_africain ;
 
     }
 
