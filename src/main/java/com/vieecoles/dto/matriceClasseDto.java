@@ -3,7 +3,7 @@ package com.vieecoles.dto;
 import java.util.List;
 
 public class matriceClasseDto {
-   private  Long idEleve ;
+   private  Long ideleve ;
    private  String matricule ;
     private  String nom ;
     private  String prenoms;
@@ -11,6 +11,27 @@ public class matriceClasseDto {
     private  String appreciation ;
     private String periode ;
     private String anneScolaire ;
+    private  Double moyenTrimes ;
+
+    public Double getMoyenTrimes() {
+        return moyenTrimes;
+    }
+
+    public void setMoyenTrimes(Double moyenTrimes) {
+        this.moyenTrimes = moyenTrimes;
+    }
+
+    private List<matiereMoyenneDto>  matiereMoyenneDto ;
+
+    public Long getIdeleve() {
+        return ideleve;
+    }
+
+    public void setIdeleve(Long ideleve) {
+        this.ideleve = ideleve;
+    }
+
+
 
     public String getPeriode() {
         return periode;
@@ -28,17 +49,17 @@ public class matriceClasseDto {
         this.anneScolaire = anneScolaire;
     }
 
-    private List<matiereMoyenneDto>  matiereMoyenneDto ;
+
 
     public matriceClasseDto() {
     }
 
     public Long getIdEleve() {
-        return idEleve;
+        return ideleve;
     }
 
     public void setIdEleve(Long idEleve) {
-        this.idEleve = idEleve;
+        this.ideleve = idEleve;
     }
 
     public String getMatricule() {
@@ -87,5 +108,20 @@ public class matriceClasseDto {
 
     public void setMatiereMoyenneDto(List<com.vieecoles.dto.matiereMoyenneDto> matiereMoyenneDto) {
         this.matiereMoyenneDto = matiereMoyenneDto;
+    }
+
+    @Override
+    public String toString() {
+        return "matriceClasseDto{" +
+                "idEleve=" + ideleve +
+                ", matricule='" + matricule + '\'' +
+                ", nom='" + nom + '\'' +
+                ", prenoms='" + prenoms + '\'' +
+                ", rang=" + rang +
+                ", appreciation='" + appreciation + '\'' +
+                ", periode='" + periode + '\'' +
+                ", anneScolaire='" + anneScolaire + '\'' +
+                ", matiereMoyenneDto=" + matiereMoyenneDto +
+                '}';
     }
 }

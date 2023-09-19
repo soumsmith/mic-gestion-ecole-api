@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Spider_Book" pageWidth="595" pageHeight="842" sectionType="Part" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="d2716064-8ae4-40cf-a575-33afba400e3a">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ecolevieDB2"/>
+	<property name="net.sf.jasperreports.print.create.bookmarks" value="true"/>
+	<property name="com.jaspersoft.studio.book.group.cover.header" value="Cover and Table of Contents"/>
+	<property name="com.jaspersoft.studio.book.group.cover.footer" value="Backcover"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="net.sf.jasperreports.default.font.name" value="Sans Serif"/>
+	<parameter name="codeEcole" class="java.lang.String"/>
+	<parameter name="SUB_REPORT_DIR" class="java.lang.String" isForPrompting="false"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT NOW() as DATE]]>
+	</queryString>
+	<field name="rapportRentreeDto" class="java.util.List"/>
+	<field name="pyramideEffectDto1" class="java.util.List"/>
+	<field name="pyramideEffectDto2" class="java.util.List"/>
+	<field name="pyramideEffectDtoBilan" class="java.util.List"/>
+	<field name="effectifElevLangueVivante2Dto" class="java.util.List"/>
+	<field name="etatNominatifEnseignatDto" class="java.util.List"/>
+	<field name="comparatifDto" class="java.util.List"/>
+	<detail>
+		<part uuid="968947e9-d627-441c-a302-1bd9eaebff99">
+			<p:subreportPart xmlns:p="http://jasperreports.sourceforge.net/jasperreports/parts" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/parts http://jasperreports.sourceforge.net/xsd/parts.xsd">
+				<subreportParameter name="REPORT_CONNECTION">
+					<subreportParameterExpression><![CDATA[$P{REPORT_CONNECTION}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="REPORT_DATA_SOURCE">
+					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{rapportRentreeDto})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportExpression><![CDATA["etats/spider/RapportDerentree/Profil_des_enseignants.jasper"]]></subreportExpression>
+			</p:subreportPart>
+		</part>
+		<part uuid="968947e9-d627-441c-a302-1bd9eaebff98">
+			<p:subreportPart xmlns:p="http://jasperreports.sourceforge.net/jasperreports/parts" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/parts http://jasperreports.sourceforge.net/xsd/parts.xsd">
+				<subreportParameter name="REPORT_CONNECTION">
+					<subreportParameterExpression><![CDATA[$P{REPORT_CONNECTION}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="REPORT_DATA_SOURCE">
+					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{etatNominatifEnseignatDto})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportExpression><![CDATA["etats/spider/RapportDerentree/Etat_nominatif_des_enseignants.jasper"]]></subreportExpression>
+			</p:subreportPart>
+		</part>
+		<part uuid="968947e9-d627-441c-a302-1bd9eaebff68">
+			<p:subreportPart xmlns:p="http://jasperreports.sourceforge.net/jasperreports/parts" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/parts http://jasperreports.sourceforge.net/xsd/parts.xsd">
+				<subreportParameter name="REPORT_CONNECTION">
+					<subreportParameterExpression><![CDATA[$P{REPORT_CONNECTION}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="REPORT_DATA_SOURCE">
+					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{pyramideEffectDto1})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportExpression><![CDATA["etats/spider/RapportDerentree/Pyramide_et_effectifs_eleves.jasper"]]></subreportExpression>
+			</p:subreportPart>
+		</part>
+		<part uuid="968947e9-d627-441c-a302-1bd9eaebff65">
+			<p:subreportPart xmlns:p="http://jasperreports.sourceforge.net/jasperreports/parts" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/parts http://jasperreports.sourceforge.net/xsd/parts.xsd">
+				<subreportParameter name="REPORT_CONNECTION">
+					<subreportParameterExpression><![CDATA[$P{REPORT_CONNECTION}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="REPORT_DATA_SOURCE">
+					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{pyramideEffectDto2})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportExpression><![CDATA["etats/spider/RapportDerentree/Pyramide_et_effectifs_eleSecon.jasper"]]></subreportExpression>
+			</p:subreportPart>
+		</part>
+		<part uuid="968947e9-d627-441c-a302-1bd9eaebff99">
+			<p:subreportPart xmlns:p="http://jasperreports.sourceforge.net/jasperreports/parts" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/parts http://jasperreports.sourceforge.net/xsd/parts.xsd">
+				<subreportParameter name="REPORT_CONNECTION">
+					<subreportParameterExpression><![CDATA[$P{REPORT_CONNECTION}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="REPORT_DATA_SOURCE">
+					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{pyramideEffectDtoBilan})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportExpression><![CDATA["etats/spider/RapportDerentree/Pyramide_et_effectifs_eleveBilan.jasper"]]></subreportExpression>
+			</p:subreportPart>
+		</part>
+		<part uuid="968947e9-d627-441c-a302-1bd9eaebff19">
+			<p:subreportPart xmlns:p="http://jasperreports.sourceforge.net/jasperreports/parts" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/parts http://jasperreports.sourceforge.net/xsd/parts.xsd">
+				<subreportParameter name="REPORT_CONNECTION">
+					<subreportParameterExpression><![CDATA[$P{REPORT_CONNECTION}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="REPORT_DATA_SOURCE">
+					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{pyramideEffectDto1})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportExpression><![CDATA["etats/spider/RapportDerentree/Recapitulatif_statique_filiere_classe1erCycle.jasper"]]></subreportExpression>
+			</p:subreportPart>
+		</part>
+		<part uuid="968947e9-d627-441c-a302-1bd9eaebff29">
+			<p:subreportPart xmlns:p="http://jasperreports.sourceforge.net/jasperreports/parts" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/parts http://jasperreports.sourceforge.net/xsd/parts.xsd">
+				<subreportParameter name="REPORT_CONNECTION">
+					<subreportParameterExpression><![CDATA[$P{REPORT_CONNECTION}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="REPORT_DATA_SOURCE">
+					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{pyramideEffectDto2})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportExpression><![CDATA["etats/spider/RapportDerentree/Recapitulatif_statique_filiere_classe1erCycle2.jasper"]]></subreportExpression>
+			</p:subreportPart>
+		</part>
+		<part uuid="968947e9-d627-441c-a302-1bd9eaebff39">
+			<p:subreportPart xmlns:p="http://jasperreports.sourceforge.net/jasperreports/parts" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/parts http://jasperreports.sourceforge.net/xsd/parts.xsd">
+				<subreportParameter name="REPORT_CONNECTION">
+					<subreportParameterExpression><![CDATA[$P{REPORT_CONNECTION}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="REPORT_DATA_SOURCE">
+					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{pyramideEffectDtoBilan})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportExpression><![CDATA["etats/spider/RapportDerentree/Recapitulatif_statique_filiere_classe1erBilan.jasper"]]></subreportExpression>
+			</p:subreportPart>
+		</part>
+		<part uuid="968947e9-d627-441c-a302-1bd9eaebff49">
+			<p:subreportPart xmlns:p="http://jasperreports.sourceforge.net/jasperreports/parts" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/parts http://jasperreports.sourceforge.net/xsd/parts.xsd">
+				<subreportParameter name="REPORT_CONNECTION">
+					<subreportParameterExpression><![CDATA[$P{REPORT_CONNECTION}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="REPORT_DATA_SOURCE">
+					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{pyramideEffectDto1})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportExpression><![CDATA["etats/spider/RapportDerentree/StatistiqueEleveStatus.jasper"]]></subreportExpression>
+			</p:subreportPart>
+		</part>
+		<part uuid="968947e9-d627-441c-a302-1bd9eaebff59">
+			<p:subreportPart xmlns:p="http://jasperreports.sourceforge.net/jasperreports/parts" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/parts http://jasperreports.sourceforge.net/xsd/parts.xsd">
+				<subreportParameter name="REPORT_CONNECTION">
+					<subreportParameterExpression><![CDATA[$P{REPORT_CONNECTION}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="REPORT_DATA_SOURCE">
+					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{pyramideEffectDto2})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportExpression><![CDATA["etats/spider/RapportDerentree/StatistiqueEleveStatus2.jasper"]]></subreportExpression>
+			</p:subreportPart>
+		</part>
+		<part uuid="968947e9-d627-441c-a302-1bd9eaebff69">
+			<p:subreportPart xmlns:p="http://jasperreports.sourceforge.net/jasperreports/parts" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/parts http://jasperreports.sourceforge.net/xsd/parts.xsd">
+				<subreportParameter name="REPORT_CONNECTION">
+					<subreportParameterExpression><![CDATA[$P{REPORT_CONNECTION}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="REPORT_DATA_SOURCE">
+					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{pyramideEffectDtoBilan})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportExpression><![CDATA["etats/spider/RapportDerentree/StatistiqueEleveStatusBilan.jasper"]]></subreportExpression>
+			</p:subreportPart>
+		</part>
+		<part uuid="968947e9-d627-441c-a302-1bd9eaebff70">
+			<p:subreportPart xmlns:p="http://jasperreports.sourceforge.net/jasperreports/parts" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/parts http://jasperreports.sourceforge.net/xsd/parts.xsd">
+				<subreportParameter name="REPORT_CONNECTION">
+					<subreportParameterExpression><![CDATA[$P{REPORT_CONNECTION}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="REPORT_DATA_SOURCE">
+					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{pyramideEffectDto1})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportExpression><![CDATA["etats/spider/RapportDerentree/Statut_eleve.jasper"]]></subreportExpression>
+			</p:subreportPart>
+		</part>
+		<part uuid="968947e9-d627-441c-a302-1bd9eaebff71">
+			<p:subreportPart xmlns:p="http://jasperreports.sourceforge.net/jasperreports/parts" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/parts http://jasperreports.sourceforge.net/xsd/parts.xsd">
+				<subreportParameter name="REPORT_CONNECTION">
+					<subreportParameterExpression><![CDATA[$P{REPORT_CONNECTION}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="REPORT_DATA_SOURCE">
+					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{pyramideEffectDto2})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportExpression><![CDATA["etats/spider/RapportDerentree/Statut_eleve2.jasper"]]></subreportExpression>
+			</p:subreportPart>
+		</part>
+		<part uuid="968947e9-d627-441c-a302-1bd9eaebff71">
+			<p:subreportPart xmlns:p="http://jasperreports.sourceforge.net/jasperreports/parts" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/parts http://jasperreports.sourceforge.net/xsd/parts.xsd">
+				<subreportParameter name="REPORT_CONNECTION">
+					<subreportParameterExpression><![CDATA[$P{REPORT_CONNECTION}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="REPORT_DATA_SOURCE">
+					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{pyramideEffectDtoBilan})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportExpression><![CDATA["etats/spider/RapportDerentree/Statut_eleveBilan.jasper"]]></subreportExpression>
+			</p:subreportPart>
+		</part>
+		<part uuid="968947e9-d627-441c-a302-1bd9eaebff72">
+			<p:subreportPart xmlns:p="http://jasperreports.sourceforge.net/jasperreports/parts" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/parts http://jasperreports.sourceforge.net/xsd/parts.xsd">
+				<subreportParameter name="REPORT_CONNECTION">
+					<subreportParameterExpression><![CDATA[$P{REPORT_CONNECTION}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="REPORT_DATA_SOURCE">
+					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{pyramideEffectDto1})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportExpression><![CDATA["etats/spider/RapportDerentree/Eleve_Nationnalite.jasper"]]></subreportExpression>
+			</p:subreportPart>
+		</part>
+		<part uuid="968947e9-d627-441c-a302-1bd9eaebff73">
+			<p:subreportPart xmlns:p="http://jasperreports.sourceforge.net/jasperreports/parts" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/parts http://jasperreports.sourceforge.net/xsd/parts.xsd">
+				<subreportParameter name="REPORT_CONNECTION">
+					<subreportParameterExpression><![CDATA[$P{REPORT_CONNECTION}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="REPORT_DATA_SOURCE">
+					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{pyramideEffectDto2})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportExpression><![CDATA["etats/spider/RapportDerentree/Eleve_Nationnalite2.jasper"]]></subreportExpression>
+			</p:subreportPart>
+		</part>
+		<part uuid="968947e9-d627-441c-a302-1bd9eaebff74">
+			<p:subreportPart xmlns:p="http://jasperreports.sourceforge.net/jasperreports/parts" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/parts http://jasperreports.sourceforge.net/xsd/parts.xsd">
+				<subreportParameter name="REPORT_CONNECTION">
+					<subreportParameterExpression><![CDATA[$P{REPORT_CONNECTION}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="REPORT_DATA_SOURCE">
+					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{pyramideEffectDtoBilan})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportExpression><![CDATA["etats/spider/RapportDerentree/Eleve_NationnaliteBilan.jasper"]]></subreportExpression>
+			</p:subreportPart>
+		</part>
+		<part uuid="968947e9-d627-441c-a302-1bd9eaebff75">
+			<p:subreportPart xmlns:p="http://jasperreports.sourceforge.net/jasperreports/parts" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/parts http://jasperreports.sourceforge.net/xsd/parts.xsd">
+				<subreportParameter name="REPORT_CONNECTION">
+					<subreportParameterExpression><![CDATA[$P{REPORT_CONNECTION}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="REPORT_DATA_SOURCE">
+					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{effectifElevLangueVivante2Dto})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportExpression><![CDATA["etats/spider/RapportDerentree/effectifParLanguevivante.jasper"]]></subreportExpression>
+			</p:subreportPart>
+		</part>
+
+		<part uuid="968947e9-d627-441c-a302-1bd9eaebff75">
+			<p:subreportPart xmlns:p="http://jasperreports.sourceforge.net/jasperreports/parts" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/parts http://jasperreports.sourceforge.net/xsd/parts.xsd">
+				<subreportParameter name="REPORT_CONNECTION">
+					<subreportParameterExpression><![CDATA[$P{REPORT_CONNECTION}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="REPORT_DATA_SOURCE">
+					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{comparatifDto})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportExpression><![CDATA["etats/spider/RapportDerentree/ComparatifEffecPyramide2.jasper"]]></subreportExpression>
+			</p:subreportPart>
+		</part>
+
+
+
+	</detail>
+</jasperReport>

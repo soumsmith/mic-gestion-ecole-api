@@ -3,6 +3,15 @@ package com.vieecoles.dto;
 public class matiereMoyenneBilanDto {
     private String libelleMatiereBilan ;
     private Double moyMatiereBilan ;
+    private String ecoleId ;
+
+    public String getEcoleId() {
+        return ecoleId;
+    }
+
+    public void setEcoleId(String ecoleId) {
+        this.ecoleId = ecoleId;
+    }
 
     public matiereMoyenneBilanDto() {
     }

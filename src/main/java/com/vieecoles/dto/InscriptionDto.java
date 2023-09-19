@@ -71,6 +71,61 @@ public class InscriptionDto {
     private String autre_handicap ;
     private String nom_prenom_pers_en_charge ;
     private String classe_arabe ;
+    private Boolean internes;
+    private Boolean demi_pension;
+    private Boolean externes;
+    private Boolean ivoirien;
+    private Boolean etranger_africain;
+    private Boolean etranger_non_africain;
+
+
+    public Boolean getInternes() {
+        return internes;
+    }
+
+    public void setInternes(Boolean internes) {
+        this.internes = internes;
+    }
+
+    public Boolean getDemi_pension() {
+        return demi_pension;
+    }
+
+    public void setDemi_pension(Boolean demi_pension) {
+        this.demi_pension = demi_pension;
+    }
+
+    public Boolean getExternes() {
+        return externes;
+    }
+
+    public void setExternes(Boolean externes) {
+        this.externes = externes;
+    }
+
+    public Boolean getIvoirien() {
+        return ivoirien;
+    }
+
+    public void setIvoirien(Boolean ivoirien) {
+        this.ivoirien = ivoirien;
+    }
+
+    public Boolean getEtranger_africain() {
+        return etranger_africain;
+    }
+
+    public void setEtranger_africain(Boolean etranger_africain) {
+        this.etranger_africain = etranger_africain;
+    }
+
+    public Boolean getEtranger_non_africain() {
+        return etranger_non_africain;
+    }
+
+    public void setEtranger_non_africain(Boolean etranger_non_africain) {
+        this.etranger_non_africain = etranger_non_africain;
+    }
 
     public String getNom_prenoms_pere() {
         return nom_prenoms_pere;

@@ -79,4 +79,17 @@ public class EnseignantSelectDto {
     public void setStatutVacPer(String statutVacPer) {
         this.statutVacPer = statutVacPer;
     }
+
+    @Override
+    public String toString() {
+        return "EnseignantSelectDto{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                ", prenoms='" + prenoms + '\'' +
+                ", dateNaiss=" + dateNaiss +
+                ", diplome='" + diplome + '\'' +
+                ", contact='" + contact + '\'' +
+                ", statutVacPer='" + statutVacPer + '\'' +
+                '}';
+    }
 }

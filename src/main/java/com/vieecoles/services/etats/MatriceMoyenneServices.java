@@ -300,6 +300,21 @@ public class MatriceMoyenneServices {
 
     }
 
+    public  Double getBilanMoyMatiere(String libelleMatiere,String periode ,String libelleAnnee){
+        try {
+            Double   moyClasseF = (Double) em.createQuery("select avg(d.moyenne)   from DetailBulletin  d join d.bulletin b  where  d.matiereLibelle=:libelleMatiere  and b.anneeLibelle=:libelleAnnee " +
+                            " and b.libellePeriode=:periode ")
+                    .setParameter("libelleMatiere",libelleMatiere)
+                    .setParameter("periode",periode)
+                    .setParameter("libelleAnnee", libelleAnnee)
+                    .getSingleResult();
+            return  moyClasseF ;
+        } catch (NoResultException e){
+            return 0D ;
+        }
+
+    }
+
     public  Double getMoyAvgMatiere(String libelleMatiere,String periode ,String libelleAnnee ,Long idEcole ,String classe){
         try {
             Double   moyClasseF = (Double) em.createQuery("select  Avg(d.moyenne)   from DetailBulletin  d join d.bulletin b  where  d.matiereLibelle=:libelleMatiere  and b.anneeLibelle=:libelleAnnee " +
