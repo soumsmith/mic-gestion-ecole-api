@@ -186,7 +186,8 @@ public class EvaluationService implements PanacheRepositoryBase<Evaluation, Long
 			AnneeScolaire annee = anneeService.getById(ev.getAnnee().getId());
 			AnneeScolaire anneeEcole = anneeService.getByEcoleAndAnneeDebut(ev.getClasse().getEcole().getId(), annee.getAnneeDebut());
 			Date dateEvaluation = ev.getDate();
-			Integer nombreJoursDelai = anneeEcole.getDelaiNotes();
+			Integer nombreJoursDelai = anneeEcole.getDelaiNotes() !=null ? anneeEcole.getDelaiNotes() : 0;
+			System.out.println("nombreJoursDelai : "+nombreJoursDelai);
 			Date dateLimiteSaisieAutorise = DateUtils.addDays(dateEvaluation, nombreJoursDelai);
 			Date today = new Date();
 			today =  DateUtils.getDateAtStartDay(today);

@@ -64,10 +64,18 @@ public class AnneeResource {
 	public Response getById(@PathParam("id") Long id) {
 		return Response.ok().entity(anneeService.getById(id)).build();
 	}
+	
+	@GET
+	@Path("/info-annee/{ecoleId}")
+	@Operation(description = "Informations sur l année et les periode par rapport à la date courante", summary = "")
+	@Tag(name = "Année scolaire")
+	public Response getAnneeInfos(@PathParam("ecoleId") Long ecoleId) {
+		return Response.ok().entity(anneeService.getAnneeInfo(ecoleId)).build();
+	}
 
 	@GET
 	@Path("/delete/{id}")
-	@Operation(description = "Obtenir une année scolaire via son id", summary = "")
+	@Operation(description = "supprimer une année scolaire via son id", summary = "")
 	@Tag(name = "Année scolaire")
 	public Response delete(@PathParam("id") Long id) {
 		try {

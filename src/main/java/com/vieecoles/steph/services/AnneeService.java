@@ -1,11 +1,14 @@
 package com.vieecoles.steph.services;
 
 import com.google.gson.Gson;
+import com.vieecoles.steph.dto.AnneeInfoDto;
 import com.vieecoles.steph.entities.AnneePeriode;
 import com.vieecoles.steph.entities.AnneeScolaire;
 import com.vieecoles.steph.entities.Constants;
 import com.vieecoles.steph.entities.Ecole;
+import com.vieecoles.steph.entities.Periode;
 import com.vieecoles.steph.pojos.AnneePeriodePojo;
+import com.vieecoles.steph.pojos.SorterAnneePeriodePojo;
 import com.vieecoles.steph.util.DateUtils;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
@@ -28,6 +31,9 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 	EcoleService ecoleService;
 	@Inject
 	BulletinService bulletinService;
+	
+	@Inject
+	PeriodeService periodeService;
 
 	public List<AnneeScolaire> getList() {
 
@@ -177,12 +183,12 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 		}
 		return annees;
 	}
-	
+
 	public AnneeScolaire getByEcoleAndAnneeDebut(Long ecole, Integer anneeDebut) {
 		AnneeScolaire anneeScolaire = new AnneeScolaire();
 		try {
-			anneeScolaire = AnneeScolaire.find("ecole.id=?1 and anneeDebut =?2", ecole,anneeDebut).singleResult();
-		}catch (RuntimeException e) {
+			anneeScolaire = AnneeScolaire.find("ecole.id=?1 and anneeDebut =?2", ecole, anneeDebut).singleResult();
+		} catch (RuntimeException e) {
 			e.printStackTrace();
 		}
 		return anneeScolaire;
@@ -377,6 +383,7 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 				anneeTemp.setEcole(ecole);
 				anneeTemp.setUser(annee.getUser());
 				anneeTemp.setNiveau(Constants.ECOLE);
+				anneeTemp.setDelaiNotes(Constants.DEFAULT_DELAI_SAISIE_NOTES);
 				create(anneeTemp);
 				System.out.println(String.format("----> %s - %s", anneeTemp.getId(), anneeTemp.getLibelle()));
 				anneePeriodeService.handleSharingToEcole(annee.getId(), anneeTemp);
@@ -402,5 +409,80 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 
 	public long count() {
 		return AnneeScolaire.count();
+	}
+
+	Integer getIndex(Long id, List<SorterAnneePeriodePojo> list) {
+		int index = -1;
+		int cmpte = 0;
+		for (SorterAnneePeriodePojo elmt : list) {
+			if (elmt.getId() == id) {
+				index = cmpte;
+				break;
+			}
+			cmpte++;
+
+		}
+		return index;
+	}
+
+	public List<SorterAnneePeriodePojo> buildSorter(List<AnneePeriodePojo> anneePeriodePojos) {
+		List<SorterAnneePeriodePojo> list = new ArrayList<SorterAnneePeriodePojo>();
+		for (AnneePeriodePojo ap : anneePeriodePojos) {
+			String[] pattern = ap.getId().split("_");
+			if (pattern != null && pattern.length > 1) {
+				Long id = Long.parseLong(pattern[1]);
+				Integer index = getIndex(id, list);
+				if (index == -1) {
+					SorterAnneePeriodePojo sap = new SorterAnneePeriodePojo();
+					sap.setId(id);
+					if (pattern[0].equals("deb"))
+						sap.setPeriodeDebut(ap.getValue());
+					else if (pattern[0].equals("fin"))
+						sap.setPeriodeFin(DateUtils.getLastTimeFromDate(ap.getValue()));
+					list.add(sap);
+
+				}else {
+					if (pattern[0].equals("deb"))
+						list.get(index).setPeriodeDebut(ap.getValue());
+					else if (pattern[0].equals("fin"))
+						list.get(index).setPeriodeFin(DateUtils.getLastTimeFromDate(ap.getValue()));
+					
+				}
+			}
+
+		}
+		return list;
+	}
+
+	public AnneeInfoDto getAnneeInfo(Long ecoleId) {
+		Date today = new Date();
+		Gson g = new Gson();
+		AnneeInfoDto infos = new AnneeInfoDto();
+		List<AnneeScolaire> anneeOuverteList = getByEcoleAndStatut(ecoleId, Constants.OUVERT);
+		AnneeScolaire anneeOuverte = new AnneeScolaire();
+		if (anneeOuverteList.size() > 0) {
+			anneeOuverte = populateEntityEcole(anneeOuverteList.get(0));
+			List<SorterAnneePeriodePojo> sorterList = buildSorter(anneeOuverte.getAnneePeriodes());
+			infos.setAnneeId(anneeOuverte.getId());
+			infos.setAnneeLibelle(anneeOuverte.getCustomLibelle());
+//			System.out.println(anneeOuverte.getCustomLibelle());
+			for(SorterAnneePeriodePojo sap : sorterList) {
+				infos.setSeverity(Constants.SEVERITY_SUCCESS);
+				if(today.after(sap.getPeriodeDebut()) && today.before(sap.getPeriodeFin())) {
+					Periode per = Periode.findById(sap.getId());
+					infos.setDateDebut(sap.getPeriodeDebut());
+					infos.setDateFin(sap.getPeriodeFin());
+					infos.setPeriodeId(sap.getId());
+					infos.setPeriodeLibelle(per.getLibelle());
+					break;
+				}
+			}
+			
+		}else {
+			infos.setAnneeLibelle("Aucune année ouverte");
+			infos.setSeverity(Constants.SEVERITY_DANGER);
+		}
+
+		return infos;
 	}
 }

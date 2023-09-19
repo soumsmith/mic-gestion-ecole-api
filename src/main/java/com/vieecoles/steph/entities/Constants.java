@@ -37,9 +37,13 @@ public class Constants {
 	
 	public static final String DEFAULT_NOTE_SUR = "20";
 	public static final String DEFAULT_COEFFICIENT = "1";
+	public static final int DEFAULT_DELAI_SAISIE_NOTES = 7;
 	
 	public static final String CENTRAL = "CENTRAL";
 	public static final String ECOLE = "ECOLE";
+	
+	public static final String SEVERITY_SUCCESS = "success";
+	public static final String SEVERITY_DANGER = "danger";
 
 	public static final Double MOYENNE_ELEVE_NON_CLASSE_MATIERE = -1.00;
 	

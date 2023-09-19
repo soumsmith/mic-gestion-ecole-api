@@ -3,6 +3,7 @@ package com.vieecoles.steph.util;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
@@ -34,6 +35,11 @@ public class DateUtils {
 
 	public static LocalDateTime asLocalDateTime(Date date) {
 		return Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDateTime();
+	}
+	
+	public static Date getLastTimeFromDate(Date date) {
+		LocalDate dt = Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
+		return asDate(dt.atTime(LocalTime.MAX));
 	}
 	
 	// Ajouter un nombre de jours à une date
