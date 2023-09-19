@@ -127,7 +127,7 @@ public class AnneeResource {
 	public Response saveOrDisplayAndDisplay(AnneeScolaire anneeScolaire) {
 		Gson g = new Gson();
 		try {
-			System.out.println(g.toJson(anneeScolaire));
+//			System.out.println(g.toJson(anneeScolaire));
 			AnneeScolaire annee = anneeService.handleOpenAnnee(anneeScolaire);
 			return Response.ok(annee).build();
 		} catch (RuntimeException e) {

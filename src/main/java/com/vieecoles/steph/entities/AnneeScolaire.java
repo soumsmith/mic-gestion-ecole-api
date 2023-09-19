@@ -53,6 +53,8 @@ public class AnneeScolaire extends PanacheEntityBase{
 	@ManyToOne
 	@JoinColumn(name = "ecole_id")
 	private Ecole ecole;
+	@Column(name="delai_notes")
+	private Integer delaiNotes;
 	// Niveau CENTRAL ou ECOLE
 	private String niveau;
 	private String user;

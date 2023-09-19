@@ -217,9 +217,8 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 				bulletinsArchives = Bulletin.find("classeId = ?1 and anneeId= ?2 and periodeId = ?3 and statut =?4",
 						Long.parseLong(classe), Long.parseLong(annee), Long.parseLong(periode), Constants.ARCHIVE)
 						.count();
-				if (bulletinsArchives == 0L) {
-					throw new RuntimeException(String
-							.format("Les bulletins sont archivés, aucune modification possible!", e.getMessage()));
+				if (bulletinsArchives != 0L) {
+					throw new RuntimeException("Les bulletins sont archivés, aucune modification possible!");
 				}
 			} else
 				throw new RuntimeException(

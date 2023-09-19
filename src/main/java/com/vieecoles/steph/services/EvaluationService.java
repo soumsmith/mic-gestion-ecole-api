@@ -1,13 +1,20 @@
 package com.vieecoles.steph.services;
 
 import com.google.gson.Gson;
+import com.vieecoles.steph.dto.LockedDto;
+import com.vieecoles.steph.entities.AnneeScolaire;
 import com.vieecoles.steph.entities.Evaluation;
+import com.vieecoles.steph.util.DateUtils;
+
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 import io.quarkus.panache.common.Parameters;
 
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.NotFoundException;
+
+import org.apache.poi.ss.formula.functions.Today;
 
 import java.sql.Time;
 import java.time.LocalDateTime;
@@ -20,6 +27,9 @@ import java.util.logging.Logger;
 
 @RequestScoped
 public class EvaluationService implements PanacheRepositoryBase<Evaluation, Long> {
+	
+	@Inject
+	AnneeService anneeService;
 
 	Logger logger = Logger.getLogger(EvaluationService.class.getName());
 
@@ -166,5 +176,26 @@ public class EvaluationService implements PanacheRepositoryBase<Evaluation, Long
 
 	public long count() {
 		return Evaluation.count();
+	}
+	
+	public LockedDto isLockable(Long evaluationId) {
+		Evaluation ev = findById(evaluationId);
+		LockedDto dto = new LockedDto();
+		int flat = 1; 
+		if(ev!=null) {
+			AnneeScolaire annee = anneeService.getById(ev.getAnnee().getId());
+			AnneeScolaire anneeEcole = anneeService.getByEcoleAndAnneeDebut(ev.getClasse().getEcole().getId(), annee.getAnneeDebut());
+			Date dateEvaluation = ev.getDate();
+			Integer nombreJoursDelai = anneeEcole.getDelaiNotes();
+			Date dateLimiteSaisieAutorise = DateUtils.addDays(dateEvaluation, nombreJoursDelai);
+			Date today = new Date();
+			today =  DateUtils.getDateAtStartDay(today);
+			flat = today.compareTo(dateLimiteSaisieAutorise);
+			System.out.println(String.format("Date evaluation: %s - jours délai %s - Date limite: %s (is blocked? %s - today %s)", dateEvaluation,nombreJoursDelai,dateLimiteSaisieAutorise,flat, today));
+			dto.setDateLimite(dateLimiteSaisieAutorise);
+			if(flat<=0)
+				dto.setIsLocked(false);
+		}
+		return dto;
 	}
 }
