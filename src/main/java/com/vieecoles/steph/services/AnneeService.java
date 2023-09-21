@@ -335,8 +335,9 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 					ecole.getNiveauEnseignement().getId());
 			for (AnneeScolaire an : annees) {
 				AnneeScolaire anneeTemp = new AnneeScolaire();
-				anneeTemp.setLibelle(an.getCustomLibelle());
 				anneeTemp.setAnneeDebut(an.getAnneeDebut());
+				anneeTemp.setAnneeFin(an.getAnneeDebut()+1);
+				anneeTemp.setLibelle(an.getCustomLibelle());
 				anneeTemp.setNbreEval(an.getNbreEval());
 				anneeTemp.setNiveauEnseignement(an.getNiveauEnseignement());
 				anneeTemp.setPeriodicite(an.getPeriodicite());
@@ -345,7 +346,7 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 				anneeTemp.setUser(an.getUser());
 				anneeTemp.setNiveau(Constants.ECOLE);
 				create(anneeTemp);
-				System.out.println(String.format("Init----> %s - %s", anneeTemp.getId(), anneeTemp.getLibelle()));
+				System.out.println(String.format("Init----> %s - %s", anneeTemp.getId(), anneeTemp.getCustomLibelle()));
 				anneePeriodeService.handleSharingToEcole(an.getId(), anneeTemp);
 			}
 		}

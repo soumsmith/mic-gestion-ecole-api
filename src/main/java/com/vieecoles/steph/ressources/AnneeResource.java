@@ -3,6 +3,7 @@ package com.vieecoles.steph.ressources;
 import com.google.gson.Gson;
 import com.vieecoles.steph.entities.AnneeScolaire;
 import com.vieecoles.steph.entities.Ecole;
+import com.vieecoles.steph.services.AnneePeriodeService;
 import com.vieecoles.steph.services.AnneeService;
 import com.vieecoles.steph.services.EcoleService;
 
@@ -21,6 +22,9 @@ import javax.ws.rs.core.Response;
 public class AnneeResource {
 	@Inject
 	AnneeService anneeService;
+	
+	@Inject
+	AnneePeriodeService anneePeriodeService;
 	
 	@Inject
 	EcoleService ecoleService;
@@ -128,6 +132,19 @@ public class AnneeResource {
 			return Response.serverError().build();
 		}
 	}
+	
+//	@GET
+//	@Path("/test-annee-periode/")
+//	@Operation(description = "Initialiser les années scolaires pour une nouvelle école créee", summary = "")
+//	@Tag(name = "Année scolaire")
+//	public Response initAnneePeriode(@QueryParam("anneeId") Long anneeId, @QueryParam("niveauId") Long niveauId) {
+//		try {
+//			return Response.ok(anneePeriodeService.listByAnneeAndNiveauEnseignementToCentral(anneeId, niveauId)).build();
+//		} catch (RuntimeException r) {
+//			r.printStackTrace();
+//			return Response.serverError().build();
+//		}
+//	}
 	
 	@POST
 	@Path("/save-update")
