@@ -21,42 +21,42 @@ import lombok.Setter;
             name = "Inscription.getNewEleveCount",
             query = "select count(c.nbreOcc) from ( "
             		+ "SELECT COUNT(ins.eleve_eleveid) as nbreOcc, ins.eleve_eleveid  FROM inscriptions ins"
-            		+ "  where ins.ecole_ecoleid = :ecoleId "
+            		+ "  where ins.ecole_ecoleid = :ecoleId and inscriptions_status='VALIDEE' and ins.annee_scolaire_annee_scolaireid= :anneeId "
             		+ "GROUP BY ins.eleve_eleveid, ins.eleve_eleveid) c "
             		+ "where c.nbreOcc = 1"
     ),@NamedNativeQuery(
             name = "Inscription.getNewEleveCountBySexe",
             query = "select count(c.nbreOcc) from ( "
             		+ "SELECT COUNT(ins.eleve_eleveid) as nbreOcc, ins.eleve_eleveid  FROM inscriptions ins left join eleve elv on ins.eleve_eleveid = elv.eleveid "
-            		+ "  where ins.ecole_ecoleid = :ecoleId and  elv.eleve_sexe = :sexe"
+            		+ "  where ins.ecole_ecoleid = :ecoleId and  elv.eleve_sexe = :sexe and inscriptions_status='VALIDEE' and ins.annee_scolaire_annee_scolaireid= :anneeId "
             		+ "GROUP BY ins.eleve_eleveid, ins.eleve_eleveid) c "
             		+ "where c.nbreOcc = 1"
     ),@NamedNativeQuery(
             name = "Inscription.getNewEleveCountBySexeAndAffecte",
             query = "select count(c.nbreOcc) from ( "
             		+ " SELECT COUNT(ins.eleve_eleveid) as nbreOcc, ins.eleve_eleveid  FROM inscriptions ins left join eleve elv on ins.eleve_eleveid = elv.eleveid "
-            		+ " where ins.ecole_ecoleid = :ecoleId and  elv.eleve_sexe = :sexe AND ins.inscriptions_statut_eleve = :statutAffecte"
+            		+ " where ins.ecole_ecoleid = :ecoleId and  elv.eleve_sexe = :sexe AND ins.inscriptions_statut_eleve = :statutAffecte and inscriptions_status='VALIDEE' and ins.annee_scolaire_annee_scolaireid= :anneeId  " 
             		+ " GROUP BY ins.eleve_eleveid, ins.eleve_eleveid) c "
             		+ " where c.nbreOcc = 1"
     ),@NamedNativeQuery(
             name = "Inscription.getOldEleveCount",
             query = "select count(c.nbreOcc) from ( "
             		+ "SELECT COUNT(ins.eleve_eleveid) as nbreOcc, ins.eleve_eleveid  FROM inscriptions ins"
-            		+ "  where ins.ecole_ecoleid = :ecoleId "
+            		+ "  where ins.ecole_ecoleid = :ecoleId and inscriptions_status='VALIDEE' and ins.annee_scolaire_annee_scolaireid= :anneeId  "
             		+ "GROUP BY ins.eleve_eleveid, ins.eleve_eleveid) c "
             		+ "where c.nbreOcc > 1"
     ),@NamedNativeQuery(
             name = "Inscription.getOldEleveCountBySexe",
             query = "select count(c.nbreOcc) from ( "
             		+ "SELECT COUNT(ins.eleve_eleveid) as nbreOcc, ins.eleve_eleveid  FROM inscriptions ins left join eleve elv on ins.eleve_eleveid = elv.eleveid "
-            		+ "  where ins.ecole_ecoleid = :ecoleId and  elv.eleve_sexe = :sexe"
+            		+ "  where ins.ecole_ecoleid = :ecoleId and  elv.eleve_sexe = :sexe and inscriptions_status='VALIDEE' and ins.annee_scolaire_annee_scolaireid= :anneeId  "
             		+ "GROUP BY ins.eleve_eleveid, ins.eleve_eleveid) c "
             		+ "where c.nbreOcc > 1"
     ),@NamedNativeQuery(
             name = "Inscription.getOldEleveCountBySexeAndAffecte",
             query = "select count(c.nbreOcc) from ( "
             		+ " SELECT COUNT(ins.eleve_eleveid) as nbreOcc, ins.eleve_eleveid  FROM inscriptions ins left join eleve elv on ins.eleve_eleveid = elv.eleveid "
-            		+ " where ins.ecole_ecoleid = :ecoleId and  elv.eleve_sexe = :sexe AND ins.inscriptions_statut_eleve = :statutAffecte"
+            		+ " where ins.ecole_ecoleid = :ecoleId and  elv.eleve_sexe = :sexe AND ins.inscriptions_statut_eleve = :statutAffecte and inscriptions_status='VALIDEE' and ins.annee_scolaire_annee_scolaireid= :anneeId  "
             		+ " GROUP BY ins.eleve_eleveid, ins.eleve_eleveid) c "
             		+ " where c.nbreOcc > 1"
     ),@NamedNativeQuery(
@@ -64,7 +64,7 @@ import lombok.Setter;
             query = "select AVG(c.nbreEleve) FROM "
             		+ "( SELECT count(*) as nbreEleve, classe_classeid FROM inscriptions_has_classe icl "
             		+ "left join inscriptions ins on icl.inscriptions_inscriptionsid = ins.inscriptionsid "
-            		+ "where ins.ecole_ecoleid = :ecoleId and ins.annee_scolaire_annee_scolaireid = :anneeId "
+            		+ "where ins.ecole_ecoleid = :ecoleId and ins.annee_scolaire_annee_scolaireid = :anneeId and inscriptions_status='VALIDEE' "
             		+ "group by icl.classe_classeid "
             		+ ") c"
     )

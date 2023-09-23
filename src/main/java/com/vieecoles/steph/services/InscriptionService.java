@@ -2,6 +2,8 @@ package com.vieecoles.steph.services;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,11 +67,12 @@ public class InscriptionService implements PanacheRepositoryBase<Inscription, In
 	}
 	
 	// nombre de nouveaux élèves dans l 'ecole
-	public long countNewEleve(Long ecoleId) {
+	public long countNewEleve(Long ecoleId, Long anneeId) {
         Query query = em.createNamedQuery("Inscription.getNewEleveCount");
         query.setParameter("ecoleId", ecoleId);
+        query.setParameter("anneeId", anneeId);
         try{
-        	System.out.println(query.getSingleResult());
+//        	System.out.println(query.getSingleResult());
         	BigInteger count = (BigInteger) query.getSingleResult();
             return Long.parseLong(count.toString());
         }catch(NoResultException ex){
@@ -78,11 +81,12 @@ public class InscriptionService implements PanacheRepositoryBase<Inscription, In
         }
     }
 	// Nombre des anciens élèves dans l'ecole
-	public long countOldEleve(Long ecoleId) {
+	public long countOldEleve(Long ecoleId, Long anneeId) {
         Query query = em.createNamedQuery("Inscription.getOldEleveCount");
         query.setParameter("ecoleId", ecoleId);
+        query.setParameter("anneeId", anneeId);
         try{
-        	System.out.println(query.getSingleResult());
+//        	System.out.println(query.getSingleResult());
         	BigInteger count = (BigInteger) query.getSingleResult();
             return Long.parseLong(count.toString());
         }catch(NoResultException ex){
@@ -91,13 +95,14 @@ public class InscriptionService implements PanacheRepositoryBase<Inscription, In
         }
     }
 	
-	public long getNewEleveAffCountBySexe(Long ecoleId, String sexe, String statut) {
+	public long getNewEleveAffCountBySexe(Long ecoleId, Long anneeId, String sexe, String statut) {
         Query query = em.createNamedQuery("Inscription.getNewEleveCountBySexeAndAffecte");
         query.setParameter("ecoleId", ecoleId);
         query.setParameter("sexe", sexe);
         query.setParameter("statutAffecte", statut);
+        query.setParameter("anneeId", anneeId);
         try{
-        	System.out.println(query.getSingleResult());
+//        	System.out.println(query.getSingleResult());
         	BigInteger count = (BigInteger) query.getSingleResult();
             return Long.parseLong(count.toString());
         }catch(NoResultException ex){
@@ -113,20 +118,21 @@ public class InscriptionService implements PanacheRepositoryBase<Inscription, In
         query.setParameter("anneeId", anneeId);
         try{
         	BigDecimal count = (BigDecimal) query.getSingleResult();
-            return count;
+            return count.round(new MathContext(2, RoundingMode.HALF_UP));
         }catch(NoResultException ex){
             ex.getMessage();
             return BigDecimal.ZERO;
         }
     }
 	
-	public long getOldEleveAffCountBySexe(Long ecoleId, String sexe, String statut) {
+	public long getOldEleveAffCountBySexe(Long ecoleId, Long anneeId, String sexe, String statut) {
         Query query = em.createNamedQuery("Inscription.getOldEleveCountBySexeAndAffecte");
         query.setParameter("ecoleId", ecoleId);
+        query.setParameter("anneeId", anneeId);
         query.setParameter("sexe", sexe);
         query.setParameter("statutAffecte", statut);
         try{
-        	System.out.println(query.getSingleResult());
+//        	System.out.println(query.getSingleResult());
         	BigInteger count = (BigInteger) query.getSingleResult();
             return Long.parseLong(count.toString());
         }catch(NoResultException ex){
@@ -143,8 +149,8 @@ public class InscriptionService implements PanacheRepositoryBase<Inscription, In
 		List<Inscription> inscriptions = getByBrancheAndAnneeAndStatut(branche, annee, statut, ecole);
 		List<ClasseEleve> classeEleves = classeEleveService.getByBrancheAndAnnee(branche, annee, ecole);
 		List<Inscription> _inscriptions = new ArrayList<Inscription>();
-		System.out.println("liste inscriptions " + (inscriptions != null ? inscriptions.size() : 0));
-		System.out.println("liste acffecte dans une clase " + (classeEleves != null ? classeEleves.size() : 0));
+//		System.out.println("liste inscriptions " + (inscriptions != null ? inscriptions.size() : 0));
+//		System.out.println("liste acffecte dans une clase " + (classeEleves != null ? classeEleves.size() : 0));
 		Boolean flat = false;
 		for (Inscription ins : inscriptions) {
 			System.out.println(ins);

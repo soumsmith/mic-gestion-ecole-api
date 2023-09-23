@@ -64,7 +64,7 @@ public class ActiviteRessource {
 	@Path("/{id}")
 	@Operation(description = "Obtenir la classe par son id", summary = "")
 	@Tag(name = "Activite")
-	public Activite get(@PathParam("id") long id) {
+	public Activite get(@PathParam("id") String id) {
 		Activite atv = activiteService.findById(id);
 		if (atv == null) {
 			System.out.println("activite non trouvee avec id = " + id);
