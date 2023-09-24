@@ -169,13 +169,13 @@ public class connexionService implements PanacheRepositoryBase<utilisateur_has_p
 }
 
     @Transactional
-    public CandidatConnexionDto infosCandidatConnecte(String email){
+    public CandidatConnexionDto infosCandidatConnecte(String login){
         Long idUtilisateur ,IdPersonnel ;
         CandidatConnexionDto  myPersoDto = new CandidatConnexionDto() ;
         System.out.println("ENTREEEEEE ");
-        idUtilisateur =   getIdUtilisateur(email);
+        idUtilisateur =   getIdUtilisateur(login);
         System.out.println("idUtilisateur "+idUtilisateur);
-        IdPersonnel = getIDpersonnelSouscrip(email) ;
+        IdPersonnel = getIDpersonnelSouscrip(login) ;
         System.out.println("IdPersonnel "+IdPersonnel);
         myPersoDto = getInfoPersonnCandidat(IdPersonnel) ;
         System.out.println("myPersoDto "+myPersoDto);
@@ -235,11 +235,11 @@ public class connexionService implements PanacheRepositoryBase<utilisateur_has_p
 
 
 @Transactional
-  public long  getIdUtilisateur(String email){
+  public long  getIdUtilisateur(String login){
         Long IdUtilisateur = null;
       try {
-          IdUtilisateur= (Long) em.createQuery("select o.utilisateurid from utilisateur  o  where  o.utilisateu_email =:email ")
-                  .setParameter("email",email)
+          IdUtilisateur= (Long) em.createQuery("select o.utilisateurid from utilisateur  o  where  o.utilisateu_login =:login ")
+                  .setParameter("login",login)
                   .getSingleResult();
       } catch (Exception e) {
           IdUtilisateur = 0L;
@@ -262,11 +262,11 @@ public class connexionService implements PanacheRepositoryBase<utilisateur_has_p
     }
 
     @Transactional
-    public long  getIDpersonnelSouscrip(String  email){
+    public long  getIDpersonnelSouscrip(String  login){
         Long IdPersonnel = null;
         try {
-            IdPersonnel= (Long) em.createQuery("select distinct  o.sous_attent_personnid from sous_attent_personn  o  where  o.sous_attent_personn_email =: email ")
-                    .setParameter("email",email)
+            IdPersonnel= (Long) em.createQuery("select distinct  o.sous_attent_personnid from sous_attent_personn  o , utilisateur  u where  o.sous_attent_personnid= u.sous_attent_personn_sous_attent_personnid  and u.utilisateu_login  =:login ")
+                    .setParameter("login",login)
                     .getSingleResult();
         } catch (Exception e) {
             IdPersonnel = null;
@@ -280,7 +280,7 @@ public class connexionService implements PanacheRepositoryBase<utilisateur_has_p
     public personnelConnexionDto  getInfoPersonn(Long  idPersonnel){
         personnelConnexionDto  myPersoDto = new personnelConnexionDto() ;
         try {
-            myPersoDto= (personnelConnexionDto) em.createQuery("select  new com.vieecoles.dto.personnelConnexionDto(o.personnelid,o.personnelnom,o.personnelprenom) from personnel  o  where  o.personnelid=:idPersonnel",personnelConnexionDto.class)
+            myPersoDto= (personnelConnexionDto) em.createQuery("select  new com.vieecoles.dto.personnelConnexionDto(o.personnelid,o.personnelnom,o.personnelprenom ,pl.profil_libelle) from personnel o, profil pl ,utilisateur_has_personnel  ut where o.personnelid=ut.personnel_personnelid and pl.profilid = ut.profil.profilid and  o.personnelid=:idPersonnel",personnelConnexionDto.class)
                     .setParameter("idPersonnel",idPersonnel)
                     .getSingleResult();
         } catch (Exception e) {
@@ -330,7 +330,7 @@ public class connexionService implements PanacheRepositoryBase<utilisateur_has_p
                          profilNonCreer.add(myProfil.getProfil_libelle()) ;
                      }
                  } else {
-                     myutilisateur1= creerUtilisateur(motDepasse ,emailUtilisateur) ;
+                     myutilisateur1= creerUtilisateur(motDepasse ,emailUtilisateur,myUtilisaDto.getLogin()) ;
 
                      utilisatPersonDto.setProfilid(myUtilisaDto.getListProfil().get(i));
                      utilisatPersonDto.setPersonnel_personnelid(myUtilisaDto.getPersonnel_personnelid());
@@ -492,7 +492,7 @@ public class connexionService implements PanacheRepositoryBase<utilisateur_has_p
 
 
      @Transactional
-     public utilisateur   creerUtilisateur(String motPasse , String email ){
+     public utilisateur   creerUtilisateur(String motPasse , String email ,String login ){
          utilisateur myutilisateur1 = new utilisateur() ;
          myutilisateur1= verifiEmailUtilisateur(email) ;
 
@@ -500,6 +500,7 @@ public class connexionService implements PanacheRepositoryBase<utilisateur_has_p
              utilisateur myutilisateur = new utilisateur() ;
              myutilisateur.setUtilisateur_mot_de_passe(motPasse);
              myutilisateur.setUtilisateu_email(email);
+             myutilisateur.setUtilisateu_login(login);
              myutilisateur.persist();
              return  myutilisateur ;
          } else {
@@ -591,17 +592,17 @@ public class connexionService implements PanacheRepositoryBase<utilisateur_has_p
 
 
 @Transactional
-    public String modifierMotPasse(String emailUtilisateur,String motdePasse ,String nouveauMotPasse){
+    public String modifierMotPasse(String login,String motdePasse ,String nouveauMotPasse){
         utilisateur myUtilisateur = new utilisateur() ;
         utilisateur myUtilisateur2 = new utilisateur() ;
         String messageRetour= null ;
-        myUtilisateur = checkPassword(emailUtilisateur ,motdePasse ) ;
+        myUtilisateur = checkPassword(login ,motdePasse ) ;
 
         if(myUtilisateur!= null) {
             myUtilisateur2 = utilisateur.findById(myUtilisateur.getUtilisateurid()) ;
             System.out.print("myUtilisateur2MotPasse "+myUtilisateur2);
             myUtilisateur2.setUtilisateur_mot_de_passe(nouveauMotPasse);
-            myUtilisateur2.setUtilisateu_email(myUtilisateur.getUtilisateu_email());
+            myUtilisateur2.setUtilisateu_login(myUtilisateur.getUtilisateu_login());
             System.out.print("myUtilisateur211MotPasse "+myUtilisateur2);
             messageRetour ="mot de passe modifié!" ;
         } else {
@@ -613,10 +614,10 @@ public class connexionService implements PanacheRepositoryBase<utilisateur_has_p
 
 
 
-    public utilisateur checkPassword(String emailUtilisateur,String motdePasse){
+    public utilisateur checkPassword(String login,String motdePasse){
         try {
-            return (utilisateur) em.createQuery("select o from utilisateur o where o.utilisateu_email =:email and o.utilisateur_mot_de_passe=:motPasse")
-                    .setParameter("email",emailUtilisateur.trim())
+            return (utilisateur) em.createQuery("select o from utilisateur o where o.utilisateu_login =:login and o.utilisateur_mot_de_passe=:motPasse")
+                    .setParameter("login",login.trim())
                     .setParameter("motPasse",motdePasse.trim())
                     .getSingleResult();
         } catch (Exception e) {
@@ -636,6 +637,16 @@ public class connexionService implements PanacheRepositoryBase<utilisateur_has_p
 
      }
 
+    public String pseudo(String login){
+        try {
+            return (String) em.createQuery("select o.utilisateu_login from utilisateur o where o.utilisateu_login =:login")
+                    .setParameter("login",login)
+                    .getSingleResult();
+        } catch (Exception e) {
+            return  null;
+        }
+
+    }
      public  utilisateur_has_personnel veriCompteUtilisateurEcole(Long personnelId , Long codeEcole,Long profilId){
 
          try {

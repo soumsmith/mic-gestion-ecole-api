@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @ApplicationScoped
-public class RecapitulatifStatistiqueServices {
+public class RecapitulatifStatistiqueBilan2Services {
     @Inject
     EntityManager em;
     @Inject
@@ -24,15 +24,11 @@ public class RecapitulatifStatistiqueServices {
     @Inject
     SousceecoleService sousceecoleService ;
 
-    public List<PyramideEffectDto> getPyramide(Long idEcole ,Long anneeId ,Integer lim){
+    public List<PyramideEffectDto> getPyramide(Long idEcole ,Long anneeId ){
 
         List<NiveauClasseDto> niveauDtoList = new ArrayList<>() ;
 
-         if(lim ==4) {
-             niveauDtoList= getListClasse(idEcole,anneeId,lim);
-         } else {
-             niveauDtoList= getListClasseSecon(idEcole,anneeId,lim);
-         }
+        niveauDtoList= getListClasse(idEcole,anneeId);
 
 
        int sizeClass ;
@@ -234,12 +230,12 @@ public class RecapitulatifStatistiqueServices {
            }
        }
 
-    List<NiveauClasseDto> getListClasse(Long idEcole , Long idAnneId, Integer lim) {
+    List<NiveauClasseDto> getListClasse(Long idEcole , Long idAnneId) {
         List<NiveauClasseDto> classeNiveauDtoList = new ArrayList<>() ;
-        TypedQuery<NiveauClasseDto> q = em.createQuery( "SELECT DISTINCT new com.vieecoles.dto.NiveauClasseDto(o.branche.libelle,o.branche.id) FROM Classe o  where o.ecole.id =:idEcole  and o.annee.id =:idAnneId and o.branche.niveau.id <=:lim  order by o.branche.id "
+        TypedQuery<NiveauClasseDto> q = em.createQuery( "SELECT DISTINCT new com.vieecoles.dto.NiveauClasseDto(o.branche.libelle,o.branche.id) FROM Classe o  where o.ecole.id =:idEcole  and o.annee.id =:idAnneId   order by o.branche.id "
                 , NiveauClasseDto.class);
         return      classeNiveauDtoList = q.setParameter("idEcole" ,idEcole)
-                                           .setParameter("lim" ,lim)
+                                          // .setParameter("lim" ,lim)
                 .setParameter("idAnneId" ,idAnneId).getResultList() ;
 
     }

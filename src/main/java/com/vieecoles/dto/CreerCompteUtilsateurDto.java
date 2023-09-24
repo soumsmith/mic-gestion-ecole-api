@@ -9,9 +9,18 @@ public class CreerCompteUtilsateurDto {
  private  Long   utilisateurid ;
   private  String  utilisateur_mot_de_passe ;
  private  String   utilisateu_email ;
+    private  String   utilisateu_login ;
 private  Long sous_attent_personn_sous_attent_personnid ;
 
     public CreerCompteUtilsateurDto() {
+    }
+
+    public String getUtilisateu_login() {
+        return utilisateu_login;
+    }
+
+    public void setUtilisateu_login(String utilisateu_login) {
+        this.utilisateu_login = utilisateu_login;
     }
 
     public Long getUtilisateurid() {

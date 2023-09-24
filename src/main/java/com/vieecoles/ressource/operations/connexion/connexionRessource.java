@@ -86,20 +86,36 @@ public class connexionRessource {
         return  myconnexionService.verifiEmailUtilisateur(emailUtilisateur);
     }
 
+    @GET
+    @Path("check-pseudo/{login}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.TEXT_PLAIN)
+    public String checkLogin( @PathParam("login") String login )
+    {  String mess;
+        mess=  myconnexionService.pseudo(login);
+        if(mess!=null){
+            mess="Ce login est déjà utilisé!";
+        } else {
+            mess="Login disponible!";
+        }
+        System.out.println("mess "+mess);
+        return  mess  ;
+    }
+
     @POST
     @Path("/se-connecter")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public String seConnecter( connexionDto myConnexionDto )
     {
-        String email ,motPasse;
+        String login ,motPasse;
         Long profilId,EcoleId ;
-        email= myConnexionDto.getEmail().trim();
+        login= myConnexionDto.getLogin().trim();
         motPasse= myConnexionDto.getMotdePasse().trim() ;
         profilId= myConnexionDto.getProfilid() ;
         EcoleId= myConnexionDto.getEcoleid();
-        System.out.println("Info-compte "+email +" "+motPasse+" "+ profilId+" "+ EcoleId);
-        return  myconnexionService.seConnecter(email,motPasse,profilId,EcoleId) ;
+        System.out.println("Info-compte "+login +" "+motPasse+" "+ profilId+" "+ EcoleId);
+        return  myconnexionService.seConnecter(login,motPasse,profilId,EcoleId) ;
     }
 
     @POST
@@ -108,16 +124,16 @@ public class connexionRessource {
     @Consumes(MediaType.APPLICATION_JSON)
     public String seConnecterAdmin( connexionDto myConnexionDto )
     {
-        String email ,motPasse;
+        String login ,motPasse;
         Long profilId ;
         profil myProfil= new profil() ;
         myProfil = profilservice.getIdProfilAdmin("Admin");
-        email= myConnexionDto.getEmail().trim();
+        login= myConnexionDto.getLogin().trim();
         motPasse= myConnexionDto.getMotdePasse().trim() ;
         profilId= myProfil.getProfilid() ;
 
-        System.out.println("Info-compte "+email +" "+motPasse+" "+ profilId);
-        return  myconnexionService.seConnecterAdmin(email,motPasse,profilId) ;
+        System.out.println("Info-compte "+login +" "+motPasse+" "+ profilId);
+        return  myconnexionService.seConnecterAdmin(login,motPasse,profilId) ;
     }
 
 
@@ -125,11 +141,11 @@ public class connexionRessource {
     @Path("/checkPassword")
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_JSON)
-    public String checkPassword(@QueryParam("emailUtilisateur") String emailUtilisateur ,@QueryParam("motDepasse") String motDepasse )
+    public String checkPassword(@QueryParam("login") String login ,@QueryParam("motDepasse") String motDepasse )
     {
         String messageRetour=null;
         utilisateur myUtilis = new utilisateur() ;
-        myUtilis = myconnexionService.checkPassword(emailUtilisateur,motDepasse) ;
+        myUtilis = myconnexionService.checkPassword(login,motDepasse) ;
         if(myUtilis!=null){
             messageRetour= "Mot de passe correct!";
         } else {
@@ -139,36 +155,36 @@ public class connexionRessource {
     }
 
     @GET
-    @Path("infos-personnel-connecte/{emailUtilisateur}/{idEcole}")
+    @Path("infos-personnel-connecte/{login}/{idEcole}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.TEXT_PLAIN)
-    public personnelConnexionDto infoPersonnConnect(@PathParam("emailUtilisateur") String emailUtilisateur ,@PathParam("idEcole") Long idEcole)
+    public personnelConnexionDto infoPersonnConnect(@PathParam("login") String login ,@PathParam("idEcole") Long idEcole)
     {
         Long idUtilisateur ;
-        idUtilisateur = myconnexionService.getIdUtilisateur(emailUtilisateur) ;
+        idUtilisateur = myconnexionService.getIdUtilisateur(login) ;
         personnelConnexionDto myPersonn= new personnelConnexionDto();
         System.out.println("idUtilisateurxxx "+ idUtilisateur);
 
         if(idUtilisateur!=0L) {
-            myPersonn =  myconnexionService.infosUtilisateurConnecte(emailUtilisateur,idEcole) ;
+            myPersonn =  myconnexionService.infosUtilisateurConnecte(login,idEcole) ;
         }
       return   myPersonn ;
     }
 
 
     @GET
-    @Path("infos-personnel-connecte-candidat/{emailUtilisateur}")
+    @Path("infos-personnel-connecte-candidat/{login}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.TEXT_PLAIN)
-    public CandidatConnexionDto infoPersonnConnectCandidat(@PathParam("emailUtilisateur") String emailUtilisateur )
+    public CandidatConnexionDto infoPersonnConnectCandidat(@PathParam("login") String login )
     {
         Long idUtilisateur ;
-        idUtilisateur = myconnexionService.getIdUtilisateur(emailUtilisateur) ;
+        idUtilisateur = myconnexionService.getIdUtilisateur(login) ;
         CandidatConnexionDto myPersonn= new CandidatConnexionDto();
         System.out.println("idUtilisateurxxx "+ idUtilisateur);
 
         if(idUtilisateur!=0L) {
-            myPersonn =  myconnexionService.infosCandidatConnecte(emailUtilisateur) ;
+            myPersonn =  myconnexionService.infosCandidatConnecte(login) ;
         }
         return   myPersonn ;
     }
@@ -176,13 +192,13 @@ public class connexionRessource {
 
 
     @GET
-    @Path("id-utilisateur-connecte/{emailUtilisateur}")
+    @Path("id-utilisateur-connecte/{login}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.TEXT_PLAIN)
-    public Long idPersonnConnect(@PathParam("emailUtilisateur") String emailUtilisateur )
+    public Long idPersonnConnect(@PathParam("login") String login )
     {
         Long idUtilisateur ;
-        idUtilisateur = myconnexionService.getIdUtilisateur(emailUtilisateur) ;
+        idUtilisateur = myconnexionService.getIdUtilisateur(login) ;
 
         return   idUtilisateur ;
     }

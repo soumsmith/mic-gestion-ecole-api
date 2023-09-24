@@ -15,10 +15,7 @@ import org.springframework.http.ResponseEntity;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -163,10 +160,12 @@ public class FichePersonnelRessource {
     }
 
     @GET
-    @Path("/eleve-par-classe/{IdEcole}/{anneeId}/{classe}")
+    @Path("/eleve-par-classe/")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    public ResponseEntity<byte[]>  getDtoRapport5(@PathParam("IdEcole") Long IdEcole ,@PathParam("anneeId") Long anneeId
-    ,@PathParam("classe") String classe) throws Exception, JRException {
+    public ResponseEntity<byte[]>  getDtoRapport5(@QueryParam("IdEcole") Long IdEcole , @QueryParam("anneeId") Long anneeId
+    , @QueryParam("classe") String classe , @QueryParam("branche") Long branche, @QueryParam("redoublant") String redoublant,
+                                                  @QueryParam("genre") String genre, @QueryParam("langueVivante"
+    ) String langueVivante , @QueryParam("affecte") String affecte ,@QueryParam("boursier") String boursier) throws Exception, JRException {
         InputStream myInpuStream ;
 
         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Liste_eleve_par_classe.jrxml");
@@ -178,6 +177,14 @@ public class FichePersonnelRessource {
         map.put("IdEcole", IdEcole);
         map.put("idAnnee", anneeId);
         map.put("classe", classe);
+        map.put("branche", branche);
+        map.put("redoublant", redoublant);
+        map.put("genre", genre);
+        map.put("langueVivante", langueVivante);
+        map.put("affecte", affecte);
+        map.put("boursier", boursier);
+
+
         JasperPrint report = JasperFillManager.fillReport(compileReport, map, connection);
         byte[] data =JasperExportManager.exportReportToPdf(report);
         HttpHeaders headers= new HttpHeaders();
@@ -187,10 +194,12 @@ public class FichePersonnelRessource {
 
     }
     @GET
-    @Path("/eleve-par-classe-xls/{IdEcole}/{anneeId}/{classe}")
+    @Path("/eleve-par-classe-xls")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    public ResponseEntity<byte[]>  getDtoRapport6(@PathParam("IdEcole") Long IdEcole ,@PathParam("anneeId") Long anneeId
-            ,@PathParam("classe") String classe) throws Exception, JRException {
+    public ResponseEntity<byte[]>  getDtoRapport6(@QueryParam("IdEcole") Long IdEcole ,@QueryParam("anneeId") Long anneeId
+            ,@QueryParam("classe") String classe ,@QueryParam("branche") Long branche,@QueryParam("redoublant") String redoublant,
+                                                  @QueryParam("genre") String genre,@QueryParam("langueVivante") String langueVivante,
+                                                  @QueryParam("affecte") String affecte,@QueryParam("boursier") String boursier) throws Exception, JRException {
         InputStream myInpuStream ;
 
         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Liste_eleve_par_classe.jrxml");
@@ -205,6 +214,12 @@ public class FichePersonnelRessource {
         map.put("IdEcole", IdEcole);
         map.put("idAnnee", anneeId);
         map.put("classe", classe);
+        map.put("branche", branche);
+        map.put("redoublant", redoublant);
+        map.put("genre", genre);
+        map.put("langueVivante", langueVivante);
+        map.put("affecte", affecte);
+        map.put("boursier", boursier);
         JasperPrint report = JasperFillManager.fillReport(compileReport, map, connection);
         JRXlsExporter exporter = new JRXlsExporter();
         exporter.setExporterInput(new SimpleExporterInput(report));
@@ -253,6 +268,80 @@ public class FichePersonnelRessource {
         return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.MULTIPART_FORM_DATA).body(data);
     }
 
+
+    @GET
+    @Path("/eleve-par-moyenne/")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public ResponseEntity<byte[]>  getDtoRapportParMoyenne(@QueryParam("IdEcole") Long IdEcole , @QueryParam("anneeId") Long anneeId
+            , @QueryParam("classe") String classe , @QueryParam("branche") Long branche, @QueryParam("moyenne") Double moyenne,
+                                                  @QueryParam("genre") String genre,@QueryParam("affecte") String affecte
+                                                           ) throws Exception, JRException {
+        InputStream myInpuStream ;
+
+        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Liste_eleve_des_admis.jrxml");
+
+        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecoleviedbv2", USER, PASS);
+        JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
+        //   JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");
+        Map<String, Object> map = new HashMap<>();
+        map.put("IdEcole", IdEcole);
+        map.put("idAnnee", anneeId);
+        map.put("classe", classe);
+        map.put("branche", branche);
+        map.put("moyenne", moyenne);
+        map.put("genre", genre);
+        map.put("affecte", affecte);
+
+
+        JasperPrint report = JasperFillManager.fillReport(compileReport, map, connection);
+        byte[] data =JasperExportManager.exportReportToPdf(report);
+        HttpHeaders headers= new HttpHeaders();
+        // headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Rapport"+myScole.getEcoleclibelle()+".docx");
+        headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Liste_eleve_des_admis"+".pdf");
+        return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.MULTIPART_FORM_DATA).body(data);
+
+    }
+
+
+    @GET
+    @Path("/eleve-par-moyenne-xls")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public ResponseEntity<byte[]>  getDtoRapportMoyenne6(@QueryParam("IdEcole") Long IdEcole ,@QueryParam("anneeId") Long anneeId
+            ,@QueryParam("classe") String classe ,@QueryParam("branche") Long branche,@QueryParam("moyenne") Double moyenne,
+                                                  @QueryParam("genre") String genre,@QueryParam("langueVivante") String langueVivante,
+                                                         @QueryParam("affecte") String affecte) throws Exception, JRException {
+        InputStream myInpuStream ;
+
+        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Liste_eleve_des_admis.jrxml");
+
+
+        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecoleviedbv2", USER, PASS);
+
+
+        JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
+        //   JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");
+        Map<String, Object> map = new HashMap<>();
+        map.put("IdEcole", IdEcole);
+        map.put("idAnnee", anneeId);
+        map.put("classe", classe);
+        map.put("branche", branche);
+        map.put("moyenne", moyenne);
+        map.put("genre", genre);
+        map.put("affecte", affecte);
+        JasperPrint report = JasperFillManager.fillReport(compileReport, map, connection);
+        JRXlsExporter exporter = new JRXlsExporter();
+        exporter.setExporterInput(new SimpleExporterInput(report));
+        // File exportReportFile = new File("profils" + ".docx");
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(baos));
+        exporter.exportReport();
+        byte[] data = baos.toByteArray() ;
+        HttpHeaders headers= new HttpHeaders();
+        // headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Rapport"+myScole.getEcoleclibelle()+".docx");
+        headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Liste_eleve_des_admis.xls");
+        return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.MULTIPART_FORM_DATA).body(data);
+
+    }
 
 
 

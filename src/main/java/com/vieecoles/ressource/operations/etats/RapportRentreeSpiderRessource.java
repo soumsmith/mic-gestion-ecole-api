@@ -40,7 +40,7 @@ public class RapportRentreeSpiderRessource {
     @Inject
     RecapitulatifStatistiqueServices recapitulatif ;
     @Inject
-    RecapitulatifStatistiqueBilanServices recapitulatiBilan ;
+    RecapitulatifStatistiqueBilan2Services recapitulatiBilan ;
 
     @Inject
     ComparatifServices comparatifServices ;

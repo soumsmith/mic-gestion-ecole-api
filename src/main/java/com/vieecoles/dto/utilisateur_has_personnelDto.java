@@ -21,6 +21,15 @@ public class utilisateur_has_personnelDto {
     private List<Long> listProfil ;
     private  Long utilisateurid  ;
     private String emailUtilisateur ;
+    private String login ;
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
 
     public Long getPersonnel_personnelid() {
         return personnel_personnelid;

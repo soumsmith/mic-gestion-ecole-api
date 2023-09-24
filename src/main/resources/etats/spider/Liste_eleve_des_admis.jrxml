@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Liste_eleve_par_classe" pageWidth="630" pageHeight="842" columnWidth="630" leftMargin="0" rightMargin="0" topMargin="20" bottomMargin="20" uuid="cecdf213-9a9e-43a3-a0f6-256935281386">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Liste_eleve_des_admis." pageWidth="630" pageHeight="842" columnWidth="630" leftMargin="0" rightMargin="0" topMargin="20" bottomMargin="20" uuid="cecdf213-9a9e-43a3-a0f6-256935281386">
 	<property name="net.sf.jasperreports.awt.ignore.missing.font" value="true"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ecolevieDB2"/>
@@ -17,228 +17,236 @@
 	<parameter name="IdEcole" class="java.lang.Long"/>
 	<parameter name="classe" class="java.lang.String"/>
 	<parameter name="branche" class="java.lang.Long"/>
-	<parameter name="redoublant" class="java.lang.String"/>
+	<parameter name="moyenne" class="java.lang.Double"/>
 	<parameter name="genre" class="java.lang.String"/>
 	<parameter name="langueVivante" class="java.lang.String"/>
 	<parameter name="affecte" class="java.lang.String"/>
-	<parameter name="boursier" class="java.lang.String"/>
 	<queryString language="SQL">
-		<![CDATA[select * from   `ecoleviedbv2`.list_eleve_par_classe
-where   `ecoleviedbv2`.list_eleve_par_classe.ecoleid=  $P{IdEcole}
-and   `ecoleviedbv2`.list_eleve_par_classe.annee_scolaireid = $P{idAnnee}
-and  `ecoleviedbv2`.list_eleve_par_classe.id_branche =  $P{branche}
-and ($P{classe} is null or  `ecoleviedbv2`.list_eleve_par_classe.classelibelle = $P{classe}  )
-and ($P{redoublant} is null or `ecoleviedbv2`.list_eleve_par_classe.inscriptions_redoublant =  $P{redoublant})
-and  ($P{langueVivante} is null or `ecoleviedbv2`.list_eleve_par_classe.inscriptions_langue_vivante =  $P{langueVivante}  )
-and  ($P{genre} is null or `ecoleviedbv2`.list_eleve_par_classe.eleve_sexe = $P{genre} )
-and  (   $P{affecte} is null or `ecoleviedbv2`.list_eleve_par_classe.inscriptions_statut_eleve = $P{affecte} )
-and  (  $P{boursier}    is null or `ecoleviedbv2`.list_eleve_par_classe.inscriptions_boursier = $P{boursier} )]]>
+		<![CDATA[select * from   `ecoleviedbv2`.list_des_admis
+where   `ecoleviedbv2`.list_des_admis.ecoleid=  $P{IdEcole}
+and   `ecoleviedbv2`.list_des_admis.annee_scolaireid = $P{idAnnee}
+and  `ecoleviedbv2`.list_des_admis.id_branche =  $P{branche}
+and ($P{classe} is null or  `ecoleviedbv2`.list_des_admis.libelle_classe = $P{classe}  )
+and  ($P{genre} is null or `ecoleviedbv2`.list_des_admis.eleve_sexe = $P{genre} )
+and( $P{moyenne} is null or `ecoleviedbv2`.list_des_admis.moy_annuelle > $P{moyenne} )
+and  (   $P{affecte} is null or `ecoleviedbv2`.list_des_admis.inscriptions_statut_eleve = $P{affecte} )
+]]>
 	</queryString>
 	<field name="ecoleclibelle" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="ecoleclibelle"/>
 		<property name="com.jaspersoft.studio.field.label" value="ecoleclibelle"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="list_eleve_par_classe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="list_des_admis"/>
 	</field>
 	<field name="ecole_adresse" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="ecole_adresse"/>
 		<property name="com.jaspersoft.studio.field.label" value="ecole_adresse"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="list_eleve_par_classe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="list_des_admis"/>
 	</field>
 	<field name="ecoleid" class="java.lang.Long">
 		<property name="com.jaspersoft.studio.field.name" value="ecoleid"/>
 		<property name="com.jaspersoft.studio.field.label" value="ecoleid"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="list_eleve_par_classe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="list_des_admis"/>
 	</field>
 	<field name="ecolecode" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="ecolecode"/>
 		<property name="com.jaspersoft.studio.field.label" value="ecolecode"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="list_eleve_par_classe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="list_des_admis"/>
 	</field>
 	<field name="ecole_statut" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="ecole_statut"/>
 		<property name="com.jaspersoft.studio.field.label" value="ecole_statut"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="list_eleve_par_classe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="list_des_admis"/>
 	</field>
 	<field name="ecole_telephone" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="ecole_telephone"/>
 		<property name="com.jaspersoft.studio.field.label" value="ecole_telephone"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="list_eleve_par_classe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="list_des_admis"/>
 	</field>
 	<field name="logo" class="byte[]">
 		<property name="com.jaspersoft.studio.field.name" value="logo"/>
 		<property name="com.jaspersoft.studio.field.label" value="logo"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="list_eleve_par_classe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="list_des_admis"/>
 	</field>
 	<field name="filigramme" class="byte[]">
 		<property name="com.jaspersoft.studio.field.name" value="filigramme"/>
 		<property name="com.jaspersoft.studio.field.label" value="filigramme"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="list_eleve_par_classe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="list_des_admis"/>
 	</field>
 	<field name="inscriptionscode" class="java.lang.Long">
 		<property name="com.jaspersoft.studio.field.name" value="inscriptionscode"/>
 		<property name="com.jaspersoft.studio.field.label" value="inscriptionscode"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="list_eleve_par_classe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="list_des_admis"/>
 	</field>
 	<field name="libelle" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="libelle"/>
 		<property name="com.jaspersoft.studio.field.label" value="libelle"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="list_eleve_par_classe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="list_des_admis"/>
 	</field>
 	<field name="eleve_matricule" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="eleve_matricule"/>
 		<property name="com.jaspersoft.studio.field.label" value="eleve_matricule"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="list_eleve_par_classe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="list_des_admis"/>
 	</field>
 	<field name="elevenom" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="elevenom"/>
 		<property name="com.jaspersoft.studio.field.label" value="elevenom"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="list_eleve_par_classe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="list_des_admis"/>
 	</field>
 	<field name="eleveprenom" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="eleveprenom"/>
 		<property name="com.jaspersoft.studio.field.label" value="eleveprenom"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="list_eleve_par_classe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="list_des_admis"/>
 	</field>
 	<field name="eleve_sexe" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="eleve_sexe"/>
 		<property name="com.jaspersoft.studio.field.label" value="eleve_sexe"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="list_eleve_par_classe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="list_des_admis"/>
 	</field>
 	<field name="eleve_nationalite" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="eleve_nationalite"/>
 		<property name="com.jaspersoft.studio.field.label" value="eleve_nationalite"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="list_eleve_par_classe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="list_des_admis"/>
 	</field>
 	<field name="inscriptions_langue_vivante" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="inscriptions_langue_vivante"/>
 		<property name="com.jaspersoft.studio.field.label" value="inscriptions_langue_vivante"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="list_eleve_par_classe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="list_des_admis"/>
 	</field>
 	<field name="elevedate_naissance" class="java.sql.Date">
 		<property name="com.jaspersoft.studio.field.name" value="elevedate_naissance"/>
 		<property name="com.jaspersoft.studio.field.label" value="elevedate_naissance"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="list_eleve_par_classe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="list_des_admis"/>
 	</field>
 	<field name="elevelieu_naissance" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="elevelieu_naissance"/>
 		<property name="com.jaspersoft.studio.field.label" value="elevelieu_naissance"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="list_eleve_par_classe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="list_des_admis"/>
 	</field>
 	<field name="eleveadresse" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="eleveadresse"/>
 		<property name="com.jaspersoft.studio.field.label" value="eleveadresse"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="list_eleve_par_classe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="list_des_admis"/>
 	</field>
 	<field name="elevecellulaire" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="elevecellulaire"/>
 		<property name="com.jaspersoft.studio.field.label" value="elevecellulaire"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="list_eleve_par_classe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="list_des_admis"/>
 	</field>
 	<field name="nom_prenoms_pere" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="nom_prenoms_pere"/>
 		<property name="com.jaspersoft.studio.field.label" value="nom_prenoms_pere"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="list_eleve_par_classe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="list_des_admis"/>
 	</field>
 	<field name="nom_prenoms_mere" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="nom_prenoms_mere"/>
 		<property name="com.jaspersoft.studio.field.label" value="nom_prenoms_mere"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="list_eleve_par_classe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="list_des_admis"/>
 	</field>
 	<field name="nom_prenoms_tuteur" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="nom_prenoms_tuteur"/>
 		<property name="com.jaspersoft.studio.field.label" value="nom_prenoms_tuteur"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="list_eleve_par_classe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="list_des_admis"/>
 	</field>
 	<field name="commune" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="commune"/>
 		<property name="com.jaspersoft.studio.field.label" value="commune"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="list_eleve_par_classe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="list_des_admis"/>
 	</field>
 	<field name="inscriptions_status" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="inscriptions_status"/>
 		<property name="com.jaspersoft.studio.field.label" value="inscriptions_status"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="list_eleve_par_classe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="list_des_admis"/>
 		<fieldDescription><![CDATA[VALIDEEN  ATTENTE]]></fieldDescription>
 	</field>
 	<field name="inscriptions_redoublant" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="inscriptions_redoublant"/>
 		<property name="com.jaspersoft.studio.field.label" value="inscriptions_redoublant"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="list_eleve_par_classe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="list_des_admis"/>
 	</field>
 	<field name="inscriptions_boursier" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="inscriptions_boursier"/>
 		<property name="com.jaspersoft.studio.field.label" value="inscriptions_boursier"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="list_eleve_par_classe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="list_des_admis"/>
 	</field>
 	<field name="eleve_numero_extrait_naiss" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.name" value="eleve_numero_extrait_naiss"/>
 		<property name="com.jaspersoft.studio.field.label" value="eleve_numero_extrait_naiss"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="list_eleve_par_classe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="list_des_admis"/>
 	</field>
 	<field name="elevedate_etabli_extrait_naiss" class="java.sql.Date">
 		<property name="com.jaspersoft.studio.field.name" value="elevedate_etabli_extrait_naiss"/>
 		<property name="com.jaspersoft.studio.field.label" value="elevedate_etabli_extrait_naiss"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="list_eleve_par_classe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="list_des_admis"/>
 	</field>
 	<field name="inscriptions_derniereclasse_religieuse" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="inscriptions_derniereclasse_religieuse"/>
 		<property name="com.jaspersoft.studio.field.label" value="inscriptions_derniereclasse_religieuse"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="list_eleve_par_classe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="list_des_admis"/>
 	</field>
 	<field name="inscriptions_ecole_origine" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="inscriptions_ecole_origine"/>
 		<property name="com.jaspersoft.studio.field.label" value="inscriptions_ecole_origine"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="list_eleve_par_classe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="list_des_admis"/>
 	</field>
 	<field name="inscriptions_classe_precedente" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="inscriptions_classe_precedente"/>
 		<property name="com.jaspersoft.studio.field.label" value="inscriptions_classe_precedente"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="list_eleve_par_classe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="list_des_admis"/>
 	</field>
 	<field name="num_decision_affecte" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="num_decision_affecte"/>
 		<property name="com.jaspersoft.studio.field.label" value="num_decision_affecte"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="list_eleve_par_classe"/>
-	</field>
-	<field name="classelibelle" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="classelibelle"/>
-		<property name="com.jaspersoft.studio.field.label" value="classelibelle"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="list_eleve_par_classe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="list_des_admis"/>
 	</field>
 	<field name="amoirie" class="byte[]">
 		<property name="com.jaspersoft.studio.field.name" value="amoirie"/>
 		<property name="com.jaspersoft.studio.field.label" value="amoirie"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="list_eleve_par_classe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="list_des_admis"/>
 	</field>
 	<field name="annee_scolaire_libelle" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="annee_scolaire_libelle"/>
 		<property name="com.jaspersoft.studio.field.label" value="annee_scolaire_libelle"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="list_eleve_par_classe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="list_des_admis"/>
 	</field>
 	<field name="annee_scolaireid" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.name" value="annee_scolaireid"/>
 		<property name="com.jaspersoft.studio.field.label" value="annee_scolaireid"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="list_eleve_par_classe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="list_des_admis"/>
 	</field>
 	<field name="photo_eleve" class="byte[]">
 		<property name="com.jaspersoft.studio.field.name" value="photo_eleve"/>
 		<property name="com.jaspersoft.studio.field.label" value="photo_eleve"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="list_eleve_par_classe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="list_des_admis"/>
 	</field>
 	<field name="inscriptions_statut_eleve" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="inscriptions_statut_eleve"/>
 		<property name="com.jaspersoft.studio.field.label" value="inscriptions_statut_eleve"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="list_eleve_par_classe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="list_des_admis"/>
+	</field>
+	<field name="appreciation_conseil" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="appreciation_conseil"/>
+		<property name="com.jaspersoft.studio.field.label" value="appreciation_conseil"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="list_des_admis"/>
+	</field>
+	<field name="moy_annuelle" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="moy_annuelle"/>
+		<property name="com.jaspersoft.studio.field.label" value="moy_annuelle"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="list_des_admis"/>
+	</field>
+	<field name="libelle_classe" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="libelle_classe"/>
+		<property name="com.jaspersoft.studio.field.label" value="libelle_classe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="list_des_admis"/>
 	</field>
 	<field name="niveau" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="niveau"/>
 		<property name="com.jaspersoft.studio.field.label" value="niveau"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="list_eleve_par_classe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="list_des_admis"/>
 	</field>
 	<field name="id_branche" class="java.lang.Long">
 		<property name="com.jaspersoft.studio.field.name" value="id_branche"/>
 		<property name="com.jaspersoft.studio.field.label" value="id_branche"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="list_eleve_par_classe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="list_des_admis"/>
 	</field>
 	<variable name="Compteur" class="java.lang.Integer" calculation="DistinctCount">
 		<variableExpression><![CDATA[$V{Compteur}+1]]></variableExpression>
@@ -581,7 +589,7 @@ and  (  $P{boursier}    is null or `ecoleviedbv2`.list_eleve_par_classe.inscript
 					<textElement textAlignment="Center">
 						<font size="13" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA["Liste des élèves"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["Liste des élèves par rapport à la moyenne"]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="380" y="0" width="202" height="30" uuid="624248a2-a79c-44ec-84ce-a36e1b17dbfc"/>
@@ -673,7 +681,7 @@ and  (  $P{boursier}    is null or `ecoleviedbv2`.list_eleve_par_classe.inscript
 					<text><![CDATA[Matricule]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="TotalCateg" x="134" y="0" width="176" height="20" uuid="7a88027e-08c0-4ca2-893a-681f86453baa">
+					<reportElement style="TotalCateg" x="134" y="0" width="156" height="20" uuid="7a88027e-08c0-4ca2-893a-681f86453baa">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -695,7 +703,7 @@ and  (  $P{boursier}    is null or `ecoleviedbv2`.list_eleve_par_classe.inscript
 					<text><![CDATA[Nom et Prenoms]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="TotalCateg" x="310" y="0" width="50" height="20" uuid="80d06892-cbbe-4800-9545-ba823fef33e7">
+					<reportElement style="TotalCateg" x="290" y="0" width="50" height="20" uuid="80d06892-cbbe-4800-9545-ba823fef33e7">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -717,7 +725,7 @@ and  (  $P{boursier}    is null or `ecoleviedbv2`.list_eleve_par_classe.inscript
 					<text><![CDATA[Classe]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="TotalCateg" x="360" y="0" width="40" height="20" uuid="15b6519f-f41c-4fbc-a4bd-9e86d4b6424c">
+					<reportElement style="TotalCateg" x="340" y="0" width="40" height="20" uuid="15b6519f-f41c-4fbc-a4bd-9e86d4b6424c">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -739,7 +747,7 @@ and  (  $P{boursier}    is null or `ecoleviedbv2`.list_eleve_par_classe.inscript
 					<text><![CDATA[Niveau]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="TotalCateg" x="400" y="0" width="30" height="20" uuid="87708599-4199-4259-a89c-db517294a452">
+					<reportElement style="TotalCateg" x="380" y="0" width="30" height="20" uuid="87708599-4199-4259-a89c-db517294a452">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -761,7 +769,7 @@ and  (  $P{boursier}    is null or `ecoleviedbv2`.list_eleve_par_classe.inscript
 					<text><![CDATA[Sexe]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="TotalCateg" x="430" y="0" width="45" height="20" uuid="ece10a20-8bce-49bf-9ad2-dc668f247e41">
+					<reportElement style="TotalCateg" x="410" y="0" width="45" height="20" uuid="ece10a20-8bce-49bf-9ad2-dc668f247e41">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -783,7 +791,7 @@ and  (  $P{boursier}    is null or `ecoleviedbv2`.list_eleve_par_classe.inscript
 					<text><![CDATA[Statut]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="TotalCateg" x="475" y="0" width="45" height="20" uuid="edde65ba-72bf-409a-bb7a-3c7f488c73f3">
+					<reportElement style="TotalCateg" x="455" y="0" width="45" height="20" uuid="edde65ba-72bf-409a-bb7a-3c7f488c73f3">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -805,7 +813,7 @@ and  (  $P{boursier}    is null or `ecoleviedbv2`.list_eleve_par_classe.inscript
 					<text><![CDATA[Red.]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="TotalCateg" x="520" y="0" width="40" height="20" uuid="e78f7442-685d-493d-b521-d5f429f2bb2d">
+					<reportElement style="TotalCateg" x="500" y="0" width="38" height="20" uuid="e78f7442-685d-493d-b521-d5f429f2bb2d">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -827,7 +835,7 @@ and  (  $P{boursier}    is null or `ecoleviedbv2`.list_eleve_par_classe.inscript
 					<text><![CDATA[LV2]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="TotalCateg" x="560" y="0" width="31" height="20" uuid="f14048ff-ed44-4037-b490-b3b941d1a5fb">
+					<reportElement style="TotalCateg" x="538" y="0" width="53" height="20" uuid="1e04fa1c-b7d0-4344-acd2-962abfdba026">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -846,7 +854,7 @@ and  (  $P{boursier}    is null or `ecoleviedbv2`.list_eleve_par_classe.inscript
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="7"/>
 					</textElement>
-					<text><![CDATA[Regime]]></text>
+					<text><![CDATA[Moy. AN]]></text>
 				</staticText>
 			</frame>
 		</band>
@@ -921,7 +929,7 @@ and  (  $P{boursier}    is null or `ecoleviedbv2`.list_eleve_par_classe.inscript
 					<textFieldExpression><![CDATA[$F{eleve_matricule}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement style="TotalCateg" x="133" y="0" width="177" height="52" uuid="df2bd651-6862-4c99-bc58-3a46f4dfeff0">
+					<reportElement style="TotalCateg" x="133" y="0" width="157" height="52" uuid="df2bd651-6862-4c99-bc58-3a46f4dfeff0">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -943,7 +951,7 @@ and  (  $P{boursier}    is null or `ecoleviedbv2`.list_eleve_par_classe.inscript
 					<textFieldExpression><![CDATA[$F{elevenom}+" "+$F{eleveprenom}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement style="TotalCateg" x="310" y="0" width="50" height="52" uuid="f0e8d314-8117-43cc-bc56-66f82c1f7900">
+					<reportElement style="TotalCateg" x="290" y="0" width="50" height="52" uuid="f0e8d314-8117-43cc-bc56-66f82c1f7900">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -962,10 +970,10 @@ and  (  $P{boursier}    is null or `ecoleviedbv2`.list_eleve_par_classe.inscript
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="7"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{classelibelle}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{libelle_classe}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement style="TotalCateg" x="360" y="0" width="40" height="52" uuid="0276b735-d542-473c-a5dc-3a0bfb7a39b0">
+					<reportElement style="TotalCateg" x="340" y="0" width="40" height="52" uuid="0276b735-d542-473c-a5dc-3a0bfb7a39b0">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -987,7 +995,7 @@ and  (  $P{boursier}    is null or `ecoleviedbv2`.list_eleve_par_classe.inscript
 					<textFieldExpression><![CDATA[$F{niveau}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement style="TotalCateg" x="400" y="0" width="30" height="52" uuid="274c8d2f-03a1-4f97-a777-6a224463bf89">
+					<reportElement style="TotalCateg" x="380" y="0" width="30" height="52" uuid="274c8d2f-03a1-4f97-a777-6a224463bf89">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1009,7 +1017,7 @@ and  (  $P{boursier}    is null or `ecoleviedbv2`.list_eleve_par_classe.inscript
 					<textFieldExpression><![CDATA[$F{eleve_sexe}.equals("MASCULIN")?"M":"F"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement style="TotalCateg" x="430" y="0" width="45" height="52" uuid="90de9481-6799-4808-ae8c-28260e843325">
+					<reportElement style="TotalCateg" x="410" y="0" width="45" height="52" uuid="90de9481-6799-4808-ae8c-28260e843325">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1031,7 +1039,7 @@ and  (  $P{boursier}    is null or `ecoleviedbv2`.list_eleve_par_classe.inscript
 					<textFieldExpression><![CDATA[$F{inscriptions_statut_eleve}.equals("AFFECTE")?"AFF":"NAFF"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement style="TotalCateg" x="475" y="0" width="44" height="52" uuid="d53ada5e-adab-49a0-abb5-c67f226a16bf">
+					<reportElement style="TotalCateg" x="455" y="0" width="44" height="52" uuid="d53ada5e-adab-49a0-abb5-c67f226a16bf">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1053,7 +1061,7 @@ and  (  $P{boursier}    is null or `ecoleviedbv2`.list_eleve_par_classe.inscript
 					<textFieldExpression><![CDATA[$F{inscriptions_redoublant}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement style="TotalCateg" x="519" y="0" width="41" height="52" uuid="99d558a8-a0ac-4701-9736-7089cf18f740">
+					<reportElement style="TotalCateg" x="499" y="0" width="40" height="52" uuid="99d558a8-a0ac-4701-9736-7089cf18f740">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1075,7 +1083,7 @@ and  (  $P{boursier}    is null or `ecoleviedbv2`.list_eleve_par_classe.inscript
 					<textFieldExpression><![CDATA[$F{inscriptions_langue_vivante}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement style="TotalCateg" x="560" y="0" width="31" height="52" uuid="bf536e34-ff3d-46b5-9c61-d81cab9ff1c4">
+					<reportElement style="TotalCateg" x="539" y="0" width="52" height="52" uuid="cb9a0d68-60d2-4d51-8036-6fe9d4a1e129">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1094,7 +1102,7 @@ and  (  $P{boursier}    is null or `ecoleviedbv2`.list_eleve_par_classe.inscript
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="7"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{inscriptions_boursier}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{moy_annuelle}]]></textFieldExpression>
 				</textField>
 			</frame>
 		</band>

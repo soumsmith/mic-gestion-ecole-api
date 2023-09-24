@@ -96,10 +96,10 @@ public class ComparatifServices {
         effParClass1D = getCountNomBreClasse(12L,anneeId,idEcole);
         effParClassTC = getCountNomBreClasse(14L,anneeId,idEcole);
         effParClassTD = getCountNomBreClasse(15L,anneeId,idEcole);
-        Double effParClassTA1 ,effParClassTA2 ;
+        Double effParClassTA1  ,effParClassTA2 ;
         effParClassTA1= getCountNomBreClasse(13L,anneeId,idEcole);
         effParClassTA2= getCountNomBreClasse(16L,anneeId,idEcole);
-        effParClassTA = effParClassTA1+ effParClassTA2 ;
+        effParClassTA = ( effParClassTA1==null ? 0D:effParClassTA1 )+ (effParClassTA2==null ? 0D:effParClassTA2 );
         System.out.println("effParClass6 "+effParClass6);
         m.setEffParClass6(effParClass6);
         m.setEffParClass5(effParClass5);

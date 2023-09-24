@@ -58,6 +58,7 @@ public class SouscPersonnelService implements PanacheRepositoryBase<sous_attent_
    public String   CreerSousCriperson(sous_attent_personnDto souscriPersonn) throws IOException, SQLException {
     sous_attent_personn  mysouscripPersonn1 = new sous_attent_personn() ;
     mysouscripPersonn1= getSouscripByEmail(souscriPersonn.getSous_attent_personn_email()) ;
+    //System.out.println("souscripteur trouvé "+mysouscripPersonn1.toString());
     if (mysouscripPersonn1!=null) {
         return  "EXISTE_DEJA !";
     } else {
@@ -87,7 +88,9 @@ public class SouscPersonnelService implements PanacheRepositoryBase<sous_attent_
         mysouscripPersonn.setSous_attent_personn_date_creation(LocalDateTime.now());
         mysouscripPersonn.setSous_attent_personn_nbre_annee_experience(souscriPersonn.getSous_attent_personn_nbre_annee_experience());
         mysouscripPersonn.persist();
+        System.out.println("Demande créée avec succes !");
         return  "Demande créée avec succes !";
+
     }
 
           }
@@ -102,6 +105,7 @@ public class SouscPersonnelService implements PanacheRepositoryBase<sous_attent_
                   Long idsouscripteur = mysouscripPersonn1.getSous_attent_personnid() ;
                   CreerCompteUtilsateurDto creerCompte = new CreerCompteUtilsateurDto() ;
                   creerCompte.setUtilisateur_mot_de_passe(souscriPersonn.getSous_attent_personn_password());
+                  creerCompte.setUtilisateu_login(souscriPersonn.getSous_attent_personn_login());
                   creerCompte.setSous_attent_personn_sous_attent_personnid(idsouscripteur);
                   creerCompte.setUtilisateu_email(souscriPersonn.getSous_attent_personn_email());
                   messageRetour = creerCompteUtilisateur(creerCompte) ;
@@ -123,6 +127,7 @@ public class SouscPersonnelService implements PanacheRepositoryBase<sous_attent_
            myNewInser.setUtilisateu_email(creerCompte.getUtilisateu_email());
            myNewInser.setSous_attent_personn_sous_attent_personnid(creerCompte.getSous_attent_personn_sous_attent_personnid());
            myNewInser.setUtilisateur_mot_de_passe(creerCompte.getUtilisateur_mot_de_passe());
+           myNewInser.setUtilisateu_login(creerCompte.getUtilisateu_login());
            myNewInser.persist();
            return  "Demande créée avec succes !";
 
