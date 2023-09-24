@@ -2,7 +2,12 @@ package com.vieecoles.steph.ressources;
 
 import com.vieecoles.steph.entities.Salle;
 import com.vieecoles.steph.services.SalleService;
+import com.vieecoles.steph.util.DateUtils;
+
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
+
+import java.time.LocalDate;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -79,7 +84,13 @@ public class SalleResource {
 	@GET
     @Path("/get-salles-dispo-heures")
     @Tag(name = "Salle")
-    public Response getWithSallesDisponibles(@QueryParam("annee") long anneeId, @QueryParam("classe") long classeId, @QueryParam("jour") int jourId, @QueryParam("heureDeb") String heureDeb, @QueryParam("heureFin") String heureFin) {
-        return Response.ok().entity(salleService.getWithSallesDisponibles(anneeId, classeId, jourId, heureDeb, heureFin)).build();
+    public Response getWithSallesDisponibles(@QueryParam("annee") long anneeId, @QueryParam("classe") long classeId, @QueryParam("jour") int jourId, 
+    		@QueryParam("date") String dateSeance, @QueryParam("heureDeb") String heureDeb, @QueryParam("heureFin") String heureFin) {
+		List<Salle> salles = salleService.getSallesDisponiblesByActivites(anneeId, classeId, jourId, heureDeb, heureFin);
+		if(dateSeance!=null && !dateSeance.isBlank()) {
+			LocalDate dateFormat = LocalDate.parse(dateSeance);
+			salles = salleService.getSallesDisponiblesBySeances(anneeId, classeId, jourId, DateUtils.asDate(dateFormat), dateSeance, heureDeb, heureFin, salles);
+		}
+        return Response.ok().entity(salles).build();
     }
 }

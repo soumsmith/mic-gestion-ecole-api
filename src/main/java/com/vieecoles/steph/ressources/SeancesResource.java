@@ -43,7 +43,20 @@ public class SeancesResource {
 		return Response.ok().entity(seanceService.generateSeances(ourDate, classeId)).build();
     }
 
-
+	@GET
+	@Path("/is-plage-horaire-valid")
+	@Tag(name = "Seances")
+	public Response isPlageHoraireValid(@QueryParam("annee") long anneeId, @QueryParam("classe") long classeId,
+			@QueryParam("jour") int jourId, @QueryParam("date") String dateSeance, @QueryParam("heureDeb") String heureDeb,
+			@QueryParam("heureFin") String heureFin) {
+		LocalDate dateFormat = LocalDate.parse(dateSeance);
+		
+		System.out.println(dateSeance);
+		System.out.println(dateFormat);
+		
+		return Response.ok().entity(seanceService.isPlageHoraireValid(anneeId, classeId, jourId,DateUtils.asDate(dateFormat), heureDeb, heureFin))
+				.build();
+	}
 
 	@GET
     @Path("/get-list-date-classe-statut")
@@ -155,7 +168,7 @@ public class SeancesResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Tag(name = "Seances")
     public Response updateAndDisplay(Seances seance) {
-
+		System.out.println("update and display ...");
     	Seances sc = seanceService.updateAndDisplay(seance);
 		if(sc==null) {
 			throw new NotFoundException();

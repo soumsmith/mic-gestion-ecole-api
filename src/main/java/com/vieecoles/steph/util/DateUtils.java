@@ -55,4 +55,12 @@ public class DateUtils {
 		LocalDate localDate = asLocalDate(date);
 		return asDate(localDate.atStartOfDay());
 	}
+	
+	public static int getNumDay(Date date) {
+		int jourNum;
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		jourNum = calendar.get(Calendar.DAY_OF_WEEK);
+		return jourNum;
+	}
 }

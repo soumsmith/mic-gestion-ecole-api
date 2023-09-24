@@ -15,8 +15,8 @@ import java.util.Date;
 public class Seances extends PanacheEntityBase {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private String id;
 	private String annee;
 	@ManyToOne
 	@JoinColumn(name = "jour")
