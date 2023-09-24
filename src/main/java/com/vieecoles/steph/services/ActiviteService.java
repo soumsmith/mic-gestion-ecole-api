@@ -14,6 +14,8 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
+import java.util.UUID;
 
 
 @ApplicationScoped
@@ -97,7 +99,7 @@ public class ActiviteService implements PanacheRepositoryBase<Activite, Integer>
 		return true;
 	}
 
-	public Activite findById(long id) {
+	public Activite findById(String id) {
 		//logger.info(String.format("find by id :: %s", id));
 		return Activite.findById(id);
 	}
@@ -106,7 +108,9 @@ public class ActiviteService implements PanacheRepositoryBase<Activite, Integer>
 	public Response save(Activite activite) {
 		Gson gson = new Gson();
 		//logger.info("persist activite ...");
-		//logger.info(gson.toJson(activite));
+		System.out.println(gson.toJson(activite));
+		UUID uuid = UUID.randomUUID();
+		activite.setId(uuid.toString());
 		activite.setDateCreation(new Date());
 		activite.setDateUpdate(new Date());
 		activite.setStatut(Constants.ACTIF);
@@ -160,7 +164,7 @@ public class ActiviteService implements PanacheRepositoryBase<Activite, Integer>
 	public void delete(String id) {
 
 		//logger.info("delete activite id " + id);
-		Activite atv = findById(Long.parseLong(id));
+		Activite atv = findById(id);
 //			atv.delete();
 		if (atv != null && isDeletable(atv)) {
 			atv.setStatut(Constants.INACTIF);

@@ -11,11 +11,13 @@ import javax.transaction.Transactional;
 import javax.ws.rs.core.Response;
 import java.net.URI;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -94,6 +96,43 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 			return null;
 		}
 	}
+	
+	public Boolean isPlageHoraireValid(long anneeId, long classeId, int jourId, Date date,  String heureDeb, String heureFin) {
+		List<Activite> activites = activiteService.getListByClasseAndJour(classeId, jourId);
+		List<Seances> seances = getListByDateAndClasse(anneeId, date, classeId);
+		LocalTime timeDeb = LocalTime.parse(heureDeb);
+		LocalTime timeFin = LocalTime.parse(heureFin);
+		// Vérification avec l emploi du temps
+		for (Activite atv : activites) {
+			if (!timeDeb.isBefore(LocalTime.parse(atv.getHeureDeb()))
+					&& timeDeb.isBefore(LocalTime.parse(atv.getHeureFin()))) {
+				return false;
+			}
+			if (timeFin.isAfter(LocalTime.parse(atv.getHeureDeb()))
+					&& !timeFin.isAfter(LocalTime.parse(atv.getHeureFin()))) {
+				return false;
+			}
+			if(!timeDeb.isAfter(LocalTime.parse(atv.getHeureDeb())) && !timeFin.isBefore(LocalTime.parse(atv.getHeureFin()))){
+				return false;
+			}
+		}
+		// Vérification avec eventuelles séances saisies
+		for(Seances s : seances) {
+			if (!timeDeb.isBefore(LocalTime.parse(s.getHeureDeb()))
+					&& timeDeb.isBefore(LocalTime.parse(s.getHeureFin()))) {
+				return false;
+			}
+			if (timeFin.isAfter(LocalTime.parse(s.getHeureDeb()))
+					&& !timeFin.isAfter(LocalTime.parse(s.getHeureFin()))) {
+				return false;
+			}
+			if(!timeDeb.isAfter(LocalTime.parse(s.getHeureDeb())) && !timeFin.isBefore(LocalTime.parse(s.getHeureFin()))){
+				return false;
+			}
+		}
+
+		return true;
+	}
 
 	public List<Seances> getDistinctListByDate(Date date) {
 		return Seances.find(
@@ -119,7 +158,7 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 		return seances;
 	}
 
-	public Seances findById(long id) {
+	public Seances findById(String id) {
 		// logger.info(String.format("find by id :: %s", id));
 		return Seances.findById(id);
 	}
@@ -138,6 +177,8 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 	public Response save(Seances seances) {
 		Gson gson = new Gson();
 		logger.info("persist seance ...");
+		UUID uuid = UUID.randomUUID();
+		seances.setId(uuid.toString());
 		if (seances.getSurveillant().getId() == 0)
 			seances.setSurveillant(null);
 		seances.setDateCreation(new Date());
@@ -201,9 +242,7 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 //		Gson gson = new Gson();
 		int jourNum;
 
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
-		jourNum = calendar.get(Calendar.DAY_OF_WEEK);
+		jourNum = DateUtils.getNumDay(date);
 
 		Jour jour = jourService.findByIdSys(jourNum);
 
@@ -283,13 +322,18 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 		return messages;
 	}
 
+	
+
 	public Seances updateAndDisplay(Seances seances) {
 		Seances seance;
+		try {
 		if (update(seances) != null) {
 			seance = findById(seances.getId());
 			return seance;
 		}
-
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 

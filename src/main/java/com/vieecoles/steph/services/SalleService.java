@@ -5,6 +5,8 @@ import java.util.logging.Logger;
 import com.vieecoles.steph.entities.Activite;
 import com.vieecoles.steph.entities.Classe;
 import com.vieecoles.steph.entities.Salle;
+import com.vieecoles.steph.entities.Seances;
+
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -23,6 +25,9 @@ public class SalleService implements PanacheRepositoryBase<Salle, Long> {
 
 	@Inject
 	ActiviteService activiteService;
+	
+	@Inject
+	SeanceService seanceService;
 
 	@Inject
 	ClasseService classeService;
@@ -56,7 +61,7 @@ public class SalleService implements PanacheRepositoryBase<Salle, Long> {
 	
 	
 
-	public List<Salle> getWithSallesDisponibles(long anneeId, long classeId, int jourId, String heureDeb,
+	public List<Salle> getSallesDisponiblesByActivites(long anneeId, long classeId, int jourId, String heureDeb,
 			String heureFin) {
 		List<Activite> activites = activiteService.getListByClasseAndJour(classeId, jourId);
 
@@ -99,6 +104,52 @@ public class SalleService implements PanacheRepositoryBase<Salle, Long> {
 		for (Activite atv : atvCart) {
 			for (Salle salle : salles) {
 				if (atv.getSalle().getId() == salle.getId()) {
+					salleCopy.remove(salle);
+				}
+			}
+		}
+		return salleCopy;
+	}
+	
+	public List<Salle> getSallesDisponiblesBySeances(long anneeId, long classeId, int jourId, Date date, String dateSeance,String heureDeb,
+			String heureFin,List<Salle>  salles) {
+		List<Seances> seances = seanceService.getListByDateAndClasse(anneeId, date, classeId);
+
+		LocalTime timeDeb = LocalTime.parse(heureDeb);
+		LocalTime timeFin = LocalTime.parse(heureFin);
+		List<Seances> seancesCart = new ArrayList<Seances>();
+		List<Salle> salleCopy = new ArrayList<Salle>();
+//		Gson gson = new Gson();
+//		System.out.println(gson.toJson(salles));
+		Boolean flag = true;
+		// liste des activités de la plage horaire
+		for (Seances s : seances) {
+//			System.out.println("______________");
+			flag = true;
+			if (!timeDeb.isBefore(LocalTime.parse(s.getHeureDeb()))
+					&& timeDeb.isBefore(LocalTime.parse(s.getHeureFin())) && flag) {
+				System.out.println("in 1---->");
+				seancesCart.add(s);
+				flag = false;
+			}
+			if (timeFin.isAfter(LocalTime.parse(s.getHeureDeb()))
+					&& !timeFin.isAfter(LocalTime.parse(s.getHeureFin())) && flag) {
+				System.out.println("in 2---->");
+				seancesCart.add(s);
+				flag = false;
+			}
+			if (!timeDeb.isAfter(LocalTime.parse(s.getHeureDeb()))
+					&& !timeFin.isBefore(LocalTime.parse(s.getHeureFin())) && flag) {
+				System.out.println("in 3---->");
+				seancesCart.add(s);
+			}
+
+		}
+		salleCopy.addAll(salles);
+		// suppression des activites dont les salles sont occupées
+		for (Seances seance : seancesCart) {
+			for (Salle salle : salles) {
+				if (seance.getSalle().getId() == salle.getId()) {
 					salleCopy.remove(salle);
 				}
 			}

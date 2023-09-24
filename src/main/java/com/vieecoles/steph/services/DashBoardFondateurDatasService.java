@@ -40,25 +40,25 @@ public class DashBoardFondateurDatasService {
 					ecoleId, anneeId, Constants.VALIDEE, Constants.FEMININ, Constants.NON_AFFECTE));
 			dash.setNombreEleveNonAffGarcons(inscriptionService.getNbreEleveAffecteByEcoleAndAnneeAndStatutAndSexe(
 					ecoleId, anneeId, Constants.VALIDEE, Constants.MASCULIN, Constants.NON_AFFECTE));
-			dash.setNombreEleveNouv(inscriptionService.countNewEleve(ecoleId));
+			dash.setNombreEleveNouv(inscriptionService.countNewEleve(ecoleId, anneeId));
 
 			dash.setNombreEleveNouvAffFilles(
-					inscriptionService.getNewEleveAffCountBySexe(ecoleId, Constants.FEMININ, Constants.AFFECTE));
+					inscriptionService.getNewEleveAffCountBySexe(ecoleId, anneeId, Constants.FEMININ, Constants.AFFECTE));
 			dash.setNombreEleveNouvAffGarcons(
-					inscriptionService.getNewEleveAffCountBySexe(ecoleId, Constants.MASCULIN, Constants.AFFECTE));
+					inscriptionService.getNewEleveAffCountBySexe(ecoleId, anneeId, Constants.MASCULIN, Constants.AFFECTE));
 			dash.setNombreEleveNouvNonAffFilles(
-					inscriptionService.getNewEleveAffCountBySexe(ecoleId, Constants.FEMININ, Constants.NON_AFFECTE));
+					inscriptionService.getNewEleveAffCountBySexe(ecoleId, anneeId, Constants.FEMININ, Constants.NON_AFFECTE));
 			dash.setNombreEleveNouvNonAffGarcons(
-					inscriptionService.getNewEleveAffCountBySexe(ecoleId, Constants.MASCULIN, Constants.NON_AFFECTE));
-			dash.setNombreEleveAnc(inscriptionService.countOldEleve(ecoleId));
+					inscriptionService.getNewEleveAffCountBySexe(ecoleId, anneeId, Constants.MASCULIN, Constants.NON_AFFECTE));
+			dash.setNombreEleveAnc(inscriptionService.countOldEleve(ecoleId, anneeId));
 			dash.setNombreEleveAncAffFilles(
-					inscriptionService.getOldEleveAffCountBySexe(ecoleId, Constants.FEMININ, Constants.AFFECTE));
+					inscriptionService.getOldEleveAffCountBySexe(ecoleId, anneeId, Constants.FEMININ, Constants.AFFECTE));
 			dash.setNombreEleveAncAffGarcons(
-					inscriptionService.getOldEleveAffCountBySexe(ecoleId, Constants.MASCULIN, Constants.AFFECTE));
+					inscriptionService.getOldEleveAffCountBySexe(ecoleId, anneeId, Constants.MASCULIN, Constants.AFFECTE));
 			dash.setNombreEleveAncNonAffFilles(
-					inscriptionService.getOldEleveAffCountBySexe(ecoleId, Constants.FEMININ, Constants.NON_AFFECTE));
+					inscriptionService.getOldEleveAffCountBySexe(ecoleId, anneeId, Constants.FEMININ, Constants.NON_AFFECTE));
 			dash.setNombreEleveAncNonAffGarcons(
-					inscriptionService.getOldEleveAffCountBySexe(ecoleId, Constants.MASCULIN, Constants.NON_AFFECTE));
+					inscriptionService.getOldEleveAffCountBySexe(ecoleId, anneeId, Constants.MASCULIN, Constants.NON_AFFECTE));
 
 			dash.setEffectifMoyenClasse(inscriptionService.getAvgEffectifbyClasse(ecoleId, anneeId));
 			dash.setNombreClasses(classeService.countClassesByEcole(ecoleId));
