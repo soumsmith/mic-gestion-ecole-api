@@ -290,6 +290,20 @@ public class connexionService implements PanacheRepositoryBase<utilisateur_has_p
     }
 
     @Transactional
+    public parametreConnexion  getInfoParametreConn(String  email){
+        parametreConnexion  myPersoDto = new parametreConnexion() ;
+        try {
+            myPersoDto= (parametreConnexion) em.createQuery("select  new com.vieecoles.dto.parametreConnexion(o.utilisateu_login ,o.utilisateur_mot_de_passe) from utilisateur o where o.utilisateu_email=:email ",parametreConnexion.class)
+                    .setParameter("email",email)
+                    .getSingleResult();
+        } catch (Exception e) {
+            myPersoDto = null;
+        }
+        return myPersoDto ;
+    }
+
+
+    @Transactional
     public CandidatConnexionDto getInfoPersonnCandidat(Long  idPersonnel){
         CandidatConnexionDto  myPersoDto = new CandidatConnexionDto() ;
         try {

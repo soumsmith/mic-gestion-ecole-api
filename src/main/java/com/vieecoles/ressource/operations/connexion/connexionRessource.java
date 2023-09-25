@@ -189,7 +189,26 @@ public class connexionRessource {
         return   myPersonn ;
     }
 
+    @GET
+    @Path("parametreLogin/{login}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.TEXT_PLAIN)
+    public parametreInfo infoParam(@PathParam("login") String login )
+    {
+        parametreInfo parm = new parametreInfo() ;
 
+        parametreConnexion   myPersonn = new parametreConnexion() ;
+        myPersonn=  myconnexionService.getInfoParametreConn(login) ;
+
+        if(myPersonn!=null) {
+            parm.setMessage("utilisateur trouve");
+            parm.setParametre(myPersonn);
+        } else {
+            parm.setMessage("utilisateur  non trouve");
+        }
+
+        return   parm ;
+    }
 
     @GET
     @Path("id-utilisateur-connecte/{login}")
