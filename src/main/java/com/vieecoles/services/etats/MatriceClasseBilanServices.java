@@ -84,8 +84,10 @@ public class MatriceClasseBilanServices {
             System.out.println("libelleMatiere "+libelleMatiere);
          if(libelleMatiere.equals("FRANCAIS") && numOrdreClasse<=2){
              System.out.println("SSSSSSS1");
+             Double moyMat = null;
              Double moyFr = calculMoycoefFran(classe,libelleAnnee ,periode,idEcole ) ;
-             Double moyMat= moyFr/(3d*sizeMatricule) ;
+             if(moyFr!=null && moyFr!=0D)
+              moyMat= moyFr/(3d*sizeMatricule) ;
              l.setLibelleMatiereBilan(libelleMatiere.substring(0, 3));
              l.setEcoleId("1");
              l.setMoyMatiereBilan(moyMat);
@@ -93,7 +95,9 @@ public class MatriceClasseBilanServices {
          } else if(libelleMatiere.equals("FRANCAIS") && (numOrdreClasse>2||numOrdreClasse<=5))   {
              System.out.println("SSSSSSS2");
              Double moyFr = calculMoycoefFran(classe,libelleAnnee ,periode,idEcole ) ;
-             Double moyMat= moyFr/(4d*sizeMatricule) ;
+             Double moyMat = null;
+             if(moyFr!=null && moyFr!=0D)
+              moyMat= moyFr/(4d*sizeMatricule) ;
              l.setLibelleMatiereBilan(libelleMatiere.substring(0, 3));
              l.setEcoleId("1");
              l.setMoyMatiereBilan(moyMat);

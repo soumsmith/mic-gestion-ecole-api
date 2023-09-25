@@ -175,14 +175,17 @@ public class LivretScolaireServices {
             System.out.println("effectif_non_classe>>"+ effectif_non_classe );
 
             rang = getRangMatiere(monMatricule ,classeNiveauDtoList.get(i).getNiveau(),"Troisième Trimestre") ;
+            System.out.println("rang "+rang);
             moyenne = getMoyenTroisiMatiere(monMatricule ,classeNiveauDtoList.get(i).getNiveau(),"Troisième Trimestre") ;
-
+            System.out.println("moyenne "+moyenne);
             rangPremier = getRangMatiere(monMatricule ,classeNiveauDtoList.get(i).getNiveau(),"Premier Trimestre") ;
+            System.out.println("rangPremier "+rangPremier);
             moyennePremier = getMoyenTroisiMatiere(monMatricule ,classeNiveauDtoList.get(i).getNiveau(),"Premier Trimestre") ;
-
+            System.out.println("moyennePremier "+moyennePremier);
             rangDeuxieme = getRangMatiere(monMatricule ,classeNiveauDtoList.get(i).getNiveau(),"Deuxième Trimestre") ;
+            System.out.println("rangDeuxieme "+rangDeuxieme);
             moyenneDeuxieme = getMoyenTroisiMatiere(monMatricule ,classeNiveauDtoList.get(i).getNiveau(),"Deuxième Trimestre") ;
-
+            System.out.println("moyenneDeuxieme "+moyenneDeuxieme);
             m.setAppreciation(appreciation);
             m.setAffecte(affecte);
             m.setId_ecole(idEcole);

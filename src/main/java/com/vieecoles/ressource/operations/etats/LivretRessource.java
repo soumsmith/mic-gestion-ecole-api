@@ -24,6 +24,7 @@ import java.nio.file.Files;
 
 import com.vieecoles.services.souscription.SousceecoleService;
 import com.vieecoles.steph.entities.Bulletin;
+import com.vieecoles.steph.services.AnneeService;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -65,6 +66,8 @@ import java.util.*;
 //@Consumes(MediaType.APPLICATION_JSON)
 
 public class LivretRessource {
+    @Inject
+    AnneeService anneeService;
     @Inject
     EntityManager em;
     @Inject
@@ -108,10 +111,15 @@ public class LivretRessource {
         //System.out.println("myEcole "+myEcole.toString());
         myIns = inscriptionService.checkInscrit(idEcole,matricule,1L);
         // System.out.println("Inscription "+ myIns.toString());
-        byte[] imagebytes = myIns.getPhoto_eleve() ;
-        byte[] imagebytes2 = myEcole.getLogoBlob() ;
-        byte[] imagebytes3 = mpara.getImage() ;
-        byte[] imagebytes4 = myEcole.getFiligramme() ;
+            byte[] imagebytes = new byte[0],imagebytes2 = new byte[0],imagebytes3 = new byte[0] ,imagebytes4 = new byte[0] ;
+            if(myIns.getPhoto_eleve()!=null)
+           imagebytes = myIns.getPhoto_eleve() ;
+            if(myEcole.getLogoBlob()!=null)
+         imagebytes2 = myEcole.getLogoBlob() ;
+
+         imagebytes3 = mpara.getImage() ;
+            if(myEcole.getFiligramme()!=null)
+         imagebytes4 = myEcole.getFiligramme() ;
         BufferedImage photo_eleve = null,logo= null ,amoirie= null,bg= null;
         String codeEcole = myEcole.getEcolecode() ;
         String statut = myEcole.getEcole_statut() ;

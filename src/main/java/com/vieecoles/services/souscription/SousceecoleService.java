@@ -205,12 +205,12 @@ return  messageRetour ;
 
 
 
-        public String creerSouscripEtablissement(Long fonctionId ,String nom, String prenom, String contact1 ,String contact2 ,String email ,String password,List<sous_attent_ecoleDto> listsouscr){
+        public String creerSouscripEtablissement(Long fonctionId ,String nom, String prenom, String contact1 ,String contact2 ,String email ,String password,String login,List<sous_attent_ecoleDto> listsouscr){
            String messaRetour = null ;
            utilisateur myUtili= new utilisateur() ;
             myUtili = myconnexionService.verifiEmailUtilisateur(email);
             if(myUtili==null){
-                return    creerLesEcoles(fonctionId,nom,prenom,contact1,contact2,email,password,listsouscr) ;
+                return    creerLesEcoles(fonctionId,nom,prenom,contact1,contact2,email,password,login,listsouscr) ;
             } else {
                return  messaRetour= "Cet utilisateur à déjà un compte";
             }
@@ -303,13 +303,14 @@ return  messageRetour ;
 
 
         public sous_attent_personn CreerPersonnelSouscriAndCompteUser(Long fonctionId ,String nom, String prenom, String contact1 ,String contact2,String email,
-        String password) {
+        String password,String login) {
             sous_attent_personn sous_attent_personn= new sous_attent_personn() ;
             //Creer souscripteur
             sous_attent_personn= creerPersonnel(fonctionId,nom,prenom,contact1,contact2,email) ;
             CreerCompteUtilsateurDto comptUserDto = new CreerCompteUtilsateurDto() ;
             comptUserDto.setSous_attent_personn_sous_attent_personnid(sous_attent_personn.getSous_attent_personnid());
             comptUserDto.setUtilisateu_email(email);
+            comptUserDto.setUtilisateu_login(login);
             comptUserDto.setUtilisateur_mot_de_passe(password);
                //Creer compte souscripteur
             creerCompteUtilisateur(comptUserDto) ;
@@ -391,9 +392,9 @@ return listEcoleDto ;
 
 
   @Transactional
-  public String creerLesEcoles(Long fonctionId ,String nom, String prenom, String contact1 ,String contact2 ,String email ,String password,List<sous_attent_ecoleDto> listsouscr ) {
+  public String creerLesEcoles(Long fonctionId ,String nom, String prenom, String contact1 ,String contact2 ,String email ,String password,String login ,List<sous_attent_ecoleDto> listsouscr ) {
     sous_attent_personn sous = new sous_attent_personn() ;
-    sous = CreerPersonnelSouscriAndCompteUser(fonctionId,nom,prenom,contact1,contact2,email,password);
+    sous = CreerPersonnelSouscriAndCompteUser(fonctionId,nom,prenom,contact1,contact2,email,password,login);
 
     System.out.println("sous+++ "+sous.toString());
     System.out.println("Longueur Tableau listsouscr+++ "+listsouscr.size());

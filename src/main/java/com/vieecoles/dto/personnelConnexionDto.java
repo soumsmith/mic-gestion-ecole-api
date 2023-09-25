@@ -10,11 +10,21 @@ public class personnelConnexionDto {
 
     private  String personnelnom;
     private  String personnelprenom;
+    private String profil ;
 
-    public personnelConnexionDto(Long personnelid, String personnelnom, String personnelprenom) {
+    public String getProfil() {
+        return profil;
+    }
+
+    public void setProfil(String profil) {
+        this.profil = profil;
+    }
+
+    public personnelConnexionDto(Long personnelid, String personnelnom, String personnelprenom , String profil) {
         this.personnelid = personnelid;
         this.personnelnom = personnelnom;
         this.personnelprenom = personnelprenom;
+        this.profil =profil ;
     }
 
     public personnelConnexionDto() {
