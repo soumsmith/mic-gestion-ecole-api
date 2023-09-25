@@ -33,14 +33,14 @@ public class SeancesResource {
 	@GET
     @Path("/generate-seances")
     @Tag(name = "Seances")
-    public Response generateSeances(@QueryParam("date") String date, @QueryParam("classe") String classeId) {
+    public Response generateSeances(@QueryParam("date") String date, @QueryParam("classe") String classeId, @QueryParam("ecole") Long ecoleId) {
         List<Message> messages = new ArrayList<Message>();
-        messages.add(new Message("Generé", "Mon titre", "Mon detail bla bla bla"));
+        messages.add(new Message("Generé", "Mon titre", "Mon detail"));
         LocalDate ld = DateUtils.getDateWithString(date);
 		Date ourDate = DateUtils.asDate(ld);
 
 //		return Response.ok().entity(messages).build();
-		return Response.ok().entity(seanceService.generateSeances(ourDate, classeId)).build();
+		return Response.ok().entity(seanceService.generateSeances(ourDate, classeId, ecoleId)).build();
     }
 
 	@GET

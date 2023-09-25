@@ -1,15 +1,18 @@
 package com.vieecoles.steph.services;
 
 import com.google.gson.Gson;
+import com.vieecoles.services.operations.ecoleService;
 import com.vieecoles.steph.entities.*;
 import com.vieecoles.steph.util.DateUtils;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
+import io.quarkus.scheduler.Scheduled;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.core.Response;
 import java.net.URI;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -35,9 +38,12 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 
 	@Inject
 	PersonnelMatiereClasseService personnelMatiereClasseService;
-	
+
 	@Inject
 	EvaluationService evaluationService;
+
+	@Inject
+	EcoleService ecoleService;
 
 	Logger logger = Logger.getLogger(SeanceService.class.getName());
 
@@ -90,14 +96,26 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 		// logger.info(String.format("Annee %s - statut %s", anneeId, statut));
 		try {
 			return Seances.find("statut = ?1 and classe.ecole.id=?2 and annee =?3", statut, ecoleId, anneeId).list();
-			
-		}catch(RuntimeException r) {
+
+		} catch (RuntimeException r) {
 			r.printStackTrace();
 			return null;
 		}
 	}
-	
-	public Boolean isPlageHoraireValid(long anneeId, long classeId, int jourId, Date date,  String heureDeb, String heureFin) {
+
+	public List<Seances> getListByEcoleAndDateAndStatut(Date date, String statut, long ecoleId) {
+		// logger.info(String.format("Annee %s - statut %s", anneeId, statut));
+		try {
+			return Seances.find("statut=?1 and classe.ecole.id=?2 and dateSeance =?3", statut, ecoleId, date).list();
+
+		} catch (RuntimeException r) {
+			r.printStackTrace();
+			return null;
+		}
+	}
+
+	public Boolean isPlageHoraireValid(long anneeId, long classeId, int jourId, Date date, String heureDeb,
+			String heureFin) {
 		List<Activite> activites = activiteService.getListByClasseAndJour(classeId, jourId);
 		List<Seances> seances = getListByDateAndClasse(anneeId, date, classeId);
 		LocalTime timeDeb = LocalTime.parse(heureDeb);
@@ -112,12 +130,13 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 					&& !timeFin.isAfter(LocalTime.parse(atv.getHeureFin()))) {
 				return false;
 			}
-			if(!timeDeb.isAfter(LocalTime.parse(atv.getHeureDeb())) && !timeFin.isBefore(LocalTime.parse(atv.getHeureFin()))){
+			if (!timeDeb.isAfter(LocalTime.parse(atv.getHeureDeb()))
+					&& !timeFin.isBefore(LocalTime.parse(atv.getHeureFin()))) {
 				return false;
 			}
 		}
 		// Vérification avec eventuelles séances saisies
-		for(Seances s : seances) {
+		for (Seances s : seances) {
 			if (!timeDeb.isBefore(LocalTime.parse(s.getHeureDeb()))
 					&& timeDeb.isBefore(LocalTime.parse(s.getHeureFin()))) {
 				return false;
@@ -126,7 +145,8 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 					&& !timeFin.isAfter(LocalTime.parse(s.getHeureFin()))) {
 				return false;
 			}
-			if(!timeDeb.isAfter(LocalTime.parse(s.getHeureDeb())) && !timeFin.isBefore(LocalTime.parse(s.getHeureFin()))){
+			if (!timeDeb.isAfter(LocalTime.parse(s.getHeureDeb()))
+					&& !timeFin.isBefore(LocalTime.parse(s.getHeureFin()))) {
 				return false;
 			}
 		}
@@ -162,10 +182,13 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 		// logger.info(String.format("find by id :: %s", id));
 		return Seances.findById(id);
 	}
-	
+
 	public Long countSallesUtiliseInSeanceByEcoleAndDate(Long ecoleId, Date date) {
 		try {
-			return Seances.find("select distinct s.salle.id from Seances s where s.classe.ecole.id = ?1 and s.dateSeance =?2", ecoleId, date).count();
+			return Seances
+					.find("select distinct s.salle.id from Seances s where s.classe.ecole.id = ?1 and s.dateSeance =?2",
+							ecoleId, date)
+					.count();
 		} catch (RuntimeException ex) {
 			logger.log(Level.WARNING, " Error getSallesByEcole {0}", ex);
 			return (long) 0;
@@ -194,19 +217,19 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 			seances.getEvaluation().setType(seances.getTypeActivite());
 			// Ajouter l heure et la minutes à la date de l evaluation
 			LocalDateTime ldt = DateUtils.asLocalDateTime(seances.getDateSeance());
-			Long heureD = seances.getHeureDeb() != null ?  Long.parseLong(seances.getHeureDeb().split(":")[0]) : 0;
-			Long minD = seances.getHeureDeb() != null ?  Long.parseLong(seances.getHeureDeb().split(":")[1]) : 0;
+			Long heureD = seances.getHeureDeb() != null ? Long.parseLong(seances.getHeureDeb().split(":")[0]) : 0;
+			Long minD = seances.getHeureDeb() != null ? Long.parseLong(seances.getHeureDeb().split(":")[1]) : 0;
 			logger.info(DateUtils.asDate(ldt.plusHours(heureD).plusMinutes(minD)).toString());
 			seances.getEvaluation().setDate(DateUtils.asDate(ldt.plusHours(heureD).plusMinutes(minD)));
-			
+
 			seances.getEvaluation().setClasse(seances.getClasse());
 			seances.getEvaluation().setUser(seances.getUser());
 			logger.info(gson.toJson(seances.getEvaluation()));
 			evaluationService.create(seances.getEvaluation());
-		}else {
+		} else {
 			seances.setEvaluation(null);
 		}
-		 seances.persist();
+		seances.persist();
 		return Response.created(URI.create("/seances/" + seances.getId())).build();
 	}
 
@@ -234,26 +257,21 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 	}
 
 	@Transactional
-	public List<Message> generateSeances(Date date, String classe) {
+	public List<Message> generateSeances(Date date, String classe, Long ecoleId) {
 		// si classe est non nulle verifier existence de la séance, si existe alors
-		// passer
-
-		// rechercher le Jour a partir d une date
+		// passer rechercher le Jour a partir d une date
 //		Gson gson = new Gson();
 		int jourNum;
-
 		jourNum = DateUtils.getNumDay(date);
-
 		Jour jour = jourService.findByIdSys(jourNum);
-
-//		System.out.println(gson.toJson(jour));
+		System.out.println("Ecole ::: "+ecoleId);
 		List<Activite> activites = new ArrayList<Activite>();
 
 		// Recuperer la liste des emploi du temps en fonction du jour et/ou de la classe
 		// (si classe non nulle)
-		if (classe == null)
-			activites = activiteService.getListByJour(jour.getId());
-		else
+		if (classe == null) {
+			activites = activiteService.getListByJourAndEcole(jour.getId(), ecoleId);
+		}else
 			activites = activiteService.getListByClasseAndJour(Long.parseLong(classe), jour.getId());
 
 		// inserer pour chaque emploi du temps une seance (en recherchant le professeur
@@ -278,8 +296,10 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 
 				if (seanceExist.size() == 0) {
 					seance = new Seances();
+					UUID uuid = UUID.randomUUID();
 					pers = personnelMatiereClasseService.findByMatiereAndClasse(atv.getMatiere().getId(), 1,
 							atv.getClasse().getId());
+					seance.setId(uuid.toString());
 					seance.setAnnee(atv.getAnnee());
 					seance.setClasse(atv.getClasse());
 					seance.setDateCreation(new Date());
@@ -296,8 +316,8 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 					seance.setTypeActivite(atv.getTypeActivite());
 					seance.setActivite(atv);
 					seance.persist();
-					// logger.info("-> id "+seance.getId());
 					seancespersist.add(seance);
+					logger.info("-> id "+seance.getId());
 					cpteSeances++;
 				} else {
 					blackIdsClasses.add(atv.getClasse().getId());
@@ -322,16 +342,85 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 		return messages;
 	}
 
-	
+	@Scheduled(cron = "0 0 23 * * ?")
+	public void generatorSeanceScheduler() {
+		List<Ecole> ecoles = ecoleService.getList();
+		int jourNum;
+		LocalDate tomorrow = LocalDate.now().plusDays(1);
+		jourNum = DateUtils.getNumDay(DateUtils.asDate(tomorrow));
+		Jour jour = jourService.findByIdSys(jourNum);
+		logger.info("*** GENERATION AUTOMATIQUE DES EMPLOI DU TEMPS ***");
+		logger.info(String.format("Date de generation des bulletins %s", DateUtils.asDate(tomorrow)));
+
+		for (Ecole ecole : ecoles) {
+			System.out.println(String.format("Ecole %s", ecole.getLibelle()));
+			handlePersist(tomorrow, jour, ecole);
+		}
+		logger.info("*** FIN GENERATION ***");
+	}
+
+	/**
+	 * 
+	 * @param dateSeance
+	 * @param ecoleId
+	 * @return true si une generation automatique a eu deja lieu pour une ecole
+	 *         sinon false
+	 * 
+	 */
+	public Boolean checkIfSeancesGenerate(Date dateSeance, Long ecoleId) {
+		List<Seances> seances = getListByEcoleAndDateAndStatut(dateSeance, Constants.AUTOMATIQUE, ecoleId);
+		if (seances != null && seances.size() > 0) {
+			logger.info("-> Séances generées détectées");
+			return true;
+		}
+		return false;
+	}
+
+	@Transactional
+	public void handlePersist(LocalDate tomorrow, Jour jour, Ecole ecole) {
+		try {
+			if (!checkIfSeancesGenerate(DateUtils.asDate(tomorrow), ecole.getId())) {
+				List<Activite> activites = activiteService.getListByEcole(ecole.getId());
+				for (Activite atv : activites) {
+					Seances seance = new Seances();
+					UUID uuid = UUID.randomUUID();
+					PersonnelMatiereClasse pers = new PersonnelMatiereClasse();
+					pers = personnelMatiereClasseService.findByMatiereAndClasse(atv.getMatiere().getId(), 1,
+							atv.getClasse().getId());
+					seance.setId(uuid.toString());
+					seance.setAnnee(atv.getAnnee());
+					seance.setClasse(atv.getClasse());
+					seance.setDateCreation(new Date());
+					seance.setDateUpdate(new Date());
+					seance.setDateSeance(DateUtils.asDate(tomorrow));
+					seance.setHeureDeb(atv.getHeureDeb());
+					seance.setHeureFin(atv.getHeureFin());
+					seance.setJour(jour);
+					seance.setMatiere(atv.getMatiere());
+					seance.setProfesseur(pers != null ? pers.getPersonnel() : null);
+					seance.setSalle(atv.getSalle());
+					seance.setStatut(Constants.AUTOMATIQUE);
+					seance.setSurveillant(null);
+					seance.setTypeActivite(atv.getTypeActivite());
+					seance.setActivite(atv);
+					seance.persist();
+//					System.out.println("---> "+seance.getId());
+				}
+				logger.info("--> "+activites.size()+" enregistrement(s)");
+			}
+		} catch (RuntimeException r) {
+			r.printStackTrace();
+		}
+	}
 
 	public Seances updateAndDisplay(Seances seances) {
 		Seances seance;
 		try {
-		if (update(seances) != null) {
-			seance = findById(seances.getId());
-			return seance;
-		}
-		}catch (Exception e) {
+			if (update(seances) != null) {
+				seance = findById(seances.getId());
+				return seance;
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
