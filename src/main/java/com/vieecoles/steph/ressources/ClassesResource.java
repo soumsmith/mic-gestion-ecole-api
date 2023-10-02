@@ -38,7 +38,7 @@ public class ClassesResource {
 	    @Path("/list-populate")
 	    @Tag(name = "Classe")
 	    public Response listPopulate() {
-	    	System.out.println("ClassesResource.listPopulate()");
+//	    	System.out.println("ClassesResource.listPopulate()");
 	        return Response.ok().entity(classeService.getListClasseAllFields()).build();
 	    }
 	    
@@ -46,8 +46,16 @@ public class ClassesResource {
 	    @Path("/list-populate-by-ecole")
 	    @Tag(name = "Classe")
 	    public Response listPopulateByEcole(@QueryParam("ecole") Long ecole) {
-	    	System.out.println("ClassesResource.listPopulateByEcole()");
+//	    	System.out.println("ClassesResource.listPopulateByEcole()");
 	        return Response.ok().entity(classeService.getListClasseAllFields(ecole)).build();
+	    }
+	    
+	    @GET
+	    @Path("/list-all-populate-by-ecole")
+	    @Tag(name = "Classe")
+	    public Response listAllPopulateByEcole(@QueryParam("ecole") Long ecole) {
+//	    	System.out.println("ClassesResource.listPopulateByEcole()");
+	        return Response.ok().entity(classeService.getListAllClasseAllFields(ecole)).build();
 	    }
 
 	    @GET
@@ -70,6 +78,16 @@ public class ClassesResource {
 		@Tag(name = "Classe")
 	    public List<Classe> getByBranche(@QueryParam("branche") long brancheId,@QueryParam("ecole") long ecole ) {
 	    	List<Classe> classes = classeService.findByBranche(brancheId, ecole);
+	    	return classes;
+	    }
+	    
+
+	    @GET
+	    @Path("/get-visible-by-branche")
+	    @Operation(description = "Obtenir les classes de meme branche", summary = "")
+		@Tag(name = "Classe")
+	    public List<Classe> getVisibleByBranche(@QueryParam("branche") long brancheId,@QueryParam("ecole") long ecole ) {
+	    	List<Classe> classes = classeService.findVisibleByBranche(brancheId, ecole);
 	    	return classes;
 	    }
 

@@ -10,6 +10,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
 import javax.ws.rs.core.Response;
 import java.net.URI;
+import java.util.Date;
 import java.util.List;
 
 
@@ -29,7 +30,17 @@ public class ClasseService implements PanacheRepositoryBase<Classe,Integer> {
 	public List<Classe> getListClasseByEcole(Long ecoleId) {
 		try {
 		//	logger.info("........ in list <<<<>>>>>");
-			return Classe.find("ecole.id =?1", Sort.by("libelle").descending(), ecoleId).list();
+			return Classe.find("ecole.id =?1 and visible = 1", Sort.by("libelle").descending(), ecoleId).list();
+		}catch(Exception e) {
+			e.printStackTrace();
+			return null ;
+		}
+	}
+	
+	public List<Classe> getListAllClasseByEcole(Long ecoleId) {
+		try {
+		//	logger.info("........ in list <<<<>>>>>");
+			return Classe.find("ecole.id =?1 ", Sort.by("libelle").descending(), ecoleId).list();
 		}catch(Exception e) {
 			e.printStackTrace();
 			return null ;
@@ -55,11 +66,32 @@ public class ClasseService implements PanacheRepositoryBase<Classe,Integer> {
 			return null ;
 		}
 	}
-	
+	/**
+	 * Cette méthode renvoie la liste des classes visible dans une école
+	 *
+	 * @param ecoleId identifiant de l'école
+	 * @return Liste des classes visibles
+	 */
 	public List<Classe> getListClasseAllFields(Long ecoleId) {
 		try {
 			//logger.info("........ in list <<<<>>>>>");
 			return populateNullFieldClasse(getListClasseByEcole(ecoleId));
+		}catch(Exception e) {
+			e.printStackTrace();
+			return null ;
+		}
+	}
+	/**
+	 * Cette méthode renvoie toutes les classes d'une école
+	 *
+	 * @param ecoleId identifiant de l'école
+	 * 
+	 * @return liste des classes
+	 */
+	public List<Classe> getListAllClasseAllFields(Long ecoleId) {
+		try {
+			//logger.info("........ in list <<<<>>>>>");
+			return populateNullFieldClasse(getListAllClasseByEcole(ecoleId));
 		}catch(Exception e) {
 			e.printStackTrace();
 			return null ;
@@ -80,6 +112,12 @@ public class ClasseService implements PanacheRepositoryBase<Classe,Integer> {
 		//logger.info(String.format("find by Branche id :: %s", id));
 		return Classe.find("branche.id = ?1 and ecole.id=?2",id, ecoleId).list();
 	}
+	
+	public List<Classe> findVisibleByBranche(long id, Long ecoleId) {
+		//logger.info(String.format("find by Branche id :: %s", id));
+		return Classe.find("branche.id = ?1 and ecole.id=?2 and visible = 1",id, ecoleId).list();
+	}
+	
 	@Transactional
 	public Response save(Classe classe) {
 //	logger.info("persist classe ...");
@@ -87,6 +125,8 @@ public class ClasseService implements PanacheRepositoryBase<Classe,Integer> {
 		Ecole ecole;
 		// A supprimer lorsque le credential contenant l ecole sera disponible
 		// Par defaut pour tout enregistrement on set l ecole id à 1
+		classe.setDateCreation(new Date());
+		classe.setDateUpdate(new Date());
 		if(classe.getEcole()== null) {
 			ecole = new Ecole();
 			ecole.setId(1);
@@ -104,13 +144,15 @@ public class ClasseService implements PanacheRepositoryBase<Classe,Integer> {
 	public Classe update(Classe classe) {
 	//	logger.info("updating classe ...");
 		Classe cl = Classe.findById(classe.getId());
+		classe.setDateUpdate(new Date());
 		if(cl != null) {
-			cl.setAnnee(classe.getAnnee());
+//			cl.setAnnee(classe.getAnnee());
 			cl.setBranche(classe.getBranche());
 			cl.setLangueVivante(classe.getLangueVivante());
 			cl.setCode(classe.getCode());
 			cl.setLibelle(classe.getLibelle());
 			cl.setEffectif(classe.getEffectif());
+			cl.setVisible(classe.getVisible());
 		}
 //		logger.info(new Gson().toJson(cl));
 		return cl;

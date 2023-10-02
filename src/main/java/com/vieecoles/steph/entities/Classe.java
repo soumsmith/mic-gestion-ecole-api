@@ -32,16 +32,20 @@ public class Classe extends PanacheEntityBase {
 	private Professeur profPrincipal;
 	@ManyToOne
 	private Branche branche;
-	@ManyToOne
-	@JoinColumn(name = "annee_scolaire_annee_scolaireid")
-	private AnneeScolaire annee;
-	@Transient
+//	@ManyToOne
+//	@JoinColumn(name = "annee_scolaire_annee_scolaireid")
+//	private AnneeScolaire annee;
+//	@Transient
+	@Column(name = "date_creation")
 	private Date dateCreation;
 	@ManyToOne
 	@JoinColumn(name = "ecole_ecoleid")
 	private Ecole ecole;
 	@Column(name = "effectif")
 	private Integer effectif;
+	private Integer visible;
+	@Column(name = "date_update")
+	private Date dateUpdate;
 //	@Transient
 //	@OneToMany
 //	private List<Eleve> eleve;
