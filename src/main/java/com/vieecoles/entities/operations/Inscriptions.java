@@ -28,6 +28,16 @@ public class Inscriptions extends PanacheEntityBase {
     private  String inscriptions_contact1 ;
     private  String inscriptions_contact2 ;
     private String num_decision_affecte;
+    private String decision_ant ;
+
+    public String getDecision_ant() {
+        return decision_ant;
+    }
+
+    public void setDecision_ant(String decision_ant) {
+        this.decision_ant = decision_ant;
+    }
+
     private  Boolean transfert ;
     @Lob @Basic(fetch = FetchType.LAZY)
     @Column(length=100000)

@@ -13,7 +13,7 @@ public class EleveDto {
     private  String eleveprenom ;
     private LocalDate elevedate_naissance ;
     private  String  elevelieu_naissance ;
-    private  Integer eleve_numero_extrait_naiss ;
+    private  String eleve_numero_extrait_naiss ;
     private  LocalDate  elevedate_etabli_extrait_naiss ;
     private  String  elevelieu_etabliss_etrait_naissance ;
     private  String eleveadresse ;
@@ -78,7 +78,7 @@ public class EleveDto {
         this.eleve_nationalite = eleve_nationalite;
     }
 
-    public EleveDto(Long eleveid, String elevecode, String elevenom, String eleveprenom, LocalDate elevedate_naissance, String elevelieu_naissance, Integer eleve_numero_extrait_naiss, LocalDate elevedate_etabli_extrait_naiss, String elevelieu_etabliss_etrait_naissance, String eleveadresse, String elevecellulaire, String eleve_mail) {
+    public EleveDto(Long eleveid, String elevecode, String elevenom, String eleveprenom, LocalDate elevedate_naissance, String elevelieu_naissance, String eleve_numero_extrait_naiss, LocalDate elevedate_etabli_extrait_naiss, String elevelieu_etabliss_etrait_naissance, String eleveadresse, String elevecellulaire, String eleve_mail) {
         this.eleveid = eleveid;
         this.elevecode = elevecode;
         this.elevenom = elevenom;
@@ -142,11 +142,11 @@ public class EleveDto {
         this.elevelieu_naissance = elevelieu_naissance;
     }
 
-    public Integer getEleve_numero_extrait_naiss() {
+    public String getEleve_numero_extrait_naiss() {
         return eleve_numero_extrait_naiss;
     }
 
-    public void setEleve_numero_extrait_naiss(Integer eleve_numero_extrait_naiss) {
+    public void setEleve_numero_extrait_naiss(String eleve_numero_extrait_naiss) {
         this.eleve_numero_extrait_naiss = eleve_numero_extrait_naiss;
     }
 
