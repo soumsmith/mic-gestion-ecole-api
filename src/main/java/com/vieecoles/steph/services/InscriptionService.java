@@ -155,7 +155,7 @@ public class InscriptionService implements PanacheRepositoryBase<Inscription, In
 		for (Inscription ins : inscriptions) {
 			System.out.println(ins);
 			for (ClasseEleve ce : classeEleves) {
-				System.out.println(ins.getId() + " == " + ce.getInscription().getId());
+//				System.out.println(ins.getId() + " == " + ce.getInscription().getId());
 				if (ins.getId() == ce.getInscription().getId()) {
 					flat = true;
 					break;

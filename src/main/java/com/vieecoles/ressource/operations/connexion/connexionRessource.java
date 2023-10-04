@@ -170,6 +170,23 @@ public class connexionRessource {
         }
       return   myPersonn ;
     }
+    
+    @GET
+    @Path("infos-personnel-connecte-v2/{login}/{idEcole}/{profil}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.TEXT_PLAIN)
+    public personnelConnexionDto infoPersonnConnect(@PathParam("login") String login ,@PathParam("idEcole") Long idEcole,@PathParam("profil") Long profilId)
+    {
+        Long idUtilisateur ;
+        idUtilisateur = myconnexionService.getIdUtilisateur(login) ;
+        personnelConnexionDto myPersonn= new personnelConnexionDto();
+        System.out.println("idUtilisateurxxx "+ idUtilisateur);
+
+        if(idUtilisateur!=0L) {
+            myPersonn =  myconnexionService.infosUtilisateurConnecteV2(login,idEcole,profilId) ;
+        }
+      return   myPersonn ;
+    }
 
 
     @GET

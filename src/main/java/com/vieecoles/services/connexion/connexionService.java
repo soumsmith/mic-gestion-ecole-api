@@ -168,6 +168,26 @@ public class connexionService implements PanacheRepositoryBase<utilisateur_has_p
 
 }
 
+public personnelConnexionDto infosUtilisateurConnecteV2(String email,Long idEcole, Long profil){
+
+    Long idUtilisateur ,IdPersonnel ;
+      personnelConnexionDto  myPersoDto = new personnelConnexionDto() ;
+      System.out.println("ENTREEEEEE ");
+
+      idUtilisateur =   getIdUtilisateur(email);
+      System.out.println("idUtilisateur "+idUtilisateur);
+
+          IdPersonnel = getIDpersonnel(idUtilisateur,idEcole) ;
+
+          System.out.println("IdPersonnel "+IdPersonnel);
+          myPersoDto = getInfoPersonnel(IdPersonnel,profil) ;
+
+          System.out.println("myPersoDto "+myPersoDto);
+
+    return myPersoDto;
+
+}
+
     @Transactional
     public CandidatConnexionDto infosCandidatConnecte(String login){
         Long idUtilisateur ,IdPersonnel ;
@@ -198,6 +218,7 @@ public class connexionService implements PanacheRepositoryBase<utilisateur_has_p
                     .setParameter("idPersonnel",idPersonnel)
                     .getSingleResult();
         } catch (Exception e) {
+        	e.printStackTrace();
             idSouscripteur = 0L;
         }
         return idSouscripteur ;
@@ -211,6 +232,7 @@ public class connexionService implements PanacheRepositoryBase<utilisateur_has_p
                     .setParameter("idPersonnel",idPersonnel)
                     .getSingleResult();
         } catch (Exception e) {
+        	e.printStackTrace();
             emailSouscripteur = null;
         }
         return emailSouscripteur ;
@@ -226,6 +248,7 @@ public class connexionService implements PanacheRepositoryBase<utilisateur_has_p
                     .setParameter("idSouscripteur",idSouscripteur)
                     .getSingleResult();
         } catch (Exception e) {
+        	e.printStackTrace();
             idUtilisateur = 0L;
         }
         return idUtilisateur ;
@@ -242,6 +265,7 @@ public class connexionService implements PanacheRepositoryBase<utilisateur_has_p
                   .setParameter("login",login)
                   .getSingleResult();
       } catch (Exception e) {
+    	  e.printStackTrace();
           IdUtilisateur = 0L;
       }
      return IdUtilisateur ;
@@ -256,6 +280,7 @@ public class connexionService implements PanacheRepositoryBase<utilisateur_has_p
                     .setParameter("idEcole",idEcole)
                     .getSingleResult();
         } catch (Exception e) {
+        	e.printStackTrace();
             IdPersonnel = null;
         }
         return IdPersonnel ;
@@ -269,6 +294,7 @@ public class connexionService implements PanacheRepositoryBase<utilisateur_has_p
                     .setParameter("login",login)
                     .getSingleResult();
         } catch (Exception e) {
+        	e.printStackTrace();
             IdPersonnel = null;
         }
         return IdPersonnel ;
@@ -284,7 +310,22 @@ public class connexionService implements PanacheRepositoryBase<utilisateur_has_p
                     .setParameter("idPersonnel",idPersonnel)
                     .getSingleResult();
         } catch (Exception e) {
-            myPersoDto = null;
+        	e.printStackTrace();
+        	myPersoDto = null;
+        }
+        return myPersoDto ;
+    }
+    
+    public personnelConnexionDto  getInfoPersonnel(Long  idPersonnel, Long profilId){
+        personnelConnexionDto  myPersoDto = new personnelConnexionDto() ;
+        try {
+            myPersoDto= (personnelConnexionDto) em.createQuery("select  new com.vieecoles.dto.personnelConnexionDto(o.personnelid,o.personnelnom,o.personnelprenom ,pl.profil_libelle) from personnel o, profil pl ,utilisateur_has_personnel  ut where o.personnelid=ut.personnel_personnelid and pl.profilid = ut.profil.profilid and  o.personnelid=:idPersonnel and ut.profil.profilid=:profilId",personnelConnexionDto.class)
+                    .setParameter("idPersonnel",idPersonnel)
+                    .setParameter("profilId",profilId)
+                    .getSingleResult();
+        } catch (Exception e) {
+        	e.printStackTrace();
+        	myPersoDto = null;
         }
         return myPersoDto ;
     }
@@ -293,10 +334,12 @@ public class connexionService implements PanacheRepositoryBase<utilisateur_has_p
     public parametreConnexion  getInfoParametreConn(String  email){
         parametreConnexion  myPersoDto = new parametreConnexion() ;
         try {
+        	System.out.println("email :  "+email);
             myPersoDto= (parametreConnexion) em.createQuery("select  new com.vieecoles.dto.parametreConnexion(o.utilisateu_login ,o.utilisateur_mot_de_passe) from utilisateur o where o.utilisateu_email=:email ",parametreConnexion.class)
                     .setParameter("email",email)
                     .getSingleResult();
         } catch (Exception e) {
+        	e.printStackTrace();
             myPersoDto = null;
         }
         return myPersoDto ;
@@ -635,6 +678,7 @@ public class connexionService implements PanacheRepositoryBase<utilisateur_has_p
                     .setParameter("motPasse",motdePasse.trim())
                     .getSingleResult();
         } catch (Exception e) {
+        	e.printStackTrace();
             return  null;
         }
     }
@@ -646,6 +690,7 @@ public class connexionService implements PanacheRepositoryBase<utilisateur_has_p
                      .setParameter("email",emailUtilisateur)
                      .getSingleResult();
          } catch (Exception e) {
+        	 e.printStackTrace();
              return  null;
          }
 
@@ -657,6 +702,7 @@ public class connexionService implements PanacheRepositoryBase<utilisateur_has_p
                     .setParameter("login",login)
                     .getSingleResult();
         } catch (Exception e) {
+        	e.printStackTrace();
             return  null;
         }
 
@@ -670,6 +716,7 @@ public class connexionService implements PanacheRepositoryBase<utilisateur_has_p
                      .setParameter("profilId",profilId)
                       .getSingleResult();
          } catch (Exception e) {
+        	 e.printStackTrace();
              return  null;
          }
 
