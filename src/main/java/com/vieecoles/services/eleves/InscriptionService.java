@@ -202,6 +202,11 @@ public class InscriptionService implements PanacheRepositoryBase<Inscriptions, L
             inscr.setInscriptions_derniereclasse_religieuse(inscriptionDto.getInscriptions_derniereclasse_religieuse());
             inscr.setInscriptions_classe_precedente(inscriptionDto.getInscriptions_classe_precedente());
             inscr.setInscriptions_ecole_origine(inscriptionDto.getInscriptions_ecole_origine());
+
+            inscr.setNom_prenoms_pere(inscriptionDto.getNom_prenoms_pere());
+            inscr.setNom_prenoms_tuteur(inscriptionDto.getNom_prenoms_tuteur());
+            inscr.setNom_prenoms_mere(inscriptionDto.getNom_prenoms_mere());
+            inscr.setDecision_ant(inscriptionDto.getDecision_ant());
             inscr.setBranche(myBranche);
 
         } else {
@@ -216,6 +221,10 @@ public class InscriptionService implements PanacheRepositoryBase<Inscriptions, L
             inscr.setInscriptions_classe_precedente(inscriptionDto.getInscriptions_classe_precedente());
             inscr.setInscriptions_ecole_origine(inscriptionDto.getInscriptions_ecole_origine());
             inscr.setAnnee_scolaire(annee_scolaire);
+            inscr.setNom_prenoms_pere(inscriptionDto.getNom_prenoms_pere());
+            inscr.setNom_prenoms_tuteur(inscriptionDto.getNom_prenoms_tuteur());
+            inscr.setNom_prenoms_mere(inscriptionDto.getNom_prenoms_mere());
+            inscr.setDecision_ant(inscriptionDto.getDecision_ant());
             inscr.setBranche(myBranche);
 
         }
@@ -279,6 +288,10 @@ public class InscriptionService implements PanacheRepositoryBase<Inscriptions, L
             inscr.setInscriptions_classe_precedente(inscriptionDto.getInscriptions_classe_precedente());
             inscr.setInscriptions_ecole_origine(inscriptionDto.getInscriptions_ecole_origine());
             inscr.setBranche(myBranche);
+            inscr.setNom_prenoms_pere(inscriptionDto.getNom_prenoms_pere());
+            inscr.setNom_prenoms_tuteur(inscriptionDto.getNom_prenoms_tuteur());
+            inscr.setNom_prenoms_mere(inscriptionDto.getNom_prenoms_mere());
+            inscr.setDecision_ant(inscriptionDto.getDecision_ant());
             inscr.persist();
 
         } else {
@@ -297,6 +310,11 @@ public class InscriptionService implements PanacheRepositoryBase<Inscriptions, L
             inscr.setInscriptions_derniereclasse_religieuse(inscriptionDto.getInscriptions_derniereclasse_religieuse());
             inscr.setInscriptions_classe_precedente(inscriptionDto.getInscriptions_classe_precedente());
             inscr.setInscriptions_ecole_origine(inscriptionDto.getInscriptions_ecole_origine());
+
+            inscr.setNom_prenoms_pere(inscriptionDto.getNom_prenoms_pere());
+            inscr.setNom_prenoms_tuteur(inscriptionDto.getNom_prenoms_tuteur());
+            inscr.setNom_prenoms_mere(inscriptionDto.getNom_prenoms_mere());
+            inscr.setDecision_ant(inscriptionDto.getDecision_ant());
             inscr.setAnnee_scolaire(annee_scolaire);
             inscr.setBranche(myBranche);
             inscr.persist();

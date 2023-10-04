@@ -12,6 +12,7 @@ import java.util.List;
 public class InscriptionDto {
     private  Long   inscriptionsid ;
     private String  inscriptionscode ;
+    private String decision_ant ;
     private String inscriptions_ecole_origine ;
     private  String   inscriptions_classe_precedente ;
     private  String    inscriptions_derniereclasse_religieuse ;
@@ -32,6 +33,13 @@ public class InscriptionDto {
     @Enumerated(EnumType.STRING)
     private Inscriptions.status inscriptions_status ;
 
+    public String getDecision_ant() {
+        return decision_ant;
+    }
+
+    public void setDecision_ant(String decision_ant) {
+        this.decision_ant = decision_ant;
+    }
 
     private LocalDate inscriptionsdate_creation ;
     private LocalDate inscriptionsdate_modification ;

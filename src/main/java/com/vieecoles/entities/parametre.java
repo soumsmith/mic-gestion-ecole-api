@@ -17,7 +17,20 @@ public class parametre extends PanacheEntityBase {
     @Basic(fetch = FetchType.LAZY)
     @Column(length=100000)
     private byte[] filigramme ;
+
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    @Column(length=100000)
+    private byte[] cadre_tableau_honneur ;
     private  String libelle;
+
+    public byte[] getCadre_tableau_honneur() {
+        return cadre_tableau_honneur;
+    }
+
+    public void setCadre_tableau_honneur(byte[] cadre_tableau_honneur) {
+        this.cadre_tableau_honneur = cadre_tableau_honneur;
+    }
 
     public byte[] getFiligramme() {
         return filigramme;

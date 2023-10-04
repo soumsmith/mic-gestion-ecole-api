@@ -3,6 +3,7 @@ package com.vieecoles.ressource.operations.eleves;
 import com.vieecoles.dto.InscriptionAvaliderDto;
 import com.vieecoles.dto.InscriptionDto;
 import com.vieecoles.entities.operations.Inscriptions;
+import com.vieecoles.entities.parametre;
 import com.vieecoles.services.eleves.InscriptionService;
 import org.apache.commons.io.IOUtils;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
@@ -117,6 +118,38 @@ public class InscriptionRessource {
         return   Response.ok(String.format("Inscription  %s mis à jour",inscriptionId)).build();
     }
 
+    @PUT
+    @Produces(MediaType.TEXT_PLAIN)
+    @Consumes({MediaType.MULTIPART_FORM_DATA})
+    @Path("/charger-image-paramatre")
+    @Transactional
+    public Response chargerImageParam(@MultipartForm MultipartFormDataInput input) {
+        Map<String, List<InputPart>> uploadForm = input.getFormDataMap();
+        List<String> fileNames = new ArrayList<>();
+
+        List<InputPart> inputParts = uploadForm.get("file");
+        System.out.println("inputParts size: " + inputParts.size());
+        String fileName = null;
+        for (InputPart inputPart : inputParts) {
+            try {
+
+                MultivaluedMap<String, String> header = inputPart.getHeaders();
+                fileName = getFileName(header);
+                fileNames.add(fileName);
+                System.out.println("File Name: " + fileName);
+                InputStream inputStream = inputPart.getBody(InputStream.class, null);
+                byte[] bytes = IOUtils.toByteArray(inputStream);
+                parametre p= new parametre() ;
+                p= parametre.findById(1);
+                p.setCadre_tableau_honneur(bytes);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        return   Response.ok(String.format("Fichier mis à jour  %s mis à jour")).build();
+    }
 
 
     @PUT
