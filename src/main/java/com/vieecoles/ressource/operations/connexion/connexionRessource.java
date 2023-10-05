@@ -168,7 +168,7 @@ public class connexionRessource {
         if(idUtilisateur!=0L) {
             myPersonn =  myconnexionService.infosUtilisateurConnecte(login,idEcole) ;
         }
-      return   myPersonn ;
+      return myPersonn ;
     }
     
     @GET
