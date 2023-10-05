@@ -172,7 +172,7 @@ public personnelConnexionDto infosUtilisateurConnecteV2(String email,Long idEcol
 
     Long idUtilisateur ,IdPersonnel ;
       personnelConnexionDto  myPersoDto = new personnelConnexionDto() ;
-      System.out.println("ENTREEEEEE ");
+//      System.out.println("ENTREEEEEE ");
 
       idUtilisateur =   getIdUtilisateur(email);
       System.out.println("idUtilisateur "+idUtilisateur);
