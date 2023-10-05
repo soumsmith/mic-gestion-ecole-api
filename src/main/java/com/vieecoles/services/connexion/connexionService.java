@@ -459,14 +459,14 @@ public personnelConnexionDto infosUtilisateurConnecteV2(String email,Long idEcol
                             }
        return  messageRetour ;
      }
-     public String seConnecter(String email,String motdePasse,Long Profilid,Long Ecoleid ){
+     public String seConnecter(String login,String motdePasse,Long Profilid,Long Ecoleid ){
         String messageRetour = null;
          utilisateur myutilisateur2 = new utilisateur() ;
-         myutilisateur2 = verifiEmailUtilisateur(email) ;
+         myutilisateur2 = checkUserLogin(login) ;
 
                             if(myutilisateur2!=null){
                                 utilisateur_has_personnel myUtiliPers= new utilisateur_has_personnel() ;
-                                myUtiliPers = getUtilisateurPersonn(email,Profilid,Ecoleid) ;
+                                myUtiliPers = getUtilisateurPersonn(myutilisateur2.getUtilisateu_email(),Profilid,Ecoleid) ;
                                 LocalDate dateFin ;
                                 LocalDate dateDuJour= LocalDate.now() ;
                                 String profilUtilsateur ;
@@ -484,7 +484,7 @@ public personnelConnexionDto infosUtilisateurConnecteV2(String email,Long idEcol
                                                 messageRetour="Ce profil a été désactivé pour ce compte pour cette ecole!";
                                             } else  {
                                                 utilisateur myUtilis= new utilisateur() ;
-                                                myUtilis= checkPassword(email,motdePasse);
+                                                myUtilis= checkPassword(login,motdePasse);
                                                 if(myUtilis != null){
                                                     profilUtilsateur= myUtiliPers.getProfil().getProfil_libelle() ;
                                                     messageRetour=profilUtilsateur ;
@@ -688,6 +688,18 @@ public personnelConnexionDto infosUtilisateurConnecteV2(String email,Long idEcol
          try {
              return (utilisateur) em.createQuery("select o from utilisateur o where o.utilisateu_email =:email")
                      .setParameter("email",emailUtilisateur)
+                     .getSingleResult();
+         } catch (Exception e) {
+        	 e.printStackTrace();
+             return  null;
+         }
+
+     }
+     
+     public utilisateur checkUserLogin(String login){
+         try {
+             return (utilisateur) em.createQuery("select o from utilisateur o where o.utilisateu_login =:login")
+                     .setParameter("login",login)
                      .getSingleResult();
          } catch (Exception e) {
         	 e.printStackTrace();
