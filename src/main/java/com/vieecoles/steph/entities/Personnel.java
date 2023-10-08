@@ -1,6 +1,7 @@
 package com.vieecoles.steph.entities;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -19,7 +20,13 @@ import javax.persistence.*;
 				+ " LEFT JOIN sous_attent_personn ss on "
 				+ " p.sous_attent_personn_sous_attent_personnid = ss.sous_attent_personnid "
 				+ " WHERE p.ecole_ecoleid = :ecoleId and ss.sous_attent_personn_sexe = :sexeId and p.fonction_fonctionid= :fonctionId "
-				+ " and p.personnel_status_personnel_statusid = :statut") })
+				+ " and p.personnel_status_personnel_statusid = :statut"),
+
+		@NamedNativeQuery(name = "Personnel.getByEcoleAndProfil", query = "SELECT p.* FROM personnel p "
+				+ "LEFT JOIN utilisateur_has_personnel up on "
+				+ "p.personnelid = up.personnel_personnelid "
+				+ "WHERE p.ecole_ecoleid = :ecoleId and up.profil_profilid = :profilId") 
+		})
 @Entity
 @Table(name = "personnel")
 @Data
@@ -44,11 +51,12 @@ public class Personnel extends PanacheEntityBase {
 	private Long souscriptionAttenteId;
 	@Column(name = "personnel_contact")
 	private String contact;
-	
+
 	@Column(name = "personnel_status_personnel_statusid")
 	private Integer statut;
 	@Column(name = "personnel_sexe")
 	private String sexe;
 	@Column(name = "niveau_etude_niveau_etudeid")
 	private Integer niveauEtude;
+	
 }

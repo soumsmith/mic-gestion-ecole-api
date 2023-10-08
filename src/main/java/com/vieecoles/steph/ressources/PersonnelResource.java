@@ -1,5 +1,6 @@
 package com.vieecoles.steph.ressources;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -56,7 +57,22 @@ public class PersonnelResource {
 		}
 		return Response.ok().entity(personnels).build();
 	}
-
+	
+	@GET
+	@Path("/get-by-ecole-and-profil")
+	@Tag(name = "Personnel")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response listByEcoleAndProfil(@QueryParam("ecole") Long ecoleId, @QueryParam("profil") int profilId) {
+		List<Personnel> personnels = new ArrayList<>();
+		try {
+			personnels = personnelService.getByEcoleAndProfil_v2(ecoleId, profilId);
+			logger.log(Level.INFO, "Param - listProf size ::: {0} ", personnels.size());
+		} catch (RuntimeException e) {
+			logger.log(Level.WARNING, "Error - listProf :::{0} ", e);
+		}
+		return Response.ok().entity(personnels).build();
+	}
+	
 	@GET
 	@Path("/get-by-fonction-and-classe")
 	@Tag(name = "Personnel")

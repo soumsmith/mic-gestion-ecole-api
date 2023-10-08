@@ -437,8 +437,8 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 //			System.out.println("---> " + classeId);
 			classe = classeService.findById(Long.parseLong(classeId));
 
-			Gson g = new Gson();
-			logger.info(g.toJson(classe));
+//			Gson g = new Gson();
+//			logger.info(g.toJson(classe));
 			// Formatage des dto
 			AnneeScolaire anneeScolaire = new AnneeScolaire();
 			Periode periode = new Periode();
@@ -995,6 +995,19 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				eleve.setRang(String.valueOf(i));
 		}
 
+	}
+	
+	public Boolean haveNotesByEleveAndClasseAndAnnee(String matricule, Long classeId, Long anneeId) {
+
+		Long noteCounter = 0L;
+		try {
+			noteCounter = Notes.find(
+					"classeEleve.inscription.eleve.matricule = ?1 and classeEleve.classe.id = ?2 and evaluation.annee.id =?3",
+					matricule, classeId, anneeId).count();
+		} catch (RuntimeException e) {
+			logger.warning("Erreur ::: " + e.getMessage());
+		}
+		return noteCounter == 0 ? false : true;
 	}
 
 	public List<Notes> getListNotesByEleveAndClasseAndAnneeAndPeriode(String matricule, Long classeId, Long anneeId,
