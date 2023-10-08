@@ -168,9 +168,8 @@ public class ComparatifServices {
 
        Double getCountNomBreClasse(Long idBranche,Long idAnneId ,Long idEcole) {
            try {
-               TypedQuery<Double> q = (TypedQuery<Double>) em.createQuery( "SELECT avg(o.effectif)  from Classe o   where o.ecole.id =:idEcole  and o.annee.id =:idAnneId and o.branche.id=:idBranche ");
+               TypedQuery<Double> q = (TypedQuery<Double>) em.createQuery( "SELECT avg(o.effectif)  from Classe o   where o.ecole.id =:idEcole   and o.branche.id=:idBranche ");
                Double size = q.setParameter("idEcole" ,idEcole).
-                                 setParameter("idAnneId" ,idAnneId).
                                  setParameter("idBranche" ,idBranche).
                               getSingleResult() ;
 

@@ -145,7 +145,10 @@ public class connexionRessource {
     {
         String messageRetour=null;
         utilisateur myUtilis = new utilisateur() ;
+        System.out.println("login "+login);
+        System.out.println("motDepasse "+motDepasse);
         myUtilis = myconnexionService.checkPassword(login,motDepasse) ;
+        System.out.println("myUtilis "+myUtilis);
         if(myUtilis!=null){
             messageRetour= "Mot de passe correct!";
         } else {
@@ -170,7 +173,7 @@ public class connexionRessource {
         }
       return   myPersonn ;
     }
-    
+
     @GET
     @Path("infos-personnel-connecte-v2/{login}/{idEcole}/{profil}")
     @Produces(MediaType.APPLICATION_JSON)

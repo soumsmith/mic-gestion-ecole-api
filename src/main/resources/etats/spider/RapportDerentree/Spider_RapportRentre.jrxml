@@ -19,6 +19,7 @@
 	<field name="effectifElevLangueVivante2Dto" class="java.util.List"/>
 	<field name="etatNominatifEnseignatDto" class="java.util.List"/>
 	<field name="comparatifDto" class="java.util.List"/>
+
 	<detail>
 		<part uuid="968947e9-d627-441c-a302-1bd9eaebff99">
 			<p:subreportPart xmlns:p="http://jasperreports.sourceforge.net/jasperreports/parts" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/parts http://jasperreports.sourceforge.net/xsd/parts.xsd">
@@ -230,8 +231,5 @@
 				<subreportExpression><![CDATA["etats/spider/RapportDerentree/ComparatifEffecPyramide2.jasper"]]></subreportExpression>
 			</p:subreportPart>
 		</part>
-
-
-
 	</detail>
 </jasperReport>

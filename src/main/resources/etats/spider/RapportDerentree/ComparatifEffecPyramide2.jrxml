@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ComparatifEffecPyramide2" pageWidth="842" pageHeight="635" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ec37564c-44d0-4805-bbad-05c8313e52c9">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ComparatifEffecPyramide2" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ec37564c-44d0-4805-bbad-05c8313e52c9">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<queryString>
 		<![CDATA[]]>
@@ -43,10 +43,10 @@
 	<field name="effParClassTD" class="java.lang.Double"/>
 	<group name="Groupe1">
 		<groupHeader>
-			<band height="269">
+			<band height="241">
 				<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
 				<frame>
-					<reportElement x="0" y="91" width="720" height="89" uuid="9d5e4fc9-34f5-4929-a865-7f615cba1b38">
+					<reportElement x="0" y="91" width="802" height="89" uuid="9d5e4fc9-34f5-4929-a865-7f615cba1b38">
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="1"/>
@@ -78,6 +78,7 @@
 							<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 							<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 						</box>
+						<textElement verticalAlignment="Middle"/>
 						<textFieldExpression><![CDATA["ANNEE  EN COURS"]]></textFieldExpression>
 					</textField>
 					<textField>
@@ -765,6 +766,7 @@
 						</box>
 						<textElement textAlignment="Center" verticalAlignment="Middle"/>
 						<textFieldExpression><![CDATA[$F{effParClass6}]]></textFieldExpression>
+						<patternExpression><![CDATA["#.##"]]></patternExpression>
 					</textField>
 					<textField isBlankWhenNull="true">
 						<reportElement x="150" y="60" width="40" height="30" uuid="6ad4bd77-b0fd-4913-9dbe-09be728ae2a5">
@@ -784,6 +786,7 @@
 						</box>
 						<textElement textAlignment="Center" verticalAlignment="Middle"/>
 						<textFieldExpression><![CDATA[$F{effParClass5}]]></textFieldExpression>
+						<patternExpression><![CDATA["#.##"]]></patternExpression>
 					</textField>
 					<textField isBlankWhenNull="true">
 						<reportElement x="190" y="60" width="40" height="30" uuid="fd15142f-cb7a-405c-ad69-01ae236c42fd">
@@ -803,6 +806,7 @@
 						</box>
 						<textElement textAlignment="Center" verticalAlignment="Middle"/>
 						<textFieldExpression><![CDATA[$F{effParClass4}]]></textFieldExpression>
+						<patternExpression><![CDATA["#.##"]]></patternExpression>
 					</textField>
 					<textField isBlankWhenNull="true">
 						<reportElement x="230" y="60" width="40" height="30" uuid="528d1a5a-7532-48dd-bae6-1b9177af52e4">
@@ -822,6 +826,7 @@
 						</box>
 						<textElement textAlignment="Center" verticalAlignment="Middle"/>
 						<textFieldExpression><![CDATA[$F{effParClass3}]]></textFieldExpression>
+						<patternExpression><![CDATA["#.##"]]></patternExpression>
 					</textField>
 					<textField isBlankWhenNull="true">
 						<reportElement x="270" y="60" width="40" height="30" uuid="7db56e97-4111-4115-bcfb-a099f0688592">
@@ -841,6 +846,7 @@
 						</box>
 						<textElement textAlignment="Center" verticalAlignment="Middle"/>
 						<textFieldExpression><![CDATA[$F{effParClass6}+$F{effParClass5}+$F{effParClass4}+$F{effParClass3}]]></textFieldExpression>
+						<patternExpression><![CDATA["#.##"]]></patternExpression>
 					</textField>
 					<textField isBlankWhenNull="true">
 						<reportElement x="310" y="60" width="30" height="30" uuid="4817fc83-3dc1-41a1-9a8e-247881009c5c">
@@ -860,6 +866,7 @@
 						</box>
 						<textElement textAlignment="Center" verticalAlignment="Middle"/>
 						<textFieldExpression><![CDATA[$F{effParClass2nA}]]></textFieldExpression>
+						<patternExpression><![CDATA["#.##"]]></patternExpression>
 					</textField>
 					<textField isBlankWhenNull="true">
 						<reportElement x="340" y="60" width="30" height="30" uuid="986c32d7-bbfe-4a78-a355-e2078a39a028">
@@ -879,6 +886,7 @@
 						</box>
 						<textElement textAlignment="Center" verticalAlignment="Middle"/>
 						<textFieldExpression><![CDATA[$F{effParClass2nC}]]></textFieldExpression>
+						<patternExpression><![CDATA["#.##"]]></patternExpression>
 					</textField>
 					<textField isBlankWhenNull="true">
 						<reportElement x="370" y="60" width="30" height="30" uuid="80f2aa86-6c58-4df4-aa87-8555e1c6dabb">
@@ -898,6 +906,7 @@
 						</box>
 						<textElement textAlignment="Center" verticalAlignment="Middle"/>
 						<textFieldExpression><![CDATA[$F{effParClass2nA}+$F{effParClass2nC}]]></textFieldExpression>
+						<patternExpression><![CDATA["#.##"]]></patternExpression>
 					</textField>
 					<textField isBlankWhenNull="true">
 						<reportElement x="400" y="60" width="30" height="30" uuid="cce059d4-e1b1-4673-8ac3-ba46df00b2d5">
@@ -917,6 +926,7 @@
 						</box>
 						<textElement textAlignment="Center" verticalAlignment="Middle"/>
 						<textFieldExpression><![CDATA[$F{effParClass1A}]]></textFieldExpression>
+						<patternExpression><![CDATA["#.##"]]></patternExpression>
 					</textField>
 					<textField isBlankWhenNull="true">
 						<reportElement x="430" y="60" width="30" height="30" uuid="3ce058b1-389c-4e3a-be50-efa26ee37cd1">
@@ -936,6 +946,7 @@
 						</box>
 						<textElement textAlignment="Center" verticalAlignment="Middle"/>
 						<textFieldExpression><![CDATA[$F{effParClass1C}]]></textFieldExpression>
+						<patternExpression><![CDATA["#.##"]]></patternExpression>
 					</textField>
 					<textField isBlankWhenNull="true">
 						<reportElement x="460" y="60" width="30" height="30" uuid="da006b34-926a-4334-ab99-b74cb6ffcf2e">
@@ -955,6 +966,7 @@
 						</box>
 						<textElement textAlignment="Center" verticalAlignment="Middle"/>
 						<textFieldExpression><![CDATA[$F{effParClass1D}]]></textFieldExpression>
+						<patternExpression><![CDATA["#.##"]]></patternExpression>
 					</textField>
 					<textField isBlankWhenNull="true">
 						<reportElement x="490" y="60" width="30" height="30" uuid="578e4c62-ef8d-4263-9bf3-acd4e19a54cf">
@@ -974,6 +986,7 @@
 						</box>
 						<textElement textAlignment="Center" verticalAlignment="Middle"/>
 						<textFieldExpression><![CDATA[$F{effParClass1A}+$F{effParClass1C}+$F{effParClass1D}]]></textFieldExpression>
+						<patternExpression><![CDATA["#.##"]]></patternExpression>
 					</textField>
 					<textField isBlankWhenNull="true">
 						<reportElement x="520" y="60" width="30" height="30" uuid="333ac89e-2008-4e8b-98d2-770e1785aa8e">
@@ -993,6 +1006,7 @@
 						</box>
 						<textElement textAlignment="Center" verticalAlignment="Middle"/>
 						<textFieldExpression><![CDATA[$F{effParClassTA}]]></textFieldExpression>
+						<patternExpression><![CDATA["#.##"]]></patternExpression>
 					</textField>
 					<textField isBlankWhenNull="true">
 						<reportElement x="550" y="60" width="30" height="30" uuid="f2bf0e1e-728d-447c-805d-963e837db799">
@@ -1012,6 +1026,7 @@
 						</box>
 						<textElement textAlignment="Center" verticalAlignment="Middle"/>
 						<textFieldExpression><![CDATA[$F{effParClassTC}]]></textFieldExpression>
+						<patternExpression><![CDATA["#.##"]]></patternExpression>
 					</textField>
 					<textField isBlankWhenNull="true">
 						<reportElement x="580" y="60" width="30" height="30" uuid="9c69e739-df94-4fa9-bf90-ddb622d8d445">
@@ -1031,6 +1046,7 @@
 						</box>
 						<textElement textAlignment="Center" verticalAlignment="Middle"/>
 						<textFieldExpression><![CDATA[$F{effParClassTD}]]></textFieldExpression>
+						<patternExpression><![CDATA["#.##"]]></patternExpression>
 					</textField>
 					<textField isBlankWhenNull="true">
 						<reportElement x="610" y="60" width="30" height="30" uuid="7618129e-e542-4a09-8755-ec1644df0594">
@@ -1050,9 +1066,10 @@
 						</box>
 						<textElement textAlignment="Center" verticalAlignment="Middle"/>
 						<textFieldExpression><![CDATA[$F{effParClassTA}+$F{effParClassTC}+$F{effParClassTD}]]></textFieldExpression>
+						<patternExpression><![CDATA["#.##"]]></patternExpression>
 					</textField>
 					<textField evaluationTime="Band" isBlankWhenNull="true">
-						<reportElement x="640" y="60" width="40" height="30" uuid="734abe49-d8e0-4a88-bc2d-c0a655a33693">
+						<reportElement x="640" y="60" width="70" height="30" uuid="734abe49-d8e0-4a88-bc2d-c0a655a33693">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1069,9 +1086,10 @@
 						</box>
 						<textElement textAlignment="Center" verticalAlignment="Middle"/>
 						<textFieldExpression><![CDATA[$F{effParClass2nA}+$F{effParClass2nC}+$F{effParClass1A}+$F{effParClass1C}+$F{effParClass1D}+$F{effParClassTA}+$F{effParClassTC}+$F{effParClassTD}]]></textFieldExpression>
+						<patternExpression><![CDATA["#.##"]]></patternExpression>
 					</textField>
 					<textField evaluationTime="Band" isBlankWhenNull="true">
-						<reportElement x="640" y="0" width="40" height="30" uuid="0d270446-c854-4d28-88dd-1f805ca24b41">
+						<reportElement x="640" y="0" width="70" height="30" uuid="0d270446-c854-4d28-88dd-1f805ca24b41">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="0"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1090,7 +1108,7 @@
 						<textFieldExpression><![CDATA[$F{nbrc2nA}+$F{nbrc2nC}+ $F{nbrc1A}+$F{nbrc1C}+$F{nbrc1D}+$F{nbrcTA}+$F{nbrcTC}+$F{nbrcTD}]]></textFieldExpression>
 					</textField>
 					<textField evaluationTime="Band" isBlankWhenNull="true">
-						<reportElement x="680" y="0" width="40" height="30" uuid="d1332a73-a9b7-4c43-8958-d3e93d19bba5">
+						<reportElement x="710" y="0" width="92" height="30" uuid="d1332a73-a9b7-4c43-8958-d3e93d19bba5">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="0"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1110,7 +1128,7 @@
 						<textFieldExpression><![CDATA[$F{nbrc2nA}+$F{nbrc2nC}+ $F{nbrc1A}+$F{nbrc1C}+$F{nbrc1D}+$F{nbrcTA}+$F{nbrcTC}+$F{nbrcTD}+$F{nbrc6}+$F{nbrc5}+$F{nbrc4}+$F{nbrc3}]]></textFieldExpression>
 					</textField>
 					<textField evaluationTime="Band" isBlankWhenNull="true">
-						<reportElement x="640" y="30" width="40" height="30" uuid="f801081e-25e2-4f62-bcef-74013acfae95">
+						<reportElement x="640" y="30" width="70" height="30" uuid="f801081e-25e2-4f62-bcef-74013acfae95">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1129,7 +1147,7 @@
 						<textFieldExpression><![CDATA[$F{effTA}+$F{effTC}+$F{effTD}+$F{eff1A}+$F{eff1C}+$F{eff1D}+$F{eff2nA}+$F{eff2nC}]]></textFieldExpression>
 					</textField>
 					<textField evaluationTime="Band" isBlankWhenNull="true">
-						<reportElement x="680" y="30" width="40" height="30" uuid="550d5365-daf8-45f7-a56c-1dec3ad90474">
+						<reportElement x="710" y="30" width="92" height="30" uuid="550d5365-daf8-45f7-a56c-1dec3ad90474">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1149,7 +1167,7 @@
 						<textFieldExpression><![CDATA[$F{effTA}+$F{effTC}+$F{effTD}+$F{eff1A}+$F{eff1C}+$F{eff1D}+$F{eff2nA}+$F{eff2nC}+$F{eff6}+$F{eff5}+$F{eff4}+$F{eff3}]]></textFieldExpression>
 					</textField>
 					<textField evaluationTime="Band" isBlankWhenNull="true">
-						<reportElement x="680" y="60" width="40" height="30" uuid="0fe505b7-16de-4ab7-b00c-176ed50c3416">
+						<reportElement x="710" y="60" width="92" height="30" uuid="0fe505b7-16de-4ab7-b00c-176ed50c3416">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="2"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1166,10 +1184,11 @@
 						</box>
 						<textElement textAlignment="Center" verticalAlignment="Middle"/>
 						<textFieldExpression><![CDATA[$F{effParClass2nA}+$F{effParClass2nC}+$F{effParClass1A}+$F{effParClass1C}+$F{effParClass1D}+$F{effParClassTA}+$F{effParClassTC}+$F{effParClassTD}+$F{effParClass6}+$F{effParClass5}+$F{effParClass4}+$F{effParClass3}]]></textFieldExpression>
+						<patternExpression><![CDATA["#.##"]]></patternExpression>
 					</textField>
 				</frame>
 				<frame>
-					<reportElement x="0" y="0" width="720" height="90" uuid="f69413f0-ab51-4359-964f-a3431fec5be7">
+					<reportElement x="0" y="0" width="802" height="90" uuid="f69413f0-ab51-4359-964f-a3431fec5be7">
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="0"/>
@@ -1491,7 +1510,7 @@
 						<text><![CDATA[]]></text>
 					</staticText>
 					<staticText>
-						<reportElement x="580" y="0" width="29" height="30" uuid="88ec5b7e-3013-4958-8f71-ddd2bac65532">
+						<reportElement x="580" y="0" width="30" height="30" uuid="88ec5b7e-3013-4958-8f71-ddd2bac65532">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1757,7 +1776,7 @@
 						<text><![CDATA[]]></text>
 					</staticText>
 					<staticText>
-						<reportElement x="490" y="30" width="30" height="30" uuid="fb674a4b-0af9-4d3c-af2c-6e4e7fa17d18">
+						<reportElement x="490" y="30" width="29" height="30" uuid="fb674a4b-0af9-4d3c-af2c-6e4e7fa17d18">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2175,7 +2194,7 @@
 						<text><![CDATA[]]></text>
 					</staticText>
 					<staticText>
-						<reportElement x="640" y="60" width="40" height="30" uuid="00fa0ee2-d4ad-4ead-9e7c-eeaa6a6df7ef">
+						<reportElement x="640" y="60" width="70" height="30" uuid="00fa0ee2-d4ad-4ead-9e7c-eeaa6a6df7ef">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2194,7 +2213,7 @@
 						<text><![CDATA[]]></text>
 					</staticText>
 					<staticText>
-						<reportElement x="640" y="0" width="40" height="30" uuid="fcb06ffa-e0f7-49e9-a2da-c0e8d383619c">
+						<reportElement x="640" y="0" width="70" height="30" uuid="fcb06ffa-e0f7-49e9-a2da-c0e8d383619c">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="0"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2213,7 +2232,7 @@
 						<text><![CDATA[]]></text>
 					</staticText>
 					<staticText>
-						<reportElement x="680" y="0" width="40" height="30" uuid="d525a99b-ca18-4cd0-92c9-5f28a0d35848">
+						<reportElement x="710" y="0" width="92" height="30" uuid="d525a99b-ca18-4cd0-92c9-5f28a0d35848">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="0"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2233,7 +2252,7 @@
 						<text><![CDATA[]]></text>
 					</staticText>
 					<staticText>
-						<reportElement x="640" y="30" width="40" height="30" uuid="91763490-dae9-439b-85c3-157f6520e702">
+						<reportElement x="640" y="30" width="70" height="30" uuid="91763490-dae9-439b-85c3-157f6520e702">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2252,7 +2271,7 @@
 						<text><![CDATA[]]></text>
 					</staticText>
 					<staticText>
-						<reportElement x="680" y="30" width="40" height="30" uuid="b4a2150c-af89-43b4-ac65-ab76445b77da">
+						<reportElement x="710" y="30" width="92" height="30" uuid="b4a2150c-af89-43b4-ac65-ab76445b77da">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2272,7 +2291,7 @@
 						<text><![CDATA[]]></text>
 					</staticText>
 					<staticText>
-						<reportElement x="680" y="60" width="40" height="30" uuid="1a3bdc35-99d6-48af-a4c3-c64b4c93c272">
+						<reportElement x="710" y="60" width="92" height="30" uuid="1a3bdc35-99d6-48af-a4c3-c64b4c93c272">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="2"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2292,7 +2311,7 @@
 					</staticText>
 				</frame>
 				<frame>
-					<reportElement x="0" y="182" width="720" height="60" uuid="ffa2f89f-faed-46d0-aa51-23e89e867907">
+					<reportElement x="0" y="181" width="802" height="60" uuid="ffa2f89f-faed-46d0-aa51-23e89e867907">
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="2"/>
@@ -2303,10 +2322,10 @@
 						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 					</reportElement>
 					<box>
-						<topPen lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineStyle="Solid" lineColor="#000000"/>
-						<rightPen lineStyle="Solid" lineColor="#000000"/>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textField>
 						<reportElement x="0" y="0" width="40" height="60" uuid="3f239982-4fe5-4eba-a42d-94d0277ac9ee">
@@ -2324,6 +2343,7 @@
 							<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 							<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 						</box>
+						<textElement textAlignment="Center" verticalAlignment="Middle"/>
 						<textFieldExpression><![CDATA["ECART"]]></textFieldExpression>
 					</textField>
 					<textField>
@@ -2631,7 +2651,7 @@
 						<text><![CDATA[]]></text>
 					</staticText>
 					<staticText>
-						<reportElement x="611" y="0" width="30" height="30" uuid="8ed656d7-78bb-4c2f-830d-7c2e38ae5198">
+						<reportElement x="610" y="0" width="30" height="30" uuid="8ed656d7-78bb-4c2f-830d-7c2e38ae5198">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2935,7 +2955,7 @@
 						<text><![CDATA[]]></text>
 					</staticText>
 					<staticText>
-						<reportElement x="580" y="30" width="31" height="30" uuid="819c8262-c14e-4ff1-b88d-fb5f12839df0">
+						<reportElement x="580" y="30" width="30" height="30" uuid="819c8262-c14e-4ff1-b88d-fb5f12839df0">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2954,7 +2974,7 @@
 						<text><![CDATA[]]></text>
 					</staticText>
 					<staticText>
-						<reportElement x="611" y="30" width="30" height="30" uuid="519ad6b4-14dc-4981-8b01-2bc7e46cda15">
+						<reportElement x="610" y="30" width="30" height="30" uuid="519ad6b4-14dc-4981-8b01-2bc7e46cda15">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2973,7 +2993,7 @@
 						<text><![CDATA[]]></text>
 					</staticText>
 					<staticText>
-						<reportElement x="641" y="0" width="40" height="30" uuid="b22ba680-850f-4ba9-808a-cfae11150fb2">
+						<reportElement x="640" y="0" width="70" height="30" uuid="b22ba680-850f-4ba9-808a-cfae11150fb2">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="0"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2992,7 +3012,7 @@
 						<text><![CDATA[]]></text>
 					</staticText>
 					<staticText>
-						<reportElement x="681" y="0" width="38" height="30" uuid="9e097010-fde0-44c8-be5b-13ead1657ae6">
+						<reportElement x="710" y="0" width="92" height="30" uuid="9e097010-fde0-44c8-be5b-13ead1657ae6">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="0"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -3011,7 +3031,7 @@
 						<text><![CDATA[]]></text>
 					</staticText>
 					<staticText>
-						<reportElement x="641" y="30" width="40" height="30" uuid="02e43046-3e11-4fe3-9819-5235c8eab8f0">
+						<reportElement x="640" y="30" width="70" height="30" uuid="02e43046-3e11-4fe3-9819-5235c8eab8f0">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -3030,7 +3050,7 @@
 						<text><![CDATA[]]></text>
 					</staticText>
 					<staticText>
-						<reportElement x="681" y="30" width="38" height="30" uuid="86783143-4072-4184-8dc5-d898764930d4">
+						<reportElement x="710" y="30" width="92" height="30" uuid="86783143-4072-4184-8dc5-d898764930d4">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -3070,7 +3090,7 @@
 	<columnHeader>
 		<band height="50" splitType="Stretch">
 			<frame>
-				<reportElement x="-1" y="0" width="720" height="50" uuid="68460605-b58f-41db-af97-df3dde74c790">
+				<reportElement x="0" y="0" width="802" height="50" uuid="68460605-b58f-41db-af97-df3dde74c790">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 				</reportElement>
 				<box>
@@ -3520,7 +3540,7 @@
 					</textField>
 				</frame>
 				<textField>
-					<reportElement x="640" y="0" width="40" height="50" uuid="368cf5bf-375e-4064-b353-6bd45e5be1df">
+					<reportElement x="640" y="0" width="70" height="50" uuid="368cf5bf-375e-4064-b353-6bd45e5be1df">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -3540,7 +3560,7 @@
 					<textFieldExpression><![CDATA["Total 2nd Cycle"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="680" y="0" width="40" height="50" uuid="28da41d5-44d3-434b-b8e0-66aca862f735">
+					<reportElement x="710" y="0" width="92" height="50" uuid="28da41d5-44d3-434b-b8e0-66aca862f735">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>

@@ -111,9 +111,8 @@ public class EffectifParLangueServices {
 
        Long getCountNomBreParLangueClasse(Long idEcole , Long idAnneId ,Integer niveauId ,Long langueid) {
            try {
-               TypedQuery<Long> q = (TypedQuery<Long>) em.createQuery( "SELECT  count(o.id) from Classe o   where o.ecole.id =:idEcole  and o.annee.id =:idAnneId and o.branche.niveau.id=:niveauId and o.langueVivante.id=:langueid ");
+               TypedQuery<Long> q = (TypedQuery<Long>) em.createQuery( "SELECT  count(o.id) from Classe o   where o.ecole.id =:idEcole   and o.branche.niveau.id=:niveauId and o.langueVivante.id=:langueid ");
                Long size = q.setParameter("idEcole" ,idEcole).
-                                 setParameter("idAnneId" ,idAnneId).
                                   setParameter("niveauId" ,niveauId).
                                      setParameter("langueid" ,langueid).
                               getSingleResult() ;
