@@ -160,8 +160,7 @@ public class ClasseEleveResource {
 			return Response.ok("Suppression ClasseEleve id = " + id).build();
 		} catch (RuntimeException re) {
 			re.printStackTrace();
-			return Response.serverError().entity("Erreur lors de la suppression").build();
+			return Response.serverError().entity(re.getMessage()).build();
 		}
-
 	}
 }

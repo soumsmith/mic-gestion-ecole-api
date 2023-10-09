@@ -6,6 +6,7 @@ import com.vieecoles.steph.entities.Inscription;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.NotFoundException;
 import java.util.ArrayList;
@@ -16,6 +17,8 @@ import java.util.List;
 public class ClasseEleveService implements PanacheRepositoryBase<ClasseEleve, Long> {
 
 	// Logger logger = Logger.getLogger(ClasseEleveService.class.getName());
+	@Inject
+	NoteService noteService;
 
 	public List<ClasseEleve> findByid(Long id) {
 		return ClasseEleve.findById(id);
@@ -69,9 +72,15 @@ public class ClasseEleveService implements PanacheRepositoryBase<ClasseEleve, Lo
 	@Transactional
 	public void delete(long id) {
 		// logger.info(String.format("Id to delete %s", id));
+		//Vérifier que l'élève n'a pas de notes
+		
 		ClasseEleve entity = ClasseEleve.findById(id);
 		if (entity == null) {
 			throw new NotFoundException();
+		}
+		Boolean haveNotes = noteService.haveNotesByEleveAndClasseAndAnnee(entity.getInscription().getEleve().getMatricule(), entity.getClasse().getId(), entity.getInscription().getAnnee().getId());
+		if(haveNotes) {
+			throw new RuntimeException("Suppression impossible car l'élève a déjà une évaluation");
 		}
 		entity.delete();
 	}
@@ -95,7 +104,7 @@ public class ClasseEleveService implements PanacheRepositoryBase<ClasseEleve, Lo
 	}
 
 	public List<ClasseEleve> getByClasseAnnee(Long classeId, Long anneeId) {
-		return ClasseEleve.find("classe.id = ?1 and inscription.annee.id = ?2", classeId,
+		return ClasseEleve.find("classe.id = ?1 and inscription.annee.id = ?2 order by inscription.eleve.nom", classeId,
 				anneeId).list();
 	}
 

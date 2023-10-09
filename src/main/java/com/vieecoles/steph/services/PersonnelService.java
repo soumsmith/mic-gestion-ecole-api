@@ -12,6 +12,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NamedNativeQuery;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import com.vieecoles.entities.utilisateur;
 import com.vieecoles.services.utilisateurService;
@@ -125,6 +126,33 @@ public class PersonnelService {
 		} catch (NoResultException ex) {
 			ex.getMessage();
 			return (long) 0;
+		}
+	}
+	
+	public List<Personnel> getByEcoleAndProfil(Long ecole, Integer profil) {
+		TypedQuery<Personnel> query = em.createNamedQuery("Personnel.getByEcoleAndProfil", Personnel.class);
+		query.setParameter("ecoleId", ecole);
+		query.setParameter("profilId", profil);
+		try {
+			List<Personnel> personnels = query.getResultList();
+			System.out.println(personnels);
+			return  personnels;
+		} catch (NoResultException ex) {
+			ex.getMessage();
+			return new ArrayList<Personnel>();
+		}
+	}
+	
+	public List<Personnel> getByEcoleAndProfil_v2(Long ecole, Integer profil) {
+		try {
+			Long profilId = Long.parseLong(profil.toString());
+			List<Personnel> personnels =Personnel.find("select p from Personnel p left join utilisateur_has_personnel up on p.id = up.personnel_personnelid where "
+					+ " p.ecole.id = ?1 and up.profil.profilid = ?2 ", ecole, profilId).list();
+			System.out.println(personnels);
+			return  personnels;
+		} catch (NoResultException ex) {
+			ex.getMessage();
+			return new ArrayList<Personnel>();
 		}
 	}
 
