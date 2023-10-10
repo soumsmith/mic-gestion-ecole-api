@@ -33,6 +33,13 @@ public class ClassesResource {
 	    public Response findByEcole(@QueryParam("ecole") Long ecole) {
 	        return Response.ok().entity(classeService.getListClasseByEcole(ecole)).build();
 	    }
+	    
+	    @GET
+	    @Path("/list-by-ecole-sorted")
+	    @Tag(name = "Classe")
+	    public Response getListSortedByClasseByEcole(@QueryParam("ecole") Long ecole) {
+	        return Response.ok().entity(classeService.getListSortedByClasseByEcole(ecole)).build();
+	    }
 
 	    @GET
 	    @Path("/list-populate")

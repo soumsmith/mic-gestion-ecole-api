@@ -135,7 +135,7 @@ public class PersonnelService {
 		query.setParameter("profilId", profil);
 		try {
 			List<Personnel> personnels = query.getResultList();
-			System.out.println(personnels);
+//			System.out.println(personnels);
 			return  personnels;
 		} catch (NoResultException ex) {
 			ex.getMessage();
@@ -148,7 +148,7 @@ public class PersonnelService {
 			Long profilId = Long.parseLong(profil.toString());
 			List<Personnel> personnels =Personnel.find("select p from Personnel p left join utilisateur_has_personnel up on p.id = up.personnel_personnelid where "
 					+ " p.ecole.id = ?1 and up.profil.profilid = ?2 ", ecole, profilId).list();
-			System.out.println(personnels);
+//			System.out.println(personnels);
 			return  personnels;
 		} catch (NoResultException ex) {
 			ex.getMessage();
