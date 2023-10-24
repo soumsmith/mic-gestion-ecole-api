@@ -8,6 +8,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -179,6 +180,22 @@ public class PersonnelMatiereClasseResource {
     	return Response.ok("Enregistrement reussi").build();
     }
     
+    @PUT
+    @Path("/delete-by-status")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
+    @Tag(name = "PersonnelMatiereClasse")
+    public Response deleteByStatus(PersonnelMatiereClasse pmc) {
+    	try {
+    		System.out.println("Delete by status ...");
+    		persMatClasService.deleteByStatus(pmc);
+    	} catch(Exception e) {
+    		 e.printStackTrace();
+    		 return Response.serverError().entity(e.getMessage()).build();
+    	 }
+    	return Response.ok("Suppression effectuée").build();
+    }
+    
     @POST
     @Path("/saveAndDisplay")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -190,9 +207,9 @@ public class PersonnelMatiereClasseResource {
     		persMatClasService.save(personnel);
     	} catch(Exception e) {
     		 e.printStackTrace();
-    		 return Response.serverError().entity(new PersonnelMatiereClasse()).build();
+    		 return Response.serverError().entity(e).build();
     	 }
-    	return Response.ok().entity(persMatClasService.findById(personnel.getId())).build();
+    	return Response.ok().entity(persMatClasService.getByMatiereAndClasseDispo(personnel).get(0)).build();
     }
     
     @POST

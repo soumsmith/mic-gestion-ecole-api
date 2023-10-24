@@ -138,7 +138,7 @@ public class EmploiDuTempsServices {
     public List<PersonnelMatiereClasse> findListByClasse(long annee, long classe) {
         List<PersonnelMatiereClasse> list = new ArrayList<PersonnelMatiereClasse>();
         try {
-            list = PersonnelMatiereClasse.find("annee.id = ?1 and classe.id =?2 and matiere is not null", annee, classe)
+            list = PersonnelMatiereClasse.find("annee.id = ?1 and classe.id =?2 and matiere is not null and (statut is null or statut <> 'DELETED') ", annee, classe)
                     .list();
         } catch (RuntimeException e) {
             e.printStackTrace();

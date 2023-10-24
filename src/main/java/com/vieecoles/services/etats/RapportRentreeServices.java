@@ -100,7 +100,7 @@ public class RapportRentreeServices {
 
     public Long countProfByMatiereAndEcole(Long ecoleId, Long matiereId, Long anneeId,String sexe ,Integer niveauEtude) {
         try {
-            return PersonnelMatiereClasse.find("select distinct p.personnel from PersonnelMatiereClasse p where p.classe.ecole.id = ?1 and p.matiere.id =?2 and p.annee.id=?3 and p.personnel.sexe =?4 and p.personnel.niveauEtude =?5 ",
+            return PersonnelMatiereClasse.find("select distinct p.personnel from PersonnelMatiereClasse p where p.classe.ecole.id = ?1 and p.matiere.id =?2 and p.annee.id=?3 and p.personnel.sexe =?4 and p.personnel.niveauEtude =?5 and (p.statut is null or p.statut <> 'DELETED') ",
                             ecoleId, matiereId,anneeId,sexe , niveauEtude)
                     .count();
         }catch(RuntimeException r) {
