@@ -1,8 +1,7 @@
 package com.vieecoles.dto;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.*;
 
 import com.vieecoles.entities.operations.Inscriptions;
 
@@ -72,6 +71,18 @@ public class InscriptionAvaliderDto {
     private  Boolean ivoirien ;
     private  Boolean etranger_africain ;
     private  Boolean etranger_non_africain ;
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    @Column(length=100000)
+    private byte[] photo_eleve ;
+
+    public byte[] getPhoto_eleve() {
+        return photo_eleve;
+    }
+
+    public void setPhoto_eleve(byte[] photo_eleve) {
+        this.photo_eleve = photo_eleve;
+    }
 
     public Boolean getInternes() {
         return internes;
@@ -487,6 +498,7 @@ public class InscriptionAvaliderDto {
                                   Boolean etranger_africain ,
                                   Boolean etranger_non_africain
 
+
     ) {
         this.idEleveInscrit = idEleveInscrit ;
         this.inscriptionsidEleve= inscriptionsidEleve ;
@@ -546,7 +558,6 @@ public class InscriptionAvaliderDto {
         this.ivoirien = ivoirien ;
         this.etranger_africain = etranger_africain ;
         this.etranger_non_africain = etranger_non_africain ;
-
     }
 
 

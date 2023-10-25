@@ -195,6 +195,7 @@ return  messageRetour ;
 
       utilisateur myNewInser = new utilisateur() ;
       myNewInser.setUtilisateu_email(creerCompte.getUtilisateu_email());
+      myNewInser.setUtilisateu_login(creerCompte.getUtilisateu_login());
       myNewInser.setSous_attent_personn_sous_attent_personnid(creerCompte.getSous_attent_personn_sous_attent_personnid());
       myNewInser.setUtilisateur_mot_de_passe(creerCompte.getUtilisateur_mot_de_passe());
       myNewInser.persist();
@@ -210,6 +211,7 @@ return  messageRetour ;
            utilisateur myUtili= new utilisateur() ;
             myUtili = myconnexionService.verifiEmailUtilisateur(email);
             if(myUtili==null){
+                System.out.println("Fondateur2 "+login);
                 return    creerLesEcoles(fonctionId,nom,prenom,contact1,contact2,email,password,login,listsouscr) ;
             } else {
                return  messaRetour= "Cet utilisateur à déjà un compte";

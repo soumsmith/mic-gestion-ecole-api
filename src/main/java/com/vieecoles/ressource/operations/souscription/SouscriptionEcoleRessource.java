@@ -120,6 +120,7 @@ public class SouscriptionEcoleRessource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("souscription-etablissement")
     public String souscriptionEtablissement(@QueryParam("fonctionId") Long fonctionId ,@QueryParam("nom")String nom,@QueryParam("prenom") String prenom,@QueryParam("contact1") String contact1 ,@QueryParam("contact2")String contact2 ,@QueryParam("email")String email ,@QueryParam("passWord")String passWord ,@QueryParam("login")String login ,List<sous_attent_ecoleDto> listsouscr ){
+        System.out.println("Fondateur1 "+login);
      return   souscPersonnelService.creerSouscripEtablissement(fonctionId,nom,prenom ,contact1,contact2,email,passWord,login,listsouscr) ;
     }
 
