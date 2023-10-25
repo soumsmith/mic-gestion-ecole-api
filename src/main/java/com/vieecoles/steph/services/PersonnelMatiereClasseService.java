@@ -16,6 +16,7 @@ import org.hibernate.internal.build.AllowSysOut;
 import com.vieecoles.steph.entities.PersonnelMatiereClasse;
 import com.vieecoles.steph.dto.ProfEducDto;
 import com.vieecoles.steph.entities.ClasseMatiere;
+import com.vieecoles.steph.entities.Constants;
 import com.vieecoles.steph.entities.Ecole;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 /*
@@ -53,7 +54,7 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 		PersonnelMatiereClasse pmc = null;
 		try {
 			pmc = PersonnelMatiereClasse
-					.find("classe.id = ?1 and annee.id= ?2 and personnel.fonction.id =?3 and matiere is null", classe,
+					.find("classe.id = ?1 and annee.id= ?2 and personnel.fonction.id =?3 and matiere is null and (statut is null or statut <> 'DELETED') ", classe,
 							annee, fonction)
 					.singleResult();
 		} catch (RuntimeException e) {
@@ -73,7 +74,7 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 		logger.info(String.format("Annee: %s  Classe: %s Matiere: %s", annee, classe, matiere));
 		try {
 			pmc = PersonnelMatiereClasse
-					.find("classe.id = ?1 and annee.id= ?2 and matiere.id = ?3", classe, annee, matiere).singleResult();
+					.find("classe.id = ?1 and annee.id= ?2 and matiere.id = ?3 and (statut is null or statut <> 'DELETED') ", classe, annee, matiere).singleResult();
 		} catch (RuntimeException e) {
 			e.printStackTrace();
 			logger.warning("Erreur de type : " + e.getClass().getName());
@@ -85,7 +86,7 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 	public List<PersonnelMatiereClasse> findByBranche(long brancheId, long annee) {
 		logger.info(String.format("find by Branche id :: %s", brancheId));
 		return PersonnelMatiereClasse
-				.find("classe.branche.id = ?1 and annee.id = ?2 and matiere is not null", brancheId, annee).list();
+				.find("classe.branche.id = ?1 and annee.id = ?2 and matiere is not null and (statut is null or statut <> 'DELETED') ", brancheId, annee).list();
 	}
 
 	// modifier l annee avec le parametre quand disponible
@@ -93,7 +94,7 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 		logger.info(
 				String.format("find by Matiere id :: %s and annee :: %s and ecole ::: %s", matiereId, annee, ecole));
 		return PersonnelMatiereClasse
-				.find("matiere.id = ?1 and annee.id = ?2 and classe.ecole.id = ?3", matiereId, annee, ecole).list();
+				.find("matiere.id = ?1 and annee.id = ?2 and classe.ecole.id = ?3 and (statut is null or statut <> 'DELETED') ", matiereId, annee, ecole).list();
 	}
 
 	public PersonnelMatiereClasse findByMatiereAndClasse(long matiereId, long annee, long classeId) {
@@ -102,7 +103,7 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 		PersonnelMatiereClasse pmc;
 		try {
 			pmc = PersonnelMatiereClasse
-					.find("matiere.id = ?1 and annee.id = ?2 and classe.id = ?3", matiereId, annee, classeId)
+					.find("matiere.id = ?1 and annee.id = ?2 and classe.id = ?3 and (statut is null or statut <> 'DELETED') ", matiereId, annee, classeId)
 					.singleResult();
 		} catch (RuntimeException re) {
 			logger.log(Level.WARNING, "Aucun PersonnelMatiereClasse trouve");
@@ -113,17 +114,17 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 
 	public List<PersonnelMatiereClasse> findByProfesseur(long profId, long annee, long ecole) {
 		logger.info(
-				String.format("find by Prof id :: %s and annee :: %s", profId, annee != 0 ? annee : getAnneeScolaire));
+				String.format("find by Prof id :: %s and annee :: %s", profId, annee));
 		return PersonnelMatiereClasse
-				.find("personnel.id = ?1 and annee.id = ?2  and classe.ecole.id=?3 and matiere is not null", profId,
-						annee != 0 ? annee : getAnneeScolaire, ecole)
+				.find("personnel.id = ?1 and annee.id = ?2  and classe.ecole.id=?3 and matiere is not null and (statut is null or statut <> 'DELETED') ", profId,
+						annee , ecole)
 				.list();
 	}
 
 	public List<PersonnelMatiereClasse> findByProfesseurAndClasse(long profId, long classe, long annee) {
 		logger.info(String.format("find by Prof id :: %s and annee :: %s", profId, annee));
 		return PersonnelMatiereClasse
-				.find("personnel.id = ?1 and annee.id = ?2 and classe.id = ?3 and matiere is not null", profId,
+				.find("personnel.id = ?1 and annee.id = ?2 and classe.id = ?3 and matiere is not null and (statut is null or statut <> 'DELETED') ", profId,
 						annee != 0 ? annee : getAnneeScolaire, classe)
 				.list();
 	}
@@ -134,7 +135,7 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 		List<PersonnelMatiereClasse> pmcListTmp = null;
 		try {
 		personnelMatiereClasseList =  PersonnelMatiereClasse
-				.find("personnel.id = ?1 and annee.id = ?2 and classe.id = ?3 and matiere is not null", profId,
+				.find("personnel.id = ?1 and annee.id = ?2 and classe.id = ?3 and matiere is not null and (statut is null or statut <> 'DELETED') ", profId,
 						annee != 0 ? annee : getAnneeScolaire, classe)
 				.list();
 		}catch (Exception e) {
@@ -158,7 +159,7 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 	public List<PersonnelMatiereClasse> findListByClasse(long annee, long classe) {
 		List<PersonnelMatiereClasse> list = new ArrayList<PersonnelMatiereClasse>();
 		try {
-			list = PersonnelMatiereClasse.find("annee.id = ?1 and classe.id =?2 and matiere is not null", annee, classe)
+			list = PersonnelMatiereClasse.find("annee.id = ?1 and classe.id =?2 and matiere is not null and (statut is null or statut <> 'DELETED') ", annee, classe)
 					.list();
 		} catch (RuntimeException e) {
 			e.printStackTrace();
@@ -179,7 +180,7 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 // Attention ne pas utiliser pour determiner les matieres enseignees par un professeur
 	public List<PersonnelMatiereClasse> findListByFonction(long annee, long ecole, int fonctionId) {
 		return PersonnelMatiereClasse
-				.find("annee.id = ?1 and classe.ecole.id=?2 and personnel.fonction.id =?3 and matiere is null", annee,
+				.find("annee.id = ?1 and classe.ecole.id=?2 and personnel.fonction.id =?3 and matiere is null and (statut is null or statut <> 'DELETED') ", annee,
 						ecole, fonctionId)
 				.list();
 	}
@@ -187,21 +188,14 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 	// Attention ne pas utiliser pour determiner les matieres enseignees par un
 	// professeur
 	public List<PersonnelMatiereClasse> findListByPersonnel(Long annee, long ecole, long classe) {
-		return PersonnelMatiereClasse.find("annee.id = ?1 and classe.ecole.id=?2 and classe.id =?3 and matiere is null",
+		return PersonnelMatiereClasse.find("annee.id = ?1 and classe.ecole.id=?2 and classe.id =?3 and matiere is null and (statut is null or statut <> 'DELETED') ",
 				annee, ecole, classe).list();
 	}
 
 	@Transactional
 	public void save(PersonnelMatiereClasse persMatClasse) {
 		logger.info("persist persMatClasse ...");
-		Ecole ecole;
-		// A supprimer lorsque le credential contenant l ecole sera disponible
-		// Par defaut pour tout enregistrement on set l ecole id à 1
-		if (persMatClasse.getPersonnel() != null && persMatClasse.getPersonnel().getEcole() == null) {
-			ecole = new Ecole();
-			ecole.setId(1);
-			persMatClasse.getPersonnel().setEcole(ecole);
-		}
+		
 		persMatClasse.setDateCreation(new Date());
 		if (getIfExist(persMatClasse) != null && getIfExist(persMatClasse).size() != 0)
 			throw new RuntimeException("Enregistrement existant déjà");
@@ -259,18 +253,18 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 	}
 
 	public List<PersonnelMatiereClasse> getListProfOrEducByAnneeAndClasse(long annee, long classe) {
-		return PersonnelMatiereClasse.find("classe.id = ?1  and annee.id= ?2 and matiere.id is null", classe, annee)
+		return PersonnelMatiereClasse.find("classe.id = ?1  and annee.id= ?2 and matiere.id is null and (statut is null or statut <> 'DELETED') ", classe, annee)
 				.list();
 	}
 
 	public List<PersonnelMatiereClasse> getIfExist(PersonnelMatiereClasse persMatClasse) {
-		return PersonnelMatiereClasse.find("classe.id = ?1 and personnel.id =?2 and matiere.id =?3 and annee.id= ?4",
+		return PersonnelMatiereClasse.find("classe.id = ?1 and personnel.id =?2 and matiere.id =?3 and annee.id= ?4 and (statut is null or statut <> 'DELETED') ",
 				persMatClasse.getClasse().getId(), persMatClasse.getPersonnel().getId(),
 				persMatClasse.getMatiere().getId(), persMatClasse.getAnnee().getId()).list();
 	}
 
 	public List<PersonnelMatiereClasse> getByMatiereAndClasseDispo(PersonnelMatiereClasse persMatClasse) {
-		return PersonnelMatiereClasse.find("classe.id = ?1 and matiere.id =?2 and annee.id= ?3",
+		return PersonnelMatiereClasse.find("classe.id = ?1 and matiere.id =?2 and annee.id= ?3 and (statut is null or statut <> 'DELETED') ",
 				persMatClasse.getClasse().getId(), persMatClasse.getMatiere().getId(), persMatClasse.getAnnee().getId())
 				.list();
 	}
@@ -278,7 +272,7 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 	public List<PersonnelMatiereClasse> getIfExistProfOrEduc(PersonnelMatiereClasse persMatClasse) {
 
 		System.out.println("candidat pour supression");
-		return PersonnelMatiereClasse.find("classe.id = ?1 and matiere.id is null and annee.id= ?2",
+		return PersonnelMatiereClasse.find("classe.id = ?1 and matiere.id is null and annee.id= ?2 and (statut is null or statut <> 'DELETED') ",
 				persMatClasse.getClasse().getId(), persMatClasse.getAnnee().getId()).list();
 
 	}
@@ -319,9 +313,20 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 
 	}
 	
+	@Transactional
+	public void deleteByStatus(PersonnelMatiereClasse persMatClasse) {
+
+		logger.info("delete by status persMatClasse id " + persMatClasse.getId());
+		PersonnelMatiereClasse pmc= findById(persMatClasse.getId());
+		pmc.setStatut(Constants.DELETED);
+		pmc.setDateUpdate(new Date());
+		pmc.setUser(persMatClasse.getUser());
+
+	}
+	
 	public long countProfByMatiereAndEcole(Long ecoleId, Long matiereId, Long anneeId) {
 		try {
-		 return PersonnelMatiereClasse.find("select distinct p.personnel from PersonnelMatiereClasse p where p.classe.ecole.id = ?1 and p.matiere.id =?2 and p.annee.id= ?3",
+		 return PersonnelMatiereClasse.find("select distinct p.personnel from PersonnelMatiereClasse p where p.classe.ecole.id = ?1 and p.matiere.id =?2 and p.annee.id= ?3 and (statut is null or statut <> 'DELETED') ",
 				ecoleId, matiereId, anneeId)
 				.count();
 		 }catch(RuntimeException r) {

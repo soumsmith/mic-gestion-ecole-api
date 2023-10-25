@@ -36,6 +36,22 @@ public class ClasseService implements PanacheRepositoryBase<Classe,Integer> {
 			return null ;
 		}
 	}
+	/**
+	 * Cette méthode permet de lister les classes de manière ordonnée.
+	 * 
+	 * @param ecoleId
+	 * @return La liste des classes
+	 */
+	public List<Classe> getListSortedByClasseByEcole(Long ecoleId) {
+		try {
+		//	logger.info("........ in list <<<<>>>>>");
+			return Classe.find(" ecole.id =?1 and visible = 1 "
+					+ " ORDER BY SUBSTRING(libelle, 1, 1) desc, SUBSTRING(libelle, -1, 1) asc ", ecoleId).list();
+		}catch(Exception e) {
+			e.printStackTrace();
+			return null ;
+		}
+	}
 	
 	public List<Classe> getListAllClasseByEcole(Long ecoleId) {
 		try {
