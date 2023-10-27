@@ -45,6 +45,15 @@ public class InscriptionRessource {
            return matService.listTousLesInscription(idEcole,idAnnee,typeOperation) ;
     }
 
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("list-eleve-classe/{idEcole}/{idAnnee}")
+    public List<InscriptionAvaliderDto> elevesClasse(@PathParam("idEcole") Long idEcole,@PathParam("idAnnee") Long idAnnee) {
+
+        return matService.listDesElevesInscrits(idEcole,idAnnee) ;
+    }
+
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
