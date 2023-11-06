@@ -379,8 +379,8 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			Periode periodeCtrl = Periode.findById(Long.parseLong(periodeId));
 			if (periodeCtrl != null) {
 				if (periodeCtrl.getIsfinal() != null && periodeCtrl.getIsfinal().equals(Constants.OUI))
-					classementAnnuelEleveParMatiere(moyenneList, classe.getBranche().getId(),
-							classe.getEcole().getId(), periodeCtrl);
+					classementAnnuelEleveParMatiere(moyenneList, classe.getBranche().getId(), classe.getEcole().getId(),
+							periodeCtrl);
 			}
 
 			Collections.sort(moyenneList);
@@ -390,6 +390,25 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			r.printStackTrace();
 			throw r;
 		}
+	}
+
+	public MoyenneEleveDto moyennesAndMatiereAndNotesByMatriculeHandle(String matricule, String matiereId,
+			String anneeId, String periodeId) {
+
+		ClasseEleve ce = classeEleveService.getByMatriculeAndAnnee(matricule, Long.parseLong(anneeId));
+		MoyenneEleveDto mdto = new MoyenneEleveDto();
+		if (ce != null) {
+			List<MoyenneEleveDto> listMoyenne = moyennesAndMatiereAndNotesHandle(String.valueOf(ce.getClasse().getId()),
+					matiereId, anneeId, periodeId);
+
+			for (MoyenneEleveDto moy : listMoyenne) {
+				if (moy.getEleve().getMatricule().equals(matricule)) {
+					mdto = moy;
+					break;
+				}
+			}
+		}
+		return mdto;
 	}
 
 	public List<MoyenneEleveDto> moyennesAndMatiereAndNotesHandle(String classeId, String matiereId, String anneeId,
@@ -664,8 +683,10 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				// Vérifier si la note doit être prise en compte et si l'élève est classé dans
 				// la matière concernée ou même pour la période
 //				logger.info(matiere + "+++");
-				if(matiere.getEleveMatiereIsClassed() == null) {
-					throw new RuntimeException(String.format("Veuillez vérifier que le coeficient de la matiere %s est défini pour la branche %s", matiere.getLibelle(), eleve.getClasse().getBranche().getLibelle()));
+				if (matiere.getEleveMatiereIsClassed() == null) {
+					throw new RuntimeException(String.format(
+							"Veuillez vérifier que le coeficient de la matiere %s est défini pour la branche %s",
+							matiere.getLibelle(), eleve.getClasse().getBranche().getLibelle()));
 				}
 				if (matiere.getPec() == 1 && !matiere.getEleveMatiereIsClassed().equals(Constants.NON)
 						&& !eleve.getIsClassed().equals(Constants.NON)) {
@@ -823,7 +844,8 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 
 	}
 
-	void classementAnnuelEleveParMatiere(List<MoyenneEleveDto> moyEleve, Long brancheId, Long ecoleId, Periode periode) {
+	void classementAnnuelEleveParMatiere(List<MoyenneEleveDto> moyEleve, Long brancheId, Long ecoleId,
+			Periode periode) {
 		logger.info("---> Classement des eleves par matiere");
 		List<ClasseMatiere> classeMatList = ClasseMatiere.find("branche.id = ?1 and ecole.id =?2", brancheId, ecoleId)
 				.list();
@@ -836,7 +858,8 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 		// matieres
 		Map<Long, List<Double>> classeurAnnuelMatiereMap = new HashMap<Long, List<Double>>();
 //---- WARNING mettre un try catch
-		Periode per = Periode.find("periodicite.id=?1 and final = 'O'", periode.getPeriodicite().getId()).singleResult();
+		Periode per = Periode.find("periodicite.id=?1 and final = 'O'", periode.getPeriodicite().getId())
+				.singleResult();
 		List<Periode> periodes = Periode.find("niveau <= ?1", per.getNiveau()).list();
 
 		for (MoyenneEleveDto me : moyEleve) {
@@ -996,7 +1019,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 		}
 
 	}
-	
+
 	public Boolean haveNotesByEleveAndClasseAndAnnee(String matricule, Long classeId, Long anneeId) {
 
 		Long noteCounter = 0L;
