@@ -103,12 +103,14 @@ public class BulletinSpiderServices {
             if(l==null) {
                 InfosPersoBulletins k = new InfosPersoBulletins();
                 k.setTmoyFr(TmoyCoefFr==null? null:TmoyCoefFr/TcoefFr);
+                System.out.println("TmoyFr "+k.getTmoyFr());
                 k.setTrangFr(TrangFr);
                 k.setTrangEMR(TrangEMR);
                 k.setTmoyCoefEMR(TmoyCoefEMR);
                 myEcole=sousceecoleService.getInffosEcoleByID(idEcole);
                 //System.out.println("myEcole "+myEcole.toString());
                 myIns = inscriptionService.checkInscrit(idEcole,classeNiveauDtoList.get(i).getNiveau(),1L);
+                System.out.println("myIns>>> "+myIns);
                 parametre mpara = new parametre();
                 mpara = parametre.findById(1L) ;
                 k.setAmoirie(mpara.getImage() );
@@ -127,12 +129,17 @@ public class BulletinSpiderServices {
                 k.setMoy_1er_trim(moy_1er_trim);
                 k.setMoy_2eme_trim(moy_2eme_trim);
                 k.setMoy_3eme_trim(moy_3eme_trim);
+                System.out.println("idBulletin>> "+idBulletin);
                 k.setIdBulletin(idBulletin);
+                System.out.println(">>>>>Objet Detail Bulletin "+k.toString());
                 k.persist();
+
                 mlist.add(k);
+                System.out.println(">>>>>Sortie Bloc1");
             } else {
                // System.out.println(l.toString());
                 l.setTmoyFr(TmoyCoefFr==null? null:TmoyCoefFr/TcoefFr);
+                System.out.println(">>TmoyFr "+l.getTmoyFr());
                 l.setTrangFr(TrangFr);
                 l.setTrangEMR(TrangEMR);
                 l.setTmoyCoefEMR(TmoyCoefEMR);

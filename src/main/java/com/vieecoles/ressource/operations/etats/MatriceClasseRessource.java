@@ -5,6 +5,8 @@ import com.vieecoles.dto.*;
 import com.vieecoles.services.etats.DpspServices;
 import com.vieecoles.services.etats.MatriceClasseBilanServices;
 import com.vieecoles.services.etats.MatriceClasseServices;
+import com.vieecoles.steph.entities.Classe;
+import com.vieecoles.steph.entities.ClasseMatiere;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRXlsExporter;
@@ -182,5 +184,16 @@ public class MatriceClasseRessource {
         return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.MULTIPART_FORM_DATA).body(data);
     }
 
+    @GET
+    @Transactional
+    @Path("/matieres-ecole/{idEcole}/{classe}")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public List<ClasseMatiere>  getDtoRapport(@PathParam("idEcole") Long idEcole , @PathParam("classe") Long classe ) throws Exception, JRException {
+       Classe m= Classe.findById(classe) ;
+       System.out.println("Classe "+m.getLibelle());
+        return   ClasseMatiere.find("select distinct m from ClasseMatiere m  where m.matiere.ecole.id = ?1 and m.branche.id = ?2 ", idEcole,m.getBranche().getId()).list();
+
+        // System.out.println("classeMatiereList "+classeMatiereList.toString());
+    }
 
 }
