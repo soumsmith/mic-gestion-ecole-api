@@ -102,10 +102,10 @@ public class SeancesResource {
 	@GET
     @Path("/get-distinct-list-date")
     @Tag(name = "Seances")
-    public Response getDistinctListByDate(@QueryParam("date") String date) {
+    public Response getDistinctListByDate(@QueryParam("date") String date, @QueryParam("ecole") String ecole) {
 		LocalDate ld = DateUtils.getDateWithString(date);
 		Date ourDate = DateUtils.asDate(ld);
-		List<Seances> seances = seanceService.getDistinctListByDate(ourDate);
+		List<Seances> seances = seanceService.getDistinctListByDate(ourDate, Long.parseLong(ecole));
 		Gson gson = new Gson();
 		System.out.println(gson.toJson(seances));
         return Response.ok().entity(seances).build();

@@ -20,6 +20,7 @@ import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 import com.vieecoles.steph.dto.ProfEducDto;
+import com.vieecoles.steph.entities.Constants;
 import com.vieecoles.steph.entities.PersonnelMatiereClasse;
 import com.vieecoles.steph.services.PersonnelMatiereClasseService;
 /**
@@ -151,6 +152,24 @@ public class PersonnelMatiereClasseResource {
     	
 	}
     
+    @GET
+    @Path("/get-pp-and-educ-dto-by-classe")
+    @Tag(name = "PersonnelMatiereClasse")
+	public Response findEducPPDto( @QueryParam("annee") Long annee,@QueryParam("ecole") int ecole, @QueryParam("classe") long classe) {
+		
+		ProfEducDto profEduc = persMatClasService.findListByPersonnel_v2(annee,ecole, classe);
+    	return  Response.ok().entity(profEduc).build();
+    	
+	}
+    
+    @GET
+    @Path("/get-professeur-principal")
+    @Operation(description = "Obtenir le prof princ assigné à une classe", summary = "")
+    @Tag(name = "PersonnelMatiereClasse")
+	public Response getPP( @QueryParam("annee") Long annee, @QueryParam("classe") long classe) {
+		PersonnelMatiereClasse profPrinc = persMatClasService.findProfPrinc(annee, classe);
+    	return  Response.ok().entity(profPrinc).build();
+	}
     
     @GET
     @Path("/get-professeur-by-matiere")
@@ -234,10 +253,10 @@ public class PersonnelMatiereClasseResource {
     		}
     		
     		for(PersonnelMatiereClasse p : pmcList) {
-    			if(p.getPersonnel().getFonction().getCode().equals("01")) {
+    			if(p.getTypeFonction()!= null && p.getTypeFonction().equals(Constants.PROFESSEUR_PRINCIPAL)) {
     				peDto.setClasse(p.getClasse());
     				peDto.setProf(p.getPersonnel());
-    			}else {
+    			}else if(p.getTypeFonction()!= null && p.getTypeFonction().equals(Constants.EDUCATEUR_CLASSE))  {
     				peDto.setClasse(p.getClasse());
     				peDto.setEducateur(p.getPersonnel());
     			}
@@ -249,6 +268,14 @@ public class PersonnelMatiereClasseResource {
     		 return Response.serverError().entity(new PersonnelMatiereClasse()).build();
     	 }
     	return Response.ok().entity(peDto).build();
+    }
+    
+    @GET
+    @Path("/get-list-prof-princ-or-educ-by-classe-and-annee")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Tag(name = "PersonnelMatiereClasse")
+    public List<PersonnelMatiereClasse> getListProfPrincOrEduc(@QueryParam("annee") Long annee, @QueryParam("classe") Long classe){
+    	return persMatClasService.getListProfOrEducByAnneeAndClasse(annee, classe);
     }
     
     @POST

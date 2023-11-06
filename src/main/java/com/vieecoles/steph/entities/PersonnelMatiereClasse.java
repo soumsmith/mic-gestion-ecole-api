@@ -26,6 +26,9 @@ public class PersonnelMatiereClasse extends PanacheEntityBase {
 	private Date dateUpdate;
 	private String statut;
 	private String user;
+	// prof princ ou educateur
+	@Column(name = "type_fonction")
+	private String typeFonction;
 	@ManyToOne
 	private Personnel personnel;
 	@ManyToOne

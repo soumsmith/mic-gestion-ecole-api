@@ -30,6 +30,9 @@ public class Constants {
 	public static final String MODIFIABLE = "UPDATABLE";
 	public static final String ARCHIVE = "ARCHIVE";
 	
+	public static final String PROFESSEUR_PRINCIPAL = "PPRINC";
+	public static final String EDUCATEUR_CLASSE = "EDUC";
+	
 	public static final String OUI = "O";
 	public static final String NON = "N";
 	
