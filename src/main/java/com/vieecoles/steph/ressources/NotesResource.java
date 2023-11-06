@@ -58,7 +58,7 @@ public class NotesResource {
 
     @GET
     @Path("/list-classe-notes/{classe}/{annee}/{periode}")
-    @Operation(description = "Obtenir les notes des eleves d une classe par periode ", summary = "")
+    @Operation(description = "Obtenir les notes et moyenne des eleves d une classe par periode ", summary = "")
 	@Tag(name = "Notes")
     public Response getNotesByClasseAndPeriode(@PathParam("classe") String classe,@PathParam("annee") String annee, @PathParam("periode") String periode) {
     	List<MoyenneEleveDto> medtos = new ArrayList<MoyenneEleveDto>();

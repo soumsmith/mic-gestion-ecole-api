@@ -52,19 +52,11 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 	// Obtenir le prof princ ou l'éducateur d' une classe
 	public PersonnelMatiereClasse getPersonnelByClasseAndAnneeAndFonction(Long classe, Long annee, int fonction) {
 		PersonnelMatiereClasse pmc = null;
-		try {
-			pmc = PersonnelMatiereClasse
-					.find("classe.id = ?1 and annee.id= ?2 and personnel.fonction.id =?3 and matiere is null and (statut is null or statut <> 'DELETED') ", classe,
-							annee, fonction)
-					.singleResult();
-		} catch (RuntimeException e) {
-			if (e.getClass().getName().equals(NoResultException.class.getName())) {
-				logger.info(String.format("Aucun personnel educateur ou professeur principal [fonction : %s] trouvé ",
-						fonction));
-			} else {
-				e.printStackTrace();
-			}
-			return pmc;
+		
+		if(fonction == 1) {
+			pmc = findProfPrinc(annee, classe);
+		}else if (fonction == 2) {
+			pmc = findEducateurClasse(annee, classe);
 		}
 		return pmc;
 	}
@@ -188,9 +180,82 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 	// Attention ne pas utiliser pour determiner les matieres enseignees par un
 	// professeur
 	public List<PersonnelMatiereClasse> findListByPersonnel(Long annee, long ecole, long classe) {
-		return PersonnelMatiereClasse.find("annee.id = ?1 and classe.ecole.id=?2 and classe.id =?3 and matiere is null and (statut is null or statut <> 'DELETED') ",
-				annee, ecole, classe).list();
+		 List<PersonnelMatiereClasse> pmList = new ArrayList<>();
+		
+		 try {
+			 
+			 pmList = PersonnelMatiereClasse.find("annee.id = ?1 and classe.ecole.id=?2 and classe.id =?3 and matiere is null and (statut is null or statut <> 'DELETED') ",
+					 annee, ecole, classe).list();
+		 }catch (RuntimeException e) {
+			e.printStackTrace();
+		}
+		return pmList;
 	}
+	
+	public ProfEducDto findListByPersonnel_v2(Long annee, long ecole, long classe) {
+		List<PersonnelMatiereClasse> pmcList = new ArrayList<>();
+		ProfEducDto peDto = new ProfEducDto();
+
+		try {
+			pmcList = PersonnelMatiereClasse.find(
+					"annee.id = ?1 and classe.ecole.id=?2 and classe.id =?3 and matiere is null and (statut is null or statut <> 'DELETED') ",
+					annee, ecole, classe).list();
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+		}
+		for (PersonnelMatiereClasse p : pmcList) {
+			if (p.getTypeFonction() != null && p.getTypeFonction().equals(Constants.PROFESSEUR_PRINCIPAL)) {
+				peDto.setClasse(p.getClasse());
+				peDto.setProf(p.getPersonnel());
+			} else if (p.getTypeFonction() != null && p.getTypeFonction().equals(Constants.EDUCATEUR_CLASSE)) {
+				peDto.setClasse(p.getClasse());
+				peDto.setEducateur(p.getPersonnel());
+			}
+		}
+		return peDto;
+	}
+	
+	//Obtenir le prof princ
+	
+		public PersonnelMatiereClasse findProfPrinc(Long annee, long classe) {
+			List<PersonnelMatiereClasse> pmcList = new ArrayList<>();
+			PersonnelMatiereClasse pp = new PersonnelMatiereClasse();
+
+			try {
+				pmcList = PersonnelMatiereClasse.find(
+						"annee.id = ?1 and classe.id =?2 and matiere is null and (statut is null or statut <> 'DELETED') ",
+						annee, classe).list();
+			} catch (RuntimeException e) {
+				e.printStackTrace();
+			}
+			for (PersonnelMatiereClasse p : pmcList) {
+				if (p.getTypeFonction() != null && p.getTypeFonction().equals(Constants.PROFESSEUR_PRINCIPAL)) {
+					pp = p;
+				}
+			}
+			return pp;
+		}
+		
+		//Obtenir educateur
+		
+		public PersonnelMatiereClasse findEducateurClasse(Long annee, long classe) {
+			List<PersonnelMatiereClasse> pmcList = new ArrayList<>();
+			PersonnelMatiereClasse educ = new PersonnelMatiereClasse();
+
+			try {
+				pmcList = PersonnelMatiereClasse.find(
+						"annee.id = ?1 and classe.id =?2 and matiere is null and (statut is null or statut <> 'DELETED') ",
+						annee, classe).list();
+			} catch (RuntimeException e) {
+				e.printStackTrace();
+			}
+			for (PersonnelMatiereClasse p : pmcList) {
+				if (p.getTypeFonction() != null && p.getTypeFonction().equals(Constants.EDUCATEUR_CLASSE)) {
+					educ = p;
+				}
+			}
+			return educ;
+		}
 
 	@Transactional
 	public void save(PersonnelMatiereClasse persMatClasse) {
@@ -212,15 +277,15 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 		logger.info("persist persMatClasse ...");
 		List<PersonnelMatiereClasse> profOrEduclist;
 		ProfEducDto profEducDto = new ProfEducDto();
-		Ecole ecole;
+//		Ecole ecole;
 		Boolean flat = true;
 		// A supprimer lorsque le credential contenant l ecole sera disponible
 		// Par defaut pour tout enregistrement on set l ecole id à 1
-		if (persMatClasse.getPersonnel() != null && persMatClasse.getPersonnel().getEcole() == null) {
-			ecole = new Ecole();
-			ecole.setId(1);
-			persMatClasse.getPersonnel().setEcole(ecole);
-		}
+//		if (persMatClasse.getPersonnel() != null && persMatClasse.getPersonnel().getEcole() == null) {
+//			ecole = new Ecole();
+//			ecole.setId(1);
+//			persMatClasse.getPersonnel().setEcole(ecole);
+//		}
 		persMatClasse.setDateCreation(new Date());
 		profEducDto.setClasse(persMatClasse.getClasse());
 		profOrEduclist = getIfExistProfOrEduc(persMatClasse);
@@ -230,15 +295,15 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 				System.out.println("PersonnelMatiereClasseService.saveForEducAndProf() "
 						+ profOrEduc.getPersonnel().getFonction().getCode() + " - "
 						+ persMatClasse.getPersonnel().getFonction().getCode());
-				if (profOrEduc.getPersonnel().getFonction().getCode()
-						.equals(persMatClasse.getPersonnel().getFonction().getCode())) {
+				if (profOrEduc.getTypeFonction()!=null && persMatClasse.getTypeFonction()!=null &&
+						profOrEduc.getTypeFonction().equals(persMatClasse.getTypeFonction())) {
 					flat = false;
 					if (persMatClasse.getPersonnel().getId() == 0)
 						profOrEduc.delete();
 					else {
 						// penser à creer et mettre à jour le champ date_update
-						PersonnelMatiereClasse.update("personnel.id = ?1 where id = ?2",
-								persMatClasse.getPersonnel().getId(), profOrEduc.getId());
+						PersonnelMatiereClasse.update("personnel.id = ?1, dateUpdate= ?2, user=?3  where id = ?4",
+								persMatClasse.getPersonnel().getId(), new Date(), persMatClasse.getUser(), profOrEduc.getId());
 					}
 				}
 
@@ -246,15 +311,21 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 			if (flat)
 				persMatClasse.persist();
 		} else {
-			System.out.println(persMatClasse);
+//			System.out.println(persMatClasse);
 			persMatClasse.persist();
 		}
 
 	}
 
 	public List<PersonnelMatiereClasse> getListProfOrEducByAnneeAndClasse(long annee, long classe) {
-		return PersonnelMatiereClasse.find("classe.id = ?1  and annee.id= ?2 and matiere.id is null and (statut is null or statut <> 'DELETED') ", classe, annee)
+		List<PersonnelMatiereClasse> list = new ArrayList<>();
+		try {
+				list = PersonnelMatiereClasse.find("classe.id = ?1  and annee.id= ?2 and matiere is null and (statut is null or statut <> 'DELETED') ", classe, annee)
 				.list();
+		}catch (RuntimeException e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 
 	public List<PersonnelMatiereClasse> getIfExist(PersonnelMatiereClasse persMatClasse) {
@@ -271,8 +342,8 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 
 	public List<PersonnelMatiereClasse> getIfExistProfOrEduc(PersonnelMatiereClasse persMatClasse) {
 
-		System.out.println("candidat pour supression");
-		return PersonnelMatiereClasse.find("classe.id = ?1 and matiere.id is null and annee.id= ?2 and (statut is null or statut <> 'DELETED') ",
+		System.out.println(String.format("candidat pour supression - classe %s | annee %s ", persMatClasse.getClasse().getId(),persMatClasse.getAnnee().getId()) );
+		return PersonnelMatiereClasse.find("classe.id = ?1 and matiere is null and annee.id= ?2 and (statut is null or statut <> 'DELETED') ",
 				persMatClasse.getClasse().getId(), persMatClasse.getAnnee().getId()).list();
 
 	}

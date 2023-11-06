@@ -790,7 +790,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				@Override
 				public int compare(MoyenneEleveDto u1, MoyenneEleveDto u2) {
 					if (u1.getMoyenneMatiereToSort() == null || u2.getMoyenneMatiereToSort() == null)
-						return 0;
+						return -1;
 					return u2.getMoyenneMatiereToSort().compareTo(u1.getMoyenneMatiereToSort());
 				}
 			});

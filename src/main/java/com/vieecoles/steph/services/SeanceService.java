@@ -154,10 +154,10 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 		return true;
 	}
 
-	public List<Seances> getDistinctListByDate(Date date) {
+	public List<Seances> getDistinctListByDate(Date date, Long ecoleId) {
 		return Seances.find(
-				"select DISTINCT s.classe.id,s.classe.libelle, s.statut, s.dateSeance from Seances s where s.dateSeance = ?1",
-				date).list();
+				"select DISTINCT s.classe.id,s.classe.libelle, s.statut, s.dateSeance from Seances s where s.dateSeance = ?1 and s.classe.ecole.id = ?2 ",
+				date, ecoleId).list();
 	}
 
 	public List<Seances> getDistinctListByDateAndClasse(Date date, long classeId) {
