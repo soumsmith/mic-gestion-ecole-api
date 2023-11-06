@@ -1,9 +1,6 @@
 package com.vieecoles.ressource.operations.souscription;
 
-import com.vieecoles.dto.CreerCompteUtilsateurDto;
-import com.vieecoles.dto.sous_attent_personnDto;
-import com.vieecoles.dto.souscriptionValidationDto;
-import com.vieecoles.dto.souscriptionValidationFondatDto;
+import com.vieecoles.dto.*;
 import com.vieecoles.entities.profil;
 import com.vieecoles.entities.operations.personnel;
 import com.vieecoles.entities.operations.sous_attent_personn;
@@ -84,6 +81,14 @@ public class SouscriptionRessource {
         return souscPersonnelService.findPersonnelById(idpersonnel) ;
     }
 
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("classe-par-prof/{idpersonnel}/{idAnnee}")
+    public List<ClassesTenuesDto> personnelByIdPersonnel(@PathParam("idpersonnel") Long idpersonnel,
+                                                         @PathParam("idAnnee") Long idAnnee) {
+        return souscPersonnelService.getClasseProf(idpersonnel,idAnnee) ;
+    }
 
 
      @GET

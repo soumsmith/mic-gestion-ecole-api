@@ -3,10 +3,12 @@ package com.vieecoles.entities;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
 import javax.persistence.*;
+import java.util.Arrays;
 
 @Entity
 public class InfosPersoBulletins extends PanacheEntityBase {
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long  id ;
     private String  idBulletin ;
     @Lob
@@ -216,5 +218,29 @@ public class InfosPersoBulletins extends PanacheEntityBase {
 
     public void setIs_class_3e_trim(String is_class_3e_trim) {
         this.is_class_3e_trim = is_class_3e_trim;
+    }
+
+    @Override
+    public String toString() {
+        return "InfosPersoBulletins{" +
+                "id=" + id +
+                ", idBulletin='" + idBulletin + '\'' +
+                ", TmoyFr=" + TmoyFr +
+                ", TcoefFr=" + TcoefFr +
+                ", TmoyCoefFr=" + TmoyCoefFr +
+                ", TmoyCoefEMR=" + TmoyCoefEMR +
+                ", TrangEMR=" + TrangEMR +
+                ", moy_1er_trim=" + moy_1er_trim +
+                ", moy_2eme_trim=" + moy_2eme_trim +
+                ", moy_3eme_trim=" + moy_3eme_trim +
+                ", rang_1er_trim=" + rang_1er_trim +
+                ", rang_2eme_trim=" + rang_2eme_trim +
+                ", rang_3eme_trim=" + rang_3eme_trim +
+                ", TrangFr=" + TrangFr +
+                ", codeEcole='" + codeEcole + '\'' +
+                ", is_class_1er_trim='" + is_class_1er_trim + '\'' +
+                ", is_class_2e_trim='" + is_class_2e_trim + '\'' +
+                ", is_class_3e_trim='" + is_class_3e_trim + '\'' +
+                '}';
     }
 }

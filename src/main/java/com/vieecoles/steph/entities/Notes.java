@@ -22,6 +22,8 @@ public class Notes extends PanacheEntityBase{
 	private Double note;
 	private Integer pec;
 	private String motif;
+	private String appreciation ;
+	private String commentaire  ;
 	@ManyToOne
 	@JoinColumn(name = "inscription_has_eleve_id")
 	private ClasseEleve classeEleve;

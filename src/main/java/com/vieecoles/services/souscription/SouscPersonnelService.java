@@ -1,9 +1,6 @@
 package com.vieecoles.services.souscription;
 
-import com.vieecoles.dto.CreerCompteUtilsateurDto;
-import com.vieecoles.dto.sous_attent_personnDto;
-import com.vieecoles.dto.souscriptionValidationDto;
-import com.vieecoles.dto.souscriptionValidationFondatDto;
+import com.vieecoles.dto.*;
 import com.vieecoles.entities.domaine_formation;
 import com.vieecoles.entities.fonction;
 import com.vieecoles.entities.niveau_etude;
@@ -31,6 +28,7 @@ import java.io.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -161,7 +159,20 @@ public class SouscPersonnelService implements PanacheRepositoryBase<sous_attent_
     } */
 
 
+    public  List<ClassesTenuesDto> getClasseProf(Long idPersonn , Long idAnn) {
 
+        List<ClassesTenuesDto> classeNiveauDtoList = new ArrayList<>() ;
+        TypedQuery<ClassesTenuesDto> q = em.createQuery( "SELECT DISTINCT new com.vieecoles.dto.ClassesTenuesDto(c.classelibelle,pm.personnel.personnelid ,an.annee_scolaireid ) FROM Personnel_matiere_classe pm , classe c , ecole e  ,personnel p , niveau_etude n ,Annee_Scolaire an " +
+                        "where pm.classe.classeid = c.classeid and c.ecole_ecoleid = e.ecoleid  and pm.personnel.personnelid = p.personnelid" +
+                        " and p.niveau_etude.niveau_etudeid  = n.niveau_etudeid and pm.annee_scolaire.annee_scolaireid= an.annee_scolaireid and " +
+                        " p.personnelid =:idPersonn and an.annee_scolaireid =:idAnn "
+                , ClassesTenuesDto.class);
+        return      classeNiveauDtoList = q.setParameter("idPersonn", idPersonn)
+                .setParameter("idAnn", idAnn)
+                .getResultList() ;
+
+
+    }
 
     public  List<personnel> findAllPersonneParEcole(Long idEcole ){
         TypedQuery<personnel> q = (TypedQuery<personnel>) em.createQuery( "SELECT  o from personnel o join o.domaine_formation_domaine_formationid  d join o.niveau_etude n join o.fonction f where o.ecole.ecoleid=:idEcole and f.fonctionlibelle <>:fonctionLibelle ");
