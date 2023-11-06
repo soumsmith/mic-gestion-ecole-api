@@ -125,6 +125,11 @@ public class ClasseEleveService implements PanacheRepositoryBase<ClasseEleve, Lo
 		System.out.println("mat :"+matricule+" ecole : "+ecoleId+" annee :"+ anneeId);
 		return ClasseEleve.find("inscription.eleve.matricule = ?1 and classe.ecole.id = ?2 and inscription.annee.id = ?3 ", matricule,ecoleId, anneeId).singleResult();
 	}
+	
+	public ClasseEleve getByMatriculeAndAnnee(String matricule, Long anneeId) {
+		System.out.println("mat :"+matricule+" annee :"+ anneeId);
+		return ClasseEleve.find("inscription.eleve.matricule = ?1 and inscription.annee.id = ?2 ", matricule, anneeId).singleResult();
+	}
 
 	public long count() {
 		return ClasseEleve.count();
