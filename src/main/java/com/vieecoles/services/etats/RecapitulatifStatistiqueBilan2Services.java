@@ -217,36 +217,23 @@ public class RecapitulatifStatistiqueBilan2Services {
 
 
 
-       Long getCountNomBreClasse(Long idEcole , Long idAnneId ,Long classeId) {
-           try {
-               TypedQuery<Long> q = (TypedQuery<Long>) em.createQuery( "SELECT  count(o.id) from Classe o   where o.ecole.id =:idEcole  and o.annee.id =:idAnneId and o.id");
-               Long size = q.setParameter("idEcole" ,idEcole).
-                                 setParameter("idAnneId" ,idAnneId).
-                              getSingleResult() ;
 
-               return size;
-           } catch (NoResultException e) {
-               return 0L ;
-           }
-       }
 
     List<NiveauClasseDto> getListClasse(Long idEcole , Long idAnneId) {
         List<NiveauClasseDto> classeNiveauDtoList = new ArrayList<>() ;
-        TypedQuery<NiveauClasseDto> q = em.createQuery( "SELECT DISTINCT new com.vieecoles.dto.NiveauClasseDto(o.branche.libelle,o.branche.id) FROM Classe o  where o.ecole.id =:idEcole  and o.annee.id =:idAnneId   order by o.branche.id "
+        TypedQuery<NiveauClasseDto> q = em.createQuery( "SELECT DISTINCT new com.vieecoles.dto.NiveauClasseDto(o.branche.libelle,o.branche.id) FROM Classe o  where o.ecole.id =:idEcole    order by o.branche.id "
                 , NiveauClasseDto.class);
         return      classeNiveauDtoList = q.setParameter("idEcole" ,idEcole)
-                                          // .setParameter("lim" ,lim)
-                .setParameter("idAnneId" ,idAnneId).getResultList() ;
+                        .getResultList() ;
 
     }
 
     List<NiveauClasseDto> getListClasseSecon(Long idEcole , Long idAnneId, Integer lim) {
         List<NiveauClasseDto> classeNiveauDtoList = new ArrayList<>() ;
-        TypedQuery<NiveauClasseDto> q = em.createQuery( "SELECT DISTINCT new com.vieecoles.dto.NiveauClasseDto(o.branche.libelle,o.branche.id) FROM Classe o  where o.ecole.id =:idEcole  and o.annee.id =:idAnneId and o.branche.niveau.id >=:lim  order by o.branche.id "
+        TypedQuery<NiveauClasseDto> q = em.createQuery( "SELECT DISTINCT new com.vieecoles.dto.NiveauClasseDto(o.branche.libelle,o.branche.id) FROM Classe o  where o.ecole.id =:idEcole   and o.branche.niveau.id >=:lim  order by o.branche.id "
                 , NiveauClasseDto.class);
         return      classeNiveauDtoList = q.setParameter("idEcole" ,idEcole)
-                .setParameter("lim" ,lim)
-                .setParameter("idAnneId" ,idAnneId).getResultList() ;
+                .setParameter("lim" ,lim).getResultList() ;
 
     }
 

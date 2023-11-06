@@ -3,6 +3,7 @@ package com.vieecoles.ressource.operations.eleves;
 import com.vieecoles.dto.InscriptionAvaliderDto;
 import com.vieecoles.dto.InscriptionDto;
 import com.vieecoles.entities.operations.Inscriptions;
+import com.vieecoles.entities.operations.eleve;
 import com.vieecoles.entities.parametre;
 import com.vieecoles.services.eleves.InscriptionService;
 import org.apache.commons.io.IOUtils;
@@ -18,11 +19,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
-import java.io.File;
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -46,6 +43,15 @@ public class InscriptionRessource {
         System.out.println("entree");
         Inscriptions.typeOperation typeOperation= Inscriptions.typeOperation.valueOf(typeInscription);
            return matService.listTousLesInscription(idEcole,idAnnee,typeOperation) ;
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("list-eleve-classe/{idEcole}/{idAnnee}")
+    public List<InscriptionAvaliderDto> elevesClasse(@PathParam("idEcole") Long idEcole,@PathParam("idAnnee") Long idAnnee) {
+
+        return matService.listDesElevesInscrits(idEcole,idAnnee) ;
     }
 
 
@@ -120,10 +126,64 @@ public class InscriptionRessource {
 
     @PUT
     @Produces(MediaType.TEXT_PLAIN)
+    @Consumes({MediaType.APPLICATION_JSON,MediaType.MULTIPART_FORM_DATA})
+    @Path("/charger-photo2/{inscriptionId}")
+    @Transactional
+    public String chargerPhoto2(@MultipartForm MultipartFormDataInput input,@PathParam("inscriptionId") Long   inscriptionId ) {
+        Map<String, List<InputPart>> uploadForm = input.getFormDataMap();
+        List<String> fileNames = new ArrayList<>();
+
+        List<InputPart> inputParts = uploadForm.get("file");
+        System.out.println("inputParts size: " + inputParts.size());
+        String fileName = null;
+        for (InputPart inputPart : inputParts) {
+            try {
+
+                MultivaluedMap<String, String> header = inputPart.getHeaders();
+                fileName = getFileName(header);
+                fileNames.add(fileName);
+                System.out.println("File Name: " + fileName);
+                InputStream inputStream = inputPart.getBody(InputStream.class, null);
+                byte[] bytes = IOUtils.toByteArray(inputStream);
+                matService.chargerPhoto(bytes,inscriptionId);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        return   "effectué!!!";
+    }
+
+
+    @GET
+    @Produces("image/*")
+    @Consumes({MediaType.APPLICATION_JSON,MediaType.MULTIPART_FORM_DATA})
+    @Path("/get-image-by-inscription/{inscriptionId}")
+    @Transactional
+    public Response getImage( @PathParam("inscriptionId") Long   inscriptionId ) {
+        parametre p = new parametre() ;
+        Inscriptions inscriptions = new Inscriptions() ;
+        try {
+            inscriptions = Inscriptions.findById(inscriptionId);
+        } catch (Exception e){
+            return  null ;
+        }
+
+
+       byte[] imageData ;
+        imageData = inscriptions.getPhoto_eleve() ;
+        return  Response.ok(imageData,"image/jpeg").build() ;
+    }
+
+
+
+    @PUT
+    @Produces(MediaType.TEXT_PLAIN)
     @Consumes({MediaType.MULTIPART_FORM_DATA})
     @Path("/charger-image-paramatre")
     @Transactional
-    public Response chargerImageParam(@MultipartForm MultipartFormDataInput input) {
+    public String chargerImageParam(@MultipartForm MultipartFormDataInput input) {
         Map<String, List<InputPart>> uploadForm = input.getFormDataMap();
         List<String> fileNames = new ArrayList<>();
 
@@ -141,14 +201,15 @@ public class InscriptionRessource {
                 byte[] bytes = IOUtils.toByteArray(inputStream);
                 parametre p= new parametre() ;
                 p= parametre.findById(1);
-                p.setCadre_tableau_honneur(bytes);
+              //  p.setCadre_tableau_honneur(bytes);
+                p.setImage_test(bytes);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
 
 
-        return   Response.ok(String.format("Fichier mis à jour  %s mis à jour")).build();
+        return   "effectué!!!";
     }
 
 
@@ -168,6 +229,25 @@ public class InscriptionRessource {
     @Path("/verifier-infos-a-jour/{idInscrip}")
     public String checkInfosAjour(@PathParam("idInscrip") Long  idInscrip) {
          return   matService.checkInfosAjour(idInscrip);
+    }
+
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Transactional
+    @Path("/verifier-inscrition/{idEcole}/{matricule}/{idAnnee}")
+    public String checkInscription(@PathParam("idEcole") Long  idEcole , @PathParam("matricule") String  matricule , @PathParam("idAnnee") Long  idAnnee ) {
+       Inscriptions inscriptions= new  Inscriptions() ;
+       String mess= null ;
+        inscriptions =   matService.checkInscrit(idEcole , matricule ,idAnnee);
+        if (inscriptions==null)
+            mess ="Cet élève n'a pas encore entamé son inscription!";
+        else {
+            eleve eleve = new eleve() ;
+             eleve= inscriptions.getEleve() ;
+            mess = eleve.getElevenom()+"//"+eleve.getEleveprenom()+"//"+inscriptions.getInscriptionsid() ;
+        }
+return  mess ;
     }
 
 

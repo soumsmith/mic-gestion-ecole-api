@@ -129,7 +129,7 @@ public class PersonnelService implements PanacheRepositoryBase<personnel, Long> 
     public List<InfosConnexionSelect> getConnexionInfosByEcole(Long idEcole){
         List<InfosConnexionSelect>  mesPaniers = new ArrayList<>()  ;
         try {
-            mesPaniers=  em.createQuery("SELECT new com.vieecoles.projection.InfosConnexionSelect(p.personnelnom ,p.personnelprenom, e.ecoleclibelle ,t.utilisateu_email ,t.utilisateur_mot_de_passe) from personnel p , ecole  e ,utilisateur_has_personnel u,utilisateur t" +
+            mesPaniers=  em.createQuery("SELECT new com.vieecoles.projection.InfosConnexionSelect(p.personnelnom ,p.personnelprenom, e.ecoleclibelle ,t.utilisateu_login ,t.utilisateur_mot_de_passe) from personnel p , ecole  e ,utilisateur_has_personnel u,utilisateur t" +
                             " where p.ecole.ecoleid =e.ecoleid and u.personnel_personnelid= p.personnelid and u.utilisateur.utilisateurid = t.utilisateurid and e.ecoleid=: idEcole ")
                     .setParameter("idEcole",idEcole)
                     .getResultList() ;

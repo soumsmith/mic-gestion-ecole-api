@@ -22,10 +22,23 @@ public class parametre extends PanacheEntityBase {
     @Basic(fetch = FetchType.LAZY)
     @Column(length=100000)
     private byte[] cadre_tableau_honneur ;
+
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    @Column(length=100000)
+    private byte[] image_test ;
     private  String libelle;
 
     public byte[] getCadre_tableau_honneur() {
         return cadre_tableau_honneur;
+    }
+
+    public byte[] getImage_test() {
+        return image_test;
+    }
+
+    public void setImage_test(byte[] image_test) {
+        this.image_test = image_test;
     }
 
     public void setCadre_tableau_honneur(byte[] cadre_tableau_honneur) {

@@ -62,6 +62,7 @@ public class RapportRentreeServices {
            nbreBac2G = countProfByMatiereAndEcole(idEcole ,idMatiere ,AnneeId,"MASCULIN",nivBac2);
             System.out.println("nbreBac2G "+ nbreBac2G);
            nbreBac2F = countProfByMatiereAndEcole(idEcole ,idMatiere ,AnneeId,"FEMININ",nivBac2);
+            System.out.println("nbreBac2F "+ nbreBac2F);
 
             nbreCMF =  countProfByMatiereAndEcole(idEcole ,idMatiere ,AnneeId,"FEMININ",nivCM);
             nbreCMG =  countProfByMatiereAndEcole(idEcole ,idMatiere ,AnneeId,"MASCULIN",nivCM);

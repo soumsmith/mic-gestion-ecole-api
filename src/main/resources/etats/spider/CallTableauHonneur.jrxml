@@ -40,10 +40,10 @@
 	<parameter name="periode" class="java.lang.String"/>
 	<parameter name="moyenne" class="java.lang.Long"/>
 	<queryString language="SQL">
-		<![CDATA[select * from   `ecoleviedbv2`.tableau_honneur 
-where  `ecoleviedbv2`.tableau_honneur.libelle_periode= $P{periode}   and 
-`ecoleviedbv2`.tableau_honneur.id_ecole= $P{ecoleId} and 
-`ecoleviedbv2`.tableau_honneur.annee_libelle=  $P{annee} and 
+		<![CDATA[select * from   `ecoleviedbv2`.tableau_honneur
+where  `ecoleviedbv2`.tableau_honneur.libelle_periode= $P{periode}   and
+`ecoleviedbv2`.tableau_honneur.id_ecole= $P{ecoleId} and
+`ecoleviedbv2`.tableau_honneur.annee_libelle=  $P{annee} and
 `ecoleviedbv2`.tableau_honneur.libelle_classe=  $P{classe} and
  `ecoleviedbv2`.tableau_honneur.moy_general>=$P{moyenne}]]>
 	</queryString>
@@ -133,7 +133,7 @@ where  `ecoleviedbv2`.tableau_honneur.libelle_periode= $P{periode}   and
 					<subreportParameterExpression><![CDATA[$P{periode}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA["TableauHonneur.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["etats/spider/TableauHonneur.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>
