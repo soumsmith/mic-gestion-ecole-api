@@ -13,6 +13,8 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.NotFoundException;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -84,6 +86,7 @@ public class EvaluationService implements PanacheRepositoryBase<Evaluation, Long
 		entity.setType(ev.getType());
 		entity.setDateUpdate(new Date());
 		entity.setUser(ev.getUser());
+		entity.setGroupeEvaluationId(ev.getGroupeEvaluationId());
 		// entity.setHeure(ev.getHeure());
 		entity.setNoteSur(ev.getNoteSur());
 		return entity;
@@ -132,6 +135,33 @@ public class EvaluationService implements PanacheRepositoryBase<Evaluation, Long
 			logger.warning("Probably no result found");
 		}
 		return evaList;
+	}
+	
+	public List<Evaluation> getNonGroupe(Long anneeId, Long ecoleId, Long niveauId, Long matiereId, Long periodeId){
+		List<Evaluation> evals = new ArrayList<>();
+		if(anneeId != null && ecoleId != null && niveauId != null && matiereId!=null && periodeId != null) {
+			try {
+				evals = Evaluation.find("annee.id = ?1 and classe.ecole.id = ?2 and classe.branche.id=?3 and matiereEcole.id = ?4 and periode.id = ?5 and groupeEvaluationId is null order by date", anneeId, ecoleId, niveauId, matiereId, periodeId).list();
+			}catch(RuntimeException r) {
+				r.printStackTrace();
+				logger.warning(r.getMessage());
+			}
+		}	
+		return evals;
+	}
+	
+	public List<Evaluation> getByGroupe(String groupeId){
+		List<Evaluation> evals = new ArrayList<>();
+		if(groupeId != null) {
+			try {
+				evals = Evaluation.find("groupeEvaluationId =?1 order by date",groupeId).list();
+			}catch(RuntimeException r) {
+				r.printStackTrace();
+				logger.warning(r.getMessage());
+			}
+		}
+			
+		return evals;
 	}
 
 	public List<Evaluation> getByClasseAndMatiereAndPeriode(Long classeId, Long matiereId, Long periodeId,

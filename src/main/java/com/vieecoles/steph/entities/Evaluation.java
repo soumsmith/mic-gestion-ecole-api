@@ -6,16 +6,13 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
-
 import java.util.Date;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name = "evaluation")
-public class Evaluation extends PanacheEntityBase{
+public class Evaluation extends PanacheEntityBase {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +20,7 @@ public class Evaluation extends PanacheEntityBase{
 	private Long id;
 	@Column(name = "evaluationcode")
 	private String code;
-	//@JsonbDateFormat(value = "dd/MM/yyyy")
+	// @JsonbDateFormat(value = "dd/MM/yyyy")
 	@Column(name = "evaluationdate")
 	private Date date;
 //	@Transient
@@ -31,8 +28,9 @@ public class Evaluation extends PanacheEntityBase{
 	private String duree;
 	private String noteSur;
 	private String chapitreDeLecon;
-
 	private String etat;
+	@Column(name = "groupe_evaluation_id")
+	private String groupeEvaluationId;
 	@Column(name = "date_limite")
 	private String dateLimite;
 	@ManyToOne
