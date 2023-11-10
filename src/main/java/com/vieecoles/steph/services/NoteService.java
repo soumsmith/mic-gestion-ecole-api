@@ -155,40 +155,46 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 
 	public List<Notes> getNotesClasse(String evalCode) {
 //	    	logger.info("++++++++++"+evalCode);
-		Evaluation evaluation = evaluationService.findByCode(evalCode);
-		// Gson gson = new Gson();
-		// obtenir la liste des eleves d une classe
-		List<ClasseEleve> classeEleves = classeEleveService.getByClasseAnnee(evaluation.getClasse().getId(),
-				evaluation.getAnnee().getId());
-		// logger.info(gson.toJson(classeEleves));
-		// obtenir la liste des notes pour une évaluation
-		// getByEvaluationAndPec anciennement utilisé avec pec = 1
-		List<Notes> notesList = getByEvaluation(evaluation.getId());
-		List<Notes> noteListTemp = new ArrayList<Notes>();
-		Boolean flat = true;
-		Notes notemp;
-		for (ClasseEleve ce : classeEleves) {
-			flat = true;
-			for (Notes note : notesList) {
-				// nous avons supprimer note.getPec() == 1 dans la condition ci apres
-				if (ce.getInscription().getEleve().getMatricule().equals(
-						note.getClasseEleve().getInscription().getEleve().getMatricule()) && note.getPec() != null) {
-					noteListTemp.add(note);
-					flat = false;
-					break;
+		try {
+			Evaluation evaluation = evaluationService.findByCode(evalCode);
+			// Gson gson = new Gson();
+			// obtenir la liste des eleves d une classe
+			List<ClasseEleve> classeEleves = classeEleveService.getByClasseAnnee(evaluation.getClasse().getId(),
+					evaluation.getAnnee().getId());
+			// logger.info(gson.toJson(classeEleves));
+			// obtenir la liste des notes pour une évaluation
+			// getByEvaluationAndPec anciennement utilisé avec pec = 1
+			List<Notes> notesList = getByEvaluation(evaluation.getId());
+			List<Notes> noteListTemp = new ArrayList<Notes>();
+			Boolean flat = true;
+			Notes notemp;
+			for (ClasseEleve ce : classeEleves) {
+				flat = true;
+				for (Notes note : notesList) {
+					// nous avons supprimer note.getPec() == 1 dans la condition ci apres
+					if (ce.getInscription().getEleve().getMatricule()
+							.equals(note.getClasseEleve().getInscription().getEleve().getMatricule())
+							&& note.getPec() != null) {
+						noteListTemp.add(note);
+						flat = false;
+						break;
+					}
+				}
+				if (flat) {
+					notemp = new Notes();
+					notemp.setClasseEleve(ce);
+					notemp.setEvaluation(evaluation);
+					noteListTemp.add(notemp);
 				}
 			}
-			if (flat) {
-				notemp = new Notes();
-				notemp.setClasseEleve(ce);
-				notemp.setEvaluation(evaluation);
-				noteListTemp.add(notemp);
-			}
-		}
 
 //		logger.info("noteListTemp");
 //		logger.info(gson.toJson(noteListTemp));
-		return noteListTemp;
+			return noteListTemp;
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+			return new ArrayList<Notes>();
+		}
 	}
 
 	public List<Notes> getNotesClasseWithPec(String evalCode, Integer pec) {
