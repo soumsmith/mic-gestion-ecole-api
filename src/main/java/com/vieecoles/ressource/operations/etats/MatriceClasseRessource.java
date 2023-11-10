@@ -7,6 +7,7 @@ import com.vieecoles.services.etats.MatriceClasseBilanServices;
 import com.vieecoles.services.etats.MatriceClasseServices;
 import com.vieecoles.steph.entities.Classe;
 import com.vieecoles.steph.entities.ClasseMatiere;
+import com.vieecoles.steph.entities.Matiere;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRXlsExporter;
@@ -193,6 +194,27 @@ public class MatriceClasseRessource {
        System.out.println("Classe "+m.getLibelle());
         return   ClasseMatiere.find("select distinct m from ClasseMatiere m  where m.matiere.ecole.id = ?1 and m.branche.id = ?2 ", idEcole,m.getBranche().getId()).list();
 
+        // System.out.println("classeMatiereList "+classeMatiereList.toString());
+    }
+    @GET
+    @Transactional
+    @Path("/matieres-ecole-web/{idEcole}/{classe}")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public List<Matiere>  getDtoRapportweb(@PathParam("idEcole") Long idEcole , @PathParam("classe") Long classe ) throws Exception, JRException {
+        Classe m= Classe.findById(classe) ;
+        System.out.println("Classe "+m.getLibelle());
+        List<ClasseMatiere> classeMatiereList ;
+
+
+        classeMatiereList= ClasseMatiere.find("select distinct m from ClasseMatiere m  where m.matiere.ecole.id = ?1 and m.branche.id = ?2 ", idEcole,m.getBranche().getId()).list();
+        List<Matiere> matieres = new ArrayList<>(classeMatiereList.size());
+        for (int i=0; i< classeMatiereList.size();i++) {
+            Matiere mat= new Matiere() ;
+            mat.setId(classeMatiereList.get(i).getMatiere().getId());
+            mat.setLibelle(classeMatiereList.get(i).getMatiere().getLibelle());
+            matieres.add(mat);
+        }
+        return matieres ;
         // System.out.println("classeMatiereList "+classeMatiereList.toString());
     }
 

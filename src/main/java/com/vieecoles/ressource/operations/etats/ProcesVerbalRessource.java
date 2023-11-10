@@ -62,14 +62,17 @@ public class ProcesVerbalRessource {
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public List<ProcesVerbalDto>  getInfosProcesVerbal(@PathParam("idClasse") Long idClasse , @PathParam("code") String code ) throws Exception, JRException {
 
-        Classe cl= new Classe() ;
-        cl= Classe.findById(idClasse);
-
-
-        Evaluation evaluation = evaluationService.findByCode(code);
         return  procesVerbalServices.getProcesVerEval(idClasse ,code);
     }
 
+    @GET
+    @Transactional
+    @Path("/infos-by-matricule/{idClasse}/{code}/{matricule}")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public ProcesVerbalDto  getInfosProcesVerbal(@PathParam("idClasse") Long idClasse , @PathParam("code") String code, @PathParam("matricule") String matricule  ) throws Exception, JRException {
+
+        return  procesVerbalServices.getProcesVerEvalByMatricule(idClasse ,code ,matricule);
+    }
 
     @GET
     @Transactional
