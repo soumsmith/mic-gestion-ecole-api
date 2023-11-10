@@ -21,7 +21,10 @@ public class LivretScolaireServices {
 
     public List<LivretScolaireSelectDto>  livretScolaire(Long idEcole,String libellePeriode ,String monMatricule, String anneeLibelle){
         int LongTableau;
-
+        System.out.println("monMatricule "+monMatricule);
+        System.out.println("libellePeriode "+libellePeriode);
+        System.out.println("idEcole "+idEcole);
+        System.out.println("anneeLibelle "+anneeLibelle);
         List<NiveauDto> classeNiveauDtoList = new ArrayList<>() ;
         TypedQuery<NiveauDto> q = em.createQuery( "SELECT new com.vieecoles.dto.NiveauDto(d.matiereLibelle) from DetailBulletin  d join d.bulletin b  where b.matricule=:matricule and b.libellePeriode=:libellePeriode" +
                         " and b.ecoleId=:idEcole and b.anneeLibelle=:anneeLibelle "
@@ -33,7 +36,9 @@ public class LivretScolaireServices {
                                  .getResultList() ;
 
         LongTableau= classeNiveauDtoList.size();
+        System.out.println("Longueur Tableau--- "+LongTableau);
         System.out.println("List matiere "+classeNiveauDtoList.toString());
+
         List<LivretScolaireSelectDto> resultatsListElevesDto = new ArrayList<>();
 
              String nom_ecole;

@@ -116,29 +116,29 @@ public class ProcesVerbalServices {
         for (int k=0; k< longEvalu;k++) {
 
 
-            m.setMatricule(notesList.get(k).getClasseEleve().getInscription().getEleve().getMatricule());
-            m.setNomPrenoms(notesList.get(k).getClasseEleve().getInscription().getEleve().getNom()+" "+notesList.get(k).getClasseEleve().getInscription().getEleve().getPrenom());
-            m.setClasse(notesList.get(k).getClasseEleve().getClasse().getLibelle());
-            m.setNoteObtenu(notesList.get(k).getNote());
-            m.setNoteSur(notesList.get(k).getEvaluation().getNoteSur());
-            m.setAppreciation(notesList.get(k).getAppreciation());
-            m.setObservation(notesList.get(k).getCommentaire());
-            m.setEffectif(notesList.get(k).getClasseEleve().getClasse().getEffectif().longValue());
-            m.setPresent(getPresent(notesList.get(k).getEvaluation().getId()));
+            m.setMatricule(noteFiltres.get(k).getClasseEleve().getInscription().getEleve().getMatricule());
+            m.setNomPrenoms(noteFiltres.get(k).getClasseEleve().getInscription().getEleve().getNom()+" "+noteFiltres.get(k).getClasseEleve().getInscription().getEleve().getPrenom());
+            m.setClasse(noteFiltres.get(k).getClasseEleve().getClasse().getLibelle());
+            m.setNoteObtenu(noteFiltres.get(k).getNote());
+            m.setNoteSur(noteFiltres.get(k).getEvaluation().getNoteSur());
+            m.setAppreciation(noteFiltres.get(k).getAppreciation());
+            m.setObservation(noteFiltres.get(k).getCommentaire());
+            m.setEffectif(noteFiltres.get(k).getClasseEleve().getClasse().getEffectif().longValue());
+            m.setPresent(getPresent(noteFiltres.get(k).getEvaluation().getId()));
             present = m.getPresent() ;
 
             m.setAbsent(m.getEffectif()-m.getPresent());
-            m.setChapitreDeLecon(notesList.get(k).getEvaluation().getChapitreDeLecon());
-            m.setMoyenneEvaluation(getMoyenneEva(notesList.get(k).getEvaluation().getId()));
-            m.setForteNote(getPlusForteNote(notesList.get(k).getEvaluation().getId()));
-            m.setFaibleNote(getPlusFaibleNote(notesList.get(k).getEvaluation().getId()));
-            m.setNbreNoteInf_egal_8_50(getNoteInf_8_5(notesList.get(k).getEvaluation().getId(),8.5d));
+            m.setChapitreDeLecon(noteFiltres.get(k).getEvaluation().getChapitreDeLecon());
+            m.setMoyenneEvaluation(getMoyenneEva(noteFiltres.get(k).getEvaluation().getId()));
+            m.setForteNote(getPlusForteNote(noteFiltres.get(k).getEvaluation().getId()));
+            m.setFaibleNote(getPlusFaibleNote(noteFiltres.get(k).getEvaluation().getId()));
+            m.setNbreNoteInf_egal_8_50(getNoteInf_8_5(noteFiltres.get(k).getEvaluation().getId(),8.5d));
             nbreInf8_50 = m.getNbreNoteInf_egal_8_50() ;
-            m.setNbreNoteSup_8_50_inf_9_99(getNoteInf_8_50_inf_9_99(notesList.get(k).getEvaluation().getId(),8.5d,9.99d));
+            m.setNbreNoteSup_8_50_inf_9_99(getNoteInf_8_50_inf_9_99(noteFiltres.get(k).getEvaluation().getId(),8.5d,9.99d));
             nbre8_50_inf_9_99 = m.getNbreNoteSup_8_50_inf_9_99() ;
-            m.setNbreNoteSup10(getNoteSupA(notesList.get(k).getEvaluation().getId(),10d));
+            m.setNbreNoteSup10(getNoteSupA(noteFiltres.get(k).getEvaluation().getId(),10d));
             nbreNoteSup10 = m.getNbreNoteSup10() ;
-            m.setNbreNoteSup12(getNoteSupA(notesList.get(k).getEvaluation().getId(),12d));
+            m.setNbreNoteSup12(getNoteSupA(noteFiltres.get(k).getEvaluation().getId(),12d));
             nbrenbreNoteSup12= m.getNbreNoteSup12() ;
 
 
