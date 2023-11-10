@@ -56,6 +56,15 @@ public class EvaluationResource {
 		return Response.ok().entity(evaluationService.getByClasseAndMatiere(anneeId, classeId, matiereId)).build();
 	}
 
+	@GET
+	@Path("/get-non-groupe")
+	@Operation(description = "Obtenir par classe an la matiere", summary = "")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Tag(name = "Evaluation")
+	public Response getByClasseAndMatiere(@QueryParam("annee") Long anneeId, @QueryParam("ecole") Long ecoleId,@QueryParam("niveau") Long niveauId, @QueryParam("matiere") Long matiereId,@QueryParam("periode") Long periodeId) {
+
+		return Response.ok().entity(evaluationService.getNonGroupe(anneeId, ecoleId, niveauId, matiereId, periodeId)).build();
+	}
 
 	@GET
 	@Path("/get-classe-matiere")
