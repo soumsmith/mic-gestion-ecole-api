@@ -86,6 +86,14 @@ public class NotesResource {
     public Response getNotesByClasseAndPeriode(@PathParam("matricule") String matricule, @PathParam("classe") Long classe,@PathParam("annee") Long annee, @PathParam("periode") Long periode,  @PathParam("matiere") Long matiere) {
     	return  Response.ok(noteService.getListNotesByEleveAndClasseAndAnneeAndPeriodeAndMatiere(matricule,classe, annee, periode, matiere)).build();
     }
+    /**
+     * Cette méthode donne les notes et moyennes des élèves d'une classe pour une matière
+     * @param classe
+     * @param matiere
+     * @param annee
+     * @param periode
+     * @return
+     */
     
     @GET
     @Path("/list-classe-matiere-notes/{classe}/{matiere}/{annee}/{periode}")
@@ -95,6 +103,15 @@ public class NotesResource {
     	return noteService.moyennesAndMatiereAndNotesHandle(classe,matiere, annee, periode);
     }
     
+    /**
+     * Obtenir les notes et la moyenne d'un eleve pour une matiere.
+     * 
+     * @param matricule
+     * @param matiere
+     * @param annee
+     * @param periode
+     * @return
+     */
     @GET
     @Path("/list-matricule-matiere-notes/{matricule}/{matiere}/{annee}/{periode}")
     @Operation(description = "Obtenir les notes des eleves d une classe par periode ", summary = "")
@@ -102,6 +119,16 @@ public class NotesResource {
     public List<MoyenneEleveDto> getNotesByMatriculeAndMatiereAndPeriode(@PathParam("matricule") String matricule,@PathParam("matiere") String matiere,@PathParam("annee") String annee, @PathParam("periode") String periode) {
     	List<MoyenneEleveDto> list = new ArrayList<>();
     	list.add(noteService.moyennesAndMatiereAndNotesByMatriculeHandle(matricule,matiere, annee, periode));
+    	return list;
+    }
+    
+    @GET
+    @Path("/list-matricule-notes-moyennes/{matricule}/{annee}/{periode}")
+    @Operation(description = "Obtenir les notes des eleves d une classe par periode ", summary = "")
+	@Tag(name = "Notes")
+    public List<MoyenneEleveDto> getNotesByMatriculeAndPeriode(@PathParam("matricule") String matricule,@PathParam("annee") String annee, @PathParam("periode") String periode) {
+    	List<MoyenneEleveDto> list = new ArrayList<>();
+    	list.add(noteService.moyennesAndNotesByMatriculeHandle(matricule, annee, periode));
     	return list;
     }
         

@@ -199,6 +199,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 
 	public List<Notes> getNotesClasseWithPec(String evalCode, Integer pec) {
 //    	logger.info("++++++++++"+evalCode);
+		try {
 		Evaluation evaluation = evaluationService.findByCode(evalCode);
 		// Gson gson = new Gson();
 		// obtenir la liste des eleves d une classe
@@ -230,6 +231,10 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 		}
 
 		return noteListTemp;
+		}catch(RuntimeException r) {
+			r.printStackTrace();
+			return new ArrayList<Notes>();
+		}
 	}
 
 	List<MoyenneEleveDto> formatMoyenneMatieres(Map<Eleve, List<Notes>> param) {
@@ -406,6 +411,24 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 		if (ce != null) {
 			List<MoyenneEleveDto> listMoyenne = moyennesAndMatiereAndNotesHandle(String.valueOf(ce.getClasse().getId()),
 					matiereId, anneeId, periodeId);
+
+			for (MoyenneEleveDto moy : listMoyenne) {
+				if (moy.getEleve().getMatricule().equals(matricule)) {
+					mdto = moy;
+					break;
+				}
+			}
+		}
+		return mdto;
+	}
+	
+	public MoyenneEleveDto moyennesAndNotesByMatriculeHandle(String matricule, String anneeId, String periodeId) {
+
+		ClasseEleve ce = classeEleveService.getByMatriculeAndAnnee(matricule, Long.parseLong(anneeId));
+		MoyenneEleveDto mdto = new MoyenneEleveDto();
+		if (ce != null) {
+			List<MoyenneEleveDto> listMoyenne = moyennesAndNotesHandle(String.valueOf(ce.getClasse().getId()),
+					 anneeId, periodeId);
 
 			for (MoyenneEleveDto moy : listMoyenne) {
 				if (moy.getEleve().getMatricule().equals(matricule)) {
