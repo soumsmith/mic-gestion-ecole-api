@@ -53,6 +53,8 @@ public class Evaluation extends PanacheEntityBase {
 	@ManyToOne
 	@JoinColumn(name = "matiere_matiereid")
 	private EcoleHasMatiere matiereEcole;
+	@Transient
+	private String dateToFilter;
 
 	@Column(name = "date_creation")
 	private Date dateCreation;

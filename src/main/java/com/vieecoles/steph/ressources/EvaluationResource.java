@@ -212,16 +212,16 @@ public class EvaluationResource {
 
 
     @DELETE
-    @Path("/delete/{id}")
+    @Path("/delete-handle/{id}/{user}")
     @Produces(MediaType.TEXT_PLAIN)
     @Tag(name = "Evaluation")
-    public Response delete(@PathParam("id") String id) {
+    public Response delete(@PathParam("id") String id, @PathParam("user") String user) {
     	try {
-    		evaluationService.delete(id);
+    		evaluationService.deleteHandle(Long.parseLong(id), user);
 			return Response.ok("Suppression Evaluation id = "+id).build();
 		}catch(RuntimeException re){
 			re.printStackTrace();
-			return Response.serverError().entity("Erreur lors de la suppression").build();
+			return Response.serverError().entity(re.getMessage()).build();
 		}
 
 

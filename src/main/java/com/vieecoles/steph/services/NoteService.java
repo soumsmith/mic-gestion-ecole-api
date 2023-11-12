@@ -105,6 +105,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 		if (entity == null) {
 			throw new NotFoundException();
 		}
+		logger.info("---> Suppression de note "+id);
 		entity.delete();
 	}
 
@@ -146,11 +147,25 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 	}
 
 	public List<Notes> getByEvaluation(long evaluationId) {
-		return Notes.find("evaluation.id = ?1", evaluationId).list();
+		List<Notes> notes = new ArrayList<>();
+		try {
+			notes = Notes.find("evaluation.id = ?1", evaluationId).list();
+		}catch (RuntimeException e) {
+			e.printStackTrace();
+		}
+		return notes;
 	}
 
 	public List<Notes> getByEvaluationAndPec(long evaluationId, Integer pec) {
-		return Notes.find("evaluation.id = ?1 and pec = ?2", evaluationId, pec).list();
+		 
+		
+		List<Notes> notes = new ArrayList<>();
+		try {
+			notes = Notes.find("evaluation.id = ?1 and pec = ?2", evaluationId, pec).list();
+		}catch (RuntimeException e) {
+			e.printStackTrace();
+		}
+		return notes;
 	}
 
 	public List<Notes> getNotesClasse(String evalCode) {

@@ -65,7 +65,7 @@ public class ClasseMatiereService implements PanacheRepositoryBase<ClasseMatiere
 		//liste des matiere à coef non defini
 		for(EcoleHasMatiere ehm : ehmList) {
 			for(ClasseMatiere cm : cmList) {
-				System.out.println(String.format("%s %s  --- %s %s", ehm.getLibelle(),ehm.getId(),cm.getMatiere().getId(),cm.getMatiere().getLibelle()));
+//				System.out.println(String.format("%s %s  --- %s %s", ehm.getLibelle(),ehm.getId(),cm.getMatiere().getId(),cm.getMatiere().getLibelle()));
 				if(ehm.getId() == cm.getMatiere().getId()) {
 					isDefined = true;
 					break;
