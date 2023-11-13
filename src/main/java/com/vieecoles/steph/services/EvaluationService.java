@@ -267,6 +267,8 @@ public class EvaluationService implements PanacheRepositoryBase<Evaluation, Long
 			System.out.println(
 					String.format("Date evaluation: %s - jours délai %s - Date limite: %s (is blocked? %s - today %s)",
 							dateEvaluation, nombreJoursDelai, dateLimiteSaisieAutorise, flat, today));
+			// Si la date délai est postérieure à la date de fin de la période retourner la date de fin de période
+			
 			dto.setDateLimite(dateLimiteSaisieAutorise);
 			if (flat <= 0)
 				dto.setIsLocked(false);
