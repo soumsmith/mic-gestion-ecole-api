@@ -152,6 +152,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			notes = Notes.find("evaluation.id = ?1", evaluationId).list();
 		}catch (RuntimeException e) {
 			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 		return notes;
 	}
@@ -1090,6 +1091,19 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			logger.warning("Erreur ::: " + e.getMessage());
 		}
 		return notesByEleve;
+	}
+	
+	public List<Notes> getNotesByInscriptionHasClasse(Long inscriptionHasClasseId) {
+
+		List<Notes> notesEleve = new ArrayList<Notes>();
+		try {
+			logger.info("Inscr_has_classe_id = "+inscriptionHasClasseId);
+			notesEleve = Notes.find(
+					"classeEleve.id = ?1 and pec = 1", inscriptionHasClasseId).list();
+		} catch (RuntimeException e) {
+			logger.warning("Erreur ::: " + e.getMessage());
+		}
+		return notesEleve;
 	}
 
 	public List<Notes> getListNotesByEleveAndClasseAndAnneeAndPeriodeAndMatiere(String matricule, Long classeId,

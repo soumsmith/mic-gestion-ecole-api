@@ -32,9 +32,9 @@ public class ClasseEleve extends PanacheEntityBase{
 	private String statut;
 	@Column(name = "inscription_classedate")
 	private Date dateCreation;
-
+	@Column(name = "classe_retiree")
+	private Long classeRetireeId;
 	@Column(name = "date_update")
 	private Date dateUpdate;
-
 
 }

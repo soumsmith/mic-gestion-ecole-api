@@ -14,6 +14,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import com.vieecoles.steph.entities.ClasseEleve;
+import com.vieecoles.steph.entities.Constants;
 import com.vieecoles.steph.entities.Inscription;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
@@ -147,13 +148,13 @@ public class InscriptionService implements PanacheRepositoryBase<Inscription, In
 			long ecole) {
 
 		List<Inscription> inscriptions = getByBrancheAndAnneeAndStatut(branche, annee, statut, ecole);
-		List<ClasseEleve> classeEleves = classeEleveService.getByBrancheAndAnnee(branche, annee, ecole);
+		List<ClasseEleve> classeEleves = classeEleveService.getByBrancheAndAnneeAndStatut(branche, annee, ecole, Constants.STATUT_ELEVE_RETIRE_CLASSE);
 		List<Inscription> _inscriptions = new ArrayList<Inscription>();
 //		System.out.println("liste inscriptions " + (inscriptions != null ? inscriptions.size() : 0));
 //		System.out.println("liste acffecte dans une clase " + (classeEleves != null ? classeEleves.size() : 0));
 		Boolean flat = false;
 		for (Inscription ins : inscriptions) {
-			System.out.println(ins);
+//			System.out.println(ins);
 			for (ClasseEleve ce : classeEleves) {
 //				System.out.println(ins.getId() + " == " + ce.getInscription().getId());
 				if (ins.getId() == ce.getInscription().getId()) {

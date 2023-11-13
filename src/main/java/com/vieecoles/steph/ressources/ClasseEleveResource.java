@@ -156,8 +156,8 @@ public class ClasseEleveResource {
 	@Tag(name = "Classe-Eleve")
 	public Response delete(@PathParam("id") long id) {
 		try {
-			classeEleveService.delete(id);
-			return Response.ok("Suppression ClasseEleve id = " + id).build();
+			classeEleveService.deleteHandle(id);
+			return Response.ok("Retrait de classe éffectué [ id = " + id+" ]").build();
 		} catch (RuntimeException re) {
 			re.printStackTrace();
 			return Response.serverError().entity(re.getMessage()).build();

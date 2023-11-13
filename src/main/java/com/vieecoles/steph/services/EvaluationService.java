@@ -119,25 +119,31 @@ public class EvaluationService implements PanacheRepositoryBase<Evaluation, Long
 		if (entity == null) {
 			throw new NotFoundException();
 		}
-		List<Notes> notesByEvaluation = noteService.getByEvaluation(id);
-		if (notesByEvaluation.size() != 0) {
-			for (Notes note : notesByEvaluation) {
-				noteService.delete(note.getId());
+		try {
+			List<Notes> notesByEvaluation = noteService.getByEvaluation(id);
+			if (notesByEvaluation.size() != 0) {
+				for (Notes note : notesByEvaluation) {
+					noteService.delete(note.getId());
+				}
 			}
+			LoggerAudit audit = new LoggerAudit();
+			UUID uuid = UUID.randomUUID();
+			audit.setId(uuid.toString());
+			audit.setMessage(formatMessageAudit(entity.getId().toString(), String.valueOf(notesByEvaluation.size()),
+					String.valueOf(entity.getClasse().getId())));
+			audit.setModule(Constants.MODULE_EVALUATION);
+			audit.setTypeAction(Constants.ACTION_DELETE);
+			audit.setUser(user);
+			audit.setDateCreation(new Date());
+			
+			audit.persist();
+			
+			entity.delete();
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
-		
-		LoggerAudit audit = new LoggerAudit();
-		UUID uuid =  UUID.randomUUID();
-		audit.setId(uuid.toString());
-		audit.setMessage(formatMessageAudit(entity.getId().toString(),String.valueOf(notesByEvaluation.size()), String.valueOf(entity.getClasse().getId())));
-		audit.setModule(Constants.MODULE_EVALUATION);
-		audit.setTypeAction(Constants.ACTION_DELETE);
-		audit.setUser(user);
-		audit.setDateCreation(new Date());
-		
-		audit.persist();
-		
-		entity.delete();
+
 	}
 
 	String formatMessageAudit(String idEvaluation, String nombreNotes, String classe) {
@@ -208,9 +214,9 @@ public class EvaluationService implements PanacheRepositoryBase<Evaluation, Long
 		try {
 			evaList = Evaluation.find("annee.id=?1 and classe.id=?2 and matiereEcole.id=?3 and periode.id=?4", anneeId,
 					classeId, matiereId, periodeId).list();
-			if(evaList != null) {
+			if (evaList != null) {
 				DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-				for(Evaluation ev : evaList) {
+				for (Evaluation ev : evaList) {
 //					System.out.println(dateFormat.format(ev.getDate()));
 					ev.setDateToFilter(dateFormat.format(ev.getDate()));
 				}

@@ -11,6 +11,8 @@ public class Constants {
 	public static final String CLOTURE = "CLOTURE";
 	public static final String EN_ATTENTE = "EN_ATTENTE";
 	public static final String DELETED = "DELETED";
+	
+	public static final String STATUT_ELEVE_RETIRE_CLASSE = "RETIRE";
 
 	public static final String VALIDEE = "VALIDEE";
 	public static final String AFFECTE = "AFFECTE";

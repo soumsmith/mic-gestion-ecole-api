@@ -2,7 +2,10 @@ package com.vieecoles.steph.services;
 
 import com.vieecoles.steph.entities.Classe;
 import com.vieecoles.steph.entities.ClasseEleve;
+import com.vieecoles.steph.entities.Constants;
 import com.vieecoles.steph.entities.Inscription;
+import com.vieecoles.steph.entities.Notes;
+
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -12,11 +15,12 @@ import javax.ws.rs.NotFoundException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Logger;
 
 @ApplicationScoped
 public class ClasseEleveService implements PanacheRepositoryBase<ClasseEleve, Long> {
 
-	// Logger logger = Logger.getLogger(ClasseEleveService.class.getName());
+	Logger logger = Logger.getLogger(ClasseEleveService.class.getName());
 	@Inject
 	NoteService noteService;
 
@@ -37,18 +41,36 @@ public class ClasseEleveService implements PanacheRepositoryBase<ClasseEleve, Lo
 	public List<ClasseEleve> handleCreate(long classeId, List<Inscription> inscriptions) {
 		List<ClasseEleve> classeEleves = new ArrayList<ClasseEleve>();
 		for (Inscription ins : inscriptions) {
-		ClasseEleve classeEleve = new ClasseEleve();
-		Classe classe = new Classe();
-		classe.setId(classeId);
-		classeEleve.setClasse(classe);
-		classeEleve.setDateCreation(new Date());
-		classeEleve.setStatut("ACTIF");
-		classeEleve.setDateUpdate(new Date());
-			classeEleve.setInscription(ins);
-			System.out.println(
-					"----> Affectation de " + ins.getEleve().getMatricule() + " en classe de " + classe.getId());
-			create(classeEleve);
-			classeEleves.add(classeEleve);
+			ClasseEleve ceExistant = new ClasseEleve();
+			try {
+				ceExistant = getByInscription(ins.getId());
+			} catch (RuntimeException e) {
+				e.printStackTrace();
+				ceExistant = null;
+			}
+
+			Classe classe = new Classe();
+			classe.setId(classeId);
+
+			if (ceExistant != null) {
+				ceExistant.setClasse(classe);
+				ceExistant.setDateUpdate(new Date());
+				ceExistant.setStatut("ACTIF");
+				classeEleves.add(ceExistant);
+				System.out.println(
+						"----> Ré Affectation de " + ins.getEleve().getMatricule() + " en classe de " + classe.getId());
+			} else {
+				ClasseEleve classeEleve = new ClasseEleve();
+				classeEleve.setClasse(classe);
+				classeEleve.setDateCreation(new Date());
+				classeEleve.setStatut("ACTIF");
+				classeEleve.setDateUpdate(new Date());
+				classeEleve.setInscription(ins);
+				System.out.println(
+						"----> Affectation de " + ins.getEleve().getMatricule() + " en classe de " + classe.getId());
+				create(classeEleve);
+				classeEleves.add(classeEleve);
+			}
 		}
 		return classeEleves;
 	}
@@ -70,19 +92,32 @@ public class ClasseEleveService implements PanacheRepositoryBase<ClasseEleve, Lo
 	}
 
 	@Transactional
-	public void delete(long id) {
-		// logger.info(String.format("Id to delete %s", id));
-		//Vérifier que l'élève n'a pas de notes
-		
+	public void deleteHandle(long id) {
+		logger.info(String.format("Id to delete %s", id));
+
+		List<Notes> notes = new ArrayList<>();
 		ClasseEleve entity = ClasseEleve.findById(id);
 		if (entity == null) {
 			throw new NotFoundException();
 		}
-		Boolean haveNotes = noteService.haveNotesByEleveAndClasseAndAnnee(entity.getInscription().getEleve().getMatricule(), entity.getClasse().getId(), entity.getInscription().getAnnee().getId());
-		if(haveNotes) {
-			throw new RuntimeException("Suppression impossible car l'élève a déjà une évaluation");
+
+		notes = noteService.getNotesByInscriptionHasClasse(id);
+		// désactivation du pec des notes de l'élève à retirer
+		logger.info("Notes trouvées : " + notes.size());
+		for (Notes note : notes) {
+			note.setPec(0);
+			noteService.update(note);
 		}
-		entity.delete();
+
+//		Classe classe = new Classe();
+		entity.setClasseRetireeId(entity.getClasse().getId());
+//		classe.setId(0);
+//		entity.setClasse(classe);
+		entity.setStatut(Constants.STATUT_ELEVE_RETIRE_CLASSE);
+		entity.setDateUpdate(new Date());
+		update(entity);
+
+		logger.info("Retrait effectué");
 	}
 
 	public List<ClasseEleve> getByIds(List<Long> ids) {
@@ -104,31 +139,114 @@ public class ClasseEleveService implements PanacheRepositoryBase<ClasseEleve, Lo
 	}
 
 	public List<ClasseEleve> getByClasseAnnee(Long classeId, Long anneeId) {
-		return ClasseEleve.find("classe.id = ?1 and inscription.annee.id = ?2 order by inscription.eleve.nom", classeId,
-				anneeId).list();
+		
+		List<ClasseEleve> ces = new ArrayList<>();
+		try {
+			ces = ClasseEleve.find(
+					"classe.id = ?1 and inscription.annee.id = ?2 and (statut is null or statut <> 'RETIRE') order by inscription.eleve.nom",
+					classeId, anneeId).list();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return ces;
 	}
 
 	public int getCountByClasseAnnee(Long classeId, Long anneeId) {
-		return ClasseEleve.find("classe.id = ?1 and inscription.annee.id = ?2 ", classeId, anneeId).list().size();
+		return ClasseEleve
+				.find("classe.id = ?1 and inscription.annee.id = ?2 and (statut is null or statut <> 'RETIRE')",
+						classeId, anneeId)
+				.list().size();
 	}
 
 	public List<ClasseEleve> getByBrancheAndAnnee(Long brancheId, Long anneeId, Long ecoleId) {
-		System.out.println(brancheId+" "+anneeId+" "+ecoleId);
-		return ClasseEleve.find("inscription.branche.id = ?1 and inscription.annee.id = ?2 and inscription.ecole.id = ?3", brancheId, anneeId, ecoleId).list();
+		System.out.println(brancheId + " " + anneeId + " " + ecoleId);
+		
+		List<ClasseEleve> ces = new ArrayList<>();
+		try {
+			ces = ClasseEleve.find(
+					"inscription.branche.id = ?1 and inscription.annee.id = ?2 and inscription.ecole.id = ?3 and (statut is null or statut <> 'RETIRE')",
+					brancheId, anneeId, ecoleId).list();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return ces;
 	}
-	
+
+	public List<ClasseEleve> getByBrancheAndAnneeAndStatut(Long brancheId, Long anneeId, Long ecoleId, String statut) {
+//		System.out.println(brancheId + " " + anneeId + " " + ecoleId + " " + statut);
+		List<ClasseEleve> ces = new ArrayList<>();
+		try {
+			ces = ClasseEleve.find(
+					"inscription.branche.id = ?1 and inscription.annee.id = ?2 and inscription.ecole.id = ?3 and (statut is null or statut != ?4)",
+					brancheId, anneeId, ecoleId, Constants.STATUT_ELEVE_RETIRE_CLASSE).list();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return ces;
+	}
+
 	public ClasseEleve getByClasseAndEleveAndAnnee(Long classeId, Long eleveId, Long anneeId) {
-		return ClasseEleve.find("classe.id = ?1 and inscription.annee.id = ?2 and inscription.eleve.id = ?3", classeId, anneeId, eleveId).singleResult();
+		
+		ClasseEleve ce = new ClasseEleve();
+		try {
+			ce = ClasseEleve.find(
+					"classe.id = ?1 and inscription.annee.id = ?2 and inscription.eleve.id = ?3 and (statut is null or statut <> 'RETIRE')",
+					classeId, anneeId, eleveId).singleResult();
+		}catch (Exception e) {
+			e.printStackTrace();
+			ce = null;
+		}
+		
+		return ce;
 	}
-	
-	public ClasseEleve getByMatriculeAndAnnee(String matricule,Long ecoleId, Long anneeId) {
-		System.out.println("mat :"+matricule+" ecole : "+ecoleId+" annee :"+ anneeId);
-		return ClasseEleve.find("inscription.eleve.matricule = ?1 and classe.ecole.id = ?2 and inscription.annee.id = ?3 ", matricule,ecoleId, anneeId).singleResult();
+
+	public ClasseEleve getByInscription(Long inscriptionId) {
+		
+		ClasseEleve ce = new ClasseEleve();
+		try {
+			logger.info("Inscription id = "+inscriptionId);
+			ce = ClasseEleve.find("inscription.id = ?1", inscriptionId)
+					.singleResult();
+		}catch (Exception e) {
+			e.printStackTrace();
+			ce =null;
+		}
+		
+		return ce;
 	}
-	
+
+	public ClasseEleve getByMatriculeAndAnnee(String matricule, Long ecoleId, Long anneeId) {
+		System.out.println("mat :" + matricule + " ecole : " + ecoleId + " annee :" + anneeId);
+		
+		ClasseEleve ce = new ClasseEleve();
+		try {
+			ce = ClasseEleve.find(
+					"inscription.eleve.matricule = ?1 and classe.ecole.id = ?2 and inscription.annee.id = ?3 and (statut is null or statut <> 'RETIRE')",
+					matricule, ecoleId, anneeId).singleResult();
+		}catch (Exception e) {
+			e.printStackTrace();
+			ce = null;
+		}
+		return ce;
+	}
+
 	public ClasseEleve getByMatriculeAndAnnee(String matricule, Long anneeId) {
-		System.out.println("mat :"+matricule+" annee :"+ anneeId);
-		return ClasseEleve.find("inscription.eleve.matricule = ?1 and inscription.annee.id = ?2 ", matricule, anneeId).singleResult();
+		System.out.println("mat :" + matricule + " annee :" + anneeId);
+		
+		ClasseEleve ce = new ClasseEleve();
+		try {
+			ce = ClasseEleve.find(
+					"inscription.eleve.matricule = ?1 and inscription.annee.id = ?2 and (statut is null or statut <> 'RETIRE')",
+					matricule, anneeId).singleResult();
+		}catch (Exception e) {
+			e.printStackTrace();
+			ce = null;
+		}
+		
+		return ce;
 	}
 
 	public long count() {
