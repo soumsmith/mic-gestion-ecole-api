@@ -15,6 +15,7 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.NotFoundException;
 import com.google.gson.Gson;
+import com.vieecoles.services.operations.ecoleService;
 import com.vieecoles.steph.dto.MoyenneEleveDto;
 import com.vieecoles.steph.entities.AbsenceEleve;
 import com.vieecoles.steph.entities.AnneeScolaire;
@@ -26,11 +27,14 @@ import com.vieecoles.steph.entities.ClasseElevePeriode;
 import com.vieecoles.steph.entities.ClasseMatiere;
 import com.vieecoles.steph.entities.Constants;
 import com.vieecoles.steph.entities.DetailBulletin;
+import com.vieecoles.steph.entities.Ecole;
 import com.vieecoles.steph.entities.EcoleHasMatiere;
 import com.vieecoles.steph.entities.Eleve;
 import com.vieecoles.steph.entities.Evaluation;
+import com.vieecoles.steph.entities.EvaluationPeriode;
 import com.vieecoles.steph.entities.Notes;
 import com.vieecoles.steph.entities.Periode;
+import com.vieecoles.steph.entities.TypeActivite;
 import com.vieecoles.steph.util.CommonUtils;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
@@ -61,6 +65,12 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 
 	@Inject
 	AbsenceService absenceService;
+
+	@Inject
+	EcoleService ecoleService;
+
+	@Inject
+	EvaluationPeriodeService evaluationPeriodeService;
 
 	Logger logger = Logger.getLogger(NoteService.class.getName());
 
@@ -105,7 +115,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 		if (entity == null) {
 			throw new NotFoundException();
 		}
-		logger.info("---> Suppression de note "+id);
+		logger.info("---> Suppression de note " + id);
 		entity.delete();
 	}
 
@@ -150,7 +160,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 		List<Notes> notes = new ArrayList<>();
 		try {
 			notes = Notes.find("evaluation.id = ?1", evaluationId).list();
-		}catch (RuntimeException e) {
+		} catch (RuntimeException e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
@@ -158,12 +168,11 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 	}
 
 	public List<Notes> getByEvaluationAndPec(long evaluationId, Integer pec) {
-		 
-		
+
 		List<Notes> notes = new ArrayList<>();
 		try {
 			notes = Notes.find("evaluation.id = ?1 and pec = ?2", evaluationId, pec).list();
-		}catch (RuntimeException e) {
+		} catch (RuntimeException e) {
 			e.printStackTrace();
 		}
 		return notes;
@@ -216,38 +225,38 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 	public List<Notes> getNotesClasseWithPec(String evalCode, Integer pec) {
 //    	logger.info("++++++++++"+evalCode);
 		try {
-		Evaluation evaluation = evaluationService.findByCode(evalCode);
-		// Gson gson = new Gson();
-		// obtenir la liste des eleves d une classe
-		List<ClasseEleve> classeEleves = classeEleveService.getByClasseAnnee(evaluation.getClasse().getId(),
-				evaluation.getAnnee().getId());
-		// logger.info(gson.toJson(classeEleves));
-		// obtenir la liste des notes pour une évaluation
-		List<Notes> notesList = getByEvaluationAndPec(evaluation.getId(), pec);
-		List<Notes> noteListTemp = new ArrayList<Notes>();
-		Boolean flat = true;
-		Notes notemp;
-		for (ClasseEleve ce : classeEleves) {
-			flat = true;
-			for (Notes note : notesList) {
-				if (ce.getInscription().getEleve().getMatricule()
-						.equals(note.getClasseEleve().getInscription().getEleve().getMatricule())
-						&& note.getPec() != null && note.getPec() == pec) {
-					noteListTemp.add(note);
-					flat = false;
-					break;
+			Evaluation evaluation = evaluationService.findByCode(evalCode);
+			// Gson gson = new Gson();
+			// obtenir la liste des eleves d une classe
+			List<ClasseEleve> classeEleves = classeEleveService.getByClasseAnnee(evaluation.getClasse().getId(),
+					evaluation.getAnnee().getId());
+			// logger.info(gson.toJson(classeEleves));
+			// obtenir la liste des notes pour une évaluation
+			List<Notes> notesList = getByEvaluationAndPec(evaluation.getId(), pec);
+			List<Notes> noteListTemp = new ArrayList<Notes>();
+			Boolean flat = true;
+			Notes notemp;
+			for (ClasseEleve ce : classeEleves) {
+				flat = true;
+				for (Notes note : notesList) {
+					if (ce.getInscription().getEleve().getMatricule()
+							.equals(note.getClasseEleve().getInscription().getEleve().getMatricule())
+							&& note.getPec() != null && note.getPec() == pec) {
+						noteListTemp.add(note);
+						flat = false;
+						break;
+					}
+				}
+				if (flat) {
+					notemp = new Notes();
+					notemp.setClasseEleve(ce);
+					notemp.setEvaluation(evaluation);
+					noteListTemp.add(notemp);
 				}
 			}
-			if (flat) {
-				notemp = new Notes();
-				notemp.setClasseEleve(ce);
-				notemp.setEvaluation(evaluation);
-				noteListTemp.add(notemp);
-			}
-		}
 
-		return noteListTemp;
-		}catch(RuntimeException r) {
+			return noteListTemp;
+		} catch (RuntimeException r) {
 			r.printStackTrace();
 			return new ArrayList<Notes>();
 		}
@@ -280,6 +289,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			Map<EcoleHasMatiere, List<Notes>> notesMatiereGroup;
 			Classe classe;
 			MoyenneEleveDto moyenneEleveDto;
+			EvaluationPeriode evaluationPeriode = null;
 //			Gson g = new Gson();
 			// pour chaque évaluation avoir la liste des notes des élèves
 //			System.out.println("ealist "+evalList);
@@ -312,12 +322,27 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			Periode periode = new Periode();
 			anneeScolaire.setId(Long.parseLong(anneeId));
 			periode.setId(Long.parseLong(periodeId));
+
+			System.out.println("Niveau ens ::: " + classe.getEcole().getNiveauEnseignement().getId());
+			if (classe.getEcole().getNiveauEnseignement().getId() == 1L) {
+				evaluationPeriode = evaluationPeriodeService.findByAnneeAndEcoleAndPeriodeAndNiveau(
+						Long.parseLong(anneeId), classe.getEcole().getId(), Long.parseLong(periodeId),
+						classe.getBranche().getId());
+				logger.info(">>>>>  Evaluation par periode non definie  <<<<<");
+			}
+
 			for (Map.Entry<Eleve, List<Notes>> entry : noteGroup.entrySet()) {
 				moyenneEleveDto = new MoyenneEleveDto();
 				moyenneEleveDto.setEleve(entry.getKey());
 				moyenneEleveDto.setClasse(classe);
 				moyenneEleveDto.setAnnee(anneeScolaire);
 				moyenneEleveDto.setPeriode(periode);
+				if (evaluationPeriode != null) {
+					moyenneEleveDto.setTypeEvaluation(evaluationPeriode.getTypeEvaluation().getId());
+					moyenneEleveDto.setTypeEvationLibelle(evaluationPeriode.getTypeEvaluation().getLibelle());
+					moyenneEleveDto.setNumeroEvaluation(evaluationPeriode.getNumero());
+				}
+				moyenneEleveDto.setNumeroIEPP(classe.getEcole().getNumeroIEPP());
 				notesMatiereGroup = new HashMap<EcoleHasMatiere, List<Notes>>();
 				EcoleHasMatiere matiereTemp;
 				List<String> filter = new ArrayList<>();
@@ -437,14 +462,14 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 		}
 		return mdto;
 	}
-	
+
 	public MoyenneEleveDto moyennesAndNotesByMatriculeHandle(String matricule, String anneeId, String periodeId) {
 
 		ClasseEleve ce = classeEleveService.getByMatriculeAndAnnee(matricule, Long.parseLong(anneeId));
 		MoyenneEleveDto mdto = new MoyenneEleveDto();
 		if (ce != null) {
-			List<MoyenneEleveDto> listMoyenne = moyennesAndNotesHandle(String.valueOf(ce.getClasse().getId()),
-					 anneeId, periodeId);
+			List<MoyenneEleveDto> listMoyenne = moyennesAndNotesHandle(String.valueOf(ce.getClasse().getId()), anneeId,
+					periodeId);
 
 			for (MoyenneEleveDto moy : listMoyenne) {
 				if (moy.getEleve().getMatricule().equals(matricule)) {
@@ -903,9 +928,13 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 		// matieres
 		Map<Long, List<Double>> classeurAnnuelMatiereMap = new HashMap<Long, List<Double>>();
 //---- WARNING mettre un try catch
-		Periode per = Periode.find("periodicite.id=?1 and final = 'O'", periode.getPeriodicite().getId())
-				.singleResult();
-		List<Periode> periodes = Periode.find("niveau <= ?1", per.getNiveau()).list();
+		Periode per = new Periode();
+		try {
+			per = Periode.find("periodicite.id=?1 and final = 'O'", periode.getPeriodicite().getId()).singleResult();
+		} catch (RuntimeException e) {
+			logger.warning(e.getMessage());
+		}
+		List<Periode> periodes = Periode.find("niveau <= ?1 order by niveau", per.getNiveau()).list();
 
 		for (MoyenneEleveDto me : moyEleve) {
 			// recup la moyenne de la matiere dans les details bulletins (par classe,
@@ -914,28 +943,39 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			// recuperer la liste des bulletins de l'élève
 			List<Bulletin> bulletinsElevesList = bulletinService.getBulletinsEleveByAnnee(me.getAnnee().getId(),
 					me.getEleve().getMatricule(), me.getClasse().getId());
+			Ecole ecole = ecoleService.findById(ecoleId);
 //			Integer rangAn = 0;
+			Double coef;
 			Double moyAn = 0.0;
-			Double coef = 0.0;
-			for (Bulletin bul : bulletinsElevesList) {
-
-				for (Periode p : periodes) {
-					if (bul.getPeriodeId().equals(p.getId())) {
-						if (bul.getIsClassed() != null && bul.getIsClassed().equals(Constants.OUI)) {
-							if (p.getIsfinal() != null && p.getIsfinal().equals("O"))
-								moyAn = moyAn + me.getMoyenne() * Double.parseDouble(p.getCoef());
-							else
-								moyAn = moyAn + bul.getMoyGeneral() * Double.parseDouble(p.getCoef());
-							coef = coef + Double.parseDouble(p.getCoef());
-						}
-						break;
-					}
-				}
-				// recuperer le coeficient dans bulletin (a creer dans bulletin coefperiode)
+			List<Double> moyAnInterne = new ArrayList<>();
+			List<Double> moyAnIEPP = new ArrayList<>();
+			List<Double> moyAnPassage = new ArrayList<>();
+			Periode finalPeriode = periodes.stream().filter(p -> (p.getIsfinal() != null && p.getIsfinal().equals("O")))
+					.findAny().orElse(new Periode());
+			if (ecole.getNiveauEnseignement().getId() == Constants.NIVEAU_ENSEIGNEMENT_PRIMAIRE) {
+				System.out.println("ENS PRIMAIRE");
+				handleMoyenneAnnuelleEnsPrimaire(periodes,
+						Double.parseDouble(per.getCoef().equals("") ? "1" : finalPeriode.getCoef()), me,
+						bulletinsElevesList, moyAn, moyAnInterne, moyAnIEPP, moyAnPassage);
+			} else if (ecole.getNiveauEnseignement().getId() == Constants.NIVEAU_ENSEIGNEMENT_SECONDAIRE) {
+				System.out.println("ENS SECONDAIRE");
+				moyAn = handleMoyenneAnnuelleEnsSecondaire(periodes,
+						Double.parseDouble(per.getCoef().equals("") ? "1" : finalPeriode.getCoef()), me,
+						bulletinsElevesList);
+//				System.out.println("Moy an ext ::: " + moyAn);
 			}
-			moyAn = CommonUtils.roundDouble(moyAn / (coef == 0.0 ? 1.0 : coef), 2);
-//			System.out.println(">Moyenne Annuelle = " + moyAn + " (eleve " + me.getEleve().getMatricule() + ")");
+			System.out.println(
+					String.format("Eleve %s > Moyenne Annuelle = %s - Interne = %s - IEPP = %s - passage = %s ",
+							me.getEleve().getMatricule(), moyAn,
+							moyAnInterne.stream().mapToDouble(Double::doubleValue).average().orElse(0.0),
+							moyAnIEPP.stream().mapToDouble(Double::doubleValue).average().orElse(0.0),
+							moyAnPassage.stream().mapToDouble(Double::doubleValue).average().orElse(0.0)));
+
 			me.setMoyenneAnnuelle(moyAn);
+			me.setMoyenneIEPP(moyAnIEPP.stream().mapToDouble(Double::doubleValue).average().orElse(0.0));
+			me.setMoyenneInterne(moyAnInterne.stream().mapToDouble(Double::doubleValue).average().orElse(0.0));
+			me.setMoyennePassage(moyAnPassage.stream().mapToDouble(Double::doubleValue).average().orElse(0.0));
+
 			classeurAnnuelList.add(moyAn);
 			// calcul moyenne annuelle pour chaque eleve et dans chaque matiere
 			for (ClasseMatiere cml : classeMatList) {
@@ -1027,6 +1067,79 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 
 	}
 
+	public Double handleMoyenneAnnuelleEnsSecondaire(List<Periode> periodes, Double coefFinalPeriode,
+			MoyenneEleveDto me, List<Bulletin> bulletinsElevesList) {
+		Double moyAn = 0.0;
+		Double coef = 0.0;
+
+		for (Bulletin bul : bulletinsElevesList) {
+			for (Periode p : periodes) {
+				if (bul.getPeriodeId().equals(p.getId())) {
+					if (bul.getIsClassed() != null && bul.getIsClassed().equals(Constants.OUI)) {
+						if (p.getIsfinal() == null) {
+							moyAn = moyAn + bul.getMoyGeneral() * Double.parseDouble(p.getCoef());
+							coef = coef + Double.parseDouble(p.getCoef());
+						}
+					}
+					break;
+				}
+			}
+		}
+		// Ajout des moyennes de la dernière période
+
+		moyAn = moyAn + me.getMoyenne() * coefFinalPeriode;
+		coef = coef + coefFinalPeriode;
+
+		moyAn = CommonUtils.roundDouble(moyAn / (coef == 0.0 ? 1.0 : coef), 2);
+//		System.out.println("Moy an ::: " + moyAn);
+//		System.out.println("Coef ::: " + coef);
+//		System.out.println("Moy O ::: " + me.getMoyenne());
+		return moyAn;
+	}
+
+	public void handleMoyenneAnnuelleEnsPrimaire(List<Periode> periodes, Double coefFinalPeriode, MoyenneEleveDto me,
+			List<Bulletin> bulletinsElevesList, Double moyAn, List<Double> moyAnInterne, List<Double> moyAnIEPP,
+			List<Double> moyAnPassage) {
+		Double coef = 0.0;
+		for (Bulletin bul : bulletinsElevesList) {
+			for (Periode p : periodes) {
+				if (bul.getPeriodeId().equals(p.getId())) {
+					if (bul.getIsClassed() != null && bul.getIsClassed().equals(Constants.OUI)) {
+						if (p.getIsfinal() == null) {
+							moyAn = moyAn + bul.getMoyGeneral() * Double.parseDouble(p.getCoef());
+							coef = coef + Double.parseDouble(p.getCoef());
+							if (bul.getTypeEvaluation() == 7) {
+								// composition de passage
+								moyAnInterne.add(bul.getMoyGeneral());
+							} else if (bul.getTypeEvaluation() == 15) {
+								// composition interne
+								moyAnIEPP.add(bul.getMoyGeneral());
+							} else if (bul.getTypeEvaluation() == 16) {
+								// composition IEPP
+								moyAnPassage.add(bul.getMoyGeneral());
+							}
+						}
+					}
+					break;
+				}
+			}
+		}
+		if (me.getTypeEvaluation() == 7) {
+			// composition de passage
+			moyAnInterne.add(me.getMoyenne());
+		} else if (me.getTypeEvaluation() == 15) {
+			// composition interne
+			moyAnIEPP.add(me.getMoyenne());
+		} else if (me.getTypeEvaluation() == 16) {
+			// composition IEPP
+			moyAnPassage.add(me.getMoyenne());
+		}
+		moyAn = moyAn + me.getMoyenne() * coefFinalPeriode;
+		coef = coef + coefFinalPeriode;
+
+		moyAn = CommonUtils.roundDouble(moyAn / (coef == 0.0 ? 1.0 : coef), 2);
+	}
+
 	public Integer getRangByValue(List<Double> list, Double value) {
 		int i = 1;
 		if (list != null) {
@@ -1092,14 +1205,13 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 		}
 		return notesByEleve;
 	}
-	
+
 	public List<Notes> getNotesByInscriptionHasClasse(Long inscriptionHasClasseId) {
 
 		List<Notes> notesEleve = new ArrayList<Notes>();
 		try {
-			logger.info("Inscr_has_classe_id = "+inscriptionHasClasseId);
-			notesEleve = Notes.find(
-					"classeEleve.id = ?1 and pec = 1", inscriptionHasClasseId).list();
+			logger.info("Inscr_has_classe_id = " + inscriptionHasClasseId);
+			notesEleve = Notes.find("classeEleve.id = ?1 and pec = 1", inscriptionHasClasseId).list();
 		} catch (RuntimeException e) {
 			logger.warning("Erreur ::: " + e.getMessage());
 		}

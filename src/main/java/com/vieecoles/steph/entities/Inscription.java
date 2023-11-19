@@ -61,7 +61,7 @@ import lombok.Setter;
             		+ " where c.nbreOcc > 1"
     ),@NamedNativeQuery(
             name = "Inscription.getAvgEffectifbyClasse",
-            query = "select AVG(c.nbreEleve) FROM "
+            query = "select case when AVG(c.nbreEleve) is null then 0 else AVG(c.nbreEleve) end as avgbyclasse FROM "
             		+ "( SELECT count(*) as nbreEleve, classe_classeid FROM inscriptions_has_classe icl "
             		+ "left join inscriptions ins on icl.inscriptions_inscriptionsid = ins.inscriptionsid "
             		+ "where ins.ecole_ecoleid = :ecoleId and ins.annee_scolaire_annee_scolaireid = :anneeId and inscriptions_status='VALIDEE' "

@@ -374,6 +374,7 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 		if (ecoles != null && ecoles.size() > 0)
 			for (Ecole ecole : ecoles) {
 				System.out.println(String.format("==> %s", ecole.getLibelle()));
+				//Vérifier que l'année n'existe pas (à prendre comme précaution  au cas où on reprend le process manuellement)
 				AnneeScolaire anneeTemp = new AnneeScolaire();
 				anneeTemp.setLibelle(annee.getCustomLibelle());
 				anneeTemp.setAnneeDebut(annee.getAnneeDebut());

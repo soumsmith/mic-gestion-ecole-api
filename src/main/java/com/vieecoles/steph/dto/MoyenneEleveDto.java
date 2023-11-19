@@ -23,15 +23,25 @@ public class MoyenneEleveDto implements Comparable<MoyenneEleveDto> {
 	private AnneeScolaire annee;
 	
 	private Double moyenneAnnuelle;
+	private Double moyenneInterne;
+	private Double moyenneIEPP;
+	private Double moyennePassage;
+
 	private String rangAnnuel;
 	
 	private Integer absJust;
 	private Integer absNonJust;
+	//Type Activite
+	private Long typeEvaluation;
+	private String typeEvationLibelle;
+	
+	private String numeroEvaluation; 
+	private String numeroIEPP;
 
 	@Override
 	public int compareTo(MoyenneEleveDto o) {
-		System.out.println(o.moyenne);
-		System.out.println(this.moyenne);
+//		System.out.println(o.moyenne);
+//		System.out.println(this.moyenne);
 		return o.moyenne.compareTo(this.moyenne);
 	}
 

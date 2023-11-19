@@ -33,7 +33,26 @@ public class AnneePeriodeService implements PanacheRepositoryBase<AnneePeriode, 
 	}
 
 	public List<AnneePeriode> listByAnneeAndEcole(Long anneeId, Long ecoleId) {
-		return AnneePeriode.find("anneeScolaire.id=?1 and ecole.id=?2", anneeId, ecoleId).list();
+		List<AnneePeriode> anneesP = new ArrayList<>();
+		try {
+			anneesP = AnneePeriode.find("anneeScolaire.id=?1 and ecole.id=?2", anneeId, ecoleId).list();
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+		}
+		return anneesP;
+	}
+
+	public AnneePeriode getByAnneeAndEcoleAndPeriode(Long anneeId, Long ecoleId, Long periodeId) {
+		logger.info(String.format("annee : %s - ecole : %s - periode %s", anneeId,ecoleId, periodeId));
+		AnneePeriode anneePeriode = null;
+		try {
+			anneePeriode = AnneePeriode
+					.find("anneeScolaire.id=?1 and ecole.id=?2 and periode.id=?3", anneeId, ecoleId, periodeId)
+					.singleResult();
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+		}
+		return anneePeriode;
 	}
 
 // CENTRAL

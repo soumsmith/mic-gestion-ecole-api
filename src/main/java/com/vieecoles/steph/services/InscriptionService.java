@@ -119,6 +119,7 @@ public class InscriptionService implements PanacheRepositoryBase<Inscription, In
         query.setParameter("anneeId", anneeId);
         try{
         	BigDecimal count = (BigDecimal) query.getSingleResult();
+        	System.out.println("************  "+count);
             return count.round(new MathContext(2, RoundingMode.HALF_UP));
         }catch(NoResultException ex){
             ex.getMessage();

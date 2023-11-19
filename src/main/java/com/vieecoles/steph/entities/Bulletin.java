@@ -1,8 +1,6 @@
 package com.vieecoles.steph.entities;
 
 import java.util.Date;
-import java.util.UUID;
-
 import javax.persistence.*;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
@@ -120,5 +118,20 @@ public class Bulletin extends PanacheEntityBase{
 
 	@Column(name = "effectif_non_classe")
 	private String effectifNonClasse;
+	
+	@Column(name = "type_evaluation")
+	private Long typeEvaluation;
+	@Column(name = "type_evaluation_libelle")
+	private String typeEvaluationLibelle;
+	@Column(name = "numero_evaluation")
+	private Integer numeroEvaluation;
+	@Column(name = "numero_IEPP")
+	private Integer numeroIEPP;
+	@Column(name = "moy_eval_IEPP")
+	private Double moyEvaluationIEPP;
+	@Column(name = "moy_eval_interne")
+	private Double moyEvaluationInterne;
+	@Column(name = "moy_eval_passage")
+	private Double moyEvaluationPassage;
 
 }
