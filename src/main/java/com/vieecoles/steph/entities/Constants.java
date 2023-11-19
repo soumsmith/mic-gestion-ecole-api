@@ -56,6 +56,10 @@ public class Constants {
 	public static final int PEC_1 = 1;
 
 	public static final int PEC_0 = 0;
+	
+	public static final Long NIVEAU_ENSEIGNEMENT_PRIMAIRE = 1L;
+	
+	public static final Long NIVEAU_ENSEIGNEMENT_SECONDAIRE = 2L;
 
 	// Modules
 	public static final String MODULE_EVALUATION = "EVALUATION";

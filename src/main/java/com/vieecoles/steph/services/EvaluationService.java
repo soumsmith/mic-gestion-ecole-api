@@ -2,6 +2,7 @@ package com.vieecoles.steph.services;
 
 import com.google.gson.Gson;
 import com.vieecoles.steph.dto.LockedDto;
+import com.vieecoles.steph.entities.AnneePeriode;
 import com.vieecoles.steph.entities.AnneeScolaire;
 import com.vieecoles.steph.entities.Constants;
 import com.vieecoles.steph.entities.Evaluation;
@@ -33,6 +34,9 @@ public class EvaluationService implements PanacheRepositoryBase<Evaluation, Long
 
 	@Inject
 	NoteService noteService;
+
+	@Inject
+	AnneePeriodeService anneePeriodeService;
 
 	Logger logger = Logger.getLogger(EvaluationService.class.getName());
 
@@ -135,9 +139,9 @@ public class EvaluationService implements PanacheRepositoryBase<Evaluation, Long
 			audit.setTypeAction(Constants.ACTION_DELETE);
 			audit.setUser(user);
 			audit.setDateCreation(new Date());
-			
+
 			audit.persist();
-			
+
 			entity.delete();
 		} catch (RuntimeException e) {
 			e.printStackTrace();
@@ -257,19 +261,27 @@ public class EvaluationService implements PanacheRepositoryBase<Evaluation, Long
 			AnneeScolaire annee = anneeService.getById(ev.getAnnee().getId());
 			AnneeScolaire anneeEcole = anneeService.getByEcoleAndAnneeDebut(ev.getClasse().getEcole().getId(),
 					annee.getAnneeDebut());
+			AnneePeriode anneePeriode = anneePeriodeService.getByAnneeAndEcoleAndPeriode(anneeEcole.getId(),
+					ev.getClasse().getEcole().getId(), ev.getPeriode().getId());
 			Date dateEvaluation = ev.getDate();
 			Integer nombreJoursDelai = anneeEcole.getDelaiNotes() != null ? anneeEcole.getDelaiNotes() : 0;
-			System.out.println("nombreJoursDelai : " + nombreJoursDelai);
+//			System.out.println("nombreJoursDelai : " + nombreJoursDelai);
 			Date dateLimiteSaisieAutorise = DateUtils.addDays(dateEvaluation, nombreJoursDelai);
 			Date today = new Date();
 			today = DateUtils.getDateAtStartDay(today);
-			flat = today.compareTo(dateLimiteSaisieAutorise);
 			System.out.println(
 					String.format("Date evaluation: %s - jours délai %s - Date limite: %s (is blocked? %s - today %s)",
 							dateEvaluation, nombreJoursDelai, dateLimiteSaisieAutorise, flat, today));
-			// Si la date délai est postérieure à la date de fin de la période retourner la date de fin de période
+			// Si la date délai est postérieure à la date de fin de la période retourner la
+			// date de fin de période
+//			System.out.println(DateUtils.asDate(anneePeriode.getDateLimite()));
+//			System.out.println(dateLimiteSaisieAutorise);
+			if (DateUtils.asDate(anneePeriode.getDateLimite()).compareTo(dateLimiteSaisieAutorise) >= 0)
+				dto.setDateLimite(dateLimiteSaisieAutorise);
+			else
+				dto.setDateLimite(DateUtils.asDate(anneePeriode.getDateLimite()));
 			
-			dto.setDateLimite(dateLimiteSaisieAutorise);
+			flat = today.compareTo(dto.getDateLimite());
 			if (flat <= 0)
 				dto.setIsLocked(false);
 		}

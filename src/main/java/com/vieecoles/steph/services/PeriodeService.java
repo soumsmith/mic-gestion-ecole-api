@@ -19,7 +19,7 @@ public class PeriodeService {
 	
 	public List<Periode> getListByPeriodicite(Integer periodiciteId) {
 		try {
-			return Periode.list("periodicite.id", periodiciteId);
+			return Periode.list("periodicite.id=?1 order by niveau", periodiciteId);
 		}catch(Exception e) {
 			e.printStackTrace();
 			return new ArrayList<Periode>() ;

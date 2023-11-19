@@ -24,7 +24,7 @@ public class Periode extends PanacheEntityBase {
 	private Periodicite periodicite;
 	@Column(name = "periodelibelle")
 	private String libelle;
-	private String niveau;
+	private Integer niveau;
 	private String coef;
 	@Column(name = "final")
 	private String isfinal;
