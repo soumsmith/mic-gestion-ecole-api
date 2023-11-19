@@ -269,10 +269,6 @@ System.out.println(" entree >>> "+1);
             map.put("is_class_1er_trim",is_class_1er_trim);
             map.put("is_class_2e_trim",is_class_2e_trim);
             map.put("is_class_3e_trim",is_class_3e_trim);
-
-
-
-
             JasperPrint report = JasperFillManager.fillReport(compileReport, map, beanCollectionDataSource);
 
             //to pdf ;
