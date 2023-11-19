@@ -22,6 +22,7 @@ public class Ecole extends PanacheEntityBase{
 	private String Code;
 	@Column(name= "ecoleclibelle")
 	private String libelle;
+	private String numeroIEPP;
 
 	@Column(name = "ecole_adresse")
 	private String adresse;

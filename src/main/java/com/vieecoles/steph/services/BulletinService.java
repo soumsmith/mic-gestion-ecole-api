@@ -171,6 +171,15 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 		b.setRang(bulletin.getRang());
 		b.setHeuresAbsJustifiees(bulletin.getHeuresAbsJustifiees());
 		b.setHeuresAbsNonJustifiees(bulletin.getHeuresAbsNonJustifiees());
+		
+		b.setTypeEvaluation(bulletin.getTypeEvaluation());
+		b.setTypeEvaluationLibelle(bulletin.getTypeEvaluationLibelle());
+		b.setNumeroEvaluation(bulletin.getNumeroEvaluation());
+		b.setNumeroIEPP(bulletin.getNumeroIEPP());
+		b.setMoyEvaluationInterne(bulletin.getMoyEvaluationInterne());
+		b.setMoyEvaluationIEPP(bulletin.getMoyEvaluationIEPP());
+		b.setMoyEvaluationPassage(bulletin.getMoyEvaluationPassage());
+		
 	}
 
 	@Transactional
@@ -584,6 +593,14 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 //		bul.setNomPrenomEducateur(null);
 //		bul.setCodeEducateur(null);
 		bul.setNomSignataire(me.getClasse().getEcole().getNomSignataire());
+		
+		bul.setTypeEvaluation(me.getTypeEvaluation());
+		bul.setTypeEvaluationLibelle(me.getTypeEvationLibelle());
+		bul.setNumeroEvaluation(me.getNumeroEvaluation()!=null ? Integer.parseInt(me.getNumeroEvaluation()) : 0);
+		bul.setNumeroIEPP(me.getNumeroIEPP() != null ? Integer.parseInt(me.getNumeroIEPP()) : 0);
+		bul.setMoyEvaluationInterne(me.getMoyenneInterne());
+		bul.setMoyEvaluationIEPP(me.getMoyenneIEPP());
+		bul.setMoyEvaluationPassage(me.getMoyennePassage());
 
 		return bul;
 	}

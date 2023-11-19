@@ -120,7 +120,7 @@ public class Bulletin extends PanacheEntityBase{
 	private String effectifNonClasse;
 	
 	@Column(name = "type_evaluation")
-	private Integer typeEvaluation;
+	private Long typeEvaluation;
 	@Column(name = "type_evaluation_libelle")
 	private String typeEvaluationLibelle;
 	@Column(name = "numero_evaluation")

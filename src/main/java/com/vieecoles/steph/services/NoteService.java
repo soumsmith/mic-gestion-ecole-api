@@ -31,8 +31,10 @@ import com.vieecoles.steph.entities.Ecole;
 import com.vieecoles.steph.entities.EcoleHasMatiere;
 import com.vieecoles.steph.entities.Eleve;
 import com.vieecoles.steph.entities.Evaluation;
+import com.vieecoles.steph.entities.EvaluationPeriode;
 import com.vieecoles.steph.entities.Notes;
 import com.vieecoles.steph.entities.Periode;
+import com.vieecoles.steph.entities.TypeActivite;
 import com.vieecoles.steph.util.CommonUtils;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
@@ -66,6 +68,9 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 
 	@Inject
 	EcoleService ecoleService;
+
+	@Inject
+	EvaluationPeriodeService evaluationPeriodeService;
 
 	Logger logger = Logger.getLogger(NoteService.class.getName());
 
@@ -284,7 +289,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			Map<EcoleHasMatiere, List<Notes>> notesMatiereGroup;
 			Classe classe;
 			MoyenneEleveDto moyenneEleveDto;
-			Long typeEvaluation = 0L;
+			EvaluationPeriode evaluationPeriode = null;
 //			Gson g = new Gson();
 			// pour chaque évaluation avoir la liste des notes des élèves
 //			System.out.println("ealist "+evalList);
@@ -320,9 +325,10 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 
 			System.out.println("Niveau ens ::: " + classe.getEcole().getNiveauEnseignement().getId());
 			if (classe.getEcole().getNiveauEnseignement().getId() == 1L) {
-				if (evalList != null && evalList.size() > 0)
-					typeEvaluation = evalList.get(0).getType().getId();
-				System.out.println("--->>> type évaluation ::: " + typeEvaluation);
+				evaluationPeriode = evaluationPeriodeService.findByAnneeAndEcoleAndPeriodeAndNiveau(
+						Long.parseLong(anneeId), classe.getEcole().getId(), Long.parseLong(periodeId),
+						classe.getBranche().getId());
+				logger.info(">>>>>  Evaluation par periode non definie  <<<<<");
 			}
 
 			for (Map.Entry<Eleve, List<Notes>> entry : noteGroup.entrySet()) {
@@ -331,7 +337,12 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				moyenneEleveDto.setClasse(classe);
 				moyenneEleveDto.setAnnee(anneeScolaire);
 				moyenneEleveDto.setPeriode(periode);
-				moyenneEleveDto.setTypeEvaluation(typeEvaluation);
+				if (evaluationPeriode != null) {
+					moyenneEleveDto.setTypeEvaluation(evaluationPeriode.getTypeEvaluation().getId());
+					moyenneEleveDto.setTypeEvationLibelle(evaluationPeriode.getTypeEvaluation().getLibelle());
+					moyenneEleveDto.setNumeroEvaluation(evaluationPeriode.getNumero());
+				}
+				moyenneEleveDto.setNumeroIEPP(classe.getEcole().getNumeroIEPP());
 				notesMatiereGroup = new HashMap<EcoleHasMatiere, List<Notes>>();
 				EcoleHasMatiere matiereTemp;
 				List<String> filter = new ArrayList<>();
@@ -959,7 +970,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 							moyAnInterne.stream().mapToDouble(Double::doubleValue).average().orElse(0.0),
 							moyAnIEPP.stream().mapToDouble(Double::doubleValue).average().orElse(0.0),
 							moyAnPassage.stream().mapToDouble(Double::doubleValue).average().orElse(0.0)));
-			
+
 			me.setMoyenneAnnuelle(moyAn);
 			me.setMoyenneIEPP(moyAnIEPP.stream().mapToDouble(Double::doubleValue).average().orElse(0.0));
 			me.setMoyenneInterne(moyAnInterne.stream().mapToDouble(Double::doubleValue).average().orElse(0.0));
