@@ -39,7 +39,7 @@ import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 import io.quarkus.panache.common.Parameters;
 
 @RequestScoped
-public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
+public class BulletinService implements PanacheRepositoryBase<Bulletin, String> {
 
 	@Inject
 	NoteService noteService;
@@ -66,18 +66,27 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 	Gson g = new Gson();
 
 	public void save(Bulletin bulletin) {
-		UUID uuid = UUID.randomUUID();
-		bulletin.setId(uuid.toString());
-		bulletin.setDateCreation(new Date());
-		bulletin.persist();
+		try {
+			UUID uuid = UUID.randomUUID();
+			bulletin.setId(uuid.toString());
+			bulletin.setDateCreation(new Date());
+			bulletin.persist();
+		} catch (RuntimeException e) {
+			logger.warning("Bulletin non persisté !!! ");
+			e.printStackTrace();
+		}
+		logger.info("Bulletin persisté !!! ");
+
+//		Gson g = new Gson();
+//		System.out.println(g.toJson(findById(bulletin.getId())));
 	}
 
 	public void updateBulletinStatut(Long ecoleId, Long anneeId, String statut) {
 		List<Bulletin> bulletinsToUpdate = new ArrayList<Bulletin>();
 		try {
 			bulletinsToUpdate = Bulletin.find("ecoleId =?1 and anneeId = ?2", ecoleId, anneeId).list();
-			for(Bulletin bul : bulletinsToUpdate) {
-				Bulletin b =  Bulletin.findById(bul.getId());
+			for (Bulletin bul : bulletinsToUpdate) {
+				Bulletin b = Bulletin.findById(bul.getId());
 				bul.setStatut(statut);
 			}
 			logger.info(String.format("%s bulletin(s) archivés", bulletinsToUpdate.size()));
@@ -86,7 +95,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 				logger.info("Aucun blletin à mettre à jour trouvé");
 			else {
 				r.printStackTrace();
-				throw new RuntimeException("Erreur ::: "+r.getMessage());
+				throw new RuntimeException("Erreur ::: " + r.getMessage());
 			}
 		}
 	}
@@ -171,7 +180,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 		b.setRang(bulletin.getRang());
 		b.setHeuresAbsJustifiees(bulletin.getHeuresAbsJustifiees());
 		b.setHeuresAbsNonJustifiees(bulletin.getHeuresAbsNonJustifiees());
-		
+
 		b.setTypeEvaluation(bulletin.getTypeEvaluation());
 		b.setTypeEvaluationLibelle(bulletin.getTypeEvaluationLibelle());
 		b.setNumeroEvaluation(bulletin.getNumeroEvaluation());
@@ -179,7 +188,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 		b.setMoyEvaluationInterne(bulletin.getMoyEvaluationInterne());
 		b.setMoyEvaluationIEPP(bulletin.getMoyEvaluationIEPP());
 		b.setMoyEvaluationPassage(bulletin.getMoyEvaluationPassage());
-		
+
 	}
 
 	@Transactional
@@ -204,17 +213,17 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 				}
 				try {
 					List<InfosPersoBulletins> infoBul = InfosPersoBulletins.find("idBulletin", bulletin.getId()).list();
-					for(InfosPersoBulletins info: infoBul) {
+					for (InfosPersoBulletins info : infoBul) {
 						InfosPersoBulletins.deleteById(info.getId());
 					}
 					logger.info(String.format("%s informations personnelles de bulletin supprimées", infoBul.size()));
-					}catch (RuntimeException e) {
-						if(e.getClass().equals(NoResultException.class))
-							logger.info(bulletin.getId()+" inexistant dans InfosPersoBulletins");
-						else {
-							e.printStackTrace();
-						}
+				} catch (RuntimeException e) {
+					if (e.getClass().equals(NoResultException.class))
+						logger.info(bulletin.getId() + " inexistant dans InfosPersoBulletins");
+					else {
+						e.printStackTrace();
 					}
+				}
 				Bulletin.delete("id", bulletin.getId());
 				logger.info((details != null ? details.size() : 0) + " details de bulletins supprimés");
 			}
@@ -288,16 +297,16 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 //			System.out.println("rang ->"+me.getRang());
 //			bulletin.setRang(Integer.parseInt(me.getRang()));
 			// Ajout du professeur principal
-			PersonnelMatiereClasse pp = personnelMatiereClasseService
-					.findProfPrinc( Long.parseLong(annee),Long.parseLong(classe));
-			if (pp != null) {
+			PersonnelMatiereClasse pp = personnelMatiereClasseService.findProfPrinc(Long.parseLong(annee),
+					Long.parseLong(classe));
+			if (!pp.equals(new PersonnelMatiereClasse())) {
 				bulletin.setCodeProfPrincipal(pp.getPersonnel().getCode());
 				bulletin.setNomPrenomProfPrincipal(pp.getPersonnel().getNom() + " " + pp.getPersonnel().getPrenom());
 			}
 			// Ajout de l'éducateur
-			PersonnelMatiereClasse educ = personnelMatiereClasseService
-					.findEducateurClasse( Long.parseLong(annee),Long.parseLong(classe));
-			if (educ != null) {
+			PersonnelMatiereClasse educ = personnelMatiereClasseService.findEducateurClasse(Long.parseLong(annee),
+					Long.parseLong(classe));
+			if (!educ.equals(new PersonnelMatiereClasse())) {
 				bulletin.setCodeEducateur(educ.getPersonnel().getCode());
 				bulletin.setNomPrenomEducateur(educ.getPersonnel().getNom() + " " + educ.getPersonnel().getPrenom());
 			}
@@ -459,10 +468,17 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 
 					flag.persist();
 				}
-				notesBulletin = NoteBulletin
-						.find("detailBulletin.id = : detail", Parameters.with("detail", flag.getId())).list();
-
-				if (notesBulletin != null) {
+				try {
+					notesBulletin = NoteBulletin
+							.find("detailBulletin.id = : detail", Parameters.with("detail", flag.getId())).list();
+//					System.out.println("NOTE BULLETIN "+notesBulletin.size());
+				} catch (RuntimeException e) {
+					notesBulletin = new ArrayList<NoteBulletin>();
+//					System.out.println("NOTE BULLETIN NULL" );
+					e.printStackTrace();
+					// TODO: handle exception
+				}
+				if (notesBulletin.size() > 0) {
 					logger.info("--> Suppresion notes trouvees");
 					try {
 						for (NoteBulletin noteBul : notesBulletin) {
@@ -512,29 +528,29 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 		// to do: vérifier si dernière période (trimestre/semestre)
 
 		// Mise à jour des bulletins
-		bulletin = new Bulletin();
-		Periode perTmp = Periode.findById(Long.parseLong(periode));
+//		bulletin = new Bulletin();
+//		Periode perTmp = Periode.findById(Long.parseLong(periode));
 		// Obtenir le nombre de période à prendre en compte
-		Periode per = Periode.find("final = 'O' and periodicite.id =?1", perTmp.getPeriodicite().getId()).singleResult();
-
-		List<Periode> periodes = Periode.find("niveau <= ?1", per.getNiveau()).list();
+//		Periode per = Periode.find("final = 'O' and periodicite.id =?1", perTmp.getPeriodicite().getId()).singleResult();
+//
+//		List<Periode> periodes = Periode.find("niveau <= ?1", per.getNiveau()).list();
 
 //		System.out.println(periodes);
 
-		for (String id : bulletinIdList) {
-			bulletin = Bulletin.findById(id);
-			bulletin.setMoyMax(CommonUtils.roundDouble(maxMoy, 2));
-			bulletin.setMoyMin(CommonUtils.roundDouble(minMoy, 2));
-			bulletin.setMoyAvg(CommonUtils.roundDouble(avgMoy, 2));
-			bulletin.setEffectif(effectif);
-			bulletin.setEffectifNonClasse(String.valueOf(countNonClasses));
-//			logger.info(String.format("m a j du bulletin %s [effectif : % . smoy max : %s . moy min : %s . moy avg : %s", id,
-//					effectif, bulletin.getMoyMax().toString(), bulletin.getMoyMin(), bulletin.getMoyAvg()));
+//		for (String id : bulletinIdList) {
+//			bulletin = Bulletin.findById(id);
+//			bulletin.setMoyMax(CommonUtils.roundDouble(maxMoy, 2));
+//			bulletin.setMoyMin(CommonUtils.roundDouble(minMoy, 2));
+//			bulletin.setMoyAvg(CommonUtils.roundDouble(avgMoy, 2));
+//			bulletin.setEffectif(effectif);
+//			bulletin.setEffectifNonClasse(String.valueOf(countNonClasses));
+////			logger.info(String.format("m a j du bulletin %s [effectif : % . smoy max : %s . moy min : %s . moy avg : %s", id,
+////					effectif, bulletin.getMoyMax().toString(), bulletin.getMoyMin(), bulletin.getMoyAvg()));
 
-			// to do: Calcul de la moyenne annuelle si dernier trimestre ou semestre
-			// (periode)
+		// to do: Calcul de la moyenne annuelle si dernier trimestre ou semestre
+		// (periode)
 
-		}
+//		}
 		return moyenneParEleve != null ? moyenneParEleve.size() : 0;
 	}
 
@@ -593,10 +609,10 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, Long> {
 //		bul.setNomPrenomEducateur(null);
 //		bul.setCodeEducateur(null);
 		bul.setNomSignataire(me.getClasse().getEcole().getNomSignataire());
-		
+
 		bul.setTypeEvaluation(me.getTypeEvaluation());
 		bul.setTypeEvaluationLibelle(me.getTypeEvationLibelle());
-		bul.setNumeroEvaluation(me.getNumeroEvaluation()!=null ? Integer.parseInt(me.getNumeroEvaluation()) : 0);
+		bul.setNumeroEvaluation(me.getNumeroEvaluation() != null ? Integer.parseInt(me.getNumeroEvaluation()) : 0);
 		bul.setNumeroIEPP(me.getNumeroIEPP() != null ? Integer.parseInt(me.getNumeroIEPP()) : 0);
 		bul.setMoyEvaluationInterne(me.getMoyenneInterne());
 		bul.setMoyEvaluationIEPP(me.getMoyenneIEPP());
