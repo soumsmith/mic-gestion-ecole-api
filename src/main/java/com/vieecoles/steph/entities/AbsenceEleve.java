@@ -24,7 +24,7 @@ public class AbsenceEleve extends PanacheEntityBase{
 	@Column(name="abscence_elevecode")
 	private String code;
 	@Column(name = "abscence_elevestatus")
-	private String statut;
+	private String statut; 
 	@ManyToOne
 	@JoinColumn(name = "eleve_eleveid")
 	private Eleve eleve;

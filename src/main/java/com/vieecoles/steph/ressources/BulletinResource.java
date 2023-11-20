@@ -1,5 +1,8 @@
 package com.vieecoles.steph.ressources;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -9,6 +12,8 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.vieecoles.steph.entities.Bulletin;
+import com.vieecoles.steph.entities.Classe;
 import com.vieecoles.steph.services.BulletinService;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
@@ -27,8 +32,18 @@ public class BulletinResource {
 	@Tag(name = "Bulletins")
 	public Response handleSave(@QueryParam("classe") String classe ,@QueryParam("annee") String  annee, @QueryParam("periode") String periode) {
 		int nbreEleve = 0;
+		List<Bulletin> list = new ArrayList<>();
 		try {
 			nbreEleve = bulletinService.handleSave(classe, annee, periode);
+			Classe cl = Classe.findById(Long.parseLong(classe));
+			System.out.println(cl.getEcole().getId());
+			try {
+			list = Bulletin.find("ecoleId =?1", cl.getEcole().getId()).list();
+			}catch(RuntimeException r) {
+				list = null;
+				r.printStackTrace();
+			}
+			System.out.println(list);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.serverError().entity(e.getMessage()).build();
