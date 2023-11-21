@@ -2,6 +2,7 @@ package com.vieecoles.steph.entities;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -30,10 +31,14 @@ public class EvaluationPeriode extends PanacheEntityBase {
 	private Ecole ecole;
 	private String numero;
 	@ManyToOne
+	@JoinColumn(name = "periode")
+	private Periode periode;
+	@ManyToOne
 	@JoinColumn(name = "type_evaluation")
 	private TypeActivite typeEvaluation;
-
+	@Column(name = "date_creation")
 	private Date dateCreation;
+	@Column(name = "date_update")
 	private Date dateUpdate;
 	private String user;
 
