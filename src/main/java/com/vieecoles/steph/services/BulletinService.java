@@ -247,7 +247,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 
 	}
 
-	@Transactional(dontRollbackOn = Exception.class)
+	@Transactional
 	public int handleSave(String classe, String annee, String periode) {
 		try {
 			logger.info(String.format("classe %s  annee %s  periode  %s", classe, annee, periode));

@@ -328,7 +328,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				evaluationPeriode = evaluationPeriodeService.findByAnneeAndEcoleAndPeriodeAndNiveau(
 						Long.parseLong(anneeId), classe.getEcole().getId(), Long.parseLong(periodeId),
 						classe.getBranche().getId());
-				logger.info(">>>>>  Evaluation par periode non definie  <<<<<");
+				
 			}
 
 			for (Map.Entry<Eleve, List<Notes>> entry : noteGroup.entrySet()) {
@@ -1110,13 +1110,13 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 							coef = coef + Double.parseDouble(p.getCoef());
 							if (bul.getTypeEvaluation() == 7) {
 								// composition de passage
-								moyAnInterne.add(bul.getMoyGeneral());
+								moyAnPassage.add(bul.getMoyGeneral());
 							} else if (bul.getTypeEvaluation() == 15) {
 								// composition interne
-								moyAnIEPP.add(bul.getMoyGeneral());
+								moyAnInterne.add(bul.getMoyGeneral());
 							} else if (bul.getTypeEvaluation() == 16) {
 								// composition IEPP
-								moyAnPassage.add(bul.getMoyGeneral());
+								moyAnIEPP.add(bul.getMoyGeneral());
 							}
 						}
 					}
@@ -1126,13 +1126,13 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 		}
 		if (me.getTypeEvaluation() == 7) {
 			// composition de passage
-			moyAnInterne.add(me.getMoyenne());
+			moyAnPassage.add(me.getMoyenne());
 		} else if (me.getTypeEvaluation() == 15) {
 			// composition interne
-			moyAnIEPP.add(me.getMoyenne());
+			moyAnInterne.add(me.getMoyenne());
 		} else if (me.getTypeEvaluation() == 16) {
 			// composition IEPP
-			moyAnPassage.add(me.getMoyenne());
+			moyAnIEPP.add(me.getMoyenne());
 		}
 		moyAn = moyAn + me.getMoyenne() * coefFinalPeriode;
 		coef = coef + coefFinalPeriode;
