@@ -5,6 +5,7 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -89,6 +90,8 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 		logger.info("--> Création de note pour " + notes.getClasseEleve().getInscription().getEleve().getNom());
 		logger.info(gson.toJson(notes));
 		// pec dans le calcul de moyenne par defaut
+		notes.setDateCreation(new Date());
+		notes.setDateUpdate(new Date());
 		notes.setPec(notes.getPec() != null ? notes.getPec() : 0);
 		notes.setNote(notes.getNote() != null ? notes.getNote() : 0);
 		notes.persist();
@@ -102,8 +105,9 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 		}
 		entity.setClasseEleve(notes.getClasseEleve());
 		entity.setEvaluation(notes.getEvaluation());
-		System.out.println("Note --> " + notes.getNote());
-		System.out.println("Note --> " + notes.getPec());
+		entity.setDateUpdate(new Date());		
+//		System.out.println("Note --> " + notes.getNote());
+//		System.out.println("Note --> " + notes.getPec());
 		entity.setNote(notes.getNote());
 		entity.setPec(notes.getPec());
 		return entity;

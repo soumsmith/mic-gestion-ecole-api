@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import javax.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -23,7 +24,8 @@ public class Evaluation extends PanacheEntityBase {
 	// @JsonbDateFormat(value = "dd/MM/yyyy")
 	@Column(name = "evaluationdate")
 	private Date date;
-//	@Transient
+	@Transient
+	private List<EvaluationLoader> evaLoaders;
 	private String heure;
 	private String duree;
 	private String noteSur;

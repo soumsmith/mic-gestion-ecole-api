@@ -33,10 +33,13 @@ import javax.transaction.Transactional;
 import javax.ws.rs.NotFoundException;
 
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 import java.util.logging.Logger;
 
@@ -123,10 +126,12 @@ public class EvaluationLoaderService implements PanacheRepositoryBase<Evaluation
 	}
 
 	@Transactional
-	public void appliquerChargement(List<EvaluationLoader> evals, Long matiere, Long periode, Long annee) {
+	public void appliquerChargement(List<EvaluationLoader> evals, Long matiere, Long periode, Long annee, String noteSur, String date, Long type, String user) {
 
+		logger.info(String.format("Matiere %s , periode %s, annee %s , noteSur %s, date %s, type %s, user %s", matiere,periode,annee,noteSur,date,type, user));
+		
 		TypeActivite typeActivite = new TypeActivite();
-		typeActivite.setId(1);
+		typeActivite.setId(type);
 //		evaluation.setAnnee(null);
 		EcoleHasMatiere mat = new EcoleHasMatiere();
 		mat.setId(matiere);
@@ -160,8 +165,19 @@ public class EvaluationLoaderService implements PanacheRepositoryBase<Evaluation
 				evaluation.setAnnee(ann);
 				evaluation.setType(typeActivite);
 				evaluation.setClasse(classe);
-				evaluation.setDate(DateUtils.asDate(LocalDate.now()));
-				evaluation.setNoteSur(Constants.DEFAULT_NOTE_SUR);
+				evaluation.setNoteSur(noteSur);
+				evaluation.setUser(user);
+				String dateStringFromUrl = date;
+				SimpleDateFormat dateFormat = new SimpleDateFormat("EEE MMM dd yyyy HH:mm:ss", Locale.ENGLISH);
+				 Date _date;
+				try {
+					_date = dateFormat.parse(dateStringFromUrl);
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					_date = new Date();
+					e.printStackTrace();
+				}
+				evaluation.setDate(_date);
 				evaluationService.create(evaluation);
 
 				for (EvaluationLoader ev : evals) {
@@ -184,6 +200,7 @@ public class EvaluationLoaderService implements PanacheRepositoryBase<Evaluation
 //				compteurEleve++;
 			} catch (RuntimeException e) {
 				e.printStackTrace();
+				throw new RuntimeException(e);
 			}
 		}
 
