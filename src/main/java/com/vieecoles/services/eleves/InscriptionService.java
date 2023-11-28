@@ -544,6 +544,16 @@ public  void updatelibelleHandicap_inscrip (Long InscriptionId , Long oldHandica
         myB = Branche.findById(inscriptionDto.getIdentifiantBranche()) ;
         myIns =Inscriptions.findById(inscriptionDto.getInscriptionsid()) ;
 
+        eleve elev = new eleve() ;
+        System.out.println("Identifiant elève "+inscriptionDto.getIdentifiantEleve());
+        elev = eleve.findById(inscriptionDto.getIdEleveInscrit());
+        elev.setEleve_sexe(inscriptionDto.getSexeEleve());
+        elev.setEleve_matricule(inscriptionDto.getMatriculeEleve());
+        elev.setElevenom(inscriptionDto.getNomEleve());
+        System.out.println("Nom  "+inscriptionDto.getNomEleve());
+        System.out.println("PréNom  "+inscriptionDto.getPrenomEleve());
+        elev.setEleveprenom(inscriptionDto.getPrenomEleve());
+
         myIns.setBranche(myB);
         myIns.setInscriptions_classe_actuelle(myB.getLibelle());
         myIns.setInscriptions_ecole_origine(inscriptionDto.getInscriptions_ecole_origine());
@@ -752,6 +762,15 @@ public  void updatelibelleHandicap_inscrip (Long InscriptionId , Long oldHandica
 
     public  long count(){
         return  Inscriptions.count();
+    }
+
+    public  eleve getElevByMatricule(String matricule){
+        eleve elev = new eleve() ;
+        elev= (eleve) em.createQuery(" select e from eleve e   where e.eleve_matricule=:matricule ",eleve.class )
+                .setParameter("matricule",matricule)
+                .getSingleResult();
+
+        return  elev ;
     }
 
 

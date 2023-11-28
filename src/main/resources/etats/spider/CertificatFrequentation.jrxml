@@ -3,7 +3,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CertificatFrequentation" pageWidth="630" pageHeight="842" columnWidth="630" leftMargin="0" rightMargin="0" topMargin="20" bottomMargin="20" uuid="cecdf213-9a9e-43a3-a0f6-256935281386">
 	<property name="net.sf.jasperreports.awt.ignore.missing.font" value="true"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="NO_DATA_ADAPTER"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ecolevieDB"/>
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="431"/>
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="559"/>
 	<style name="champsLibelle" fontName="Serif" fontSize="8">
@@ -40,206 +40,201 @@
 	<parameter name="amoirie" class="java.awt.Image" isForPrompting="false"/>
 	<parameter name="annee" class="java.lang.String"/>
 	<queryString language="SQL">
-		<![CDATA[select * from  `ecoleviedbv2`.fiche_identification_eleve
-where `ecoleviedbv2`.fiche_identification_eleve.eleve_matricule = $P{matricule} and
-`ecoleviedbv2`.fiche_identification_eleve.annee_scolaire_libelle= $P{annee} and
-`ecoleviedbv2`.fiche_identification_eleve.ecoleid =  $P{ecoleId}]]>
+		<![CDATA[select * from  `ecoleviedbv2`.certificat_frequentation
+where `ecoleviedbv2`.certificat_frequentation.eleve_matricule = $P{matricule} and
+`ecoleviedbv2`.certificat_frequentation.annee_scolaire_libelle= $P{annee} and
+`ecoleviedbv2`.certificat_frequentation.ecoleid =  $P{ecoleId}]]>
 	</queryString>
 	<field name="ecoleclibelle" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="ecoleclibelle"/>
 		<property name="com.jaspersoft.studio.field.label" value="ecoleclibelle"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="fiche_identification_eleve"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
 	</field>
 	<field name="ecole_adresse" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="ecole_adresse"/>
 		<property name="com.jaspersoft.studio.field.label" value="ecole_adresse"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="fiche_identification_eleve"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
 	</field>
 	<field name="ecoleid" class="java.lang.Long">
 		<property name="com.jaspersoft.studio.field.name" value="ecoleid"/>
 		<property name="com.jaspersoft.studio.field.label" value="ecoleid"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="fiche_identification_eleve"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
 	</field>
 	<field name="ecolecode" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="ecolecode"/>
 		<property name="com.jaspersoft.studio.field.label" value="ecolecode"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="fiche_identification_eleve"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
 	</field>
 	<field name="ecole_statut" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="ecole_statut"/>
 		<property name="com.jaspersoft.studio.field.label" value="ecole_statut"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="fiche_identification_eleve"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
 	</field>
 	<field name="ecole_telephone" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="ecole_telephone"/>
 		<property name="com.jaspersoft.studio.field.label" value="ecole_telephone"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="fiche_identification_eleve"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
 	</field>
 	<field name="logo" class="byte[]">
 		<property name="com.jaspersoft.studio.field.name" value="logo"/>
 		<property name="com.jaspersoft.studio.field.label" value="logo"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="fiche_identification_eleve"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
 	</field>
 	<field name="filigramme" class="byte[]">
 		<property name="com.jaspersoft.studio.field.name" value="filigramme"/>
 		<property name="com.jaspersoft.studio.field.label" value="filigramme"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="fiche_identification_eleve"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
 	</field>
 	<field name="inscriptionscode" class="java.lang.Long">
 		<property name="com.jaspersoft.studio.field.name" value="inscriptionscode"/>
 		<property name="com.jaspersoft.studio.field.label" value="inscriptionscode"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="fiche_identification_eleve"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
 	</field>
 	<field name="libelle" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="libelle"/>
 		<property name="com.jaspersoft.studio.field.label" value="libelle"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="fiche_identification_eleve"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
 	</field>
 	<field name="eleve_matricule" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="eleve_matricule"/>
 		<property name="com.jaspersoft.studio.field.label" value="eleve_matricule"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="fiche_identification_eleve"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
 	</field>
 	<field name="elevenom" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="elevenom"/>
 		<property name="com.jaspersoft.studio.field.label" value="elevenom"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="fiche_identification_eleve"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
 	</field>
 	<field name="eleveprenom" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="eleveprenom"/>
 		<property name="com.jaspersoft.studio.field.label" value="eleveprenom"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="fiche_identification_eleve"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
 	</field>
 	<field name="eleve_sexe" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="eleve_sexe"/>
 		<property name="com.jaspersoft.studio.field.label" value="eleve_sexe"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="fiche_identification_eleve"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
 	</field>
 	<field name="eleve_nationalite" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="eleve_nationalite"/>
 		<property name="com.jaspersoft.studio.field.label" value="eleve_nationalite"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="fiche_identification_eleve"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
 	</field>
 	<field name="inscriptions_langue_vivante" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="inscriptions_langue_vivante"/>
 		<property name="com.jaspersoft.studio.field.label" value="inscriptions_langue_vivante"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="fiche_identification_eleve"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
 	</field>
 	<field name="elevedate_naissance" class="java.sql.Date">
 		<property name="com.jaspersoft.studio.field.name" value="elevedate_naissance"/>
 		<property name="com.jaspersoft.studio.field.label" value="elevedate_naissance"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="fiche_identification_eleve"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
 	</field>
 	<field name="elevelieu_naissance" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="elevelieu_naissance"/>
 		<property name="com.jaspersoft.studio.field.label" value="elevelieu_naissance"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="fiche_identification_eleve"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
 	</field>
 	<field name="eleveadresse" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="eleveadresse"/>
 		<property name="com.jaspersoft.studio.field.label" value="eleveadresse"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="fiche_identification_eleve"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
 	</field>
 	<field name="elevecellulaire" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="elevecellulaire"/>
 		<property name="com.jaspersoft.studio.field.label" value="elevecellulaire"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="fiche_identification_eleve"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
 	</field>
 	<field name="nom_prenoms_pere" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="nom_prenoms_pere"/>
 		<property name="com.jaspersoft.studio.field.label" value="nom_prenoms_pere"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="fiche_identification_eleve"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
 	</field>
 	<field name="nom_prenoms_mere" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="nom_prenoms_mere"/>
 		<property name="com.jaspersoft.studio.field.label" value="nom_prenoms_mere"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="fiche_identification_eleve"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
 	</field>
 	<field name="nom_prenoms_tuteur" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="nom_prenoms_tuteur"/>
 		<property name="com.jaspersoft.studio.field.label" value="nom_prenoms_tuteur"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="fiche_identification_eleve"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
 	</field>
 	<field name="commune" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="commune"/>
 		<property name="com.jaspersoft.studio.field.label" value="commune"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="fiche_identification_eleve"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
 	</field>
 	<field name="inscriptions_status" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="inscriptions_status"/>
 		<property name="com.jaspersoft.studio.field.label" value="inscriptions_status"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="fiche_identification_eleve"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
 		<fieldDescription><![CDATA[VALIDEEN  ATTENTE]]></fieldDescription>
 	</field>
 	<field name="inscriptions_redoublant" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="inscriptions_redoublant"/>
 		<property name="com.jaspersoft.studio.field.label" value="inscriptions_redoublant"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="fiche_identification_eleve"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
 	</field>
 	<field name="inscriptions_boursier" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="inscriptions_boursier"/>
 		<property name="com.jaspersoft.studio.field.label" value="inscriptions_boursier"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="fiche_identification_eleve"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
 	</field>
-	<field name="eleve_numero_extrait_naiss" class="java.lang.Integer">
+	<field name="eleve_numero_extrait_naiss" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="eleve_numero_extrait_naiss"/>
 		<property name="com.jaspersoft.studio.field.label" value="eleve_numero_extrait_naiss"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="fiche_identification_eleve"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
 	</field>
 	<field name="elevedate_etabli_extrait_naiss" class="java.sql.Date">
 		<property name="com.jaspersoft.studio.field.name" value="elevedate_etabli_extrait_naiss"/>
 		<property name="com.jaspersoft.studio.field.label" value="elevedate_etabli_extrait_naiss"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="fiche_identification_eleve"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
 	</field>
 	<field name="inscriptions_derniereclasse_religieuse" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="inscriptions_derniereclasse_religieuse"/>
 		<property name="com.jaspersoft.studio.field.label" value="inscriptions_derniereclasse_religieuse"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="fiche_identification_eleve"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
 	</field>
 	<field name="inscriptions_ecole_origine" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="inscriptions_ecole_origine"/>
 		<property name="com.jaspersoft.studio.field.label" value="inscriptions_ecole_origine"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="fiche_identification_eleve"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
 	</field>
 	<field name="inscriptions_classe_precedente" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="inscriptions_classe_precedente"/>
 		<property name="com.jaspersoft.studio.field.label" value="inscriptions_classe_precedente"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="fiche_identification_eleve"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
 	</field>
 	<field name="num_decision_affecte" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="num_decision_affecte"/>
 		<property name="com.jaspersoft.studio.field.label" value="num_decision_affecte"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="fiche_identification_eleve"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
+	</field>
+	<field name="classelibelle" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="classelibelle"/>
+		<property name="com.jaspersoft.studio.field.label" value="classelibelle"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
 	</field>
 	<field name="amoirie" class="byte[]">
 		<property name="com.jaspersoft.studio.field.name" value="amoirie"/>
 		<property name="com.jaspersoft.studio.field.label" value="amoirie"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="fiche_identification_eleve"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
 	</field>
 	<field name="annee_scolaire_libelle" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="annee_scolaire_libelle"/>
 		<property name="com.jaspersoft.studio.field.label" value="annee_scolaire_libelle"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="fiche_identification_eleve"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
 	</field>
 	<field name="photo_eleve" class="byte[]">
 		<property name="com.jaspersoft.studio.field.name" value="photo_eleve"/>
 		<property name="com.jaspersoft.studio.field.label" value="photo_eleve"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="fiche_identification_eleve"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
 	</field>
 	<field name="inscriptions_statut_eleve" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="inscriptions_statut_eleve"/>
 		<property name="com.jaspersoft.studio.field.label" value="inscriptions_statut_eleve"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="fiche_identification_eleve"/>
-	</field>
-	<field name="appreciation_conseil" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="appreciation_conseil"/>
-		<property name="com.jaspersoft.studio.field.label" value="appreciation_conseil"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="fiche_identification_eleve"/>
-	</field>
-	<field name="moy_annuelle" class="java.lang.Double">
-		<property name="com.jaspersoft.studio.field.name" value="moy_annuelle"/>
-		<property name="com.jaspersoft.studio.field.label" value="moy_annuelle"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="fiche_identification_eleve"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
 	</field>
 	<group name="InfosPersonnelEleve"/>
 	<group name="DisciplineLettre"/>
