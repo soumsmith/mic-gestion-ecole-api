@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InscriptionDto {
+    private  String nomEleve;
+    private String prenomEleve ;
     private  Long   inscriptionsid ;
     private String  inscriptionscode ;
     private String decision_ant ;
@@ -37,6 +39,8 @@ public class InscriptionDto {
         return decision_ant;
     }
 
+
+
     public void setDecision_ant(String decision_ant) {
         this.decision_ant = decision_ant;
     }
@@ -45,6 +49,8 @@ public class InscriptionDto {
     private LocalDate inscriptionsdate_modification ;
     private  Long identifiantEleve ;
     private  Long identifiantEcole ;
+    private Long idEleveInscrit ;
+
     private  Long identifiantAnnee_scolaire ;
     private Long identifiantBranche ;
     private  String nom_prenoms_pere ;
@@ -85,7 +91,50 @@ public class InscriptionDto {
     private Boolean ivoirien;
     private Boolean etranger_africain;
     private Boolean etranger_non_africain;
+    private  String matriculeEleve ;
+    private  String sexeEleve ;
 
+    public String getSexeEleve() {
+        return sexeEleve;
+    }
+
+    public void setSexeEleve(String sexeEleve) {
+        this.sexeEleve = sexeEleve;
+    }
+
+    public Long getIdEleveInscrit() {
+        return idEleveInscrit;
+    }
+
+    public void setIdEleveInscrit(Long idEleveInscrit) {
+        this.idEleveInscrit = idEleveInscrit;
+    }
+
+
+
+    public String getNomEleve() {
+        return nomEleve;
+    }
+
+    public void setNomEleve(String nomEleve) {
+        this.nomEleve = nomEleve;
+    }
+
+    public String getPrenomEleve() {
+        return prenomEleve;
+    }
+
+    public void setPrenomEleve(String prenomEleve) {
+        this.prenomEleve = prenomEleve;
+    }
+
+    public String getMatriculeEleve() {
+        return matriculeEleve;
+    }
+
+    public void setMatriculeEleve(String matriculeEleve) {
+        this.matriculeEleve = matriculeEleve;
+    }
 
     public Boolean getInternes() {
         return internes;
