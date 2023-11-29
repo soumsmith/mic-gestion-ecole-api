@@ -537,13 +537,16 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 
 			logger.info(String.format("Max= %s , Min = %s, Sum = %s, Avg = %s, effectif %s", maxMoy, minMoy, sumMoy,
 					avgMoy, effectif));
-
-			System.out.println(" ***************** VERIFICATION DE PERSISTENCE DES BULLETINS ***********************");
-			for (String b : bulletinIdList) {
-				Bulletin bull = new Bulletin();
-				bull = findById(b);
-				logger.info(bull != null ? String.format("Bulletin %s trouvé", b)
-						: String.format("Bulletin %s non trouvé", b));
+			
+			// Mise à jour des bulletins
+			bulletin = new Bulletin();
+			for (String id : bulletinIdList) {
+				bulletin = Bulletin.findById(id);
+				bulletin.setMoyMax(CommonUtils.roundDouble(maxMoy, 2));
+				bulletin.setMoyMin(CommonUtils.roundDouble(minMoy, 2));
+				bulletin.setMoyAvg(CommonUtils.roundDouble(avgMoy, 2));
+				bulletin.setEffectif(effectif);
+				bulletin.setEffectifNonClasse(String.valueOf(countNonClasses));
 			}
 
 			logger.info("*********** FIN DU CALCUL DES MOYENNES");
