@@ -1,15 +1,14 @@
 package com.vieecoles.services.etats;
 
-import com.vieecoles.dto.*;
+import com.vieecoles.dto.BulletinSpiderDto;
+import com.vieecoles.dto.NiveauDto;
 import com.vieecoles.entities.InfosPersoBulletins;
 import com.vieecoles.entities.operations.Inscriptions;
 import com.vieecoles.entities.operations.ecole;
 import com.vieecoles.entities.parametre;
-import com.vieecoles.projection.BulletinSelectDto;
 import com.vieecoles.services.eleves.InscriptionService;
 import com.vieecoles.services.souscription.SousceecoleService;
 import com.vieecoles.steph.entities.AnneeScolaire;
-import com.vieecoles.steph.entities.Bulletin;
 import com.vieecoles.steph.entities.Constants;
 import com.vieecoles.steph.entities.Ecole;
 
@@ -20,11 +19,10 @@ import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @ApplicationScoped
-public class BulletinSpiderServices {
+public class BulletinSpiderPrimaireServices {
     @Inject
     EntityManager em;
     @Inject
@@ -52,7 +50,7 @@ public class BulletinSpiderServices {
 
         Double TmoyFr,TcoefFr,TmoyCoefFr,TmoyCoefEMR, moy_1er_trim ,moy_2eme_trim,moy_3eme_trim ,TmoyCoefEMR1 ;
        Integer rang_1er_trim ,rang_2eme_trim ,rang_3eme_trim ;
-        int TrangEMR = 0, TrangFr = 0;
+        int TrangEMR , TrangFr = 0;
       String  codeEcole,is_class_1er_trim,is_class_2e_trim,is_class_3e_trim ;
 
 
@@ -70,7 +68,7 @@ public class BulletinSpiderServices {
             idBulletin = getIdBulletin(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,libelleTrimestre,idEcole) ;
             System.out.println("idBulletin "+idBulletin);
             TcoefFr = calculcoefFran(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,libelleTrimestre,idEcole) ;
-             Double TrangEMR1 = 0d ;
+
 
             System.out.println("TcoefFr "+TcoefFr);
 
@@ -82,14 +80,9 @@ public class BulletinSpiderServices {
             System.out.println("TrangFr1 "+TrangFr1);
             if(TrangFr1 !=null)
                 TrangFr = TrangFr1.intValue() ;
-            System.out.println("Before TmoyFr");
+
            TmoyFr = calculTMoyFran(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,libelleTrimestre,idEcole);
-            System.out.println("TmoyFraaaa "+TmoyFr);
-            TrangEMR1 =calculRangEMR(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,libelleTrimestre,idEcole) ;
-
-            if(TrangEMR1 !=null)
-                TrangEMR = TrangEMR1.intValue() ;
-
+            TrangEMR =calculRangEMR(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,libelleTrimestre,idEcole) ;
             System.out.println("TrangEMR "+TrangEMR);
             TmoyCoefEMR1 = calculMoycoefEMR(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,libelleTrimestre,idEcole);
 
@@ -115,16 +108,14 @@ public class BulletinSpiderServices {
            l= getIdBulletinFromInfosBull(idBulletin);
 
             if(l==null) {
-                System.out.println(">>>>>Entree Bloc1");
                 InfosPersoBulletins k = new InfosPersoBulletins();
-                k.setTmoyFr(TcoefFr==null ||TcoefFr==0? null:TmoyCoefFr/TcoefFr);
+                k.setTmoyFr(TmoyCoefFr==null? null:TmoyCoefFr/TcoefFr);
                 System.out.println("TmoyFr "+k.getTmoyFr());
                 k.setTrangFr(TrangFr);
                 k.setTrangEMR(TrangEMR);
                 k.setTmoyCoefEMR(TmoyCoefEMR);
                 myEcole=sousceecoleService.getInffosEcoleByID(idEcole);
                 //System.out.println("myEcole "+myEcole.toString());
-                System.out.println(">>>>>Before myIns");
                 myIns = inscriptionService.checkInscrit(idEcole,classeNiveauDtoList.get(i).getNiveau(),mainAnnee.getId());
                 System.out.println("myIns>>> "+myIns);
                 parametre mpara = new parametre();
@@ -133,7 +124,6 @@ public class BulletinSpiderServices {
                 k.setCodeEcole(myEcole.getEcolecode());
                 k.setBg(myEcole.getFiligramme());
                 k.setLogo(myEcole.getLogoBlob());
-                if(myIns!=null && myIns.getPhoto_eleve()!=null)
                 k.setPhoto_eleve(myIns.getPhoto_eleve());
                 k.setTcoefFr(TcoefFr);
                 k.setTmoyCoefFr(TmoyCoefFr);
@@ -155,27 +145,21 @@ public class BulletinSpiderServices {
                 System.out.println(">>>>>Sortie Bloc1");
             } else {
                // System.out.println(l.toString());
-                System.out.println(">>>>>Entree Bloc2");
-                l.setTmoyFr(TcoefFr==null||TcoefFr==0? null:TmoyCoefFr/TcoefFr);
+                l.setTmoyFr(TmoyCoefFr==null? null:TmoyCoefFr/TcoefFr);
                 System.out.println(">>TmoyFr "+l.getTmoyFr());
                 l.setTrangFr(TrangFr);
                 l.setTrangEMR(TrangEMR);
                 l.setTmoyCoefEMR(TmoyCoefEMR);
                 myEcole=sousceecoleService.getInffosEcoleByID(idEcole);
                 //System.out.println("myEcole "+myEcole.toString());
-                System.out.println(">>>>>Before  myIns");
                 myIns = inscriptionService.checkInscrit(idEcole,classeNiveauDtoList.get(i).getNiveau(),mainAnnee.getId());
-
                 parametre mpara = new parametre();
                 mpara = parametre.findById(1L) ;
                 l.setAmoirie(mpara.getImage() );
                 l.setCodeEcole(myEcole.getEcolecode());
                 l.setBg(myEcole.getFiligramme());
                 l.setLogo(myEcole.getLogoBlob());
-                    System.out.println(">>>>>Before   set photo ");
-                    if(myIns !=null && myIns.getPhoto_eleve()!=null)
                 l.setPhoto_eleve(myIns.getPhoto_eleve());
-                System.out.println(">>>>>After   set photo ");
                 l.setTcoefFr(TcoefFr);
                 l.setTmoyCoefFr(TmoyCoefFr);
                 l.setIs_class_1er_trim(is_class_1er_trim);
@@ -188,7 +172,7 @@ public class BulletinSpiderServices {
                 l.setMoy_2eme_trim(moy_2eme_trim);
                 l.setMoy_3eme_trim(moy_3eme_trim);
                 l.setIdBulletin(idBulletin);
-                System.out.println(">>>>>FIN****");
+
                 mlist.add(l);
             }
 
@@ -207,10 +191,7 @@ public class BulletinSpiderServices {
                         .setParameter("periode",periode)
                         .setParameter("idEcole",idEcole)
                         .getSingleResult();
-                if(moyTfr==null) {
-                    return 0D ;
-                } else
-                    return  moyTfr ;
+                return  moyTfr ;
             } catch (NoResultException e){
                 return 0D ;
             }
@@ -223,10 +204,7 @@ public class BulletinSpiderServices {
                         .setParameter("idEcole",idEcole)
                         .setParameter("matiere","FRANCAIS")
                         .getSingleResult();
-                if(moyTfr==null) {
-                    return 0D ;
-                } else
-                    return  moyTfr ;
+                return  moyTfr ;
             } catch (NoResultException e){
                 return 0D ;
             }
@@ -262,10 +240,6 @@ public class BulletinSpiderServices {
 
     public  Double calculcoefFran(String matricule, String annee,String periode,Long idEcole){
         Integer niveauOrdre= getNiveau(matricule,annee ,periode,idEcole);
-        System.out.println("annee "+annee);
-        System.out.println("matricule "+matricule);
-        System.out.println("periode "+periode);
-        System.out.println("idEcole "+idEcole);
         if(niveauOrdre<=4) {
             try {
                 Double  moyTfr = (Double) em.createQuery("select SUM(d.coef) from DetailBulletin d join d.bulletin b where b.matricule=:matricule and b.libellePeriode=:periode and b.ecoleId=:idEcole and b.anneeLibelle=:annee  and d.matiereLibelle in ('COMPOSITION FRANCAISE','ORTHOGRAPHE ET GRAMMAIRE','EXPRESSION ORALE') ")
@@ -274,11 +248,7 @@ public class BulletinSpiderServices {
                         .setParameter("periode",periode)
                         .setParameter("idEcole",idEcole)
                         .getSingleResult();
-                System.out.println("moyTfr>>>>> "+moyTfr);
-                if(moyTfr==null) {
-                    return 0D ;
-                } else
-                    return  moyTfr ;
+                return  moyTfr ;
             } catch (NoResultException e){
                 return 0D ;
             }
@@ -291,10 +261,7 @@ public class BulletinSpiderServices {
                         .setParameter("idEcole",idEcole)
                         .setParameter("matiere","FRANCAIS")
                         .getSingleResult();
-                if(moyTfr==null) {
-                    return 0D ;
-                } else
-                    return  moyTfr ;
+                return  moyTfr ;
             } catch (NoResultException e){
                 return 0D ;
             }
@@ -304,16 +271,13 @@ public class BulletinSpiderServices {
 
     public  Double calculcoefEMR(String matricule, String annee,String periode,Long idEcole){
         try {
-            Double  moyTfr = (Double) em.createQuery("select SUM(d.coef) from DetailBulletin d join d.bulletin b where b.matricule=:matricule and b.libellePeriode=:periode and b.ecoleId=:idEcole and b.anneeLibelle=:annee  and d.matiereCode in ('30','35','37','38','29') ")
+            Double  moyTfr = (Double) em.createQuery("select SUM(d.coef) from DetailBulletin d join d.bulletin b where b.matricule=:matricule and b.libellePeriode=:periode and b.ecoleId=:idEcole and b.anneeLibelle=:annee  and d.matiereLibelle in ('FIQ','AS-SIRAH','AL-AQIDAH','AL-AKHLÂQ','MEMORISATION') ")
                     .setParameter("matricule",matricule)
                     .setParameter("annee",annee)
                     .setParameter("periode",periode)
                     .setParameter("idEcole",idEcole)
                     .getSingleResult();
-            if(moyTfr==null) {
-                return 0D ;
-            } else
-                return  moyTfr ;
+            return  moyTfr ;
         } catch (NoResultException e){
             return 0D ;
         }
@@ -325,16 +289,13 @@ public class BulletinSpiderServices {
         if(niveauOrdre<=4){
             System.out.println("Premier Cycle>>> "+niveauOrdre);
             try {
-                Double  moyTfr = (Double) em.createQuery("select SUM(d.coef*d.moyenne) from DetailBulletin d join d.bulletin b where b.matricule=:matricule and b.libellePeriode=:periode and b.ecoleId=:idEcole and b.anneeLibelle=:annee  and d.matiereCode in ('02','03','04') ")
+                Double  moyTfr = (Double) em.createQuery("select SUM(d.coef*d.moyenne) from DetailBulletin d join d.bulletin b where b.matricule=:matricule and b.libellePeriode=:periode and b.ecoleId=:idEcole and b.anneeLibelle=:annee  and d.matiereLibelle in ('COMPOSITION FRANCAISE','ORTHOGRAPHE ET GRAMMAIRE','EXPRESSION ORALE') ")
                         .setParameter("matricule",matricule)
                         .setParameter("annee",annee)
                         .setParameter("periode",periode)
                         .setParameter("idEcole",idEcole)
                         .getSingleResult();
-                if(moyTfr==null) {
-                    return 0D ;
-                } else
-                    return  moyTfr ;
+                return  moyTfr ;
             } catch (NoResultException e){
                 return 0D ;
             }
@@ -349,10 +310,7 @@ public class BulletinSpiderServices {
                         .setParameter("matiere","FRANCAIS")
                         .getSingleResult();
                 System.out.println("Niveau ordre moyCoef "+moyTfr);
-                if(moyTfr==null) {
-                    return 0D ;
-                } else
-                    return  moyTfr ;
+                return  moyTfr ;
             } catch (NoResultException e){
                 return 0D ;
             }
@@ -362,16 +320,13 @@ public class BulletinSpiderServices {
 
     public  Double calculMoycoefEMR(String matricule, String annee,String periode,Long idEcole){
         try {
-            Double  moyTfr = (Double) em.createQuery("select SUM(d.moyenne)  from DetailBulletin d join d.bulletin b where b.matricule=:matricule and b.libellePeriode=:periode and b.ecoleId=:idEcole and b.anneeLibelle=:annee  and d.matiereCode in ('30','35','37','38','29') ")
+            Double  moyTfr = (Double) em.createQuery("select SUM(d.moyenne)  from DetailBulletin d join d.bulletin b where b.matricule=:matricule and b.libellePeriode=:periode and b.ecoleId=:idEcole and b.anneeLibelle=:annee  and d.matiereLibelle in ('FIQ','AS-SIRAH','AL-AQIDAH','AL-AKHLÂQ','MEMORISATION') ")
                     .setParameter("matricule",matricule)
                     .setParameter("annee",annee)
                     .setParameter("periode",periode)
                     .setParameter("idEcole",idEcole)
                     .getSingleResult();
-            if(moyTfr==null) {
-                return 0D ;
-            } else
-                return  moyTfr ;
+            return  moyTfr ;
         } catch (NoResultException e){
             return 0D ;
         }
@@ -383,15 +338,12 @@ public class BulletinSpiderServices {
         Integer niveauOrdre= getNiveau(matricule,annee ,periode,idEcole);
         if(niveauOrdre<=4) {
             try {
-                Double  moyTfr = (Double) em.createQuery("select AVG(d.rang) from DetailBulletin d join d.bulletin b where b.matricule=:matricule and b.libellePeriode=:periode and b.ecoleId=:idEcole and b.anneeLibelle=:annee  and d.matiereCode in ('02','03','04') ")
+                Double  moyTfr = (Double) em.createQuery("select AVG(d.rang) from DetailBulletin d join d.bulletin b where b.matricule=:matricule and b.libellePeriode=:periode and b.ecoleId=:idEcole and b.anneeLibelle=:annee  and d.matiereLibelle in ('COMPOSITION FRANCAISE','ORTHOGRAPHE ET GRAMMAIRE','EXPRESSION ORALE') ")
                         .setParameter("matricule",matricule)
                         .setParameter("annee",annee)
                         .setParameter("periode",periode)
                         .setParameter("idEcole",idEcole)
                         .getSingleResult();
-                if(moyTfr==null) {
-                    return 0D ;
-                } else
                 return  moyTfr ;
             } catch (NoResultException e){
                 return 0D ;
@@ -405,10 +357,7 @@ public class BulletinSpiderServices {
                         .setParameter("idEcole",idEcole)
                         .setParameter("matiere","FRANCAIS")
                         .getSingleResult();
-                if(moyTfr==null) {
-                    return 0D ;
-                } else
-                    return  moyTfr ;
+                return  moyTfr ;
             } catch (NoResultException e){
                 return 0D ;
             }
@@ -418,23 +367,17 @@ public class BulletinSpiderServices {
 
 
 
-    public  Double calculRangEMR(String matricule, String annee,String periode,Long idEcole){
-        System.out.println("Debut Rang EMR ");
+    public  Integer calculRangEMR(String matricule, String annee,String periode,Long idEcole){
         try {
-            Double  moyTfr = (Double) em.createQuery("select AVG(d.rang) from DetailBulletin d join d.bulletin b where b.matricule=:matricule and b.libellePeriode=:periode and b.ecoleId=:idEcole and b.anneeLibelle=:annee  and d.matiereCode in ('30','35','37','38','29')  ")
+            Integer  moyTfr = (Integer) em.createQuery("select AVG(d.rang) from DetailBulletin d join d.bulletin b where b.matricule=:matricule and b.libellePeriode=:periode and b.ecoleId=:idEcole and b.anneeLibelle=:annee  and d.matiereLibelle in ('FIQ','AS-SIRAH','AL-AQIDAH','AL-AKHLÂQ','MEMORISATION')  ")
                     .setParameter("matricule",matricule)
                     .setParameter("annee",annee)
                     .setParameter("periode",periode)
                     .setParameter("idEcole",idEcole)
                     .getSingleResult();
-            System.out.println("Rang EMR "+moyTfr);
-            if(moyTfr==null)
-            return  0D ;
-            else
-            return moyTfr ;
+            return  moyTfr ;
         } catch (NoResultException e){
-            System.out.println("Moyenne EMR Error");
-            return 0D ;
+            return 0 ;
         }
     }
 
@@ -448,10 +391,7 @@ public class BulletinSpiderServices {
                     .setParameter("periode",periode)
                     .setParameter("idEcole",idEcole)
                     .getSingleResult();
-            if(moyTfr==null) {
-                return 0D ;
-            } else
-                return  moyTfr ;
+            return  moyTfr ;
         } catch (NoResultException e){
             return 0D ;
         }
@@ -465,10 +405,7 @@ public class BulletinSpiderServices {
                     .setParameter("periode",periode)
                     .setParameter("idEcole",idEcole)
                     .getSingleResult();
-            if(moyTfr==null) {
-                return 0 ;
-            } else
-                return  moyTfr ;
+            return  moyTfr ;
         } catch (NoResultException e){
             return 0;
         }
