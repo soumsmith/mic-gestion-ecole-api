@@ -1,15 +1,14 @@
 package com.vieecoles.services.etats;
 
-import com.vieecoles.dto.*;
+import com.vieecoles.dto.BulletinSpiderDto;
+import com.vieecoles.dto.NiveauDto;
 import com.vieecoles.entities.InfosPersoBulletins;
 import com.vieecoles.entities.operations.Inscriptions;
 import com.vieecoles.entities.operations.ecole;
 import com.vieecoles.entities.parametre;
-import com.vieecoles.projection.BulletinSelectDto;
 import com.vieecoles.services.eleves.InscriptionService;
 import com.vieecoles.services.souscription.SousceecoleService;
 import com.vieecoles.steph.entities.AnneeScolaire;
-import com.vieecoles.steph.entities.Bulletin;
 import com.vieecoles.steph.entities.Constants;
 import com.vieecoles.steph.entities.Ecole;
 
@@ -20,11 +19,10 @@ import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @ApplicationScoped
-public class BulletinSpiderServices {
+public class BulletinSpiderMatriculeServices {
     @Inject
     EntityManager em;
     @Inject
@@ -32,20 +30,19 @@ public class BulletinSpiderServices {
     @Inject
     SousceecoleService sousceecoleService ;
 @Transactional
-    public List<InfosPersoBulletins>  bulletinInfos(Long idEcole ,String libelleAnnee , String libelleTrimestre , String libelleClasse){
+    public List<InfosPersoBulletins>  bulletinInfos(Long idEcole ,String libelleAnnee , String libelleTrimestre ,String matricule){
         int LongTableau;
          AnneeScolaire mainAnnee = new AnneeScolaire() ;
          Ecole mynewEcole = new Ecole() ;
     mynewEcole = Ecole.findById(idEcole);
     mainAnnee =findMainAnneeByEcole(mynewEcole) ;
         List<NiveauDto> classeNiveauDtoList = new ArrayList<>() ;
-
     TypedQuery<NiveauDto> q = em.createQuery( "SELECT new com.vieecoles.dto.NiveauDto(b.matricule) from Bulletin b  where b.ecoleId =:idEcole and b.libellePeriode=:periode and b.anneeLibelle=:annee " +
-            " and b.libelleClasse=:libelleClasse ", NiveauDto.class);
+            " and b.matricule=:matricule ", NiveauDto.class);
     classeNiveauDtoList = q.setParameter("idEcole", idEcole)
             .setParameter("annee", libelleAnnee)
             .setParameter("periode", libelleTrimestre)
-            .setParameter("libelleClasse", libelleClasse)
+            .setParameter("matricule", matricule)
             .getResultList() ;
 
 

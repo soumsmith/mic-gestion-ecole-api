@@ -802,7 +802,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 							<textElement verticalAlignment="Middle">
 								<font fontName="SansSerif" size="10" isBold="true"/>
 							</textElement>
-							<text><![CDATA[BULLETIN DE NOTEdd]]></text>
+							<text><![CDATA[BULLETIN DE NOTES]]></text>
 						</staticText>
 						<frame>
 							<reportElement x="89" y="30" width="351" height="40" uuid="aab6c102-ff03-489c-b8bf-db27b8fa6d9d">
@@ -946,7 +946,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<textElement verticalAlignment="Middle">
 									<font size="6" isBold="true"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$F{statut}==null? "" :$F{statut}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{statut_ecole}==null? "" :$F{statut_ecole}]]></textFieldExpression>
 							</textField>
 						</frame>
 					</frame>
