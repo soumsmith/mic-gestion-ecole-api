@@ -1,5 +1,7 @@
 package com.vieecoles.steph.entities;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -50,4 +52,6 @@ public class DetailBulletin extends PanacheEntityBase{
 
 	@ManyToOne
 	private Bulletin bulletin;
+	@Column(name = "date_creation")
+	private Date dateCreation;
 }
