@@ -105,7 +105,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 		}
 		entity.setClasseEleve(notes.getClasseEleve());
 		entity.setEvaluation(notes.getEvaluation());
-		entity.setDateUpdate(new Date());		
+		entity.setDateUpdate(new Date());
 //		System.out.println("Note --> " + notes.getNote());
 //		System.out.println("Note --> " + notes.getPec());
 		entity.setNote(notes.getNote());
@@ -332,7 +332,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				evaluationPeriode = evaluationPeriodeService.findByAnneeAndEcoleAndPeriodeAndNiveau(
 						Long.parseLong(anneeId), classe.getEcole().getId(), Long.parseLong(periodeId),
 						classe.getBranche().getId());
-				
+
 			}
 
 			for (Map.Entry<Eleve, List<Notes>> entry : noteGroup.entrySet()) {
@@ -884,9 +884,18 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			Collections.sort(moyEleve, new Comparator<MoyenneEleveDto>() {
 				@Override
 				public int compare(MoyenneEleveDto u1, MoyenneEleveDto u2) {
-					if (u1.getMoyenneMatiereToSort() == null || u2.getMoyenneMatiereToSort() == null)
+//					System.out.println("u1 : " + u1.getMoyenneMatiereToSort());
+//					System.out.println("u2 : " + u2.getMoyenneMatiereToSort());
+					if (u1.getMoyenneMatiereToSort() == null && u2.getMoyenneMatiereToSort() != null) {
+//						System.out.println(" ------ -1");
 						return -1;
-					return u2.getMoyenneMatiereToSort().compareTo(u1.getMoyenneMatiereToSort());
+					}else if (u1.getMoyenneMatiereToSort() != null && u2.getMoyenneMatiereToSort() == null) {
+						return 1;
+					}else if (u1.getMoyenneMatiereToSort() == null && u2.getMoyenneMatiereToSort() == null) {
+						return 0;
+					} else {
+						return u2.getMoyenneMatiereToSort().compareTo(u1.getMoyenneMatiereToSort());
+					}
 				}
 			});
 // variable pour la gestion des rang et prise encompte des exécos

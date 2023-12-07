@@ -40,8 +40,6 @@ public class MoyenneEleveDto implements Comparable<MoyenneEleveDto> {
 
 	@Override
 	public int compareTo(MoyenneEleveDto o) {
-//		System.out.println(o.moyenne);
-//		System.out.println(this.moyenne);
 		return o.moyenne.compareTo(this.moyenne);
 	}
 
