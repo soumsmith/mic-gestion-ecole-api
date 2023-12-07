@@ -173,15 +173,9 @@ public class MatriceClasseRessource {
         Map<String, Object> map = new HashMap<>();
         // map.put("title", type);
         JasperPrint report = JasperFillManager.fillReport(compileReport, map, beanCollectionDataSource);
-        JRDocxExporter exporter = new JRDocxExporter();
-        exporter.setExporterInput(new SimpleExporterInput(report));
-        // File exportReportFile = new File("profils" + ".docx");
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(baos));
-        exporter.exportReport();
-        byte[] data = baos.toByteArray() ;
+        byte[] data =JasperExportManager.exportReportToPdf(report);
         HttpHeaders headers= new HttpHeaders();
-        headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=matrice trimestrielle.docx");
+        headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=matrice trimestrielle.pdf");
         return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.MULTIPART_FORM_DATA).body(data);
     }
 

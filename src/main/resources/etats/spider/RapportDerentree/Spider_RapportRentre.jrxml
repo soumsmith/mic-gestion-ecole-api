@@ -18,6 +18,7 @@
 	<field name="pyramideEffectDtoBilan" class="java.util.List"/>
 	<field name="effectifElevLangueVivante2Dto" class="java.util.List"/>
 	<field name="etatNominatifEnseignatDto" class="java.util.List"/>
+	<field name="repartitionEleveParAnNaissDto" class="java.util.List"/>
 	<field name="comparatifDto" class="java.util.List"/>
 
 	<detail>
@@ -219,7 +220,18 @@
 				<subreportExpression><![CDATA["etats/spider/RapportDerentree/effectifParLanguevivante.jasper"]]></subreportExpression>
 			</p:subreportPart>
 		</part>
+		<part uuid="968947e9-d627-441c-a302-1bd9eaebff01">
+			<p:subreportPart xmlns:p="http://jasperreports.sourceforge.net/jasperreports/parts" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/parts http://jasperreports.sourceforge.net/xsd/parts.xsd">
+				<subreportParameter name="REPORT_CONNECTION">
+					<subreportParameterExpression><![CDATA[$P{REPORT_CONNECTION}]]></subreportParameterExpression>
+				</subreportParameter>
 
+				<subreportParameter name="REPORT_DATA_SOURCE">
+					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{repartitionEleveParAnNaissDto})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportExpression><![CDATA["etats/spider/Repartition_Des_eleves_par_annee_naissance.jasper"]]></subreportExpression>
+			</p:subreportPart>
+		</part>
 		<part uuid="968947e9-d627-441c-a302-1bd9eaebff75">
 			<p:subreportPart xmlns:p="http://jasperreports.sourceforge.net/jasperreports/parts" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/parts http://jasperreports.sourceforge.net/xsd/parts.xsd">
 				<subreportParameter name="REPORT_CONNECTION">

@@ -468,8 +468,8 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 							<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						</reportElement>
-						<textElement textAlignment="Left" verticalAlignment="Middle">
-							<font fontName="SansSerif" size="8" isBold="true"/>
+						<textElement textAlignment="Left" verticalAlignment="Top">
+							<font fontName="SansSerif" size="7" isBold="true"/>
 						</textElement>
 						<textFieldExpression><![CDATA["Bilan "+$F{libelle_categorie}]]></textFieldExpression>
 					</textField>
@@ -485,7 +485,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 							<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						</reportElement>
 						<textElement textAlignment="Center">
-							<font fontName="SansSerif" size="8" isBold="true"/>
+							<font fontName="SansSerif" size="7" isBold="true"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{libelle_categorie}.equals("Religion")? $F{TmoyCoefEMR}:$V{TotalMoyeCoefParCategorie}/$V{TotalCoeffParCategParMatier}]]></textFieldExpression>
 						<patternExpression><![CDATA["##.##"]]></patternExpression>
@@ -501,7 +501,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 						</reportElement>
 						<textElement textAlignment="Center">
-							<font fontName="SansSerif" size="8" isBold="true"/>
+							<font fontName="SansSerif" size="7" isBold="true"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{libelle_categorie}.equals("Religion")? 1:$V{TotalCoeffParCategParMatier}]]></textFieldExpression>
 					</textField>
@@ -517,7 +517,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 							<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						</reportElement>
 						<textElement textAlignment="Center">
-							<font fontName="SansSerif" size="8" isBold="true"/>
+							<font fontName="SansSerif" size="7" isBold="true"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{libelle_categorie}.equals("Religion")? $F{TmoyCoefEMR}:$V{TotalMoyeCoefParCategorie}]]></textFieldExpression>
 					</textField>
@@ -558,7 +558,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 							<pen lineWidth="0.5"/>
 						</box>
 						<textElement textAlignment="Left" verticalAlignment="Middle">
-							<font fontName="SansSerif" size="8" isBold="false"/>
+							<font fontName="SansSerif" size="7" isBold="false"/>
 							<paragraph leftIndent="0"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{parent_matiere}.equals("HISTOIRE-GEOGAPHIE")? "Histoire-Géographie":$F{parent_matiere}.equals("MATHEMATIQUES")? "Mathématiques" :$F{parent_matiere}.equals("SVT")? "SVT" :$F{parent_matiere}.equals("EDHC")? "EDHC"  :$F{parent_matiere}.equals("EPS")? "EPS"  :$F{parent_matiere}.substring(0,1).toUpperCase() + $F{parent_matiere}.substring(1).toLowerCase()]]></textFieldExpression>
@@ -577,7 +577,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 							<pen lineWidth="0.5"/>
 						</box>
 						<textElement textAlignment="Center" verticalAlignment="Middle">
-							<font fontName="SansSerif" size="8"/>
+							<font fontName="SansSerif" size="7"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{parent_matiere}.equals("FRANCAIS")?$F{TmoyFr}:$F{parent_matiere}.equals("EMR")?$F{TmoyCoefEMR}:$F{moyenne}]]></textFieldExpression>
 						<patternExpression><![CDATA[$F{bonus}.equals("1") ? "+#.##": "##.##"]]></patternExpression>
@@ -596,9 +596,9 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 							<pen lineWidth="0.5"/>
 						</box>
 						<textElement textAlignment="Center" verticalAlignment="Middle">
-							<font fontName="SansSerif" size="8"/>
+							<font fontName="SansSerif" size="7"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{parent_matiere}.equals("FRANCAIS")?$F{TcoefFr}:$F{coef}]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{parent_matiere}.equals("FRANCAIS")?$F{TcoefFr}:$F{parent_matiere}.equals("EMR")?1:$F{coef}]]></textFieldExpression>
 					</textField>
 					<textField evaluationTime="Band" isBlankWhenNull="true">
 						<reportElement style="champsLibelle" x="271" y="0" width="43" height="15" isRemoveLineWhenBlank="true" uuid="4863f765-b56c-4e96-b748-68ff7b46689c">
@@ -614,9 +614,10 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 							<pen lineWidth="0.5"/>
 						</box>
 						<textElement textAlignment="Center" verticalAlignment="Middle">
-							<font fontName="SansSerif" size="8"/>
+							<font fontName="SansSerif" size="7"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{parent_matiere}.equals("FRANCAIS")?$F{TmoyCoefFr}:$F{parent_matiere}.equals("EMR")?$F{TmoyCoefEMR}:$F{bonus}.equals("0")?$F{moyenne}*$F{coef}:$F{moyenne}]]></textFieldExpression>
+						<patternExpression><![CDATA["##.##"]]></patternExpression>
 					</textField>
 					<textField isBlankWhenNull="true">
 						<reportElement style="champsLibelle" x="314" y="0" width="43" height="15" isRemoveLineWhenBlank="true" uuid="5777905c-6a5a-4450-af83-0cb270796a96">
@@ -632,7 +633,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 							<pen lineWidth="0.5"/>
 						</box>
 						<textElement verticalAlignment="Middle">
-							<font fontName="SansSerif" size="8"/>
+							<font fontName="SansSerif" size="7"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":($F{parent_matiere}.equals("FRANCAIS")&&$F{TrangFr}==1) ?$F{TrangFr}+" er":($F{parent_matiere}.equals("FRANCAIS")&& $F{TrangFr}!=1) ?$F{TrangFr}+" e" 
 :($F{parent_matiere}.equals("EMR")&&$F{TrangEMR}==1) ?$F{TrangEMR}+" er":($F{parent_matiere}.equals("EMR")&& $F{TrangEMR}!=1) ?$F{TrangEMR}+" e": $F{rang}==1 ?  $F{rang}+" er" :$F{rang}!=1? $F{rang} +" e": $F{rang} +" e"]]></textFieldExpression>
@@ -651,7 +652,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 							<pen lineWidth="0.5"/>
 						</box>
 						<textElement textAlignment="Center" verticalAlignment="Middle">
-							<font fontName="SansSerif" size="8"/>
+							<font fontName="SansSerif" size="7"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "" :$F{nom_prenom_professeur}]]></textFieldExpression>
 					</textField>
@@ -673,7 +674,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 							<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textElement textAlignment="Left" verticalAlignment="Middle">
-							<font fontName="SansSerif" size="6" isItalic="true"/>
+							<font fontName="SansSerif" size="7" isItalic="true"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{appreciation}]]></textFieldExpression>
 					</textField>
@@ -692,14 +693,14 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 		</band>
 	</background>
 	<title>
-		<band height="101" splitType="Stretch">
+		<band height="92" splitType="Stretch">
 			<frame>
-				<reportElement style="TotalCateg" x="7" y="1" width="585" height="97" uuid="0d92ee3e-bb2e-44be-b923-70b2be5e0171">
+				<reportElement style="TotalCateg" x="7" y="1" width="585" height="91" uuid="0d92ee3e-bb2e-44be-b923-70b2be5e0171">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<frame>
-					<reportElement x="0" y="0" width="455" height="97" uuid="ffda8dc2-a7ee-4bb7-916c-174cb20aae68">
+					<reportElement x="0" y="0" width="455" height="91" uuid="ffda8dc2-a7ee-4bb7-916c-174cb20aae68">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -711,7 +712,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<frame>
-						<reportElement x="0" y="0" width="455" height="97" uuid="e68f22aa-c70a-49fa-89e7-c47c1b05e6d5">
+						<reportElement x="0" y="0" width="455" height="91" uuid="e68f22aa-c70a-49fa-89e7-c47c1b05e6d5">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -773,7 +774,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 							<textFieldExpression><![CDATA[$F{nom_ecole}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement style="TitreLibelle" x="118" y="74" width="102" height="17" uuid="827fe3e4-f544-4187-9be5-ca4da1eb5477">
+							<reportElement style="TitreLibelle" x="118" y="72" width="102" height="17" uuid="827fe3e4-f544-4187-9be5-ca4da1eb5477">
 								<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 								<property name="com.jaspersoft.layout.grid.x" value="2"/>
 								<property name="com.jaspersoft.layout.grid.y" value="4"/>
@@ -789,8 +790,8 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 							</textElement>
 							<textFieldExpression><![CDATA[$F{libelle_periode}]]></textFieldExpression>
 						</textField>
-						<staticText>
-							<reportElement style="champsLibelle" x="0" y="74" width="118" height="17" uuid="3623a13c-58d9-4da0-8972-6732bb811814">
+						<textField textAdjust="ScaleFont">
+							<reportElement style="champsLibelle" x="0" y="72" width="118" height="17" uuid="96976887-394d-432f-b1bc-fc8e9246a529">
 								<property name="com.jaspersoft.layout.grid.x" value="0"/>
 								<property name="com.jaspersoft.layout.grid.y" value="4"/>
 								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -802,8 +803,8 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 							<textElement verticalAlignment="Middle">
 								<font fontName="SansSerif" size="10" isBold="true"/>
 							</textElement>
-							<text><![CDATA[BULLETIN DE NOTES]]></text>
-						</staticText>
+							<textFieldExpression><![CDATA["BULLETIN DE NOTES"]]></textFieldExpression>
+						</textField>
 						<frame>
 							<reportElement x="89" y="30" width="351" height="40" uuid="aab6c102-ff03-489c-b8bf-db27b8fa6d9d">
 								<property name="com.jaspersoft.layout.grid.x" value="1"/>
@@ -952,7 +953,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 					</frame>
 				</frame>
 				<frame>
-					<reportElement x="455" y="0" width="120" height="97" uuid="4a21b0ca-32b6-452c-8329-d23e62436788">
+					<reportElement x="455" y="0" width="120" height="91" uuid="4a21b0ca-32b6-452c-8329-d23e62436788">
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
@@ -1021,7 +1022,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 					</frame>
 				</frame>
 				<line>
-					<reportElement x="0" y="97" width="584" height="1" uuid="ffb0aef9-2adf-4b29-8211-8848e89a5ca5">
+					<reportElement x="0" y="91" width="584" height="1" uuid="ffb0aef9-2adf-4b29-8211-8848e89a5ca5">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1089,7 +1090,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							</reportElement>
 							<textElement verticalAlignment="Middle">
-								<font isBold="true"/>
+								<font size="7" isBold="true"/>
 							</textElement>
 							<text><![CDATA[Matricule:]]></text>
 						</staticText>
@@ -1105,7 +1106,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							</reportElement>
 							<textElement verticalAlignment="Middle">
-								<font isBold="true"/>
+								<font size="7" isBold="true"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{matricule}]]></textFieldExpression>
 						</textField>
@@ -1121,7 +1122,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							</reportElement>
 							<textElement verticalAlignment="Middle">
-								<font size="8"/>
+								<font size="7"/>
 							</textElement>
 							<text><![CDATA[Sexe:]]></text>
 						</staticText>
@@ -1137,7 +1138,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							</reportElement>
 							<textElement verticalAlignment="Middle">
-								<font size="8" isBold="true"/>
+								<font size="7" isBold="true"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{sexe}.equals("FEMININ")? "F":$F{sexe}.equals("MASCULIN")? "M":""]]></textFieldExpression>
 						</textField>
@@ -1153,7 +1154,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							</reportElement>
 							<textElement verticalAlignment="Middle">
-								<font size="8"/>
+								<font size="7"/>
 							</textElement>
 							<text><![CDATA[Redoublant :]]></text>
 						</staticText>
@@ -1169,7 +1170,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							</reportElement>
 							<textElement verticalAlignment="Middle">
-								<font size="8" isBold="true"/>
+								<font size="7" isBold="true"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{redoublant}==null?"NON " : $F{redoublant}.equals("OUI") ? "OUI" : "NON"]]></textFieldExpression>
 						</textField>
@@ -1185,7 +1186,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							</reportElement>
 							<textElement verticalAlignment="Middle">
-								<font isBold="true"/>
+								<font size="7" isBold="true"/>
 							</textElement>
 							<text><![CDATA[Classe:]]></text>
 						</staticText>
@@ -1201,7 +1202,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							</reportElement>
 							<textElement verticalAlignment="Middle">
-								<font isBold="true"/>
+								<font size="7" isBold="true"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{libelle_classe}]]></textFieldExpression>
 						</textField>
@@ -1228,7 +1229,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 									<property name="com.jaspersoft.studio.unit.height" value="px"/>
 								</reportElement>
 								<textElement verticalAlignment="Middle">
-									<font size="8"/>
+									<font size="7"/>
 								</textElement>
 								<text><![CDATA[Né(e) le :]]></text>
 							</staticText>
@@ -1243,7 +1244,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 								</reportElement>
 								<textElement verticalAlignment="Middle">
-									<font size="8" isBold="true"/>
+									<font size="7" isBold="true"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{date_naissance}==null ? "" :$F{date_naissance}]]></textFieldExpression>
 							</textField>
@@ -1259,7 +1260,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 									<property name="com.jaspersoft.studio.unit.height" value="px"/>
 								</reportElement>
 								<textElement verticalAlignment="Middle">
-									<font size="8"/>
+									<font size="7"/>
 								</textElement>
 								<text><![CDATA[Lieu de naissance:]]></text>
 							</staticText>
@@ -1274,7 +1275,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 								</reportElement>
 								<textElement verticalAlignment="Middle">
-									<font size="8" isBold="true"/>
+									<font size="7" isBold="true"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{lieu_naissance}==null? "" : $F{lieu_naissance}]]></textFieldExpression>
 							</textField>
@@ -1291,7 +1292,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							</reportElement>
 							<textElement verticalAlignment="Middle">
-								<font size="8" isBold="false"/>
+								<font size="7" isBold="false"/>
 							</textElement>
 							<text><![CDATA[Effectif:]]></text>
 						</staticText>
@@ -1307,7 +1308,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							</reportElement>
 							<textElement verticalAlignment="Middle">
-								<font isBold="true"/>
+								<font size="7" isBold="true"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{effectif_classe}]]></textFieldExpression>
 						</textField>
@@ -1323,7 +1324,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							</reportElement>
 							<textElement verticalAlignment="Middle">
-								<font size="8"/>
+								<font size="7"/>
 							</textElement>
 							<text><![CDATA[Nationalité:]]></text>
 						</staticText>
@@ -1338,7 +1339,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 							</reportElement>
 							<textElement verticalAlignment="Middle">
-								<font size="8" isBold="true"/>
+								<font size="7" isBold="true"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{nationalite}]]></textFieldExpression>
 						</textField>
@@ -1353,7 +1354,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
 							</reportElement>
 							<textElement>
-								<font size="8"/>
+								<font size="7"/>
 							</textElement>
 							<text><![CDATA[Affecté(e): ]]></text>
 						</staticText>
@@ -1369,7 +1370,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							</reportElement>
 							<textElement verticalAlignment="Middle">
-								<font size="8" isBold="true"/>
+								<font size="7" isBold="true"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{affecte}==null?"NON" : $F{affecte}.equals("AFFECTE")? "OUI":$F{affecte}.equals("NON_AFFECTE")? " NON": "NON"]]></textFieldExpression>
 						</textField>
@@ -1385,7 +1386,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							</reportElement>
 							<textElement verticalAlignment="Middle">
-								<font size="8"/>
+								<font size="7"/>
 							</textElement>
 							<text><![CDATA[Boursier:]]></text>
 						</staticText>
@@ -1401,7 +1402,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							</reportElement>
 							<textElement verticalAlignment="Middle">
-								<font size="8" isBold="true"/>
+								<font size="7" isBold="true"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{boursier}==null?"NON" : $F{boursier}.equals("B") ? " OUI" : $F{boursier}.equals("1/2B") ?  "OUI" :"NON"]]></textFieldExpression>
 						</textField>
@@ -1419,7 +1420,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<textElement>
-						<font isBold="true"/>
+						<font size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{nom}+' '+$F{prenoms}]]></textFieldExpression>
 				</textField>
@@ -1477,7 +1478,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement>
-						<font fontName="SansSerif" size="8" isBold="true"/>
+						<font fontName="SansSerif" size="7" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Discipline]]></text>
 				</staticText>
@@ -1500,7 +1501,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center">
-						<font fontName="SansSerif" size="8" isBold="true"/>
+						<font fontName="SansSerif" size="7" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Moy./20]]></text>
 				</staticText>
@@ -1522,7 +1523,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center">
-						<font fontName="SansSerif" size="8" isBold="true"/>
+						<font fontName="SansSerif" size="7" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Coeff.]]></text>
 				</staticText>
@@ -1544,7 +1545,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center">
-						<font fontName="SansSerif" size="8" isBold="true"/>
+						<font fontName="SansSerif" size="7" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Moy.Coeff]]></text>
 				</staticText>
@@ -1566,7 +1567,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center">
-						<font fontName="SansSerif" size="8" isBold="true"/>
+						<font fontName="SansSerif" size="7" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Rang]]></text>
 				</staticText>
@@ -1589,7 +1590,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center">
-						<font fontName="SansSerif" size="8" isBold="true"/>
+						<font fontName="SansSerif" size="7" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Nom du Professeur]]></text>
 				</staticText>
@@ -1611,7 +1612,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement>
-						<font fontName="SansSerif" size="8" isBold="true"/>
+						<font fontName="SansSerif" size="7" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Appréciation Prof Signature]]></text>
 				</staticText>
@@ -1650,7 +1651,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 						<pen lineWidth="0.5"/>
 					</box>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="SansSerif" size="8" isBold="false" isItalic="true"/>
+						<font fontName="SansSerif" size="7" isBold="false" isItalic="true"/>
 						<paragraph leftIndent="10"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{libelle_matiere}.substring(0,1).toUpperCase() + $F{libelle_matiere}.substring(1).toLowerCase()]]></textFieldExpression>
@@ -1669,7 +1670,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 						<pen lineWidth="0.5"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="SansSerif" size="8"/>
+						<font fontName="SansSerif" size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC": $F{moyenne}]]></textFieldExpression>
 					<patternExpression><![CDATA[$F{bonus}.equals("1") ? "+#.##": "##.##"]]></patternExpression>
@@ -1688,7 +1689,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 						<pen lineWidth="0.5"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="SansSerif" size="8"/>
+						<font fontName="SansSerif" size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC" :$F{coef}]]></textFieldExpression>
 				</textField>
@@ -1706,7 +1707,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 						<pen lineWidth="0.5"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="SansSerif" size="8"/>
+						<font fontName="SansSerif" size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{bonus}.equals("0")?$F{moyenne}*$F{coef}:$F{moyenne}]]></textFieldExpression>
 				</textField>
@@ -1724,7 +1725,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 						<pen lineWidth="0.5"/>
 					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="SansSerif" size="8"/>
+						<font fontName="SansSerif" size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{rang}.equals("1") ?  $F{rang}+" er" :$F{rang}+" e"]]></textFieldExpression>
 				</textField>
@@ -1742,7 +1743,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 						<pen lineWidth="0.5"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="SansSerif" size="8"/>
+						<font fontName="SansSerif" size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "" :$F{nom_prenom_professeur}]]></textFieldExpression>
 				</textField>
@@ -1764,7 +1765,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="SansSerif" size="6" isItalic="true"/>
+						<font fontName="SansSerif" size="7" isItalic="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{appreciation}]]></textFieldExpression>
 				</textField>
@@ -1772,14 +1773,14 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 		</band>
 	</detail>
 	<summary>
-		<band height="236">
+		<band height="199">
 			<rectangle>
 				<reportElement x="10" y="0" width="583" height="14" backcolor="#E0DEDE" uuid="1d3bd04a-c591-4552-8c30-0060adc2f28f">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 			</rectangle>
 			<frame>
-				<reportElement x="9" y="15" width="585" height="221" uuid="c441a6ea-2879-40e8-b760-0f38e5ad925e">
+				<reportElement x="9" y="15" width="585" height="184" uuid="c441a6ea-2879-40e8-b760-0f38e5ad925e">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -1825,7 +1826,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							</reportElement>
 							<textElement>
-								<font fontName="SansSerif" isBold="true"/>
+								<font fontName="SansSerif" size="7" isBold="true"/>
 							</textElement>
 							<text><![CDATA[Assiduité]]></text>
 						</staticText>
@@ -1841,7 +1842,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							</reportElement>
 							<textElement textAlignment="Left">
-								<font fontName="SansSerif" size="8"/>
+								<font fontName="SansSerif" size="7"/>
 							</textElement>
 							<text><![CDATA[Heures d'absences justifiées:]]></text>
 						</staticText>
@@ -1856,7 +1857,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 							</reportElement>
 							<textElement>
-								<font fontName="SansSerif"/>
+								<font fontName="SansSerif" size="7"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{heures_abs_just}]]></textFieldExpression>
 						</textField>
@@ -1872,7 +1873,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							</reportElement>
 							<textElement textAlignment="Left">
-								<font fontName="SansSerif" size="8"/>
+								<font fontName="SansSerif" size="7"/>
 							</textElement>
 							<text><![CDATA[Heures d'absences Non justifiées:]]></text>
 						</staticText>
@@ -1887,13 +1888,13 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 							</reportElement>
 							<textElement>
-								<font fontName="SansSerif"/>
+								<font fontName="SansSerif" size="7"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{heures_abs_non_just}]]></textFieldExpression>
 						</textField>
 					</frame>
 					<frame>
-						<reportElement x="178" y="0" width="179" height="49" uuid="fa37fbc0-9936-45de-a03b-f9b2e208c422">
+						<reportElement x="178" y="0" width="179" height="45" uuid="fa37fbc0-9936-45de-a03b-f9b2e208c422">
 							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
@@ -1904,7 +1905,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 						</reportElement>
 						<textField>
-							<reportElement style="champsLibelle" x="0" y="0" width="179" height="20" uuid="4bb11041-f0e4-4560-be6a-84b41dc8b24a">
+							<reportElement style="champsLibelle" x="0" y="0" width="179" height="18" uuid="4bb11041-f0e4-4560-be6a-84b41dc8b24a">
 								<property name="com.jaspersoft.layout.grid.x" value="0"/>
 								<property name="com.jaspersoft.layout.grid.y" value="0"/>
 								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1915,12 +1916,12 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							</reportElement>
 							<textElement textAlignment="Left" verticalAlignment="Middle">
-								<font fontName="SansSerif" size="8" isBold="true"/>
+								<font fontName="SansSerif" size="7" isBold="true"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{is_classed_periode}.equals("N")? "NC" :"Moyenne: "+$F{moy_general}+" / 20"]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="0" y="20" width="179" height="25" uuid="fe05077a-dd98-416f-9aed-16bf82e2da04">
+							<reportElement x="0" y="18" width="179" height="18" uuid="fe05077a-dd98-416f-9aed-16bf82e2da04">
 								<property name="com.jaspersoft.layout.grid.x" value="0"/>
 								<property name="com.jaspersoft.layout.grid.y" value="1"/>
 								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1929,9 +1930,10 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<property name="com.jaspersoft.layout.grid.colspan" value="2"/>
 								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 								<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							</reportElement>
 							<textElement textAlignment="Left">
-								<font size="8"/>
+								<font size="7"/>
 								<paragraph leftIndent="4"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{is_classed_periode}.equals("N")? "NC":$F{rangBulletin}.equals("1") ?  "Rang: "+$F{rangBulletin}+" èr(e) / " + $V{TotalEleveClasse} : "Rang: "+$F{rangBulletin}+" ème / "+$V{TotalEleveClasse}]]></textFieldExpression>
@@ -1962,7 +1964,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							</reportElement>
 							<textElement>
-								<font fontName="SansSerif" size="8" isBold="true"/>
+								<font fontName="SansSerif" size="7" isBold="true"/>
 								<paragraph leftIndent="5"/>
 							</textElement>
 							<text><![CDATA[Résultat de la classe]]></text>
@@ -1979,7 +1981,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							</reportElement>
 							<textElement>
-								<font fontName="SansSerif" size="8"/>
+								<font fontName="SansSerif" size="7"/>
 							</textElement>
 							<textFieldExpression><![CDATA["Plus forte moyenne: "+$F{moy_max}]]></textFieldExpression>
 						</textField>
@@ -1996,7 +1998,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							</reportElement>
 							<textElement>
-								<font fontName="SansSerif" size="8"/>
+								<font fontName="SansSerif" size="7"/>
 							</textElement>
 							<textFieldExpression><![CDATA["Plus faible moyenne: "+$F{moy_min}]]></textFieldExpression>
 						</textField>
@@ -2012,14 +2014,14 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							</reportElement>
 							<textElement>
-								<font fontName="SansSerif" size="8"/>
+								<font fontName="SansSerif" size="7"/>
 							</textElement>
 							<textFieldExpression><![CDATA["Moyenne de la classe: "+$F{moy_avg}]]></textFieldExpression>
 						</textField>
 					</frame>
 				</frame>
 				<frame>
-					<reportElement x="0" y="50" width="585" height="167" uuid="830e37d6-7957-45f9-920d-6faa7b2d2916">
+					<reportElement x="0" y="50" width="585" height="134" uuid="830e37d6-7957-45f9-920d-6faa7b2d2916">
 						<property name="com.jaspersoft.layout.grid.x" value="0"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2039,7 +2041,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<frame>
-						<reportElement style="TitreLibelle" x="0" y="0" width="233" height="160" uuid="7a533f36-ac92-440a-a056-cc576b0b47c4">
+						<reportElement style="TitreLibelle" x="0" y="0" width="233" height="134" uuid="7a533f36-ac92-440a-a056-cc576b0b47c4">
 							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
@@ -2056,7 +2058,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 							<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<frame>
-							<reportElement x="0" y="0" width="228" height="160" uuid="4c22db5d-c3ca-43f5-878e-02d3c6e2f343">
+							<reportElement x="0" y="0" width="228" height="134" uuid="4c22db5d-c3ca-43f5-878e-02d3c6e2f343">
 								<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 								<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 							</reportElement>
@@ -2067,7 +2069,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<staticText>
-								<reportElement style="TitreLibelle" x="0" y="0" width="200" height="20" uuid="01a6ef7d-691b-43d7-982d-69c42f6c96ed">
+								<reportElement style="TitreLibelle" x="0" y="0" width="200" height="15" uuid="01a6ef7d-691b-43d7-982d-69c42f6c96ed">
 									<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 									<property name="com.jaspersoft.layout.grid.y" value="0"/>
 									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2078,12 +2080,12 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 									<property name="com.jaspersoft.studio.unit.height" value="px"/>
 								</reportElement>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="SansSerif" isBold="true" isUnderline="true"/>
+									<font fontName="SansSerif" size="7" isBold="true" isUnderline="true"/>
 								</textElement>
 								<text><![CDATA[DISTINCTIONS]]></text>
 							</staticText>
 							<frame>
-								<reportElement x="0" y="20" width="223" height="144" uuid="21f514a0-e669-4b79-a527-85baf2fa5115">
+								<reportElement x="0" y="15" width="223" height="120" uuid="21f514a0-e669-4b79-a527-85baf2fa5115">
 									<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 									<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 									<property name="com.jaspersoft.layout.grid.y" value="1"/>
@@ -2095,7 +2097,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 									<property name="com.jaspersoft.studio.unit.height" value="px"/>
 								</reportElement>
 								<rectangle>
-									<reportElement x="0" y="0" width="20" height="20" uuid="4531198c-a24c-45d1-a641-84543aedcae8">
+									<reportElement x="0" y="0" width="20" height="15" uuid="4531198c-a24c-45d1-a641-84543aedcae8">
 										<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 										<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2103,11 +2105,10 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
 										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-										<property name="com.jaspersoft.studio.unit.height" value="px"/>
 									</reportElement>
 								</rectangle>
 								<staticText>
-									<reportElement style="champsLibelle" x="20" y="0" width="120" height="20" uuid="7f7d979a-3a38-4d2b-80ef-560a68f6b222">
+									<reportElement style="champsLibelle" x="20" y="0" width="120" height="15" uuid="7f7d979a-3a38-4d2b-80ef-560a68f6b222">
 										<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 										<property name="com.jaspersoft.layout.grid.y" value="0"/>
 										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2118,12 +2119,12 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 										<property name="com.jaspersoft.studio.unit.height" value="px"/>
 									</reportElement>
 									<textElement textAlignment="Left" verticalAlignment="Middle">
-										<font fontName="SansSerif"/>
+										<font fontName="SansSerif" size="7"/>
 									</textElement>
 									<text><![CDATA[Tableau d'honneur]]></text>
 								</staticText>
 								<rectangle>
-									<reportElement x="140" y="0" width="22" height="20" uuid="7ab7131d-792f-4f51-bb09-7af538dbbbb9">
+									<reportElement x="140" y="0" width="22" height="15" uuid="7ab7131d-792f-4f51-bb09-7af538dbbbb9">
 										<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 										<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2131,11 +2132,10 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
 										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-										<property name="com.jaspersoft.studio.unit.height" value="px"/>
 									</reportElement>
 								</rectangle>
 								<rectangle>
-									<reportElement x="0" y="20" width="20" height="20" uuid="4703bf0c-c99c-4a41-af87-c034b7467896">
+									<reportElement x="0" y="15" width="20" height="15" uuid="4703bf0c-c99c-4a41-af87-c034b7467896">
 										<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 										<property name="com.jaspersoft.layout.grid.y" value="1"/>
 										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2147,7 +2147,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 									</reportElement>
 								</rectangle>
 								<staticText>
-									<reportElement style="champsLibelle" x="20" y="20" width="153" height="20" uuid="746324cb-2416-4f8c-a3d3-a8fc74f94815">
+									<reportElement style="champsLibelle" x="20" y="15" width="153" height="15" uuid="746324cb-2416-4f8c-a3d3-a8fc74f94815">
 										<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 										<property name="com.jaspersoft.layout.grid.y" value="1"/>
 										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2155,15 +2155,14 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
 										<property name="com.jaspersoft.layout.grid.colspan" value="4"/>
 										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-										<property name="com.jaspersoft.studio.unit.height" value="px"/>
 									</reportElement>
 									<textElement textAlignment="Left" verticalAlignment="Middle">
-										<font fontName="SansSerif"/>
+										<font fontName="SansSerif" size="7"/>
 									</textElement>
 									<text><![CDATA[Tableau d'honneur +Encouragement]]></text>
 								</staticText>
 								<rectangle>
-									<reportElement x="0" y="40" width="20" height="20" uuid="aa480fba-2869-4862-bd7a-9a6adb73eaa9">
+									<reportElement x="0" y="30" width="20" height="15" uuid="aa480fba-2869-4862-bd7a-9a6adb73eaa9">
 										<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 										<property name="com.jaspersoft.layout.grid.y" value="2"/>
 										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2175,7 +2174,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 									</reportElement>
 								</rectangle>
 								<staticText>
-									<reportElement style="champsLibelle" x="20" y="40" width="163" height="20" uuid="65f0989a-0d78-4379-864c-e2daf997d5c7">
+									<reportElement style="champsLibelle" x="20" y="30" width="163" height="15" uuid="65f0989a-0d78-4379-864c-e2daf997d5c7">
 										<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 										<property name="com.jaspersoft.layout.grid.y" value="2"/>
 										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2183,15 +2182,14 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
 										<property name="com.jaspersoft.layout.grid.colspan" value="4"/>
 										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-										<property name="com.jaspersoft.studio.unit.height" value="px"/>
 									</reportElement>
 									<textElement textAlignment="Left" verticalAlignment="Middle">
-										<font fontName="SansSerif"/>
+										<font fontName="SansSerif" size="7"/>
 									</textElement>
 									<text><![CDATA[Tableau d'honneur +Félicitation]]></text>
 								</staticText>
 								<staticText>
-									<reportElement style="TitreLibelle" x="0" y="60" width="188" height="15" printWhenGroupChanges="DisciplineLettre" uuid="4f87f035-5f87-4b79-9a80-bed73b2785f4">
+									<reportElement style="TitreLibelle" x="0" y="45" width="188" height="15" printWhenGroupChanges="DisciplineLettre" uuid="4f87f035-5f87-4b79-9a80-bed73b2785f4">
 										<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 										<property name="com.jaspersoft.layout.grid.y" value="3"/>
 										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2201,12 +2199,12 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 									</reportElement>
 									<textElement textAlignment="Center" verticalAlignment="Middle">
-										<font fontName="SansSerif" isBold="true" isUnderline="true"/>
+										<font fontName="SansSerif" size="7" isBold="true" isUnderline="true"/>
 									</textElement>
 									<text><![CDATA[SANCTIONS]]></text>
 								</staticText>
 								<staticText>
-									<reportElement style="champsLibelle" x="20" y="75" width="173" height="15" uuid="1d6bce73-8941-487a-9cff-2ab8ce2de199">
+									<reportElement style="champsLibelle" x="20" y="60" width="173" height="15" uuid="1d6bce73-8941-487a-9cff-2ab8ce2de199">
 										<property name="com.jaspersoft.layout.grid.x" value="1"/>
 										<property name="com.jaspersoft.layout.grid.y" value="4"/>
 										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2216,12 +2214,12 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 									</reportElement>
 									<textElement>
-										<font fontName="SansSerif"/>
+										<font fontName="SansSerif" size="7"/>
 									</textElement>
 									<text><![CDATA[Avertissement pour travail insuffisant]]></text>
 								</staticText>
 								<staticText>
-									<reportElement x="0" y="75" width="18" height="15" uuid="8b99a34b-0fc5-405f-9f46-7a190ba25f3b">
+									<reportElement x="0" y="60" width="18" height="15" uuid="8b99a34b-0fc5-405f-9f46-7a190ba25f3b">
 										<property name="com.jaspersoft.layout.grid.x" value="0"/>
 										<property name="com.jaspersoft.layout.grid.y" value="4"/>
 										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2237,12 +2235,12 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 										<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 									</box>
 									<textElement>
-										<font fontName="SansSerif"/>
+										<font fontName="SansSerif" size="7"/>
 									</textElement>
 									<text><![CDATA[]]></text>
 								</staticText>
 								<staticText>
-									<reportElement x="0" y="90" width="18" height="15" uuid="012707ed-7f2c-4c83-ac59-ee1cc26412a3">
+									<reportElement x="0" y="75" width="18" height="15" uuid="012707ed-7f2c-4c83-ac59-ee1cc26412a3">
 										<property name="com.jaspersoft.layout.grid.x" value="0"/>
 										<property name="com.jaspersoft.layout.grid.y" value="5"/>
 										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2258,12 +2256,12 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 										<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 									</box>
 									<textElement>
-										<font fontName="SansSerif"/>
+										<font fontName="SansSerif" size="7"/>
 									</textElement>
 									<text><![CDATA[]]></text>
 								</staticText>
 								<staticText>
-									<reportElement style="champsLibelle" x="20" y="90" width="173" height="15" uuid="7eeb084f-dfb9-40a6-a7a6-434b4a6428c6">
+									<reportElement style="champsLibelle" x="20" y="75" width="173" height="15" uuid="7eeb084f-dfb9-40a6-a7a6-434b4a6428c6">
 										<property name="com.jaspersoft.layout.grid.x" value="1"/>
 										<property name="com.jaspersoft.layout.grid.y" value="5"/>
 										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2273,12 +2271,12 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 									</reportElement>
 									<textElement>
-										<font fontName="SansSerif"/>
+										<font fontName="SansSerif" size="7"/>
 									</textElement>
 									<text><![CDATA[Blâme pour travail insuffisant]]></text>
 								</staticText>
 								<staticText>
-									<reportElement x="0" y="105" width="18" height="15" uuid="12e85f0c-6b4b-4f2f-9158-9e1c7c8b069f">
+									<reportElement x="0" y="90" width="18" height="15" uuid="12e85f0c-6b4b-4f2f-9158-9e1c7c8b069f">
 										<property name="com.jaspersoft.layout.grid.x" value="0"/>
 										<property name="com.jaspersoft.layout.grid.y" value="6"/>
 										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2294,12 +2292,12 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 										<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 									</box>
 									<textElement>
-										<font fontName="SansSerif"/>
+										<font fontName="SansSerif" size="7"/>
 									</textElement>
 									<text><![CDATA[]]></text>
 								</staticText>
 								<staticText>
-									<reportElement style="champsLibelle" x="20" y="105" width="173" height="15" uuid="4bb5057d-ee64-470a-87f2-313a3276e038">
+									<reportElement style="champsLibelle" x="20" y="90" width="173" height="15" uuid="4bb5057d-ee64-470a-87f2-313a3276e038">
 										<property name="com.jaspersoft.layout.grid.x" value="1"/>
 										<property name="com.jaspersoft.layout.grid.y" value="6"/>
 										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2309,12 +2307,12 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 									</reportElement>
 									<textElement>
-										<font fontName="SansSerif"/>
+										<font fontName="SansSerif" size="7"/>
 									</textElement>
 									<text><![CDATA[Avertissement pour mauvaise conduite]]></text>
 								</staticText>
 								<staticText>
-									<reportElement x="0" y="120" width="18" height="15" uuid="a4223a4c-d073-473b-9a77-ef39dfc04db0">
+									<reportElement x="0" y="105" width="18" height="15" uuid="a4223a4c-d073-473b-9a77-ef39dfc04db0">
 										<property name="com.jaspersoft.layout.grid.x" value="0"/>
 										<property name="com.jaspersoft.layout.grid.y" value="7"/>
 										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2330,12 +2328,12 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 										<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 									</box>
 									<textElement>
-										<font fontName="SansSerif"/>
+										<font fontName="SansSerif" size="7"/>
 									</textElement>
 									<text><![CDATA[]]></text>
 								</staticText>
 								<staticText>
-									<reportElement style="champsLibelle" x="20" y="120" width="173" height="15" uuid="95e4f3ba-b23b-4a82-8d58-c60bc204ea36">
+									<reportElement style="champsLibelle" x="20" y="105" width="173" height="15" uuid="95e4f3ba-b23b-4a82-8d58-c60bc204ea36">
 										<property name="com.jaspersoft.layout.grid.x" value="1"/>
 										<property name="com.jaspersoft.layout.grid.y" value="7"/>
 										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2345,12 +2343,12 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 									</reportElement>
 									<textElement>
-										<font fontName="SansSerif"/>
+										<font fontName="SansSerif" size="7"/>
 									</textElement>
 									<text><![CDATA[Blâme pour mauvaise conduite]]></text>
 								</staticText>
 								<staticText>
-									<reportElement style="champsLibelle" x="162" y="0" width="48" height="20" uuid="d68dbb03-93ef-4bcd-b31e-dec036c02e42">
+									<reportElement style="champsLibelle" x="162" y="0" width="48" height="15" uuid="d68dbb03-93ef-4bcd-b31e-dec036c02e42">
 										<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 										<property name="com.jaspersoft.layout.grid.y" value="0"/>
 										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2358,10 +2356,9 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
 										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-										<property name="com.jaspersoft.studio.unit.height" value="px"/>
 									</reportElement>
 									<textElement textAlignment="Left" verticalAlignment="Middle">
-										<font fontName="SansSerif"/>
+										<font fontName="SansSerif" size="7"/>
 									</textElement>
 									<text><![CDATA[Refusé]]></text>
 								</staticText>
@@ -2369,7 +2366,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 						</frame>
 					</frame>
 					<frame>
-						<reportElement x="233" y="0" width="160" height="167" uuid="4dfdf4f8-0fc2-483c-ad12-d51574518ca4">
+						<reportElement x="233" y="0" width="160" height="135" uuid="4dfdf4f8-0fc2-483c-ad12-d51574518ca4">
 							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
@@ -2387,7 +2384,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<staticText>
-							<reportElement style="TitreLibelle" x="0" y="0" width="160" height="20" uuid="015567ef-db6c-442b-a5ad-df9beb668c3a">
+							<reportElement style="TitreLibelle" x="0" y="0" width="160" height="15" uuid="015567ef-db6c-442b-a5ad-df9beb668c3a">
 								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 								<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2395,6 +2392,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
 								<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							</reportElement>
 							<box>
 								<pen lineWidth="0.25"/>
@@ -2404,12 +2402,12 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font fontName="SansSerif" size="8" isBold="true" isUnderline="true"/>
+								<font fontName="SansSerif" size="7" isBold="true" isUnderline="true"/>
 							</textElement>
 							<text><![CDATA[Appréciations du Conseil de classe]]></text>
 						</staticText>
 						<textField isBlankWhenNull="true">
-							<reportElement style="champsLibelle" x="0" y="20" width="160" height="33" uuid="22cbbe2f-8712-4c94-a2b0-ea2d967d4bb6">
+							<reportElement style="champsLibelle" x="0" y="15" width="160" height="15" uuid="22cbbe2f-8712-4c94-a2b0-ea2d967d4bb6">
 								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 								<property name="com.jaspersoft.layout.grid.y" value="1"/>
 								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2419,12 +2417,12 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 							</reportElement>
 							<textElement textAlignment="Center">
-								<font fontName="SansSerif"/>
+								<font fontName="SansSerif" size="7"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{appreciation_conseil}]]></textFieldExpression>
 						</textField>
 						<staticText>
-							<reportElement style="champsLibelle" x="0" y="53" width="160" height="42" uuid="b01364fc-3d13-4418-8999-1799d25b9282">
+							<reportElement style="champsLibelle" x="0" y="30" width="160" height="42" uuid="b01364fc-3d13-4418-8999-1799d25b9282">
 								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 								<property name="com.jaspersoft.layout.grid.y" value="2"/>
 								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2434,12 +2432,12 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 							</reportElement>
 							<textElement textAlignment="Center" verticalAlignment="Bottom">
-								<font fontName="SansSerif" isBold="true" isUnderline="true"/>
+								<font fontName="SansSerif" size="7" isBold="true" isUnderline="true"/>
 							</textElement>
 							<text><![CDATA[Le Professeur Principal]]></text>
 						</staticText>
 						<textField>
-							<reportElement style="champsLibelle" x="0" y="95" width="160" height="37" uuid="54c19381-f516-4ff1-a1bb-000a936225d4">
+							<reportElement style="champsLibelle" x="0" y="72" width="160" height="37" uuid="54c19381-f516-4ff1-a1bb-000a936225d4">
 								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 								<property name="com.jaspersoft.layout.grid.y" value="3"/>
 								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2450,13 +2448,13 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 							</reportElement>
 							<textElement textAlignment="Center">
-								<font fontName="SansSerif"/>
+								<font fontName="SansSerif" size="7"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{nom_prof_princ}==null? " " : $F{nom_prof_princ}]]></textFieldExpression>
 						</textField>
 					</frame>
 					<frame>
-						<reportElement x="393" y="0" width="191" height="167" uuid="64c222f1-70ce-452d-9525-3a18a30e1e35">
+						<reportElement x="393" y="0" width="191" height="135" uuid="64c222f1-70ce-452d-9525-3a18a30e1e35">
 							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
@@ -2475,7 +2473,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 							<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<staticText>
-							<reportElement style="TitreLibelle" x="0" y="0" width="188" height="95" uuid="95f77e89-ef9c-47cc-a1d3-c8a2eb642a29">
+							<reportElement style="TitreLibelle" x="0" y="0" width="188" height="72" uuid="95f77e89-ef9c-47cc-a1d3-c8a2eb642a29">
 								<property name="com.jaspersoft.layout.grid.x" value="0"/>
 								<property name="com.jaspersoft.layout.grid.y" value="0"/>
 								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2488,13 +2486,13 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							</reportElement>
 							<textElement verticalAlignment="Top">
-								<font fontName="SansSerif" isBold="true" isUnderline="true"/>
+								<font fontName="SansSerif" size="7" isBold="true" isUnderline="true"/>
 								<paragraph spacingBefore="4"/>
 							</textElement>
 							<text><![CDATA[VISA DU CHEF DE L'ETABLISSEMENT]]></text>
 						</staticText>
 						<staticText>
-							<reportElement x="0" y="150" width="100" height="14" uuid="b246c8b1-7700-4bcf-9991-fabcabd18fe0">
+							<reportElement x="0" y="120" width="100" height="14" uuid="b246c8b1-7700-4bcf-9991-fabcabd18fe0">
 								<property name="com.jaspersoft.layout.grid.x" value="0"/>
 								<property name="com.jaspersoft.layout.grid.y" value="2"/>
 								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2510,12 +2508,12 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<textElement textAlignment="Right">
-								<font fontName="SansSerif" size="8"/>
+								<font fontName="SansSerif" size="7"/>
 							</textElement>
 							<text><![CDATA[Etablit le : ]]></text>
 						</staticText>
 						<textField textAdjust="ScaleFont" pattern="M/d/yy h:mm a">
-							<reportElement x="100" y="150" width="90" height="14" uuid="c755f624-f764-4177-9d2c-cc236a09b776">
+							<reportElement x="100" y="120" width="90" height="14" uuid="c755f624-f764-4177-9d2c-cc236a09b776">
 								<property name="com.jaspersoft.layout.grid.x" value="1"/>
 								<property name="com.jaspersoft.layout.grid.y" value="2"/>
 								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2525,12 +2523,12 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 							</reportElement>
 							<textElement textAlignment="Left">
-								<font fontName="SansSerif" size="8"/>
+								<font fontName="SansSerif" size="7"/>
 							</textElement>
 							<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 						</textField>
 						<textField isBlankWhenNull="true">
-							<reportElement x="0" y="95" width="190" height="55" uuid="c244eba8-3ffd-45dc-b36a-c4c3658d3ee9">
+							<reportElement x="0" y="72" width="190" height="48" uuid="c244eba8-3ffd-45dc-b36a-c4c3658d3ee9">
 								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 								<property name="com.jaspersoft.layout.grid.y" value="1"/>
 								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2543,6 +2541,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							</reportElement>
 							<textElement textAlignment="Center" verticalAlignment="Top">
+								<font size="7"/>
 								<paragraph firstLineIndent="0" spacingBefore="8"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{signataire}==null ? " ": $F{signataire}]]></textFieldExpression>
@@ -2555,7 +2554,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement>
-					<font fontName="SansSerif" size="8" isBold="true"/>
+					<font fontName="SansSerif" size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[TOTAUX]]></text>
 			</staticText>
@@ -2564,7 +2563,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement>
-					<font fontName="SansSerif" size="8" isBold="true"/>
+					<font fontName="SansSerif" size="7" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{TotauxCoefficient}]]></textFieldExpression>
 			</textField>
@@ -2573,7 +2572,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement>
-					<font fontName="SansSerif" size="8" isBold="true"/>
+					<font fontName="SansSerif" size="7" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{TotauxMoyenCoef}]]></textFieldExpression>
 			</textField>

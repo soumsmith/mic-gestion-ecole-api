@@ -93,7 +93,8 @@ public class BulletinSpiderMatriculeServices {
             System.out.println("TrangEMR "+TrangEMR);
             TmoyCoefEMR1 = calculMoycoefEMR(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,libelleTrimestre,idEcole);
 
-            TmoyCoefEMR = (TcoefEMR != null? TmoyCoefEMR1/TcoefEMR : 0.0 );
+            TmoyCoefEMR = (TcoefEMR ==0.0? 0.0: (TmoyCoefEMR1)/TcoefEMR);
+           // TmoyCoefEMR = (TcoefEMR != null? TmoyCoefEMR1/TcoefEMR : 0.0 );
 
             System.out.println("TmoyCoefEMR "+TmoyCoefEMR);
 

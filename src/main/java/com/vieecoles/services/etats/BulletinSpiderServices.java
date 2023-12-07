@@ -96,7 +96,11 @@ public class BulletinSpiderServices {
             System.out.println("TrangEMR "+TrangEMR);
             TmoyCoefEMR1 = calculMoycoefEMR(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,libelleTrimestre,idEcole);
 
-            TmoyCoefEMR = (TcoefEMR != null? TmoyCoefEMR1/TcoefEMR : 0.0 );
+            System.out.println("TcoefEMR "+TcoefEMR);
+
+            System.out.println("TmoyCoefEMR1 "+TmoyCoefEMR1);
+
+            TmoyCoefEMR = (TcoefEMR ==0.0? 0.0: (TmoyCoefEMR1)/TcoefEMR);
 
             System.out.println("TmoyCoefEMR "+TmoyCoefEMR);
 

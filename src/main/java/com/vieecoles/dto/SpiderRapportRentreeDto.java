@@ -9,7 +9,7 @@ public class SpiderRapportRentreeDto {
     private List<PyramideEffectDto> pyramideEffectDtoBilan ;
     private List<EtatNominatifEnseignatDto> etatNominatifEnseignatDto ;
     private List<ComparatifDto> comparatifDto ;
-
+    List<RepartitionEleveParAnNaissDto> repartitionEleveParAnNaissDto ;
     public List<ComparatifDto> getComparatifDto() {
         return comparatifDto;
     }
@@ -34,6 +34,14 @@ public class SpiderRapportRentreeDto {
 
     public void setPyramideEffectDto1(List<PyramideEffectDto> pyramideEffectDto1) {
         this.pyramideEffectDto1 = pyramideEffectDto1;
+    }
+
+    public List<RepartitionEleveParAnNaissDto> getRepartitionEleveParAnNaissDto() {
+        return repartitionEleveParAnNaissDto;
+    }
+
+    public void setRepartitionEleveParAnNaissDto(List<RepartitionEleveParAnNaissDto> repartitionEleveParAnNaissDto) {
+        this.repartitionEleveParAnNaissDto = repartitionEleveParAnNaissDto;
     }
 
     public List<PyramideEffectDto> getPyramideEffectDto2() {

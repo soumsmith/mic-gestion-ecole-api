@@ -22,6 +22,7 @@ public class matriceClasseDto {
     }
 
     private List<matiereMoyenneDto>  matiereMoyenneDto ;
+    private List<MatiereTitreDto>  matiereTitreDto ;
 
     public Long getIdeleve() {
         return ideleve;
@@ -50,6 +51,13 @@ public class matriceClasseDto {
     }
 
 
+    public List<MatiereTitreDto> getMatiereTitreDto() {
+        return matiereTitreDto;
+    }
+
+    public void setMatiereTitreDto(List<MatiereTitreDto> matiereTitreDto) {
+        this.matiereTitreDto = matiereTitreDto;
+    }
 
     public matriceClasseDto() {
     }

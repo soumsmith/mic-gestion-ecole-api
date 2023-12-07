@@ -53,10 +53,13 @@ public class MatriceMoyenneDto {
 
     private Double moyenAlQidah;
     private  String is_clasAlQidah ;
+    private  String is_classFran ;
+    private  Double moyenFran ;
 
     private Double moyenAlAklaq;
     private  String is_clasAlAklaq;
     private Double pCompoFr ;
+    private Double pFran ;
     private Double pOrthoGram ;
     private Double pExpreOral ;
     private Double philoso ;
@@ -119,6 +122,30 @@ public class MatriceMoyenneDto {
 
     public Double getPmoyenne() {
         return pmoyenne;
+    }
+
+    public String getIs_classFran() {
+        return is_classFran;
+    }
+
+    public void setIs_classFran(String is_classFran) {
+        this.is_classFran = is_classFran;
+    }
+
+    public Double getMoyenFran() {
+        return moyenFran;
+    }
+
+    public void setMoyenFran(Double moyenFran) {
+        this.moyenFran = moyenFran;
+    }
+
+    public Double getpFran() {
+        return pFran;
+    }
+
+    public void setpFran(Double pFran) {
+        this.pFran = pFran;
     }
 
     public void setPmoyenne(Double pmoyenne) {

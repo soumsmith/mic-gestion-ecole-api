@@ -21,7 +21,7 @@ public class MatriceMoyenneServices {
         int LongTableau;
 
         List<NiveauDto> classeNiveauDtoList = new ArrayList<>() ;
-        TypedQuery<NiveauDto> q = em.createQuery( "SELECT new com.vieecoles.dto.NiveauDto(b.matricule) from Bulletin b  where b.ecoleId =:idEcole and b.libelleClasse=: Classe and  b.ordreNiveau < 10 and b.libellePeriode=:periode and b.anneeLibelle=:libelleAnnee order by b.nom asc, b.prenoms asc ,b.ordreNiveau"
+        TypedQuery<NiveauDto> q = em.createQuery( "SELECT new com.vieecoles.dto.NiveauDto(b.matricule) from Bulletin b  where b.ecoleId =:idEcole and b.libelleClasse=: Classe and  b.ordreNiveau < 15 and b.libellePeriode=:periode and b.anneeLibelle=:libelleAnnee order by b.nom asc, b.prenoms asc ,b.ordreNiveau"
                , NiveauDto.class);
         classeNiveauDtoList = q.setParameter("idEcole", idEcole)
                                 .setParameter("periode", libellePeriode)
@@ -32,12 +32,12 @@ public class MatriceMoyenneServices {
         LongTableau= classeNiveauDtoList.size();
         List<MatriceMoyenneDto> resultatsListElevesDto = new ArrayList<>();
 
-        String matricule ,nom,prenoms,niveau,is_clasCompoFr,is_clasOrthoGram,is_clasExpreOral,is_clasphiloso,is_clasAng,
+        String matricule ,nom,prenoms,niveau,is_classFran = null,is_clasCompoFr = null,is_clasOrthoGram = null,is_clasExpreOral = null,is_clasphiloso,is_clasAng,
                 is_clasMath,is_clasPhysiq,is_clasSVT,is_clasHg,is_clasLv2,is_clasEdhc,is_clasArplat,is_clasTic ,
                 is_clasConduite,is_clasEps,is_class_periode ,nom_ecole,is_clasPericul,is_clasMemoris,is_clasFiq,is_clasAsSirah,is_clasAlQidah,is_clasAlAklaq ,pAppreciation;
-        Double moyenTrim,moyenCompoFr,moyenOrthoGram,moyenExpreOral,moyenphiloso,moyenAng,moyenMath,moyenPhysiq,moyenSVT,
+        Double moyenTrim,moyenCompoFr = null,moyenFran = null,moyenOrthoGram = null,moyenExpreOral = null,moyenphiloso,moyenAng,moyenMath,moyenPhysiq,moyenSVT,
                 moyenHg,moyenLv2,moyenEdhc,moyenArplat,moyenTic,moyenConduite,moyenEps,moyenPericul,moyenMemoris,moyenFiq,moyenAsSirah,moyenAlQidah,moyenAlAklaq,
-                pCompoFr ,pOrthoGram ,pExpreOral ,philoso ,pAng ,pMath,pPhysiq,pSVT,pHg,pLv2,pEdhc,pArplat,pTic,pConduite,pEps,pPericul,pMemoris,
+                pCompoFr ,pFran,pOrthoGram ,pExpreOral ,philoso ,pAng ,pMath,pPhysiq,pSVT,pHg,pLv2,pEdhc,pArplat,pTic,pConduite,pEps,pPericul,pMemoris,
                 pFiq,pAsSirah,pAlQidah,pAlAklaq ,pmoyenne
                 ;
         Integer rang , ordre_niveau ;
@@ -69,54 +69,70 @@ public class MatriceMoyenneServices {
             is_class_periode= getIsClassePeriode(classeNiveauDtoList.get(i).getNiveau(),libellePeriode ,libelleAnnee) ;
             System.out.println("is_class_periode >>>>>>"+is_class_periode);
 
-            is_clasCompoFr = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),"COMPOSITION FRANCAISE",libellePeriode ,libelleAnnee) ;
-            System.out.println("is_clasCompoFr >>>>>>"+is_clasCompoFr);
-            moyenCompoFr = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),"COMPOSITION FRANCAISE",libellePeriode ,libelleAnnee) ;
-            pCompoFr = getMoyAvgMatiere("COMPOSITION FRANCAISE",libellePeriode ,libelleAnnee,idEcole ,Classe) ;
-            m.setpCompoFr(pCompoFr);
-            System.out.println("moyenCompoFr >>>>>>"+moyenCompoFr);
+            Integer niveauOrdre= getNiveauId(matricule,libelleAnnee ,libellePeriode,idEcole);
+            System.out.println("niveauOrdrew>>> "+niveauOrdre);
+            if(niveauOrdre<=4) {
+                is_clasCompoFr = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),"02",libellePeriode ,libelleAnnee ) ;
+                System.out.println("is_clasCompoFr >>>>>>"+is_clasCompoFr);
+                moyenCompoFr = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),"02",libellePeriode ,libelleAnnee ) ;
+                pCompoFr = getMoyAvgMatiere("02",libellePeriode ,libelleAnnee,idEcole ,Classe) ;
+                m.setpCompoFr(pCompoFr);
+                System.out.println("moyenCompoFr >>>>>>"+moyenCompoFr);
 
-            is_clasOrthoGram = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),"ORTHOGRAPHE ET GRAMMAIRE",libellePeriode ,libelleAnnee) ;
-            moyenOrthoGram = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),"ORTHOGRAPHE ET GRAMMAIRE",libellePeriode ,libelleAnnee) ;
-            pOrthoGram = getMoyAvgMatiere("ORTHOGRAPHE ET GRAMMAIRE",libellePeriode ,libelleAnnee,idEcole ,Classe) ;
-            m.setpOrthoGram(pOrthoGram);
+                is_clasOrthoGram = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),"04",libellePeriode ,libelleAnnee) ;
+                moyenOrthoGram = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),"04",libellePeriode ,libelleAnnee) ;
+                pOrthoGram = getMoyAvgMatiere("04",libellePeriode ,libelleAnnee,idEcole ,Classe) ;
+                m.setpOrthoGram(pOrthoGram);
 
-            is_clasExpreOral = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),"EXPRESSION ORALE",libellePeriode ,libelleAnnee) ;
-            moyenExpreOral = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),"EXPRESSION ORALE",libellePeriode ,libelleAnnee) ;
-            pExpreOral = getMoyAvgMatiere("EXPRESSION ORALE",libellePeriode ,libelleAnnee,idEcole ,Classe) ;
-            m.setpExpreOral(pExpreOral);
+                is_clasExpreOral = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),"03",libellePeriode ,libelleAnnee) ;
+                moyenExpreOral = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),"03",libellePeriode ,libelleAnnee) ;
+                pExpreOral = getMoyAvgMatiere("03",libellePeriode ,libelleAnnee,idEcole ,Classe) ;
+                m.setpExpreOral(pExpreOral);
+            } else {
+                System.out.println("niveauOrdrew Second cyle>>> "+niveauOrdre);
+                is_classFran = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),"01",libellePeriode ,libelleAnnee) ;
+                System.out.println("is_classFran >>>>>>"+is_classFran);
+                moyenFran = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),"01",libellePeriode ,libelleAnnee) ;
+                pFran = getMoyAvgMatiere("01",libellePeriode ,libelleAnnee,idEcole ,Classe) ;
+                m.setpFran(pFran);
+                System.out.println("moyenFran >>>>>>"+moyenFran);
+
+            }
 
 
-            is_clasphiloso = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),"PHILOSOPHIE",libellePeriode ,libelleAnnee) ;
-            moyenphiloso = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),"PHILOSOPHIE",libellePeriode ,libelleAnnee) ;
-            philoso = getMoyAvgMatiere("PHILOSOPHIE",libellePeriode ,libelleAnnee,idEcole ,Classe) ;
+
+
+
+            is_clasphiloso = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),"26",libellePeriode ,libelleAnnee) ;
+            moyenphiloso = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),"26",libellePeriode ,libelleAnnee) ;
+            philoso = getMoyAvgMatiere("26",libellePeriode ,libelleAnnee,idEcole ,Classe) ;
             m.setPhiloso(philoso);
 
-            is_clasAng = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),"ANGLAIS",libellePeriode ,libelleAnnee) ;
-            moyenAng = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),"ANGLAIS",libellePeriode ,libelleAnnee) ;
-            pAng = getMoyAvgMatiere("ANGLAIS",libellePeriode ,libelleAnnee,idEcole ,Classe) ;
+            is_clasAng = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),"05",libellePeriode ,libelleAnnee) ;
+            moyenAng = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),"05",libellePeriode ,libelleAnnee) ;
+            pAng = getMoyAvgMatiere("05",libellePeriode ,libelleAnnee,idEcole ,Classe) ;
             m.setpAng(pAng);
 
-            is_clasMath = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),"MATHEMATIQUES",libellePeriode ,libelleAnnee) ;
-            moyenMath = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),"MATHEMATIQUES",libellePeriode ,libelleAnnee) ;
-            pMath = getMoyAvgMatiere("MATHEMATIQUES",libellePeriode ,libelleAnnee,idEcole ,Classe) ;
+            is_clasMath = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),"07",libellePeriode ,libelleAnnee) ;
+            moyenMath = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),"07",libellePeriode ,libelleAnnee) ;
+            pMath = getMoyAvgMatiere("07",libellePeriode ,libelleAnnee,idEcole ,Classe) ;
             m.setpMath(pMath);
 
-            is_clasPhysiq = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),"PHYSIQUE-CHIMIE",libellePeriode ,libelleAnnee) ;
-            moyenPhysiq = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),"PHYSIQUE-CHIMIE",libellePeriode ,libelleAnnee) ;
-            pPhysiq = getMoyAvgMatiere("PHYSIQUE-CHIMIE",libellePeriode ,libelleAnnee,idEcole ,Classe) ;
+            is_clasPhysiq = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),"08",libellePeriode ,libelleAnnee) ;
+            moyenPhysiq = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),"08",libellePeriode ,libelleAnnee) ;
+            pPhysiq = getMoyAvgMatiere("08",libellePeriode ,libelleAnnee,idEcole ,Classe) ;
             m.setpPhysiq(pPhysiq);
 
-            is_clasSVT = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),"SVT",libellePeriode ,libelleAnnee) ;
-            moyenSVT = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),"SVT",libellePeriode ,libelleAnnee) ;
-            pSVT = getMoyAvgMatiere("SVT",libellePeriode ,libelleAnnee,idEcole ,Classe) ;
+            is_clasSVT = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),"09",libellePeriode ,libelleAnnee) ;
+            moyenSVT = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),"09",libellePeriode ,libelleAnnee) ;
+            pSVT = getMoyAvgMatiere("09",libellePeriode ,libelleAnnee,idEcole ,Classe) ;
             m.setpSVT(pSVT);
 
 
-            is_clasHg = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),"HISTOIRE-GEOGAPHIE",libellePeriode ,libelleAnnee) ;
+            is_clasHg = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),"06",libellePeriode ,libelleAnnee) ;
             System.out.println("is_clasHg >>>>>>"+is_clasHg);
-            moyenHg = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),"HISTOIRE-GEOGAPHIE",libellePeriode ,libelleAnnee) ;
-            pHg = getMoyAvgMatiere("HISTOIRE-GEOGAPHIE",libellePeriode ,libelleAnnee,idEcole ,Classe) ;
+            moyenHg = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),"06",libellePeriode ,libelleAnnee) ;
+            pHg = getMoyAvgMatiere("06",libellePeriode ,libelleAnnee,idEcole ,Classe) ;
             m.setpHg(pHg);
             System.out.println("moyenHg >>>>>>"+moyenHg);
 
@@ -128,62 +144,62 @@ public class MatriceMoyenneServices {
 
             System.out.println("moyenLv2 >>>>>>"+moyenLv2);
 
-            is_clasEdhc = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),"EDHC",libellePeriode ,libelleAnnee) ;
-            moyenEdhc = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),"EDHC",libellePeriode ,libelleAnnee) ;
-            pEdhc = getMoyAvgMatiere("EDHC",libellePeriode ,libelleAnnee,idEcole ,Classe) ;
+            is_clasEdhc = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),"11",libellePeriode ,libelleAnnee) ;
+            moyenEdhc = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),"11",libellePeriode ,libelleAnnee) ;
+            pEdhc = getMoyAvgMatiere("11",libellePeriode ,libelleAnnee,idEcole ,Classe) ;
             m.setpEdhc(pEdhc);
 
-            is_clasArplat = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),"ARTS PLASTIQUES",libellePeriode ,libelleAnnee) ;
+            is_clasArplat = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),"19",libellePeriode ,libelleAnnee) ;
             System.out.println("is_clasArplat >>>>>>"+is_clasArplat);
-            moyenArplat = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),"ARTS PLASTIQUES",libellePeriode ,libelleAnnee) ;
-            pArplat = getMoyAvgMatiere("ARTS PLASTIQUES",libellePeriode ,libelleAnnee,idEcole ,Classe) ;
+            moyenArplat = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),"19",libellePeriode ,libelleAnnee) ;
+            pArplat = getMoyAvgMatiere("19",libellePeriode ,libelleAnnee,idEcole ,Classe) ;
             m.setpArplat(pArplat);
 
             System.out.println("moyenArplat >>>>>>"+moyenArplat);
-            is_clasTic = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),"INFORMATIQUE",libellePeriode ,libelleAnnee) ;
-            moyenTic = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),"INFORMATIQUE",libellePeriode ,libelleAnnee) ;
-            pTic = getMoyAvgMatiere("INFORMATIQUE",libellePeriode ,libelleAnnee ,idEcole ,Classe) ;
+            is_clasTic = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),"13",libellePeriode ,libelleAnnee) ;
+            moyenTic = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),"13",libellePeriode ,libelleAnnee) ;
+            pTic = getMoyAvgMatiere("13",libellePeriode ,libelleAnnee ,idEcole ,Classe) ;
             m.setpTic(pTic);
 
-            is_clasConduite = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),"CONDUITE",libellePeriode ,libelleAnnee) ;
-            moyenConduite = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),"CONDUITE",libellePeriode ,libelleAnnee) ;
-            pConduite = getMoyAvgMatiere("CONDUITE",libellePeriode ,libelleAnnee ,idEcole ,Classe) ;
+            is_clasConduite = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),"12",libellePeriode ,libelleAnnee) ;
+            moyenConduite = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),"12",libellePeriode ,libelleAnnee) ;
+            pConduite = getMoyAvgMatiere("12",libellePeriode ,libelleAnnee ,idEcole ,Classe) ;
             m.setpConduite(pConduite);
 
-            is_clasEps = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),"EPS",libellePeriode ,libelleAnnee) ;
-            moyenEps = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),"EPS",libellePeriode ,libelleAnnee) ;
-            pEps = getMoyAvgMatiere("EPS",libellePeriode ,libelleAnnee ,idEcole ,Classe) ;
+            is_clasEps = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),"10",libellePeriode ,libelleAnnee) ;
+            moyenEps = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),"10",libellePeriode ,libelleAnnee) ;
+            pEps = getMoyAvgMatiere("10",libellePeriode ,libelleAnnee ,idEcole ,Classe) ;
             m.setpEps(pEps);
 
-            is_clasPericul = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),"PUERICULTURE",libellePeriode ,libelleAnnee) ;
-            moyenPericul = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),"PUERICULTURE",libellePeriode ,libelleAnnee) ;
-            pPericul = getMoyAvgMatiere("PUERICULTURE",libellePeriode ,libelleAnnee ,idEcole ,Classe) ;
+            is_clasPericul = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),"72",libellePeriode ,libelleAnnee) ;
+            moyenPericul = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),"72",libellePeriode ,libelleAnnee) ;
+            pPericul = getMoyAvgMatiere("72",libellePeriode ,libelleAnnee ,idEcole ,Classe) ;
             m.setpPericul(pPericul);
 
-            is_clasMemoris = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),"MEMORISATION",libellePeriode ,libelleAnnee) ;
-            moyenMemoris = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),"MEMORISATION",libellePeriode ,libelleAnnee) ;
-            pMemoris = getMoyAvgMatiere("MEMORISATION",libellePeriode ,libelleAnnee ,idEcole ,Classe) ;
+            is_clasMemoris = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),"29",libellePeriode ,libelleAnnee) ;
+            moyenMemoris = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),"29",libellePeriode ,libelleAnnee) ;
+            pMemoris = getMoyAvgMatiere("29",libellePeriode ,libelleAnnee ,idEcole ,Classe) ;
             m.setpMemoris(pMemoris);
 
-            is_clasFiq = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),"FIQ",libellePeriode ,libelleAnnee) ;
-            moyenFiq = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),"FIQ",libellePeriode ,libelleAnnee) ;
-            pFiq = getMoyAvgMatiere("FIQ",libellePeriode ,libelleAnnee ,idEcole ,Classe) ;
+            is_clasFiq = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),"30",libellePeriode ,libelleAnnee) ;
+            moyenFiq = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),"30",libellePeriode ,libelleAnnee) ;
+            pFiq = getMoyAvgMatiere("30",libellePeriode ,libelleAnnee ,idEcole ,Classe) ;
             m.setpFiq(pFiq);
 
-            is_clasAsSirah = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),"AS-SIRAH",libellePeriode ,libelleAnnee) ;
-            moyenAsSirah = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),"AS-SIRAH",libellePeriode ,libelleAnnee) ;
-            pAsSirah = getMoyAvgMatiere("AS-SIRAH",libellePeriode ,libelleAnnee ,idEcole ,Classe) ;
+            is_clasAsSirah = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),"35",libellePeriode ,libelleAnnee) ;
+            moyenAsSirah = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),"35",libellePeriode ,libelleAnnee) ;
+            pAsSirah = getMoyAvgMatiere("35",libellePeriode ,libelleAnnee ,idEcole ,Classe) ;
             m.setpAsSirah(pAsSirah);
 
-            is_clasAlQidah = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),"AL-AQIDAH",libellePeriode ,libelleAnnee) ;
-            moyenAlQidah = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),"AL-AQIDAH",libellePeriode ,libelleAnnee) ;
-            pAlQidah = getMoyAvgMatiere("AL-AQIDAH",libellePeriode ,libelleAnnee ,idEcole ,Classe) ;
+            is_clasAlQidah = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),"37",libellePeriode ,libelleAnnee) ;
+            moyenAlQidah = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),"37",libellePeriode ,libelleAnnee) ;
+            pAlQidah = getMoyAvgMatiere("37",libellePeriode ,libelleAnnee ,idEcole ,Classe) ;
             m.setpAlQidah(pAlQidah);
 
 
-            is_clasAlAklaq = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),"AL-AKHLÂQ",libellePeriode ,libelleAnnee) ;
-            moyenAlAklaq = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),"AL-AKHLÂQ",libellePeriode ,libelleAnnee) ;
-            pAlAklaq = getMoyAvgMatiere("AL-AKHLÂQ",libellePeriode ,libelleAnnee ,idEcole ,Classe) ;
+            is_clasAlAklaq = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),"38",libellePeriode ,libelleAnnee) ;
+            moyenAlAklaq = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),"38",libellePeriode ,libelleAnnee) ;
+            pAlAklaq = getMoyAvgMatiere("38",libellePeriode ,libelleAnnee ,idEcole ,Classe) ;
             m.setpAlAklaq(pAlAklaq);
 
             m.setMoyenPericul(moyenPericul);
@@ -218,6 +234,9 @@ public class MatriceMoyenneServices {
 
             m.setIs_clasOrthoGram(is_clasOrthoGram);
             m.setMoyenOrthoGram(moyenOrthoGram);
+
+            m.setMoyenFran(moyenFran);
+            m.setIs_classFran(is_classFran);
 
             m.setIs_clasphiloso(is_clasphiloso);
             m.setMoyenphiloso(moyenphiloso);
@@ -286,7 +305,7 @@ public class MatriceMoyenneServices {
 
     public  Double getMoyMatiere(String matricule,String libelleMatiere,String periode ,String libelleAnnee){
         try {
-            Double   moyClasseF = (Double) em.createQuery("select d.moyenne  from DetailBulletin  d join d.bulletin b  where b.matricule=:matricule and d.matiereLibelle=:libelleMatiere  and b.anneeLibelle=:libelleAnnee " +
+            Double   moyClasseF = (Double) em.createQuery("select d.moyenne  from DetailBulletin  d join d.bulletin b  where b.matricule=:matricule and d.matiereCode =:libelleMatiere  and b.anneeLibelle=:libelleAnnee " +
                             " and b.libellePeriode=:periode ")
                     .setParameter("matricule",matricule)
                     .setParameter("libelleMatiere",libelleMatiere)
@@ -317,7 +336,7 @@ public class MatriceMoyenneServices {
 
     public  Double getMoyAvgMatiere(String libelleMatiere,String periode ,String libelleAnnee ,Long idEcole ,String classe){
         try {
-            Double   moyClasseF = (Double) em.createQuery("select  Avg(d.moyenne)   from DetailBulletin  d join d.bulletin b  where  d.matiereLibelle=:libelleMatiere  and b.anneeLibelle=:libelleAnnee " +
+            Double   moyClasseF = (Double) em.createQuery("select  Avg(d.moyenne)   from DetailBulletin  d join d.bulletin b  where  d.matiereCode=:libelleMatiere  and b.anneeLibelle=:libelleAnnee " +
                             " and b.libellePeriode=:periode and d.isRanked=:isclass and b.ecoleId=:idEcole and b.libelleClasse=: classe ")
 
                     .setParameter("libelleMatiere",libelleMatiere)
@@ -475,20 +494,20 @@ System.out.println("Chercher lv2>>>>>>");
         String   isClasseMat = null;
         if( lv2!=null && lv2.equals("ESP") ) {
             try {
-                isClasseMat = (String) em.createQuery("select d.isRanked  from DetailBulletin  d join d.bulletin b  where b.matricule=:matricule and (d.matiereLibelle=:libelleMatiere1 )  " +
+                isClasseMat = (String) em.createQuery("select d.isRanked  from DetailBulletin  d join d.bulletin b  where b.matricule=:matricule and (d.matiereCode=:libelleMatiere1 )  " +
                                 " and b.libellePeriode=:periode and b.anneeLibelle=:libelleAnnee ")
                         .setParameter("matricule",matricule)
-                        .setParameter("libelleMatiere1","ESPAGNOL")
+                        .setParameter("libelleMatiere1","21")
                         .setParameter("periode",periode)
                         .setParameter("libelleAnnee", libelleAnnee)
                         .getSingleResult();
             } catch (NoResultException e) {
 
                 try {
-                    isClasseMat = (String) em.createQuery("select d.isRanked  from DetailBulletin  d join d.bulletin b  where b.matricule=:matricule and (d.matiereLibelle=:libelleMatiere1 )  " +
+                    isClasseMat = (String) em.createQuery("select d.isRanked  from DetailBulletin  d join d.bulletin b  where b.matricule=:matricule and (d.matiereCode=:libelleMatiere1 )  " +
                                     " and b.libellePeriode=:periode and b.anneeLibelle=:libelleAnnee")
                             .setParameter("matricule",matricule)
-                            .setParameter("libelleMatiere1","ALLEMAND")
+                            .setParameter("libelleMatiere1","25")
                             .setParameter("periode",periode)
                             .setParameter("libelleAnnee", libelleAnnee)
                             .getSingleResult();
@@ -505,10 +524,10 @@ System.out.println("Chercher lv2>>>>>>");
         } else  if ( lv2!=null && lv2.equals("ALL") ) {
 
             try {
-                isClasseMat = (String) em.createQuery("select d.isRanked  from DetailBulletin  d join d.bulletin b  where b.matricule=:matricule and (d.matiereLibelle=:libelleMatiere1 ) " +
+                isClasseMat = (String) em.createQuery("select d.isRanked  from DetailBulletin  d join d.bulletin b  where b.matricule=:matricule and (d.matiereCode=:libelleMatiere1 ) " +
                                 " and b.libellePeriode=:periode and b.anneeLibelle=:libelleAnnee")
                         .setParameter("matricule",matricule)
-                        .setParameter("libelleMatiere1","ALLEMAND")
+                        .setParameter("libelleMatiere1","25")
                         .setParameter("periode",periode)
                         .setParameter("libelleAnnee", libelleAnnee)
                         .getSingleResult();
@@ -516,10 +535,10 @@ System.out.println("Chercher lv2>>>>>>");
             } catch (NoResultException e) {
 
                 try {
-                    isClasseMat = (String) em.createQuery("select d.isRanked  from DetailBulletin  d join d.bulletin b  where b.matricule=:matricule and (d.matiereLibelle=:libelleMatiere1 ) " +
+                    isClasseMat = (String) em.createQuery("select d.isRanked  from DetailBulletin  d join d.bulletin b  where b.matricule=:matricule and (d.matiereCode=:libelleMatiere1 ) " +
                                     " and b.libellePeriode=:periode and b.anneeLibelle=:libelleAnnee")
                             .setParameter("matricule",matricule)
-                            .setParameter("libelleMatiere1","ESPAGNOL")
+                            .setParameter("libelleMatiere1","21")
                             .setParameter("periode",periode)
                             .setParameter("libelleAnnee", libelleAnnee)
                             .getSingleResult();
@@ -543,8 +562,9 @@ System.out.println("Chercher lv2>>>>>>");
 
 
     public  String getIsClasseMatiere(String matricule,String libelleMatiere,String periode ,String libelleAnnee){
+
         try {
-            String   isClasseMat = (String) em.createQuery("select d.isRanked  from DetailBulletin  d join d.bulletin b  where b.matricule=:matricule and d.matiereLibelle=:libelleMatiere " +
+            String   isClasseMat = (String) em.createQuery("select d.isRanked  from DetailBulletin  d join d.bulletin b  where b.matricule=:matricule and d.matiereCode=:libelleMatiere " +
                             " and b.libellePeriode=:periode and b.anneeLibelle=:libelleAnnee")
                     .setParameter("matricule",matricule)
                     .setParameter("libelleMatiere",libelleMatiere)
@@ -556,7 +576,10 @@ System.out.println("Chercher lv2>>>>>>");
             return null ;
         }
 
+
+
     }
+
     public  String getIsClassePeriode(String matricule,String periode ,String libelleAnnee){
         try {
             String   isClassePeriode = (String) em.createQuery("select b.isClassed  from Bulletin b   where b.matricule=:matricule" +
@@ -613,6 +636,20 @@ System.out.println("Chercher lv2>>>>>>");
             return null ;
         }
 
+    }
+
+    public  Integer getNiveauId(String matricule, String annee,String periode,Long idEcole){
+        try {
+            Integer  num = (Integer) em.createQuery("select b.ordreNiveau from Bulletin b where b.matricule=:matricule and b.libellePeriode=:periode and b.ecoleId=:idEcole and b.anneeLibelle=:annee  ")
+                    .setParameter("matricule",matricule)
+                    .setParameter("annee",annee)
+                    .setParameter("periode",periode)
+                    .setParameter("idEcole",idEcole)
+                    .getSingleResult();
+            return  num ;
+        } catch (NoResultException e){
+            return 0;
+        }
     }
 
     public  Integer getRang(String matricule,String periode ,String libelleAnnee){
