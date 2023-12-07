@@ -39,6 +39,9 @@ public class RapportRentreeSpiderRessource {
     EffectifParLangueServices effectifParLangueServices ;
 
     @Inject
+    RepartPartielElevParAnNaissServices repartitionElevParAnNaissServices ;
+
+    @Inject
     RecapitulatifStatistiqueServices recapitulatif ;
     @Inject
     RecapitulatifStatistiqueBilan2Services recapitulatiBilan ;
@@ -63,9 +66,9 @@ public class RapportRentreeSpiderRessource {
     @GET
 
     @Transactional
-    @Path("/{idEcole}/{anneeId}")
+    @Path("/{idEcole}/{anneeId}/{libelleAnnee}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    public ResponseEntity<byte[]>  getDtoRapport6(@PathParam("idEcole") Long idEcole , @PathParam("anneeId") Long anneeId) throws Exception, JRException {
+    public ResponseEntity<byte[]>  getDtoRapport6(@PathParam("idEcole") Long idEcole , @PathParam("anneeId") Long anneeId ,@PathParam("libelleAnnee") String libelleAnnee) throws Exception, JRException {
         InputStream myInpuStream ;
         /*myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/BulletinBean.jrxml");*/
         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/RapportDerentree/Spider_RapportRentre.jrxml");
@@ -79,6 +82,7 @@ public class RapportRentreeSpiderRessource {
         List<EtatNominatifEnseignatDto> etatNominatifEnseignatDto = new ArrayList<>() ;
         List<EffectifElevLangueVivante2Dto> effectifElevLangueVivante2Dto = new ArrayList<>() ;
             List<ComparatifDto> comparatifDto = new ArrayList<>() ;
+        List<RepartitionEleveParAnNaissDto> repartitionEleveParAnNaissDto = new ArrayList<>() ;
 
         EffectifElevLangueVivante2Dto m = new EffectifElevLangueVivante2Dto() ;
 
@@ -97,6 +101,7 @@ public class RapportRentreeSpiderRessource {
         ComparatifDto  n= new ComparatifDto() ;
         n = comparatifServices.getComparatif(idEcole ,anneeId) ;
         System.out.println("Comparatif   ok");
+        repartitionEleveParAnNaissDto= repartitionElevParAnNaissServices.CalculRepartElevParAnnNaiss(idEcole ,libelleAnnee);
         comparatifDto.add(n);
 
         effectifElevLangueVivante2Dto.add(m);
@@ -107,6 +112,7 @@ public class RapportRentreeSpiderRessource {
         detailsBull.setRapportRentreeDto(rapportRentreeDto);
         detailsBull.setEffectifElevLangueVivante2Dto(effectifElevLangueVivante2Dto);
         detailsBull.setEtatNominatifEnseignatDto(etatNominatifEnseignatDto);
+        detailsBull.setRepartitionEleveParAnNaissDto(repartitionEleveParAnNaissDto);
         detailsBull.setComparatifDto(comparatifDto);
 
 

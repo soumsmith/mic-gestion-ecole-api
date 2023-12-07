@@ -40,4 +40,14 @@ public class matiereMoyenneDto {
     public void setMoyMatiere(Double moyMatiere) {
         this.moyMatiere = moyMatiere;
     }
+
+    @Override
+    public String toString() {
+        return "matiereMoyenneDto{" +
+                "libelleMatiere='" + libelleMatiere + '\'' +
+                ", moyMatiere=" + moyMatiere +
+                ", matricule='" + matricule + '\'' +
+                ", numOrdre=" + numOrdre +
+                '}';
+    }
 }

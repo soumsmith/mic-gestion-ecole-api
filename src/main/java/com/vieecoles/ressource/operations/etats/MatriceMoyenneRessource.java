@@ -86,6 +86,43 @@ public class MatriceMoyenneRessource {
     }
 
 
+    @GET
+    @Transactional
+    @Path("/trimestrielle-pdf/{idEcole}/{libellePeriode}/{libelleAnnee}/{classe}")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public ResponseEntity<byte[]>  getDtoRapportpdf(@PathParam("idEcole") Long idEcole ,@PathParam("libellePeriode") String libellePeriode ,
+                                                 @PathParam("libelleAnnee") String libelleAnnee ,@PathParam("classe") String classe) throws Exception, JRException {
+
+        Double pCompoFr ,pOrthoGram,pExpreOral,philoso , pAng, pMath,pPhysiq ,pSVT , pHg , pLv2 , pEdhc ,
+                pArplat , pTic ,pConduite ,pEps ,pPericul ,pMemoris ,pFiq , pAsSirah ,pAlQidah ,pAlAklaq;
+        InputStream myInpuStream ;
+        /*myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/BulletinBean.jrxml");*/
+        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Spider_Book_matrice.jrxml");
+        matriceDspsDto detailsBull= new matriceDspsDto() ;
+        List<MatriceMoyenneDto>  dspsDto = new ArrayList<>() ;
+
+        dspsDto = moyenneServices.DspspDto(idEcole,libellePeriode,libelleAnnee, classe) ;
+
+        detailsBull.setDspsDto(dspsDto);
+
+
+        JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(Collections.singleton(detailsBull)) ;
+        JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
+        //   JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");
+        Map<String, Object> map = new HashMap<>();
+        // map.put("title", type);
+
+
+        JasperPrint report = JasperFillManager.fillReport(compileReport, map, beanCollectionDataSource);
+        byte[] data =JasperExportManager.exportReportToPdf(report);
+        HttpHeaders headers= new HttpHeaders();
+        // headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Rapport"+myScole.getEcoleclibelle()+".docx");
+        headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Matrice-trimestrielle.pdf");
+        return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.MULTIPART_FORM_DATA).body(data);
+
+
+
+    }
 
 
 

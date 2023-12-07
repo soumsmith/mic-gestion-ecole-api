@@ -7,6 +7,7 @@ import com.vieecoles.dto.spiderBulletinDto;
 import com.vieecoles.dto.spiderDspsDto;
 import com.vieecoles.entities.InfosPersoBulletins;
 import com.vieecoles.services.etats.BulletinRapportServices;
+import com.vieecoles.services.etats.BulletinSpiderMatriculeServices;
 import com.vieecoles.services.etats.BulletinSpiderServices;
 import com.vieecoles.services.etats.DpspServices;
 import net.sf.jasperreports.engine.*;
@@ -48,6 +49,8 @@ public class BulletinSpiderRessource {
     @ConfigProperty(name = "PASS")
     private String PASS ;
     Connection dbConnection = null;
+    @Inject
+    BulletinSpiderMatriculeServices bulletinSpiderMatriculeServices ;
 
     @Inject
     EntityManager em;
@@ -113,7 +116,7 @@ public class BulletinSpiderRessource {
         List<parametreDto>  dspsDto = new ArrayList<>() ;
 
 
-       bulletinSpider.bulletinInfos(idEcole ,libelleAnnee ,libellePeriode ,libelleClasse) ;
+        bulletinSpiderMatriculeServices.bulletinInfos(idEcole ,libelleAnnee ,libellePeriode ,matricule) ;
 
 
         Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecoleviedbv2", USER, PASS);
