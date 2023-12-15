@@ -287,7 +287,7 @@ System.out.println("Statut0 "+lisImpo.get(i).getStatut());
 
 
            System.out.println("Debut  creation Insrip "+inscriptionDto.toString());
-           messageRetour=  inscriptionService.verifInscriptionImporter(inscriptionDto,idEcole,elv.getEleve_matricule(),idAnneeScolaire);
+           messageRetour =  inscriptionService.verifInscriptionImporter(inscriptionDto,idEcole,elv.getEleve_matricule(),idAnneeScolaire);
 
            if(!messageRetour.equals("DEMANDE D'INSCRIPTION EFFECTUEE AVEC SUCCES!")){
                matriculeNonCreer.add(lisImpo.get(i).getMatricule()) ;

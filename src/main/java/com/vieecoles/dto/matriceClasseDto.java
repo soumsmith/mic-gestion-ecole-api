@@ -5,6 +5,7 @@ import java.util.List;
 public class matriceClasseDto {
    private  Long ideleve ;
    private  String matricule ;
+    private  String classe ;
     private  String nom ;
     private  String prenoms;
     private  int rang ;
@@ -15,6 +16,14 @@ public class matriceClasseDto {
 
     public Double getMoyenTrimes() {
         return moyenTrimes;
+    }
+
+    public String getClasse() {
+        return classe;
+    }
+
+    public void setClasse(String classe) {
+        this.classe = classe;
     }
 
     public void setMoyenTrimes(Double moyenTrimes) {

@@ -40,9 +40,18 @@ public class InfosPersoBulletins extends PanacheEntityBase {
     private Integer rang_3eme_trim ;
     private int TrangFr ;
     private String  codeEcole ;
+    private String cheminphoto ;
     private String  is_class_1er_trim ;
     private String  is_class_2e_trim ;
     private String  is_class_3e_trim ;
+
+    public String getCheminphoto() {
+        return cheminphoto;
+    }
+
+    public void setCheminphoto(String cheminphoto) {
+        this.cheminphoto = cheminphoto;
+    }
 
     public Long getId() {
         return id;
