@@ -17,6 +17,16 @@ public class InscriptionAvaliderDto {
     LocalDate Date_naissanceEleve ;
     String sexeEleve ;
     String contactEleve ;
+    String cheminphoto ;
+
+    public String getCheminphoto() {
+        return cheminphoto;
+    }
+
+    public void setCheminphoto(String cheminphoto) {
+        this.cheminphoto = cheminphoto;
+    }
+
     @Enumerated(EnumType.STRING)
     private Inscriptions.statusEleve inscriptions_statut_eleve ;
     @Enumerated(EnumType.STRING)
@@ -496,7 +506,8 @@ public class InscriptionAvaliderDto {
                                   Boolean externes ,
                                   Boolean ivoirien ,
                                   Boolean etranger_africain ,
-                                  Boolean etranger_non_africain
+                                  Boolean etranger_non_africain ,
+                                  String cheminphoto
 
 
     ) {
@@ -558,6 +569,7 @@ public class InscriptionAvaliderDto {
         this.ivoirien = ivoirien ;
         this.etranger_africain = etranger_africain ;
         this.etranger_non_africain = etranger_non_africain ;
+        this.cheminphoto = cheminphoto ;
     }
 
 

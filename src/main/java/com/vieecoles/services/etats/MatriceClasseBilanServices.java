@@ -29,7 +29,7 @@ public class MatriceClasseBilanServices {
     public List<matiereMoyenneBilanDto> getInfosBilanMatriceClasse(Long idEcole , String libelleAnnee , String periode ,Long anneeId ,String classe){
 
         Branche br = new Branche() ;
-        br= getLibelleMBranche(classe) ;
+        br= getLibelleMBranche(classe,idEcole) ;
           String myBranch = null ;
         myBranch = String.valueOf(Classe.find("select distinct m.branche.libelle from Classe m where m.libelle = ?1 and m.ecole.id = ?2",classe ,idEcole).firstResult());
 
@@ -131,7 +131,7 @@ public class MatriceClasseBilanServices {
              mat= Matiere.findById(idMatiere);
              //libelleMatiere= getLibelleMatiere(idMatiere) ;
 
-           libelleMatiere = mat.getLibelle() ;
+           //libelleMatiere = mat.getLibelle() ;
              System.out.println("libelleMatiere "+libelleMatiere);
              Double moyMat=  getBilanMoyMatiere(id ,periode ,libelleAnnee ,classe ,idEcole);
              l.setLibelleMatiereBilan(libelleMatiere);
@@ -364,10 +364,12 @@ public class MatriceClasseBilanServices {
 
     }
 
-    public Branche getLibelleMBranche(String classe){
+    public Branche getLibelleMBranche(String classe,Long idEcole){
         try {
-            TypedQuery<Branche> q = (TypedQuery<Branche>) em.createQuery( "SELECT  o.branche from Classe o   where o.libelle =:classe");
-            Branche branche = q.setParameter("classe" ,classe).getSingleResult() ;
+            TypedQuery<Branche> q = (TypedQuery<Branche>) em.createQuery( "SELECT  o.branche from Classe o   where o.libelle =:classe and o.ecole.id=:idEcole");
+            Branche branche = q.setParameter("classe" ,classe)
+                                .setParameter("idEcole" ,idEcole)
+                              .getSingleResult() ;
 
             return branche;
         } catch (NoResultException e) {

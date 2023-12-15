@@ -97,6 +97,7 @@ public class MatriceClasseRessource {
                                                  @PathParam("periode") String periode , @PathParam("anneeId") Long anneeId ,@PathParam("classe") String classe) throws Exception, JRException {
 
         return  matriceClasseServices.getInfosMatriceClasse(idEcole ,libelleAnnee ,periode ,anneeId, classe) ;
+        //return null;
     }
 
     @GET

@@ -29,6 +29,15 @@ public class Inscriptions extends PanacheEntityBase {
     private  String inscriptions_contact2 ;
     private String num_decision_affecte;
     private String decision_ant ;
+    private  String cheminphoto ;
+
+    public String getCheminphoto() {
+        return cheminphoto;
+    }
+
+    public void setCheminphoto(String cheminphoto) {
+        this.cheminphoto = cheminphoto;
+    }
 
     public String getDecision_ant() {
         return decision_ant;

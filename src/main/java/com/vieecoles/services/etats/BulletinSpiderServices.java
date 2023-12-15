@@ -140,8 +140,12 @@ public class BulletinSpiderServices {
                 k.setCodeEcole(myEcole.getEcolecode());
                 k.setBg(myEcole.getFiligramme());
                 k.setLogo(myEcole.getLogoBlob());
-                if(myIns!=null && myIns.getPhoto_eleve()!=null)
-                k.setPhoto_eleve(myIns.getPhoto_eleve());
+                if(myIns!=null && myIns.getCheminphoto()!=null)
+                {
+                    //k.setPhoto_eleve(myIns.getPhoto_eleve());
+                    k.setCheminphoto(myIns.getCheminphoto());
+                }
+
                 k.setTcoefFr(TcoefFr);
                 k.setTmoyCoefFr(TmoyCoefFr);
                 k.setIs_class_1er_trim(is_class_1er_trim);
@@ -180,8 +184,11 @@ public class BulletinSpiderServices {
                 l.setBg(myEcole.getFiligramme());
                 l.setLogo(myEcole.getLogoBlob());
                     System.out.println(">>>>>Before   set photo ");
-                    if(myIns !=null && myIns.getPhoto_eleve()!=null)
-                l.setPhoto_eleve(myIns.getPhoto_eleve());
+                    if(myIns !=null && myIns.getCheminphoto()!=null)
+                    {
+                        //l.setPhoto_eleve(myIns.getPhoto_eleve());
+                        l.setCheminphoto(myIns.getCheminphoto());
+                    }
                 System.out.println(">>>>>After   set photo ");
                 l.setTcoefFr(TcoefFr);
                 l.setTmoyCoefFr(TmoyCoefFr);
