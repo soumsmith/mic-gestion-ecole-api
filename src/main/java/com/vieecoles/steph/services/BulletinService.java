@@ -277,9 +277,10 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 			removeAllBulletinsByClasseProcess(classe, annee, periode);
 			for (MoyenneEleveDto me : moyenneParEleve) {
 //			 logger.info(g.toJson(me));
-				logger.info(String.format("%s %s  %s  %s ", me.getClasse().getEcole().getId(),
-						me.getClasse().getLibelle(), me.getMoyenne(), me.getAppreciation()));
-
+				logger.info(String.format("%s %s  %s  %s %s", me.getClasse().getEcole().getId(),
+						me.getClasse().getLibelle(), me.getMoyenne(), me.getAppreciation(), me.getEleve().getId()));
+				
+				logger.info(String.format(" getByEleveAndEcoleAndAnnee  %s  %s %s", me.getEleve().getId(), me.getClasse().getEcole().getId(), Long.parseLong(annee)));
 				Inscription infosInscriptionsEleve = inscriptionService.getByEleveAndEcoleAndAnnee(
 						me.getEleve().getId(), me.getClasse().getEcole().getId(), Long.parseLong(annee));
 				// Collecter toutes les moyennes des élèves pour déterminer la moyenne max, min
