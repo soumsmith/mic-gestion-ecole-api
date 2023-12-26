@@ -299,10 +299,12 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 //			Gson g = new Gson();
 			// pour chaque évaluation avoir la liste des notes des élèves
 //			System.out.println("ealist "+evalList);
+			
+			List<Evaluation> _iterateur = new ArrayList<Evaluation>();
+			if(evalList!=null)
+			_iterateur.addAll(evalList);
 
-			ListIterator<Evaluation> iterateur = evalList.listIterator();
-			while (iterateur.hasNext()) {
-				Evaluation ev = iterateur.next();
+			for(Evaluation ev : _iterateur) {
 				List<Notes> listNotesByEvaluation = new ArrayList<Notes>();
 				logger.info(ev.getPec().toString());
 				if (ev.getPec() != null && ev.getPec() == Constants.PEC_1) {
