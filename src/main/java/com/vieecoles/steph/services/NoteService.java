@@ -7,7 +7,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -297,10 +299,67 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 //			Gson g = new Gson();
 			// pour chaque évaluation avoir la liste des notes des élèves
 //			System.out.println("ealist "+evalList);
-			for (Evaluation ev : evalList) {
+
+			ListIterator<Evaluation> iterateur = evalList.listIterator();
+			while (iterateur.hasNext()) {
+				Evaluation ev = iterateur.next();
+				List<Notes> listNotesByEvaluation = new ArrayList<Notes>();
 				logger.info(ev.getPec().toString());
-				if (ev.getPec() != null && ev.getPec() == Constants.PEC_1)
-					noteList.addAll(getNotesClasseWithPec(ev.getCode(), Constants.PEC_1));
+				if (ev.getPec() != null && ev.getPec() == Constants.PEC_1) {
+					listNotesByEvaluation = getNotesClasseWithPec(ev.getCode(), Constants.PEC_1);
+					noteList.addAll(listNotesByEvaluation);
+				}
+
+				if (ev.getMatiereEcole().getMatiereParent() != null
+						&& ev.getMatiereEcole().getMatiereParent().getIsEMR() != null
+						&& ev.getMatiereEcole().getMatiereParent().getIsEMR().equals(Constants.OUI)) {
+					ev.getMatiereEcole().setPec(Constants.PEC_0);
+					
+					Evaluation evalEMR = new Evaluation();
+					evalEMR.setAnnee(ev.getAnnee());
+					evalEMR.setClasse(ev.getClasse());
+					evalEMR.setPec(ev.getPec());
+					evalEMR.setCode(ev.getCode() + "_1");
+					evalEMR.setId(ev.getId() + 10000000L);
+					evalEMR.setNoteSur(ev.getNoteSur());
+					evalEMR.setMatiereEcole(ev.getMatiereEcole().getMatiereParent());
+					evalEMR.setPeriode(ev.getPeriode());
+					evalEMR.setType(ev.getType());
+
+//					iterateur.add(evalEMR);
+					evalList.add(evalEMR);
+					Double _noteEMR = 0.0;
+
+					if (listNotesByEvaluation != null) {
+						Double _totDiv = 0.0;
+						Double _totNotes = 0.0;
+						for (Notes _note : listNotesByEvaluation) {
+							_totNotes = _totNotes + _note.getNote();
+							_totDiv = _totDiv + Double.parseDouble(_note.getEvaluation().getNoteSur())
+									/ Double.parseDouble(Constants.DEFAULT_NOTE_SUR);
+						}
+						if (_totDiv == 0.0)
+							_totDiv = 1.0;
+						_noteEMR = CommonUtils.roundDouble((_totNotes / _totDiv), 2);
+
+						Notes noteEMR = new Notes();
+						noteEMR.setClasseEleve(
+								listNotesByEvaluation.size() != 0 ? listNotesByEvaluation.get(0).getClasseEleve()
+										: null);
+						noteEMR.setEvaluation(evalEMR);
+						noteEMR.setId(listNotesByEvaluation.size() != 0
+								? listNotesByEvaluation.get(listNotesByEvaluation.size() - 1).getId() + 10000000L
+								: null);
+						noteEMR.setNote(_noteEMR);
+						noteEMR.setPec(Constants.PEC_1);
+						noteEMR.setPersonnel(
+								listNotesByEvaluation.size() != 0 ? listNotesByEvaluation.get(0).getPersonnel() : null);
+						noteEMR.setStatut(
+								listNotesByEvaluation.size() != 0 ? listNotesByEvaluation.get(0).getStatut() : null);
+						noteList.add(noteEMR);
+					}
+
+				}
 			}
 //		logger.info("note size " + noteList.size());
 //		logger.info(gson.toJson(noteList));
@@ -981,12 +1040,11 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 						bulletinsElevesList);
 //				System.out.println("Moy an ext ::: " + moyAn);
 			}
-			logger.info(
-					String.format("Eleve %s > Moyenne Annuelle = %s - Interne = %s - IEPP = %s - passage = %s ",
-							me.getEleve().getMatricule(), moyAn,
-							moyAnInterne.stream().mapToDouble(Double::doubleValue).average().orElse(0.0),
-							moyAnIEPP.stream().mapToDouble(Double::doubleValue).average().orElse(0.0),
-							moyAnPassage.stream().mapToDouble(Double::doubleValue).average().orElse(0.0)));
+			logger.info(String.format("Eleve %s > Moyenne Annuelle = %s - Interne = %s - IEPP = %s - passage = %s ",
+					me.getEleve().getMatricule(), moyAn,
+					moyAnInterne.stream().mapToDouble(Double::doubleValue).average().orElse(0.0),
+					moyAnIEPP.stream().mapToDouble(Double::doubleValue).average().orElse(0.0),
+					moyAnPassage.stream().mapToDouble(Double::doubleValue).average().orElse(0.0)));
 
 			me.setMoyenneAnnuelle(moyAn);
 			me.setMoyenneIEPP(moyAnIEPP.stream().mapToDouble(Double::doubleValue).average().orElse(0.0));
