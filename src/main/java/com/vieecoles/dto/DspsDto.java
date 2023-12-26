@@ -43,6 +43,25 @@ public class DspsDto {
 
     private  String nom_ecole  ;
 
+    private Double moyen_fr;
+    private  String is_class_fr ;
+
+    public Double getMoyen_fr() {
+        return moyen_fr;
+    }
+
+    public void setMoyen_fr(Double moyen_fr) {
+        this.moyen_fr = moyen_fr;
+    }
+
+    public String getIs_class_fr() {
+        return is_class_fr;
+    }
+
+    public void setIs_class_fr(String is_class_fr) {
+        this.is_class_fr = is_class_fr;
+    }
+
     public DspsDto() {
     }
 

@@ -26,6 +26,8 @@
 	<field name="boursierDto" class="java.util.List"/>
 	<field name="effApprocheNiveauGenreDto" class="java.util.List"/>
 	<field name="intro" class="java.util.List"/>
+	<field name="effectifElevLangueVivante2Dto" class="java.util.List"/>
+	<field name="etatNominatifEnseignatDto" class="java.util.List"/>
 
 	<!--<group name="cover">
 		<groupHeader>
@@ -246,9 +248,9 @@
 				</subreportParameter>
 
 				<subreportParameter name="REPORT_DATA_SOURCE">
-					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{intro})]]></subreportParameterExpression>
+					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{effectifElevLangueVivante2Dto})]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportExpression><![CDATA["etats/spider/effectif_classe_pedagogique_genre_niveau.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["etats/spider/effectifParLanguevivante.jasper"]]></subreportExpression>
 			</p:subreportPart>
 		</part>
 		<part uuid="968947e9-d627-441c-a302-1bd9eaebff74">
@@ -263,6 +265,22 @@
 				<subreportExpression><![CDATA["etats/spider/Vie_scolaire.jasper"]]></subreportExpression>
 			</p:subreportPart>
 		</part>
+
+		<part uuid="968947e9-d627-441c-a302-1bd9eaebff15">
+			<p:subreportPart xmlns:p="http://jasperreports.sourceforge.net/jasperreports/parts" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/parts http://jasperreports.sourceforge.net/xsd/parts.xsd">
+				<subreportParameter name="REPORT_CONNECTION">
+					<subreportParameterExpression><![CDATA[$P{REPORT_CONNECTION}]]></subreportParameterExpression>
+				</subreportParameter>
+
+				<subreportParameter name="REPORT_DATA_SOURCE">
+					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{etatNominatifEnseignatDto})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportExpression><![CDATA["etats/spider/Etat_nominatif_des_enseignants.jasper"]]></subreportExpression>
+			</p:subreportPart>
+		</part>
+
+
+
 		<part uuid="968947e9-d627-441c-a302-1bd9eaebff75">
 			<p:subreportPart xmlns:p="http://jasperreports.sourceforge.net/jasperreports/parts" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/parts http://jasperreports.sourceforge.net/xsd/parts.xsd">
 				<subreportParameter name="REPORT_CONNECTION">

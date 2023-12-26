@@ -16,6 +16,16 @@ public class spiderDto {
    private List<RepartitionEleveParAnNaissDto> repartitionEleveParAnNaissDto ;
     private List<BoursierDto> boursierDto ;
     private List<EffApprocheNiveauGenreDto> effApprocheNiveauGenreDto ;
+    private List<EffectifElevLangueVivante2Dto> effectifElevLangueVivante2Dto ;
+    private List<EtatNominatifEnseignatDto> etatNominatifEnseignatDto ;
+
+    public List<EtatNominatifEnseignatDto> getEtatNominatifEnseignatDto() {
+        return etatNominatifEnseignatDto;
+    }
+
+    public void setEtatNominatifEnseignatDto(List<EtatNominatifEnseignatDto> etatNominatifEnseignatDto) {
+        this.etatNominatifEnseignatDto = etatNominatifEnseignatDto;
+    }
 
     public List<EffApprocheNiveauGenreDto> getEffApprocheNiveauGenreDto() {
         return effApprocheNiveauGenreDto;
@@ -37,6 +47,14 @@ public class spiderDto {
 
     public List<RepartitionEleveParAnNaissDto> getRepartitionEleveParAnNaissDto() {
         return repartitionEleveParAnNaissDto;
+    }
+
+    public List<EffectifElevLangueVivante2Dto> getEffectifElevLangueVivante2Dto() {
+        return effectifElevLangueVivante2Dto;
+    }
+
+    public void setEffectifElevLangueVivante2Dto(List<EffectifElevLangueVivante2Dto> effectifElevLangueVivante2Dto) {
+        this.effectifElevLangueVivante2Dto = effectifElevLangueVivante2Dto;
     }
 
     public void setRepartitionEleveParAnNaissDto(List<RepartitionEleveParAnNaissDto> repartitionEleveParAnNaissDto) {

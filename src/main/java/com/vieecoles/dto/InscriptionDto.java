@@ -29,6 +29,17 @@ public class InscriptionDto {
     private String num_decision_affecte ;
     @Enumerated(EnumType.STRING)
     private Inscriptions.statusEleve inscriptions_statut_eleve ;
+
+    public String getDate_naissanceEleve() {
+        return date_naissanceEleve;
+    }
+
+    public void setDate_naissanceEleve(String date_naissanceEleve) {
+        this.date_naissanceEleve = date_naissanceEleve;
+    }
+
+    private String date_naissanceEleve ;
+
     @Enumerated(EnumType.STRING)
     private Inscriptions.typeOperation inscriptions_type ;
     private  int   inscriptions_delete ;

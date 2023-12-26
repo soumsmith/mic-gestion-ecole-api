@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="callSpiderNobel" pageWidth="595" pageHeight="850" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5a2b5033-89f0-4350-bb7d-4afdfdd95def">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="NO_DATA_ADAPTER"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="callSpiderNobel" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5a2b5033-89f0-4350-bb7d-4afdfdd95def">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ecolevieDB"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
@@ -407,7 +407,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.libelle_classe =  $P{clas
 			<band height="723">
 				<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				<subreport>
-					<reportElement stretchType="RelativeToTallestObject" x="-22" y="10" width="584" height="200" uuid="4ac0ee79-a3ca-47bd-a7ea-48f4b0a47e5b">
+					<reportElement stretchType="RelativeToTallestObject" x="-16" y="10" width="584" height="200" uuid="4ac0ee79-a3ca-47bd-a7ea-48f4b0a47e5b">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
 					<subreportParameter name="matricule">
@@ -429,6 +429,12 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.libelle_classe =  $P{clas
 		</groupHeader>
 	</group>
 	<background>
-		<band splitType="Stretch"/>
+		<band height="802" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<image scaleImage="FillFrame" onErrorType="Blank">
+				<reportElement x="-16" y="0" width="584" height="802" uuid="381f9557-868c-45e1-8d15-b28b5d8b2b17"/>
+				<imageExpression><![CDATA[$F{bg}]]></imageExpression>
+			</image>
+		</band>
 	</background>
 </jasperReport>

@@ -35,6 +35,7 @@ public class InfosPersoBulletins extends PanacheEntityBase {
     private Double moy_1er_trim ;
     private Double moy_2eme_trim ;
     private Double moy_3eme_trim ;
+    private  Double TmoyCoefReligio ;
     private Integer rang_1er_trim ;
     private Integer rang_2eme_trim ;
     private Integer rang_3eme_trim ;
@@ -44,6 +45,14 @@ public class InfosPersoBulletins extends PanacheEntityBase {
     private String  is_class_1er_trim ;
     private String  is_class_2e_trim ;
     private String  is_class_3e_trim ;
+
+    public Double getTmoyCoefReligio() {
+        return TmoyCoefReligio;
+    }
+
+    public void setTmoyCoefReligio(Double tmoyCoefReligio) {
+        TmoyCoefReligio = tmoyCoefReligio;
+    }
 
     public String getCheminphoto() {
         return cheminphoto;
