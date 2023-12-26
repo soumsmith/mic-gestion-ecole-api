@@ -32,18 +32,18 @@ public class BulletinResource {
 	@Tag(name = "Bulletins")
 	public Response handleSave(@QueryParam("classe") String classe ,@QueryParam("annee") String  annee, @QueryParam("periode") String periode) {
 		int nbreEleve = 0;
-		List<Bulletin> list = new ArrayList<>();
+//		List<Bulletin> list = new ArrayList<>();
 		try {
 			nbreEleve = bulletinService.handleSave(classe, annee, periode);
-			Classe cl = Classe.findById(Long.parseLong(classe));
-			System.out.println(cl.getEcole().getId());
-			try {
-			list = Bulletin.find("ecoleId =?1", cl.getEcole().getId()).list();
-			}catch(RuntimeException r) {
-				list = null;
-				r.printStackTrace();
-			}
-			System.out.println(list);
+//			Classe cl = Classe.findById(Long.parseLong(classe));
+//			System.out.println(cl.getEcole().getId());
+//			try {
+//			list = Bulletin.find("ecoleId =?1", cl.getEcole().getId()).list();
+//			}catch(RuntimeException r) {
+//				list = null;
+//				r.printStackTrace();
+//			}
+//			System.out.println(list);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.serverError().entity(e.getMessage()).build();

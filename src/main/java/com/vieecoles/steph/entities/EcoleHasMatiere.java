@@ -78,6 +78,9 @@ public class EcoleHasMatiere extends PanacheEntityBase{
     
     @Column(name = "parent_matiere")
     private String parentMatiereLibelle;
+    
+    @Column(name = "is_emr")
+    private String isEMR;
 
     private LocalDateTime dateCreation;
     private LocalDateTime dateUpdate;
