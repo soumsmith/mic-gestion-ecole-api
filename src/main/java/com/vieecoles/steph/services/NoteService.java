@@ -299,12 +299,12 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 //			Gson g = new Gson();
 			// pour chaque évaluation avoir la liste des notes des élèves
 //			System.out.println("ealist "+evalList);
-			
-			List<Evaluation> _iterateur = new ArrayList<Evaluation>();
-			if(evalList!=null)
-			_iterateur.addAll(evalList);
 
-			for(Evaluation ev : _iterateur) {
+			List<Evaluation> _iterateur = new ArrayList<Evaluation>();
+			if (evalList != null)
+				_iterateur.addAll(evalList);
+
+			for (Evaluation ev : _iterateur) {
 				List<Notes> listNotesByEvaluation = new ArrayList<Notes>();
 				logger.info(ev.getPec().toString());
 				if (ev.getPec() != null && ev.getPec() == Constants.PEC_1) {
@@ -316,7 +316,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 						&& ev.getMatiereEcole().getMatiereParent().getIsEMR() != null
 						&& ev.getMatiereEcole().getMatiereParent().getIsEMR().equals(Constants.OUI)) {
 					ev.getMatiereEcole().setPec(Constants.PEC_0);
-					
+
 					Evaluation evalEMR = new Evaluation();
 					evalEMR.setAnnee(ev.getAnnee());
 					evalEMR.setClasse(ev.getClasse());
@@ -325,41 +325,27 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 					evalEMR.setId(ev.getId() + 10000000L);
 					evalEMR.setNoteSur(ev.getNoteSur());
 					evalEMR.setMatiereEcole(ev.getMatiereEcole().getMatiereParent());
+					System.out.println("EMR -> " + ev.getMatiereEcole().getMatiereParent().getLibelle());
 					evalEMR.setPeriode(ev.getPeriode());
 					evalEMR.setType(ev.getType());
 
 //					iterateur.add(evalEMR);
 					evalList.add(evalEMR);
-					Double _noteEMR = 0.0;
-
-					if (listNotesByEvaluation != null) {
-						Double _totDiv = 0.0;
-						Double _totNotes = 0.0;
-						for (Notes _note : listNotesByEvaluation) {
-							_totNotes = _totNotes + _note.getNote();
-							_totDiv = _totDiv + Double.parseDouble(_note.getEvaluation().getNoteSur())
-									/ Double.parseDouble(Constants.DEFAULT_NOTE_SUR);
-						}
-						if (_totDiv == 0.0)
-							_totDiv = 1.0;
-						_noteEMR = CommonUtils.roundDouble((_totNotes / _totDiv), 2);
-
+					for (Notes n : listNotesByEvaluation) {
 						Notes noteEMR = new Notes();
-						noteEMR.setClasseEleve(
-								listNotesByEvaluation.size() != 0 ? listNotesByEvaluation.get(0).getClasseEleve()
-										: null);
+						noteEMR.setClasseEleve(n.getClasseEleve());
 						noteEMR.setEvaluation(evalEMR);
-						noteEMR.setId(listNotesByEvaluation.size() != 0
-								? listNotesByEvaluation.get(listNotesByEvaluation.size() - 1).getId() + 10000000L
-								: null);
-						noteEMR.setNote(_noteEMR);
-						noteEMR.setPec(Constants.PEC_1);
-						noteEMR.setPersonnel(
-								listNotesByEvaluation.size() != 0 ? listNotesByEvaluation.get(0).getPersonnel() : null);
-						noteEMR.setStatut(
-								listNotesByEvaluation.size() != 0 ? listNotesByEvaluation.get(0).getStatut() : null);
+						noteEMR.setId(n.getId() + 1000000L);
+						noteEMR.setNote(n.getNote());
+						noteEMR.setPec(n.getPec());
+						noteEMR.setPersonnel(n.getPersonnel());
+						noteEMR.setStatut(n.getStatut());
 						noteList.add(noteEMR);
-					}
+						if(n.getNote() == null)
+							System.out.println("NOTE NULLE");
+						else
+							System.out.println("NOTE OK");
+					}			
 
 				}
 			}
@@ -499,9 +485,22 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 					classementAnnuelEleveParMatiere(moyenneList, classe.getBranche().getId(), classe.getEcole().getId(),
 							periodeCtrl);
 			}
-
+			Gson g = new Gson();
 			Collections.sort(moyenneList);
-//	    logger.info(g.toJson(moyenneList));
+			for (MoyenneEleveDto m : moyenneList) {
+				for (Map.Entry<EcoleHasMatiere, List<Notes>> entry : m.getNotesMatiereMap().entrySet()) {
+					System.out.println("---> ");
+					for (Notes n : entry.getValue()) {
+						System.out.println("---> " + n.getEvaluation().getMatiereEcole().getLibelle());
+						if (n.getEvaluation().getMatiereEcole().getLibelle().contains("Education Morale")) {
+							System.out.println(g.toJson(n));
+						}
+						break;
+					}
+
+				}
+				break;
+			}
 			return moyenneList;
 		} catch (RuntimeException r) {
 			r.printStackTrace();
@@ -723,9 +722,11 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 
 //				entry.getValue().clear();
 //				entry.getValue().
-
-				for (Double note : noteList)
-					somme += note;
+				
+					for (Double note : noteList) {
+						System.out.println(note);
+						somme += note;
+					}
 
 				moyenne = somme / (diviser.equals(Double.parseDouble("0")) ? Double.parseDouble("1") : diviser);
 				logger.info("Moyenne = " + somme + " / " + diviser + " = " + CommonUtils.roundDouble(moyenne, 2));
