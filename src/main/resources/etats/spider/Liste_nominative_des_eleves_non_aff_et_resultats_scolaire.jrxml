@@ -444,7 +444,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{Compteur}]]></textFieldExpression>
 				</textField>
-				<textField textAdjust="ScaleFont">
+				<textField textAdjust="ScaleFont" isBlankWhenNull="true">
 					<reportElement style="contenuTableau" x="20" y="0" width="48" height="15" uuid="c4a798d8-36a6-408e-8071-c1b94f64d1fc">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
@@ -467,7 +467,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{matricule}]]></textFieldExpression>
 				</textField>
-				<textField textAdjust="ScaleFont">
+				<textField textAdjust="ScaleFont" isBlankWhenNull="true">
 					<reportElement stretchType="ContainerHeight" isPrintRepeatedValues="false" x="68" y="0" width="82" height="15" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true" uuid="c261646c-a0f2-444c-b27e-b86d6bbfe1d3">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
@@ -491,7 +491,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{nomEleve}+" "+$F{prenomEleve}]]></textFieldExpression>
 				</textField>
-				<textField textAdjust="ScaleFont">
+				<textField textAdjust="ScaleFont" isBlankWhenNull="true">
 					<reportElement style="contenuTableau" x="150" y="0" width="27" height="15" uuid="7810bc17-d131-4923-84bf-e68dce202682">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
@@ -514,7 +514,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{sexe}]]></textFieldExpression>
 				</textField>
-				<textField textAdjust="ScaleFont">
+				<textField textAdjust="ScaleFont" isBlankWhenNull="true">
 					<reportElement style="contenuTableau" x="177" y="0" width="36" height="15" uuid="10f257f7-6d39-40a8-a3b3-8f16f70e9395">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
@@ -537,7 +537,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{anneeNaissance}]]></textFieldExpression>
 				</textField>
-				<textField textAdjust="ScaleFont">
+				<textField textAdjust="ScaleFont" isBlankWhenNull="true">
 					<reportElement style="contenuTableau" x="213" y="0" width="64" height="15" uuid="ebab6b07-b025-4328-b869-157b6dc5db1a">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
@@ -560,7 +560,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{nationnalite}]]></textFieldExpression>
 				</textField>
-				<textField textAdjust="ScaleFont">
+				<textField textAdjust="ScaleFont" isBlankWhenNull="true">
 					<reportElement style="contenuTableau" x="277" y="0" width="22" height="15" uuid="31c8dabc-b65c-4614-b3ff-64d97e4ecb84">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
@@ -583,7 +583,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{redoublan}]]></textFieldExpression>
 				</textField>
-				<textField textAdjust="ScaleFont">
+				<textField textAdjust="ScaleFont" isBlankWhenNull="true">
 					<reportElement style="contenuTableau" x="299" y="0" width="47" height="15" uuid="632ea928-cf40-454d-9e36-c3fe1ac96b65">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
@@ -606,7 +606,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{affecte}]]></textFieldExpression>
 				</textField>
-				<textField textAdjust="ScaleFont">
+				<textField textAdjust="ScaleFont" isBlankWhenNull="true">
 					<reportElement style="contenuTableau" x="346" y="0" width="47" height="15" uuid="a36ba6fb-da8b-4717-8c31-f09e93b7d43a">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
@@ -629,7 +629,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{numDecisionAffecte}]]></textFieldExpression>
 				</textField>
-				<textField textAdjust="ScaleFont">
+				<textField textAdjust="ScaleFont" isBlankWhenNull="true">
 					<reportElement style="contenuTableau" x="393" y="0" width="50" height="15" uuid="5b6ff692-537c-4c59-a8d6-a3635a218794">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
@@ -652,7 +652,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{moyeGeneral}]]></textFieldExpression>
 				</textField>
-				<textField textAdjust="ScaleFont">
+				<textField textAdjust="ScaleFont" isBlankWhenNull="true">
 					<reportElement style="contenuTableau" x="443" y="0" width="50" height="15" uuid="d2f6a259-f48d-49fa-b5d5-e716ae777b8e">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
@@ -675,7 +675,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{rang}]]></textFieldExpression>
 				</textField>
-				<textField textAdjust="ScaleFont">
+				<textField textAdjust="ScaleFont" isBlankWhenNull="true">
 					<reportElement style="contenuTableau" x="493" y="0" width="76" height="15" uuid="579c561c-9ce9-4663-b229-766afb4a8b1f">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>

@@ -321,6 +321,7 @@ public class spiderRessource {
         detailsBull.setBoursierDto(boursierDto);
         detailsBull.setEffApprocheNiveauGenreDto(effApprocheNiveauGenreDto);
         detailsBull.setEffectifElevLangueVivante2Dto(effectifElevLangueVivante2Dto);
+        detailsBull.setEtatNominatifEnseignatDto(etatNominatifEnseignatDto);
 
       // System.out.print("soummm"+resultatsElevesAffecteDto.toString());
         if(type.toUpperCase().equals("PDF")){

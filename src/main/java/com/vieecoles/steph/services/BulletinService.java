@@ -199,7 +199,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 		try {
 
 			bulletins = Bulletin.find("classeId = ?1 and anneeId= ?2 and periodeId = ?3 and statut =?4",
-					Long.parseLong(classe), Long.parseLong(annee), Long.parseLong(periode), Constants.MODIFIABLE)
+							Long.parseLong(classe), Long.parseLong(annee), Long.parseLong(periode), Constants.MODIFIABLE)
 					.list();
 			for (Bulletin bulletin : bulletins) {
 				List<DetailBulletin> details = DetailBulletin.find("bulletin.id = ?1", bulletin.getId()).list();
@@ -234,7 +234,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 			if (e.getClass() == NoResultException.class) {
 				logger.info("Aucun Bulletin à supprimer trouvé");
 				bulletinsArchives = Bulletin.find("classeId = ?1 and anneeId= ?2 and periodeId = ?3 and statut =?4",
-						Long.parseLong(classe), Long.parseLong(annee), Long.parseLong(periode), Constants.ARCHIVE)
+								Long.parseLong(classe), Long.parseLong(annee), Long.parseLong(periode), Constants.ARCHIVE)
 						.count();
 				if (bulletinsArchives != 0L) {
 					throw new RuntimeException("Les bulletins sont archivés, aucune modification possible!");
@@ -279,7 +279,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 //			 logger.info(g.toJson(me));
 				logger.info(String.format("%s %s  %s  %s %s", me.getClasse().getEcole().getId(),
 						me.getClasse().getLibelle(), me.getMoyenne(), me.getAppreciation(), me.getEleve().getId()));
-				
+
 				logger.info(String.format(" getByEleveAndEcoleAndAnnee  %s  %s %s", me.getEleve().getId(), me.getClasse().getEcole().getId(), Long.parseLong(annee)));
 				Inscription infosInscriptionsEleve = inscriptionService.getByEleveAndEcoleAndAnnee(
 						me.getEleve().getId(), me.getClasse().getEcole().getId(), Long.parseLong(annee));
@@ -355,9 +355,9 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 				try {
 
 					bltDb = Bulletin.find(
-							"matricule = :matricule and classeId = :classe and periodeId= :periode and anneeId= :annee",
-							Parameters.with("matricule", bulletin.getMatricule()).and("classe", Long.parseLong(classe))
-									.and("periode", Long.parseLong(periode)).and("annee", Long.parseLong(annee)))
+									"matricule = :matricule and classeId = :classe and periodeId= :periode and anneeId= :annee",
+									Parameters.with("matricule", bulletin.getMatricule()).and("classe", Long.parseLong(classe))
+											.and("periode", Long.parseLong(periode)).and("annee", Long.parseLong(annee)))
 							.singleResult();
 				} catch (NoResultException e) {
 					logger.info("Aucun bulletin trouvé dans la bd");
@@ -389,8 +389,8 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 					DetailBulletin flag = null;
 					try {
 						flag = DetailBulletin.find("bulletin.id = :bulletinId and matiereCode =: matiereCode ",
-								Parameters.with("bulletinId", bulletin.getId()).and("matiereCode",
-										entry.getKey().getCode()))
+										Parameters.with("bulletinId", bulletin.getId()).and("matiereCode",
+												entry.getKey().getCode()))
 								.singleResult();
 					} catch (NoResultException ex) {
 						logger.info("Aucun detail de bulletin trouvé pour la matiere " + entry.getKey().getLibelle());
@@ -540,7 +540,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 
 			logger.info(String.format("Max= %s , Min = %s, Sum = %s, Avg = %s, effectif %s", maxMoy, minMoy, sumMoy,
 					avgMoy, effectif));
-			
+
 			// Mise à jour des bulletins
 			bulletin = new Bulletin();
 			for (String id : bulletinIdList) {

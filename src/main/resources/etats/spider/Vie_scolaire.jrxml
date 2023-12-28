@@ -1,19 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Vie_scolaire" pageWidth="555" pageHeight="802" columnWidth="515" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e4434007-2c81-4873-9647-0c650bf216e1">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Vie_scolaire" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e4434007-2c81-4873-9647-0c650bf216e1">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ecolevieDB2"/>
 	<property name="net.sf.jasperreports.export.docx.flexible.row.height" value="true"/>
 	<property name="net.sf.jasperreports.export.docx.frames.as.nested.tables" value="false"/>
-	<property name="com.jaspersoft.studio.unit." value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<style name="Border">
 		<box>
 			<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -49,14 +40,14 @@
 		<groupHeader>
 			<band height="655">
 				<staticText>
-					<reportElement x="-11" y="70" width="112" height="20" uuid="c405fcd9-1131-4f0d-8ba0-9a90b10ad5cc"/>
+					<reportElement x="11" y="72" width="112" height="20" uuid="c405fcd9-1131-4f0d-8ba0-9a90b10ad5cc"/>
 					<textElement>
 						<font fontName="SansSerif" size="8"/>
 					</textElement>
 					<text><![CDATA[1-Les cas de grossesses ]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="-6" y="48" width="95" height="20" uuid="1f3b8eb7-23d8-439c-ae55-591c94c8f2f3">
+					<reportElement x="16" y="50" width="95" height="20" uuid="1f3b8eb7-23d8-439c-ae55-591c94c8f2f3">
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -66,7 +57,7 @@
 					<text><![CDATA[C-LES CAS SOCIAUX]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="-6" y="28" width="145" height="20" uuid="dbaf4c09-990d-45f8-9793-776591244b5a">
+					<reportElement x="16" y="30" width="145" height="20" uuid="dbaf4c09-990d-45f8-9793-776591244b5a">
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -76,7 +67,7 @@
 					<text><![CDATA[B-LE CONSEIL DE DISCIPLINE]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="-5" y="8" width="75" height="20" uuid="a216a483-c3c5-4e88-b6ac-b7bc673cfc85">
+					<reportElement x="17" y="10" width="75" height="20" uuid="a216a483-c3c5-4e88-b6ac-b7bc673cfc85">
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -86,28 +77,28 @@
 					<text><![CDATA[A-LE CONSEIL INTERIEUR]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="-3" y="395" width="80" height="20" uuid="f2f661b2-fa40-46cb-9167-ec10a9314d27"/>
+					<reportElement x="19" y="397" width="80" height="20" uuid="f2f661b2-fa40-46cb-9167-ec10a9314d27"/>
 					<textElement>
 						<font fontName="SansSerif" size="8"/>
 					</textElement>
 					<text><![CDATA[3- les autres cas ]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="-15" y="240" width="104" height="20" uuid="a49dec28-964a-40f4-a58f-ebc51ecadd27"/>
+					<reportElement x="7" y="242" width="104" height="20" uuid="a49dec28-964a-40f4-a58f-ebc51ecadd27"/>
 					<textElement>
 						<font fontName="SansSerif" size="8"/>
 					</textElement>
 					<text><![CDATA[2-Les cas d’abandons ]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="0" y="494" width="231" height="20" uuid="339cd30e-0ec3-4a10-8785-ebb2401b09d8"/>
+					<reportElement x="22" y="496" width="231" height="20" uuid="339cd30e-0ec3-4a10-8785-ebb2401b09d8"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font fontName="SansSerif" size="8"/>
 					</textElement>
 					<text><![CDATA[D-AUTRE ACTIVITES LIEES A LA VIE SCOLAIRE ]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="17" y="524" width="92" height="16" uuid="788158ad-dbac-4679-a51a-93435b708083"/>
+					<reportElement x="39" y="526" width="92" height="16" uuid="788158ad-dbac-4679-a51a-93435b708083"/>
 					<textElement textAlignment="Left">
 						<font fontName="SansSerif" size="8"/>
 						<paragraph lineSpacingSize="1.0"/>
@@ -115,7 +106,7 @@
 					<text><![CDATA[1-Cantine scolaire : ]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="29" y="544" width="60" height="16" uuid="5f50a5ab-802d-4327-9d30-cc8e8f4bd422"/>
+					<reportElement x="51" y="546" width="60" height="16" uuid="5f50a5ab-802d-4327-9d30-cc8e8f4bd422"/>
 					<textElement textAlignment="Left">
 						<font fontName="SansSerif" size="8"/>
 						<paragraph lineSpacingSize="1.0"/>
@@ -123,7 +114,7 @@
 					<text><![CDATA[2-Infirmerie : ]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="24" y="564" width="71" height="18" uuid="67749347-0fb6-4cff-9c8c-6363c9a92787">
+					<reportElement x="46" y="566" width="71" height="18" uuid="67749347-0fb6-4cff-9c8c-6363c9a92787">
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<textElement textAlignment="Left">
@@ -133,7 +124,7 @@
 					<text><![CDATA[3-Bibliothèque : ]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="-3" y="584" width="159" height="18" uuid="ed3993e6-4f92-4abf-8cf3-18398623c733">
+					<reportElement x="19" y="586" width="159" height="18" uuid="ed3993e6-4f92-4abf-8cf3-18398623c733">
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
@@ -142,7 +133,7 @@
 					<text><![CDATA[E-ACTIVITES PARA SCOLAIRES ]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="-3" y="604" width="170" height="16" uuid="a840c0b5-fca2-4aae-90df-45ca844d6280"/>
+					<reportElement x="19" y="606" width="170" height="16" uuid="a840c0b5-fca2-4aae-90df-45ca844d6280"/>
 					<textElement textAlignment="Left">
 						<font fontName="SansSerif" size="8"/>
 						<paragraph lineSpacingSize="1.0"/>
@@ -150,7 +141,7 @@
 					<text><![CDATA[1-Activités des clubs et associations ]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="3" y="624" width="108" height="16" uuid="219b7cdb-9a3c-4546-a7f2-1442981cc046"/>
+					<reportElement x="25" y="626" width="108" height="16" uuid="219b7cdb-9a3c-4546-a7f2-1442981cc046"/>
 					<textElement textAlignment="Left">
 						<font fontName="SansSerif" size="8"/>
 						<paragraph lineSpacingSize="1.0"/>
@@ -167,7 +158,7 @@
 		<band height="26" splitType="Stretch">
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 			<staticText>
-				<reportElement x="0" y="0" width="515" height="26" uuid="b6e6ce39-df0d-440d-8ca1-522c2c307ece">
+				<reportElement x="0" y="0" width="555" height="26" uuid="b6e6ce39-df0d-440d-8ca1-522c2c307ece">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Left">
@@ -184,7 +175,7 @@
 		<band height="1">
 			<property name="com.jaspersoft.studio.layout"/>
 			<frame>
-				<reportElement style="Border" x="-15" y="-550" width="539" height="120" uuid="4c19d53c-e38c-4d2d-9d95-ec16afdd5449">
+				<reportElement style="Border" x="7" y="-548" width="539" height="120" uuid="4c19d53c-e38c-4d2d-9d95-ec16afdd5449">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 				</reportElement>
 				<staticText>
@@ -702,7 +693,7 @@
 				</staticText>
 			</frame>
 			<frame>
-				<reportElement style="Border" x="-15" y="-390" width="539" height="120" uuid="3eb74eb9-7efd-4a46-b388-480202e08e3f">
+				<reportElement style="Border" x="7" y="-388" width="539" height="120" uuid="3eb74eb9-7efd-4a46-b388-480202e08e3f">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 				</reportElement>
 				<staticText>
@@ -1220,7 +1211,7 @@
 				</staticText>
 			</frame>
 			<frame>
-				<reportElement style="Border" x="-13" y="-235" width="518" height="50" uuid="3d7aa16f-d459-4646-b41b-e957c0aacc84">
+				<reportElement style="Border" x="9" y="-233" width="518" height="50" uuid="3d7aa16f-d459-4646-b41b-e957c0aacc84">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 				</reportElement>
 				<staticText>

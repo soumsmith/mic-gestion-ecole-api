@@ -126,7 +126,7 @@
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[B/REPARTITION DES ELEVES PAR ANNEE DE NAISSANCE-----]]></text>
+				<text><![CDATA[B/REPARTITION DES ELEVES PAR ANNEE DE NAISSANCE]]></text>
 			</staticText>
 		</band>
 	</title>
@@ -475,7 +475,7 @@
 					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textField>
+				<textField isBlankWhenNull="true">
 					<reportElement style="contenu" x="0" y="0" width="40" height="30" uuid="b6fdd13a-de91-495a-9b1f-9596d0ddc20a">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
@@ -509,6 +509,13 @@
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
+					<box>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
 					<staticText>
 						<reportElement style="contenu" x="0" y="0" width="30" height="15" uuid="ea498b01-7960-4347-951d-849afdca7bac">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
@@ -586,7 +593,7 @@
 							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
-						<textElement>
+						<textElement textAlignment="Center">
 							<font fontName="SansSerif"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{an6G}]]></textFieldExpression>
@@ -609,7 +616,7 @@
 							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
-						<textElement>
+						<textElement textAlignment="Center">
 							<font fontName="SansSerif"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{an5G}]]></textFieldExpression>
@@ -632,7 +639,7 @@
 							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
-						<textElement>
+						<textElement textAlignment="Center">
 							<font fontName="SansSerif"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{an4G}]]></textFieldExpression>
@@ -655,7 +662,7 @@
 							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
-						<textElement>
+						<textElement textAlignment="Center">
 							<font fontName="SansSerif"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{an3G}]]></textFieldExpression>
@@ -678,7 +685,7 @@
 							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
-						<textElement>
+						<textElement textAlignment="Center">
 							<font fontName="SansSerif"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{an6G}+$F{an5G}+$F{an4G}+$F{an3G}]]></textFieldExpression>
@@ -701,7 +708,7 @@
 							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
-						<textElement>
+						<textElement textAlignment="Center">
 							<font fontName="SansSerif"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{an6F}]]></textFieldExpression>
@@ -724,7 +731,7 @@
 							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
-						<textElement>
+						<textElement textAlignment="Center">
 							<font fontName="SansSerif"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{an5F}]]></textFieldExpression>
@@ -747,7 +754,7 @@
 							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
-						<textElement>
+						<textElement textAlignment="Center">
 							<font fontName="SansSerif"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{an4F}]]></textFieldExpression>
@@ -770,7 +777,7 @@
 							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
-						<textElement>
+						<textElement textAlignment="Center">
 							<font fontName="SansSerif"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{an3F}]]></textFieldExpression>
@@ -793,7 +800,7 @@
 							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
-						<textElement>
+						<textElement textAlignment="Center">
 							<font fontName="SansSerif"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{an6F}+$F{an5F}+$F{an4F}+$F{an3F}]]></textFieldExpression>
@@ -829,7 +836,7 @@
 							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
-						<textElement>
+						<textElement textAlignment="Center">
 							<font fontName="SansSerif"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{an2AF}]]></textFieldExpression>
@@ -852,7 +859,7 @@
 							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
-						<textElement>
+						<textElement textAlignment="Center">
 							<font fontName="SansSerif"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{an2CF}]]></textFieldExpression>
@@ -875,7 +882,7 @@
 							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
-						<textElement>
+						<textElement textAlignment="Center">
 							<font fontName="SansSerif"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{an1AF}]]></textFieldExpression>
@@ -898,7 +905,7 @@
 							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
-						<textElement>
+						<textElement textAlignment="Center">
 							<font fontName="SansSerif"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{an1CF}]]></textFieldExpression>
@@ -921,7 +928,7 @@
 							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
-						<textElement>
+						<textElement textAlignment="Center">
 							<font fontName="SansSerif"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{an1DF}]]></textFieldExpression>
@@ -944,7 +951,7 @@
 							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
-						<textElement>
+						<textElement textAlignment="Center">
 							<font fontName="SansSerif"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{anTAF}]]></textFieldExpression>
@@ -967,7 +974,7 @@
 							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
-						<textElement>
+						<textElement textAlignment="Center">
 							<font fontName="SansSerif"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{anTCF}]]></textFieldExpression>
@@ -990,7 +997,7 @@
 							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
-						<textElement>
+						<textElement textAlignment="Center">
 							<font fontName="SansSerif"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{anTDF}]]></textFieldExpression>
@@ -1013,7 +1020,7 @@
 							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
-						<textElement>
+						<textElement textAlignment="Center">
 							<font fontName="SansSerif"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{an2AF}+$F{an2CF}+$F{an1AF}+$F{an1CF}+$F{an1DF}+$F{anTAF}+$F{anTCF}+$F{anTDF}]]></textFieldExpression>
@@ -1036,7 +1043,7 @@
 							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
-						<textElement>
+						<textElement textAlignment="Center">
 							<font fontName="SansSerif"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{an2AG}]]></textFieldExpression>
@@ -1059,7 +1066,7 @@
 							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
-						<textElement>
+						<textElement textAlignment="Center">
 							<font fontName="SansSerif"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{an2CG}]]></textFieldExpression>
@@ -1082,7 +1089,7 @@
 							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
-						<textElement>
+						<textElement textAlignment="Center">
 							<font fontName="SansSerif"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{an1AG}]]></textFieldExpression>
@@ -1105,7 +1112,7 @@
 							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
-						<textElement>
+						<textElement textAlignment="Center">
 							<font fontName="SansSerif"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{an1CG}]]></textFieldExpression>
@@ -1128,7 +1135,7 @@
 							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
-						<textElement>
+						<textElement textAlignment="Center">
 							<font fontName="SansSerif"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{an1DG}]]></textFieldExpression>
@@ -1151,7 +1158,7 @@
 							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
-						<textElement>
+						<textElement textAlignment="Center">
 							<font fontName="SansSerif"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{anTAG}]]></textFieldExpression>
@@ -1174,7 +1181,7 @@
 							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
-						<textElement>
+						<textElement textAlignment="Center">
 							<font fontName="SansSerif"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{anTCG}]]></textFieldExpression>
@@ -1197,7 +1204,7 @@
 							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
-						<textElement>
+						<textElement textAlignment="Center">
 							<font fontName="SansSerif"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{anTDG}]]></textFieldExpression>
@@ -1220,7 +1227,7 @@
 							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
-						<textElement>
+						<textElement textAlignment="Center">
 							<font fontName="SansSerif"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{an2AG}+$F{an2CG}+$F{an1AG}+$F{an1CG}+$F{an1DG}+$F{anTAG}+$F{anTCG}+$F{anTDG}]]></textFieldExpression>
@@ -1238,6 +1245,13 @@
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
+					<box>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
 					<textField evaluationTime="Band">
 						<reportElement style="contenu" x="0" y="0" width="27" height="15" uuid="d066d6ae-c4d0-46f9-8665-4ae2d75637ae">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
@@ -1256,7 +1270,7 @@
 							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
-						<textElement>
+						<textElement textAlignment="Center">
 							<font fontName="SansSerif"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{an6G}+$F{an5G}+$F{an4G}+$F{an3G}+$F{an2AG}+$F{an2CG}+$F{an1AG}+$F{an1CG}+$F{an1DG}+$F{anTAG}+$F{anTCG}+$F{anTDG}]]></textFieldExpression>
@@ -1279,7 +1293,7 @@
 							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
-						<textElement>
+						<textElement textAlignment="Center">
 							<font fontName="SansSerif"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{an6F}+$F{an5F}+$F{an4F}+$F{an3F}+$F{an2AF}+$F{an2CF}+$F{an1AF}+$F{an1CF}+$F{an1DF}+$F{anTAF}+$F{anTCF}+$F{anTDF}]]></textFieldExpression>
