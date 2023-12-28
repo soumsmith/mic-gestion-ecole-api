@@ -11,6 +11,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.Random;
+import java.util.UUID;
 import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -311,43 +313,6 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 					listNotesByEvaluation = getNotesClasseWithPec(ev.getCode(), Constants.PEC_1);
 					noteList.addAll(listNotesByEvaluation);
 				}
-
-				if (ev.getMatiereEcole().getMatiereParent() != null
-						&& ev.getMatiereEcole().getMatiereParent().getIsEMR() != null
-						&& ev.getMatiereEcole().getMatiereParent().getIsEMR().equals(Constants.OUI)) {
-					ev.getMatiereEcole().setPec(Constants.PEC_0);
-
-					Evaluation evalEMR = new Evaluation();
-					evalEMR.setAnnee(ev.getAnnee());
-					evalEMR.setClasse(ev.getClasse());
-					evalEMR.setPec(ev.getPec());
-					evalEMR.setCode(ev.getCode() + "_1");
-					evalEMR.setId(ev.getId() + 10000000L);
-					evalEMR.setNoteSur(ev.getNoteSur());
-					evalEMR.setMatiereEcole(ev.getMatiereEcole().getMatiereParent());
-					System.out.println("EMR -> " + ev.getMatiereEcole().getMatiereParent().getLibelle());
-					evalEMR.setPeriode(ev.getPeriode());
-					evalEMR.setType(ev.getType());
-
-//					iterateur.add(evalEMR);
-					evalList.add(evalEMR);
-					for (Notes n : listNotesByEvaluation) {
-						Notes noteEMR = new Notes();
-						noteEMR.setClasseEleve(n.getClasseEleve());
-						noteEMR.setEvaluation(evalEMR);
-						noteEMR.setId(n.getId() + 1000000L);
-						noteEMR.setNote(n.getNote());
-						noteEMR.setPec(n.getPec());
-						noteEMR.setPersonnel(n.getPersonnel());
-						noteEMR.setStatut(n.getStatut());
-						noteList.add(noteEMR);
-						if(n.getNote() == null)
-							System.out.println("NOTE NULLE");
-						else
-							System.out.println("NOTE OK");
-					}			
-
-				}
 			}
 //		logger.info("note size " + noteList.size());
 //		logger.info(gson.toJson(noteList));
@@ -374,7 +339,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			anneeScolaire.setId(Long.parseLong(anneeId));
 			periode.setId(Long.parseLong(periodeId));
 
-			System.out.println("Niveau ens ::: " + classe.getEcole().getNiveauEnseignement().getId());
+//			System.out.println("Niveau ens ::: " + classe.getEcole().getNiveauEnseignement().getId());
 			if (classe.getEcole().getNiveauEnseignement().getId() == 1L) {
 				evaluationPeriode = evaluationPeriodeService.findByAnneeAndEcoleAndPeriodeAndNiveau(
 						Long.parseLong(anneeId), classe.getEcole().getId(), Long.parseLong(periodeId),
@@ -485,16 +450,16 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 					classementAnnuelEleveParMatiere(moyenneList, classe.getBranche().getId(), classe.getEcole().getId(),
 							periodeCtrl);
 			}
-			Gson g = new Gson();
+//			Gson g = new Gson();
 			Collections.sort(moyenneList);
 			for (MoyenneEleveDto m : moyenneList) {
 				for (Map.Entry<EcoleHasMatiere, List<Notes>> entry : m.getNotesMatiereMap().entrySet()) {
-					System.out.println("---> ");
+//					System.out.println("---> ");
 					for (Notes n : entry.getValue()) {
-						System.out.println("---> " + n.getEvaluation().getMatiereEcole().getLibelle());
-						if (n.getEvaluation().getMatiereEcole().getLibelle().contains("Education Morale")) {
-							System.out.println(g.toJson(n));
-						}
+//						System.out.println("---> " + n.getEvaluation().getMatiereEcole().getLibelle());
+//						if (n.getEvaluation().getMatiereEcole().getLibelle().contains("Education Morale")) {
+//							System.out.println(g.toJson(n));
+//						}
 						break;
 					}
 
@@ -694,16 +659,28 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 	List<MoyenneEleveDto> calculMoyenneMatiere(List<MoyenneEleveDto> moyEleve) {
 		logger.info("---> Calcul des moyennes par matiere");
 		Double moyenne;
+		Double moyenneEMR;
 		List<Double> noteList;
+		List<Notes> moyenneEMRList;
 
 		Double diviser;
 		Double somme;
+
+		Double diviserEMR;
+		Double sommeEMR;
+		
 
 //		Gson g = new Gson();
 
 //		System.out.println(g.toJson(moyEleve));
 		for (MoyenneEleveDto me : moyEleve) {
-
+			EcoleHasMatiere ehm = new EcoleHasMatiere();
+			sommeEMR = 0.0;
+			diviserEMR = 0.0;
+			moyenneEMR = 0.0;
+			moyenneEMRList = new ArrayList<>();
+			Boolean EMRFlat = false;
+//			Map<EcoleHasMatiere, List<Notes>> matiereNoteEMRMap = new HashMap<EcoleHasMatiere, List<Notes>>();
 			for (Map.Entry<EcoleHasMatiere, List<Notes>> entry : me.getNotesMatiereMap().entrySet()) {
 				moyenne = 0.0;
 				noteList = new ArrayList<Double>();
@@ -722,19 +699,74 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 
 //				entry.getValue().clear();
 //				entry.getValue().
-				
-					for (Double note : noteList) {
-						System.out.println(note);
-						somme += note;
-					}
+
+				for (Double note : noteList) {
+//					System.out.println(note);
+					somme += note;
+				}
 
 				moyenne = somme / (diviser.equals(Double.parseDouble("0")) ? Double.parseDouble("1") : diviser);
 				logger.info("Moyenne = " + somme + " / " + diviser + " = " + CommonUtils.roundDouble(moyenne, 2));
 				entry.getKey().setMoyenne(CommonUtils.roundDouble(moyenne, 2));
 				entry.getKey().setAppreciation(appreciation(moyenne));
+
+				// Traitement cas des sous matières EMR
+				if (entry.getKey().getMatiereParent() != null && entry.getKey().getMatiereParent().getIsEMR() != null
+						&& entry.getKey().getMatiereParent().getIsEMR().equals(Constants.OUI)) {
+
+					if (diviserEMR == 0.0) {
+						
+						// Construction d'un Map
+//						matiereNoteEMRMap = new HashMap<EcoleHasMatiere, List<Notes>>();
+						Map<EcoleHasMatiere, List<Notes>> matiereNoteEMRMap = new HashMap<EcoleHasMatiere, List<Notes>>();
+						matiereNoteEMRMap.put(entry.getKey().getMatiereParent(), new ArrayList<Notes>());
+						ehm = entry.getKey().getMatiereParent();
+						EMRFlat = true;
+					}
+
+					sommeEMR += moyenne;
+					diviserEMR++;
+					Evaluation evalEMR = new Evaluation();
+					evalEMR.setAnnee(me.getAnnee());
+					evalEMR.setClasse(me.getClasse());
+					evalEMR.setPec(Constants.PEC_1);
+					evalEMR.setCode(me.getNumeroEvaluation() + "_1");
+					evalEMR.setId(new Random().nextLong());
+					evalEMR.setNoteSur(Constants.DEFAULT_NOTE_SUR);
+					evalEMR.setMatiereEcole(entry.getKey().getMatiereParent());
+					evalEMR.setPeriode(me.getPeriode());
+//
+					Notes noteEMR = new Notes();
+					noteEMR.setClasseEleve(entry.getValue().get(0).getClasseEleve());
+					noteEMR.setEvaluation(evalEMR);
+					noteEMR.setId(new Random().nextLong());
+					noteEMR.setNote(CommonUtils.roundDouble(moyenne, 2));
+					noteEMR.setPec(Constants.PEC_1);
+//					
+					moyenneEMRList.add(noteEMR);
+
+				}
 //				logger.info("++++> "+g.toJson(me.getNotesMatiereMap()));
 			}
-
+			if (EMRFlat) {
+				moyenneEMR = sommeEMR / (diviserEMR == 0.0 ? 1.0 : diviserEMR);
+				
+//				// pour eviter de partager le meme objet avec les autres eleves 
+				EcoleHasMatiere ehm_ = new EcoleHasMatiere();
+				ehm_.setId(ehm.getId());
+				ehm_.setPec(ehm.getPec());
+				ehm_.setCoef(ehm.getCoef());
+				ehm_.setMatiereParent(ehm.getMatiereParent());
+				ehm_.setCode(ehm.getCode());
+				ehm_.setLibelle(ehm.getLibelle());
+				ehm_.setCategorie(ehm.getCategorie());
+				ehm_.setMoyenne(CommonUtils.roundDouble(moyenneEMR, 2));
+				ehm_.setAppreciation(appreciation(moyenneEMR));
+				ehm_.setBonus(ehm.getBonus());
+				ehm_.setEcole(ehm.getEcole());
+				
+				me.getNotesMatiereMap().put(ehm_, moyenneEMRList);
+			}
 //			me.setMoyenne(calculMoyenneGeneralWithCoef(moyenneList));
 		}
 //		logger.info("++++> "+g.toJson(moyEleve));
