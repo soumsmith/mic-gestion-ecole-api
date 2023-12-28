@@ -345,7 +345,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 							System.out.println("NOTE NULLE");
 						else
 							System.out.println("NOTE OK");
-					}			
+					}
 
 				}
 			}
@@ -485,7 +485,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 					classementAnnuelEleveParMatiere(moyenneList, classe.getBranche().getId(), classe.getEcole().getId(),
 							periodeCtrl);
 			}
-			Gson g = new Gson();
+		//	Gson g = new Gson();
 			Collections.sort(moyenneList);
 			for (MoyenneEleveDto m : moyenneList) {
 				for (Map.Entry<EcoleHasMatiere, List<Notes>> entry : m.getNotesMatiereMap().entrySet()) {
@@ -493,7 +493,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 					for (Notes n : entry.getValue()) {
 						System.out.println("---> " + n.getEvaluation().getMatiereEcole().getLibelle());
 						if (n.getEvaluation().getMatiereEcole().getLibelle().contains("Education Morale")) {
-							System.out.println(g.toJson(n));
+							//System.out.println(g.toJson(n));
 						}
 						break;
 					}
@@ -722,7 +722,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 
 //				entry.getValue().clear();
 //				entry.getValue().
-				
+
 					for (Double note : noteList) {
 						System.out.println(note);
 						somme += note;
