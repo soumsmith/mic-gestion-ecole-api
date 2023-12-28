@@ -764,7 +764,8 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				ehm_.setAppreciation(appreciation(moyenneEMR));
 				ehm_.setBonus(ehm.getBonus());
 				ehm_.setEcole(ehm.getEcole());
-				
+				ehm_.setParentMatiereLibelle(ehm.getParentMatiereLibelle());
+				ehm_.setNumOrdre(ehm.getNumOrdre());
 				me.getNotesMatiereMap().put(ehm_, moyenneEMRList);
 			}
 //			me.setMoyenne(calculMoyenneGeneralWithCoef(moyenneList));
