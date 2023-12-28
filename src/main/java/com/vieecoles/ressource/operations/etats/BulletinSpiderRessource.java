@@ -22,6 +22,7 @@ import org.springframework.http.ResponseEntity;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -80,6 +81,7 @@ public class BulletinSpiderRessource {
 
 
         bulletinSpider.bulletinInfos(idEcole ,libelleAnnee ,libellePeriode ,libelleClasse) ;
+        // deleteEmr(libellePeriode,libelleAnnee,idEcole);
         //connect() ;
 
         Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecoleviedbv2", USER, PASS);
@@ -117,6 +119,7 @@ public class BulletinSpiderRessource {
 
 
         bulletinSpiderMatriculeServices.bulletinInfos(idEcole ,libelleAnnee ,libellePeriode ,matricule) ;
+       // deleteEmr(libellePeriode,libelleAnnee,idEcole);
 
 
         Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecoleviedbv2", USER, PASS);
@@ -166,8 +169,19 @@ public class BulletinSpiderRessource {
 
         }
     }
+@Transactional
+    public  void deleteEmr (String periode, String annee ,Long ecoleId){
+        try {
+            em.createQuery("delete from DetailBulletin d where  d.matiereCode in ('31') and d.bulletin.id in (select b.id from  Bulletin b where  b.libellePeriode=:periode and b.anneeLibelle=:annee and b.ecoleId=:ecoleId  )  ")
 
+                    .setParameter("periode",periode)
+                    .setParameter("annee",annee)
+                    .setParameter("ecoleId",ecoleId)
+                    .executeUpdate() ;
+        } catch (NoResultException e){
 
+        }
+    }
 
 
 

@@ -589,7 +589,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 						<textElement textAlignment="Center" verticalAlignment="Middle">
 							<font fontName="SansSerif" size="7"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{parent_matiere}.equals("FRANCAIS")?$F{TmoyFr}:$F{parent_matiere}.equals("EMR")?$F{TmoyCoefEMR}:$F{moyenne}]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{parent_matiere}.equals("FRANCAIS")?$F{TmoyFr}:$F{parent_matiere}.equals("")?"":$F{moyenne}]]></textFieldExpression>
 						<patternExpression><![CDATA[$F{bonus}.equals("1") ? "+#.##": "##.##"]]></patternExpression>
 					</textField>
 					<textField isBlankWhenNull="true">
@@ -608,7 +608,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 						<textElement textAlignment="Center" verticalAlignment="Middle">
 							<font fontName="SansSerif" size="7"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{parent_matiere}.equals("FRANCAIS")?$F{TcoefFr}:$F{parent_matiere}.equals("EMR")?1:$F{coef}]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{parent_matiere}.equals("FRANCAIS")?$F{TcoefFr}:$F{parent_matiere}.equals("")?"":$F{coef}]]></textFieldExpression>
 					</textField>
 					<textField evaluationTime="Band" isBlankWhenNull="true">
 						<reportElement style="champsLibelle" x="215" y="0" width="30" height="15" isRemoveLineWhenBlank="true" uuid="4863f765-b56c-4e96-b748-68ff7b46689c">
@@ -627,7 +627,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 						<textElement textAlignment="Center" verticalAlignment="Middle">
 							<font fontName="SansSerif" size="7"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{parent_matiere}.equals("FRANCAIS")?$F{TmoyCoefFr}:$F{parent_matiere}.equals("EMR")?$F{TmoyCoefEMR}:$F{bonus}.equals("0")?$F{moyenne}*$F{coef}:$F{moyenne}]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{parent_matiere}.equals("FRANCAIS")?$F{TmoyCoefFr}:$F{parent_matiere}.equals("")?"":$F{bonus}.equals("0")?$F{moyenne}*$F{coef}:$F{moyenne}]]></textFieldExpression>
 						<patternExpression><![CDATA["##.##"]]></patternExpression>
 					</textField>
 					<textField isBlankWhenNull="true">
@@ -648,7 +648,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 							<font fontName="SansSerif" size="7"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":($F{parent_matiere}.equals("FRANCAIS")&&$F{TrangFr}==1) ?$F{TrangFr}+" er":($F{parent_matiere}.equals("FRANCAIS")&& $F{TrangFr}!=1) ?$F{TrangFr}+" e" 
-:($F{parent_matiere}.equals("EMR")&&$F{TrangEMR}==1) ?$F{TrangEMR}+" er":($F{parent_matiere}.equals("EMR")&& $F{TrangEMR}!=1) ?$F{TrangEMR}+" e": $F{rang}==1 ?  $F{rang}+" er" :$F{rang}!=1? $F{rang} +" e": $F{rang} +" e"]]></textFieldExpression>
+:$F{rang}==1 ?  $F{rang}+" er" :$F{rang}!=1? $F{rang} +" e": $F{rang} +" e"]]></textFieldExpression>
 					</textField>
 					<textField textAdjust="ScaleFont" isBlankWhenNull="true">
 						<reportElement style="champsLibelle" x="275" y="0" width="73" height="15" isRemoveLineWhenBlank="true" uuid="38db39fa-1ab5-4ff7-b6aa-c0b44fdccdcc">
@@ -670,7 +670,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 						<textElement textAlignment="Left" verticalAlignment="Middle">
 							<font fontName="SansSerif" size="7" isItalic="true"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{appreciation}]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{parent_matiere}.equals("")?"":$F{appreciation}]]></textFieldExpression>
 					</textField>
 					<textField textAdjust="ScaleFont" isBlankWhenNull="true">
 						<reportElement style="champsLibelle" x="348" y="0" width="111" height="15" isRemoveLineWhenBlank="true" uuid="b4200066-a206-4e5c-b3ee-1c1c3d9c5fde">
@@ -688,7 +688,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 						<textElement textAlignment="Left" verticalAlignment="Middle">
 							<font fontName="SansSerif" size="7"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "" :$F{nom_prenom_professeur}]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")||$F{parent_matiere}.equals("")? "" :$F{nom_prenom_professeur}]]></textFieldExpression>
 					</textField>
 				</frame>
 			</band>

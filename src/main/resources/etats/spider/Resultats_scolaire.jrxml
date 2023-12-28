@@ -174,7 +174,7 @@
 		<variableExpression><![CDATA[$F{moyClasse}]]></variableExpression>
 		<initialValueExpression><![CDATA[0]]></initialValueExpression>
 	</variable>
-	<group name="GroupeNiveau" isStartNewPage="true" isReprintHeaderOnEachPage="true" keepTogether="true">
+	<group name="GroupeNiveau" isStartNewPage="true" keepTogether="true">
 		<groupExpression><![CDATA[$F{niveau}]]></groupExpression>
 		<groupHeader>
 			<band/>
