@@ -65,16 +65,21 @@ public class BulletinSpiderRessource {
     private static String UPLOAD_DIR = "/data/";
 
      @GET
-
-    @Path("/spider-bulletin/{idEcole}/{libellePeriode}/{libelleAnnee}/{libelleClasse}")
+    @Path("/spider-bulletin/{idEcole}/{libellePeriode}/{libelleAnnee}/{libelleClasse}/{compress}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public ResponseEntity<byte[]>  getDtoRapport(@PathParam("idEcole") Long idEcole ,@PathParam("libellePeriode") String libellePeriode ,
-                                                 @PathParam("libelleAnnee") String libelleAnnee , @PathParam("libelleClasse") String libelleClasse) throws Exception, JRException {
+                                                 @PathParam("libelleAnnee") String libelleAnnee , @PathParam("libelleClasse") String libelleClasse ,@PathParam("compress") Boolean compress) throws Exception, JRException {
         InputStream myInpuStream ;
 
-       if(libellePeriode.equals("Troisième Trimestre"))
-            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderBulletin.jrxml");
-        else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderNobel.jrxml");
+        if(!compress) {
+            if(libellePeriode.equals("Troisième Trimestre"))
+                myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderBulletin.jrxml");
+            else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderNobel.jrxml");
+        } else {
+            if(libellePeriode.equals("Troisième Trimestre"))
+                myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderBulletin.jrxml");
+            else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderNobelDecompress.jrxml");
+        }
 
         spiderBulletinDto detailsBull= new spiderBulletinDto() ;
         List<parametreDto>  dspsDto = new ArrayList<>() ;
@@ -103,15 +108,22 @@ public class BulletinSpiderRessource {
     }
 
     @GET
-    @Path("/spider-bulletin-matricule/{idEcole}/{libellePeriode}/{libelleAnnee}/{libelleClasse}/{matricule}")
+    @Path("/spider-bulletin-matricule/{idEcole}/{libellePeriode}/{libelleAnnee}/{libelleClasse}/{matricule}/{compress}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public ResponseEntity<byte[]>  getDtoRapport(@PathParam("idEcole") Long idEcole ,@PathParam("libellePeriode") String libellePeriode ,
-                                                 @PathParam("libelleAnnee") String libelleAnnee , @PathParam("libelleClasse") String libelleClasse ,@PathParam("matricule") String matricule) throws Exception, JRException {
+                                                 @PathParam("libelleAnnee") String libelleAnnee , @PathParam("libelleClasse") String libelleClasse ,@PathParam("matricule") String matricule,@PathParam("compress") Boolean compress) throws Exception, JRException {
         InputStream myInpuStream ;
+if (!compress){
+    if(libellePeriode.equals("Troisième Trimestre"))
+        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinTroisiemeTrimetreSpider.jrxml");
+    else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinNobelSpider.jrxml");
 
-        if(libellePeriode.equals("Troisième Trimestre"))
-            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinTroisiemeTrimetreSpider.jrxml");
-        else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinNobelSpider.jrxml");
+} else {
+    if(libellePeriode.equals("Troisième Trimestre"))
+        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinTroisiemeTrimetreSpider.jrxml");
+    else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinNobelSpiderEtan.jrxml");
+
+}
 
 
         spiderBulletinDto detailsBull= new spiderBulletinDto() ;

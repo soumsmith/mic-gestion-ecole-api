@@ -12,6 +12,7 @@ import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import javax.ws.rs.NotFoundException;
@@ -315,7 +316,7 @@ public personnelConnexionDto infosUtilisateurConnecteV2(String email,Long idEcol
         }
         return myPersoDto ;
     }
-    
+
     public personnelConnexionDto  getInfoPersonnel(Long  idPersonnel, Long profilId){
         personnelConnexionDto  myPersoDto = new personnelConnexionDto() ;
         try {
@@ -484,13 +485,23 @@ public personnelConnexionDto infosUtilisateurConnecteV2(String email,Long idEcol
                                                 messageRetour="Ce profil a été désactivé pour ce compte pour cette ecole!";
                                             } else  {
                                                 utilisateur myUtilis= new utilisateur() ;
-                                                myUtilis= checkPassword(login,motdePasse);
-                                                if(myUtilis != null){
-                                                    profilUtilsateur= myUtiliPers.getProfil().getProfil_libelle() ;
-                                                    messageRetour=profilUtilsateur ;
-                                                } else {
+                                                //gestion de l'exception pour se connecter
+
+                                                try {
+                                                    utilisateur  myLogin = new utilisateur();
+                                                    myLogin= (utilisateur) em.createQuery("select o from utilisateur o where o.utilisateu_login =:login and o.utilisateur_mot_de_passe=:motPasse")
+                                                            .setParameter("login",login.trim())
+                                                            .setParameter("motPasse",motdePasse.trim())
+                                                            .getSingleResult();
+                                                    if(!(myLogin ==null)) {
+                                                        profilUtilsateur= myUtiliPers.getProfil().getProfil_libelle() ;
+                                                        messageRetour=profilUtilsateur ;
+                                                    }
+                                                } catch (NoResultException e) {
                                                     messageRetour="Login ou mot de passe incorrect!";
                                                 }
+
+
 
                                             }
                                 } else {
@@ -670,18 +681,20 @@ public personnelConnexionDto infosUtilisateurConnecteV2(String email,Long idEcol
     }
 
 
-
+//@Transactional
     public utilisateur checkPassword(String login,String motdePasse){
         try {
             return (utilisateur) em.createQuery("select o from utilisateur o where o.utilisateu_login =:login and o.utilisateur_mot_de_passe=:motPasse")
                     .setParameter("login",login.trim())
                     .setParameter("motPasse",motdePasse.trim())
                     .getSingleResult();
-        } catch (Exception e) {
-        	e.printStackTrace();
+        } catch (NoResultException e) {
+        //	e.printStackTrace();
             return  null;
         }
     }
+
+
 
 
      public utilisateur verifiEmailUtilisateur(String emailUtilisateur){
@@ -695,7 +708,7 @@ public personnelConnexionDto infosUtilisateurConnecteV2(String email,Long idEcol
          }
 
      }
-     
+
      public utilisateur checkUserLogin(String login){
          try {
              return (utilisateur) em.createQuery("select o from utilisateur o where o.utilisateu_login =:login")
