@@ -6,6 +6,8 @@ import com.vieecoles.steph.entities.Message;
 import com.vieecoles.steph.entities.Seances;
 import com.vieecoles.steph.services.SeanceService;
 import com.vieecoles.steph.util.DateUtils;
+
+import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 import javax.inject.Inject;
@@ -92,6 +94,7 @@ public class SeancesResource {
 	@GET
     @Path("/get-list-date-prof")
     @Tag(name = "Seances")
+	@Operation(description = "Obtenir les séances d'un professseur à une date donné (format date yyyy-mm-dd)")
     public Response getListByDateAndProf(@QueryParam("date") String date, @QueryParam("prof") long profId) {
 		LocalDate ld = DateUtils.getDateWithString(date);
 		Date ourDate = DateUtils.asDate(ld);

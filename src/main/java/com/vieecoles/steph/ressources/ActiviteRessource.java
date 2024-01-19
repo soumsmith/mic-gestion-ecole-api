@@ -27,6 +27,13 @@ public class ActiviteRessource {
 	public Response list() {
 		return Response.ok().entity(activiteService.getList()).build();
 	}
+	
+	@GET
+	@Path("/list-by-prof-and-day")
+	@Tag(name = "Activite")
+	public Response listByProfAndDay(@QueryParam("profId") Long profId, @QueryParam("anneeId") Long anneeId, @QueryParam("day") int day) {
+		return Response.ok().entity(activiteService.getList()).build();
+	}
 
 	@GET
 	@Path("/list-by-ecole/{ecoleId}")
