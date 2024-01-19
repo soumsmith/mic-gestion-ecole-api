@@ -62,11 +62,25 @@ public class ActiviteService implements PanacheRepositoryBase<Activite, Integer>
 		return list;
 
 	}
+	
+	public List<Activite> getListByProfAndJour(Long anneeId, Long profId, int day) {
+		
+		//To do
+		
+		// Identifier les matieres enseignées dans chaque classe
+		
+		// Ramener les activités actives pour chaque classe et matiere precedemment identifiés en fonction du jour
+		
+		// Ranger chaque element par jour et par heure de debut
+		
+		List<Activite> list = new ArrayList<Activite>();
+		
+		return list;
+
+	}
 
 	public List<Activite> getListByClasse(long classeId) {
-		// logger.info(String.format("Annee %s - classe %s - jour %s", anneeId,
-		// classeId, jourId));
-
+		
 		List<Activite> list = new ArrayList<Activite>();
 		try {
 			list = Activite.find("classe.id = ?1 and statut = ?2", classeId, Constants.ACTIF).list();
@@ -78,8 +92,7 @@ public class ActiviteService implements PanacheRepositoryBase<Activite, Integer>
 	}
 
 	public List<Activite> getListByJour(int jourId) {
-		// logger.info(String.format("Annee %s - classe %s - jour %s",1, anneeId,
-		// jourId));
+		
 		List<Activite> list = new ArrayList<Activite>();
 		try {
 			list = Activite.find("jour.id = ?1 and statut = ?2", jourId, Constants.ACTIF).list();

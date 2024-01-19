@@ -362,17 +362,17 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				notesMatiereGroup = new HashMap<EcoleHasMatiere, List<Notes>>();
 				EcoleHasMatiere matiereTemp;
 				List<String> filter = new ArrayList<>();
-//				Gson g = new Gson();
+				Gson g = new Gson();
 //			logger.info(String.format("Eleve - %s - %s", entry.getKey().getMatricule(),entry.getKey().getNom()));
 				for (Notes note : entry.getValue()) {
 					logger.info("note id --->" + note.getId());
 					if (note.getId() != 0) {
-						if (filter.contains(note.getEvaluation().getMatiereEcole().getCode())) {
+						if (filter.contains(note.getEvaluation().getMatiereEcole().getId().toString())) {
 //					if (notesMatiereGroup.containsKey(note.getEvaluation().getMatiere())) {
 							logger.info("**** upd ****>" + note.getEvaluation().getMatiereEcole().getCode());
 //						logger.info(g.toJson(notesMatiereGroup));
-//						logger.info("----------");
-//						logger.info(g.toJson(note.getEvaluation().getMatiereEcole()));
+						logger.info("----------");
+						logger.info(note.getEvaluation().getMatiereEcole().getCode());
 							notesMatiereGroup.get(note.getEvaluation().getMatiereEcole()).add(note);
 //						System.out.println("----------------------------");
 //						System.out.println(g.toJson(note.getEvaluation().getMatiere()));
@@ -855,7 +855,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 //				logger.info(matiere + "+++");
 					if (matiere.getEleveMatiereIsClassed() == null) {
 						throw new RuntimeException(String.format(
-								"Veuillez vérifier que le coeficient de la matiere %s est défini pour la branche %s",
+								"Veuillez vérifier que le coeficient de la matiere \" %s \" est défini pour la branche \" %s \"",
 								matiere.getLibelle(), eleve.getClasse().getBranche().getLibelle()));
 					}
 					if (matiere.getPec() == 1 && !matiere.getEleveMatiereIsClassed().equals(Constants.NON)
@@ -930,6 +930,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			classementElevePeriode(classement);
 		} catch (RuntimeException r) {
 			r.printStackTrace();
+			throw r;
 		}
 	}
 

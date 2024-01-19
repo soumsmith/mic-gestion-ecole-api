@@ -44,6 +44,9 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 
 	@Inject
 	EcoleService ecoleService;
+	
+	@Inject
+	AnneeService anneeService;
 
 	Logger logger = Logger.getLogger(SeanceService.class.getName());
 
@@ -88,8 +91,8 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 	}
 
 	public List<Seances> getListByDateAndProf(long anneeId, Date date, long profId) {
-		// logger.info(String.format("Annee %s - date %s", anneeId, date));
-		return Seances.find("dateSeance = ?1 and professeur.id= ?2", date, profId).list();
+		 logger.info(String.format("prof %s - date %s", profId, date));
+		return Seances.find("dateSeance = ?1 and professeur.id= ?2 order by heureDeb", date, profId).list();
 	}
 
 	public List<Seances> getListByStatut(String anneeId, String statut, long ecoleId) {
@@ -266,7 +269,7 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 		Jour jour = jourService.findByIdSys(jourNum);
 		System.out.println("Ecole ::: "+ecoleId);
 		List<Activite> activites = new ArrayList<Activite>();
-
+		
 		// Recuperer la liste des emploi du temps en fonction du jour et/ou de la classe
 		// (si classe non nulle)
 		if (classe == null) {
@@ -297,7 +300,7 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 				if (seanceExist.size() == 0) {
 					seance = new Seances();
 					UUID uuid = UUID.randomUUID();
-					pers = personnelMatiereClasseService.findByMatiereAndClasse(atv.getMatiere().getId(), 1,
+					pers = personnelMatiereClasseService.findByMatiereAndClasse(atv.getMatiere().getId(), Long.parseLong(atv.getAnnee()),
 							atv.getClasse().getId());
 					seance.setId(uuid.toString());
 					seance.setAnnee(atv.getAnnee());
