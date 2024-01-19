@@ -3,7 +3,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CallTableauHonneur" pageWidth="803" pageHeight="680" orientation="Landscape" columnWidth="763" leftMargin="20" rightMargin="20" topMargin="0" bottomMargin="0" uuid="cecdf213-9a9e-43a3-a0f6-256935281386">
 	<property name="net.sf.jasperreports.awt.ignore.missing.font" value="true"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ecolevieDB2"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ecolevieDB"/>
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="431"/>
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="559"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
@@ -47,54 +47,74 @@ where  `ecoleviedbv2`.tableau_honneur.libelle_periode= $P{periode}   and
 `ecoleviedbv2`.tableau_honneur.libelle_classe=  $P{classe} and
  `ecoleviedbv2`.tableau_honneur.moy_general>=$P{moyenne}]]>
 	</queryString>
+	<field name="nom" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nom"/>
+		<property name="com.jaspersoft.studio.field.label" value="nom"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tableau_honneur"/>
+	</field>
+	<field name="prenoms" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="prenoms"/>
+		<property name="com.jaspersoft.studio.field.label" value="prenoms"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tableau_honneur"/>
+	</field>
 	<field name="libelle_classe" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="libelle_classe"/>
 		<property name="com.jaspersoft.studio.field.label" value="libelle_classe"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="bulletins"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tableau_honneur"/>
 	</field>
 	<field name="moy_general" class="java.math.BigDecimal">
 		<property name="com.jaspersoft.studio.field.name" value="moy_general"/>
 		<property name="com.jaspersoft.studio.field.label" value="moy_general"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="bulletins"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tableau_honneur"/>
+	</field>
+	<field name="appreciation_conseil" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="appreciation_conseil"/>
+		<property name="com.jaspersoft.studio.field.label" value="appreciation_conseil"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tableau_honneur"/>
 	</field>
 	<field name="id_ecole" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="id_ecole"/>
 		<property name="com.jaspersoft.studio.field.label" value="id_ecole"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="bulletins"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tableau_honneur"/>
 	</field>
 	<field name="matricule" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="matricule"/>
 		<property name="com.jaspersoft.studio.field.label" value="matricule"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="bulletins"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tableau_honneur"/>
 	</field>
 	<field name="annee_libelle" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="annee_libelle"/>
 		<property name="com.jaspersoft.studio.field.label" value="annee_libelle"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="bulletins"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tableau_honneur"/>
 	</field>
 	<field name="libelle_periode" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="libelle_periode"/>
 		<property name="com.jaspersoft.studio.field.label" value="libelle_periode"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="bulletins"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tableau_honneur"/>
 	</field>
 	<field name="nom_ecole" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="nom_ecole"/>
 		<property name="com.jaspersoft.studio.field.label" value="nom_ecole"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="bulletins"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tableau_honneur"/>
 	</field>
-	<field name="amoirie" class="byte[]">
+	<field name="amoirie" class="java.sql.Blob">
 		<property name="com.jaspersoft.studio.field.name" value="amoirie"/>
 		<property name="com.jaspersoft.studio.field.label" value="amoirie"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="tableau_honneur"/>
 	</field>
-	<field name="logo" class="byte[]">
+	<field name="cadre_tableau_honneur" class="java.sql.Blob">
+		<property name="com.jaspersoft.studio.field.name" value="cadre_tableau_honneur"/>
+		<property name="com.jaspersoft.studio.field.label" value="cadre_tableau_honneur"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tableau_honneur"/>
+	</field>
+	<field name="logo" class="java.sql.Blob">
 		<property name="com.jaspersoft.studio.field.name" value="logo"/>
 		<property name="com.jaspersoft.studio.field.label" value="logo"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="tableau_honneur"/>
 	</field>
-	<field name="photo_eleve" class="byte[]">
-		<property name="com.jaspersoft.studio.field.name" value="photo_eleve"/>
-		<property name="com.jaspersoft.studio.field.label" value="photo_eleve"/>
+	<field name="cheminphoto" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="cheminphoto"/>
+		<property name="com.jaspersoft.studio.field.label" value="cheminphoto"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="tableau_honneur"/>
 	</field>
 	<group name="InfosPersonnelEleve"/>

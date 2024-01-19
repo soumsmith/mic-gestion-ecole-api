@@ -173,10 +173,15 @@ public class FichePersonnelRessource {
     public ResponseEntity<byte[]>  getDtoRapport5(@QueryParam("IdEcole") Long IdEcole , @QueryParam("anneeId") Long anneeId
     , @QueryParam("classe") String classe , @QueryParam("branche") Long branche, @QueryParam("redoublant") String redoublant,
                                                   @QueryParam("genre") String genre, @QueryParam("langueVivante"
-    ) String langueVivante , @QueryParam("affecte") String affecte ,@QueryParam("boursier") String boursier) throws Exception, JRException {
+    ) String langueVivante , @QueryParam("affecte") String affecte ,@QueryParam("boursier") String boursier ,@QueryParam("photo") Boolean photo) throws Exception, JRException {
         InputStream myInpuStream ;
 
-        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Liste_eleve_par_classe.jrxml");
+        if(photo){
+            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Liste_eleve_par_classe_photos.jrxml");
+        } else {
+            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Liste_eleve_par_classe.jrxml");
+        }
+
 
         Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecoleviedbv2", USER, PASS);
         JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
@@ -207,11 +212,14 @@ public class FichePersonnelRessource {
     public ResponseEntity<byte[]>  getDtoRapport6(@QueryParam("IdEcole") Long IdEcole ,@QueryParam("anneeId") Long anneeId
             ,@QueryParam("classe") String classe ,@QueryParam("branche") Long branche,@QueryParam("redoublant") String redoublant,
                                                   @QueryParam("genre") String genre,@QueryParam("langueVivante") String langueVivante,
-                                                  @QueryParam("affecte") String affecte,@QueryParam("boursier") String boursier) throws Exception, JRException {
+                                                  @QueryParam("affecte") String affecte,@QueryParam("boursier") String boursier,@QueryParam("photo") Boolean photo) throws Exception, JRException {
         InputStream myInpuStream ;
 
-        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Liste_eleve_par_classe.jrxml");
-
+        if(photo){
+            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Liste_eleve_par_classe_photos.jrxml");
+        } else {
+            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Liste_eleve_par_classe.jrxml");
+        }
 
         Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecoleviedbv2", USER, PASS);
 

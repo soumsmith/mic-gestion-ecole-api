@@ -22,6 +22,7 @@ import org.springframework.http.ResponseEntity;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -64,22 +65,28 @@ public class BulletinSpiderRessource {
     private static String UPLOAD_DIR = "/data/";
 
      @GET
-
-    @Path("/spider-bulletin/{idEcole}/{libellePeriode}/{libelleAnnee}/{libelleClasse}")
+    @Path("/spider-bulletin/{idEcole}/{libellePeriode}/{libelleAnnee}/{libelleClasse}/{compress}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public ResponseEntity<byte[]>  getDtoRapport(@PathParam("idEcole") Long idEcole ,@PathParam("libellePeriode") String libellePeriode ,
-                                                 @PathParam("libelleAnnee") String libelleAnnee , @PathParam("libelleClasse") String libelleClasse) throws Exception, JRException {
+                                                 @PathParam("libelleAnnee") String libelleAnnee , @PathParam("libelleClasse") String libelleClasse ,@PathParam("compress") Boolean compress) throws Exception, JRException {
         InputStream myInpuStream ;
 
-       if(libellePeriode.equals("Troisième Trimestre"))
-            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderBulletin.jrxml");
-        else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderNobel.jrxml");
+        if(!compress) {
+            if(libellePeriode.equals("Troisième Trimestre"))
+                myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderBulletin.jrxml");
+            else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderNobel.jrxml");
+        } else {
+            if(libellePeriode.equals("Troisième Trimestre"))
+                myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderBulletin.jrxml");
+            else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderNobelDecompress.jrxml");
+        }
 
         spiderBulletinDto detailsBull= new spiderBulletinDto() ;
         List<parametreDto>  dspsDto = new ArrayList<>() ;
 
 
         bulletinSpider.bulletinInfos(idEcole ,libelleAnnee ,libellePeriode ,libelleClasse) ;
+        // deleteEmr(libellePeriode,libelleAnnee,idEcole);
         //connect() ;
 
         Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecoleviedbv2", USER, PASS);
@@ -101,15 +108,22 @@ public class BulletinSpiderRessource {
     }
 
     @GET
-    @Path("/spider-bulletin-matricule/{idEcole}/{libellePeriode}/{libelleAnnee}/{libelleClasse}/{matricule}")
+    @Path("/spider-bulletin-matricule/{idEcole}/{libellePeriode}/{libelleAnnee}/{libelleClasse}/{matricule}/{compress}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public ResponseEntity<byte[]>  getDtoRapport(@PathParam("idEcole") Long idEcole ,@PathParam("libellePeriode") String libellePeriode ,
-                                                 @PathParam("libelleAnnee") String libelleAnnee , @PathParam("libelleClasse") String libelleClasse ,@PathParam("matricule") String matricule) throws Exception, JRException {
+                                                 @PathParam("libelleAnnee") String libelleAnnee , @PathParam("libelleClasse") String libelleClasse ,@PathParam("matricule") String matricule,@PathParam("compress") Boolean compress) throws Exception, JRException {
         InputStream myInpuStream ;
+if (!compress){
+    if(libellePeriode.equals("Troisième Trimestre"))
+        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinTroisiemeTrimetreSpider.jrxml");
+    else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinNobelSpider.jrxml");
 
-        if(libellePeriode.equals("Troisième Trimestre"))
-            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinTroisiemeTrimetreSpider.jrxml");
-        else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinNobelSpider.jrxml");
+} else {
+    if(libellePeriode.equals("Troisième Trimestre"))
+        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinTroisiemeTrimetreSpider.jrxml");
+    else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinNobelSpiderEtan.jrxml");
+
+}
 
 
         spiderBulletinDto detailsBull= new spiderBulletinDto() ;
@@ -117,6 +131,7 @@ public class BulletinSpiderRessource {
 
 
         bulletinSpiderMatriculeServices.bulletinInfos(idEcole ,libelleAnnee ,libellePeriode ,matricule) ;
+       // deleteEmr(libellePeriode,libelleAnnee,idEcole);
 
 
         Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecoleviedbv2", USER, PASS);
@@ -166,8 +181,19 @@ public class BulletinSpiderRessource {
 
         }
     }
+@Transactional
+    public  void deleteEmr (String periode, String annee ,Long ecoleId){
+        try {
+            em.createQuery("delete from DetailBulletin d where  d.matiereCode in ('31') and d.bulletin.id in (select b.id from  Bulletin b where  b.libellePeriode=:periode and b.anneeLibelle=:annee and b.ecoleId=:ecoleId  )  ")
 
+                    .setParameter("periode",periode)
+                    .setParameter("annee",annee)
+                    .setParameter("ecoleId",ecoleId)
+                    .executeUpdate() ;
+        } catch (NoResultException e){
 
+        }
+    }
 
 
 

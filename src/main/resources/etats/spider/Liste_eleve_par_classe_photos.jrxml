@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Liste_eleve_par_classe" pageWidth="630" pageHeight="842" columnWidth="630" leftMargin="0" rightMargin="0" topMargin="20" bottomMargin="20" uuid="cecdf213-9a9e-43a3-a0f6-256935281386">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Liste_eleve_par_classe_photos" pageWidth="630" pageHeight="842" columnWidth="630" leftMargin="0" rightMargin="0" topMargin="20" bottomMargin="20" uuid="cecdf213-9a9e-43a3-a0f6-256935281386">
 	<property name="net.sf.jasperreports.awt.ignore.missing.font" value="true"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ecolevieDB"/>
@@ -193,6 +193,11 @@ and  (  $P{boursier}    is null or `ecoleviedbv2`.list_eleve_par_classe.inscript
 	<field name="inscriptions_classe_precedente" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="inscriptions_classe_precedente"/>
 		<property name="com.jaspersoft.studio.field.label" value="inscriptions_classe_precedente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="list_eleve_par_classe"/>
+	</field>
+	<field name="cheminphoto" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="cheminphoto"/>
+		<property name="com.jaspersoft.studio.field.label" value="cheminphoto"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="list_eleve_par_classe"/>
 	</field>
 	<field name="num_decision_affecte" class="java.lang.String">
@@ -651,7 +656,22 @@ and  (  $P{boursier}    is null or `ecoleviedbv2`.list_eleve_par_classe.inscript
 					<text><![CDATA[Matricule]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="TotalCateg" x="60" y="0" width="176" height="20" uuid="7a88027e-08c0-4ca2-893a-681f86453baa">
+					<reportElement x="60" y="0" width="90" height="20" uuid="b7c6fcea-d559-421f-bd4f-f0b49ac1f578">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="7"/>
+					</textElement>
+					<text><![CDATA[Photo]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="TotalCateg" x="150" y="0" width="133" height="20" uuid="7a88027e-08c0-4ca2-893a-681f86453baa">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -673,7 +693,7 @@ and  (  $P{boursier}    is null or `ecoleviedbv2`.list_eleve_par_classe.inscript
 					<text><![CDATA[Nom et Prenoms]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="TotalCateg" x="236" y="0" width="50" height="20" uuid="80d06892-cbbe-4800-9545-ba823fef33e7">
+					<reportElement style="TotalCateg" x="283" y="0" width="50" height="20" uuid="80d06892-cbbe-4800-9545-ba823fef33e7">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -695,7 +715,7 @@ and  (  $P{boursier}    is null or `ecoleviedbv2`.list_eleve_par_classe.inscript
 					<text><![CDATA[Classe]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="TotalCateg" x="286" y="0" width="40" height="20" uuid="15b6519f-f41c-4fbc-a4bd-9e86d4b6424c">
+					<reportElement style="TotalCateg" x="333" y="0" width="40" height="20" uuid="15b6519f-f41c-4fbc-a4bd-9e86d4b6424c">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -717,7 +737,7 @@ and  (  $P{boursier}    is null or `ecoleviedbv2`.list_eleve_par_classe.inscript
 					<text><![CDATA[Niveau]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="TotalCateg" x="326" y="0" width="30" height="20" uuid="87708599-4199-4259-a89c-db517294a452">
+					<reportElement style="TotalCateg" x="373" y="0" width="30" height="20" uuid="87708599-4199-4259-a89c-db517294a452">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -739,7 +759,7 @@ and  (  $P{boursier}    is null or `ecoleviedbv2`.list_eleve_par_classe.inscript
 					<text><![CDATA[Sexe]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="TotalCateg" x="356" y="0" width="45" height="20" uuid="ece10a20-8bce-49bf-9ad2-dc668f247e41">
+					<reportElement style="TotalCateg" x="403" y="0" width="45" height="20" uuid="ece10a20-8bce-49bf-9ad2-dc668f247e41">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -761,7 +781,7 @@ and  (  $P{boursier}    is null or `ecoleviedbv2`.list_eleve_par_classe.inscript
 					<text><![CDATA[Statut]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="TotalCateg" x="401" y="0" width="45" height="20" uuid="edde65ba-72bf-409a-bb7a-3c7f488c73f3">
+					<reportElement style="TotalCateg" x="448" y="0" width="45" height="20" uuid="edde65ba-72bf-409a-bb7a-3c7f488c73f3">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -783,7 +803,7 @@ and  (  $P{boursier}    is null or `ecoleviedbv2`.list_eleve_par_classe.inscript
 					<text><![CDATA[Red.]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="TotalCateg" x="446" y="0" width="40" height="20" uuid="e78f7442-685d-493d-b521-d5f429f2bb2d">
+					<reportElement style="TotalCateg" x="493" y="0" width="40" height="20" uuid="e78f7442-685d-493d-b521-d5f429f2bb2d">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -805,7 +825,7 @@ and  (  $P{boursier}    is null or `ecoleviedbv2`.list_eleve_par_classe.inscript
 					<text><![CDATA[LV2]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="TotalCateg" x="486" y="0" width="104" height="20" uuid="f14048ff-ed44-4037-b490-b3b941d1a5fb">
+					<reportElement style="TotalCateg" x="533" y="0" width="58" height="20" uuid="f14048ff-ed44-4037-b490-b3b941d1a5fb">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -830,9 +850,9 @@ and  (  $P{boursier}    is null or `ecoleviedbv2`.list_eleve_par_classe.inscript
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="20">
+		<band height="51">
 			<frame>
-				<reportElement x="19" y="0" width="591" height="20" uuid="a0a062bc-6858-4d94-8650-8c1ffbcfc207">
+				<reportElement x="19" y="0" width="591" height="51" uuid="a0a062bc-6858-4d94-8650-8c1ffbcfc207">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
@@ -844,7 +864,7 @@ and  (  $P{boursier}    is null or `ecoleviedbv2`.list_eleve_par_classe.inscript
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textField>
-					<reportElement style="TotalCateg" x="0" y="0" width="15" height="20" uuid="fbe0cf32-6c66-4d64-95e7-e500369336ba">
+					<reportElement style="TotalCateg" x="0" y="0" width="15" height="51" uuid="fbe0cf32-6c66-4d64-95e7-e500369336ba">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -867,7 +887,7 @@ and  (  $P{boursier}    is null or `ecoleviedbv2`.list_eleve_par_classe.inscript
 					<textFieldExpression><![CDATA[$V{Compteur}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement style="TotalCateg" x="15" y="0" width="45" height="20" uuid="af460416-0371-48b7-848e-b4dc81c167f8">
+					<reportElement style="TotalCateg" x="15" y="0" width="45" height="51" uuid="af460416-0371-48b7-848e-b4dc81c167f8">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -889,8 +909,20 @@ and  (  $P{boursier}    is null or `ecoleviedbv2`.list_eleve_par_classe.inscript
 					</textElement>
 					<textFieldExpression><![CDATA[$F{eleve_matricule}]]></textFieldExpression>
 				</textField>
+				<image scaleImage="FillFrame" onErrorType="Blank">
+					<reportElement x="60" y="0" width="90" height="51" uuid="f8796b54-8b4e-45cd-8610-befd3dd84775">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+					</reportElement>
+					<imageExpression><![CDATA[$F{cheminphoto}]]></imageExpression>
+				</image>
 				<textField>
-					<reportElement style="TotalCateg" x="60" y="0" width="176" height="20" uuid="df2bd651-6862-4c99-bc58-3a46f4dfeff0">
+					<reportElement style="TotalCateg" x="150" y="0" width="133" height="51" uuid="df2bd651-6862-4c99-bc58-3a46f4dfeff0">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -913,7 +945,7 @@ and  (  $P{boursier}    is null or `ecoleviedbv2`.list_eleve_par_classe.inscript
 					<textFieldExpression><![CDATA[$F{elevenom}+" "+$F{eleveprenom}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement style="TotalCateg" x="236" y="0" width="50" height="20" uuid="f0e8d314-8117-43cc-bc56-66f82c1f7900">
+					<reportElement style="TotalCateg" x="283" y="0" width="50" height="51" uuid="f0e8d314-8117-43cc-bc56-66f82c1f7900">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -936,7 +968,7 @@ and  (  $P{boursier}    is null or `ecoleviedbv2`.list_eleve_par_classe.inscript
 					<textFieldExpression><![CDATA[$F{classelibelle}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement style="TotalCateg" x="286" y="0" width="40" height="20" uuid="0276b735-d542-473c-a5dc-3a0bfb7a39b0">
+					<reportElement style="TotalCateg" x="333" y="0" width="40" height="51" uuid="0276b735-d542-473c-a5dc-3a0bfb7a39b0">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -959,7 +991,7 @@ and  (  $P{boursier}    is null or `ecoleviedbv2`.list_eleve_par_classe.inscript
 					<textFieldExpression><![CDATA[$F{niveau}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement style="TotalCateg" x="326" y="0" width="30" height="20" uuid="274c8d2f-03a1-4f97-a777-6a224463bf89">
+					<reportElement style="TotalCateg" x="373" y="0" width="30" height="51" uuid="274c8d2f-03a1-4f97-a777-6a224463bf89">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -982,7 +1014,7 @@ and  (  $P{boursier}    is null or `ecoleviedbv2`.list_eleve_par_classe.inscript
 					<textFieldExpression><![CDATA[$F{eleve_sexe}.equals("MASCULIN")?"M":"F"]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement style="TotalCateg" x="356" y="0" width="45" height="20" uuid="90de9481-6799-4808-ae8c-28260e843325">
+					<reportElement style="TotalCateg" x="403" y="0" width="45" height="51" uuid="90de9481-6799-4808-ae8c-28260e843325">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1005,7 +1037,7 @@ and  (  $P{boursier}    is null or `ecoleviedbv2`.list_eleve_par_classe.inscript
 					<textFieldExpression><![CDATA[$F{inscriptions_statut_eleve}.equals("AFFECTE")?"AFF":"NAFF"]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement style="TotalCateg" x="401" y="0" width="44" height="20" uuid="d53ada5e-adab-49a0-abb5-c67f226a16bf">
+					<reportElement style="TotalCateg" x="448" y="0" width="45" height="51" uuid="d53ada5e-adab-49a0-abb5-c67f226a16bf">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1028,7 +1060,7 @@ and  (  $P{boursier}    is null or `ecoleviedbv2`.list_eleve_par_classe.inscript
 					<textFieldExpression><![CDATA[$F{inscriptions_redoublant}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement style="TotalCateg" x="445" y="0" width="41" height="20" uuid="99d558a8-a0ac-4701-9736-7089cf18f740">
+					<reportElement style="TotalCateg" x="493" y="0" width="40" height="51" uuid="99d558a8-a0ac-4701-9736-7089cf18f740">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1051,7 +1083,7 @@ and  (  $P{boursier}    is null or `ecoleviedbv2`.list_eleve_par_classe.inscript
 					<textFieldExpression><![CDATA[$F{inscriptions_langue_vivante}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement style="TotalCateg" x="486" y="0" width="104" height="20" uuid="bf536e34-ff3d-46b5-9c61-d81cab9ff1c4">
+					<reportElement style="TotalCateg" x="533" y="0" width="58" height="51" uuid="bf536e34-ff3d-46b5-9c61-d81cab9ff1c4">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>

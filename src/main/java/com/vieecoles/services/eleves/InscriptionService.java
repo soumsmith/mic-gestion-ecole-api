@@ -16,6 +16,7 @@ import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.io.InputStream;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -547,6 +548,13 @@ public  void updatelibelleHandicap_inscrip (Long InscriptionId , Long oldHandica
         eleve elev = new eleve() ;
         System.out.println("Identifiant elève "+inscriptionDto.getIdentifiantEleve());
         elev = eleve.findById(inscriptionDto.getIdEleveInscrit());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        System.out.println("Date--Naissance "+inscriptionDto.getDate_naissanceEleve());
+        LocalDate localDateExtre = LocalDate.parse(inscriptionDto.getDate_naissanceEleve(), formatter);
+
+        LocalDate localDateNaiss = localDateExtre;
+        elev.setElevedate_naissance(localDateNaiss);
+
         elev.setEleve_sexe(inscriptionDto.getSexeEleve());
         elev.setEleve_matricule(inscriptionDto.getMatriculeEleve());
         elev.setElevenom(inscriptionDto.getNomEleve());
@@ -559,6 +567,7 @@ public  void updatelibelleHandicap_inscrip (Long InscriptionId , Long oldHandica
         myIns.setInscriptions_ecole_origine(inscriptionDto.getInscriptions_ecole_origine());
         myIns.setInscriptions_boursier(inscriptionDto.getInscriptions_boursier());
         myIns.setInscriptions_redoublant(inscriptionDto.getInscriptions_redoublant());
+        myIns.setInscriptions_statut_eleve(inscriptionDto.getInscriptions_statut_eleve());
        // myIns.setInscriptions_classe_actuelle(inscriptionDto.getInscriptions_classe_actuelle());
         myIns.setInscriptions_classe_precedente(inscriptionDto.getInscriptions_classe_precedente());
         myIns.setInscriptions_derniereclasse_religieuse(inscriptionDto.getInscriptions_derniereclasse_religieuse());

@@ -407,7 +407,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.libelle_classe =  $P{clas
 			<band height="723">
 				<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				<subreport>
-					<reportElement stretchType="RelativeToTallestObject" x="-16" y="10" width="584" height="200" uuid="4ac0ee79-a3ca-47bd-a7ea-48f4b0a47e5b">
+					<reportElement stretchType="RelativeToTallestObject" x="-16" y="10" width="584" height="480" uuid="4ac0ee79-a3ca-47bd-a7ea-48f4b0a47e5b">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
 					<subreportParameter name="matricule">
@@ -423,7 +423,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.libelle_classe =  $P{clas
 						<subreportParameterExpression><![CDATA[$F{libelle_periode}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression><![CDATA["etats/spider/BulletinNobelSpider.jasper"]]></subreportExpression>
+					<subreportExpression><![CDATA["etats/spider/BulletinNobelSpiderEtan.jasper"]]></subreportExpression>
 				</subreport>
 			</band>
 		</groupHeader>

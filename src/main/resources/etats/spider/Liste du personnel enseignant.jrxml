@@ -3,7 +3,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Liste du personnel enseignant" pageWidth="630" pageHeight="842" columnWidth="630" leftMargin="0" rightMargin="0" topMargin="20" bottomMargin="20" uuid="cecdf213-9a9e-43a3-a0f6-256935281386">
 	<property name="net.sf.jasperreports.awt.ignore.missing.font" value="true"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="NO_DATA_ADAPTER"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ecolevieDB"/>
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="431"/>
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="559"/>
 	<style name="champsLibelle" fontName="Serif" fontSize="8">
@@ -16,10 +16,9 @@
 	<parameter name="idAnnee" class="java.lang.Long"/>
 	<parameter name="IdEcole" class="java.lang.Long"/>
 	<queryString language="SQL">
-		<![CDATA[select * from   `ecoleviedbv2`.liste_personnel_enseignant
+		<![CDATA[select * from   `ecoleviedbv2`.liste_personnel_enseignant 
 where  `ecoleviedbv2`.liste_personnel_enseignant.ecoleid= $P{IdEcole}  and
-`ecoleviedbv2`.liste_personnel_enseignant.annee_scolaireid = $P{idAnnee}
-]]>
+`ecoleviedbv2`.liste_personnel_enseignant.annee_scolaireid = $P{idAnnee}]]>
 	</queryString>
 	<field name="personnelid" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.name" value="personnelid"/>
@@ -127,7 +126,7 @@ where  `ecoleviedbv2`.liste_personnel_enseignant.ecoleid= $P{IdEcole}  and
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<staticText>
-					<reportElement style="TotalCateg" x="0" y="0" width="45" height="20" uuid="2e23155f-97b8-4d7a-968f-5829d6a3ebac">
+					<reportElement style="TotalCateg" x="0" y="0" width="40" height="20" uuid="2e23155f-97b8-4d7a-968f-5829d6a3ebac">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -143,13 +142,13 @@ where  `ecoleviedbv2`.liste_personnel_enseignant.ecoleid= $P{IdEcole}  and
 						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement textAlignment="Left" verticalAlignment="Middle">
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="7"/>
 					</textElement>
 					<text><![CDATA[Matricule]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="TotalCateg" x="45" y="0" width="45" height="20" uuid="7a88027e-08c0-4ca2-893a-681f86453baa">
+					<reportElement style="TotalCateg" x="40" y="0" width="60" height="20" uuid="7a88027e-08c0-4ca2-893a-681f86453baa">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -165,13 +164,13 @@ where  `ecoleviedbv2`.liste_personnel_enseignant.ecoleid= $P{IdEcole}  and
 						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement textAlignment="Left" verticalAlignment="Middle">
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="7"/>
 					</textElement>
 					<text><![CDATA[Nom]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="TotalCateg" x="90" y="0" width="100" height="20" uuid="87708599-4199-4259-a89c-db517294a452">
+					<reportElement style="TotalCateg" x="100" y="0" width="100" height="20" uuid="87708599-4199-4259-a89c-db517294a452">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -187,13 +186,13 @@ where  `ecoleviedbv2`.liste_personnel_enseignant.ecoleid= $P{IdEcole}  and
 						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement textAlignment="Left" verticalAlignment="Middle">
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="7"/>
 					</textElement>
 					<text><![CDATA[Prenoms]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="TotalCateg" x="190" y="0" width="45" height="20" uuid="ece10a20-8bce-49bf-9ad2-dc668f247e41">
+					<reportElement style="TotalCateg" x="200" y="0" width="80" height="20" uuid="ece10a20-8bce-49bf-9ad2-dc668f247e41">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -209,13 +208,13 @@ where  `ecoleviedbv2`.liste_personnel_enseignant.ecoleid= $P{IdEcole}  and
 						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement textAlignment="Left" verticalAlignment="Middle">
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="7"/>
 					</textElement>
 					<text><![CDATA[Fonction]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="TotalCateg" x="235" y="0" width="45" height="20" uuid="edde65ba-72bf-409a-bb7a-3c7f488c73f3">
+					<reportElement style="TotalCateg" x="280" y="0" width="45" height="20" uuid="edde65ba-72bf-409a-bb7a-3c7f488c73f3">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -231,13 +230,13 @@ where  `ecoleviedbv2`.liste_personnel_enseignant.ecoleid= $P{IdEcole}  and
 						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement textAlignment="Left" verticalAlignment="Middle">
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="7"/>
 					</textElement>
 					<text><![CDATA[Diplôme]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="TotalCateg" x="280" y="0" width="71" height="20" uuid="e78f7442-685d-493d-b521-d5f429f2bb2d">
+					<reportElement style="TotalCateg" x="325" y="0" width="65" height="20" uuid="e78f7442-685d-493d-b521-d5f429f2bb2d">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -253,13 +252,13 @@ where  `ecoleviedbv2`.liste_personnel_enseignant.ecoleid= $P{IdEcole}  and
 						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement textAlignment="Left" verticalAlignment="Middle">
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="7"/>
 					</textElement>
 					<text><![CDATA[n°autorisation]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="TotalCateg" x="351" y="0" width="71" height="20" uuid="a4253b2b-1ddc-45b3-a059-270517e09b21">
+					<reportElement style="TotalCateg" x="390" y="0" width="60" height="20" uuid="a4253b2b-1ddc-45b3-a059-270517e09b21">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -275,13 +274,13 @@ where  `ecoleviedbv2`.liste_personnel_enseignant.ecoleid= $P{IdEcole}  and
 						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement textAlignment="Left" verticalAlignment="Middle">
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="7"/>
 					</textElement>
 					<text><![CDATA[contact]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="TotalCateg" x="422" y="0" width="71" height="20" uuid="de47023d-bc06-418e-86cf-c833ab2be495">
+					<reportElement style="TotalCateg" x="450" y="0" width="70" height="20" uuid="de47023d-bc06-418e-86cf-c833ab2be495">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -297,13 +296,13 @@ where  `ecoleviedbv2`.liste_personnel_enseignant.ecoleid= $P{IdEcole}  and
 						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement textAlignment="Left" verticalAlignment="Middle">
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="7"/>
 					</textElement>
 					<text><![CDATA[email]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="TotalCateg" x="493" y="0" width="98" height="20" uuid="14761616-69fd-44ba-9a23-52e41066b541">
+					<reportElement style="TotalCateg" x="520" y="0" width="71" height="20" uuid="14761616-69fd-44ba-9a23-52e41066b541">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -319,7 +318,7 @@ where  `ecoleviedbv2`.liste_personnel_enseignant.ecoleid= $P{IdEcole}  and
 						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement textAlignment="Left" verticalAlignment="Middle">
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="7"/>
 					</textElement>
 					<text><![CDATA[Date prise de service]]></text>
@@ -341,7 +340,7 @@ where  `ecoleviedbv2`.liste_personnel_enseignant.ecoleid= $P{IdEcole}  and
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textField>
-					<reportElement style="TotalCateg" x="0" y="0" width="45" height="20" uuid="c5b6dc66-84eb-4387-bee7-36c8903fe919">
+					<reportElement style="TotalCateg" x="0" y="0" width="40" height="20" uuid="c5b6dc66-84eb-4387-bee7-36c8903fe919">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -357,13 +356,13 @@ where  `ecoleviedbv2`.liste_personnel_enseignant.ecoleid= $P{IdEcole}  and
 						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement textAlignment="Left" verticalAlignment="Middle">
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{personnelid}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement style="TotalCateg" x="45" y="0" width="45" height="20" uuid="f1f971f0-14d5-4734-98fc-602a683e9948">
+					<reportElement style="TotalCateg" x="40" y="0" width="60" height="20" uuid="f1f971f0-14d5-4734-98fc-602a683e9948">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -379,13 +378,13 @@ where  `ecoleviedbv2`.liste_personnel_enseignant.ecoleid= $P{IdEcole}  and
 						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement textAlignment="Left" verticalAlignment="Middle">
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{personnelnom}]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont" isBlankWhenNull="true">
-					<reportElement style="TotalCateg" x="90" y="0" width="100" height="20" uuid="17339e86-0176-48a2-a4da-a0c3e71c426e">
+					<reportElement style="TotalCateg" x="100" y="0" width="100" height="20" uuid="17339e86-0176-48a2-a4da-a0c3e71c426e">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -401,13 +400,13 @@ where  `ecoleviedbv2`.liste_personnel_enseignant.ecoleid= $P{IdEcole}  and
 						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement textAlignment="Left" verticalAlignment="Middle">
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{personnelprenom}]]></textFieldExpression>
 				</textField>
-				<textField isBlankWhenNull="true">
-					<reportElement style="TotalCateg" x="190" y="0" width="45" height="20" uuid="0a60383b-1534-4b3a-82fa-7e6d25cd85ad">
+				<textField textAdjust="ScaleFont" isBlankWhenNull="true">
+					<reportElement style="TotalCateg" x="200" y="0" width="80" height="20" uuid="0a60383b-1534-4b3a-82fa-7e6d25cd85ad">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -423,13 +422,13 @@ where  `ecoleviedbv2`.liste_personnel_enseignant.ecoleid= $P{IdEcole}  and
 						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement textAlignment="Left" verticalAlignment="Middle">
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{fonctionlibelle}]]></textFieldExpression>
 				</textField>
-				<textField isBlankWhenNull="true">
-					<reportElement style="TotalCateg" x="235" y="0" width="45" height="20" uuid="10385f69-0fb5-4c96-bfc8-ccbcbd8f2b10">
+				<textField textAdjust="ScaleFont" isBlankWhenNull="true">
+					<reportElement style="TotalCateg" x="280" y="0" width="45" height="20" uuid="10385f69-0fb5-4c96-bfc8-ccbcbd8f2b10">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -445,13 +444,13 @@ where  `ecoleviedbv2`.liste_personnel_enseignant.ecoleid= $P{IdEcole}  and
 						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement textAlignment="Left" verticalAlignment="Middle">
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{niveau_etude_libelle}]]></textFieldExpression>
 				</textField>
-				<textField isBlankWhenNull="true">
-					<reportElement style="TotalCateg" x="280" y="0" width="71" height="20" uuid="d0d6a033-2589-44cf-8edc-c5174db9b0d8">
+				<textField textAdjust="ScaleFont" isBlankWhenNull="true">
+					<reportElement style="TotalCateg" x="325" y="0" width="65" height="20" uuid="d0d6a033-2589-44cf-8edc-c5174db9b0d8">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -467,13 +466,13 @@ where  `ecoleviedbv2`.liste_personnel_enseignant.ecoleid= $P{IdEcole}  and
 						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement textAlignment="Left" verticalAlignment="Middle">
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{numAuto}]]></textFieldExpression>
 				</textField>
-				<textField isBlankWhenNull="true">
-					<reportElement style="TotalCateg" x="351" y="0" width="71" height="20" uuid="fa58090e-41d1-43ad-afea-faa79b12a264">
+				<textField textAdjust="ScaleFont" isBlankWhenNull="true">
+					<reportElement style="TotalCateg" x="390" y="0" width="60" height="20" uuid="fa58090e-41d1-43ad-afea-faa79b12a264">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -489,13 +488,13 @@ where  `ecoleviedbv2`.liste_personnel_enseignant.ecoleid= $P{IdEcole}  and
 						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement textAlignment="Left" verticalAlignment="Middle">
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{personnel_contact}]]></textFieldExpression>
 				</textField>
-				<textField isBlankWhenNull="true">
-					<reportElement style="TotalCateg" x="422" y="0" width="71" height="20" uuid="93c03b0e-88ee-49a4-8fae-cac96da6fb35">
+				<textField textAdjust="ScaleFont" isBlankWhenNull="true">
+					<reportElement style="TotalCateg" x="450" y="0" width="70" height="20" uuid="93c03b0e-88ee-49a4-8fae-cac96da6fb35">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -511,13 +510,13 @@ where  `ecoleviedbv2`.liste_personnel_enseignant.ecoleid= $P{IdEcole}  and
 						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement textAlignment="Left" verticalAlignment="Middle">
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{email}]]></textFieldExpression>
 				</textField>
-				<textField isBlankWhenNull="true">
-					<reportElement style="TotalCateg" x="493" y="0" width="98" height="20" uuid="f7c44b22-d857-46cd-8e24-a5ebc9748522">
+				<textField textAdjust="ScaleFont" isBlankWhenNull="true">
+					<reportElement style="TotalCateg" x="520" y="0" width="71" height="20" uuid="f7c44b22-d857-46cd-8e24-a5ebc9748522">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -533,7 +532,7 @@ where  `ecoleviedbv2`.liste_personnel_enseignant.ecoleid= $P{IdEcole}  and
 						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement textAlignment="Left" verticalAlignment="Middle">
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{DatePriseService}]]></textFieldExpression>

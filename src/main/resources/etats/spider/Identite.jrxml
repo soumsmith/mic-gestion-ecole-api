@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Detail_IdentiteRapportGlobal" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e5b5a591-36bb-4f37-9156-ca7fcdf8244a">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Detail_IdentiteRapportGlobal" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e5b5a591-36bb-4f37-9156-ca7fcdf8244a">
 	<property name="com.jaspersoft.studio.data.sql.tables">
 		<![CDATA[ZWNvbGV2aWVkYnYyLnJfaW5mb19mb25kYXRldXIgLDU5MiwzMCwwNTczOTdkMy00NDY4LTRjYTkt
 YTQyNi00YmUxYThhY2JhYmE7ZWNvbGV2aWVkYnYyLnJfZGlyZWN0ZXVyX2Rlc19ldHVkZXMgLDE1
@@ -11,6 +11,15 @@ NWViYzM7]]>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="NO_DATA_ADAPTER"/>
 	<property name="net.sf.jasperreports.export.docx.flexible.row.height" value="true"/>
 	<property name="net.sf.jasperreports.export.docx.frames.as.nested.tables" value="false"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<parameter name="codeEcole" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
@@ -39,30 +48,30 @@ NWViYzM7]]>
 		<groupHeader>
 			<band height="551">
 				<rectangle>
-					<reportElement x="12" y="28" width="530" height="30" backcolor="#A19C9C" uuid="f8f26e43-de26-455e-a473-080202e51ca4"/>
+					<reportElement x="30" y="30" width="530" height="30" backcolor="#A19C9C" uuid="f8f26e43-de26-455e-a473-080202e51ca4"/>
 				</rectangle>
 				<staticText>
-					<reportElement x="212" y="28" width="130" height="30" uuid="b4e2d1bd-906d-43f5-a364-13c74d7ed60f"/>
+					<reportElement x="230" y="30" width="130" height="30" uuid="b4e2d1bd-906d-43f5-a364-13c74d7ed60f"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="SansSerif" size="14"/>
 					</textElement>
 					<text><![CDATA[Etablissement]]></text>
 				</staticText>
 				<rectangle>
-					<reportElement x="12" y="223" width="530" height="30" backcolor="#A19C9C" uuid="93b9a625-f330-4c91-bc02-914ca85aa622"/>
+					<reportElement x="30" y="225" width="530" height="30" backcolor="#A19C9C" uuid="93b9a625-f330-4c91-bc02-914ca85aa622"/>
 				</rectangle>
 				<rectangle>
-					<reportElement x="12" y="379" width="530" height="30" backcolor="#A19C9C" uuid="a16925f9-8463-47f5-884a-332d0da8e1c2"/>
+					<reportElement x="30" y="381" width="530" height="30" backcolor="#A19C9C" uuid="a16925f9-8463-47f5-884a-332d0da8e1c2"/>
 				</rectangle>
 				<staticText>
-					<reportElement x="203" y="228" width="130" height="21" uuid="b7570105-52a1-45b6-8c67-6904478c0f24"/>
+					<reportElement x="221" y="230" width="130" height="21" uuid="b7570105-52a1-45b6-8c67-6904478c0f24"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="SansSerif" size="14"/>
 					</textElement>
 					<text><![CDATA[FONDATEUR]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="152" y="380" width="250" height="30" uuid="bec0ae91-a2f0-48fd-9671-dcce8a647934"/>
+					<reportElement x="170" y="382" width="250" height="30" uuid="bec0ae91-a2f0-48fd-9671-dcce8a647934"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="SansSerif" size="14"/>
 					</textElement>
@@ -76,9 +85,15 @@ NWViYzM7]]>
 					<text><![CDATA[IDENTITE]]></text>
 				</staticText>
 				<frame>
-					<reportElement x="12" y="59" width="530" height="163" uuid="64f84aa8-7988-45f2-b341-4ca321304840">
+					<reportElement x="30" y="61" width="530" height="163" uuid="64f84aa8-7988-45f2-b341-4ca321304840">
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 					</reportElement>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
 					<staticText>
 						<reportElement x="0" y="0" width="265" height="21" uuid="34403864-4ebd-406f-8cbe-5bfa2f6466fa">
 							<property name="com.jaspersoft.layout.grid.x" value="0"/>
@@ -449,9 +464,15 @@ NWViYzM7]]>
 					</textField>
 				</frame>
 				<frame>
-					<reportElement x="12" y="254" width="530" height="123" uuid="48aa2667-059e-4d55-862b-8e5a10421ec7">
+					<reportElement x="30" y="256" width="530" height="123" uuid="48aa2667-059e-4d55-862b-8e5a10421ec7">
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 					</reportElement>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
 					<staticText>
 						<reportElement x="0" y="0" width="265" height="21" uuid="a4c9f971-cacb-48d9-8391-0f9cd3606175">
 							<property name="com.jaspersoft.layout.grid.x" value="0"/>
@@ -729,9 +750,15 @@ NWViYzM7]]>
 					</staticText>
 				</frame>
 				<frame>
-					<reportElement x="12" y="410" width="530" height="103" uuid="285806f5-cde7-489b-8b78-d29638743a88">
+					<reportElement x="30" y="412" width="530" height="103" uuid="285806f5-cde7-489b-8b78-d29638743a88">
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 					</reportElement>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
 					<staticText>
 						<reportElement x="0" y="0" width="265" height="18" uuid="0b2be88d-54e4-49ca-a558-023d357c171b">
 							<property name="com.jaspersoft.layout.grid.x" value="0"/>

@@ -240,7 +240,7 @@
 						<bottomPen lineWidth="1.0"/>
 						<rightPen lineWidth="1.0"/>
 					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
+					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font fontName="SansSerif" size="6" isBold="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{nom} + " " + $F{prenoms}]]></textFieldExpression>
@@ -308,7 +308,4 @@
 			</frame>
 		</band>
 	</detail>
-	<pageFooter>
-		<band height="62"/>
-	</pageFooter>
 </jasperReport>

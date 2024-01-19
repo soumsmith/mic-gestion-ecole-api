@@ -474,7 +474,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 	}
 
 	public MoyenneEleveDto moyennesAndMatiereAndNotesByMatriculeHandle(String matricule, String matiereId,
-			String anneeId, String periodeId) {
+																	   String anneeId, String periodeId) {
 
 		ClasseEleve ce = classeEleveService.getByMatriculeAndAnnee(matricule, Long.parseLong(anneeId));
 		MoyenneEleveDto mdto = new MoyenneEleveDto();
@@ -511,7 +511,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 	}
 
 	public List<MoyenneEleveDto> moyennesAndMatiereAndNotesHandle(String classeId, String matiereId, String anneeId,
-			String periodeId) {
+																  String periodeId) {
 		// Obtenir la liste des evaluations dans une classe et une matiere au cours de l
 		// année pour une
 		// période
@@ -668,7 +668,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 
 		Double diviserEMR;
 		Double sommeEMR;
-		
+
 
 //		Gson g = new Gson();
 
@@ -715,7 +715,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 						&& entry.getKey().getMatiereParent().getIsEMR().equals(Constants.OUI)) {
 
 					if (diviserEMR == 0.0) {
-						
+
 						// Construction d'un Map
 //						matiereNoteEMRMap = new HashMap<EcoleHasMatiere, List<Notes>>();
 						Map<EcoleHasMatiere, List<Notes>> matiereNoteEMRMap = new HashMap<EcoleHasMatiere, List<Notes>>();
@@ -742,7 +742,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 					noteEMR.setId(new Random().nextLong());
 					noteEMR.setNote(CommonUtils.roundDouble(moyenne, 2));
 					noteEMR.setPec(Constants.PEC_1);
-//					
+//
 					moyenneEMRList.add(noteEMR);
 
 				}
@@ -750,8 +750,8 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			}
 			if (EMRFlat) {
 				moyenneEMR = sommeEMR / (diviserEMR == 0.0 ? 1.0 : diviserEMR);
-				
-//				// pour eviter de partager le meme objet avec les autres eleves 
+
+//				// pour eviter de partager le meme objet avec les autres eleves
 				EcoleHasMatiere ehm_ = new EcoleHasMatiere();
 				ehm_.setId(ehm.getId());
 				ehm_.setPec(ehm.getPec());
@@ -1028,7 +1028,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 	}
 
 	void classementAnnuelEleveParMatiere(List<MoyenneEleveDto> moyEleve, Long brancheId, Long ecoleId,
-			Periode periode) {
+										 Periode periode) {
 		logger.info("---> Classement des eleves par matiere");
 		List<ClasseMatiere> classeMatList = ClasseMatiere.find("branche.id = ?1 and ecole.id =?2", brancheId, ecoleId)
 				.list();
@@ -1179,7 +1179,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 	}
 
 	public Double handleMoyenneAnnuelleEnsSecondaire(List<Periode> periodes, Double coefFinalPeriode,
-			MoyenneEleveDto me, List<Bulletin> bulletinsElevesList) {
+													 MoyenneEleveDto me, List<Bulletin> bulletinsElevesList) {
 		Double moyAn = 0.0;
 		Double coef = 0.0;
 
@@ -1209,8 +1209,8 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 	}
 
 	public void handleMoyenneAnnuelleEnsPrimaire(List<Periode> periodes, Double coefFinalPeriode, MoyenneEleveDto me,
-			List<Bulletin> bulletinsElevesList, Double moyAn, List<Double> moyAnInterne, List<Double> moyAnIEPP,
-			List<Double> moyAnPassage) {
+												 List<Bulletin> bulletinsElevesList, Double moyAn, List<Double> moyAnInterne, List<Double> moyAnIEPP,
+												 List<Double> moyAnPassage) {
 		Double coef = 0.0;
 		for (Bulletin bul : bulletinsElevesList) {
 			for (Periode p : periodes) {
@@ -1303,7 +1303,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 	}
 
 	public List<Notes> getListNotesByEleveAndClasseAndAnneeAndPeriode(String matricule, Long classeId, Long anneeId,
-			Long periodeId) {
+																	  Long periodeId) {
 
 		List<Notes> notesByEleve = new ArrayList<Notes>();
 		try {
@@ -1330,7 +1330,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 	}
 
 	public List<Notes> getListNotesByEleveAndClasseAndAnneeAndPeriodeAndMatiere(String matricule, Long classeId,
-			Long anneeId, Long periodeId, Long matiereId) {
+																				Long anneeId, Long periodeId, Long matiereId) {
 
 		List<Notes> notesByEleve = new ArrayList<Notes>();
 		try {

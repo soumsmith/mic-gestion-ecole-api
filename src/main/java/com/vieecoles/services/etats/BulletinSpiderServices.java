@@ -52,7 +52,8 @@ public class BulletinSpiderServices {
         LongTableau= classeNiveauDtoList.size();
         List<InfosPersoBulletins> resultatsListElevesDto = new ArrayList<>();
 
-        Double TmoyFr,TcoefFr,TmoyCoefFr,TmoyCoefEMR, moy_1er_trim ,moy_2eme_trim,moy_3eme_trim ,TmoyCoefEMR1 ,TcoefEMR ;
+        Double TmoyFr,TcoefFr,TmoyCoefFr,TmoyCoefEMR, moy_1er_trim ,moy_2eme_trim,moy_3eme_trim ,TmoyCoefEMR1 ,TcoefEMR ,TmoyCoefReligio = null,TmoyCoefReligio1,
+    TcoefReligion;
        Integer rang_1er_trim ,rang_2eme_trim ,rang_3eme_trim ;
         int TrangEMR = 0, TrangFr = 0;
       String  codeEcole,is_class_1er_trim,is_class_2e_trim,is_class_3e_trim ;
@@ -72,6 +73,7 @@ public class BulletinSpiderServices {
             idBulletin = getIdBulletin(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,libelleTrimestre,idEcole) ;
             System.out.println("idBulletin "+idBulletin);
             TcoefEMR= calculcoefEMR(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,libelleTrimestre,idEcole) ;
+            TcoefReligion = calculcoefReligion(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,libelleTrimestre,idEcole);
             TcoefFr = calculcoefFran(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,libelleTrimestre,idEcole) ;
              Double TrangEMR1 = 0d ;
 
@@ -96,11 +98,24 @@ public class BulletinSpiderServices {
             System.out.println("TrangEMR "+TrangEMR);
             TmoyCoefEMR1 = calculMoycoefEMR(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,libelleTrimestre,idEcole);
 
+            TmoyCoefReligio1 = calculMoycoefReligion(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,libelleTrimestre,idEcole);
+
             System.out.println("TcoefEMR "+TcoefEMR);
 
             System.out.println("TmoyCoefEMR1 "+TmoyCoefEMR1);
 
             TmoyCoefEMR = (TcoefEMR ==0.0? 0.0: (TmoyCoefEMR1)/TcoefEMR);
+
+            if(TcoefEMR==0.0 && TcoefReligion==0.0) {
+                TmoyCoefReligio= 0.0 ;
+            } else if (TcoefEMR==0.0&& TcoefReligion!=0.0) {
+                TmoyCoefReligio = (TmoyCoefReligio1)/(TcoefReligion) ;
+            } else if(TcoefEMR!=0.0 && TcoefReligion==0.0) {
+                TmoyCoefReligio = TmoyCoefEMR ;
+            } else if (TcoefEMR!=0.0 && TcoefReligion!=0.0) {
+                TmoyCoefReligio = (((TmoyCoefReligio1)/(TcoefReligion))+TmoyCoefEMR) /2L;
+            }
+
 
             System.out.println("TmoyCoefEMR "+TmoyCoefEMR);
 
@@ -157,6 +172,7 @@ public class BulletinSpiderServices {
                 k.setMoy_1er_trim(moy_1er_trim);
                 k.setMoy_2eme_trim(moy_2eme_trim);
                 k.setMoy_3eme_trim(moy_3eme_trim);
+                k.setTmoyCoefReligio(TmoyCoefReligio);
                 System.out.println("idBulletin>> "+idBulletin);
                 k.setIdBulletin(idBulletin);
                 System.out.println(">>>>>Objet Detail Bulletin "+k.toString());
@@ -201,6 +217,7 @@ public class BulletinSpiderServices {
                 l.setMoy_1er_trim(moy_1er_trim);
                 l.setMoy_2eme_trim(moy_2eme_trim);
                 l.setMoy_3eme_trim(moy_3eme_trim);
+                l.setTmoyCoefReligio(TmoyCoefReligio);
                 l.setIdBulletin(idBulletin);
                 System.out.println(">>>>>FIN****");
                 mlist.add(l);
@@ -318,7 +335,7 @@ public class BulletinSpiderServices {
 
     public  Double calculcoefEMR(String matricule, String annee,String periode,Long idEcole){
         try {
-            Double  moyTfr = (Double) em.createQuery("select SUM(d.coef) from DetailBulletin d join d.bulletin b where b.matricule=:matricule and b.libellePeriode=:periode and b.ecoleId=:idEcole and b.anneeLibelle=:annee  and d.matiereCode in ('30','35','37','38','29') ")
+            Double  moyTfr = (Double) em.createQuery("select SUM(d.coef) from DetailBulletin d join d.bulletin b where b.matricule=:matricule and b.libellePeriode=:periode and b.ecoleId=:idEcole and b.anneeLibelle=:annee  and d.matiereCode in ('30','35','37','38','29','32') ")
                     .setParameter("matricule",matricule)
                     .setParameter("annee",annee)
                     .setParameter("periode",periode)
@@ -333,6 +350,23 @@ public class BulletinSpiderServices {
         }
     }
 
+    public  Double calculcoefReligion(String matricule, String annee,String periode,Long idEcole){
+        try {
+            Double  moyTfr = (Double) em.createQuery("select SUM(d.coef) from DetailBulletin d join d.bulletin b where b.matricule=:matricule and b.libellePeriode=:periode and b.ecoleId=:idEcole and b.anneeLibelle=:annee  and d.matiereCode not in ('30','35','37','38','29','32') and d.categorie=:cat ")
+                    .setParameter("matricule",matricule)
+                    .setParameter("annee",annee)
+                    .setParameter("periode",periode)
+                    .setParameter("idEcole",idEcole)
+                    .setParameter("cat","05")
+                    .getSingleResult();
+            if(moyTfr==null) {
+                return 0D ;
+            } else
+                return  moyTfr ;
+        } catch (NoResultException e){
+            return 0D ;
+        }
+    }
     public  Double calculMoycoefFran(String matricule, String annee,String periode,Long idEcole){
         Integer niveauOrdre= getNiveau(matricule,annee ,periode,idEcole);
         System.out.println("niveauOrdre>>> "+niveauOrdre);
@@ -376,7 +410,7 @@ public class BulletinSpiderServices {
 
     public  Double calculMoycoefEMR(String matricule, String annee,String periode,Long idEcole){
         try {
-            Double  moyTfr = (Double) em.createQuery("select SUM(d.moyenne)  from DetailBulletin d join d.bulletin b where b.matricule=:matricule and b.libellePeriode=:periode and b.ecoleId=:idEcole and b.anneeLibelle=:annee  and d.matiereCode in ('30','35','37','38','29') ")
+            Double  moyTfr = (Double) em.createQuery("select SUM(d.moyenne)  from DetailBulletin d join d.bulletin b where b.matricule=:matricule and b.libellePeriode=:periode and b.ecoleId=:idEcole and b.anneeLibelle=:annee  and d.matiereCode in ('30','35','37','38','29','32') ")
                     .setParameter("matricule",matricule)
                     .setParameter("annee",annee)
                     .setParameter("periode",periode)
@@ -391,6 +425,23 @@ public class BulletinSpiderServices {
         }
     }
 
+    public  Double calculMoycoefReligion(String matricule, String annee,String periode,Long idEcole){
+        try {
+            Double  moyTfr = (Double) em.createQuery("select SUM(d.moyenne)  from DetailBulletin d join d.bulletin b where b.matricule=:matricule and b.libellePeriode=:periode and b.ecoleId=:idEcole and b.anneeLibelle=:annee  and d.matiereCode not in ('30','35','37','38','29','32') and d.categorie=:cate ")
+                    .setParameter("matricule",matricule)
+                    .setParameter("annee",annee)
+                    .setParameter("periode",periode)
+                    .setParameter("idEcole",idEcole)
+                    .setParameter("cate","05")
+                    .getSingleResult();
+            if(moyTfr==null) {
+                return 0D ;
+            } else
+                return  moyTfr ;
+        } catch (NoResultException e){
+            return 0D ;
+        }
+    }
 
 
     public  Double calculRangFran(String matricule, String annee,String periode,Long idEcole){

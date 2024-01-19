@@ -2,7 +2,7 @@
 <!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Liste_des_majors_photos" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4798adcd-b33d-4103-8f41-c1e234463320">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="NO_DATA_ADAPTER"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ecolevieDB"/>
 	<property name="net.sf.jasperreports.export.docx.flexible.row.height" value="true"/>
 	<property name="net.sf.jasperreports.export.docx.frames.as.nested.tables" value="false"/>
 	<style name="Titre" fontName="Caladea" fontSize="8">
@@ -28,9 +28,9 @@
 	<parameter name="id_ecole" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT *
-FROM `ecoleviedbv2`.liste_major_ecole_par_ecole
-where  `ecoleviedbv2`.liste_major_ecole_par_ecole.id_ecole = $P{id_ecole}
-and  `ecoleviedbv2`.liste_major_ecole_par_ecole.libelle_periode =  $P{periode}
+FROM `ecoleviedbv2`.liste_major_ecole_par_ecole 
+where  `ecoleviedbv2`.liste_major_ecole_par_ecole.id_ecole = $P{id_ecole} 
+and  `ecoleviedbv2`.liste_major_ecole_par_ecole.libelle_periode =  $P{periode} 
 and  `ecoleviedbv2`.liste_major_ecole_par_ecole.annee_libelle  =  $P{annee}]]>
 	</queryString>
 	<field name="moyGeneral" class="java.lang.Double">
@@ -98,14 +98,14 @@ and  `ecoleviedbv2`.liste_major_ecole_par_ecole.annee_libelle  =  $P{annee}]]>
 		<property name="com.jaspersoft.studio.field.label" value="annee_libelle"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="liste_major_ecole_par_ecole"/>
 	</field>
-	<field name="id_ecole" class="java.lang.Long">
-		<property name="com.jaspersoft.studio.field.name" value="id_ecole"/>
-		<property name="com.jaspersoft.studio.field.label" value="id_ecole"/>
+	<field name="cheminphoto" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="cheminphoto"/>
+		<property name="com.jaspersoft.studio.field.label" value="cheminphoto"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="liste_major_ecole_par_ecole"/>
 	</field>
-	<field name="photo_eleve" class="byte[]">
-		<property name="com.jaspersoft.studio.field.name" value="photo_eleve"/>
-		<property name="com.jaspersoft.studio.field.label" value="photo_eleve"/>
+	<field name="id_ecole" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="id_ecole"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_ecole"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="liste_major_ecole_par_ecole"/>
 	</field>
 	<sortField name="ordre_niveau"/>
@@ -366,7 +366,7 @@ and  `ecoleviedbv2`.liste_major_ecole_par_ecole.annee_libelle  =  $P{annee}]]>
 						<textElement textAlignment="Center" verticalAlignment="Middle">
 							<font fontName="SansSerif" size="6" isBold="true"/>
 						</textElement>
-						<text><![CDATA[LV2]]></text>
+						<text><![CDATA[Observation]]></text>
 					</staticText>
 				</frame>
 				<textField>
@@ -400,7 +400,7 @@ and  `ecoleviedbv2`.liste_major_ecole_par_ecole.annee_libelle  =  $P{annee}]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="14" isBold="true" isUnderline="true"/>
 				</textElement>
-				<text><![CDATA[Liste des majors de classe par niveau]]></text>
+				<text><![CDATA[Liste des majors par classe]]></text>
 			</staticText>
 		</band>
 	</title>
@@ -422,7 +422,7 @@ and  `ecoleviedbv2`.liste_major_ecole_par_ecole.annee_libelle  =  $P{annee}]]>
 					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<image scaleImage="FillFrame" onErrorType="Icon">
+				<image scaleImage="FillFrame" onErrorType="Blank">
 					<reportElement x="0" y="0" width="60" height="49" uuid="0205f797-d845-4941-a3ab-c311e3e7e3d1">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
@@ -432,7 +432,7 @@ and  `ecoleviedbv2`.liste_major_ecole_par_ecole.annee_libelle  =  $P{annee}]]>
 						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 					</reportElement>
-					<imageExpression><![CDATA[$F{photo_eleve}]]></imageExpression>
+					<imageExpression><![CDATA[$F{cheminphoto}]]></imageExpression>
 				</image>
 				<textField textAdjust="ScaleFont" evaluationTime="Group" evaluationGroup="Niveau">
 					<reportElement style="Contenu" x="60" y="0" width="50" height="49" uuid="06501ab4-efcf-4cc2-9d84-e1b4b42020e0">
@@ -641,7 +641,7 @@ and  `ecoleviedbv2`.liste_major_ecole_par_ecole.annee_libelle  =  $P{annee}]]>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{moyGeneral}]]></textFieldExpression>
 				</textField>
-				<textField textAdjust="ScaleFont">
+				<textField textAdjust="ScaleFont" isBlankWhenNull="true">
 					<reportElement style="Contenu" x="510" y="0" width="50" height="49" uuid="dd61942d-3301-4a1f-8aa4-200721f55b35">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
@@ -662,7 +662,7 @@ and  `ecoleviedbv2`.liste_major_ecole_par_ecole.annee_libelle  =  $P{annee}]]>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="SansSerif"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{lv2}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[""]]></textFieldExpression>
 				</textField>
 			</frame>
 		</band>

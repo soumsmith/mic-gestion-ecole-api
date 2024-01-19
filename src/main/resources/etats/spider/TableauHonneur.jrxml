@@ -1,0 +1,578 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TableauHonneur" pageWidth="802" pageHeight="655" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="cecdf213-9a9e-43a3-a0f6-256935281386">
+	<property name="net.sf.jasperreports.awt.ignore.missing.font" value="true"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ecolevieDB"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="431"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="559"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<style name="champsLibelle" fontName="Serif" fontSize="8">
+		<box leftPadding="5"/>
+	</style>
+	<style name="TitreLibelle" fontName="Serif" fontSize="10">
+		<box leftPadding="5"/>
+	</style>
+	<style name="TotalCateg" hTextAlign="Center" fontName="Serif" fontSize="10"/>
+	<subDataset name="DatasetParcours" uuid="e720d79a-55bc-48ab-9f2d-112623c7b358">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="anneeScol" class="java.lang.String"/>
+		<field name="etabliLibe" class="java.lang.String"/>
+		<field name="classeLibell" class="java.lang.String"/>
+		<field name="moyGenAnnuelle" class="java.lang.Double"/>
+		<field name="rangAn" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="ecoleId" class="java.lang.Long"/>
+	<parameter name="matricule" class="java.lang.String"/>
+	<parameter name="annee" class="java.lang.String"/>
+	<parameter name="periode" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[select * from   `ecoleviedbv2`.tableau_honneur 
+where  `ecoleviedbv2`.tableau_honneur.libelle_periode= $P{periode}   and 
+`ecoleviedbv2`.tableau_honneur.id_ecole= $P{ecoleId} and 
+`ecoleviedbv2`.tableau_honneur.annee_libelle=  $P{annee} and 
+`ecoleviedbv2`.tableau_honneur.matricule=  $P{matricule}]]>
+	</queryString>
+	<field name="nom" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nom"/>
+		<property name="com.jaspersoft.studio.field.label" value="nom"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bulletins"/>
+	</field>
+	<field name="prenoms" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="prenoms"/>
+		<property name="com.jaspersoft.studio.field.label" value="prenoms"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bulletins"/>
+	</field>
+	<field name="libelle_classe" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="libelle_classe"/>
+		<property name="com.jaspersoft.studio.field.label" value="libelle_classe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bulletins"/>
+	</field>
+	<field name="moy_general" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="moy_general"/>
+		<property name="com.jaspersoft.studio.field.label" value="moy_general"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bulletins"/>
+	</field>
+	<field name="appreciation_conseil" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="appreciation_conseil"/>
+		<property name="com.jaspersoft.studio.field.label" value="appreciation_conseil"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bulletins"/>
+	</field>
+	<field name="id_ecole" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="id_ecole"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_ecole"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bulletins"/>
+	</field>
+	<field name="matricule" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="matricule"/>
+		<property name="com.jaspersoft.studio.field.label" value="matricule"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bulletins"/>
+	</field>
+	<field name="annee_libelle" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="annee_libelle"/>
+		<property name="com.jaspersoft.studio.field.label" value="annee_libelle"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bulletins"/>
+	</field>
+	<field name="libelle_periode" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="libelle_periode"/>
+		<property name="com.jaspersoft.studio.field.label" value="libelle_periode"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bulletins"/>
+	</field>
+	<field name="nom_ecole" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nom_ecole"/>
+		<property name="com.jaspersoft.studio.field.label" value="nom_ecole"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bulletins"/>
+	</field>
+	<field name="amoirie" class="byte[]">
+		<property name="com.jaspersoft.studio.field.name" value="amoirie"/>
+		<property name="com.jaspersoft.studio.field.label" value="amoirie"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tableau_honneur"/>
+	</field>
+	<field name="cadre_tableau_honneur" class="byte[]">
+		<property name="com.jaspersoft.studio.field.name" value="cadre_tableau_honneur"/>
+		<property name="com.jaspersoft.studio.field.label" value="cadre_tableau_honneur"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tableau_honneur"/>
+	</field>
+	<field name="logo" class="byte[]">
+		<property name="com.jaspersoft.studio.field.name" value="logo"/>
+		<property name="com.jaspersoft.studio.field.label" value="logo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tableau_honneur"/>
+	</field>
+	<field name="cheminphoto" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="photo_eleve"/>
+		<property name="com.jaspersoft.studio.field.label" value="photo_eleve"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tableau_honneur"/>
+	</field>
+	<group name="InfosPersonnelEleve"/>
+	<group name="DisciplineLettre"/>
+	<group name="BilanScientifique"/>
+	<group name="infosGenerale"/>
+	<group name="categorie">
+		<groupHeader>
+			<band/>
+		</groupHeader>
+	</group>
+	<group name="GoupeMatiere">
+		<groupHeader>
+			<band height="540">
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<textField>
+					<reportElement x="99" y="344" width="70" height="20" uuid="b34ce046-cebe-46d0-b5a0-341a9f69acd4"/>
+					<box>
+						<pen lineWidth="0.0" lineStyle="Dashed"/>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="16" isItalic="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["élève en classe de "]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="ScaleFont">
+					<reportElement x="493" y="344" width="46" height="20" uuid="eb00e4ed-5966-44c6-9cb4-2e11562ffe61"/>
+					<box>
+						<pen lineWidth="0.0" lineStyle="Dashed"/>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="16" isBold="true" isItalic="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{moy_general}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="ScaleFont">
+					<reportElement x="99" y="410" width="268" height="20" uuid="2351f277-de33-4e46-9d67-76d5c6a18dcd"/>
+					<box>
+						<pen lineWidth="0.0" lineStyle="Dashed"/>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="16" isItalic="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["En foi de quoi , lui est délivré le présent "]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="99" y="445" width="590" height="20" uuid="5d10998f-f72d-48ce-848f-f0ee40c384d2"/>
+					<box>
+						<pen lineWidth="0.0" lineStyle="Dashed"/>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="16" isItalic="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["et valoir ce que de droit ."]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="ScaleFont">
+					<reportElement x="119" y="308" width="472" height="23" uuid="cb30a36f-e1b1-4a42-8aa4-3351fb5e57ed">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.0" lineStyle="Dashed"/>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="20" isBold="true" isItalic="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nom}.toUpperCase()+" "+$F{prenoms}.toUpperCase()]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="ScaleFont">
+					<reportElement x="170" y="344" width="66" height="20" uuid="44a2a812-59dc-44e8-b210-ca9b7132df94"/>
+					<box>
+						<pen lineWidth="0.0" lineStyle="Dashed"/>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="16" isBold="true" isItalic="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{libelle_classe}+" ,"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="236" y="344" width="254" height="20" uuid="2a324c3f-6c4c-4872-826b-b452864a96c5"/>
+					<box>
+						<pen lineWidth="0.0" lineStyle="Dashed"/>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="16" isItalic="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["pour l'obtention de la moyenne de"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="539" y="344" width="162" height="20" uuid="f31358d6-1e9a-42c2-a3d2-4779ca197ca2"/>
+					<box>
+						<pen lineWidth="0.0" lineStyle="Dashed"/>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="16" isBold="false" isItalic="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["et la mention "]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="ScaleFont">
+					<reportElement x="99" y="376" width="100" height="20" uuid="ab858742-9fb7-4879-a4cc-5572a2edc9bf"/>
+					<box>
+						<pen lineWidth="0.0" lineStyle="Dashed"/>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="16" isBold="true" isItalic="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{appreciation_conseil}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="201" y="376" width="26" height="20" uuid="3fc785d6-f947-4fe8-9623-f6ed8eb8e9f7"/>
+					<box>
+						<pen lineWidth="0.0" lineStyle="Dashed"/>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="16" isBold="false" isItalic="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["au"]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="ScaleFont">
+					<reportElement x="227" y="376" width="142" height="20" uuid="6315f019-f348-4b34-8618-785d83c85aa4"/>
+					<box>
+						<pen lineWidth="0.0" lineStyle="Dashed"/>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="16" isBold="true" isItalic="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{libelle_periode}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="ScaleFont">
+					<reportElement x="370" y="376" width="200" height="20" uuid="b0526702-5868-4b18-b741-9db4552f698c"/>
+					<box>
+						<pen lineWidth="0.0" lineStyle="Dashed"/>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="16" isBold="false" isItalic="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["au titre de l'année scolaire"]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="ScaleFont">
+					<reportElement x="570" y="376" width="128" height="20" uuid="cf8ec6ef-e381-4a59-ac8f-88ad22cbf1d6"/>
+					<box>
+						<pen lineWidth="0.0" lineStyle="Dashed"/>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" size="16" isBold="true" isItalic="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["2023 - 2024."]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="ScaleFont">
+					<reportElement x="367" y="410" width="193" height="20" uuid="96ef1f96-ae84-42c5-9347-904dd3d82412"/>
+					<box>
+						<pen lineWidth="0.0" lineStyle="Dashed"/>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="16" isBold="true" isItalic="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["TABLEAU D'HONNEUR"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="562" y="410" width="117" height="20" uuid="9b137878-40df-46c9-9e85-4fe0ecf62fcc"/>
+					<box>
+						<pen lineWidth="0.0" lineStyle="Dashed"/>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="16" isItalic="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["pour servir"]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="ScaleFont">
+					<reportElement x="490" y="501" width="180" height="20" uuid="5913070d-2b0c-40fe-a1f6-e8dbffd53db2"/>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" size="16" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Le Directeur des Etudes"]]></textFieldExpression>
+				</textField>
+				<frame>
+					<reportElement x="80" y="202" width="630" height="94" uuid="00f1937a-aa28-469b-9eb6-c2c1a8c5fa5d">
+						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<frame>
+						<reportElement x="39" y="10" width="591" height="84" uuid="8ffb767a-e06d-4678-a946-1344308fc520">
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+							<property name="com.jaspersoft.layout.grid.x" value="3"/>
+							<property name="com.jaspersoft.layout.grid.y" value="1"/>
+							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						</reportElement>
+						<image scaleImage="FillFrame" onErrorType="Blank">
+							<reportElement x="472" y="0" width="119" height="80" uuid="ead8d2cf-965c-4bfa-a420-f2630105d2a3">
+								<property name="com.jaspersoft.layout.grid.x" value="4"/>
+								<property name="com.jaspersoft.layout.grid.y" value="0"/>
+								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+								<property name="com.jaspersoft.studio.unit.width" value="px"/>
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							</reportElement>
+							<imageExpression><![CDATA[$F{cheminphoto}]]></imageExpression>
+						</image>
+						<frame>
+							<reportElement x="0" y="0" width="472" height="80" uuid="bd519287-9e26-4a07-973c-2d404677ee8f">
+								<property name="com.jaspersoft.layout.grid.x" value="0"/>
+								<property name="com.jaspersoft.layout.grid.y" value="0"/>
+								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+								<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							</reportElement>
+							<textField>
+								<reportElement x="0" y="0" width="472" height="40" uuid="9d314154-26f0-4953-9ec5-a8f0bb2408fc">
+									<property name="com.jaspersoft.layout.grid.x" value="0"/>
+									<property name="com.jaspersoft.layout.grid.y" value="0"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="5"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial Black" size="20" isBold="true" isItalic="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA["TABLEAU D'HONNEUR"]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="0" y="40" width="472" height="40" uuid="1c39f245-ff36-418c-94c2-63ba4c2b56b5"/>
+								<textElement textAlignment="Center">
+									<font fontName="Arial Black" size="20"/>
+								</textElement>
+								<textFieldExpression><![CDATA["A"]]></textFieldExpression>
+							</textField>
+						</frame>
+						<frame>
+							<reportElement x="0" y="0" width="0" height="0" uuid="b7943d1f-27c1-4a40-9b55-6bc4cc60d185"/>
+						</frame>
+					</frame>
+				</frame>
+				<frame>
+					<reportElement style="TotalCateg" x="80" y="106" width="630" height="94" uuid="0d92ee3e-bb2e-44be-b923-70b2be5e0171">
+						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<frame>
+						<reportElement x="0" y="0" width="530" height="94" uuid="ffda8dc2-a7ee-4bb7-916c-174cb20aae68">
+							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						</reportElement>
+						<frame>
+							<reportElement x="0" y="0" width="530" height="94" uuid="e68f22aa-c70a-49fa-89e7-c47c1b05e6d5">
+								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+								<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+								<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							</reportElement>
+							<image scaleImage="FillFrame" onErrorType="Blank">
+								<reportElement x="0" y="0" width="89" height="80" uuid="7fe39447-d640-43b0-a566-d8158f299e49">
+									<property name="com.jaspersoft.layout.grid.x" value="0"/>
+									<property name="com.jaspersoft.layout.grid.y" value="0"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="3"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+									<property name="com.jaspersoft.studio.unit.width" value="px"/>
+									<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								</reportElement>
+								<imageExpression><![CDATA[$F{amoirie}]]></imageExpression>
+							</image>
+							<staticText>
+								<reportElement style="TitreLibelle" x="89" y="0" width="441" height="20" uuid="36634628-804a-4af6-93a2-3bc587ad220e">
+									<property name="com.jaspersoft.layout.grid.x" value="1"/>
+									<property name="com.jaspersoft.layout.grid.y" value="0"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="2"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+									<property name="com.jaspersoft.studio.unit.height" value="px"/>
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="SansSerif" size="12"/>
+									<paragraph leftIndent="10"/>
+								</textElement>
+								<text><![CDATA[MINISTERE DE L'EDUCATION NATIONALE ET DE L'ALPHABETISATION]]></text>
+							</staticText>
+							<textField textAdjust="ScaleFont" isBlankWhenNull="true">
+								<reportElement style="TitreLibelle" x="89" y="20" width="441" height="66" isPrintInFirstWholeBand="true" uuid="d2c6fec4-ff6d-4c67-90d2-9c0a5f3a972a">
+									<property name="com.jaspersoft.layout.grid.x" value="1"/>
+									<property name="com.jaspersoft.layout.grid.y" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="2"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+									<property name="com.jaspersoft.studio.unit.height" value="px"/>
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="SansSerif" size="16" isBold="true"/>
+									<paragraph leftIndent="10"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{nom_ecole}.toUpperCase()]]></textFieldExpression>
+							</textField>
+						</frame>
+					</frame>
+					<frame>
+						<reportElement x="530" y="0" width="100" height="94" uuid="4a21b0ca-32b6-452c-8329-d23e62436788">
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						</reportElement>
+						<frame>
+							<reportElement x="0" y="0" width="100" height="94" uuid="b6df39d0-e059-4af5-a0f9-936aaed1814a">
+								<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+								<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.rowspan" value="5"/>
+								<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+							</reportElement>
+							<image scaleImage="FillFrame" hAlign="Center" onErrorType="Blank">
+								<reportElement x="0" y="14" width="89" height="80" uuid="4986db79-2f2f-4b0f-b870-d4af978eeb73">
+									<property name="com.jaspersoft.layout.grid.x" value="1"/>
+									<property name="com.jaspersoft.layout.grid.y" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="2"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="2"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+									<property name="com.jaspersoft.studio.unit.width" value="px"/>
+									<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								</reportElement>
+								<box leftPadding="0"/>
+								<imageExpression><![CDATA[$F{logo}]]></imageExpression>
+							</image>
+							<staticText>
+								<reportElement x="0" y="0" width="100" height="14" uuid="09d078b0-7011-40fd-ae75-0ee010c0a540">
+									<property name="com.jaspersoft.layout.grid.x" value="0"/>
+									<property name="com.jaspersoft.layout.grid.y" value="0"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="3"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font fontName="SansSerif" size="6"/>
+								</textElement>
+								<text><![CDATA[REPUBLIQUE DE COTE D'IVOIRE]]></text>
+							</staticText>
+						</frame>
+					</frame>
+				</frame>
+			</band>
+			<band/>
+		</groupHeader>
+	</group>
+	<background>
+		<band height="655" splitType="Immediate">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<image scaleImage="FillFrame" onErrorType="Blank">
+				<reportElement x="0" y="10" width="801" height="645" uuid="dddb9690-6a72-4f76-9930-508577e876fa"/>
+				<imageExpression><![CDATA[$F{cadre_tableau_honneur}]]></imageExpression>
+			</image>
+		</band>
+	</background>
+</jasperReport>

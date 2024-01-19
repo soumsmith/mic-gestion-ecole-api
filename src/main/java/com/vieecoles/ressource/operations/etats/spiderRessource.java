@@ -45,6 +45,9 @@ public class spiderRessource {
     resultatsServices resultatsServices ;
 
     @Inject
+    EtatNominatifEnseignantServices etatNominatifEnseignantServices ;
+
+    @Inject
     RepartitionElevParAnNaissServices repartitionElevParAnNaissServices ;
 
     @Inject
@@ -55,7 +58,8 @@ public class spiderRessource {
 
     @Inject
     BoursiersServices boursiersServices ;
-
+    @Inject
+    EffectifParLangueServices effectifParLangueServices ;
     @Inject
     TransfertsServices transfertsServices ;
     @Inject
@@ -234,11 +238,11 @@ public class spiderRessource {
 
     @GET
     @Transactional
-    @Path("/pouls-rapport/{idEcole}/{type}/{libelleAnnee}/{libelleTrimetre}")
+    @Path("/pouls-rapport/{idEcole}/{type}/{libelleAnnee}/{libelleTrimetre}/{anneeId}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public ResponseEntity<byte[]>  getDtoRapport(@PathParam("idEcole") Long idEcole ,@PathParam("type") String type ,
                                                  @PathParam("libelleAnnee") String libelleAnnee,
-                                                 @PathParam("libelleTrimetre") String libelleTrimetre) throws Exception, JRException {
+                                                 @PathParam("libelleTrimetre") String libelleTrimetre,@PathParam("anneeId") Long anneeId) throws Exception, JRException {
         InputStream myInpuStream ;
         /*myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/BulletinBean.jrxml");*/
         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Spider_Book.jrxml");
@@ -259,6 +263,9 @@ public class spiderRessource {
        List<BoursierDto> boursierDto = new ArrayList<>() ;
        List<EffApprocheNiveauGenreDto> effApprocheNiveauGenreDto= new ArrayList<>()  ;
        EffApprocheNiveauGenreDto effApprocheNive = new EffApprocheNiveauGenreDto() ;
+        List<EffectifElevLangueVivante2Dto> effectifElevLangueVivante2Dto = new ArrayList<>() ;
+        EffectifElevLangueVivante2Dto m = new EffectifElevLangueVivante2Dto() ;
+        List<EtatNominatifEnseignatDto> etatNominatifEnseignatDto = new ArrayList<>() ;
 
 
        List<EmptyDto> introLis= new ArrayList<>() ;
@@ -294,6 +301,9 @@ public class spiderRessource {
         effApprocheNive= approcheParNiveauParGenreServices.EffApprocheNiveauGenre(idEcole ,libelleAnnee , libelleTrimetre) ;
         System.out.println("FIN approcheParNiveauParGenre ");
         effApprocheNiveauGenreDto.add(effApprocheNive)   ;
+        m = effectifParLangueServices.getLangueVivante(idEcole,anneeId);
+        etatNominatifEnseignatDto = etatNominatifEnseignantServices.infosEtatNominEnseignant(idEcole ,anneeId) ;
+        effectifElevLangueVivante2Dto.add(m);
 
 
         detailsBull.setIdentiteEtatDto(identiteEtatDto);
@@ -310,6 +320,8 @@ public class spiderRessource {
         detailsBull.setRepartitionEleveParAnNaissDto(repartitionEleveParAnNaissDto);
         detailsBull.setBoursierDto(boursierDto);
         detailsBull.setEffApprocheNiveauGenreDto(effApprocheNiveauGenreDto);
+        detailsBull.setEffectifElevLangueVivante2Dto(effectifElevLangueVivante2Dto);
+        detailsBull.setEtatNominatifEnseignatDto(etatNominatifEnseignatDto);
 
       // System.out.print("soummm"+resultatsElevesAffecteDto.toString());
         if(type.toUpperCase().equals("PDF")){

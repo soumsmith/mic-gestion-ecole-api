@@ -5,6 +5,15 @@
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="net.sf.jasperreports.export.docx.flexible.row.height" value="true"/>
 	<property name="net.sf.jasperreports.export.docx.frames.as.nested.tables" value="false"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<style name="Titre" fontName="Caladea" fontSize="8">
 		<box>
 			<pen lineWidth="0.25"/>
@@ -417,12 +426,12 @@
 						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
+					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font fontName="SansSerif"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{nom} + " " + $F{prenom}]]></textFieldExpression>
 				</textField>
-				<textField textAdjust="ScaleFont">
+				<textField textAdjust="ScaleFont" isBlankWhenNull="true">
 					<reportElement style="Contenu" x="320" y="0" width="20" height="15" uuid="0e2f37bf-2c7c-49d9-83d1-86616fc1132f">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
@@ -445,7 +454,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{anneeNaiss}]]></textFieldExpression>
 				</textField>
-				<textField textAdjust="ScaleFont">
+				<textField textAdjust="ScaleFont" isBlankWhenNull="true">
 					<reportElement style="Contenu" x="340" y="0" width="20" height="15" uuid="86224c28-fd01-4133-ad09-2e0a54912f5f">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
@@ -468,7 +477,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{sexe}]]></textFieldExpression>
 				</textField>
-				<textField textAdjust="ScaleFont">
+				<textField textAdjust="ScaleFont" isBlankWhenNull="true">
 					<reportElement style="Contenu" x="360" y="0" width="20" height="15" uuid="23d26a15-d2e7-4726-9846-89bfed3f110c">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
@@ -491,7 +500,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{nature}]]></textFieldExpression>
 				</textField>
-				<textField textAdjust="ScaleFont">
+				<textField textAdjust="ScaleFont" isBlankWhenNull="true">
 					<reportElement style="Contenu" x="380" y="0" width="19" height="15" uuid="7d900b78-0669-4e92-968d-63001c73a8c4">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
@@ -514,7 +523,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{redoublant}]]></textFieldExpression>
 				</textField>
-				<textField textAdjust="ScaleFont">
+				<textField textAdjust="ScaleFont" isBlankWhenNull="true">
 					<reportElement style="Contenu" x="399" y="0" width="36" height="15" uuid="c8c8aa34-482c-4ab9-bedf-becb5e23da6e">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
@@ -537,7 +546,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{moyGeneral}]]></textFieldExpression>
 				</textField>
-				<textField textAdjust="ScaleFont">
+				<textField textAdjust="ScaleFont" isBlankWhenNull="true">
 					<reportElement style="Contenu" x="435" y="0" width="20" height="15" uuid="dd61942d-3301-4a1f-8aa4-200721f55b35">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>

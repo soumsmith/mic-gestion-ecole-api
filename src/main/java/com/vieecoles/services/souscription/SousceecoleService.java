@@ -266,8 +266,6 @@ return  messageRetour ;
             sousc_atten_etabliss  sousEtabli= new sousc_atten_etabliss() ;
             sousEtabli = checkExistEtabliss(listsouscr.get(i).getSousc_atten_etablisscode()) ;
             System.out.println("sousEtabli---- "+sousEtabli);
-
-
             sousEtabli.setSousc_atten_etabliss_email(listsouscr.get(i).getSousc_atten_etabliss_email());
             sousEtabli.setZone_zoneid(listsouscr.get(i).getZone_zoneid());
             sousEtabli.setCommune_communeid(listsouscr.get(i).getCommune_communeid());
@@ -278,6 +276,24 @@ return  messageRetour ;
             sousEtabli.setSousc_atten_etabliss_lien_autorisa(listsouscr.get(i).getSousc_atten_etabliss_lien_autorisa());
             sousEtabli.setSousc_atten_etabliss_lien_logo(listsouscr.get(i).getSousc_atten_etabliss_lien_logo());
             sousEtabli.setNiveau_Enseignement_id(listsouscr.get(i).getNiveau_Enseignement_id());
+
+            //Modifier ecole
+            ecole myEcole = new ecole() ;
+            myEcole = getEcoleBySouscriEcole(sousEtabli.getIdSOUS_ATTENT_ETABLISSEMENT());
+
+            if(myEcole!=null) {
+                myEcole.setZone_zoneid(listsouscr.get(i).getZone_zoneid());
+                myEcole.setCommune_communeid(listsouscr.get(i).getCommune_communeid());
+                myEcole.setEcole_indication(listsouscr.get(i).getSousc_atten_etabliss_indication());
+                myEcole.setEcoleclibelle(listsouscr.get(i).getSousc_atten_etabliss_nom());
+                myEcole.setEcole_telephone(listsouscr.get(i).getSousc_atten_etabliss_tel());
+                myEcole.setEcolecode(listsouscr.get(i).getSousc_atten_etablisscode());
+                myEcole.setNiveau_Enseignement_id(listsouscr.get(i).getNiveau_Enseignement_id());
+
+            }
+
+
+
         }
         messageRetour ="DEMANDE D'INSCRIPTION MODIFIEE AVEC SUCCES!" ;
 
@@ -328,6 +344,19 @@ return  messageRetour ;
                 getResultList();
 return listEcoleDto ;
     }
+
+
+    public ecole getEcoleBySouscriEcole(Long idSouscri){
+        ecole  myEcole= new ecole() ;
+        try {
+                myEcole= (ecole) em.createQuery("select distinct o from ecole o  where o.sousc_atten_etabliss_idSOUS_ATTENT_ETABLISSEMENT =:idSouscri " )
+                    .setParameter("idSouscri", idSouscri).getSingleResult() ;
+        }catch (Exception e){
+            myEcole = null ;
+        }
+        return myEcole ;
+    }
+
 
       @Transactional
   public sous_attent_personn creerPersonnel(Long fonctionId ,String nom, String prenom, String contact1 ,String contact2,String email){
