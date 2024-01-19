@@ -949,7 +949,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				// logger.info(".getNotesMatiereMap() - " + me.getNotesMatiereMap());
 				if (me.getNotesMatiereMap() != null) {
 					for (Map.Entry<EcoleHasMatiere, List<Notes>> map : me.getNotesMatiereMap().entrySet()) {
-						if (map.getKey().getCode().equals(cm.getMatiere().getCode())) {
+						if (map.getKey().getId().equals(cm.getMatiere().getId())) {
 							mapt.put(map.getKey().getMoyenne(), me);
 
 							logger.info(String.format("--- %s - %s - %s - %s - %s ---", me.getClasse().getId(),
