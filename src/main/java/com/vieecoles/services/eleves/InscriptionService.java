@@ -568,6 +568,8 @@ public  void updatelibelleHandicap_inscrip (Long InscriptionId , Long oldHandica
         myIns.setInscriptions_boursier(inscriptionDto.getInscriptions_boursier());
         myIns.setInscriptions_redoublant(inscriptionDto.getInscriptions_redoublant());
         myIns.setInscriptions_statut_eleve(inscriptionDto.getInscriptions_statut_eleve());
+        System.out.println("inscriptionDto.getInscriptions_langue_vivante() "+inscriptionDto.getInscriptions_langue_vivante());
+        myIns.setInscriptions_langue_vivante(inscriptionDto.getInscriptions_langue_vivante());
        // myIns.setInscriptions_classe_actuelle(inscriptionDto.getInscriptions_classe_actuelle());
         myIns.setInscriptions_classe_precedente(inscriptionDto.getInscriptions_classe_precedente());
         myIns.setInscriptions_derniereclasse_religieuse(inscriptionDto.getInscriptions_derniereclasse_religieuse());

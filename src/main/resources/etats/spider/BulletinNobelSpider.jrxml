@@ -2420,6 +2420,97 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 									</textElement>
 									<text><![CDATA[Refusé]]></text>
 								</staticText>
+								<image scaleImage="FillFrame">
+									<reportElement positionType="Float" x="0" y="0" width="20" height="10" uuid="aa4e60a4-9d65-4639-b3c0-9b150f9a998b">
+										<property name="com.jaspersoft.layout.grid.x" value="0"/>
+										<property name="com.jaspersoft.layout.grid.y" value="0"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+										<printWhenExpression><![CDATA[$F{moy_general} >= 12 && $F{moy_general}<=12.99]]></printWhenExpression>
+									</reportElement>
+									<imageExpression><![CDATA["etats/spider/cocher.jpg"]]></imageExpression>
+								</image>
+								<image scaleImage="FillFrame">
+									<reportElement positionType="Float" x="0" y="10" width="20" height="10" uuid="d1e41079-4c1d-446e-9500-eb24ef3dcd7b">
+										<property name="com.jaspersoft.layout.grid.x" value="0"/>
+										<property name="com.jaspersoft.layout.grid.y" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+										<printWhenExpression><![CDATA[$F{moy_general} >= 13 && $F{moy_general}<=13.99]]></printWhenExpression>
+									</reportElement>
+									<imageExpression><![CDATA["etats/spider/cocher.jpg"]]></imageExpression>
+								</image>
+								<image scaleImage="FillFrame">
+									<reportElement positionType="Float" x="0" y="20" width="20" height="10" uuid="e2b85590-9135-4170-85c4-2d7f8c344709">
+										<property name="com.jaspersoft.layout.grid.x" value="0"/>
+										<property name="com.jaspersoft.layout.grid.y" value="2"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+										<printWhenExpression><![CDATA[$F{moy_general} >= 14]]></printWhenExpression>
+									</reportElement>
+									<imageExpression><![CDATA["etats/spider/cocher.jpg"]]></imageExpression>
+								</image>
+								<image scaleImage="FillFrame">
+									<reportElement positionType="Float" x="0" y="40" width="20" height="10" uuid="3f1be997-d634-4ae2-9bfa-d2013841fce2">
+										<property name="com.jaspersoft.layout.grid.x" value="0"/>
+										<property name="com.jaspersoft.layout.grid.y" value="4"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+										<printWhenExpression><![CDATA[$F{moy_general} >= 8.5 && $F{moy_general}<=9.99]]></printWhenExpression>
+									</reportElement>
+									<imageExpression><![CDATA["etats/spider/cocher.jpg"]]></imageExpression>
+								</image>
+								<image scaleImage="FillFrame">
+									<reportElement positionType="Float" x="0" y="50" width="20" height="10" uuid="f27e95b6-f991-4a2d-9919-e9757e2ca7d3">
+										<property name="com.jaspersoft.layout.grid.x" value="0"/>
+										<property name="com.jaspersoft.layout.grid.y" value="5"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+										<printWhenExpression><![CDATA[$F{moy_general}< 8.5]]></printWhenExpression>
+									</reportElement>
+									<imageExpression><![CDATA["etats/spider/cocher.jpg"]]></imageExpression>
+								</image>
+								<image scaleImage="FillFrame">
+									<reportElement positionType="Float" x="0" y="60" width="20" height="10" uuid="296b97d6-8621-4cae-a26f-46208a8d2cdc">
+										<property name="com.jaspersoft.layout.grid.x" value="0"/>
+										<property name="com.jaspersoft.layout.grid.y" value="6"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+										<printWhenExpression><![CDATA[$F{moyenne}>=10 && $F{moyenne}<12&&$F{libelle_matiere}.equals("CONDUITE")]]></printWhenExpression>
+									</reportElement>
+									<imageExpression><![CDATA["etats/spider/cocher.jpg"]]></imageExpression>
+								</image>
+								<image scaleImage="FillFrame">
+									<reportElement positionType="Float" x="0" y="70" width="20" height="10" uuid="9289e314-6d8f-4914-9c83-6e92f7fa8b46">
+										<property name="com.jaspersoft.layout.grid.x" value="0"/>
+										<property name="com.jaspersoft.layout.grid.y" value="7"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+										<printWhenExpression><![CDATA[$F{moyenne}<10&&$F{libelle_matiere}.equals("CONDUITE")]]></printWhenExpression>
+									</reportElement>
+									<imageExpression><![CDATA["etats/spider/cocher.jpg"]]></imageExpression>
+								</image>
 							</frame>
 						</frame>
 					</frame>

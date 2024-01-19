@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="BulletinNobelSpiderEtan" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="cecdf213-9a9e-43a3-a0f6-256935281386">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="BulletinNobelSpiderEtanBTS" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="cecdf213-9a9e-43a3-a0f6-256935281386">
 	<property name="net.sf.jasperreports.awt.ignore.missing.font" value="true"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ecolevieDB"/>
@@ -763,17 +763,17 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<property name="com.jaspersoft.layout.grid.y" value="0"/>
 								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
 								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-								<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.rowspan" value="2"/>
 								<property name="com.jaspersoft.layout.grid.colspan" value="2"/>
 								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 								<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 							</reportElement>
 							<textElement textAlignment="Left">
-								<font fontName="SansSerif" size="8"/>
+								<font fontName="SansSerif" size="7"/>
 								<paragraph leftIndent="10"/>
 							</textElement>
-							<textFieldExpression><![CDATA["MINISTERE DE L'EDUCATION NATIONALE ET DE L'ALPHABETISATION"]]></textFieldExpression>
+							<textFieldExpression><![CDATA["MINISTERE DE L'ENSEIGNEMENT SUPERIEUR ET DE LA RECHERCHE SCIENTIFIQUE"]]></textFieldExpression>
 						</textField>
 						<textField textAdjust="ScaleFont" isBlankWhenNull="true">
 							<reportElement style="TitreLibelle" x="101" y="14" width="311" height="16" isPrintInFirstWholeBand="true" uuid="d2c6fec4-ff6d-4c67-90d2-9c0a5f3a972a">
@@ -828,7 +828,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 						<frame>
 							<reportElement x="101" y="30" width="311" height="40" uuid="aab6c102-ff03-489c-b8bf-db27b8fa6d9d">
 								<property name="com.jaspersoft.layout.grid.x" value="1"/>
-								<property name="com.jaspersoft.layout.grid.y" value="2"/>
+								<property name="com.jaspersoft.layout.grid.y" value="3"/>
 								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
 								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
 								<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>

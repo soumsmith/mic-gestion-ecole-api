@@ -49,7 +49,7 @@ public class MatriceClasseRessource {
     @Path("/imprimer-spider-xls/{idEcole}/{libelleAnnee}/{periode}/{anneeId}/{classe}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public ResponseEntity<byte[]>  getDtoRapportxls(@PathParam("idEcole") Long idEcole ,@PathParam("libelleAnnee") String libelleAnnee ,
-                                                 @PathParam("periode") String periode , @PathParam("anneeId") Long anneeId ,@PathParam("classe") String classe) throws Exception, JRException {
+                                                 @PathParam("periode") String periode , @PathParam("anneeId") Long anneeId ,@PathParam("classe") Long classe) throws Exception, JRException {
         InputStream myInpuStream ;
         /*myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/BulletinBean.jrxml");*/
 
@@ -94,7 +94,7 @@ public class MatriceClasseRessource {
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public List<matriceClasseDto>  getDtoRapport2(@PathParam("idEcole") Long idEcole , @PathParam("libelleAnnee") String libelleAnnee ,
 
-                                                 @PathParam("periode") String periode , @PathParam("anneeId") Long anneeId ,@PathParam("classe") String classe) throws Exception, JRException {
+                                                 @PathParam("periode") String periode , @PathParam("anneeId") Long anneeId ,@PathParam("classe") Long classe) throws Exception, JRException {
 
         return  matriceClasseServices.getInfosMatriceClasse(idEcole ,libelleAnnee ,periode ,anneeId, classe) ;
         //return null;
@@ -105,7 +105,7 @@ public class MatriceClasseRessource {
     @Path("/Bilan-infos/{idEcole}/{libelleAnnee}/{periode}/{anneeId}/{classe}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public List<matiereMoyenneBilanDto>  getDtoRapport3(@PathParam("idEcole") Long idEcole , @PathParam("libelleAnnee") String libelleAnnee ,
-                                                        @PathParam("periode") String periode , @PathParam("anneeId") Long anneeId , @PathParam("classe") String classe) throws Exception, JRException {
+                                                        @PathParam("periode") String periode , @PathParam("anneeId") Long anneeId , @PathParam("classe") Long classe) throws Exception, JRException {
         return  matriceBilanClasseServices.getInfosBilanMatriceClasse(idEcole ,libelleAnnee ,periode ,anneeId, classe) ;
     }
 
@@ -114,7 +114,7 @@ public class MatriceClasseRessource {
     @Path("/imprimer-Bilan/{idEcole}/{libelleAnnee}/{periode}/{anneeId}/{classe}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public ResponseEntity<byte[]>  getDtoRapport4(@PathParam("idEcole") Long idEcole ,@PathParam("libelleAnnee") String libelleAnnee ,
-                                                 @PathParam("periode") String periode , @PathParam("anneeId") Long anneeId ,@PathParam("classe") String classe) throws Exception, JRException {
+                                                 @PathParam("periode") String periode , @PathParam("anneeId") Long anneeId ,@PathParam("classe") Long classe) throws Exception, JRException {
         InputStream myInpuStream ;
         /*myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/BulletinBean.jrxml");*/
         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BilanMatrice.jrxml");
@@ -150,7 +150,7 @@ public class MatriceClasseRessource {
     @Path("/imprimer-spider/{idEcole}/{libelleAnnee}/{periode}/{anneeId}/{classe}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public ResponseEntity<byte[]>  getDtoRapport(@PathParam("idEcole") Long idEcole ,@PathParam("libelleAnnee") String libelleAnnee ,
-                                                 @PathParam("periode") String periode , @PathParam("anneeId") Long anneeId ,@PathParam("classe") String classe) throws Exception, JRException {
+                                                 @PathParam("periode") String periode , @PathParam("anneeId") Long anneeId ,@PathParam("classe") Long classe) throws Exception, JRException {
         InputStream myInpuStream ;
         /*myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/BulletinBean.jrxml");*/
 
