@@ -423,12 +423,15 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 							flag.setIsRanked(Constants.OUI);
 
 						try {
+							System.out.println("--> "+me.getEleve().getMatricule()+" "+me.getEleve().getNom());
+							System.out.println("---> "+entry.getKey().getRang());
+							System.out.println("---> "+entry.getKey().getLibelle());
 							flag.setRang(Integer.valueOf(entry.getKey().getRang()));
 						} catch (RuntimeException ex) {
 							ex.printStackTrace();
 							throw new RuntimeException(String.format(
-									"Veuillez définir un coefficient pour la matiere [ %s ] de la branche [ %s] ",
-									entry.getKey().getLibelle(), me.getClasse().getBranche().getLibelle()));
+									"Veuillez définir un coefficient pour la matiere [ %s %s ] de la branche [ %s] ",
+									entry.getKey().getId(), entry.getKey().getLibelle(), me.getClasse().getBranche().getLibelle()));
 						}
 						flag.setCategorieMatiere(entry.getKey().getCategorie().getLibelle());
 						flag.setCategorie(entry.getKey().getCategorie().getCode());
