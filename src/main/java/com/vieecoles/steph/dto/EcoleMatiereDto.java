@@ -18,6 +18,7 @@ public class EcoleMatiereDto {
 	private String libelle;
 	private Integer pec;
 	private Integer bonus;
+	private Integer numOrdre;
 	private CategorieMatiere categorie;
 	private EcoleHasMatiere matiereParent;
 	

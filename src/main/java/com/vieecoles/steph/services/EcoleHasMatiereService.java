@@ -224,6 +224,7 @@ public class EcoleHasMatiereService implements PanacheRepositoryBase<EcoleHasMat
 		dto.setBonus(ecoleMatiere.getBonus());
 		dto.setCategorie(ecoleMatiere.getCategorie());
 		dto.setMatiereParent(ecoleMatiere.getMatiereParent());
+		dto.setNumOrdre(ecoleMatiere.getNumOrdre());
 
 		// Maj la matiere parentlibelle
 
@@ -260,6 +261,7 @@ public class EcoleHasMatiereService implements PanacheRepositoryBase<EcoleHasMat
 //		
 		entity.setCode(ecoleHasMatiere.getCode());
 		entity.setLibelle(ecoleHasMatiere.getLibelle());
+		entity.setNumOrdre(ecoleHasMatiere.getNumOrdre());
 		entity.setMatiereParent(
 				(ecoleHasMatiere.getMatiereParent() != null && ecoleHasMatiere.getMatiereParent().getId() != null)
 						? ecoleHasMatiere.getMatiereParent()
