@@ -276,6 +276,7 @@ return  messageRetour ;
             sousEtabli.setSousc_atten_etabliss_lien_autorisa(listsouscr.get(i).getSousc_atten_etabliss_lien_autorisa());
             sousEtabli.setSousc_atten_etabliss_lien_logo(listsouscr.get(i).getSousc_atten_etabliss_lien_logo());
             sousEtabli.setNiveau_Enseignement_id(listsouscr.get(i).getNiveau_Enseignement_id());
+           // sousEtabli.setN
 
             //Modifier ecole
             ecole myEcole = new ecole() ;
