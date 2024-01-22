@@ -41,6 +41,16 @@ public class ecole extends PanacheEntityBase {
     @Column(length=100000)
     private byte[] filigramme ;
     private String nom_signataire ;
+     private  String numero_decision_ouver ;
+
+    public String getNumero_decision_ouver() {
+        return numero_decision_ouver;
+    }
+
+    public void setNumero_decision_ouver(String numero_decision_ouver) {
+        this.numero_decision_ouver = numero_decision_ouver;
+    }
+
     /**
      * @return Long return the ecoleid
      */

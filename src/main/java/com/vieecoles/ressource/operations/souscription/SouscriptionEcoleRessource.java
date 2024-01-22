@@ -143,9 +143,9 @@ public class SouscriptionEcoleRessource {
     @PUT
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes({MediaType.APPLICATION_JSON,MediaType.MULTIPART_FORM_DATA})
-    @Path("/charger-photo-etablissement/{inscriptionId}/{signataire}")
+    @Path("/charger-photo-etablissement/{inscriptionId}")
     @Transactional
-    public Response chargerPhoto(@MultipartForm MultipartFormDataInput input,  @PathParam("inscriptionId") String   inscriptionId ,@PathParam("signataire") String   signataire) {
+    public Response chargerPhoto(@MultipartForm MultipartFormDataInput input,  @PathParam("inscriptionId") String   inscriptionId ) {
         Map<String, List<InputPart>> uploadForm = input.getFormDataMap();
         List<String> fileNames = new ArrayList<>();
 
@@ -161,7 +161,7 @@ public class SouscriptionEcoleRessource {
                 System.out.println("File Name: " + fileName);
                 InputStream inputStream = inputPart.getBody(InputStream.class, null);
                 byte[] bytes = IOUtils.toByteArray(inputStream);
-                souscPersonnelService.chargerPhotoBulletinEcole(bytes,inscriptionId,signataire) ;
+                souscPersonnelService.chargerPhotoBulletinEcole(bytes,inscriptionId) ;
                 //matService.chargerPhoto(bytes,inscriptionId);
             } catch (Exception e) {
                 e.printStackTrace();
