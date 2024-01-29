@@ -1012,7 +1012,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 							<textElement textAlignment="Left">
 								<font fontName="SansSerif" size="8"/>
 							</textElement>
-							<textFieldExpression><![CDATA["Année Scolaire: "+$F{annee_libelle}]]></textFieldExpression>
+							<textFieldExpression><![CDATA["Année Scolaire : 2023 -2024"]]></textFieldExpression>
 						</textField>
 						<staticText>
 							<reportElement x="0" y="0" width="120" height="14" uuid="09d078b0-7011-40fd-ae75-0ee010c0a540">
@@ -1363,7 +1363,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 								<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
 							</reportElement>
-							<textElement>
+							<textElement verticalAlignment="Middle">
 								<font size="8"/>
 							</textElement>
 							<text><![CDATA[Affecté(e): ]]></text>
@@ -2695,9 +2695,9 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 							</reportElement>
 							<textElement textAlignment="Center" verticalAlignment="Bottom">
-								<font size="8" isBold="false" isItalic="true"/>
+								<font size="8" isBold="false" isItalic="true" isUnderline="true"/>
 							</textElement>
-							<text><![CDATA[Nom/Signature du professeur principal]]></text>
+							<text><![CDATA[Le Professeur Principal]]></text>
 						</staticText>
 					</frame>
 					<frame>

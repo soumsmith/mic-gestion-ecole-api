@@ -117,7 +117,7 @@ public class MatriceClasseBilanServices {
              l.setEcoleId("1");
              l.setMoyMatiereBilan(moyMat);
              matiereMoyenneBilanDtoList.add(l) ;
-         } else if(libelleMatiere.equals("FR") && (numOrdreClasse>2||numOrdreClasse<=5))   {
+         } else if(libelleMatiere.equals("FR") && numOrdreClasse>2&& numOrdreClasse<5)   {
              System.out.println("SSSSSSS2");
              Double moyFr = calculMoycoefFran(classe,libelleAnnee ,periode,idEcole ) ;
              Double moyMat = null;
@@ -127,13 +127,23 @@ public class MatriceClasseBilanServices {
              l.setEcoleId("1");
              l.setMoyMatiereBilan(moyMat);
              matiereMoyenneBilanDtoList.add(l) ;
-         } else if (!libelleMatiere.equals("FR"))   {
+         }
+         else if (libelleMatiere.equals("FR") && (numOrdreClasse>=5)) {
+
+             System.out.println("libelleMatiere>>>>fRRRR "+libelleMatiere);
+             Double moyMat=  getBilanMoyMatiere(id ,periode ,libelleAnnee ,classe ,idEcole);
+             l.setLibelleMatiereBilan(libelleMatiere);
+             l.setMoyMatiereBilan(moyMat);
+             l.setEcoleId("1");
+             matiereMoyenneBilanDtoList.add(l) ;
+         }
+         else   {
              System.out.println("SSSSSSS3");
              Matiere mat = new Matiere() ;
              mat= Matiere.findById(idMatiere);
              //libelleMatiere= getLibelleMatiere(idMatiere) ;
 
-           //libelleMatiere = mat.getLibelle() ;
+             //libelleMatiere = mat.getLibelle() ;
              System.out.println("libelleMatiere "+libelleMatiere);
              Double moyMat=  getBilanMoyMatiere(id ,periode ,libelleAnnee ,classe ,idEcole);
              l.setLibelleMatiereBilan(libelleMatiere);
@@ -141,6 +151,18 @@ public class MatriceClasseBilanServices {
              l.setEcoleId("1");
              matiereMoyenneBilanDtoList.add(l) ;
          }
+       /*  else if (!libelleMatiere.equals("FR"))   {
+             System.out.println("SSSSSSS3");
+             Matiere mat = new Matiere() ;
+             mat= Matiere.findById(idMatiere);
+
+             System.out.println("libelleMatiere "+libelleMatiere);
+             Double moyMat=  getBilanMoyMatiere(id ,periode ,libelleAnnee ,classe ,idEcole);
+             l.setLibelleMatiereBilan(libelleMatiere);
+             l.setMoyMatiereBilan(moyMat);
+             l.setEcoleId("1");
+             matiereMoyenneBilanDtoList.add(l) ;
+         }*/
 
 
 

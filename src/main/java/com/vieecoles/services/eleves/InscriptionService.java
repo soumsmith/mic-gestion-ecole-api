@@ -528,6 +528,21 @@ public  void updatelibelleHandicap_inscrip (Long InscriptionId , Long oldHandica
         myInsription.setInscriptions_status(Inscriptions.status.VALIDEE);
     }
 
+
+    public void deletePhoto(Long inscriptionID){
+        Inscriptions myInsription= new Inscriptions() ;
+        myInsription= (Inscriptions) em.createQuery(" select e from Inscriptions e   where e.inscriptionsid=:inscriptionId ",Inscriptions.class )
+                .setParameter("inscriptionId",inscriptionID)
+                .getSingleResult();
+        myInsription.setCheminphoto("");
+        System.out.println("myInsription photo "+myInsription);
+        eleve elev = new eleve() ;
+        elev = eleve.findById(myInsription.getEleve().getEleveid()) ;
+        elev.setCheminphoto("");
+
+    }
+
+
     public void chargerPhoto(byte[] bytes,Long inscriptionID){
 
 
