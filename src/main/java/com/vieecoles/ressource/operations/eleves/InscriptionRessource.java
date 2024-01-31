@@ -93,6 +93,16 @@ public class InscriptionRessource {
         return   Response.ok(String.format("Inscription  %s mis à jour",inscriptionId)).build();
     }
 
+    @DELETE
+    @Produces(MediaType.TEXT_PLAIN)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/delete-photo/{inscriptionId}")
+    @Transactional
+    public Response deletPhoto(@PathParam("inscriptionId") Long   inscriptionId ) {
+        matService.deletePhoto(inscriptionId);
+        return   Response.ok(String.format("Inscription  %s supprimée",inscriptionId)).build();
+    }
+
     @PUT
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes({MediaType.APPLICATION_JSON,MediaType.MULTIPART_FORM_DATA})

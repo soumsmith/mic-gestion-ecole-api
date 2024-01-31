@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="BilanMatrice" printOrder="Horizontal" pageWidth="906" pageHeight="595" orientation="Landscape" columnWidth="906" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="0603fb74-49e5-475e-a1b3-4afd2488d6db">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="BilanMatrice" printOrder="Horizontal" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="0603fb74-49e5-475e-a1b3-4afd2488d6db">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
@@ -548,7 +548,7 @@
 		<band height="56">
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
 			<textField>
-				<reportElement x="0" y="0" width="906" height="56" uuid="c5d98b72-cdbc-4cfd-b585-d5949468428f"/>
+				<reportElement x="0" y="0" width="842" height="56" uuid="c5d98b72-cdbc-4cfd-b585-d5949468428f"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="16"/>
 				</textElement>
@@ -559,7 +559,7 @@
 	<summary>
 		<band height="45">
 			<frame>
-				<reportElement x="13" y="2" width="880" height="40" uuid="a5f89e6a-6d06-44bb-a340-897988f41678">
+				<reportElement x="13" y="2" width="807" height="40" uuid="a5f89e6a-6d06-44bb-a340-897988f41678">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 				</reportElement>
 				<box>
@@ -569,7 +569,7 @@
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textField>
-					<reportElement x="0" y="0" width="90" height="40" uuid="83d7fac3-097e-4673-b67f-684b53218a28">
+					<reportElement x="0" y="0" width="190" height="40" uuid="83d7fac3-097e-4673-b67f-684b53218a28">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -577,6 +577,7 @@
 						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
 						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
 					<box>
 						<pen lineWidth="0.0"/>
@@ -585,11 +586,13 @@
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="7"/>
+					</textElement>
 					<textFieldExpression><![CDATA["Bilan"]]></textFieldExpression>
 				</textField>
 				<crosstab>
-					<reportElement x="90" y="0" width="790" height="40" uuid="bc170fab-27cc-4e0f-8fc6-8da17be25ed2">
+					<reportElement x="190" y="0" width="617" height="40" uuid="bc170fab-27cc-4e0f-8fc6-8da17be25ed2">
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
 						<property name="com.jaspersoft.studio.crosstab.style.header" value="Crosstab 8_CH"/>
 						<property name="com.jaspersoft.studio.crosstab.style.group" value="Crosstab 8_CG"/>

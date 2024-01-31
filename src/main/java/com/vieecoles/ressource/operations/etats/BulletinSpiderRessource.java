@@ -10,6 +10,7 @@ import com.vieecoles.services.etats.BulletinRapportServices;
 import com.vieecoles.services.etats.BulletinSpiderMatriculeServices;
 import com.vieecoles.services.etats.BulletinSpiderServices;
 import com.vieecoles.services.etats.DpspServices;
+import com.vieecoles.steph.entities.Classe;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRXlsExporter;
@@ -65,26 +66,71 @@ public class BulletinSpiderRessource {
     private static String UPLOAD_DIR = "/data/";
 
      @GET
-    @Path("/spider-bulletin/{idEcole}/{libellePeriode}/{libelleAnnee}/{libelleClasse}/{compress}")
+    @Path("/spider-bulletin/{idEcole}/{libellePeriode}/{libelleAnnee}/{libelleClasse}/{compress}/{niveauEnseign}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public ResponseEntity<byte[]>  getDtoRapport(@PathParam("idEcole") Long idEcole ,@PathParam("libellePeriode") String libellePeriode ,
-                                                 @PathParam("libelleAnnee") String libelleAnnee , @PathParam("libelleClasse") String libelleClasse ,@PathParam("compress") Boolean compress) throws Exception, JRException {
-        InputStream myInpuStream ;
+                                                 @PathParam("libelleAnnee") String libelleAnnee , @PathParam("libelleClasse") Long libelleClasse ,@PathParam("compress") Boolean compress ,
+                                                 @PathParam("niveauEnseign") Long niveauEnseign) throws Exception, JRException {
+        InputStream myInpuStream = null;
+         Classe classe= new Classe() ;
+         classe = Classe.findById(libelleClasse) ;
 
         if(!compress) {
-            if(libellePeriode.equals("Troisième Trimestre"))
-                myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderBulletin.jrxml");
-            else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderNobel.jrxml");
+            if(niveauEnseign==2) {
+                if(libellePeriode.equals("Troisième Trimestre"))
+                    myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderBulletin.jrxml");
+                else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderNobel.jrxml");
+
+            } else if (niveauEnseign==4||niveauEnseign==1) {
+                if(libellePeriode.equals("Troisième Trimestre"))
+                    myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderBulletin.jrxml");
+                else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderNobelPrimaire.jrxml");
+
+            }
+            else if (niveauEnseign==5||niveauEnseign==6) {
+                if(libellePeriode.equals("Troisième Trimestre"))
+                    myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderBulletin.jrxml");
+                else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderNobelTechnique.jrxml");
+
+            }
+
+            else if (niveauEnseign==3) {
+                if(libellePeriode.equals("Troisième Trimestre"))
+                    myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderBulletin.jrxml");
+                else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderNobelBTS.jrxml");
+            }
+
         } else {
-            if(libellePeriode.equals("Troisième Trimestre"))
-                myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderBulletin.jrxml");
-            else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderNobelDecompress.jrxml");
+            if(niveauEnseign==2) {
+                if(libellePeriode.equals("Troisième Trimestre"))
+                    myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderBulletin.jrxml");
+                else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderNobelDecompress.jrxml");
+
+            } else if (niveauEnseign==4||niveauEnseign==1) {
+                if(libellePeriode.equals("Troisième Trimestre"))
+                    myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderBulletin.jrxml");
+                else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderNobelPrimaire.jrxml");
+
+            }
+            else if (niveauEnseign==5||niveauEnseign==6) {
+                if(libellePeriode.equals("Troisième Trimestre"))
+                    myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderBulletin.jrxml");
+                else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderNobelDecompressEtanTechnique.jrxml");
+
+            }
+            else if (niveauEnseign==3) {
+                if(libellePeriode.equals("Troisième Trimestre"))
+                    myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderBulletin.jrxml");
+                else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderNobelDecompressEtanBTS.jrxml");
+
+            }
+
         }
 
         spiderBulletinDto detailsBull= new spiderBulletinDto() ;
         List<parametreDto>  dspsDto = new ArrayList<>() ;
 
-
+        System.out.println("entree bulletin>>> ");
         bulletinSpider.bulletinInfos(idEcole ,libelleAnnee ,libellePeriode ,libelleClasse) ;
         // deleteEmr(libellePeriode,libelleAnnee,idEcole);
         //connect() ;
@@ -94,7 +140,7 @@ public class BulletinSpiderRessource {
         //   JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");
         Map<String, Object> map = new HashMap<>();
 
-        map.put("classe", libelleClasse);
+        map.put("classe", classe.getLibelle());
         map.put("idEcole", idEcole);
         map.put("libelleAnnee", libelleAnnee);
         map.put("libellePeriode", libellePeriode);
@@ -108,21 +154,59 @@ public class BulletinSpiderRessource {
     }
 
     @GET
-    @Path("/spider-bulletin-matricule/{idEcole}/{libellePeriode}/{libelleAnnee}/{libelleClasse}/{matricule}/{compress}")
+    @Path("/spider-bulletin-matricule/{idEcole}/{libellePeriode}/{libelleAnnee}/{libelleClasse}/{matricule}/{compress}/{niveauEnseign}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public ResponseEntity<byte[]>  getDtoRapport(@PathParam("idEcole") Long idEcole ,@PathParam("libellePeriode") String libellePeriode ,
-                                                 @PathParam("libelleAnnee") String libelleAnnee , @PathParam("libelleClasse") String libelleClasse ,@PathParam("matricule") String matricule,@PathParam("compress") Boolean compress) throws Exception, JRException {
-        InputStream myInpuStream ;
+                                                 @PathParam("libelleAnnee") String libelleAnnee , @PathParam("libelleClasse") Long libelleClasse ,@PathParam("matricule") String matricule,@PathParam("compress") Boolean compress,@PathParam("niveauEnseign") Long niveauEnseign) throws Exception, JRException {
+        InputStream myInpuStream = null;
 if (!compress){
-    if(libellePeriode.equals("Troisième Trimestre"))
-        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinTroisiemeTrimetreSpider.jrxml");
-    else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinNobelSpider.jrxml");
+    if(niveauEnseign ==2) {
+        if(libellePeriode.equals("Troisième Trimestre"))
+            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderBulletin.jrxml");
+        else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinNobelSpider.jrxml");
 
+    } else if (niveauEnseign ==4||niveauEnseign ==1) {
+        if(libellePeriode.equals("Troisième Trimestre"))
+            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderBulletin.jrxml");
+        else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/PrimaireSpider.jrxml");
+
+    }
+    else if (niveauEnseign==5||niveauEnseign==6) {
+        if(libellePeriode.equals("Troisième Trimestre"))
+            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderBulletin.jrxml");
+        else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinNobelSpiderTechnique.jrxml");
+
+    }
+
+    else if (niveauEnseign==3) {
+        if(libellePeriode.equals("Troisième Trimestre"))
+            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderBulletin.jrxml");
+        else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinNobelSpiderBTS.jrxml");
+    }
 } else {
-    if(libellePeriode.equals("Troisième Trimestre"))
-        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinTroisiemeTrimetreSpider.jrxml");
-    else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinNobelSpiderEtan.jrxml");
+    if(niveauEnseign==2) {
+        if(libellePeriode.equals("Troisième Trimestre"))
+            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderBulletin.jrxml");
+        else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinNobelSpiderEtan.jrxml");
 
+    } else if (niveauEnseign==4||niveauEnseign==1) {
+        if(libellePeriode.equals("Troisième Trimestre"))
+            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderBulletin.jrxml");
+        else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/PrimaireSpider.jrxml");
+
+    }
+    else if (niveauEnseign==5||niveauEnseign==6) {
+        if(libellePeriode.equals("Troisième Trimestre"))
+            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderBulletin.jrxml");
+        else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinNobelSpiderEtanTechnique.jrxml");
+
+    }
+    else if (niveauEnseign==3) {
+        if(libellePeriode.equals("Troisième Trimestre"))
+            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderBulletin.jrxml");
+        else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinNobelSpiderEtanBTS.jrxml");
+
+    }
 }
 
 

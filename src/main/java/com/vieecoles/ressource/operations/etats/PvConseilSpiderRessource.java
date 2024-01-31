@@ -46,9 +46,9 @@ public class PvConseilSpiderRessource {
 
     @GET
     @Transactional
-    @Path("/pouls-Conseil-classe/{idEcole}/{libelleAnnee}/{libelleTrimetre}/{classe}/{anneeId}")
+    @Path("/pouls-Conseil-classe/{idEcole}/{libelleAnnee}/{libelleTrimetre}/{classe}/{anneeId}/{idclasse}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    public ResponseEntity<byte[]>  getDtoRapport(@PathParam("idEcole") Long idEcole ,@PathParam("libelleAnnee") String libelleAnnee,@PathParam("libelleTrimetre") String libelleTrimetre ,@PathParam("classe") String classe ,@PathParam("anneeId") Long anneeId) throws Exception, JRException {
+    public ResponseEntity<byte[]>  getDtoRapport(@PathParam("idEcole") Long idEcole ,@PathParam("libelleAnnee") String libelleAnnee,@PathParam("libelleTrimetre") String libelleTrimetre ,@PathParam("classe") String classe ,@PathParam("anneeId") Long anneeId,@PathParam("idclasse") Long idclasse ) throws Exception, JRException {
         InputStream myInpuStream ;
         /*myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/BulletinBean.jrxml");*/
         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Spider_Book_PV_Conseil_classe.jrxml");
@@ -58,9 +58,9 @@ public class PvConseilSpiderRessource {
 
         List<matriceClasseDto> detailsBull1= new ArrayList<>() ;
         List<matiereMoyenneBilanDto> detailsBull2= new ArrayList<>() ;
-        detailsBull2=  matriceBilanClasseServices.getInfosBilanMatriceClasse(idEcole ,libelleAnnee ,libelleTrimetre ,anneeId, classe) ;
+        detailsBull2=  matriceBilanClasseServices.getInfosBilanMatriceClasse(idEcole ,libelleAnnee ,libelleTrimetre ,anneeId, idclasse) ;
 
-        detailsBull1=   matriceClasseServices.getInfosMatriceClasse(idEcole ,libelleAnnee ,libelleTrimetre ,anneeId, classe) ;
+        detailsBull1=   matriceClasseServices.getInfosMatriceClasse(idEcole ,libelleAnnee ,libelleTrimetre ,anneeId, idclasse) ;
        dspsDto= resultatsServices.RecapCalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,classe) ;
 
         detailsBull.setMatiereMoyenneBilanDto(detailsBull2);

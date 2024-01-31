@@ -27,6 +27,24 @@ public class sousc_atten_etabliss extends PanacheEntityBase {
     private  String sousc_atten_etabliss_lien_logo ;
     private Long Niveau_Enseignement_id ;
     private  int connecte ;
+    private  String adresse ;
+    private  String numero_decision_ouver ;
+
+    public String getNumero_decision_ouver() {
+        return numero_decision_ouver;
+    }
+
+    public void setNumero_decision_ouver(String numero_decision_ouver) {
+        this.numero_decision_ouver = numero_decision_ouver;
+    }
+
+    public String getAdresse() {
+        return adresse;
+    }
+
+    public void setAdresse(String adresse) {
+        this.adresse = adresse;
+    }
 
     @Lob @Basic(fetch = FetchType.LAZY)
     @Column(length=100000)
