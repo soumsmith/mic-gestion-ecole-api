@@ -407,7 +407,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 						logger.info("--> Modification de detail bulletin");
 						flag.setMatiereLibelle(entry.getKey().getLibelle());
 						// Champ à renseigner avec le code 
-						flag.setMatiereCode(entry.getKey().getMatiere().getId().toString());
+						flag.setMatiereCode(entry.getKey().getId().toString());
 						flag.setMatiereId(entry.getKey().getId());
 						flag.setMoyenne(CommonUtils.roundDouble(entry.getKey().getMoyenne(), 2));
 						moyCoef = entry.getKey().getMoyenne() * Double.parseDouble(entry.getKey().getCoef());
@@ -457,7 +457,8 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 						moyCoef = entry.getKey().getMoyenne() * Double.parseDouble(entry.getKey().getCoef());
 						flag.setId(idDetail.toString());
 						// Champ à renseigner avec le code 
-						flag.setMatiereCode(entry.getKey().getMatiere().getId().toString());
+						System.out.println("matiere id ---> "+entry.getKey().getId()+" "+entry.getKey().getMatiere());
+						flag.setMatiereCode(entry.getKey().getId().toString());
 						flag.setMatiereId(entry.getKey().getId());
 						flag.setMatiereLibelle(entry.getKey().getLibelle());
 						flag.setMoyenne(CommonUtils.roundDouble(entry.getKey().getMoyenne(), 2));

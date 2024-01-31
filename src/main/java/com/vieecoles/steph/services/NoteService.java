@@ -250,6 +250,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 					if (ce.getInscription().getEleve().getMatricule()
 							.equals(note.getClasseEleve().getInscription().getEleve().getMatricule())
 							&& note.getPec() != null && note.getPec() == pec) {
+//							System.out.println("$$$$$$$  "+note.getEvaluation().getMatiereEcole().getMatiere().getId());
 						noteListTemp.add(note);
 						flat = false;
 						break;
@@ -260,6 +261,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 					notemp.setClasseEleve(ce);
 					notemp.setEvaluation(evaluation);
 					noteListTemp.add(notemp);
+//						System.out.println("$$$$$$$000000  "+notemp.getEvaluation().getMatiereEcole().getMatiere().getId());
 				}
 			}
 
@@ -325,12 +327,14 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				if (noteGroup.containsKey(note.getClasseEleve().getInscription().getEleve())) {
 					logger.info("**** upd |||****>");
 					noteGroup.get(note.getClasseEleve().getInscription().getEleve()).add(note);
+//					System.out.println(">>>>>> udp"+note.getEvaluation().getMatiereEcole().getMatiere().getId());
 //					System.out.println(note.getClasseEleve().getInscription().getEleve().getNom()+" "+note.getEvaluation().getMatiereEcole().getLibelle()+" "+ noteGroup.get(note.getClasseEleve().getInscription().getEleve()).size());
 				} else {
 					logger.info("<****||| new ****");
 					notesTemp = new ArrayList<Notes>();
 					notesTemp.add(note);
 					noteGroup.put(note.getClasseEleve().getInscription().getEleve(), notesTemp);
+//					System.out.println(">>>>>> new"+note.getEvaluation().getMatiereEcole().getMatiere().getId());
 				}
 			}
 			classe = classeService.findById(Long.parseLong(classeId));
@@ -405,6 +409,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 							matiereTemp.setBonus(note.getEvaluation().getMatiereEcole().getBonus());
 							matiereTemp.setParentMatiereLibelle(
 									note.getEvaluation().getMatiereEcole().getParentMatiereLibelle());
+//							System.out.println("##############"+note.getEvaluation().getMatiereEcole().getMatiere().getId());
 							matiereTemp.setMatiere(note.getEvaluation().getMatiereEcole().getMatiere());
 							matiereTemp.setEcole(note.getClasseEleve().getClasse().getEcole());
 //						logger.info(g.toJson(matiereTemp));
