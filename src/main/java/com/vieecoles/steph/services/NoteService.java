@@ -791,7 +791,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 		else if (moyenne >= 10.0)
 			apprec = "Passable";
 		else if (moyenne >= 8.0)
-			apprec = "Insuffisance";
+			apprec = "Insuffisant";
 		else if (moyenne >= 6.0)
 			apprec = "Faible";
 		else
