@@ -253,6 +253,7 @@ public class EcoleHasMatiereService implements PanacheRepositoryBase<EcoleHasMat
 		EcoleHasMatiere entity = EcoleHasMatiere.findById(ecoleHasMatiere.getId());
 		System.out.println("-----");
 		System.out.println(ecoleHasMatiere.getMatiereParent() == null);
+		System.out.println(ecoleHasMatiere.getMatiereParent().getId());
 
 		if (entity == null) {
 			throw new NotFoundException();
