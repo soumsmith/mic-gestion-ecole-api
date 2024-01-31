@@ -20,6 +20,8 @@ public class DetailBulletin extends PanacheEntityBase{
 
 	@Id
 	private String id;
+	@Column(name = "id_matiere")
+	private Long matiereId;
 	@Column(name = "code_matiere")
 	private String matiereCode;
 	@Column(name = "libelle_matiere")
