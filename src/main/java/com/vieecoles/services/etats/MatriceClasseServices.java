@@ -6,7 +6,6 @@ import com.vieecoles.services.eleves.InscriptionService;
 import com.vieecoles.services.souscription.SousceecoleService;
 import com.vieecoles.steph.entities.Branche;
 import com.vieecoles.steph.entities.Classe;
-import com.vieecoles.steph.entities.ClasseMatiere;
 import com.vieecoles.steph.entities.Matiere;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -32,7 +31,9 @@ public class MatriceClasseServices {
         Branche br = new Branche() ;
         Classe classe1= new Classe() ;
         classe1 = Classe.findById(classe);
+
         br= getLibelleMBranche(classe1.getLibelle(),idEcole) ;
+
         String myBranch = null ;
         System.out.println("myBranch >>>> "+myBranch);
         myBranch = String.valueOf(Classe.find("select distinct m.branche.libelle from Classe m where m.libelle = ?1 and m.ecole.id = ?2",classe1.getLibelle() ,idEcole).firstResult());
@@ -63,7 +64,7 @@ public class MatriceClasseServices {
 
         // classeMatiereList = ClasseMatiere.find("select distinct m.matiere.id from ClasseMatiere m  where m.matiere.ecole.id = ?1 and m.branche.libelle = ?2 ", idEcole,myBranch).list();
 
-        System.out.println("classeMatiereList "+classeMatiereList.toString());
+        System.out.println("classeMatiereList>>>>>>>> "+classeMatiereList.toString());
 
         int    sizeMatiereList = classeMatiereList.size() ;
 
@@ -304,7 +305,7 @@ public class MatriceClasseServices {
         else {
             Matiere matiere = new Matiere();
             matiere = Matiere.findById(idMatier);
-            libelle = matiere.getLibelle() ;
+            libelle = matiere.getLibelle().substring(0,4) ;
         }
 
 

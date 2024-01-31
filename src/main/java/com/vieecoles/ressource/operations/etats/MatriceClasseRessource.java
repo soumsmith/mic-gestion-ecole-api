@@ -2,7 +2,6 @@ package com.vieecoles.ressource.operations.etats;
 
 
 import com.vieecoles.dto.*;
-import com.vieecoles.services.etats.DpspServices;
 import com.vieecoles.services.etats.MatriceClasseBilanServices;
 import com.vieecoles.services.etats.MatriceClasseServices;
 import com.vieecoles.steph.entities.Classe;
@@ -11,7 +10,6 @@ import com.vieecoles.steph.entities.Matiere;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRXlsExporter;
-import net.sf.jasperreports.engine.export.ooxml.JRDocxExporter;
 import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 import org.springframework.http.HttpHeaders;

@@ -30,7 +30,9 @@ public class MatriceClasseBilanServices {
 
         Branche br = new Branche() ;
         Classe classe1= new Classe() ;
-        classe1= Classe.findById(classe) ;
+        System.out.println("Bilan>>>Class "+classe);
+        classe1= Classe.findById(classe);
+
         br= getLibelleMBranche(classe1.getLibelle(),idEcole) ;
           String myBranch = null ;
         myBranch = String.valueOf(Classe.find("select distinct m.branche.libelle from Classe m where m.libelle = ?1 and m.ecole.id = ?2",classe1.getLibelle() ,idEcole).firstResult());
@@ -267,7 +269,7 @@ public class MatriceClasseBilanServices {
         else {
             Matiere matiere = new Matiere();
             matiere = Matiere.findById(idMatier);
-            libelle = matiere.getLibelle() ;
+            libelle = matiere.getLibelle().substring(0,4) ;
         }
 
 
@@ -399,7 +401,19 @@ public class MatriceClasseBilanServices {
         } catch (NoResultException e) {
             return null ;
         }
+    }
 
+    public Classe getClasse(Long classe,Long idEcole){
+        try {
+            TypedQuery<Classe> q = (TypedQuery<Classe>) em.createQuery( "SELECT  o from Classe o   where o.id =:classe and o.ecole.id=:idEcole");
+            Classe classe1 = q.setParameter("classe" ,classe)
+                    .setParameter("idEcole" ,idEcole)
+                    .getSingleResult() ;
+
+            return classe1;
+        } catch (NoResultException e) {
+            return null ;
+        }
     }
     public  String getAppreciation(String matricule,String periode ,String libelleAnnee){
         try {
