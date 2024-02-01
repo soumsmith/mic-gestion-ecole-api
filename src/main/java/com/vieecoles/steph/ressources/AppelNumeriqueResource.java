@@ -2,13 +2,12 @@ package com.vieecoles.steph.ressources;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
-
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -37,16 +36,28 @@ public class AppelNumeriqueResource {
 			return Response.serverError().entity(list).build();
 		}
 	}
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes (MediaType.TEXT_PLAIN)
+	@Path("/get-list-eleve/{seanceId}")
+	public Response getListEleveBySeance(@PathParam("seanceId") String seanceId) {
+		try {
+			return Response.ok(appelNumeriqueService.getListeAppel(seanceId)).build();
+		} catch (RuntimeException e) {
+			return Response.serverError().entity(e).build();
+		}
+	}
+	
 	@POST
 	@Consumes (MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/save")
 	public Response save(AppelNumerique appel) {
 		try {
-			UUID uuid = appelNumeriqueService.save(appel);
-			return Response.ok(uuid).build();
+			String id = appelNumeriqueService.save(appel);
+			return Response.ok(id).build();
 		}catch (RuntimeException e) {
-			// TODO: handle exception
 			return Response.serverError().entity(e).build();
 		}
 	}

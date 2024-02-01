@@ -16,7 +16,7 @@ public class ClasseEleve extends PanacheEntityBase{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 
 //	@ManyToOne
 //	@JoinColumn(name = "classe_annee_id")

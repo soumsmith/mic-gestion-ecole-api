@@ -24,9 +24,7 @@ import lombok.Setter;
 public class AppelNumerique extends PanacheEntityBase{
 	
 	@Id
-	@GeneratedValue(generator = "uuid-hibernate-generator")
-	@GenericGenerator(name = "uuid-hibernate-generator", strategy = "org.hibernate.id.UUIDGenerator")
-	private UUID id;
+	private String id;
 	private String code;
 	private Date date;
 	@Column(name = "heure_debut")
