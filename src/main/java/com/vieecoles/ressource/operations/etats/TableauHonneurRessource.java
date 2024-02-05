@@ -5,6 +5,7 @@ import com.vieecoles.dto.parametreDto;
 import com.vieecoles.dto.spiderBulletinDto;
 import com.vieecoles.services.etats.BulletinRapportServices;
 import com.vieecoles.services.etats.BulletinSpiderServices;
+import com.vieecoles.steph.entities.Classe;
 import net.sf.jasperreports.engine.*;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.springframework.http.HttpHeaders;
@@ -58,8 +59,10 @@ public class TableauHonneurRessource {
     @Path("/spider-tableau/{idEcole}/{libellePeriode}/{libelleAnnee}/{libelleClasse}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public ResponseEntity<byte[]>  getDtoRapport(@PathParam("idEcole") Long idEcole ,@PathParam("libellePeriode") String libellePeriode ,
-                                                 @PathParam("libelleAnnee") String libelleAnnee , @PathParam("libelleClasse") String libelleClasse) throws Exception, JRException {
+                                                 @PathParam("libelleAnnee") String libelleAnnee , @PathParam("libelleClasse") Long idClasse) throws Exception, JRException {
         InputStream myInpuStream ;
+        Classe myClasse = new Classe() ;
+        myClasse = Classe.findById(idClasse);
 
          myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/CallTableauHonneur.jrxml");
         spiderBulletinDto detailsBull= new spiderBulletinDto() ;
@@ -71,7 +74,7 @@ public class TableauHonneurRessource {
         //   JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");
         Map<String, Object> map = new HashMap<>();
 
-        map.put("classe", libelleClasse);
+        map.put("classe", myClasse.getLibelle());
         map.put("ecoleId", idEcole);
         map.put("annee", libelleAnnee);
         map.put("periode", libellePeriode);
@@ -81,7 +84,7 @@ public class TableauHonneurRessource {
 
         HttpHeaders headers= new HttpHeaders();
         // headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Rapport"+myScole.getEcoleclibelle()+".docx");
-        headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Tableau-honneur-spider"+libelleClasse+".pdf");
+        headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Tableau-honneur-spider"+myClasse.getLibelle()+".pdf");
         return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.MULTIPART_FORM_DATA).body(data);
     }
 

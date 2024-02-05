@@ -250,6 +250,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 					if (ce.getInscription().getEleve().getMatricule()
 							.equals(note.getClasseEleve().getInscription().getEleve().getMatricule())
 							&& note.getPec() != null && note.getPec() == pec) {
+//							System.out.println("$$$$$$$  "+note.getEvaluation().getMatiereEcole().getMatiere().getId());
 						noteListTemp.add(note);
 						flat = false;
 						break;
@@ -260,6 +261,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 					notemp.setClasseEleve(ce);
 					notemp.setEvaluation(evaluation);
 					noteListTemp.add(notemp);
+//						System.out.println("$$$$$$$000000  "+notemp.getEvaluation().getMatiereEcole().getMatiere().getId());
 				}
 			}
 
@@ -325,12 +327,14 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				if (noteGroup.containsKey(note.getClasseEleve().getInscription().getEleve())) {
 					logger.info("**** upd |||****>");
 					noteGroup.get(note.getClasseEleve().getInscription().getEleve()).add(note);
+//					System.out.println(">>>>>> udp"+note.getEvaluation().getMatiereEcole().getMatiere().getId());
 //					System.out.println(note.getClasseEleve().getInscription().getEleve().getNom()+" "+note.getEvaluation().getMatiereEcole().getLibelle()+" "+ noteGroup.get(note.getClasseEleve().getInscription().getEleve()).size());
 				} else {
 					logger.info("<****||| new ****");
 					notesTemp = new ArrayList<Notes>();
 					notesTemp.add(note);
 					noteGroup.put(note.getClasseEleve().getInscription().getEleve(), notesTemp);
+//					System.out.println(">>>>>> new"+note.getEvaluation().getMatiereEcole().getMatiere().getId());
 				}
 			}
 			classe = classeService.findById(Long.parseLong(classeId));
@@ -405,6 +409,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 							matiereTemp.setBonus(note.getEvaluation().getMatiereEcole().getBonus());
 							matiereTemp.setParentMatiereLibelle(
 									note.getEvaluation().getMatiereEcole().getParentMatiereLibelle());
+//							System.out.println("##############"+note.getEvaluation().getMatiereEcole().getMatiere().getId());
 							matiereTemp.setMatiere(note.getEvaluation().getMatiereEcole().getMatiere());
 							matiereTemp.setEcole(note.getClasseEleve().getClasse().getEcole());
 //						logger.info(g.toJson(matiereTemp));
@@ -432,11 +437,12 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			// Code pour visualiser les niveaux des matieres utilisées crant souvent des
 			// bugs
 //			System.out.println("Matiere et niveau");
-//			for(MoyenneEleveDto m : moyenneList) {
-//				for(Map.Entry<Matiere,List<Notes>>  n : m.getNotesMatiereMap().entrySet()) {
-//					System.out.println(String.format("matiere %s - %s ; niveau: %s",n.getKey().getCode(), n.getKey().getLibelle(), n.getKey().getNiveauEnseignement().getId()) );
-//				}
-//			}
+			for(MoyenneEleveDto m : moyenneList) {
+				for(Map.Entry<EcoleHasMatiere,List<Notes>>  n : m.getNotesMatiereMap().entrySet()) {
+					if(n.getKey().getId().equals(2044L))
+						System.out.println("PPPPPPPPPPP");
+				}
+			}
 //			periode.getCode().equals("1");
 
 //		calculMoyenneMatiere(moyenneList);
@@ -536,7 +542,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 //			Gson g = new Gson();
 			// pour chaque évaluation avoir la liste des notes des élèves
 			for (Evaluation ev : evalList) {
-				logger.info(ev.getMatiereEcole().getLibelle()+"->"+ ev.getPec().toString());
+				logger.info(ev.getMatiereEcole().getLibelle() + "->" + ev.getPec().toString());
 				if (ev.getPec() != null && ev.getPec() == 1)
 					noteList.addAll(getNotesClasseWithPec(ev.getCode(), Constants.PEC_1));
 			}
@@ -770,6 +776,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				ehm_.setEcole(ehm.getEcole());
 				ehm_.setParentMatiereLibelle(ehm.getParentMatiereLibelle());
 				ehm_.setNumOrdre(ehm.getNumOrdre());
+				ehm_.setMatiere(ehm.getMatiere());
 				me.getNotesMatiereMap().put(ehm_, moyenneEMRList);
 			}
 //			me.setMoyenne(calculMoyenneGeneralWithCoef(moyenneList));
@@ -791,7 +798,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 		else if (moyenne >= 10.0)
 			apprec = "Passable";
 		else if (moyenne >= 8.0)
-			apprec = "Insuffisance";
+			apprec = "Insuffisant";
 		else if (moyenne >= 6.0)
 			apprec = "Faible";
 		else

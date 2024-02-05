@@ -528,6 +528,21 @@ public  void updatelibelleHandicap_inscrip (Long InscriptionId , Long oldHandica
         myInsription.setInscriptions_status(Inscriptions.status.VALIDEE);
     }
 
+
+    public void deletePhoto(Long inscriptionID){
+        Inscriptions myInsription= new Inscriptions() ;
+        myInsription= (Inscriptions) em.createQuery(" select e from Inscriptions e   where e.inscriptionsid=:inscriptionId ",Inscriptions.class )
+                .setParameter("inscriptionId",inscriptionID)
+                .getSingleResult();
+        myInsription.setCheminphoto("");
+        System.out.println("myInsription photo "+myInsription);
+        eleve elev = new eleve() ;
+        elev = eleve.findById(myInsription.getEleve().getEleveid()) ;
+        elev.setCheminphoto("");
+
+    }
+
+
     public void chargerPhoto(byte[] bytes,Long inscriptionID){
 
 
@@ -568,6 +583,8 @@ public  void updatelibelleHandicap_inscrip (Long InscriptionId , Long oldHandica
         myIns.setInscriptions_boursier(inscriptionDto.getInscriptions_boursier());
         myIns.setInscriptions_redoublant(inscriptionDto.getInscriptions_redoublant());
         myIns.setInscriptions_statut_eleve(inscriptionDto.getInscriptions_statut_eleve());
+        System.out.println("inscriptionDto.getInscriptions_langue_vivante() "+inscriptionDto.getInscriptions_langue_vivante());
+        myIns.setInscriptions_langue_vivante(inscriptionDto.getInscriptions_langue_vivante());
        // myIns.setInscriptions_classe_actuelle(inscriptionDto.getInscriptions_classe_actuelle());
         myIns.setInscriptions_classe_precedente(inscriptionDto.getInscriptions_classe_precedente());
         myIns.setInscriptions_derniereclasse_religieuse(inscriptionDto.getInscriptions_derniereclasse_religieuse());

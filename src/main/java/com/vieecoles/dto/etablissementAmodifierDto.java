@@ -26,6 +26,33 @@ public class etablissementAmodifierDto {
     private String sousc_atten_etabliss_lien_logo ;
     private Inscriptions.status sousc_atten_etabliss_status ;
     private pays pays ;
+    private String adresse;
+    private String signataire ;
+    private String num_decision ;
+
+    public String getAdresse() {
+        return adresse;
+    }
+
+    public void setAdresse(String adresse) {
+        this.adresse = adresse;
+    }
+
+    public String getSignataire() {
+        return signataire;
+    }
+
+    public void setSignataire(String signataire) {
+        this.signataire = signataire;
+    }
+
+    public String getNum_decision() {
+        return num_decision;
+    }
+
+    public void setNum_decision(String num_decision) {
+        this.num_decision = num_decision;
+    }
 
     public Long getSousc_atten_etablissid() {
         return sousc_atten_etablissid;
@@ -64,7 +91,9 @@ public class etablissementAmodifierDto {
                                      com.vieecoles.entities.operations.commune commune,
                                      Zone zone, NiveauEnseignement niveauEnseignement,
                                      String nomFichier, Direction_regionale myDirection_regionale,
-                                     pays pays,String sousc_atten_etabliss_lien_logo ,Inscriptions.status sousc_atten_etabliss_status) {
+                                     pays pays,String sousc_atten_etabliss_lien_logo ,
+                                     Inscriptions.status sousc_atten_etabliss_status,
+                                     String adresse,String signataire , String num_decision) {
         this.sousc_atten_etablissid = sousc_atten_etablissid ;
         this.sousc_atten_etablisscode = sousc_atten_etablisscode;
         this.sousc_atten_etabliss_nom = sousc_atten_etabliss_nom;
@@ -80,6 +109,9 @@ public class etablissementAmodifierDto {
         this.pays= pays;
         this.sousc_atten_etabliss_lien_logo =  sousc_atten_etabliss_lien_logo;
         this.sousc_atten_etabliss_status = sousc_atten_etabliss_status ;
+        this.adresse = adresse;
+        this.signataire =signataire;
+        this.num_decision = num_decision ;
     }
 
     public String getSousc_atten_etablisscode() {

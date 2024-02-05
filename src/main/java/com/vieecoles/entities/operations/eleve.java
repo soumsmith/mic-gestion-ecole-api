@@ -29,8 +29,16 @@ public class eleve extends PanacheEntityBase {
     private  String eleve_sexe ;
     private  String eleve_matricule ;
     private  String eleve_nationalite ;
+    private  String cheminphoto ;
 
-   // @JsonbTransient
+    public String getCheminphoto() {
+        return cheminphoto;
+    }
+
+    public void setCheminphoto(String cheminphoto) {
+        this.cheminphoto = cheminphoto;
+    }
+    // @JsonbTransient
 
 
 

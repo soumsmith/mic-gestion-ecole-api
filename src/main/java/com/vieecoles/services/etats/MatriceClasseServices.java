@@ -27,19 +27,21 @@ public class MatriceClasseServices {
     @Inject
     SousceecoleService sousceecoleService ;
 
-    public List<matriceClasseDto> getInfosMatriceClasse(Long idEcole , String libelleAnnee , String periode ,Long anneeId ,String classe){
+    public List<matriceClasseDto> getInfosMatriceClasse(Long idEcole , String libelleAnnee , String periode ,Long anneeId ,Long classe){
 
         Branche br = new Branche() ;
-        br= getLibelleMBranche(classe,idEcole) ;
+        Classe classe1= new Classe() ;
+        classe1 = Classe.findById(classe);
+        br= getLibelleMBranche(classe1.getLibelle(),idEcole) ;
         String myBranch = null ;
         System.out.println("myBranch >>>> "+myBranch);
-        myBranch = String.valueOf(Classe.find("select distinct m.branche.libelle from Classe m where m.libelle = ?1 and m.ecole.id = ?2",classe ,idEcole).firstResult());
+        myBranch = String.valueOf(Classe.find("select distinct m.branche.libelle from Classe m where m.libelle = ?1 and m.ecole.id = ?2",classe1.getLibelle() ,idEcole).firstResult());
 
         System.out.println("myBranch "+myBranch);
         myBranch="4EME E" ;
         List<NiveauDto> matriculeList = new ArrayList<>() ;
         TypedQuery<NiveauDto> q = em.createQuery( "SELECT new com.vieecoles.dto.NiveauDto(b.matricule) from Bulletin b " +
-                " where b.ecoleId =:idEcole and b.libellePeriode=:periode and b.anneeLibelle=:annee and b.libelleClasse=:classe order by b.nom ,b.prenoms " , NiveauDto.class);
+                " where b.ecoleId =:idEcole and b.libellePeriode=:periode and b.anneeLibelle=:annee and b.classeId =:classe order by b.nom ,b.prenoms " , NiveauDto.class);
         matriculeList = q.setParameter("idEcole", idEcole)
                 .setParameter("annee", libelleAnnee)
                 .setParameter("periode", periode)
@@ -52,7 +54,7 @@ public class MatriceClasseServices {
         List<NiveauDto2>  classeMatiereList = new ArrayList<>() ;
 
         TypedQuery<NiveauDto2> Q = em.createQuery( "SELECT DISTINCT new com.vieecoles.dto.NiveauDto2(d.matiereCode ,d.num_ordre) from Bulletin b, DetailBulletin d " +
-                " where b.id= d.bulletin.id and b.ecoleId =:idEcole and b.libellePeriode=:periode and b.anneeLibelle=:annee and b.libelleClasse=:classe order by d.num_ordre" , NiveauDto2.class);
+                " where b.id= d.bulletin.id and b.ecoleId =:idEcole and b.libellePeriode=:periode and b.anneeLibelle=:annee and b.classeId =:classe order by d.num_ordre" , NiveauDto2.class);
         classeMatiereList = Q.setParameter("idEcole", idEcole)
                 .setParameter("annee", libelleAnnee)
                 .setParameter("periode", periode)
@@ -166,7 +168,7 @@ public class MatriceClasseServices {
             m.setMatricule(matricule);
             m.setMatiereMoyenneDto(matiMoy);
             m.setMatiereTitreDto(titreList);
-            m.setClasse(classe);
+            m.setClasse(classe1.getLibelle());
             System.out.println("mmmm>>> "+m.toString());
             resultatsListElevesDto.add(m) ;
 

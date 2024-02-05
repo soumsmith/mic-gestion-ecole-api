@@ -390,7 +390,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 					try {
 						flag = DetailBulletin.find("bulletin.id = :bulletinId and matiereCode =: matiereCode ",
 										Parameters.with("bulletinId", bulletin.getId()).and("matiereCode",
-												entry.getKey().getCode()))
+												entry.getKey().getId().toString()))
 								.singleResult();
 					} catch (NoResultException ex) {
 						logger.info("Aucun detail de bulletin trouvé pour la matiere " + entry.getKey().getLibelle());
@@ -406,6 +406,10 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 					if (flag != null) {
 						logger.info("--> Modification de detail bulletin");
 						flag.setMatiereLibelle(entry.getKey().getLibelle());
+						// Champ à renseigner avec le code 
+//						System.out.println(entry.getKey().getId());
+						flag.setMatiereCode(entry.getKey().getMatiere().getId().toString());
+						flag.setMatiereId(entry.getKey().getMatiere().getId());
 						flag.setMoyenne(CommonUtils.roundDouble(entry.getKey().getMoyenne(), 2));
 						moyCoef = entry.getKey().getMoyenne() * Double.parseDouble(entry.getKey().getCoef());
 						flag.setMoyCoef(CommonUtils.roundDouble(moyCoef, 2));
@@ -423,9 +427,9 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 							flag.setIsRanked(Constants.OUI);
 
 						try {
-							System.out.println("--> "+me.getEleve().getMatricule()+" "+me.getEleve().getNom());
-							System.out.println("---> "+entry.getKey().getRang());
-							System.out.println("---> "+entry.getKey().getLibelle());
+//							System.out.println("--> "+me.getEleve().getMatricule()+" "+me.getEleve().getNom());
+//							System.out.println("---> "+entry.getKey().getRang());
+//							System.out.println("---> "+entry.getKey().getLibelle());
 							flag.setRang(Integer.valueOf(entry.getKey().getRang()));
 						} catch (RuntimeException ex) {
 							ex.printStackTrace();
@@ -453,7 +457,10 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 						UUID idDetail = UUID.randomUUID();
 						moyCoef = entry.getKey().getMoyenne() * Double.parseDouble(entry.getKey().getCoef());
 						flag.setId(idDetail.toString());
-						flag.setMatiereCode(entry.getKey().getCode());
+						// Champ à renseigner avec le code 
+//						System.out.println("matiere id ---> "+entry.getKey().getId()+" "+(entry.getKey().getMatiere() == null ? "Matière source Nulle" : "Matiere ok"));
+						flag.setMatiereCode(entry.getKey().getMatiere().getId().toString());
+						flag.setMatiereId(entry.getKey().getMatiere().getId());
 						flag.setMatiereLibelle(entry.getKey().getLibelle());
 						flag.setMoyenne(CommonUtils.roundDouble(entry.getKey().getMoyenne(), 2));
 						flag.setMoyCoef(CommonUtils.roundDouble(moyCoef, 2));

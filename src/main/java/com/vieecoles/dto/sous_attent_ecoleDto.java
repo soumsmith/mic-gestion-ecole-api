@@ -26,9 +26,33 @@ public class sous_attent_ecoleDto {
     private String  niveauEnseignement ;
     private String  libelleCommune ;
     private  String sousc_atten_etabliss_lien_logo ;
+    private  String adresse ;
+    private  String nom_signataire ;
+   private  String numero_decision_ouver ;
 
+    public String getNumero_decision_ouver() {
+        return numero_decision_ouver;
+    }
 
+    public void setNumero_decision_ouver(String numero_decision_ouver) {
+        this.numero_decision_ouver = numero_decision_ouver;
+    }
 
+    public String getAdresse() {
+        return adresse;
+    }
+
+    public void setAdresse(String adresse) {
+        this.adresse = adresse;
+    }
+
+    public String getNom_signataire() {
+        return nom_signataire;
+    }
+
+    public void setNom_signataire(String nom_signataire) {
+        this.nom_signataire = nom_signataire;
+    }
 
     public sous_attent_ecoleDto() {
     }
