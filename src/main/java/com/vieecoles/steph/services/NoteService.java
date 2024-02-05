@@ -437,11 +437,12 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			// Code pour visualiser les niveaux des matieres utilisées crant souvent des
 			// bugs
 //			System.out.println("Matiere et niveau");
-//			for(MoyenneEleveDto m : moyenneList) {
-//				for(Map.Entry<Matiere,List<Notes>>  n : m.getNotesMatiereMap().entrySet()) {
-//					System.out.println(String.format("matiere %s - %s ; niveau: %s",n.getKey().getCode(), n.getKey().getLibelle(), n.getKey().getNiveauEnseignement().getId()) );
-//				}
-//			}
+			for(MoyenneEleveDto m : moyenneList) {
+				for(Map.Entry<EcoleHasMatiere,List<Notes>>  n : m.getNotesMatiereMap().entrySet()) {
+					if(n.getKey().getId().equals(2044L))
+						System.out.println("PPPPPPPPPPP");
+				}
+			}
 //			periode.getCode().equals("1");
 
 //		calculMoyenneMatiere(moyenneList);
@@ -541,7 +542,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 //			Gson g = new Gson();
 			// pour chaque évaluation avoir la liste des notes des élèves
 			for (Evaluation ev : evalList) {
-				logger.info(ev.getMatiereEcole().getLibelle()+"->"+ ev.getPec().toString());
+				logger.info(ev.getMatiereEcole().getLibelle() + "->" + ev.getPec().toString());
 				if (ev.getPec() != null && ev.getPec() == 1)
 					noteList.addAll(getNotesClasseWithPec(ev.getCode(), Constants.PEC_1));
 			}
@@ -775,6 +776,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				ehm_.setEcole(ehm.getEcole());
 				ehm_.setParentMatiereLibelle(ehm.getParentMatiereLibelle());
 				ehm_.setNumOrdre(ehm.getNumOrdre());
+				ehm_.setMatiere(ehm.getMatiere());
 				me.getNotesMatiereMap().put(ehm_, moyenneEMRList);
 			}
 //			me.setMoyenne(calculMoyenneGeneralWithCoef(moyenneList));
