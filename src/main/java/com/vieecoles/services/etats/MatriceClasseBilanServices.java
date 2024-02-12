@@ -56,7 +56,7 @@ public class MatriceClasseBilanServices {
                 .getResultList() ;
 
 
-
+     System.out.println("classeMatiereList >>> "+classeMatiereList.toString());
 
 
      int    sizeMatiereList = classeMatiereList.size() ;
@@ -176,12 +176,22 @@ public class MatriceClasseBilanServices {
 
     public String getCodeLIbelleById(Long idMatier ,Long idEcole){
         String libelle= null;
+        Matiere matiere = new Matiere();
+        matiere = Matiere.findById(idMatier);
+        libelle = matiere.getLibelle() ;
+
+
+        return  libelle ;
+    }
+    /*public String getCodeLIbelleById(Long idMatier ,Long idEcole){
+        String libelle= null;
         Ecole ecole = new Ecole() ;
         ecole = Ecole.findById(idEcole) ;
 
         Long niveEnsei ;
-        niveEnsei = ecole.getNiveauEnseignement().getId();
-
+       // niveEnsei = ecole.getNiveauEnseignement().getId();
+        //System.out.println("niveEnsei "+niveEnsei);
+        niveEnsei =6L;
         if(idMatier==1L && niveEnsei==2L ) {
             libelle="FR";
         } else if (idMatier==2L && niveEnsei==2L ) {
@@ -261,7 +271,7 @@ public class MatriceClasseBilanServices {
 
 
         return  libelle ;
-    }
+    }*/
     public  Double getMoyMatiere(String matricule,String libelleMatiere,String periode ,String libelleAnnee){
         try {
             Double   moyClasseF = (Double) em.createQuery("select d.moyenne  from DetailBulletin  d join d.bulletin b  where b.matricule=:matricule and d.matiereLibelle=:libelleMatiere  and b.anneeLibelle=:libelleAnnee " +

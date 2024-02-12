@@ -85,7 +85,7 @@ public class MatriceClasseServices {
             Matiere myMatiere = new Matiere();
             String libelleMatiere ;
             String id = String.valueOf(classeMatiereList.get(j).getIdMatiere());
-               //idMatiere = Long.parseLong(id);
+               idMatiere = classeMatiereList.get(j).getIdMatiere();
 
             myMatiere = Matiere.findById(idMatiere) ;
 
@@ -125,7 +125,7 @@ public class MatriceClasseServices {
                 String id = String.valueOf(classeMatiereList.get(k).getIdMatiere());
                 //idMatiere = Long.parseLong(id);
 
-                idMatiere1 = classeMatiereList.get(k).getIdMatiere();
+                idMatiere = classeMatiereList.get(k).getIdMatiere();
 
 
                 myMatiere = Matiere.findById(idMatiere) ;
@@ -241,12 +241,23 @@ public class MatriceClasseServices {
 
     public String getCodeLIbelleById(Long idMatier ,Long idEcole){
         String libelle= null;
+        Matiere matiere = new Matiere();
+        matiere = Matiere.findById(idMatier);
+        libelle = matiere.getLibelle() ;
+
+
+        return  libelle ;
+    }
+
+    /*public String getCodeLIbelleById(Long idMatier ,Long idEcole){
+        String libelle= null;
         Ecole ecole = new Ecole() ;
         ecole = Ecole.findById(idEcole) ;
 
         Long niveEnsei ;
-        niveEnsei = ecole.getNiveauEnseignement().getId();
-
+       //niveEnsei = ecole.getNiveauEnseignement().getId();
+        //System.out.println("niveEnsei "+niveEnsei);
+        niveEnsei=6L ;
         if(idMatier==1L && niveEnsei==2L ) {
             libelle="FR";
         } else if (idMatier==2L && niveEnsei==2L ) {
@@ -326,7 +337,7 @@ public class MatriceClasseServices {
 
 
         return  libelle ;
-    }
+    }*/
 
 
 

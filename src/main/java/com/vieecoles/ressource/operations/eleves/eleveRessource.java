@@ -52,19 +52,33 @@ public class eleveRessource {
     @POST
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("importer-eleve/{idEcole}/{idAnneeScolaire}/{typeOperation}")
-    public String importerCreerEleve(List<importEleveDto> lisImpo , @PathParam("idEcole") Long idEcole, @PathParam("idAnneeScolaire") Long idAnneeScolaire,@PathParam("typeOperation") String typeOperation ){
+    @Path("importer-eleve/{idEcole}/{idAnneeScolaire}/{typeOperation}/{idBranche}")
+    public Response importerCreerEleve(List<importEleveDto> lisImpo , @PathParam("idEcole") Long idEcole, @PathParam("idAnneeScolaire") Long idAnneeScolaire,
+                                     @PathParam("typeOperation") String typeOperation ,@PathParam("idBranche") Long idBranche ){
       // System.out.print("lisImpo "+lisImpo);
-        return  EleveService.importerCreerEleve(lisImpo,idEcole,idAnneeScolaire,typeOperation);
+        try {
+return  Response.ok().entity( EleveService.importerCreerEleve(lisImpo,idEcole,idAnneeScolaire,typeOperation,idBranche)).build() ;
+        } catch (Exception e){
+            return  Response.status(Response.Status.BAD_REQUEST.getStatusCode()).entity(e.getMessage()).build();
+        }
     }
 
     @PUT
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("importer-eleve/{idEcole}/{idAnneeScolaire}/{typeOperation}")
-    public String importerMiseAjourEleve(List<importEleveDto> lisImpo , @PathParam("idEcole") Long idEcole, @PathParam("idAnneeScolaire") Long idAnneeScolaire,@PathParam("typeOperation") String typeOperation ){
+    @Path("importer-eleve/{idEcole}/{idAnneeScolaire}/{typeOperation}/{idBranche}")
+    public Response importerMiseAjourEleve(List<importEleveDto> lisImpo , @PathParam("idEcole") Long idEcole, @PathParam("idAnneeScolaire") Long idAnneeScolaire,
+                                         @PathParam("typeOperation") String typeOperation ,@PathParam("idBranche") Long idBranche ){
         // System.out.print("lisImpo "+lisImpo);
-        return  EleveService.importerMiseEleve(lisImpo,idEcole,idAnneeScolaire,typeOperation);
+
+        try {
+            return  Response.ok().entity(EleveService.importerMiseEleve(lisImpo,idEcole,idAnneeScolaire,typeOperation,idBranche)).build() ;
+        } catch (Exception e){
+            return  Response.status(Response.Status.BAD_REQUEST.getStatusCode()).entity(e.getMessage()).build();
+        }
+
+
+
     }
 
 

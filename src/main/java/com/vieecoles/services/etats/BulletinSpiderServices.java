@@ -374,7 +374,7 @@ public class BulletinSpiderServices {
         if(niveauOrdre<=4){
             System.out.println("Premier Cycle>>> "+niveauOrdre);
             try {
-                Double  moyTfr = (Double) em.createQuery("select SUM(d.coef*d.moyenne) from DetailBulletin d join d.bulletin b where b.matricule=:matricule and b.libellePeriode=:periode and b.ecoleId=:idEcole and b.anneeLibelle=:annee  and d.matiereCode in ('02','03','04') ")
+                Double  moyTfr = (Double) em.createQuery("select SUM(d.coef*d.moyenne) from DetailBulletin d join d.bulletin b where b.matricule=:matricule and b.libellePeriode=:periode and b.ecoleId=:idEcole and b.anneeLibelle=:annee  and d.matiereCode in ('2','3','4') ")
                         .setParameter("matricule",matricule)
                         .setParameter("annee",annee)
                         .setParameter("periode",periode)
@@ -449,7 +449,7 @@ public class BulletinSpiderServices {
         Integer niveauOrdre= getNiveau(matricule,annee ,periode,idEcole);
         if(niveauOrdre<=4) {
             try {
-                Double  moyTfr = (Double) em.createQuery("select AVG(d.rang) from DetailBulletin d join d.bulletin b where b.matricule=:matricule and b.libellePeriode=:periode and b.ecoleId=:idEcole and b.anneeLibelle=:annee  and d.matiereCode in ('02','03','04') ")
+                Double  moyTfr = (Double) em.createQuery("select AVG(d.rang) from DetailBulletin d join d.bulletin b where b.matricule=:matricule and b.libellePeriode=:periode and b.ecoleId=:idEcole and b.anneeLibelle=:annee  and d.matiereCode in ('2','3','4') ")
                         .setParameter("matricule",matricule)
                         .setParameter("annee",annee)
                         .setParameter("periode",periode)
