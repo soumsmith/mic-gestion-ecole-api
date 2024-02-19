@@ -44,9 +44,12 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 
 	@Inject
 	EcoleService ecoleService;
-	
+
 	@Inject
 	AnneeService anneeService;
+
+	@Inject
+	AppelNumeriqueService appelNumeriqueService;
 
 	Logger logger = Logger.getLogger(SeanceService.class.getName());
 
@@ -91,8 +94,18 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 	}
 
 	public List<Seances> getListByDateAndProf(long anneeId, Date date, long profId) {
-		 logger.info(String.format("prof %s - date %s", profId, date));
-		return Seances.find("dateSeance = ?1 and professeur.id= ?2 order by heureDeb", date, profId).list();
+		logger.info(String.format("prof %s - date %s", profId, date));
+		List<Seances> list = Seances.find("dateSeance = ?1 and professeur.id= ?2 order by heureDeb", date, profId)
+				.list();
+		// indicateur pour savoir si un appel a eu lieu pour la seance
+		if (list != null) {
+			for (Seances s : list) {
+				AppelNumerique ap = new AppelNumerique();
+				ap = appelNumeriqueService.getBySeance(s.getId());
+				s.setAppelAlreadyExist(ap.getId() != null);
+			}
+		}
+		return list;
 	}
 
 	public List<Seances> getListByStatut(String anneeId, String statut, long ecoleId) {
@@ -267,14 +280,14 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 		int jourNum;
 		jourNum = DateUtils.getNumDay(date);
 		Jour jour = jourService.findByIdSys(jourNum);
-		System.out.println("Ecole ::: "+ecoleId);
+		System.out.println("Ecole ::: " + ecoleId);
 		List<Activite> activites = new ArrayList<Activite>();
-		
+
 		// Recuperer la liste des emploi du temps en fonction du jour et/ou de la classe
 		// (si classe non nulle)
 		if (classe == null) {
 			activites = activiteService.getListByJourAndEcole(jour.getId(), ecoleId);
-		}else
+		} else
 			activites = activiteService.getListByClasseAndJour(Long.parseLong(classe), jour.getId());
 
 		// inserer pour chaque emploi du temps une seance (en recherchant le professeur
@@ -300,8 +313,8 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 				if (seanceExist.size() == 0) {
 					seance = new Seances();
 					UUID uuid = UUID.randomUUID();
-					pers = personnelMatiereClasseService.findByMatiereAndClasse(atv.getMatiere().getId(), Long.parseLong(atv.getAnnee()),
-							atv.getClasse().getId());
+					pers = personnelMatiereClasseService.findByMatiereAndClasse(atv.getMatiere().getId(),
+							Long.parseLong(atv.getAnnee()), atv.getClasse().getId());
 					seance.setId(uuid.toString());
 					seance.setAnnee(atv.getAnnee());
 					seance.setClasse(atv.getClasse());
@@ -320,7 +333,7 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 					seance.setActivite(atv);
 					seance.persist();
 					seancespersist.add(seance);
-					logger.info("-> id "+seance.getId());
+					logger.info("-> id " + seance.getId());
 					cpteSeances++;
 				} else {
 					blackIdsClasses.add(atv.getClasse().getId());
@@ -409,7 +422,7 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 					seance.persist();
 //					System.out.println("---> "+seance.getId());
 				}
-				logger.info("--> "+activites.size()+" enregistrement(s)");
+				logger.info("--> " + activites.size() + " enregistrement(s)");
 			}
 		} catch (RuntimeException r) {
 			r.printStackTrace();

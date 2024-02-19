@@ -14,7 +14,9 @@ import javax.ws.rs.core.Response;
 
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
+import com.google.gson.Gson;
 import com.vieecoles.steph.entities.AppelNumerique;
+import com.vieecoles.steph.services.AppelNumeriqueDto;
 import com.vieecoles.steph.services.AppelNumeriqueService;
 
 @Path("appel-numerique")
@@ -58,6 +60,24 @@ public class AppelNumeriqueResource {
 			String id = appelNumeriqueService.save(appel);
 			return Response.ok(id).build();
 		}catch (RuntimeException e) {
+			e.printStackTrace();
+			return Response.serverError().entity(e).build();
+		}
+	}
+	
+	@POST
+	@Consumes (MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
+	@Path("/save-handle-dto")
+	public Response save(AppelNumeriqueDto dto) {
+		Gson gson = new Gson();
+		System.out.println(gson.toJson(dto));;
+		try {
+			AppelNumerique appel = appelNumeriqueService.saverFromDto(dto);
+			// Access-Control-Expose-Headers nécessaire pour que les headers non default soient accessibles requete CORS
+			return Response.ok("Appel sauvegardé").header("Access-Control-Expose-Headers", "Appel-Id,Date-Save").header("Appel-Id", appel.getId()).header("Date-Save", appel.getDate()).build();
+		}catch (RuntimeException e) {
+			e.printStackTrace();
 			return Response.serverError().entity(e).build();
 		}
 	}

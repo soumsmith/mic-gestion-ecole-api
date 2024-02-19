@@ -63,4 +63,6 @@ public class Seances extends PanacheEntityBase {
 	private Date dateUpdate;
 	@Column(name = "user")
 	private String user;
+	@Transient
+	private Boolean appelAlreadyExist;
 }

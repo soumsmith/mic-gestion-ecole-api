@@ -14,22 +14,19 @@ public abstract class AppelNumeriqueDtoAbstract {
 	private String classeCode;
 	private String classeLibelle;
 	private int effectif;
-	private String seance;
+	private String seanceId;
+	private String typeSeance;
 	private Date dateSeance;
+	private Date dateAppel;
 	private String heureDebutSeance;
 	private String heureFinSeance;
+	private String heureDebutAppel;
+	private String personnelId;
 	private String enseignantNomPrenom;
+	private Integer absenceCmpt;
+	private Integer presenceCmpt;
 	private Long matiereId;
 	private String matiereLibelle;
 	private List<AppelEleveDto> eleves;
 	
-	@Getter
-	@Setter
-	public class AppelEleveDto {
-		private Long inscriptionClasseEleveId;
-		private String nom;
-		private String prenoms;
-		private String matricule;
-		private String presence;
-	}
 }

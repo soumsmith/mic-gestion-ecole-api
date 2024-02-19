@@ -60,6 +60,11 @@ public class Constants {
 	public static final Long NIVEAU_ENSEIGNEMENT_PRIMAIRE = 1L;
 	
 	public static final Long NIVEAU_ENSEIGNEMENT_SECONDAIRE = 2L;
+	
+	//Appel numérique
+	public static final String PRESENCE = "P";
+	
+	public static final String ABSENCE = "A";
 
 	// Modules
 	public static final String MODULE_EVALUATION = "EVALUATION";

@@ -1,20 +1,24 @@
 package com.vieecoles.steph.services;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
-
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 
-import com.vieecoles.steph.dto.AppelNumeriqueDtoAbstract.AppelEleveDto;
+import com.vieecoles.steph.dto.AppelEleveDto;
 import com.vieecoles.steph.entities.AppelNumerique;
+import com.vieecoles.steph.entities.Classe;
 import com.vieecoles.steph.entities.ClasseEleve;
+import com.vieecoles.steph.entities.Constants;
 import com.vieecoles.steph.entities.DetailAppelNumerique;
+import com.vieecoles.steph.entities.Personnel;
 import com.vieecoles.steph.entities.Seances;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
@@ -26,7 +30,8 @@ public class AppelNumeriqueService implements PanacheRepositoryBase<AppelNumeriq
 	SeanceService seanceService;
 	@Inject
 	ClasseEleveService classeEleveService;
-
+	@Inject
+	ClasseService classeService;
 	@Inject
 	DetailAppelNumeriqueService detailAppel;
 
@@ -49,20 +54,23 @@ public class AppelNumeriqueService implements PanacheRepositoryBase<AppelNumeriq
 			List<DetailAppelNumerique> appelExistant) {
 		// Pour chaque eleve renseigner les infos necesaires
 		AppelNumeriqueDto dto = new AppelNumeriqueDto();
-		List<AppelNumeriqueDto.AppelEleveDto> eleveAppelList = new ArrayList<>();
+		List<AppelEleveDto> eleveAppelList = new ArrayList<>();
 		dto.setClasseId(seance.getClasse().getId());
 		dto.setClasseCode(seance.getClasse().getCode());
 		dto.setClasseLibelle(seance.getClasse().getLibelle());
-		dto.setSeance(seance.getTypeActivite().getLibelle());
+		dto.setSeanceId(seance.getId());
+		dto.setTypeSeance(seance.getTypeActivite().getLibelle());
 		dto.setDateSeance(seance.getDateSeance());
 		dto.setHeureDebutSeance(seance.getHeureDeb());
 		dto.setHeureFinSeance(seance.getHeureFin());
 		dto.setMatiereId(seance.getMatiere().getId());
 		dto.setMatiereLibelle(seance.getMatiere().getLibelle());
-		dto.setEnseignantNomPrenom(seance.getProfesseur().getNom()+" "+seance.getProfesseur().getPrenom());
+		dto.setEnseignantNomPrenom(seance.getProfesseur().getNom() + " " + seance.getProfesseur().getPrenom());
 		dto.setEffectif(listeClasseEleve.size());
+		dto.setAbsenceCmpt(0);
+		dto.setPresenceCmpt(listeClasseEleve.size());
 		for (ClasseEleve ce : listeClasseEleve) {
-			AppelNumeriqueDto.AppelEleveDto eleveAppel = dto.new AppelEleveDto();
+			AppelEleveDto eleveAppel = new AppelEleveDto();
 			eleveAppel.setInscriptionClasseEleveId(ce.getId());
 			eleveAppel.setMatricule(ce.getInscription().getEleve().getMatricule());
 			eleveAppel.setNom(ce.getInscription().getEleve().getNom());
@@ -71,6 +79,10 @@ public class AppelNumeriqueService implements PanacheRepositoryBase<AppelNumeriq
 					.filter(x -> x.getClasseEleve().getId().equals(ce.getId())).findFirst();
 			if (optClasseEleve.isPresent()) {
 				eleveAppel.setPresence(optClasseEleve.get().getPresence());
+				if (optClasseEleve.get().getPresence().equals(Constants.ABSENCE)) {
+					dto.setPresenceCmpt(dto.getPresenceCmpt() - 1);
+					dto.setAbsenceCmpt(dto.getAbsenceCmpt() + 1);
+				}
 			}
 			eleveAppelList.add(eleveAppel);
 		}
@@ -79,9 +91,36 @@ public class AppelNumeriqueService implements PanacheRepositoryBase<AppelNumeriq
 		return dto;
 	}
 
+	public AppelNumerique saverFromDto(AppelNumeriqueDto dto) {
+		AppelNumerique appel = getBySeance(dto.getSeanceId());
+		System.out.println("Heure debut ::: " + dto.getHeureDebutAppel());
+//		appel.setCode(null);
+		appel.setDate(new Date());
+		Classe classe = classeService.findById(dto.getClasseId());
+		appel.setEcole(classe.getEcole());
+		appel.setHeureDebut(dto.getHeureDebutAppel());
+		appel.setHeureFin(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+//		System.out.println("HEURE DE FIN ::: " + LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+		Personnel personnel = new Personnel();
+		if (dto.getPersonnelId() != null)
+			personnel.setId(Long.parseLong(dto.getPersonnelId()));
+		appel.setPersonnel(personnel);
+		appel.setProgression(null);
+		Seances seance = new Seances();
+		seance.setId(dto.getSeanceId());
+		appel.setSeance(seance);
+		if (appel.getId() == null) {
+			save(appel);
+		} else {
+			update(appel);
+		}
+		detailAppel.saveHandle(dto, appel.getId());
+
+		return appel;
+	}
+
 	public AppelNumeriqueDto getListeAppel(String seanceId) {
 		// obtenir la seance
-
 		Seances seance = seanceService.findById(seanceId);
 		// Liste de la classe pour l'annee
 		List<ClasseEleve> listeClasseEleve = classeEleveService.getByClasseAnnee(seance.getClasse().getId(),
@@ -90,7 +129,10 @@ public class AppelNumeriqueService implements PanacheRepositoryBase<AppelNumeriq
 		AppelNumerique appelExistant = getBySeance(seanceId);
 		List<DetailAppelNumerique> detailAppelExistant = detailAppel.getByAppel(appelExistant.getId());
 		// Construire le dto
-		return dtoBuilder(listeClasseEleve, seance, detailAppelExistant);
+		AppelNumeriqueDto dto = dtoBuilder(listeClasseEleve, seance, detailAppelExistant);
+		if (appelExistant.getId() != null)
+			dto.setDateAppel(appelExistant.getDate());
+		return dto;
 	}
 
 	public AppelNumerique getBySeance(String seanceId) {
@@ -106,14 +148,14 @@ public class AppelNumeriqueService implements PanacheRepositoryBase<AppelNumeriq
 	@Transactional
 	public void update(AppelNumerique appel) {
 		AppelNumerique appelDb = findById(appel.getId());
-		appelDb.setCode(null);
-		appelDb.setDate(null);
-		appelDb.setHeureDebut(null);
-		appelDb.setHeureFin(null);
-		appelDb.setPersonnel(null);
-		appelDb.setProgression(null);
-		appelDb.setSeance(null);
-		appelDb.setEcole(null);
-		appelDb.setCommentaire(null);
+		appelDb.setCode(appel.getCode());
+		appelDb.setDate(appel.getDate());
+		appelDb.setHeureDebut(appel.getHeureDebut());
+		appelDb.setHeureFin(appel.getHeureFin());
+		appelDb.setPersonnel(appel.getPersonnel());
+		appelDb.setProgression(appel.getProgression());
+		appelDb.setSeance(appel.getSeance());
+		appelDb.setEcole(appel.getEcole());
+		appelDb.setCommentaire(appel.getCommentaire());
 	}
 }

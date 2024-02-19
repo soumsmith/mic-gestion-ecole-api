@@ -22,7 +22,7 @@ public class DetailAppelNumerique extends PanacheEntityBase{
 	@Id
 	private String id;
 	@ManyToOne
-	@JoinColumn(name = "eleve_inscriptions_id")
+	@JoinColumn(name = "eleve_classe_id")
 	private ClasseEleve classeEleve;
 	@Column(name = "is_present")
 	private String presence;
