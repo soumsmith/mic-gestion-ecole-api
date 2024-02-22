@@ -665,13 +665,19 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			return new ArrayList<MoyenneEleveDto>();
 		}
 	}
-	
+	/**
+	 * Cette méthode renvoie le classement des eleves d'une classe dans une matière et pour une période sans ténir compte 
+	 * de la logique des matières EMR.
+	 * 
+	 * @param classeId
+	 * @param matiereId
+	 * @param anneeId
+	 * @param periodeId
+	 * @return la liste du classement des élèves
+	 */
 	public List<MoyenneEleveDto> moyennesAndMatiereAndNotesWithoutEMRHandle(String classeId, String matiereId, String anneeId,
 			String periodeId) {
-		// Obtenir la liste des evaluations dans une classe et une matiere au cours de l
-		// année pour une
-		// période
-		logger.info("---> Processus de Calcul des moyennes des éleves d une matiere");
+		logger.info("---> Processus de Calcul des moyennes des éleves d une matiere sans logique EMR");
 		try {
 			Map<Eleve, List<Notes>> noteGroup = new HashMap<Eleve, List<Notes>>();
 			Parameters params = Parameters.with("classeId", Long.parseLong(classeId))
@@ -685,19 +691,12 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			Map<EcoleHasMatiere, List<Notes>> notesMatiereGroup;
 			Classe classe;
 			MoyenneEleveDto moyenneEleveDto;
-//			Gson g = new Gson();
-			// pour chaque évaluation avoir la liste des notes des élèves
 			for (Evaluation ev : evalList) {
 				logger.info(ev.getMatiereEcole().getLibelle() + "->" + ev.getPec().toString());
 				if (ev.getPec() != null && ev.getPec() == 1)
 					noteList.addAll(getNotesClasseWithPec(ev.getCode(), Constants.PEC_1));
 			}
-//		logger.info("note size " + noteList.size());
-//		logger.info(gson.toJson(noteList));
-			// Regroupement des notes par élève
 			for (Notes note : noteList) {
-//			logger.info("note.getClasseEleve().getInscription().getEleve()");
-//			logger.info(gson.toJson(note.getClasseEleve().getInscription().getEleve()));
 				if (noteGroup.containsKey(note.getClasseEleve().getInscription().getEleve())) {
 					logger.info("**** upd |||****>");
 					noteGroup.get(note.getClasseEleve().getInscription().getEleve()).add(note);
@@ -708,12 +707,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 					noteGroup.put(note.getClasseEleve().getInscription().getEleve(), notesTemp);
 				}
 			}
-//			System.out.println("---> " + classeId);
 			classe = classeService.findById(Long.parseLong(classeId));
-
-//			Gson g = new Gson();
-//			logger.info(g.toJson(classe));
-			// Formatage des dto
 			AnneeScolaire anneeScolaire = new AnneeScolaire();
 			Periode periode = new Periode();
 			anneeScolaire.setId(Long.parseLong(anneeId));
@@ -727,26 +721,17 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				notesMatiereGroup = new HashMap<EcoleHasMatiere, List<Notes>>();
 				EcoleHasMatiere matiereTemp;
 				List<String> filter = new ArrayList<>();
-//			logger.info(String.format("Eleve - %s - %s", entry.getKey().getMatricule(),entry.getKey().getNom()));
 				for (Notes note : entry.getValue()) {
 					logger.info("note id --->" + note.getId());
 					if (note.getId() != 0) {
 						if (filter.contains(note.getEvaluation().getMatiereEcole().getCode())) {
-//					if (notesMatiereGroup.containsKey(note.getEvaluation().getMatiere())) {
 							logger.info("**** upd ****>" + note.getEvaluation().getMatiereEcole().getCode());
-//						logger.info(g.toJson(notesMatiereGroup));
-//						logger.info("----------");
-//						logger.info(g.toJson(note.getEvaluation().getMatiereEcole()));
 							notesMatiereGroup.get(note.getEvaluation().getMatiereEcole()).add(note);
-//						System.out.println("----------------------------");
-//						System.out.println(g.toJson(note.getEvaluation().getMatiere()));
-//						logger.info(String.format("%s - %s - %s", entry.getKey().getMatricule(),note.getEvaluation().getMatiere(),note.getNote()));
 						} else {
 							logger.info("<*** new *****" + note.getEvaluation().getMatiereEcole().getCode());
 							notesTemp = new ArrayList<Notes>();
 							notesTemp.add(note);
 							filter.add(note.getEvaluation().getMatiereEcole().getCode());
-//						logger.info("ref mtiere"+note.getEvaluation().getMatiere().hashCode());
 							/*
 							 * Mettre a jour matiereTemp si la structure de EcoleHasMatiere évolue
 							 */
@@ -767,30 +752,17 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 									note.getEvaluation().getMatiereEcole().getParentMatiereLibelle());
 							matiereTemp.setMatiere(note.getEvaluation().getMatiereEcole().getMatiere());
 							matiereTemp.setEcole(note.getClasseEleve().getClasse().getEcole());
-//						logger.info(g.toJson(matiereTemp));
-//						System.out.println("----------------------");
-//						System.out.println(g.toJson(note.getEvaluation().getMatiere()));
-							/**
-							 * ***********************************************
-							 */
 
 							notesMatiereGroup.put(matiereTemp, notesTemp);
 							logger.info(String.format("%s - %s - %s", entry.getKey().getMatricule(),
 									note.getEvaluation().getMatiereEcole().getCode(), note.getNote()));
 
 						}
-//					logger.info(g.toJson(notesMatiereGroup));
 					}
 				}
 				moyenneEleveDto.setNotesMatiereMap(notesMatiereGroup);
-//			logger.info(g.toJson(moyenneEleveDto));
-//			moyenneEleveDto.setMatiere(null);
-//			moyenneEleveDto.setNotes(entry.getValue());
 				moyenneList.add(moyenneEleveDto);
 			}
-//		calculMoyenneMatiere(moyenneList);
-//			logger.info(g.toJson(classe));
-//		logger.info("-------------------------------------------");
 			classementEleveParMatiere(calculMoyenneMatiereWithoutEMR(moyenneList), classe.getBranche().getId(),
 					classe.getEcole().getId());
 
@@ -804,7 +776,6 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				else
 					eleve.setIsClassed(cep.getIsClassed());
 			}
-//	    logger.info(g.toJson(moyenneList));
 			return moyenneList;
 		} catch (RuntimeException r) {
 			r.printStackTrace();
