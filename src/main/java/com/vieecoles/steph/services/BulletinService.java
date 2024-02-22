@@ -16,6 +16,7 @@ import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 
 import com.google.gson.Gson;
+import com.vieecoles.dto.BulletinDto;
 import com.vieecoles.entities.InfosPersoBulletins;
 import com.vieecoles.steph.dto.MoyenneEleveDto;
 import com.vieecoles.steph.entities.AbsenceEleve;
@@ -119,6 +120,42 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 		}
 
 		return myBulletins;
+	}
+	
+	BulletinDto buildBulletinAndDetailDto(Bulletin bulletin, DetailBulletin details){
+		
+		return new BulletinDto();
+	}
+	
+	/*
+	 * Obténir le dto du bulletin d'un élève pour un période dans une année
+	 */
+	public BulletinDto getBulletinsEleveByAnneeAndPeriode(Long anneeId, String matricule, Long classeId, Long periodeId) {
+
+		Bulletin myBulletin = new Bulletin();
+		List<DetailBulletin> details = new ArrayList<DetailBulletin>();
+		BulletinDto dto = new BulletinDto();
+
+		try {
+			myBulletin = Bulletin
+					.find("anneeId = ?1 and matricule = ?2 and classeId = ?3 ", anneeId, matricule, classeId).singleResult();
+			try {
+			
+			details = DetailBulletin.find("bulletin.id = ?1").list();
+			} catch (RuntimeException ex) {
+				if (ex.getClass().getName().equals(NoResultException.class.getName()))
+					logger.info("Aucun Detail Bulletin trouvé pour l'année pour l'élève de matricule " + matricule);
+				else
+					ex.printStackTrace();
+			}
+		} catch (RuntimeException ex) {
+			if (ex.getClass().getName().equals(NoResultException.class.getName()))
+				logger.info("Aucun bulletin trouvé pour l'année pour l'élève de matricule " + matricule);
+			else
+				ex.printStackTrace();
+		}
+
+		return dto;
 	}
 
 	public void update(Bulletin bulletin) {
