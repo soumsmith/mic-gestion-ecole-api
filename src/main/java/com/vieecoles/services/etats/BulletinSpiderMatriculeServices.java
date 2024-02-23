@@ -30,7 +30,7 @@ public class BulletinSpiderMatriculeServices {
     @Inject
     SousceecoleService sousceecoleService ;
 @Transactional
-    public List<InfosPersoBulletins>  bulletinInfos(Long idEcole ,String libelleAnnee , String libelleTrimestre ,String matricule){
+    public List<InfosPersoBulletins>  bulletinInfos(Long idEcole ,String libelleAnnee , String libelleTrimestre ,String matricule ,boolean logoPosi ,boolean filigranne){
         int LongTableau;
          AnneeScolaire mainAnnee = new AnneeScolaire() ;
          Ecole mynewEcole = new Ecole() ;
@@ -68,37 +68,31 @@ public class BulletinSpiderMatriculeServices {
             String idBulletin ;
 
             idBulletin = getIdBulletin(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,libelleTrimestre,idEcole) ;
-            System.out.println("idBulletin "+idBulletin);
+
             TcoefEMR= calculcoefEMR(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,libelleTrimestre,idEcole) ;
 
             TcoefReligion = calculcoefReligion(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,libelleTrimestre,idEcole);
             TcoefFr = calculcoefFran(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,libelleTrimestre,idEcole) ;
              Double TrangEMR1 = 0d ;
 
-            System.out.println("TcoefFr "+TcoefFr);
-
             Double TrangFr1 = calculRangFran(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,libelleTrimestre,idEcole) ;
              TmoyCoefFr = calculMoycoefFran(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,libelleTrimestre,idEcole) ;
-            System.out.println("TmoyCoefFr "+TmoyCoefFr);
-            //System.out.println("Moyene en Francais: "+TmoyCoefFr/4);
+
            TrangFr1 = calculRangFran(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,libelleTrimestre,idEcole) ;
-            System.out.println("TrangFr1 "+TrangFr1);
+
             if(TrangFr1 !=null)
                 TrangFr = TrangFr1.intValue() ;
-            System.out.println("Before TmoyFr");
+
            TmoyFr = calculTMoyFran(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,libelleTrimestre,idEcole);
-            System.out.println("TmoyFraaaa "+TmoyFr);
+
             TrangEMR1 =calculRangEMR(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,libelleTrimestre,idEcole) ;
 
             if(TrangEMR1 !=null)
                 TrangEMR = TrangEMR1.intValue() ;
-
-            System.out.println("TrangEMR "+TrangEMR);
             TmoyCoefEMR1 = calculMoycoefEMR(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,libelleTrimestre,idEcole);
             TmoyCoefReligio1 = calculMoycoefReligion(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,libelleTrimestre,idEcole);
 
             TmoyCoefEMR = (TcoefEMR ==0.0? 0.0: (TmoyCoefEMR1)/TcoefEMR);
-           // TmoyCoefEMR = (TcoefEMR != null? TmoyCoefEMR1/TcoefEMR : 0.0 );
             if(TcoefEMR==0.0 && TcoefReligion==0.0) {
                 TmoyCoefReligio= 0.0 ;
             } else if (TcoefEMR==0.0&& TcoefReligion!=0.0) {
@@ -109,10 +103,9 @@ public class BulletinSpiderMatriculeServices {
                 TmoyCoefReligio = (((TmoyCoefReligio1)/(TcoefReligion))+TmoyCoefEMR) /2L;
             }
 
-            System.out.println("TmoyCoefEMR "+TmoyCoefEMR);
 
              moy_1er_trim = calculmoyenTrimesPasse(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,"Premier Trimestre",idEcole) ;
-            System.out.println("moy_1er_trim "+moy_1er_trim);
+
              moy_2eme_trim = calculmoyenTrimesPasse(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,"Deuxième Trimestre",idEcole) ;
             moy_3eme_trim = calculmoyenTrimesPasse(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,"Troisième Trimestre",idEcole) ;
 
@@ -121,37 +114,37 @@ public class BulletinSpiderMatriculeServices {
            rang_3eme_trim = calculRangTrimesPasse(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,"Troisième Trimestre",idEcole) ;
 
              is_class_1er_trim = calculIsClassTrimesPasse(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,"Premier Trimestre",idEcole) ;
-            System.out.println("is_class_1er_trim "+is_class_1er_trim);
-             is_class_2e_trim = calculIsClassTrimesPasse(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,"Deuxième Trimestre",idEcole) ;
+            is_class_2e_trim = calculIsClassTrimesPasse(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,"Deuxième Trimestre",idEcole) ;
 
             is_class_3e_trim = calculIsClassTrimesPasse(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,"Troisième Trimestre",idEcole) ;
-            System.out.println("is_class_3e_trim "+is_class_3e_trim);
-           l= getIdBulletinFromInfosBull(idBulletin);
+             l= getIdBulletinFromInfosBull(idBulletin);
 
             if(l==null) {
-                System.out.println(">>>>>Entree Bloc1");
                 InfosPersoBulletins k = new InfosPersoBulletins();
                 k.setTmoyFr(TcoefFr==null ||TcoefFr==0? null:TmoyCoefFr/TcoefFr);
-                System.out.println("TmoyFr "+k.getTmoyFr());
                 k.setTrangFr(TrangFr);
                 k.setTrangEMR(TrangEMR);
                 k.setTmoyCoefEMR(TmoyCoefEMR);
                 myEcole=sousceecoleService.getInffosEcoleByID(idEcole);
-                //System.out.println("myEcole "+myEcole.toString());
-                System.out.println(">>>>>Before myIns");
                 myIns = inscriptionService.checkInscrit(idEcole,classeNiveauDtoList.get(i).getNiveau(),mainAnnee.getId());
-                System.out.println("myIns>>> "+myIns);
                 parametre mpara = new parametre();
                 mpara = parametre.findById(1L) ;
-                k.setAmoirie(mpara.getImage() );
-                k.setCodeEcole(myEcole.getEcolecode());
-                k.setBg(myEcole.getFiligramme());
-                k.setLogo(myEcole.getLogoBlob());
-                if(myIns!=null && myIns.getCheminphoto()!=null) {
-                    //k.setPhoto_eleve(myIns.getPhoto_eleve());
-                    k.setCheminphoto(myIns.getCheminphoto());
+                if(logoPosi){
+                    k.setAmoirie(mpara.getImage() );
+                    k.setLogo(myEcole.getLogoBlob());
+                } else {
+                    k.setAmoirie(myEcole.getLogoBlob());
+                    k.setLogo(mpara.getImage());
                 }
 
+                k.setCodeEcole(myEcole.getEcolecode());
+                if(filigranne)
+                k.setBg(myEcole.getFiligramme());
+                else
+                    k.setBg(null);
+                if(myIns!=null && myIns.getCheminphoto()!=null) {
+                    k.setCheminphoto(myIns.getCheminphoto());
+                }
                 k.setTcoefFr(TcoefFr);
                 k.setTmoyCoefFr(TmoyCoefFr);
                 k.setIs_class_1er_trim(is_class_1er_trim);
@@ -164,39 +157,38 @@ public class BulletinSpiderMatriculeServices {
                 k.setMoy_2eme_trim(moy_2eme_trim);
                 k.setMoy_3eme_trim(moy_3eme_trim);
                 k.setTmoyCoefReligio(TmoyCoefReligio);
-                System.out.println("idBulletin>> "+idBulletin);
                 k.setIdBulletin(idBulletin);
-                System.out.println(">>>>>Objet Detail Bulletin "+k.toString());
                 k.persist();
 
                 mlist.add(k);
-                System.out.println(">>>>>Sortie Bloc1");
             } else {
-               // System.out.println(l.toString());
-                System.out.println(">>>>>Entree Bloc2");
+
                 l.setTmoyFr(TcoefFr==null||TcoefFr==0? null:TmoyCoefFr/TcoefFr);
-                System.out.println(">>TmoyFr "+l.getTmoyFr());
                 l.setTrangFr(TrangFr);
                 l.setTrangEMR(TrangEMR);
                 l.setTmoyCoefEMR(TmoyCoefEMR);
                 myEcole=sousceecoleService.getInffosEcoleByID(idEcole);
-                //System.out.println("myEcole "+myEcole.toString());
-                System.out.println(">>>>>Before  myIns");
                 myIns = inscriptionService.checkInscrit(idEcole,classeNiveauDtoList.get(i).getNiveau(),mainAnnee.getId());
 
                 parametre mpara = new parametre();
                 mpara = parametre.findById(1L) ;
-                l.setAmoirie(mpara.getImage() );
-                l.setCodeEcole(myEcole.getEcolecode());
-                l.setBg(myEcole.getFiligramme());
-                l.setLogo(myEcole.getLogoBlob());
-                    System.out.println(">>>>>Before   set photo ");
+                if(logoPosi){
+                    l.setAmoirie(mpara.getImage() );
+                    l.setLogo(myEcole.getLogoBlob());
+                } else {
+                    l.setAmoirie(myEcole.getLogoBlob());
+                    l.setLogo(mpara.getImage());
+                }
+                if(filigranne)
+                    l.setBg(myEcole.getFiligramme());
+                else
+                    l.setBg(null);
 
+                l.setCodeEcole(myEcole.getEcolecode());
                 if(myIns!=null && myIns.getCheminphoto()!=null) {
-                  //  l.setPhoto_eleve(myIns.getPhoto_eleve());
                     l.setCheminphoto(myIns.getCheminphoto());
                 }
-                System.out.println(">>>>>After   set photo ");
+
                 l.setTcoefFr(TcoefFr);
                 l.setTmoyCoefFr(TmoyCoefFr);
                 l.setIs_class_1er_trim(is_class_1er_trim);
@@ -210,7 +202,6 @@ public class BulletinSpiderMatriculeServices {
                 l.setMoy_3eme_trim(moy_3eme_trim);
                 l.setIdBulletin(idBulletin);
                 l.setTmoyCoefReligio(TmoyCoefReligio);
-                System.out.println(">>>>>FIN****");
                 mlist.add(l);
             }
 

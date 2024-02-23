@@ -588,6 +588,8 @@ public  void updatelibelleHandicap_inscrip (Long InscriptionId , Long oldHandica
        // myIns.setInscriptions_classe_actuelle(inscriptionDto.getInscriptions_classe_actuelle());
         myIns.setInscriptions_classe_precedente(inscriptionDto.getInscriptions_classe_precedente());
         myIns.setInscriptions_derniereclasse_religieuse(inscriptionDto.getInscriptions_derniereclasse_religieuse());
+        System.out.println ("origine Prise en charge>> "+inscriptionDto.getOrigine_prise_en_charge());
+        myIns.setOrigine_prise_en_charge(inscriptionDto.getOrigine_prise_en_charge());
         myIns.setInscriptionsdate_modification(LocalDate.now());
         myIns.setTransfert(inscriptionDto.getTransfert());
         myIns.setNum_decision_affecte(inscriptionDto.getNum_decision_affecte());

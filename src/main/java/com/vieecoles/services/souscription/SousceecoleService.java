@@ -230,11 +230,11 @@ return  messageRetour ;
 
 
     }
-    public String chargerPhotoBulletinEcole(byte[] bytes,String codeEcole){
+    public String chargerPhotoBulletinEcole(byte[] bytes,String codeEcole,Long niveauEnsei){
       String message;
         sousc_atten_etabliss  sousEtabli= new sousc_atten_etabliss() ;
         ecole myEcole = new ecole() ;
-        sousEtabli = checkExistEtabliss(codeEcole) ;
+        sousEtabli = checkExistEtabliss(codeEcole, niveauEnsei) ;
         myEcole = getEcoleIdBySouscrId(sousEtabli.getIdSOUS_ATTENT_ETABLISSEMENT()) ;
         sousEtabli.setLogoBlob(bytes);
 
@@ -243,11 +243,11 @@ return  messageRetour ;
         message="Informations mises à jour avec succès!";
       return  message;
     }
-    public String chargerFiligraneEcole(byte[] bytes,String codeEcole){
+    public String chargerFiligraneEcole(byte[] bytes,String codeEcole,Long niveEnseign){
         String message;
         sousc_atten_etabliss  sousEtabli= new sousc_atten_etabliss() ;
         ecole myEcole = new ecole() ;
-        sousEtabli = checkExistEtabliss(codeEcole) ;
+        sousEtabli = checkExistEtabliss(codeEcole,niveEnseign) ;
         myEcole = getEcoleIdBySouscrId(sousEtabli.getIdSOUS_ATTENT_ETABLISSEMENT()) ;
         sousEtabli.setFiligramme(bytes);
         myEcole.setFiligramme(bytes);
@@ -264,7 +264,7 @@ return  messageRetour ;
         for(int i = 0 ; i < listsouscr.size() ; i++)
         {
             sousc_atten_etabliss  sousEtabli= new sousc_atten_etabliss() ;
-            sousEtabli = checkExistEtabliss(listsouscr.get(i).getSousc_atten_etablisscode()) ;
+            sousEtabli = checkExistEtabliss(listsouscr.get(i).getSousc_atten_etablisscode(),listsouscr.get(i).getNiveau_Enseignement_id ()) ;
             System.out.println("sousEtabli---- "+sousEtabli);
             sousEtabli.setSousc_atten_etabliss_email(listsouscr.get(i).getSousc_atten_etabliss_email());
             sousEtabli.setZone_zoneid(listsouscr.get(i).getZone_zoneid());
@@ -395,7 +395,7 @@ return listEcoleDto ;
         for(int i = 0 ; i < listsouscr.size() ; i++)
         {
             sousc_atten_etabliss  sousc_atten_etabliss1= new sousc_atten_etabliss() ;
-            sousc_atten_etabliss1 = checkExistEtabliss(listsouscr.get(i).getSousc_atten_etablisscode()) ;
+            sousc_atten_etabliss1 = checkExistEtabliss(listsouscr.get(i).getSousc_atten_etablisscode(),listsouscr.get(i).getNiveau_Enseignement_id ()) ;
             sousc_atten_etabliss sousEtabli = new sousc_atten_etabliss() ;
 
             if(sousc_atten_etabliss1 ==null ){
@@ -443,7 +443,7 @@ return listEcoleDto ;
       for(int i = 0 ; i < listsouscr.size() ; i++)
       {
           sousc_atten_etabliss  sousc_atten_etabliss1= new sousc_atten_etabliss() ;
-          sousc_atten_etabliss1 = checkExistEtabliss(listsouscr.get(i).getSousc_atten_etablisscode()) ;
+          sousc_atten_etabliss1 = checkExistEtabliss(listsouscr.get(i).getSousc_atten_etablisscode(),listsouscr.get(i).getNiveau_Enseignement_id ()) ;
           sousc_atten_etabliss sousEtabli = new sousc_atten_etabliss() ;
           ville mville = new ville() ;
           mville = ville.findById(listsouscr.get(i).getVille_villeid()) ;
@@ -482,11 +482,12 @@ return  messageRetour ;
 
   }
 
-  public  sousc_atten_etabliss checkExistEtabliss(String codeEtabliss) {
+  public  sousc_atten_etabliss checkExistEtabliss(String codeEtabliss ,Long nivEnsei) {
       sousc_atten_etabliss  sousc_atten_etabliss1= new sousc_atten_etabliss() ;
     try {
-         sousc_atten_etabliss1= (sousc_atten_etabliss) em.createQuery("select o from sousc_atten_etabliss o  where o.sousc_atten_etablisscode =:codeEtabliss " )
-                .setParameter("codeEtabliss", codeEtabliss).getSingleResult() ;
+         sousc_atten_etabliss1= (sousc_atten_etabliss) em.createQuery("select o from sousc_atten_etabliss o  where o.sousc_atten_etablisscode =:codeEtabliss and o.Niveau_Enseignement_id=:nivEnsei" )
+                .setParameter("codeEtabliss", codeEtabliss)
+                 .setParameter("nivEnsei", nivEnsei).getSingleResult() ;
     }catch (Exception e){
         sousc_atten_etabliss1 = null ;
     }
