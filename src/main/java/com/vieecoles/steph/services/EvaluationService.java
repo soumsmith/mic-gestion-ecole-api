@@ -1,6 +1,8 @@
 package com.vieecoles.steph.services;
 
 import com.google.gson.Gson;
+import com.vieecoles.steph.dto.DetailsEvaluationProfDto;
+import com.vieecoles.steph.dto.EvaluationsProfStatDto;
 import com.vieecoles.steph.dto.LockedDto;
 import com.vieecoles.steph.entities.AnneePeriode;
 import com.vieecoles.steph.entities.AnneeScolaire;
@@ -8,6 +10,7 @@ import com.vieecoles.steph.entities.Constants;
 import com.vieecoles.steph.entities.Evaluation;
 import com.vieecoles.steph.entities.LoggerAudit;
 import com.vieecoles.steph.entities.Notes;
+import com.vieecoles.steph.entities.PersonnelMatiereClasse;
 import com.vieecoles.steph.util.DateUtils;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
@@ -37,6 +40,9 @@ public class EvaluationService implements PanacheRepositoryBase<Evaluation, Long
 
 	@Inject
 	AnneePeriodeService anneePeriodeService;
+
+	@Inject
+	PersonnelMatiereClasseService pcmService;
 
 	Logger logger = Logger.getLogger(EvaluationService.class.getName());
 
@@ -280,11 +286,87 @@ public class EvaluationService implements PanacheRepositoryBase<Evaluation, Long
 				dto.setDateLimite(dateLimiteSaisieAutorise);
 			else
 				dto.setDateLimite(DateUtils.asDate(anneePeriode.getDateLimite()));
-			
+
 			flat = today.compareTo(dto.getDateLimite());
 			if (flat <= 0)
 				dto.setIsLocked(false);
 		}
+		return dto;
+	}
+/**
+ * Cette méthode permet d'obtenir les statistiques sur les évaluations d'un professeur.
+ * 
+ * @param personnelId
+ * @param anneeId
+ * @param ecoleId
+ * @param periodeId
+ * 
+ * @return statistiques des evaluations exécutées d'un professeur dans une école pour une année et une période définies.
+ */
+	public EvaluationsProfStatDto getEvaluationStatByProf(Long personnelId, Long anneeId, Long ecoleId,
+			Long periodeId) {
+		List<PersonnelMatiereClasse> matieresProfList = new ArrayList<PersonnelMatiereClasse>();
+		try {
+			matieresProfList = pcmService.findByProfesseur(personnelId, anneeId, ecoleId);
+		} catch (RuntimeException e) {
+			logger.warning("-----> " + e.getMessage());
+		}
+		List<AnneeScolaire> anneeOuverte = anneeService.getByEcoleAndStatut(ecoleId, Constants.OUVERT);
+		AnneePeriode ap = new AnneePeriode();
+		if(anneeOuverte.size() > 0) {
+			ap = anneePeriodeService.getByAnneeAndEcoleAndPeriode(anneeOuverte.get(0).getId(), ecoleId, periodeId);
+		}
+		EvaluationsProfStatDto dto = new EvaluationsProfStatDto();
+		if (matieresProfList.size() > 0) {
+			dto.setNomPrenoms(matieresProfList.get(0).getPersonnel().getNom() + " "
+					+ matieresProfList.get(0).getPersonnel().getPrenom());
+			dto.setProfPersonnelId(personnelId);
+			dto.setMax(ap.getNbreEval());
+		}
+		List<DetailsEvaluationProfDto> listDetails = new ArrayList<>();
+		for (PersonnelMatiereClasse pmc : matieresProfList) {
+			Integer devExec = 0;
+			Integer devNonExec = 0;
+			Integer interroExec = 0;
+			Integer interroNonExec = 0;
+			DetailsEvaluationProfDto detail = new DetailsEvaluationProfDto();
+			detail.setClasseId(pmc.getClasse().getId());
+			detail.setClasse(pmc.getClasse().getLibelle());
+			detail.setMatiereId(pmc.getMatiere().getId());
+			detail.setMatiere(pmc.getMatiere().getLibelle());
+			System.out.println("MAX ::: "+ap.getNbreEval());
+			List<Evaluation> evaluations = getByClasseAndMatiereAndPeriode(pmc.getClasse().getId(),
+					pmc.getMatiere().getId(), periodeId, anneeId);
+			System.out.println("Nombre d évaluations : "+evaluations.size());
+			if (evaluations != null) {
+				for (Evaluation ev : evaluations) {
+					int noteSize = noteService.getByEvaluation(ev.getId()).size();
+
+					if (ev.getType().getLibelle().contains("Devoir")) {
+						if (noteSize > 0) {
+							devExec++;
+						} else {
+							devNonExec++;
+						}
+					} else if (ev.getType().getLibelle().contains("Interro")) {
+						if (noteSize > 0) {
+							interroExec++;
+						} else {
+							interroNonExec++;
+						}
+					}
+				}
+			}
+			detail.setNbreDevoirExec(devExec);
+			detail.setNbreDevoirNonExec(devNonExec);
+			detail.setNbreInterroExec(interroExec);
+			detail.setNbreInterroNonExec(interroNonExec);
+			detail.setNbreTotalExec(devExec+interroExec);
+			detail.setNbreTotalNonExec(devNonExec+interroNonExec);
+
+			listDetails.add(detail);
+		}
+		dto.setDetails(listDetails);
 		return dto;
 	}
 }

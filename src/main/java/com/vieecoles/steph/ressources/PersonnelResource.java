@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -70,7 +72,7 @@ public class PersonnelResource {
 		} catch (RuntimeException e) {
 			logger.log(Level.WARNING, "Error - listProf :::{0} ", e);
 		}
-		return Response.ok().entity(personnels).build();
+		return Response.ok().entity(personnels.stream().sorted((x,y) -> x.getNom().compareTo(y.getNom())).collect(Collectors.toList())).build();
 	}
 	
 	@GET
