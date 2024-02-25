@@ -44,6 +44,7 @@ public class AnneePeriodeService implements PanacheRepositoryBase<AnneePeriode, 
 
 	public AnneePeriode getByAnneeAndEcoleAndPeriode(Long anneeId, Long ecoleId, Long periodeId) {
 		logger.info(String.format("annee : %s - ecole : %s - periode %s", anneeId,ecoleId, periodeId));
+		System.out.println(String.format("annee : %s - ecole : %s - periode %s", anneeId,ecoleId, periodeId));
 		AnneePeriode anneePeriode = null;
 		try {
 			anneePeriode = AnneePeriode
