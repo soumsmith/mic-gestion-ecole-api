@@ -36,7 +36,7 @@ public class MoyenneParProfServices {
 
     List<MoyenneEleveDto> noteMoyenne = new ArrayList<>() ;
 
-    noteMoyenne=  noteService.moyennesAndMatiereAndNotesHandle(classe,matiere, annee, periode);
+    noteMoyenne=  noteService.moyennesAndMatiereAndNotesWithoutEMRHandle(classe,matiere, annee, periode);
 
         LongTableau= noteMoyenne.size();
         System.out.println ("Longueur Tabl>>> "+LongTableau);
