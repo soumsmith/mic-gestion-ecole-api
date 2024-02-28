@@ -81,6 +81,8 @@ public class InscriptionAvaliderDto {
     private  Boolean ivoirien ;
     private  Boolean etranger_africain ;
     private  Boolean etranger_non_africain ;
+    private String nationalite ;
+    private  String lieu_naissance ;
     @Lob
     @Basic(fetch = FetchType.LAZY)
     @Column(length=100000)
@@ -463,7 +465,7 @@ public class InscriptionAvaliderDto {
                                   Inscriptions.processus inscriptions_processus ,
                                   Long brancheid
                                  ,String brancheLibelle,
-                                String  nom_prenoms_pere ,
+                                  String  nom_prenoms_pere ,
                                   String  nom_prenoms_mere,
                                   String  nom_prenoms_tuteur,
                                   String  commune,
@@ -507,7 +509,9 @@ public class InscriptionAvaliderDto {
                                   Boolean ivoirien ,
                                   Boolean etranger_africain ,
                                   Boolean etranger_non_africain ,
-                                  String cheminphoto
+                                  String cheminphoto,
+                                  String nationalite ,
+                                  String lieuNaissance
 
 
     ) {
@@ -570,9 +574,26 @@ public class InscriptionAvaliderDto {
         this.etranger_africain = etranger_africain ;
         this.etranger_non_africain = etranger_non_africain ;
         this.cheminphoto = cheminphoto ;
+        this.nationalite =nationalite ;
+        this.lieu_naissance = lieuNaissance ;
+
     }
 
+    public String getNationalite() {
+        return nationalite;
+    }
 
+    public void setNationalite(String nationalite) {
+        this.nationalite = nationalite;
+    }
+
+    public String getLieu_naissance() {
+        return lieu_naissance;
+    }
+
+    public void setLieu_naissance(String lieu_naissance) {
+        this.lieu_naissance = lieu_naissance;
+    }
 
     public Inscriptions.processus getInscriptions_processus() {
         return inscriptions_processus;
