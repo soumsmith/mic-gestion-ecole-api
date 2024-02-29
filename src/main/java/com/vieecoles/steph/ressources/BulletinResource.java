@@ -6,12 +6,14 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.vieecoles.steph.dto.BulletinDto;
 import com.vieecoles.steph.entities.Bulletin;
 import com.vieecoles.steph.entities.Classe;
 import com.vieecoles.steph.services.BulletinService;
@@ -59,5 +61,30 @@ public class BulletinResource {
 	@Tag(name = "Bulletins")
 	public Response getBulletinsElevesByAnnee(@QueryParam("annee") Long annee ,@QueryParam("matricule") String  matricule, @QueryParam("classe") Long classe) {
 		return Response.ok(bulletinService.getBulletinsEleveByAnnee(annee, matricule, classe)).build();
+	}
+	
+	@GET
+	@Path("/get-bulletin-eleve-annee-periode")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	@Operation(description = "Obtenir le bulletin d'un élève", summary = "")
+	@Tag(name = "Bulletins")
+	public Response getBulletinsElevesByAnneeAndPeriode(@QueryParam("annee") Long annee ,@QueryParam("matricule") String  matricule, @QueryParam("classe") Long classe, @QueryParam("periode") Long periode) {
+		return Response.ok(bulletinService.getBulletinsEleveByAnneeAndPeriode(annee, matricule, classe, periode)).build();
+	}
+	
+	@POST
+	@Path("/apply-moyenne-adjustment")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
+	@Operation(description = "Appliquer la modification de moyenne", summary = "")
+	@Tag(name = "Bulletins")
+	public Response saveAdjustMoyenne(BulletinDto bulletinDto) {
+		try {
+			bulletinService.handleAdjustmentMoyenne(bulletinDto);
+			return Response.ok("Opération bien effectuée").build();
+		}catch (RuntimeException e) {
+			return Response.serverError().entity(e).build();
+		}
 	}
 }

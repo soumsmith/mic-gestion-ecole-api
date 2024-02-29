@@ -32,4 +32,6 @@ public class Eleve extends PanacheEntityBase{
 	private String nationalite;
 	@Column(name = "eleve_sexe")
 	private String sexe;
+	@Column(name = "cheminphoto")
+	private String urlPhoto;
 }
