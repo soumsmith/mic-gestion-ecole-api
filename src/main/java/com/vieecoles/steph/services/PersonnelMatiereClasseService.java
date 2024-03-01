@@ -68,7 +68,7 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 			pmc = PersonnelMatiereClasse
 					.find("classe.id = ?1 and annee.id= ?2 and matiere.id = ?3 and (statut is null or statut <> 'DELETED') ", classe, annee, matiere).singleResult();
 		} catch (RuntimeException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			logger.warning("Erreur de type : " + e.getClass().getName());
 		}
 		return pmc;

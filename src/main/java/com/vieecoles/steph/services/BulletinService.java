@@ -127,11 +127,6 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 		return myBulletins;
 	}
 
-	BulletinDto buildBulletinAndDetailDto(Bulletin bulletin, DetailBulletin details) {
-
-		return new BulletinDto();
-	}
-
 	/*
 	 * Obténir les infos du bulletin d'un élève pour une période dans une année
 	 */
@@ -148,7 +143,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 					matricule, classeId, periodeId).singleResult();
 			try {
 
-				details = DetailBulletin.find("bulletin.id = ?1", myBulletin.getId()).list();
+				details = DetailBulletin.find("bulletin.id = ?1 order by num_ordre", myBulletin.getId()).list();
 				for (DetailBulletin det : details) {
 					DetailBulletinDto detailDto = new DetailBulletinDto();
 					detailDto.setMatiereId(det.getMatiereRealId());
@@ -194,9 +189,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 			dto.setLibellePeriode(myBulletin.getLibellePeriode());
 			dto.setDetails(detailsDto);
 
-		} catch (
-
-		RuntimeException ex) {
+		} catch (RuntimeException ex) {
 			if (ex.getClass().getName().equals(NoResultException.class.getName()))
 				logger.info("Aucun bulletin trouvé pour l'année pour l'élève de matricule " + matricule);
 			else
@@ -519,7 +512,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 						logger.info("--> Modification de detail bulletin");
 						flag.setMatiereLibelle(entry.getKey().getLibelle());
 						// Champ à renseigner avec le code
-//						System.out.println(entry.getKey().getId());
+//						System.out.println("matiere id +++ "+entry.getKey().getId());
 						flag.setMatiereCode(entry.getKey().getMatiere().getId().toString());
 						flag.setMatiereId(entry.getKey().getMatiere().getId());
 						flag.setMatiereRealId(entry.getKey().getId());
@@ -575,6 +568,8 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 //						System.out.println("matiere id ---> "+entry.getKey().getId()+" "+(entry.getKey().getMatiere() == null ? "Matière source Nulle" : "Matiere ok"));
 						flag.setMatiereCode(entry.getKey().getMatiere().getId().toString());
 						flag.setMatiereId(entry.getKey().getMatiere().getId());
+						// attribut de l'id de la matiere
+						flag.setMatiereRealId(entry.getKey().getId());
 						flag.setMatiereLibelle(entry.getKey().getLibelle());
 						flag.setMoyenne(CommonUtils.roundDouble(entry.getKey().getMoyenne(), 2));
 						flag.setMoyCoef(CommonUtils.roundDouble(moyCoef, 2));

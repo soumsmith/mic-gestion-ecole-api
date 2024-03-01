@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.transaction.Transactional;
 
+import com.vieecoles.steph.entities.Constants;
 import com.vieecoles.steph.entities.MoyenneAdjustment;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
@@ -21,6 +22,16 @@ public class MoyenneAdjustmentService implements PanacheRepositoryBase<MoyenneAd
 		MoyenneAdjustment moyAdj = new MoyenneAdjustment();
 		try {
 			moyAdj = MoyenneAdjustment.find("annee = ?1 and periode = ?2 and matricule = ?3 and matiere = ?4", annee, periode, matricule, matiere)
+					.singleResult();
+		} catch (RuntimeException e) {
+			logger.warning(e.getMessage());
+		}
+		return moyAdj;
+	}
+	public MoyenneAdjustment getByAnneePeriodeMatriculeAndMatiereAndStatut(Long annee, Long periode, String matricule, Long matiere, String statut) {
+		MoyenneAdjustment moyAdj = new MoyenneAdjustment();
+		try {
+			moyAdj = MoyenneAdjustment.find("annee = ?1 and periode = ?2 and matricule = ?3 and matiere = ?4 and statut = ?5", annee, periode, matricule, matiere, statut)
 					.singleResult();
 		} catch (RuntimeException e) {
 			logger.warning(e.getMessage());
