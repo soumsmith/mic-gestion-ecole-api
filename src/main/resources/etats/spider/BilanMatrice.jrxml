@@ -644,7 +644,7 @@
 						<crosstabColumnHeader>
 							<cellContents mode="Opaque" style="Crosstab 8_CH">
 								<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
-								<textField>
+								<textField textAdjust="ScaleFont">
 									<reportElement x="0" y="0" width="25" height="20" uuid="ecd35d5e-1714-473e-b23b-12ef1c149ac8">
 										<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 										<property name="com.jaspersoft.layout.grid.y" value="-1"/>
