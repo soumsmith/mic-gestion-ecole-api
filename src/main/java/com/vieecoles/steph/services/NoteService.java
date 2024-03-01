@@ -827,6 +827,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				MoyenneAdjustment moyenneAdjustment = adjustmentService.getByAnneePeriodeMatriculeAndMatiereAndStatut(
 						me.getAnnee().getId(), me.getPeriode().getId(), me.getEleve().getMatricule(),
 						entry.getKey().getId(), Constants.VALID);
+				String isAdjustment = Constants.NON;
 				if (moyenneAdjustment.getId() == null) {
 					for (Notes note : entry.getValue()) {
 // On vérifie que l'evaluation et la note sont prises en compte dans le calcul de moyenne
@@ -850,11 +851,13 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 					moyenne = somme / (diviser.equals(Double.parseDouble("0")) ? Double.parseDouble("1") : diviser);
 					logger.info("Moyenne = " + somme + " / " + diviser + " = " + CommonUtils.roundDouble(moyenne, 2));
 				} else {
+					isAdjustment = Constants.OUI;
 					moyenne = moyenneAdjustment.getMoyenne();
 					logger.info("Moyenne repêchage trouvée = " + CommonUtils.roundDouble(moyenne, 2));
 				}
 				entry.getKey().setMoyenne(CommonUtils.roundDouble(moyenne, 2));
 				entry.getKey().setAppreciation(appreciation(moyenne));
+				entry.getKey().setIsAdjustment(isAdjustment);
 
 				// Traitement cas des sous matières EMR
 				if (entry.getKey().getMatiereParent() != null && entry.getKey().getMatiereParent().getIsEMR() != null
@@ -901,9 +904,11 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				MoyenneAdjustment moyenneAdjustment = adjustmentService.getByAnneePeriodeMatriculeAndMatiereAndStatut(
 						me.getAnnee().getId(), me.getPeriode().getId(), me.getEleve().getMatricule(),
 						hasMatiere.getId(), Constants.VALID);
+				String isAdjustment = Constants.NON;
 				if (moyenneAdjustment.getId() == null) {
 					moyenneEMR = sommeEMR / (diviserEMR == 0.0 ? 1.0 : diviserEMR);
 				}else {
+					isAdjustment = Constants.OUI;
 					moyenneEMR = moyenneAdjustment.getMoyenne();
 				}
 
@@ -923,6 +928,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				ehm_.setParentMatiereLibelle(ehm.getParentMatiereLibelle());
 				ehm_.setNumOrdre(ehm.getNumOrdre());
 				ehm_.setMatiere(ehm.getMatiere());
+				ehm_.setIsAdjustment(isAdjustment);
 				me.getNotesMatiereMap().put(ehm_, moyenneEMRList);
 			}
 //			me.setMoyenne(calculMoyenneGeneralWithCoef(moyenneList));
