@@ -22,6 +22,8 @@ public class DetailBulletin extends PanacheEntityBase{
 	private String id;
 	@Column(name = "id_matiere")
 	private Long matiereId;
+	@Column(name = "id_matiere_real")
+	private Long matiereRealId;
 	@Column(name = "code_matiere")
 	private String matiereCode;
 	@Column(name = "libelle_matiere")
@@ -38,6 +40,8 @@ public class DetailBulletin extends PanacheEntityBase{
 	private String  categorie;
     private Integer  num_ordre;
 	private String nom_prenom_professeur ;
+	@Column(name = "is_adjustment")
+	private String isAdjustment;
 	
 	@Column(name = "moy_An")
 	private Double moyAn;

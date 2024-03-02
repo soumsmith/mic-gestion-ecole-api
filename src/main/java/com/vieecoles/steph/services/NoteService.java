@@ -20,6 +20,7 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.NotFoundException;
 import com.google.gson.Gson;
+import com.vieecoles.services.matiereService;
 import com.vieecoles.services.operations.ecoleService;
 import com.vieecoles.steph.dto.MoyenneEleveDto;
 import com.vieecoles.steph.entities.AbsenceEleve;
@@ -37,6 +38,7 @@ import com.vieecoles.steph.entities.EcoleHasMatiere;
 import com.vieecoles.steph.entities.Eleve;
 import com.vieecoles.steph.entities.Evaluation;
 import com.vieecoles.steph.entities.EvaluationPeriode;
+import com.vieecoles.steph.entities.MoyenneAdjustment;
 import com.vieecoles.steph.entities.Notes;
 import com.vieecoles.steph.entities.Periode;
 import com.vieecoles.steph.entities.TypeActivite;
@@ -76,6 +78,12 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 
 	@Inject
 	EvaluationPeriodeService evaluationPeriodeService;
+
+	@Inject
+	MoyenneAdjustmentService adjustmentService;
+
+	@Inject
+	EcoleHasMatiereService hasMatiereService;
 
 	Logger logger = Logger.getLogger(NoteService.class.getName());
 
@@ -665,9 +673,10 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			return new ArrayList<MoyenneEleveDto>();
 		}
 	}
+
 	/**
-	 * Cette méthode renvoie le classement des eleves d'une classe dans une matière et pour une période sans ténir compte 
-	 * de la logique des matières EMR.
+	 * Cette méthode renvoie le classement des eleves d'une classe dans une matière
+	 * et pour une période sans ténir compte de la logique des matières EMR.
 	 * 
 	 * @param classeId
 	 * @param matiereId
@@ -675,8 +684,8 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 	 * @param periodeId
 	 * @return la liste du classement des élèves
 	 */
-	public List<MoyenneEleveDto> moyennesAndMatiereAndNotesWithoutEMRHandle(String classeId, String matiereId, String anneeId,
-			String periodeId) {
+	public List<MoyenneEleveDto> moyennesAndMatiereAndNotesWithoutEMRHandle(String classeId, String matiereId,
+			String anneeId, String periodeId) {
 		logger.info("---> Processus de Calcul des moyennes des éleves d une matiere sans logique EMR");
 		try {
 			Map<Eleve, List<Notes>> noteGroup = new HashMap<Eleve, List<Notes>>();
@@ -814,28 +823,41 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 //				System.out.println("Taille notes "+entry.getValue().size());
 				diviser = 0.0;
 				somme = 0.0;
-				for (Notes note : entry.getValue()) {
+				// Vérifier l'existence de modification de moyenne
+				MoyenneAdjustment moyenneAdjustment = adjustmentService.getByAnneePeriodeMatriculeAndMatiereAndStatut(
+						me.getAnnee().getId(), me.getPeriode().getId(), me.getEleve().getMatricule(),
+						entry.getKey().getId(), Constants.VALID);
+				String isAdjustment = Constants.NON;
+				if (moyenneAdjustment.getId() == null) {
+					for (Notes note : entry.getValue()) {
 // On vérifie que l'evaluation et la note sont prises en compte dans le calcul de moyenne
-					if (note.getEvaluation().getPec() == 1 && note.getPec() != null && note.getPec() == 1) {
-						noteList.add(note.getNote());
+						if (note.getEvaluation().getPec() == Constants.PEC_1 && note.getPec() != null
+								&& note.getPec() == Constants.PEC_1) {
+							noteList.add(note.getNote());
 //						System.out.println(String.format("PEC value >>> %s", note.getEvaluation().getPec()));
-						diviser = diviser
-								+ (Double.parseDouble(note.getEvaluation().getNoteSur()) / Double.parseDouble("20"));
+							diviser = diviser + (Double.parseDouble(note.getEvaluation().getNoteSur())
+									/ Double.parseDouble(Constants.DEFAULT_NOTE_SUR));
+						}
 					}
-				}
 
 //				entry.getValue().clear();
 //				entry.getValue().
 
-				for (Double note : noteList) {
+					for (Double note : noteList) {
 //					System.out.println(note);
-					somme += note;
-				}
+						somme += note;
+					}
 
-				moyenne = somme / (diviser.equals(Double.parseDouble("0")) ? Double.parseDouble("1") : diviser);
-				logger.info("Moyenne = " + somme + " / " + diviser + " = " + CommonUtils.roundDouble(moyenne, 2));
+					moyenne = somme / (diviser.equals(Double.parseDouble("0")) ? Double.parseDouble("1") : diviser);
+					logger.info("Moyenne = " + somme + " / " + diviser + " = " + CommonUtils.roundDouble(moyenne, 2));
+				} else {
+					isAdjustment = Constants.OUI;
+					moyenne = moyenneAdjustment.getMoyenne();
+					logger.info("Moyenne repêchage trouvée = " + CommonUtils.roundDouble(moyenne, 2));
+				}
 				entry.getKey().setMoyenne(CommonUtils.roundDouble(moyenne, 2));
 				entry.getKey().setAppreciation(appreciation(moyenne));
+				entry.getKey().setIsAdjustment(isAdjustment);
 
 				// Traitement cas des sous matières EMR
 				if (entry.getKey().getMatiereParent() != null && entry.getKey().getMatiereParent().getIsEMR() != null
@@ -862,7 +884,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 					evalEMR.setNoteSur(Constants.DEFAULT_NOTE_SUR);
 					evalEMR.setMatiereEcole(entry.getKey().getMatiereParent());
 					evalEMR.setPeriode(me.getPeriode());
-					
+
 					Notes noteEMR = new Notes();
 					noteEMR.setClasseEleve(entry.getValue().get(0).getClasseEleve());
 					noteEMR.setEvaluation(evalEMR);
@@ -876,7 +898,19 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 //				logger.info("++++> "+g.toJson(me.getNotesMatiereMap()));
 			}
 			if (EMRFlat) {
-				moyenneEMR = sommeEMR / (diviserEMR == 0.0 ? 1.0 : diviserEMR);
+				// Rechercher l 'id de la matiere emr de l'ecole
+				EcoleHasMatiere hasMatiere = hasMatiereService.getEMRByEcole(me.getClasse().getEcole().getId());
+				// verifier qu'il existe ou non un repechage et impacter la moyenEMR
+				MoyenneAdjustment moyenneAdjustment = adjustmentService.getByAnneePeriodeMatriculeAndMatiereAndStatut(
+						me.getAnnee().getId(), me.getPeriode().getId(), me.getEleve().getMatricule(),
+						hasMatiere.getId(), Constants.VALID);
+				String isAdjustment = Constants.NON;
+				if (moyenneAdjustment.getId() == null) {
+					moyenneEMR = sommeEMR / (diviserEMR == 0.0 ? 1.0 : diviserEMR);
+				}else {
+					isAdjustment = Constants.OUI;
+					moyenneEMR = moyenneAdjustment.getMoyenne();
+				}
 
 //				// pour eviter de partager le meme objet avec les autres eleves
 				EcoleHasMatiere ehm_ = new EcoleHasMatiere();
@@ -894,6 +928,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				ehm_.setParentMatiereLibelle(ehm.getParentMatiereLibelle());
 				ehm_.setNumOrdre(ehm.getNumOrdre());
 				ehm_.setMatiere(ehm.getMatiere());
+				ehm_.setIsAdjustment(isAdjustment);
 				me.getNotesMatiereMap().put(ehm_, moyenneEMRList);
 			}
 //			me.setMoyenne(calculMoyenneGeneralWithCoef(moyenneList));
@@ -901,7 +936,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 //		logger.info("++++> "+g.toJson(moyEleve));
 		return moyEleve;
 	}
-	
+
 	List<MoyenneEleveDto> calculMoyenneMatiereWithoutEMR(List<MoyenneEleveDto> moyEleve) {
 		logger.info("---> Calcul des moyennes par matiere");
 		Double moyenne;
@@ -958,7 +993,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 
 //				logger.info("++++> "+g.toJson(me.getNotesMatiereMap()));
 			}
-		
+
 //			me.setMoyenne(calculMoyenneGeneralWithCoef(moyenneList));
 		}
 //		logger.info("++++> "+g.toJson(moyEleve));
