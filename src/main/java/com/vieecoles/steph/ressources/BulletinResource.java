@@ -36,7 +36,11 @@ public class BulletinResource {
 		int nbreEleve = 0;
 //		List<Bulletin> list = new ArrayList<>();
 		try {
+			long startTime = System.nanoTime();
 			nbreEleve = bulletinService.handleSave(classe, annee, periode);
+			long endTime = System.nanoTime();
+			long durationInSeconds = (endTime - startTime) / 1000000000;
+			 System.out.println("Temps d'exécution Total: " + durationInSeconds + " secondes");
 //			Classe cl = Classe.findById(Long.parseLong(classe));
 //			System.out.println(cl.getEcole().getId());
 //			try {

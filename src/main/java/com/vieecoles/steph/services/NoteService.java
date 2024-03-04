@@ -7,21 +7,20 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 import java.util.Random;
-import java.util.UUID;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.logging.Logger;
 
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.NotFoundException;
 import com.google.gson.Gson;
-import com.vieecoles.services.matiereService;
-import com.vieecoles.services.operations.ecoleService;
 import com.vieecoles.steph.dto.MoyenneEleveDto;
 import com.vieecoles.steph.entities.AbsenceEleve;
 import com.vieecoles.steph.entities.AnneeScolaire;
@@ -41,13 +40,12 @@ import com.vieecoles.steph.entities.EvaluationPeriode;
 import com.vieecoles.steph.entities.MoyenneAdjustment;
 import com.vieecoles.steph.entities.Notes;
 import com.vieecoles.steph.entities.Periode;
-import com.vieecoles.steph.entities.TypeActivite;
 import com.vieecoles.steph.util.CommonUtils;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 import io.quarkus.panache.common.Parameters;
 
-@ApplicationScoped
+@RequestScoped
 public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 
 	@Inject
@@ -315,19 +313,16 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			List<Evaluation> _iterateur = new ArrayList<Evaluation>();
 			if (evalList != null)
 				_iterateur.addAll(evalList);
+			long startTime = System.nanoTime();
+			_iterateur.stream().forEach(x -> collectNotesPec(noteList, x));
 
-			for (Evaluation ev : _iterateur) {
-				List<Notes> listNotesByEvaluation = new ArrayList<Notes>();
-//				System.out.println(ev.getMatiereEcole().getLibelle()+" :: pec ->"+ ev.getPec().toString());
-				logger.info(ev.getPec().toString());
-				if (ev.getPec() != null && ev.getPec() == Constants.PEC_1) {
-					listNotesByEvaluation = getNotesClasseWithPec(ev.getCode(), Constants.PEC_1);
-					noteList.addAll(listNotesByEvaluation);
-				}
-			}
+			long endTime = System.nanoTime();
+			long durationInSeconds = (endTime - startTime) / 1000000000;
+			System.out.println("Temps d'exécution NOte _iterateur: " + durationInSeconds + " secondes");
 //		logger.info("note size " + noteList.size());
 //		logger.info(gson.toJson(noteList));
 			// Regroupement des notes par élève
+			long startTime2 = System.nanoTime();
 			for (Notes note : noteList) {
 //				System.out.println(note.getEvaluation().getMatiereEcole().getLibelle()+" "+note.getNote());
 //			logger.info("note.getClasseEleve().getInscription().getEleve()");
@@ -345,6 +340,10 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 //					System.out.println(">>>>>> new"+note.getEvaluation().getMatiereEcole().getMatiere().getId());
 				}
 			}
+			long endTime2 = System.nanoTime();
+			long durationInSeconds2 = (endTime2 - startTime2) / 1000000000;
+			System.out.println(
+					"Temps d'exécution NOte Regroupement des notes par élève: " + durationInSeconds2 + " secondes");
 			classe = classeService.findById(Long.parseLong(classeId));
 //		logger.info(g.toJson(classe));listNotesByEvaluation
 
@@ -361,7 +360,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 						classe.getBranche().getId());
 
 			}
-
+			long startTime3 = System.nanoTime();
 			for (Map.Entry<Eleve, List<Notes>> entry : noteGroup.entrySet()) {
 				moyenneEleveDto = new MoyenneEleveDto();
 				moyenneEleveDto.setEleve(entry.getKey());
@@ -442,6 +441,9 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 //			moyenneEleveDto.setNotes(entry.getValue());
 				moyenneList.add(moyenneEleveDto);
 			}
+			long endTime3 = System.nanoTime();
+			long durationInSeconds3 = (endTime3 - startTime3) / 1000000000;
+			System.out.println("Temps d'exécution NOte build moyenneDto: " + durationInSeconds3 + " secondes");
 			// Code pour visualiser les niveaux des matieres utilisées crant souvent des
 			// bugs
 //			System.out.println("Matiere et niveau");
@@ -456,9 +458,13 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 //		calculMoyenneMatiere(moyenneList);
 //		logger.info(moyenneList.toString());
 //		logger.info("-------------------------------------------");
+			startTime = System.nanoTime();
 			classementEleveParMatiere(calculMoyenneMatiere(moyenneList), classe.getBranche().getId(),
 					classe.getEcole().getId());
 			calculMoyenneGeneralEleve(moyenneList);
+			endTime = System.nanoTime();
+			durationInSeconds = (endTime - startTime) / 1000000000;
+			System.out.println("Temps d'exécution NOte Calculs des moeynnes: " + durationInSeconds + " secondes");
 
 			// Vérifie si la période est la denière. si oui calcul des moyennes et rang
 			// annuels
@@ -489,6 +495,16 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			r.printStackTrace();
 			throw r;
 		}
+	}
+
+	public void collectNotesPec(List<Notes> noteList, Evaluation ev) {
+			List<Notes> listNotesByEvaluation = new ArrayList<Notes>();
+//				System.out.println(ev.getMatiereEcole().getLibelle()+" :: pec ->"+ ev.getPec().toString());
+			logger.info(ev.getPec().toString());
+			if (ev.getPec() != null && ev.getPec() == Constants.PEC_1) {
+				listNotesByEvaluation = getNotesClasseWithPec(ev.getCode(), Constants.PEC_1);
+				noteList.addAll(listNotesByEvaluation);
+			}
 	}
 
 	public MoyenneEleveDto moyennesAndMatiereAndNotesByMatriculeHandle(String matricule, String matiereId,
@@ -907,7 +923,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				String isAdjustment = Constants.NON;
 				if (moyenneAdjustment.getId() == null) {
 					moyenneEMR = sommeEMR / (diviserEMR == 0.0 ? 1.0 : diviserEMR);
-				}else {
+				} else {
 					isAdjustment = Constants.OUI;
 					moyenneEMR = moyenneAdjustment.getMoyenne();
 				}

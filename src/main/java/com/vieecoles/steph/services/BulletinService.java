@@ -297,7 +297,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 
 	@Transactional
 	public void removeAllBulletinsByClasseProcess(String classe, String annee, String periode) {
-
+		long startTime = System.nanoTime();
 		List<Bulletin> bulletins = new ArrayList<Bulletin>();
 		Long bulletinsArchives = 0L;
 		try {
@@ -348,7 +348,9 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 						String.format("Erreur dans le process de suppression des bulletins [%s]", e.getMessage()));
 		}
 //		throw new RuntimeException("COUCOU !!!!!");
-
+		long endTime = System.nanoTime();
+		 long durationInSeconds = (endTime - startTime) / 1000000000;
+		 System.out.println("Temps d'exécution suppression " + durationInSeconds + " secondes");
 	}
 
 	@Transactional
@@ -357,7 +359,13 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 			logger.info(String.format("classe %s  annee %s  periode  %s", classe, annee, periode));
 			List<MoyenneEleveDto> moyenneParEleve = new ArrayList<MoyenneEleveDto>();
 			try {
+				long startTime = System.nanoTime();
 				moyenneParEleve = noteService.moyennesAndNotesHandle(classe, annee, periode);
+				long endTime = System.nanoTime();
+				long durationInSeconds = (endTime - startTime) / 1000000000;
+
+				System.out
+						.println("Temps d'exécution Calcul des moyennes: " + durationInSeconds + " secondes");
 			} catch (RuntimeException r) {
 				r.printStackTrace();
 				throw r;
@@ -380,6 +388,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 			// pas avoir des enregistrement caduque dans la base de données.
 			removeAllBulletinsByClasseProcess(classe, annee, periode);
 			for (MoyenneEleveDto me : moyenneParEleve) {
+				long startTime = System.nanoTime();
 //			 logger.info(g.toJson(me));
 				logger.info(String.format("%s %s  %s  %s %s", me.getClasse().getEcole().getId(),
 						me.getClasse().getLibelle(), me.getMoyenne(), me.getAppreciation(), me.getEleve().getId()));
@@ -641,6 +650,10 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 						}
 					}
 				}
+				long endTime = System.nanoTime();
+				long durationInSeconds = (endTime - startTime) / 1000000000;
+
+		        System.out.println("Temps d'exécution pour l'élève ->"+me.getEleve().getMatricule()+" " + durationInSeconds + " secondes");
 			}
 
 			Double maxMoy;
