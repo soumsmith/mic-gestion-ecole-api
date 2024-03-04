@@ -1,5 +1,7 @@
 package com.vieecoles.dto;
 
+import java.util.List;
+
 public class BoursierDto {
     private String matricule ;
     private String nom ;
@@ -9,6 +11,9 @@ public class BoursierDto {
     private String lieuNaiss;
     private String niveau ;
     private  Integer ordre_niveau ;
+
+    public BoursierDto(List<BoursierDto> boursier) {
+    }
 
     public Integer getOrdre_niveau() {
         return ordre_niveau;

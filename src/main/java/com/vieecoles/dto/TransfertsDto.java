@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.List;
 
 
 public class TransfertsDto {
@@ -49,7 +50,10 @@ public class TransfertsDto {
 
 	}
 
-	public String getMatricule() {
+    public TransfertsDto(List<TransfertsDto> transferts) {
+    }
+
+    public String getMatricule() {
 		return matricule;
 	}
 
