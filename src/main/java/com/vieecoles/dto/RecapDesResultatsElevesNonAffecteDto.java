@@ -1,5 +1,7 @@
 package com.vieecoles.dto;
 
+import java.util.List;
+
 public class RecapDesResultatsElevesNonAffecteDto {
     private String niveau ;
     private String classe;
@@ -28,6 +30,9 @@ public class RecapDesResultatsElevesNonAffecteDto {
     private Double moyClasseF_ET ;
     private Double moyClasseG_ET ;
     private Double moyClasse_ET ;
+
+    public RecapDesResultatsElevesNonAffecteDto(List<RecapDesResultatsElevesNonAffecteDto> recapDesResultatsElevesNonAffecteDtos) {
+    }
 
     public Double getMoyClasse() {
         return moyClasse;

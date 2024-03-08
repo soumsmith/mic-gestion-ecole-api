@@ -147,8 +147,8 @@ public class BulletinSpiderServices {
                     k.setAmoirie(mpara.getImage() );
                     k.setLogo(myEcole.getLogoBlob());
                 } else {
-                    l.setAmoirie(myEcole.getLogoBlob());
-                    l.setLogo(mpara.getImage());
+                    k.setAmoirie(myEcole.getLogoBlob());
+                    k.setLogo(mpara.getImage());
                 }
                 if(filigranne)
                     k.setBg(myEcole.getFiligramme());

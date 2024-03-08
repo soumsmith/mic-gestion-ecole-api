@@ -31,6 +31,10 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 @Path("/imprimer-rapport")
 //@Produces(MediaType.APPLICATION_JSON)
@@ -237,7 +241,7 @@ public class spiderRessource {
 
 
     @GET
-    @Transactional
+    //@Transactional
     @Path("/pouls-rapport/{idEcole}/{type}/{libelleAnnee}/{libelleTrimetre}/{anneeId}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public ResponseEntity<byte[]>  getDtoRapport(@PathParam("idEcole") Long idEcole ,@PathParam("type") String type ,
@@ -249,23 +253,24 @@ public class spiderRessource {
 
         EmptyDto myIntro = new EmptyDto();
         myIntro.setIntro("INTRODUCTION");
-        List<IdentiteEtatDto>  identiteEtatDto = new ArrayList<>() ;
-       List<ResultatsElevesAffecteDto> resultatsElevesAffecteDto = new ArrayList<>() ;
-       List<RecapDesResultatsElevesAffecteDto> recapDesResultatsElevesAffecteDto= new ArrayList<>();
-       List<ResultatsElevesNonAffecteDto> resultatsElevesNonAffecteDto = new ArrayList<>();
-       List<RecapDesResultatsElevesNonAffecteDto> recapDesResultatsElevesNonAffecteDto = new ArrayList<>();
-       List<RecapResultatsElevesAffeEtNonAffDto> recapResultatsElevesAffeEtNonAffDto = new ArrayList<>();
-       List<eleveAffecteParClasseDto> eleveAffecteParClasseDto = new ArrayList<>();
-       List<eleveNonAffecteParClasseDto> eleveNonAffecteParClasseDto = new ArrayList<>();
-       List<MajorParClasseNiveauDto> majorParClasseNiveauDto = new ArrayList<>();
-       List<TransfertsDto>transfertsDto= new ArrayList<>() ;
-       List<RepartitionEleveParAnNaissDto> repartitionEleveParAnNaissDto = new ArrayList<>() ;
-       List<BoursierDto> boursierDto = new ArrayList<>() ;
-       List<EffApprocheNiveauGenreDto> effApprocheNiveauGenreDto= new ArrayList<>()  ;
-       EffApprocheNiveauGenreDto effApprocheNive = new EffApprocheNiveauGenreDto() ;
-        List<EffectifElevLangueVivante2Dto> effectifElevLangueVivante2Dto = new ArrayList<>() ;
+         List<IdentiteEtatDto>  identiteEtatDto = new ArrayList<>() ;
+        List<ResultatsElevesAffecteDto> resultatsElevesAffecteDto = new ArrayList<>() ;
+         List<RecapDesResultatsElevesAffecteDto> recapDesResultatsElevesAffecteDto= new ArrayList<>();
+          List<ResultatsElevesNonAffecteDto> resultatsElevesNonAffecteDto = new ArrayList<>();
+          List<RecapDesResultatsElevesNonAffecteDto> recapDesResultatsElevesNonAffecteDto = new ArrayList<>();
+          List<RecapResultatsElevesAffeEtNonAffDto> recapResultatsElevesAffeEtNonAffDto = new ArrayList<>();
+          List<eleveAffecteParClasseDto> eleveAffecteParClasseDto = new ArrayList<>();
+          List<eleveNonAffecteParClasseDto> eleveNonAffecteParClasseDto = new ArrayList<>();
+          List<MajorParClasseNiveauDto> majorParClasseNiveauDto = new ArrayList<>();
+          List<TransfertsDto>transfertsDto= new ArrayList<>() ;
+          List<RepartitionEleveParAnNaissDto> repartitionEleveParAnNaissDto = new ArrayList<>() ;
+          List<BoursierDto> boursierDto = new ArrayList<>() ;
+          List<EffApprocheNiveauGenreDto> effApprocheNiveauGenreDto= new ArrayList<>()  ;
+        EffApprocheNiveauGenreDto effApprocheNive = new EffApprocheNiveauGenreDto() ;
         EffectifElevLangueVivante2Dto m = new EffectifElevLangueVivante2Dto() ;
-        List<EtatNominatifEnseignatDto> etatNominatifEnseignatDto = new ArrayList<>() ;
+          List<EffectifElevLangueVivante2Dto> effectifElevLangueVivante2Dto = new ArrayList<>() ;
+
+           List<EtatNominatifEnseignatDto> etatNominatifEnseignatDto = new ArrayList<>() ;
 
 
        List<EmptyDto> introLis= new ArrayList<>() ;
@@ -305,6 +310,10 @@ public class spiderRessource {
         etatNominatifEnseignatDto = etatNominatifEnseignantServices.infosEtatNominEnseignant(idEcole ,anneeId) ;
         effectifElevLangueVivante2Dto.add(m);
 
+
+        // Le reste de votre code après l'exécution parallèle
+        detailsBull.setIdentiteEtatDto(identiteEtatDto);
+        detailsBull.setResultatsElevesAffecteDto(resultatsElevesAffecteDto);
 
         detailsBull.setIdentiteEtatDto(identiteEtatDto);
         detailsBull.setResultatsElevesAffecteDto(resultatsElevesAffecteDto);
@@ -361,7 +370,119 @@ public class spiderRessource {
     }
 
 
+@Transactional
+    public  void callExecutor(Long idEcole ,  String libelleAnnee, String libelleTrimetre ,Long anneeId)
+    {
+        EmptyDto myIntro = new EmptyDto();
+        myIntro.setIntro("INTRODUCTION");
+        final List<IdentiteEtatDto>  identiteEtatDto = new ArrayList<>() ;
+        final  List<ResultatsElevesAffecteDto> resultatsElevesAffecteDto = new ArrayList<>() ;
+        final  List<RecapDesResultatsElevesAffecteDto> recapDesResultatsElevesAffecteDto= new ArrayList<>();
+        final  List<ResultatsElevesNonAffecteDto> resultatsElevesNonAffecteDto = new ArrayList<>();
+        final  List<RecapDesResultatsElevesNonAffecteDto> recapDesResultatsElevesNonAffecteDto = new ArrayList<>();
+        final  List<RecapResultatsElevesAffeEtNonAffDto> recapResultatsElevesAffeEtNonAffDto = new ArrayList<>();
+        final  List<eleveAffecteParClasseDto> eleveAffecteParClasseDto = new ArrayList<>();
+        final  List<eleveNonAffecteParClasseDto> eleveNonAffecteParClasseDto = new ArrayList<>();
+        final  List<MajorParClasseNiveauDto> majorParClasseNiveauDto = new ArrayList<>();
+        final  List<TransfertsDto>transfertsDto= new ArrayList<>() ;
+        final  List<RepartitionEleveParAnNaissDto> repartitionEleveParAnNaissDto = new ArrayList<>() ;
+        final  List<BoursierDto> boursierDto = new ArrayList<>() ;
+        final  List<EffApprocheNiveauGenreDto> effApprocheNiveauGenreDto= new ArrayList<>()  ;
 
+        final  List<EffectifElevLangueVivante2Dto> effectifElevLangueVivante2Dto = new ArrayList<>() ;
 
+        final   List<EtatNominatifEnseignatDto> etatNominatifEnseignatDto = new ArrayList<>() ;
+
+        ExecutorService executorService = Executors.newFixedThreadPool(10); // Nombre de threads à utiliser
+        List<Future<?>> futures = new ArrayList<>();
+        try {
+
+            futures.add ( executorService.submit(() -> {
+                identiteEtatDto.add(new IdentiteEtatDto(identiteEtatService.getIdentiteDto(idEcole)));
+                // identiteEtatDto = identiteEtatService.getIdentiteDto(idEcole);
+                System.out.println("FIN IdentiteEtatDto");
+            }));
+
+            futures.add(
+                    executorService.submit(() -> {
+                        resultatsElevesAffecteDto.add(new ResultatsElevesAffecteDto(resultatsServices.CalculResultatsEleveAffecte(idEcole, libelleAnnee, libelleTrimetre))) ;
+
+                        System.out.println("FIN ResultatsEleveAffecte");
+                    })) ;
+            futures.add(executorService.submit(() -> {
+                recapDesResultatsElevesAffecteDto.add(new RecapDesResultatsElevesAffecteDto(resultatsRecapServices.RecapCalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre))) ;
+                System.out.println("FIN RecapResultatsEleveAffecte ");
+
+            })) ;
+            futures.add ( executorService.submit(() -> {
+                resultatsElevesNonAffecteDto.add (new ResultatsElevesNonAffecteDto(resultatsNonAffecteServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre))) ;
+                System.out.println("FIN resultatsNonAffecte ");
+            }));
+            futures.add (executorService.submit(() -> {
+                recapDesResultatsElevesNonAffecteDto.add(new RecapDesResultatsElevesNonAffecteDto(resultatsRecapNonAffServices.RecapCalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre)))  ;
+                System.out.println("FIN resultatsRecapNonAff ");
+            }));
+            futures.add ( executorService.submit(() -> {
+                recapResultatsElevesAffeEtNonAffDto.add(new RecapResultatsElevesAffeEtNonAffDto(resultatsRecapAffEtNonAffServices.RecapCalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre)))  ;
+                System.out.println("FIN resultatsRecapAffEtNonAff ");
+            }));
+            futures.add ( executorService.submit(() -> {
+                eleveAffecteParClasseDto.add (new eleveAffecteParClasseDto(eleveAffecteParClasseServices.eleveAffecteParClasse(idEcole ,libelleAnnee,libelleTrimetre)));
+                System.out.println("FIN eleveAffecteParClasse ");
+            })) ;
+            futures.add ( executorService.submit(() -> {
+                eleveNonAffecteParClasseDto.add (new eleveNonAffecteParClasseDto(eleveNonAffecteParClasseServices.eleveNonAffecteParClasse(idEcole ,libelleAnnee,libelleTrimetre)));
+                System.out.println("FIN eleveNonAffecteParClasse ");
+            }));
+            futures.add(
+                    executorService.submit(() -> {
+                        majorParClasseNiveauDto.add(new MajorParClasseNiveauDto(majorServices.MajorParNiveauClasse(idEcole ,libelleAnnee,libelleTrimetre))) ;
+                        System.out.println("FIN major ");
+                    })
+            );
+            futures.add ( executorService.submit(() -> {
+
+                transfertsDto.add (new TransfertsDto(transfertsServices.transferts(idEcole)));
+                System.out.println(" FIN transfert ");
+            }));
+
+            futures.add (
+                    executorService.submit(() -> {
+                        repartitionEleveParAnNaissDto.add (new RepartitionEleveParAnNaissDto(repartitionElevParAnNaissServices.CalculRepartElevParAnnNaiss(idEcole ,libelleAnnee,libelleTrimetre))) ;
+                        System.out.println("FIN repartitionElevParAnNaiss ");
+                    })
+            ) ;
+            futures.add (executorService.submit(() -> {
+                boursierDto.add (new BoursierDto(boursiersServices.boursier(idEcole ,libelleAnnee , libelleTrimetre)));
+                System.out.println("FIN Boursier ");
+
+            })) ;
+            futures.add (executorService.submit(() -> {
+                EffApprocheNiveauGenreDto effApprocheNive = new EffApprocheNiveauGenreDto() ;
+                effApprocheNive= approcheParNiveauParGenreServices.EffApprocheNiveauGenre(idEcole ,libelleAnnee , libelleTrimetre) ;
+                System.out.println("FIN approcheParNiveauParGenre ");
+                effApprocheNiveauGenreDto.add(effApprocheNive)   ;
+
+            }));
+            futures.add (executorService.submit(() -> {
+                EffectifElevLangueVivante2Dto m = new EffectifElevLangueVivante2Dto() ;
+                m = effectifParLangueServices.getLangueVivante(idEcole,anneeId);
+                etatNominatifEnseignatDto.add (new EtatNominatifEnseignatDto(etatNominatifEnseignantServices.infosEtatNominEnseignant(idEcole ,anneeId))) ;
+                effectifElevLangueVivante2Dto.add(m);
+
+            }));
+        } finally {
+            executorService.shutdown();
+        }
+
+        // Attendre la fin de toutes les tâches après le shutdown
+        for (Future<?> future : futures) {
+            try {
+                future.get(); // Attend la fin de l'exécution de chaque tâche
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 }

@@ -11,6 +11,12 @@ public class EtatNominatifEnseignatDto {
     private String contact ;
     private List<ClassesTenuesDto> classesTenuesDto ;
 
+    public EtatNominatifEnseignatDto(List<EtatNominatifEnseignatDto> etatNominatifEnseignatDtos) {
+    }
+
+    public EtatNominatifEnseignatDto() {
+    }
+
     public String getNom() {
         return nom;
     }
