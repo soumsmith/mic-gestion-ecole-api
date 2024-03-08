@@ -448,35 +448,9 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 					bulletin.setTransfert(infosInscriptionsEleve.getTransfert());
 				}
 
-				Bulletin bltDb = null;
-				try {
-
-					bltDb = Bulletin.find(
-							"matricule = :matricule and classeId = :classe and periodeId= :periode and anneeId= :annee",
-							Parameters.with("matricule", bulletin.getMatricule()).and("classe", Long.parseLong(classe))
-									.and("periode", Long.parseLong(periode)).and("annee", Long.parseLong(annee)))
-							.singleResult();
-				} catch (NoResultException e) {
-					logger.info("Aucun bulletin trouvé dans la bd");
-				} catch (RuntimeException e) {
-					e.printStackTrace();
-				}
-				if (bltDb != null && bltDb.getId() != null) {
-					if (bltDb.getStatut() != null && bltDb.getStatut().equals(Constants.MODIFIABLE)) {
-						// Condition qui ne devrait plus être vériffiée - A supprimer pour la suite
-						bulletin.setId(bltDb.getId());
-						bulletinIdList.add(bltDb.getId());
-						logger.info("Mise à jour bulletin id [ " + bltDb.getId() + "] ...");
-						update(bulletin);
-					} else if (bltDb.getStatut() != null && bltDb.getStatut().equals(Constants.ARCHIVE)) {
-						logger.info(String.format("Bulletin archivé [%s]", bltDb.getId()));
-					}
-
-				} else {
-					logger.info("Création bulletin ...");
-					save(bulletin);
-					bulletinIdList.add(bulletin.getId());
-				}
+				logger.info("Création bulletin ...");
+				save(bulletin);
+				bulletinIdList.add(bulletin.getId());
 
 				Double moyCoef = (double) 0;
 				for (Map.Entry<EcoleHasMatiere, List<Notes>> entry : me.getNotesMatiereMap().entrySet()) {
