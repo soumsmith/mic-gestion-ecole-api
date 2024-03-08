@@ -491,7 +491,7 @@
 			<band height="20">
 				<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
 				<frame>
-					<reportElement x="-8" y="0" width="818" height="20" uuid="6271be23-f5b7-4a17-be5f-70f2ee7b8161">
+					<reportElement x="-8" y="0" width="823" height="20" uuid="6271be23-f5b7-4a17-be5f-70f2ee7b8161">
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="0"/>
@@ -531,7 +531,7 @@
 						<textFieldExpression><![CDATA[$V{REPORT_COUNT}+1]]></textFieldExpression>
 					</textField>
 					<textField textAdjust="ScaleFont">
-						<reportElement x="14" y="0" width="26" height="20" uuid="cb7dcbd2-6894-4979-9509-d658b3c0db4f">
+						<reportElement x="14" y="0" width="20" height="20" uuid="cb7dcbd2-6894-4979-9509-d658b3c0db4f">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -554,7 +554,7 @@
 						<textFieldExpression><![CDATA[$F{ideleve}]]></textFieldExpression>
 					</textField>
 					<textField textAdjust="ScaleFont">
-						<reportElement x="40" y="0" width="40" height="20" uuid="8cfabd84-473b-469b-bd7d-007077e25f2c">
+						<reportElement x="34" y="0" width="40" height="20" uuid="8cfabd84-473b-469b-bd7d-007077e25f2c">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -571,13 +571,13 @@
 							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
-						<textElement textAlignment="Left" verticalAlignment="Middle">
+						<textElement textAlignment="Center" verticalAlignment="Middle">
 							<font fontName="SansSerif" size="7"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{matricule}]]></textFieldExpression>
 					</textField>
 					<textField textAdjust="ScaleFont">
-						<reportElement x="80" y="0" width="50" height="20" uuid="c2579a28-2258-4b81-a4bc-c5b67e92756d">
+						<reportElement x="74" y="0" width="45" height="20" uuid="c2579a28-2258-4b81-a4bc-c5b67e92756d">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -602,7 +602,7 @@
 						<textFieldExpression><![CDATA[$F{nom}]]></textFieldExpression>
 					</textField>
 					<textField textAdjust="ScaleFont">
-						<reportElement x="130" y="0" width="60" height="20" uuid="f1c5ab99-828e-4910-838b-d76a24881b66">
+						<reportElement x="119" y="0" width="55" height="20" uuid="f1c5ab99-828e-4910-838b-d76a24881b66">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -610,7 +610,6 @@
 							<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
 							<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-							<property name="com.jaspersoft.studio.unit.width" value="px"/>
 							<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 						</reportElement>
@@ -627,7 +626,7 @@
 						<textFieldExpression><![CDATA[$F{prenoms}]]></textFieldExpression>
 					</textField>
 					<frame>
-						<reportElement x="190" y="0" width="500" height="20" uuid="5e78348d-5aee-4ca4-bcea-a767112803c8">
+						<reportElement x="174" y="0" width="536" height="20" uuid="5e78348d-5aee-4ca4-bcea-a767112803c8">
 							<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 							<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -638,7 +637,7 @@
 							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 						</reportElement>
 						<crosstab>
-							<reportElement x="0" y="0" width="500" height="20" isPrintInFirstWholeBand="true" uuid="9492530b-666e-4974-838a-37537f3e41bb">
+							<reportElement x="0" y="0" width="536" height="20" isPrintInFirstWholeBand="true" uuid="9492530b-666e-4974-838a-37537f3e41bb">
 								<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
 								<property name="com.jaspersoft.studio.crosstab.style.header" value="Crosstab 6_CH"/>
 								<property name="com.jaspersoft.studio.crosstab.style.group" value="Crosstab 6_CG"/>
@@ -693,12 +692,12 @@
 							<measure name="moyMatiere_MEASURE" class="java.lang.Double">
 								<measureExpression><![CDATA[$F{moyMatiere}]]></measureExpression>
 							</measure>
-							<crosstabCell width="25" height="20">
+							<crosstabCell width="20" height="20">
 								<cellContents mode="Opaque" style="Crosstab 6_CD">
 									<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 									<property name="com.jaspersoft.studio.unit.width" value="px"/>
 									<textField>
-										<reportElement x="0" y="0" width="25" height="20" uuid="1f993d6d-c688-448e-a0ce-622c87dc1261">
+										<reportElement x="0" y="0" width="20" height="20" uuid="1f993d6d-c688-448e-a0ce-622c87dc1261">
 											<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 											<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 											<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -706,6 +705,7 @@
 											<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
 											<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 											<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+											<property name="com.jaspersoft.studio.unit.width" value="px"/>
 										</reportElement>
 										<textElement textAlignment="Center" verticalAlignment="Middle">
 											<font size="7"/>
@@ -717,7 +717,7 @@
 							<crosstabCell width="0" height="20" columnTotalGroup="libelleMatiere">
 								<cellContents mode="Opaque" style="Crosstab 6_CT"/>
 							</crosstabCell>
-							<crosstabCell width="25" height="0" rowTotalGroup="matricule">
+							<crosstabCell width="20" height="0" rowTotalGroup="matricule">
 								<cellContents mode="Opaque" style="Crosstab 6_CT">
 									<property name="com.jaspersoft.studio.unit.height" value="px"/>
 								</cellContents>
@@ -728,7 +728,7 @@
 						</crosstab>
 					</frame>
 					<textField textAdjust="ScaleFont">
-						<reportElement x="690" y="0" width="20" height="20" uuid="5f1845df-6c09-47af-910c-139b832242f0">
+						<reportElement x="710" y="0" width="20" height="20" uuid="5f1845df-6c09-47af-910c-139b832242f0">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -752,7 +752,7 @@
 						<textFieldExpression><![CDATA[$F{moyenTrimes}]]></textFieldExpression>
 					</textField>
 					<textField textAdjust="ScaleFont">
-						<reportElement x="710" y="0" width="20" height="20" uuid="57b470ac-fa45-4a3e-9b3f-dbf63de171c9">
+						<reportElement x="730" y="0" width="20" height="20" uuid="57b470ac-fa45-4a3e-9b3f-dbf63de171c9">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -776,7 +776,7 @@
 						<textFieldExpression><![CDATA[$F{rang}]]></textFieldExpression>
 					</textField>
 					<textField>
-						<reportElement x="730" y="0" width="44" height="20" uuid="36e77b51-046f-4199-ac8c-b4d2467f7243">
+						<reportElement x="750" y="0" width="35" height="20" uuid="36e77b51-046f-4199-ac8c-b4d2467f7243">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -821,7 +821,7 @@
 	<pageHeader>
 		<band height="20">
 			<frame>
-				<reportElement x="-8" y="0" width="818" height="20" uuid="83ec129f-1d91-47bb-910d-18b0ec62a953">
+				<reportElement x="-8" y="0" width="823" height="20" uuid="83ec129f-1d91-47bb-910d-18b0ec62a953">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 				</reportElement>
 				<box>
@@ -853,7 +853,7 @@
 					<text><![CDATA[N°]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="14" y="0" width="26" height="20" uuid="0bb37d89-8841-4504-8222-fd88eea33545">
+					<reportElement x="14" y="0" width="20" height="20" uuid="0bb37d89-8841-4504-8222-fd88eea33545">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -875,7 +875,7 @@
 					<text><![CDATA[ID]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="40" y="0" width="40" height="20" uuid="19201d74-d824-4701-bd56-a5c10be908b7">
+					<reportElement x="34" y="0" width="40" height="20" uuid="19201d74-d824-4701-bd56-a5c10be908b7">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -897,7 +897,7 @@
 					<text><![CDATA[Matricule]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="80" y="0" width="50" height="20" uuid="00398917-be4a-400d-a165-70a84f70d485">
+					<reportElement x="74" y="0" width="45" height="20" uuid="00398917-be4a-400d-a165-70a84f70d485">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -919,7 +919,7 @@
 					<text><![CDATA[Nom]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="130" y="0" width="60" height="20" uuid="a2501a98-eca4-4034-92f7-50115a382cfd">
+					<reportElement x="119" y="0" width="55" height="20" uuid="a2501a98-eca4-4034-92f7-50115a382cfd">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -941,7 +941,7 @@
 					<text><![CDATA[Prénoms]]></text>
 				</staticText>
 				<frame>
-					<reportElement x="190" y="0" width="500" height="20" uuid="4fdd67b3-780a-4639-80ef-0beb032ce752">
+					<reportElement x="174" y="0" width="536" height="20" uuid="4fdd67b3-780a-4639-80ef-0beb032ce752">
 						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -952,7 +952,7 @@
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 					</reportElement>
 					<crosstab>
-						<reportElement x="0" y="0" width="500" height="20" isPrintInFirstWholeBand="true" uuid="10981609-fb66-4647-a1e3-a1e4243ce568">
+						<reportElement x="0" y="0" width="536" height="20" isPrintInFirstWholeBand="true" uuid="10981609-fb66-4647-a1e3-a1e4243ce568">
 							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
 							<property name="com.jaspersoft.studio.crosstab.style.header" value="Crosstab 6_CH"/>
 							<property name="com.jaspersoft.studio.crosstab.style.group" value="Crosstab 6_CG"/>
@@ -996,7 +996,7 @@
 								<cellContents mode="Opaque" style="Crosstab 6_CH">
 									<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 									<textField textAdjust="ScaleFont">
-										<reportElement x="0" y="0" width="25" height="20" uuid="97f777e9-0e78-4b1a-ab3d-d0f1ff0ff451">
+										<reportElement x="0" y="0" width="20" height="20" uuid="97f777e9-0e78-4b1a-ab3d-d0f1ff0ff451">
 											<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 											<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 											<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1022,7 +1022,7 @@
 						<measure name="moyMatiere_MEASURE" class="java.lang.Double">
 							<measureExpression><![CDATA[$F{titre}]]></measureExpression>
 						</measure>
-						<crosstabCell width="25" height="0">
+						<crosstabCell width="20" height="0">
 							<cellContents mode="Opaque" style="Crosstab 6_CD">
 								<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 								<property name="com.jaspersoft.studio.unit.width" value="px"/>
@@ -1032,7 +1032,7 @@
 						<crosstabCell width="0" height="0" columnTotalGroup="libelleMatiere">
 							<cellContents mode="Opaque" style="Crosstab 6_CT"/>
 						</crosstabCell>
-						<crosstabCell width="25" height="0" rowTotalGroup="matricule">
+						<crosstabCell width="20" height="0" rowTotalGroup="matricule">
 							<cellContents mode="Opaque" style="Crosstab 6_CT">
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							</cellContents>
@@ -1043,7 +1043,7 @@
 					</crosstab>
 				</frame>
 				<staticText>
-					<reportElement x="690" y="0" width="20" height="20" uuid="af6909a8-1bad-43e2-aa29-6b92e19cf6e7">
+					<reportElement x="710" y="0" width="20" height="20" uuid="af6909a8-1bad-43e2-aa29-6b92e19cf6e7">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1065,7 +1065,7 @@
 					<text><![CDATA[Moyenne]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="710" y="0" width="20" height="20" uuid="6aadc30c-41d1-420a-baac-b76ad329040a">
+					<reportElement x="730" y="0" width="20" height="20" uuid="6aadc30c-41d1-420a-baac-b76ad329040a">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1087,7 +1087,7 @@
 					<text><![CDATA[Rang]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="730" y="0" width="44" height="20" uuid="a1746fa0-38f2-4ae1-bf70-37e455af89ec">
+					<reportElement x="750" y="0" width="35" height="20" uuid="a1746fa0-38f2-4ae1-bf70-37e455af89ec">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1095,6 +1095,7 @@
 						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
 						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
 					<box>
 						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1108,7 +1109,7 @@
 					<text><![CDATA[Appréciation]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="774" y="0" width="44" height="20" uuid="6cedf62c-f6ef-4c68-afdc-c4ed42aff34e">
+					<reportElement x="785" y="0" width="38" height="20" uuid="6cedf62c-f6ef-4c68-afdc-c4ed42aff34e">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>

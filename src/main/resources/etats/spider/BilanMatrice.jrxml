@@ -569,7 +569,7 @@
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textField>
-					<reportElement x="0" y="0" width="190" height="40" uuid="83d7fac3-097e-4673-b67f-684b53218a28">
+					<reportElement x="0" y="0" width="174" height="40" uuid="83d7fac3-097e-4673-b67f-684b53218a28">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -592,7 +592,7 @@
 					<textFieldExpression><![CDATA["Bilan"]]></textFieldExpression>
 				</textField>
 				<crosstab>
-					<reportElement x="190" y="0" width="617" height="40" uuid="bc170fab-27cc-4e0f-8fc6-8da17be25ed2">
+					<reportElement x="174" y="0" width="536" height="40" uuid="bc170fab-27cc-4e0f-8fc6-8da17be25ed2">
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
 						<property name="com.jaspersoft.studio.crosstab.style.header" value="Crosstab 8_CH"/>
 						<property name="com.jaspersoft.studio.crosstab.style.group" value="Crosstab 8_CG"/>
@@ -605,6 +605,7 @@
 						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
 						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -645,7 +646,7 @@
 							<cellContents mode="Opaque" style="Crosstab 8_CH">
 								<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 								<textField textAdjust="ScaleFont">
-									<reportElement x="0" y="0" width="25" height="20" uuid="ecd35d5e-1714-473e-b23b-12ef1c149ac8">
+									<reportElement x="0" y="0" width="20" height="20" uuid="ecd35d5e-1714-473e-b23b-12ef1c149ac8">
 										<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 										<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -671,11 +672,11 @@
 					<measure name="moyMatiereBilan_MEASURE" class="java.lang.Double">
 						<measureExpression><![CDATA[$F{moyMatiereBilan}]]></measureExpression>
 					</measure>
-					<crosstabCell width="25" height="20">
+					<crosstabCell width="20" height="20">
 						<cellContents mode="Opaque" style="Crosstab 8_CD">
 							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 							<textField>
-								<reportElement x="0" y="0" width="25" height="20" uuid="52e8800d-0ece-4c8c-b968-8495e79e1b56">
+								<reportElement x="0" y="0" width="20" height="20" uuid="52e8800d-0ece-4c8c-b968-8495e79e1b56">
 									<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 									<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -695,7 +696,7 @@
 					<crosstabCell width="0" height="20" columnTotalGroup="libelleMatiereBilan">
 						<cellContents mode="Opaque" style="Crosstab 8_CT"/>
 					</crosstabCell>
-					<crosstabCell width="25" height="0" rowTotalGroup="ecoleId">
+					<crosstabCell width="20" height="0" rowTotalGroup="ecoleId">
 						<cellContents mode="Opaque" style="Crosstab 8_CT">
 							<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						</cellContents>
