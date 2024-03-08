@@ -82,7 +82,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 
 	@Inject
 	EcoleHasMatiereService hasMatiereService;
-
+	
 	Logger logger = Logger.getLogger(NoteService.class.getName());
 
 	Gson gson = new Gson();
@@ -497,7 +497,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 		}
 	}
 
-	public void collectNotesPec(List<Notes> noteList, Evaluation ev) {
+	public synchronized void  collectNotesPec(List<Notes> noteList, Evaluation ev) {
 			List<Notes> listNotesByEvaluation = new ArrayList<Notes>();
 //				System.out.println(ev.getMatiereEcole().getLibelle()+" :: pec ->"+ ev.getPec().toString());
 			logger.info(ev.getPec().toString());

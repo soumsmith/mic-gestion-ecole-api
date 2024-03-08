@@ -36,8 +36,12 @@ import com.vieecoles.steph.entities.NoteBulletin;
 import com.vieecoles.steph.entities.Notes;
 import com.vieecoles.steph.entities.Periode;
 import com.vieecoles.steph.entities.PersonnelMatiereClasse;
+import com.vieecoles.steph.projections.BulletinIdProjection;
+import com.vieecoles.steph.projections.DetailBulletinIdProjection;
+import com.vieecoles.steph.projections.NotesBulletinIdProjection;
 import com.vieecoles.steph.util.CommonUtils;
 
+import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 import io.quarkus.panache.common.Parameters;
 
@@ -299,35 +303,26 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 	public void removeAllBulletinsByClasseProcess(String classe, String annee, String periode) {
 		long startTime = System.nanoTime();
 		List<Bulletin> bulletins = new ArrayList<Bulletin>();
-		Long bulletinsArchives = 0L;
+		List<BulletinIdProjection> bulletinsProject = new ArrayList<>();
 		try {
 
+			PanacheQuery<BulletinIdProjection> bullProjectIds = Bulletin
+					.find("classeId = ?1 and anneeId= ?2 and periodeId = ?3 and statut =?4", Long.parseLong(classe),
+							Long.parseLong(annee), Long.parseLong(periode), Constants.MODIFIABLE)
+					.project(BulletinIdProjection.class);
+			bulletinsProject = bullProjectIds.list();
 			bulletins = Bulletin.find("classeId = ?1 and anneeId= ?2 and periodeId = ?3 and statut =?4",
 					Long.parseLong(classe), Long.parseLong(annee), Long.parseLong(periode), Constants.MODIFIABLE)
 					.list();
-			for (Bulletin bulletin : bulletins) {
-				List<DetailBulletin> details = DetailBulletin.find("bulletin.id = ?1", bulletin.getId()).list();
-				for (DetailBulletin detail : details) {
-					List<NoteBulletin> notesBulletin = NoteBulletin.find("detailBulletin.id", detail.getId()).list();
-					for (NoteBulletin note : notesBulletin) {
-						NoteBulletin.delete("id", note.getId());
-					}
-					DetailBulletin.delete("id", detail.getId());
-					logger.info((notesBulletin != null ? notesBulletin.size() : 0) + " Notes de bulletins supprimées");
+			for (BulletinIdProjection bulletin : bulletinsProject) {
+				List<DetailBulletinIdProjection> details = DetailBulletin.find("bulletin.id = ?1", bulletin.getId())
+						.project(DetailBulletinIdProjection.class).list();
+				for (DetailBulletinIdProjection detail : details) {
+					NoteBulletin.delete("detailBulletin.id = ?1", detail.getId());
 				}
-				try {
-					List<InfosPersoBulletins> infoBul = InfosPersoBulletins.find("idBulletin", bulletin.getId()).list();
-					for (InfosPersoBulletins info : infoBul) {
-						InfosPersoBulletins.deleteById(info.getId());
-					}
-					logger.info(String.format("%s informations personnelles de bulletin supprimées", infoBul.size()));
-				} catch (RuntimeException e) {
-					if (e.getClass().equals(NoResultException.class))
-						logger.info(bulletin.getId() + " inexistant dans InfosPersoBulletins");
-					else {
-						e.printStackTrace();
-					}
-				}
+				DetailBulletin.delete("bulletin.id = ?1", bulletin.getId());
+				InfosPersoBulletins.delete("idBulletin", bulletin.getId());
+
 				Bulletin.delete("id", bulletin.getId());
 				logger.info((details != null ? details.size() : 0) + " details de bulletins supprimés");
 			}
@@ -335,22 +330,12 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 
 		} catch (RuntimeException e) {
 			logger.warning("IN THE CATCH OF REMOVER");
-			if (e.getClass() == NoResultException.class) {
-				logger.info("Aucun Bulletin à supprimer trouvé");
-				bulletinsArchives = Bulletin.find("classeId = ?1 and anneeId= ?2 and periodeId = ?3 and statut =?4",
-						Long.parseLong(classe), Long.parseLong(annee), Long.parseLong(periode), Constants.ARCHIVE)
-						.count();
-				if (bulletinsArchives != 0L) {
-					throw new RuntimeException("Les bulletins sont archivés, aucune modification possible!");
-				}
-			} else
 				throw new RuntimeException(
 						String.format("Erreur dans le process de suppression des bulletins [%s]", e.getMessage()));
 		}
-//		throw new RuntimeException("COUCOU !!!!!");
 		long endTime = System.nanoTime();
-		 long durationInSeconds = (endTime - startTime) / 1000000000;
-		 System.out.println("Temps d'exécution suppression " + durationInSeconds + " secondes");
+		long durationInSeconds = (endTime - startTime) / 1000000000;
+		System.out.println("Temps d'exécution suppression " + durationInSeconds + " secondes");
 	}
 
 	@Transactional
@@ -364,8 +349,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 				long endTime = System.nanoTime();
 				long durationInSeconds = (endTime - startTime) / 1000000000;
 
-				System.out
-						.println("Temps d'exécution Calcul des moyennes: " + durationInSeconds + " secondes");
+				System.out.println("Temps d'exécution Calcul des moyennes: " + durationInSeconds + " secondes");
 			} catch (RuntimeException r) {
 				r.printStackTrace();
 				throw r;
@@ -653,7 +637,8 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 				long endTime = System.nanoTime();
 				long durationInSeconds = (endTime - startTime) / 1000000000;
 
-		        System.out.println("Temps d'exécution pour l'élève ->"+me.getEleve().getMatricule()+" " + durationInSeconds + " secondes");
+				System.out.println("Temps d'exécution pour l'élève ->" + me.getEleve().getMatricule() + " "
+						+ durationInSeconds + " secondes");
 			}
 
 			Double maxMoy;
