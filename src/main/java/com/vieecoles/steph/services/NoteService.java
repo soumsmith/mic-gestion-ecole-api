@@ -429,7 +429,6 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 							notesMatiereGroup.put(matiereTemp, notesTemp);
 							logger.info(String.format("%s - %s - %s", entry.getKey().getMatricule(),
 									note.getEvaluation().getMatiereEcole().getCode(), note.getNote()));
-							;
 
 						}
 //					logger.info(g.toJson(notesMatiereGroup));
