@@ -330,8 +330,8 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 
 		} catch (RuntimeException e) {
 			logger.warning("IN THE CATCH OF REMOVER");
-				throw new RuntimeException(
-						String.format("Erreur dans le process de suppression des bulletins [%s]", e.getMessage()));
+			throw new RuntimeException(
+					String.format("Erreur dans le process de suppression des bulletins [%s]", e.getMessage()));
 		}
 		long endTime = System.nanoTime();
 		long durationInSeconds = (endTime - startTime) / 1000000000;
@@ -439,7 +439,6 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 				}
 
 				if (infosInscriptionsEleve != null) {
-//				System.out.println("affecté ::: " + infosInscriptionsEleve.getAfecte());
 					bulletin.setAffecte(infosInscriptionsEleve.getAfecte());
 					bulletin.setRedoublant(infosInscriptionsEleve.getRedoublant());
 					bulletin.setBoursier(infosInscriptionsEleve.getBoursier());
@@ -462,7 +461,6 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 				} catch (RuntimeException e) {
 					e.printStackTrace();
 				}
-//			logger.info("bulletin find ::: %s "+ g.toJson(bltDb));
 				if (bltDb != null && bltDb.getId() != null) {
 					if (bltDb.getStatut() != null && bltDb.getStatut().equals(Constants.MODIFIABLE)) {
 						// Condition qui ne devrait plus être vériffiée - A supprimer pour la suite
@@ -485,140 +483,56 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 					logger.info(
 							String.format("bulletin id %s - matiere %s", bulletin.getId(), entry.getKey().getCode()));
 					DetailBulletin flag = null;
-					try {
-						flag = DetailBulletin.find("bulletin.id = :bulletinId and matiereCode =: matiereCode ",
-								Parameters.with("bulletinId", bulletin.getId()).and("matiereCode",
-										entry.getKey().getId().toString()))
-								.singleResult();
-					} catch (NoResultException ex) {
-						logger.info("Aucun detail de bulletin trouvé pour la matiere " + entry.getKey().getLibelle());
-					} catch (RuntimeException e) {
-						e.printStackTrace();
-					}
 
 					// marquer que l eleve est classé dans une matiere ou non
 					ClasseEleveMatiere cem = classeEleveMatiereService.findByClasseAndMatiereAndEleveAndAnneeAndPeriode(
 							Long.parseLong(classe), entry.getKey().getId(), me.getEleve().getId(),
 							Long.parseLong(annee), Long.parseLong(periode));
 
-					if (flag != null) {
-						logger.info("--> Modification de detail bulletin");
-						flag.setMatiereLibelle(entry.getKey().getLibelle());
-						// Champ à renseigner avec le code
-//						System.out.println("matiere id +++ "+entry.getKey().getId());
-						flag.setMatiereCode(entry.getKey().getMatiere().getId().toString());
-						flag.setMatiereId(entry.getKey().getMatiere().getId());
-						flag.setMatiereRealId(entry.getKey().getId());
-						flag.setMoyenne(CommonUtils.roundDouble(entry.getKey().getMoyenne(), 2));
-						moyCoef = entry.getKey().getMoyenne() * Double.parseDouble(entry.getKey().getCoef());
-						flag.setMoyCoef(CommonUtils.roundDouble(moyCoef, 2));
-						flag.setAppreciation(entry.getKey().getAppreciation());
-						flag.setCoef(Double.valueOf(entry.getKey().getCoef()));
-						flag.setParentMatiere(entry.getKey().getParentMatiereLibelle());
-						flag.setMoyAn(entry.getKey().getMoyenneAnnuelle());
-						flag.setRangAn(entry.getKey().getRangAnnuel());
-						flag.setIsAdjustment(entry.getKey().getIsAdjustment());
-						flag.setDateCreation(new Date());
-
-						// Inscrire si oui ou non l'élève est classé dans la matiere
-						if (cem != null)
-							flag.setIsRanked(cem.getIsClassed());
-						else
-							flag.setIsRanked(Constants.OUI);
-
-						try {
-//							System.out.println("--> "+me.getEleve().getMatricule()+" "+me.getEleve().getNom());
-//							System.out.println("---> "+entry.getKey().getRang());
-//							System.out.println("---> "+entry.getKey().getLibelle());
-							flag.setRang(Integer.valueOf(entry.getKey().getRang()));
-						} catch (RuntimeException ex) {
-							ex.printStackTrace();
-							throw new RuntimeException(String.format(
-									"Veuillez définir un coefficient pour la matiere [ %s %s ] de la branche [ %s] ",
-									entry.getKey().getId(), entry.getKey().getLibelle(),
-									me.getClasse().getBranche().getLibelle()));
-						}
-						flag.setCategorieMatiere(entry.getKey().getCategorie().getLibelle());
-						flag.setCategorie(entry.getKey().getCategorie().getCode());
-						flag.setBonus(entry.getKey().getBonus());
-						flag.setPec(entry.getKey().getPec());
-//					logger.info(g.toJson(entry.getKey()));
-						flag.setNum_ordre(entry.getKey().getNumOrdre());
-
-						// Ajout de l'enseignant de la matiere
-						PersonnelMatiereClasse pers = personnelMatiereClasseService.findProfesseurByMatiereAndClasse(
-								Long.parseLong(annee), Long.parseLong(classe), entry.getKey().getId());
-						if (pers != null)
-							flag.setNom_prenom_professeur(
-									pers.getPersonnel().getNom() + " " + pers.getPersonnel().getPrenom());
-
-					} else {
-						logger.info("--> Création de detail bulletin ");
-						flag = new DetailBulletin();
-						UUID idDetail = UUID.randomUUID();
-						moyCoef = entry.getKey().getMoyenne() * Double.parseDouble(entry.getKey().getCoef());
-						flag.setId(idDetail.toString());
-						// Champ à renseigner avec le code
+					logger.info("--> Création de detail bulletin ");
+					flag = new DetailBulletin();
+					UUID idDetail = UUID.randomUUID();
+					moyCoef = entry.getKey().getMoyenne() * Double.parseDouble(entry.getKey().getCoef());
+					flag.setId(idDetail.toString());
+					// Champ à renseigner avec le code
 //						System.out.println("matiere id ---> "+entry.getKey().getId()+" "+(entry.getKey().getMatiere() == null ? "Matière source Nulle" : "Matiere ok"));
-						flag.setMatiereCode(entry.getKey().getMatiere().getId().toString());
-						flag.setMatiereId(entry.getKey().getMatiere().getId());
-						// attribut de l'id de la matiere
-						flag.setMatiereRealId(entry.getKey().getId());
-						flag.setMatiereLibelle(entry.getKey().getLibelle());
-						flag.setMoyenne(CommonUtils.roundDouble(entry.getKey().getMoyenne(), 2));
-						flag.setMoyCoef(CommonUtils.roundDouble(moyCoef, 2));
-						flag.setCoef(Double.valueOf(entry.getKey().getCoef()));
-						flag.setAppreciation(entry.getKey().getAppreciation());
-						flag.setRang(Integer.valueOf(entry.getKey().getRang()));
-						flag.setNum_ordre(entry.getKey().getNumOrdre());
-						flag.setCategorieMatiere(entry.getKey().getCategorie().getLibelle());
-						flag.setCategorie(entry.getKey().getCategorie().getCode());
-						flag.setBulletin(bulletin);
-						flag.setBonus(entry.getKey().getBonus());
-						flag.setPec(entry.getKey().getPec());
-						flag.setParentMatiere(entry.getKey().getParentMatiereLibelle());
-						flag.setMoyAn(entry.getKey().getMoyenneAnnuelle());
-						flag.setRangAn(entry.getKey().getRangAnnuel());
-						flag.setIsAdjustment(entry.getKey().getIsAdjustment());
-						flag.setDateCreation(new Date());
-						// Inscrire si oui ou non l'élève est classé dans la matiere
-						if (cem != null)
-							flag.setIsRanked(cem.getIsClassed());
-						else
-							flag.setIsRanked(Constants.OUI);
+					flag.setMatiereCode(entry.getKey().getMatiere().getId().toString());
+					flag.setMatiereId(entry.getKey().getMatiere().getId());
+					// attribut de l'id de la matiere
+					flag.setMatiereRealId(entry.getKey().getId());
+					flag.setMatiereLibelle(entry.getKey().getLibelle());
+					flag.setMoyenne(CommonUtils.roundDouble(entry.getKey().getMoyenne(), 2));
+					flag.setMoyCoef(CommonUtils.roundDouble(moyCoef, 2));
+					flag.setCoef(Double.valueOf(entry.getKey().getCoef()));
+					flag.setAppreciation(entry.getKey().getAppreciation());
+					flag.setRang(Integer.valueOf(entry.getKey().getRang()));
+					flag.setNum_ordre(entry.getKey().getNumOrdre());
+					flag.setCategorieMatiere(entry.getKey().getCategorie().getLibelle());
+					flag.setCategorie(entry.getKey().getCategorie().getCode());
+					flag.setBulletin(bulletin);
+					flag.setBonus(entry.getKey().getBonus());
+					flag.setPec(entry.getKey().getPec());
+					flag.setParentMatiere(entry.getKey().getParentMatiereLibelle());
+					flag.setMoyAn(entry.getKey().getMoyenneAnnuelle());
+					flag.setRangAn(entry.getKey().getRangAnnuel());
+					flag.setIsAdjustment(entry.getKey().getIsAdjustment());
+					flag.setDateCreation(new Date());
+					// Inscrire si oui ou non l'élève est classé dans la matiere
+					if (cem != null)
+						flag.setIsRanked(cem.getIsClassed());
+					else
+						flag.setIsRanked(Constants.OUI);
 
-						logger.info("--> Categorie" + entry.getKey().getCategorie().getLibelle());
-						// Ajout de l'enseignant de la matiere
-						PersonnelMatiereClasse pers = personnelMatiereClasseService.findProfesseurByMatiereAndClasse(
-								Long.parseLong(annee), Long.parseLong(classe), entry.getKey().getId());
-						if (pers != null)
-							flag.setNom_prenom_professeur(
-									pers.getPersonnel().getNom() + " " + pers.getPersonnel().getPrenom());
+					logger.info("--> Categorie" + entry.getKey().getCategorie().getLibelle());
+					// Ajout de l'enseignant de la matiere
+					PersonnelMatiereClasse pers = personnelMatiereClasseService.findProfesseurByMatiereAndClasse(
+							Long.parseLong(annee), Long.parseLong(classe), entry.getKey().getId());
+					if (pers != null)
+						flag.setNom_prenom_professeur(
+								pers.getPersonnel().getNom() + " " + pers.getPersonnel().getPrenom());
 
-						flag.persist();
-					}
-					try {
-						notesBulletin = NoteBulletin
-								.find("detailBulletin.id = : detail", Parameters.with("detail", flag.getId())).list();
-//					System.out.println("NOTE BULLETIN "+notesBulletin.size());
-					} catch (RuntimeException e) {
-						notesBulletin = new ArrayList<NoteBulletin>();
-//					System.out.println("NOTE BULLETIN NULL" );
-						e.printStackTrace();
-						// TODO: handle exception
-					}
-					if (notesBulletin.size() > 0) {
-						logger.info("--> Suppresion notes trouvees");
-						try {
-							for (NoteBulletin noteBul : notesBulletin) {
-								logger.info("id --->" + noteBul.getId());
-								noteBul.delete();
-							}
-						} catch (RuntimeException ex) {
-							logger.warning("Erreur lors de la suppression des notes");
-							ex.printStackTrace();
-						}
-					}
+					flag.persist();
+
 					UUID idNoteBul;
 					for (Notes note : entry.getValue()) {
 						if (note.getEvaluation().getPec() == 1) {
