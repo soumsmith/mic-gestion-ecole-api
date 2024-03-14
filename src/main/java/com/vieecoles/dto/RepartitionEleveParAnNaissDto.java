@@ -1,5 +1,7 @@
 package com.vieecoles.dto;
 
+import java.util.List;
+
 public class RepartitionEleveParAnNaissDto {
     private  String niveau ;
     private String annee ;
@@ -39,6 +41,9 @@ public class RepartitionEleveParAnNaissDto {
     private Long tTA;
     private Long tTC;
     private Long tTD;
+
+    public RepartitionEleveParAnNaissDto(List<RepartitionEleveParAnNaissDto> repartitionEleveParAnNaissDtos) {
+    }
 
     @Override
     public String toString() {

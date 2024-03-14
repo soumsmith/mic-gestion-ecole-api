@@ -688,7 +688,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 						<textElement textAlignment="Left" verticalAlignment="Middle">
 							<font fontName="SansSerif" size="7"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")||$F{parent_matiere}.equals("")? "" :$F{nom_prenom_professeur}.substring(0,1).toUpperCase() + $F{nom_prenom_professeur}.substring(1).toLowerCase()]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")||$F{parent_matiere}.equals("")? "" :$F{nom_prenom_professeur}.toUpperCase()]]></textFieldExpression>
 					</textField>
 				</frame>
 			</band>
@@ -1811,7 +1811,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font fontName="SansSerif" size="7"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")||$F{parent_matiere}.equals("")? "" :$F{nom_prenom_professeur}.substring(0,1).toUpperCase() + $F{nom_prenom_professeur}.substring(1).toLowerCase()]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")||$F{parent_matiere}.equals("")? "" :$F{nom_prenom_professeur}.toUpperCase()]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont" isBlankWhenNull="true">
 					<reportElement style="champsLibelle" x="275" y="0" width="73" height="15" isRemoveLineWhenBlank="true" uuid="4c499afe-e60b-418a-9122-79190c0f2f39">

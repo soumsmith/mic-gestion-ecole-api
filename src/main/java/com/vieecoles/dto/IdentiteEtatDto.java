@@ -1,5 +1,7 @@
 package com.vieecoles.dto;
 
+import java.util.List;
+
 public class IdentiteEtatDto {
 private String denominEtabli ;
 private String numDecisionOuver ;
@@ -22,6 +24,9 @@ private String telephoneDirecteuEtude;
 private String cellulaireDirecteurEtude;
 private String emailDirecteurEtude;
     private String autoriSatDirecteurEtude;
+
+    public IdentiteEtatDto(List<IdentiteEtatDto> identiteDto) {
+    }
 
     public String getEmailDirecteurEtude() {
         return emailDirecteurEtude;

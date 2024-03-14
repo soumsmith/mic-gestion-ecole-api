@@ -1,5 +1,7 @@
 package com.vieecoles.dto;
 
+import java.util.List;
+
 public class MajorParClasseNiveauDto {
     private String niveau;
     private String classeLibelle;
@@ -13,6 +15,9 @@ public class MajorParClasseNiveauDto {
     private Double moyGeneral;
     private String lv2 ;
     private  Integer ordre_niveau ;
+
+    public MajorParClasseNiveauDto(List<MajorParClasseNiveauDto> majorParClasseNiveauDtos) {
+    }
 
     public Integer getOrdre_niveau() {
         return ordre_niveau;

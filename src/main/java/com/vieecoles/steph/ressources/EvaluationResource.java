@@ -1,6 +1,7 @@
 package com.vieecoles.steph.ressources;
 
 import com.google.gson.Gson;
+import com.vieecoles.steph.dto.EvaluationsProfStatDto;
 import com.vieecoles.steph.dto.ImportEvaluationDto;
 import com.vieecoles.steph.entities.Evaluation;
 import com.vieecoles.steph.entities.Message;
@@ -129,6 +130,17 @@ public class EvaluationResource {
     	} else {
     		return ev;
     	}
+    }
+	
+	@GET
+    @Path("/statistique-prof/{ecole}/{annee}/{periode}/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+    @Operation(description = "Obtenir les statistiques par type d'evaluation", summary = "")
+	@Tag(name = "Evaluation")
+    public Response getStatistiquesProf(@PathParam("ecole") Long ecole, @PathParam("annee") Long annee, @PathParam("periode") Long periode, @PathParam("id") Long id) {
+		//logger.info("EvaluationResource.getByCode()");
+		EvaluationsProfStatDto dto = evaluationService.getEvaluationStatByProf(id, annee, ecole, periode);
+    	return Response.ok(dto).build();
     }
 
     @POST

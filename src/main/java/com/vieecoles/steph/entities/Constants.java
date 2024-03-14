@@ -71,5 +71,9 @@ public class Constants {
 	
 	// Actions
 	public static final String ACTION_DELETE = "DELETING";
+	
+	public static final String VALID = "VALID";
+	
+	public static final String INVALID = "INVALID";
 
 }

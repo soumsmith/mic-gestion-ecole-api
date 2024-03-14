@@ -2,23 +2,15 @@ package com.vieecoles.ressource.operations.etats;
 
 
 import com.vieecoles.dto.ProcesVerbalDto;
-import com.vieecoles.dto.SpiderMatriceClasseDto;
-import com.vieecoles.dto.matiereMoyenneBilanDto;
-import com.vieecoles.dto.matriceClasseDto;
 import com.vieecoles.entities.operations.ecole;
 import com.vieecoles.entities.parametre;
-import com.vieecoles.services.etats.MatriceClasseBilanServices;
-import com.vieecoles.services.etats.MatriceClasseServices;
 import com.vieecoles.services.etats.ProcesVerbalServices;
 import com.vieecoles.services.souscription.SousceecoleService;
 import com.vieecoles.steph.entities.Classe;
-import com.vieecoles.steph.entities.ClasseMatiere;
 import com.vieecoles.steph.entities.Ecole;
-import com.vieecoles.steph.entities.Evaluation;
 import com.vieecoles.steph.services.EvaluationService;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import net.sf.jasperreports.engine.export.JRXlsExporter;
 import net.sf.jasperreports.engine.export.ooxml.JRDocxExporter;
 import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;

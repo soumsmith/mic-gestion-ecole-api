@@ -349,7 +349,7 @@ public class InscriptionService implements PanacheRepositoryBase<Inscriptions, L
             return  minScription = em.createQuery("SELECT new com.vieecoles.dto.InscriptionAvaliderDto(q.eleveid,o.inscriptionsid,q.elevenom,q.eleveprenom,q.eleve_matricule,q.elevedate_naissance,q.eleve_sexe,q.elevecellulaire,o.inscriptions_statut_eleve,o.inscriptions_status,o.inscriptions_type ,o.inscriptions_processus, o.branche.id ,o.branche.libelle ,o.nom_prenoms_pere ,o.nom_prenoms_mere,o.nom_prenoms_tuteur,o.commune ,o.handicap, o.moteur,o.visuel ," +
                             " o.auditif ,o.reaffecte ,o.regularisation ,o.reintegration ,o.prise_en_charge ,o.origine_prise_en_charge ,o.profession_pere,o.boite_postal_pere," +
                             "o.tel1_pere ,o.tel2_pere , o.profession_mere ,o.boite_postal_mere,o.tel1_mere,o.tel2_mere ,o.profession_tuteur,o.boite_postal_tuteur,o.tel1_tuteur," +
-                            " o.tel2_tuteur ,o.profession_pers_en_charge ,o.boite_postale_pers_en_charge ,o.tel1_pers_en_charge , o.tel2_pers_en_charge ,o.autre_handicap ,o.nom_prenom_pers_en_charge ,o.classe_arabe , o.inscriptions_ecole_origine ,o.transfert ,o.num_decision_affecte ,o.inscriptions_langue_vivante ,o.inscriptions_redoublant , o.inscriptions_boursier ,o.internes ,o.demi_pension ,o.externes,o.ivoirien ,o.etranger_africain ,o.etranger_non_africain ,o.cheminphoto) from Inscriptions o join  o.ecole e  join  o.eleve q join o.annee_scolaire n " +
+                            " o.tel2_tuteur ,o.profession_pers_en_charge ,o.boite_postale_pers_en_charge ,o.tel1_pers_en_charge , o.tel2_pers_en_charge ,o.autre_handicap ,o.nom_prenom_pers_en_charge ,o.classe_arabe , o.inscriptions_ecole_origine ,o.transfert ,o.num_decision_affecte ,o.inscriptions_langue_vivante ,o.inscriptions_redoublant , o.inscriptions_boursier ,o.internes ,o.demi_pension ,o.externes,o.ivoirien ,o.etranger_africain ,o.etranger_non_africain ,o.cheminphoto ,q.eleve_nationalite ,q.elevelieu_naissance) from Inscriptions o join  o.ecole e  join  o.eleve q join o.annee_scolaire n " +
                             " where o.ecole.ecoleid =:idecole and o.annee_scolaire.annee_scolaireid =:idAnnee  and o.inscriptions_type=: typeInscrip ",InscriptionAvaliderDto.class )
                     .setParameter("idecole", idEcole)
                     .setParameter("typeInscrip", typeOperation)
@@ -369,7 +369,7 @@ public class InscriptionService implements PanacheRepositoryBase<Inscriptions, L
             return  minScription = em.createQuery("SELECT new com.vieecoles.dto.InscriptionAvaliderDto(q.eleveid,o.inscriptionsid,q.elevenom,q.eleveprenom,q.eleve_matricule,q.elevedate_naissance,q.eleve_sexe,q.elevecellulaire,o.inscriptions_statut_eleve,o.inscriptions_status,o.inscriptions_type ,o.inscriptions_processus, o.branche.id ,c.classe.libelle,o.nom_prenoms_pere ,o.nom_prenoms_mere,o.nom_prenoms_tuteur,o.commune ,o.handicap, o.moteur,o.visuel ," +
                             " o.auditif ,o.reaffecte ,o.regularisation ,o.reintegration ,o.prise_en_charge ,o.origine_prise_en_charge ,o.profession_pere,o.boite_postal_pere," +
                             "o.tel1_pere ,o.tel2_pere , o.profession_mere ,o.boite_postal_mere,o.tel1_mere,o.tel2_mere ,o.profession_tuteur,o.boite_postal_tuteur,o.tel1_tuteur," +
-                            " o.tel2_tuteur ,o.profession_pers_en_charge ,o.boite_postale_pers_en_charge ,o.tel1_pers_en_charge , o.tel2_pers_en_charge ,o.autre_handicap ,o.nom_prenom_pers_en_charge ,o.classe_arabe , o.inscriptions_ecole_origine ,o.transfert ,o.num_decision_affecte ,o.inscriptions_langue_vivante ,o.inscriptions_redoublant , o.inscriptions_boursier ,o.internes ,o.demi_pension ,o.externes,o.ivoirien ,o.etranger_africain ,o.etranger_non_africain ,o.cheminphoto) from Inscriptions o" +
+                            " o.tel2_tuteur ,o.profession_pers_en_charge ,o.boite_postale_pers_en_charge ,o.tel1_pers_en_charge , o.tel2_pers_en_charge ,o.autre_handicap ,o.nom_prenom_pers_en_charge ,o.classe_arabe , o.inscriptions_ecole_origine ,o.transfert ,o.num_decision_affecte ,o.inscriptions_langue_vivante ,o.inscriptions_redoublant , o.inscriptions_boursier ,o.internes ,o.demi_pension ,o.externes,o.ivoirien ,o.etranger_africain ,o.etranger_non_africain ,o.cheminphoto,q.eleve_nationalite ,q.elevelieu_naissance) from Inscriptions o" +
                             " , ecole e  ,eleve q ,Annee_Scolaire n ,ClasseEleve c" +
                             " where o.ecole.ecoleid = e.ecoleid and o.eleve.eleveid = q.eleveid and o.annee_scolaire.annee_scolaireid=n.annee_scolaireid and o.inscriptionsid=c.inscription.id and  " +
                             " o.ecole.ecoleid =:idecole and o.annee_scolaire.annee_scolaireid =:idAnnee ",InscriptionAvaliderDto.class )
@@ -391,7 +391,7 @@ public class InscriptionService implements PanacheRepositoryBase<Inscriptions, L
             return  minScription = em.createQuery("SELECT new com.vieecoles.dto.InscriptionAvaliderDto(q.eleveid,o.inscriptionsid,q.elevenom,q.eleveprenom,q.eleve_matricule,q.elevedate_naissance,q.eleve_sexe,q.elevecellulaire,o.inscriptions_statut_eleve,o.inscriptions_status,o.inscriptions_type ,o.inscriptions_processus, o.branche.id ,o.branche.libelle ,o.nom_prenoms_pere ,o.nom_prenoms_mere,o.nom_prenoms_tuteur,o.commune ,o.handicap, o.moteur,o.visuel ,"+
                             "o.auditif ,o.reaffecte ,o.regularisation ,o.reintegration ,o.prise_en_charge ,o.origine_prise_en_charge ,o.profession_pere,o.boite_postal_pere," +
                             "o.tel1_pere ,o.tel2_pere , o.profession_mere ,o.boite_postal_mere,o.tel1_mere,o.tel2_mere ,o.profession_tuteur,o.boite_postal_tuteur,o.tel1_tuteur,"+
-                            " o.tel2_tuteur ,o.profession_pers_en_charge ,o.boite_postale_pers_en_charge ,o.tel1_pers_en_charge , o.tel2_pers_en_charge ,o.autre_handicap ,o.nom_prenom_pers_en_charge ,o.classe_arabe , o.inscriptions_ecole_origine ,o.transfert ,o.num_decision_affecte,o.inscriptions_langue_vivante ,o.inscriptions_redoublant ,o.inscriptions_boursier ,o.internes ,o.demi_pension ,o.externes,o.ivoirien ,o.etranger_africain ,o.etranger_non_africain,o.cheminphoto) from Inscriptions o join  o.ecole e  join  o.eleve q join o.annee_scolaire n " +
+                            " o.tel2_tuteur ,o.profession_pers_en_charge ,o.boite_postale_pers_en_charge ,o.tel1_pers_en_charge , o.tel2_pers_en_charge ,o.autre_handicap ,o.nom_prenom_pers_en_charge ,o.classe_arabe , o.inscriptions_ecole_origine ,o.transfert ,o.num_decision_affecte,o.inscriptions_langue_vivante ,o.inscriptions_redoublant ,o.inscriptions_boursier ,o.internes ,o.demi_pension ,o.externes,o.ivoirien ,o.etranger_africain ,o.etranger_non_africain,o.cheminphoto,q.eleve_nationalite ,q.elevelieu_naissance) from Inscriptions o join  o.ecole e  join  o.eleve q join o.annee_scolaire n " +
                                         " where o.ecole.ecoleid =:idecole and o.annee_scolaire.annee_scolaireid =:idAnnee  and o.inscriptions_status =:status and o.inscriptions_type=: typeInscrip ",InscriptionAvaliderDto.class )
                                 .setParameter("idecole", idEcole)
                           .setParameter("typeInscrip", typeOperation)
@@ -576,7 +576,8 @@ public  void updatelibelleHandicap_inscrip (Long InscriptionId , Long oldHandica
         System.out.println("Nom  "+inscriptionDto.getNomEleve());
         System.out.println("PréNom  "+inscriptionDto.getPrenomEleve());
         elev.setEleveprenom(inscriptionDto.getPrenomEleve());
-
+        elev.setEleve_nationalite(inscriptionDto.getNationalite());
+        elev.setElevelieu_naissance(inscriptionDto.getLieu_naissance ());
         myIns.setBranche(myB);
         myIns.setInscriptions_classe_actuelle(myB.getLibelle());
         myIns.setInscriptions_ecole_origine(inscriptionDto.getInscriptions_ecole_origine());
@@ -588,6 +589,8 @@ public  void updatelibelleHandicap_inscrip (Long InscriptionId , Long oldHandica
        // myIns.setInscriptions_classe_actuelle(inscriptionDto.getInscriptions_classe_actuelle());
         myIns.setInscriptions_classe_precedente(inscriptionDto.getInscriptions_classe_precedente());
         myIns.setInscriptions_derniereclasse_religieuse(inscriptionDto.getInscriptions_derniereclasse_religieuse());
+        System.out.println ("origine Prise en charge>> "+inscriptionDto.getOrigine_prise_en_charge());
+        myIns.setOrigine_prise_en_charge(inscriptionDto.getOrigine_prise_en_charge());
         myIns.setInscriptionsdate_modification(LocalDate.now());
         myIns.setTransfert(inscriptionDto.getTransfert());
         myIns.setNum_decision_affecte(inscriptionDto.getNum_decision_affecte());
@@ -629,6 +632,7 @@ public  void updatelibelleHandicap_inscrip (Long InscriptionId , Long oldHandica
         myIns.setIvoirien(inscriptionDto.getIvoirien());
         myIns.setEtranger_africain(inscriptionDto.getEtranger_africain());
         myIns.setEtranger_non_africain(inscriptionDto.getEtranger_non_africain());
+
 
 
     }

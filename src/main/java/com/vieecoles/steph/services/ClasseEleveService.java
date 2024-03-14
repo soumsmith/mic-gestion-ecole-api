@@ -143,7 +143,7 @@ public class ClasseEleveService implements PanacheRepositoryBase<ClasseEleve, Lo
 		List<ClasseEleve> ces = new ArrayList<>();
 		try {
 			ces = ClasseEleve.find(
-					"classe.id = ?1 and inscription.annee.id = ?2 and (statut is null or statut <> 'RETIRE') order by inscription.eleve.nom",
+					"classe.id = ?1 and inscription.annee.id = ?2 and (statut is null or statut <> 'RETIRE') order by inscription.eleve.nom, inscription.eleve.prenom",
 					classeId, anneeId).list();
 		}catch (Exception e) {
 			e.printStackTrace();

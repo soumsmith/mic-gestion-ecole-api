@@ -1,5 +1,7 @@
 package com.vieecoles.dto;
 
+import java.util.List;
+
 public class eleveNonAffecteParClasseDto {
    private  String classeLibelle;
    private  String professeurPrincipal ;
@@ -18,7 +20,10 @@ public class eleveNonAffecteParClasseDto {
    private  String nomEducateur ;
    private  Integer ordre_niveau ;
 
-   public Integer getOrdre_niveau() {
+    public eleveNonAffecteParClasseDto(List<eleveNonAffecteParClasseDto> eleveNonAffecteParClasseDtos) {
+    }
+
+    public Integer getOrdre_niveau() {
       return ordre_niveau;
    }
 

@@ -54,6 +54,9 @@ public class EcoleHasMatiere extends PanacheEntityBase{
     private String  coef ;
     @Transient
     private String appreciation;
+    // Reservé pour indiquer si la moyenne d un élève a subit un ajustement
+    @Transient
+    private String isAdjustment;
     
     @Transient
     private Double moyenneAnnuelle;

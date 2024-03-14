@@ -27,6 +27,8 @@ public class InscriptionDto {
     private  String inscriptions_contact2 ;
     private  Boolean transfert ;
     private String num_decision_affecte ;
+    private String nationalite ;
+    private String lieu_naissance ;
     @Enumerated(EnumType.STRING)
     private Inscriptions.statusEleve inscriptions_statut_eleve ;
 
@@ -50,7 +52,21 @@ public class InscriptionDto {
         return decision_ant;
     }
 
+    public String getNationalite() {
+        return nationalite;
+    }
 
+    public void setNationalite(String nationalite) {
+        this.nationalite = nationalite;
+    }
+
+    public String getLieu_naissance() {
+        return lieu_naissance;
+    }
+
+    public void setLieu_naissance(String lieu_naissance) {
+        this.lieu_naissance = lieu_naissance;
+    }
 
     public void setDecision_ant(String decision_ant) {
         this.decision_ant = decision_ant;

@@ -209,6 +209,16 @@ public class EcoleHasMatiereService implements PanacheRepositoryBase<EcoleHasMat
 		return find("matiere.niveauEnseignement.id = ?1 and ecole.id=?2", niveau, ecole).list();
 	}
 
+	public EcoleHasMatiere getEMRByEcole(Long ecoleId) {
+		try {
+			EcoleHasMatiere matiere = EcoleHasMatiere
+					.find("ecole.id =?1 and isEMR = ?2 ", ecoleId, Constants.OUI).firstResult();
+			return matiere;
+		} catch (RuntimeException e) {
+			return null;
+		}
+	}
+
 	/*
 	 * A JUGER UTILITE
 	 */

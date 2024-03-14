@@ -36,7 +36,7 @@ public class EleveService implements PanacheRepositoryBase<eleve, Long> {
        return eleve.findById(cycleId);
    }
 
-    public String importerMiseEleve(List<importEleveDto> lisImpo ,Long idEcole,Long idAnneeScolaire,String typeOperation){
+    public String importerMiseEleve(List<importEleveDto> lisImpo ,Long idEcole,Long idAnneeScolaire,String typeOperation ,Long idBranche){
         String messageRetour ="" ;
         List<String> matriculeNonCreer = new ArrayList<>();
         for (int i = 0; i < lisImpo.size(); i++){
@@ -52,19 +52,12 @@ public class EleveService implements PanacheRepositoryBase<eleve, Long> {
             eleve elv =new eleve() ;
             InscriptionDto inscriptionDto = new InscriptionDto() ;
             Long  identifiantBranche ;
-            Branche myBranch = new Branche() ;
+
 
             Long NiveauEnseignement=  (Long) em.createQuery("select o.Niveau_Enseignement_id from ecole o  where o.ecoleid =:idEcole " )
                     .setParameter("idEcole", idEcole).getSingleResult() ;
 
-            System.out.println("NiveauEnseignement "+NiveauEnseignement);
 
-            myBranch= (Branche) em.createQuery("select o from Branche o  where o.libelle like :branche and o.niveauEnseignement.id=:idNiveauEnsei " )
-                    .setParameter("branche", lisImpo.get(i).getBranche().trim())
-                    .setParameter("idNiveauEnsei", NiveauEnseignement)
-                    .getSingleResult();
-
-            System.out.println("myBranch "+myBranch);
 
 
             if(lisImpo.get(i).getMatricule()==null|| lisImpo.get(i).getMatricule().equals(""))
@@ -126,7 +119,7 @@ public class EleveService implements PanacheRepositoryBase<eleve, Long> {
                 System.out.println("Fin creation eleve ");
                 inscriptionDto.setIdentifiantEcole(idEcole);
                 inscriptionDto.setIdentifiantAnnee_scolaire(idAnneeScolaire);
-                inscriptionDto.setIdentifiantBranche(myBranch.getId());
+                inscriptionDto.setIdentifiantBranche(idBranche);
                 Inscriptions.typeOperation myOperation= Inscriptions.typeOperation.valueOf(typeOperation);
 
                 Inscriptions.statusEleve myStatutEleve = Inscriptions.statusEleve.valueOf(NewmyStatut);
@@ -168,7 +161,12 @@ public class EleveService implements PanacheRepositoryBase<eleve, Long> {
 
 
 
-   public String importerCreerEleve(List<importEleveDto> lisImpo ,Long idEcole,Long idAnneeScolaire,String typeOperation){
+   public String importerCreerEleve(List<importEleveDto> lisImpo ,Long idEcole,Long idAnneeScolaire,String typeOperation ,Long idBranche){
+       long timestamp = System.currentTimeMillis() ;
+       String matriculeGenere = "G_"+idEcole+timestamp ;
+
+       System.out.println("matriculeGenere "+matriculeGenere);
+
        String messageRetour ="" ;
        List<String> matriculeNonCreer = new ArrayList<>();
        for (int i = 0; i < lisImpo.size(); i++){
@@ -183,26 +181,19 @@ System.out.println("Statut0 "+lisImpo.get(i).getStatut());
            EleveDto eleveDto= new EleveDto() ;
            eleve elv =new eleve() ;
            InscriptionDto inscriptionDto = new InscriptionDto() ;
-           Long  identifiantBranche ;
-           Branche myBranch = new Branche() ;
+
+
 
            Long NiveauEnseignement=  (Long) em.createQuery("select o.Niveau_Enseignement_id from ecole o  where o.ecoleid =:idEcole " )
                    .setParameter("idEcole", idEcole).getSingleResult() ;
 
-           System.out.println("NiveauEnseignement "+NiveauEnseignement);
-           System.out.println("LibelleBranche "+lisImpo.get(i).getBranche());
 
-           myBranch= (Branche) em.createQuery("select o from Branche o  where o.libelle like :branche and o.niveauEnseignement.id=:idNiveauEnsei " )
-                   .setParameter("branche", lisImpo.get(i).getBranche())
-                   .setParameter("idNiveauEnsei", NiveauEnseignement)
-                   .getSingleResult();
 
-           System.out.println("myBranch "+myBranch);
 
 
            if(lisImpo.get(i).getMatricule()==null || lisImpo.get(i).getMatricule().equals(""))
            {
-               eleveDto.setElevematricule_national(lisImpo.get(i).getId_eleve());
+               eleveDto.setElevematricule_national(matriculeGenere);
 
            }
 
@@ -267,7 +258,7 @@ System.out.println("Statut0 "+lisImpo.get(i).getStatut());
            System.out.println("Fin creation eleve ");
            inscriptionDto.setIdentifiantEcole(idEcole);
            inscriptionDto.setIdentifiantAnnee_scolaire(idAnneeScolaire);
-           inscriptionDto.setIdentifiantBranche(myBranch.getId());
+           inscriptionDto.setIdentifiantBranche(idBranche);
            Inscriptions.typeOperation myOperation= Inscriptions.typeOperation.valueOf(typeOperation);
 
            Inscriptions.statusEleve myStatutEleve = Inscriptions.statusEleve.valueOf(NewmyStatut);

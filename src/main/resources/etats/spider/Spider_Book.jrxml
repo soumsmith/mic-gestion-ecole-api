@@ -89,6 +89,29 @@
 			</p:subreportPart>
 		</part>
 
+		<part uuid="968947e9-d627-441c-a302-1bd9eaebff22">
+			<p:subreportPart xmlns:p="http://jasperreports.sourceforge.net/jasperreports/parts" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/parts http://jasperreports.sourceforge.net/xsd/parts.xsd">
+				<subreportParameter name="REPORT_CONNECTION">
+					<subreportParameterExpression><![CDATA[$P{REPORT_CONNECTION}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="REPORT_DATA_SOURCE">
+					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{intro})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportExpression><![CDATA["etats/spider/Vie_pedagogique_suite.jasper"]]></subreportExpression>
+			</p:subreportPart>
+		</part>
+		<part uuid="968947e9-d627-441c-a302-1bd9eaebff02">
+			<p:subreportPart xmlns:p="http://jasperreports.sourceforge.net/jasperreports/parts" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/parts http://jasperreports.sourceforge.net/xsd/parts.xsd">
+				<subreportParameter name="REPORT_CONNECTION">
+					<subreportParameterExpression><![CDATA[$P{REPORT_CONNECTION}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="REPORT_DATA_SOURCE">
+					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{intro})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportExpression><![CDATA["etats/spider/Vie_pedagogique_suite2.jasper"]]></subreportExpression>
+			</p:subreportPart>
+		</part>
+
 		<part uuid="968947e9-d627-441c-a302-1bd9eaebff65">
 			<p:subreportPart xmlns:p="http://jasperreports.sourceforge.net/jasperreports/parts" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/parts http://jasperreports.sourceforge.net/xsd/parts.xsd">
 				<subreportParameter name="REPORT_CONNECTION">
@@ -263,6 +286,68 @@
 					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{intro})]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportExpression><![CDATA["etats/spider/Vie_scolaire.jasper"]]></subreportExpression>
+			</p:subreportPart>
+		</part>
+		<part uuid="968947e9-d627-441c-a302-1bd9eaebff24">
+			<p:subreportPart xmlns:p="http://jasperreports.sourceforge.net/jasperreports/parts" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/parts http://jasperreports.sourceforge.net/xsd/parts.xsd">
+				<subreportParameter name="REPORT_CONNECTION">
+					<subreportParameterExpression><![CDATA[$P{REPORT_CONNECTION}]]></subreportParameterExpression>
+				</subreportParameter>
+
+				<subreportParameter name="REPORT_DATA_SOURCE">
+					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{intro})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportExpression><![CDATA["etats/spider/Vie_scolaire2.jasper"]]></subreportExpression>
+			</p:subreportPart>
+		</part>
+		<part uuid="968947e9-d627-441c-a302-1bd9eaebff34">
+			<p:subreportPart xmlns:p="http://jasperreports.sourceforge.net/jasperreports/parts" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/parts http://jasperreports.sourceforge.net/xsd/parts.xsd">
+				<subreportParameter name="REPORT_CONNECTION">
+					<subreportParameterExpression><![CDATA[$P{REPORT_CONNECTION}]]></subreportParameterExpression>
+				</subreportParameter>
+
+				<subreportParameter name="REPORT_DATA_SOURCE">
+					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{intro})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportExpression><![CDATA["etats/spider/Vie_scolaire3.jasper"]]></subreportExpression>
+			</p:subreportPart>
+		</part>
+		<part uuid="968947e9-d627-441c-a302-1bd9eaebff88">
+			<p:subreportPart xmlns:p="http://jasperreports.sourceforge.net/jasperreports/parts" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/parts http://jasperreports.sourceforge.net/xsd/parts.xsd">
+				<subreportParameter name="REPORT_CONNECTION">
+					<subreportParameterExpression><![CDATA[$P{REPORT_CONNECTION}]]></subreportParameterExpression>
+				</subreportParameter>
+
+				<subreportParameter name="REPORT_DATA_SOURCE">
+					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{intro})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportExpression><![CDATA["etats/spider/Vie_scolaireSuite.jasper"]]></subreportExpression>
+			</p:subreportPart>
+		</part>
+
+		<part uuid="968947e9-d627-441c-a302-1bd9eaebff68">
+			<p:subreportPart xmlns:p="http://jasperreports.sourceforge.net/jasperreports/parts" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/parts http://jasperreports.sourceforge.net/xsd/parts.xsd">
+				<subreportParameter name="REPORT_CONNECTION">
+					<subreportParameterExpression><![CDATA[$P{REPORT_CONNECTION}]]></subreportParameterExpression>
+				</subreportParameter>
+
+				<subreportParameter name="REPORT_DATA_SOURCE">
+					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{intro})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportExpression><![CDATA["etats/spider/Vie_scolaireSuite2.jasper"]]></subreportExpression>
+			</p:subreportPart>
+		</part>
+
+		<part uuid="968947e9-d627-441c-a302-1bd9eaebff28">
+			<p:subreportPart xmlns:p="http://jasperreports.sourceforge.net/jasperreports/parts" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/parts http://jasperreports.sourceforge.net/xsd/parts.xsd">
+				<subreportParameter name="REPORT_CONNECTION">
+					<subreportParameterExpression><![CDATA[$P{REPORT_CONNECTION}]]></subreportParameterExpression>
+				</subreportParameter>
+
+				<subreportParameter name="REPORT_DATA_SOURCE">
+					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{intro})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportExpression><![CDATA["etats/spider/Vie_scolaireSuite3.jasper"]]></subreportExpression>
 			</p:subreportPart>
 		</part>
 
