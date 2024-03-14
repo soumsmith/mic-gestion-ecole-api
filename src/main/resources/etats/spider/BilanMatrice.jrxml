@@ -539,6 +539,18 @@
 	<field name="libelleMatiereBilan" class="java.lang.String"/>
 	<field name="moyMatiereBilan" class="java.lang.Double"/>
 	<field name="ecoleId" class="java.lang.String"/>
+	<field name="nombreSupegal10F" class="java.lang.Long"/>
+	<field name="nombreInf8_5F" class="java.lang.Long"/>
+	<field name="nombreSup8_5F" class="java.lang.Long"/>
+	<field name="nombreSupegal10G" class="java.lang.Long"/>
+	<field name="nombreInf8_5G" class="java.lang.Long"/>
+	<field name="nombreSup8_5G" class="java.lang.Long"/>
+	<field name="pourSupegal10F" class="java.lang.Double"/>
+	<field name="pourInf8_5F" class="java.lang.Double"/>
+	<field name="pourSup8_5F" class="java.lang.Double"/>
+	<field name="pourSupegal10G" class="java.lang.Double"/>
+	<field name="pourInf8_5G" class="java.lang.Double"/>
+	<field name="pourSup8_5G" class="java.lang.Double"/>
 	<group name="Groupe2"/>
 	<group name="Groupe3"/>
 	<background>
@@ -557,7 +569,7 @@
 		</band>
 	</title>
 	<summary>
-		<band height="45">
+		<band height="166">
 			<frame>
 				<reportElement x="13" y="2" width="807" height="40" uuid="a5f89e6a-6d06-44bb-a340-897988f41678">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
@@ -711,6 +723,48 @@
 					</crosstabCell>
 				</crosstab>
 			</frame>
+			<textField textAdjust="ScaleFont">
+				<reportElement x="13" y="64" width="680" height="10" uuid="4382eb9b-86fb-4203-a235-f5a3c173132b"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Nombre d'élève fille ayant obtenu une moyenne >=8.50 : "+$F{nombreSup8_5F}+" élèves(s)   soit   "+ ($F{pourSup8_5F} ==0?new DecimalFormat("#.##").format(Double.valueOf(0))+"%":new DecimalFormat("#.##").format(Double.valueOf($F{pourSup8_5F} ))+"%")]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="ScaleFont">
+				<reportElement x="13" y="53" width="680" height="10" uuid="9d0843b0-504b-424e-a850-4634d1d15c2e"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Nombre d'élève fille ayant obtenu une moyenne >=10 : "+$F{nombreSupegal10F}.toString()+" élèves(s) soit   "+( $F{pourSupegal10F}==0?new DecimalFormat("#.##").format(Double.valueOf(0))+"%":new DecimalFormat("#.##").format(Double.valueOf($F{pourSupegal10F}))+"%")]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="ScaleFont">
+				<reportElement x="14" y="76" width="680" height="10" uuid="02fcbae7-9f2f-4402-aa23-088f49aa9d26"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Nombre d'élève fille ayant obtenu une moyenne <8.50 : "+$F{nombreInf8_5F}+" élèves(s)  soit   "+( $F{pourInf8_5F} ==0?new DecimalFormat("#.##").format(Double.valueOf(0))+"%":new DecimalFormat("#.##").format(Double.valueOf($F{pourInf8_5F} ))+"%" )]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="ScaleFont">
+				<reportElement x="14" y="100" width="680" height="10" uuid="148b5d84-af3c-456a-ab05-2806b64363e0"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Nombre d'élève garçon ayant obtenu une moyenne >=10 : "+$F{nombreSupegal10G}+" élèves(s)  soit  "+ ($F{pourSupegal10G}==0?new DecimalFormat("#.##").format(Double.valueOf(0))+"%":new DecimalFormat("#.##").format(Double.valueOf($F{pourSupegal10G} ))+"%")]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="ScaleFont">
+				<reportElement x="14" y="111" width="680" height="10" uuid="ccbd922b-1b85-4b47-a868-c4f0620a6386"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Nombre d'élève garçon ayant obtenu une moyenne >=8.50 : "+$F{nombreSup8_5G}+" élèves(s)  soit  "+( $F{pourSup8_5G} ==0?new DecimalFormat("#.##").format(Double.valueOf(0))+"%":new DecimalFormat("#.##").format(Double.valueOf($F{pourSup8_5G} ))+"%")]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="ScaleFont">
+				<reportElement x="15" y="123" width="680" height="10" uuid="26510fd3-114f-4393-996c-ebf87c34516f"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Nombre d'élève garçon ayant obtenu une moyenne <8.50 : "+$F{nombreInf8_5G}+" élèves(s)  soit "+( $F{pourInf8_5G} ==0?new DecimalFormat("#.##").format(Double.valueOf(0))+"%":new DecimalFormat("#.##").format(Double.valueOf($F{pourInf8_5G} ))+"%")]]></textFieldExpression>
+			</textField>
 		</band>
 	</summary>
 </jasperReport>

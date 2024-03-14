@@ -51,7 +51,13 @@ public class DspsSpiderRessource {
         spiderDspsDto detailsBull= new spiderDspsDto() ;
         List<DspsDto>  dspsDto = new ArrayList<>() ;
 
-        dspsDto = dpspServices.DspspDto(idEcole,libellePeriode,libelleAnnee) ;
+        try {
+            dspsDto = dpspServices.DspspDto(idEcole,libellePeriode,libelleAnnee) ;
+
+        } catch (RuntimeException e){
+            e.printStackTrace ();
+        }
+
 
 
         detailsBull.setDspsDto(dspsDto);

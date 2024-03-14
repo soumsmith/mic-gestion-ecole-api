@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -150,6 +151,12 @@ public class MatriceClasseRessource {
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public ResponseEntity<byte[]>  getDtoRapport(@PathParam("idEcole") Long idEcole ,@PathParam("libelleAnnee") String libelleAnnee ,
                                                  @PathParam("periode") String periode , @PathParam("anneeId") Long anneeId ,@PathParam("classe") Long classe) throws Exception, JRException {
+
+        Long nombreSupegal10F = 0L, nombreInf8_5F= 0L ,nombreSup8_5F=0L ,nombreSupegal10G=0L , nombreInf8_5G=0L , nombreSup8_5G=0L ;
+        Double pourSupegal10F = 0d, pourInf8_5F = 0d, pourSup8_5F = 0d, pourSupegal10G = 0d , pourInf8_5G = 0d, pourSup8_5G = 0d ;
+        Long clasFille =0L ,clasgarcon =0L ;
+
+
         InputStream myInpuStream ;
         /*myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/BulletinBean.jrxml");*/
 
@@ -158,9 +165,47 @@ public class MatriceClasseRessource {
         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Spider_Book_matriceClasse.jrxml");
         List<matriceClasseDto> detailsBull1= new ArrayList<>() ;
         List<matiereMoyenneBilanDto> detailsBull2= new ArrayList<>() ;
-        detailsBull2=  matriceBilanClasseServices.getInfosBilanMatriceClasse(idEcole ,libelleAnnee ,periode ,anneeId, classe) ;
+        try {
 
-        detailsBull1=   matriceClasseServices.getInfosMatriceClasse(idEcole ,libelleAnnee ,periode ,anneeId, classe) ;
+
+
+
+            detailsBull2=  matriceBilanClasseServices.getInfosBilanMatriceClasse(idEcole ,libelleAnnee ,periode ,anneeId, classe) ;
+
+            detailsBull1=   matriceClasseServices.getInfosMatriceClasse(idEcole ,libelleAnnee ,periode ,anneeId, classe) ;
+
+            clasFille = getclassF(idEcole ,classe,libelleAnnee,periode) ;
+            clasgarcon = getclassG(idEcole ,classe,libelleAnnee,periode) ;
+            nombreSupegal10F = getnbreMoySupEgal10F(idEcole,classe,libelleAnnee,periode);
+            nombreSupegal10G = getnbreMoySupEgal10G(idEcole,classe,libelleAnnee,periode) ;
+            nombreInf8_5F = getnbreMoyInf8_5F(idEcole,classe,libelleAnnee,periode) ;
+            nombreInf8_5G =getnbreMoyInf8_5G(idEcole,classe,libelleAnnee,periode) ;
+
+            nombreSup8_5F =getnbreMoyInf999F(idEcole,classe,libelleAnnee,periode) ;
+            nombreSup8_5G =getnbreMoyInf999G(idEcole,classe,libelleAnnee,periode) ;
+
+            if(clasFille !=0)
+                pourSupegal10F = (double) ((nombreSupegal10F*100d)/clasFille);
+            if(clasgarcon !=0)
+                pourSupegal10G = (double) ((nombreSupegal10G*100d)/clasgarcon);
+
+            if(clasgarcon !=0)
+                pourInf8_5G = (double) ((nombreInf8_5G*100d)/clasgarcon);
+
+            if(clasFille !=0)
+                pourInf8_5F = (double) ((nombreInf8_5F*100d)/clasFille);
+
+            if(clasgarcon !=0)
+                pourSup8_5G = (double) ((nombreSup8_5G*100d)/clasgarcon);
+
+            if(clasFille !=0)
+                pourSup8_5F = (double) ((nombreSup8_5F*100d)/clasFille);
+
+
+        } catch (RuntimeException e){
+            e.printStackTrace ();
+        }
+
 
         detailsBull.setMatriceClasseDto(detailsBull1);
         detailsBull.setMatiereMoyenneBilanDto(detailsBull2);
@@ -171,7 +216,18 @@ public class MatriceClasseRessource {
         JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
         //   JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");
         Map<String, Object> map = new HashMap<>();
-        // map.put("title", type);
+         map.put("nombreSupegal10F", nombreSupegal10F);
+        map.put("nombreSupegal10G", nombreSupegal10G);
+        map.put("nombreInf8_5F", nombreInf8_5F);
+        map.put("nombreInf8_5G", nombreInf8_5G);
+        map.put("nombreInf8_5F", nombreInf8_5F);
+        map.put("nombreInf8_5G", nombreInf8_5G);
+        map.put("pourSupegal10F", pourSupegal10F);
+        map.put("pourSupegal10G", pourSupegal10G);
+        map.put("pourInf8_5G", pourInf8_5G);
+        map.put("pourInf8_5F", pourInf8_5F);
+        map.put("pourSup8_5G", pourSup8_5G);
+        map.put("pourSup8_5F", pourSup8_5F);
 
         JasperPrint report = JasperFillManager.fillReport(compileReport, map, beanCollectionDataSource);
 
@@ -227,5 +283,155 @@ public class MatriceClasseRessource {
         return matieres ;
         // System.out.println("classeMatiereList "+classeMatiereList.toString());
     }
+    public  Long getclassF(Long idEcole , Long classeId ,String libelleAnnee , String libelleTrimestre ){
+        Long classF;
+        try {
+            classF = (Long) em.createQuery("select count(o.id) from Bulletin o  where  o.sexe=:sexe and o.ecoleId=:idEcole  and o.isClassed=:isClass and o.libellePeriode=:periode and o.anneeLibelle=:annee  and o.classeId=:classeId "
+                    )
+                    .setParameter("sexe","FEMININ")
+                    .setParameter("idEcole",idEcole)
+                    .setParameter("isClass","O")
+                    .setParameter("classeId",classeId)
+                    .setParameter("annee", libelleAnnee)
+                    .setParameter("periode", libelleTrimestre)
+                    .getSingleResult();
 
+            return  classF ;
+        } catch (NoResultException e){
+            return 0L ;
+        }
+
+
+    }
+    public Long getclassG(Long idEcole , Long classeId  ,String libelleAnnee , String libelleTrimestre ){
+        Long classG;
+        try {
+            classG = (Long) em.createQuery("select count(o.id) from Bulletin o  where  o.sexe=:sexe and o.ecoleId=:idEcole  and o.isClassed =:isClass  and o.libellePeriode=:periode and o.anneeLibelle=:annee  and o.classeId=:classeId "
+                    )
+                    .setParameter("sexe","MASCULIN")
+                    .setParameter("idEcole",idEcole)
+                    .setParameter("isClass","O")
+                    .setParameter("classeId",classeId)
+                    .setParameter("annee", libelleAnnee)
+                    .setParameter("periode", libelleTrimestre)
+                    .getSingleResult();
+            return classG ;
+        } catch (NoResultException e){
+            return 0L ;
+        }
+
+    }
+
+    public Long getnbreMoySupEgal10G(Long idEcole , Long classeId ,String libelleAnnee , String libelleTrimestre ){
+        try {
+            Long    nbreMoySup10G = (Long) em.createQuery("select count(o.id) from Bulletin o where o.isClassed=:isClass and o.sexe=:sexe and o.ecoleId=:idEcole  and o.moyGeneral>=:moy and o.libellePeriode=:periode and o.anneeLibelle=:annee " +
+                            "and o.classeId=:classeId")
+                    .setParameter("sexe","MASCULIN")
+                    .setParameter("idEcole",idEcole)
+                    .setParameter("isClass","O")
+                    .setParameter("moy",10.0)
+                    .setParameter("classeId",classeId)
+                    .setParameter("annee", libelleAnnee)
+                    .setParameter("periode", libelleTrimestre)
+                    .getSingleResult();
+            return  nbreMoySup10G ;
+        } catch (NoResultException e){
+            return 0L ;
+        }
+
+    }
+
+    public Long getnbreMoySupEgal10F(Long idEcole , Long classeId ,String libelleAnnee , String libelleTrimestre){
+        try {
+            Long    nbreMoySup10G = (Long) em.createQuery("select count(o.id) from Bulletin o where o.isClassed=:isClass and o.sexe=:sexe and o.ecoleId=:idEcole  and o.moyGeneral>=:moy and o.libellePeriode=:periode and o.anneeLibelle=:annee " +
+                            " and o.classeId=:classeId")
+                    .setParameter("sexe","FEMININ")
+                    .setParameter("idEcole",idEcole)
+                    .setParameter("isClass","O")
+                    .setParameter("moy",10.0)
+                    .setParameter("classeId",classeId)
+                    .setParameter("annee", libelleAnnee)
+                    .setParameter("periode", libelleTrimestre)
+                    .getSingleResult();
+            return  nbreMoySup10G ;
+        } catch (NoResultException e){
+            return 0L ;
+        }
+
+    }
+
+    public Long getnbreMoyInf8_5G(Long idEcole , Long classeId ,String libelleAnnee , String libelleTrimestre ){
+        try {
+            Long    nbreMoySup10G = (Long) em.createQuery("select count(o.id) from Bulletin o where o.isClassed=:isClass and o.sexe=:sexe and o.ecoleId=:idEcole  and o.moyGeneral <:moy and o.libellePeriode=:periode and o.anneeLibelle=:annee " +
+                            " and o.classeId=:classeId")
+                    .setParameter("sexe","MASCULIN")
+                    .setParameter("idEcole",idEcole)
+                    .setParameter("isClass","O")
+                    .setParameter("moy",8.5)
+                    .setParameter("classeId",classeId)
+                    .setParameter("annee", libelleAnnee)
+                    .setParameter("periode", libelleTrimestre)
+                    .getSingleResult();
+            return  nbreMoySup10G ;
+        } catch (NoResultException e){
+            return 0L ;
+        }
+
+    }
+
+    public Long getnbreMoyInf8_5F(Long idEcole , Long classeId ,String libelleAnnee , String libelleTrimestre ){
+        try {
+            Long    nbreMoySup10G = (Long) em.createQuery("select count(o.id) from Bulletin o where o.isClassed=:isClass and o.sexe=:sexe and o.ecoleId=:idEcole  and o.moyGeneral <:moy and o.libellePeriode=:periode and o.anneeLibelle=:annee " +
+                            " and o.classeId=:classeId")
+                    .setParameter("sexe","FEMININ")
+                    .setParameter("idEcole",idEcole)
+                    .setParameter("isClass","O")
+                    .setParameter("moy",8.5)
+                    .setParameter("classeId",classeId)
+                    .setParameter("annee", libelleAnnee)
+                    .setParameter("periode", libelleTrimestre)
+                    .getSingleResult();
+            return  nbreMoySup10G ;
+        } catch (NoResultException e){
+            return 0L ;
+        }
+
+    }
+
+    public Long getnbreMoyInf999G(Long idEcole , Long classeId ,String libelleAnnee , String libelleTrimestre ){
+        try {
+            Long nbreMoyInf999F = (Long) em.createQuery("select count(o.id) from Bulletin o  where o.isClassed=:isClass and o.sexe=:sexe and o.ecoleId=:idEcole  and o.moyGeneral>=:moy and o.moyGeneral <=:moy2 and o.libellePeriode=:periode and o.anneeLibelle=:annee  and o.classeId=:classeId")
+                    .setParameter("sexe","MASCULIN")
+                    .setParameter("idEcole",idEcole)
+                    .setParameter("moy",8.5)
+                    .setParameter("moy2",9.99)
+                    .setParameter("isClass","O")
+                    .setParameter("classeId",classeId)
+                    .setParameter("annee", libelleAnnee)
+                    .setParameter("periode", libelleTrimestre)
+                    .getSingleResult();
+            return  nbreMoyInf999F    ;
+        } catch (NoResultException e){
+            return 0L ;
+        }
+
+    }
+    public Long getnbreMoyInf999F(Long idEcole , Long classeId ,String libelleAnnee , String libelleTrimestre ){
+        try {
+            Long nbreMoyInf999F = (Long) em.createQuery("select count(o.id) from Bulletin o  where o.isClassed=:isClass and o.sexe=:sexe and o.ecoleId=:idEcole  and o.moyGeneral>=:moy and o.moyGeneral <=:moy2 and o.libellePeriode=:periode and o.anneeLibelle=:annee  and o.classeId=:classeId ")
+                    .setParameter("sexe","FEMININ")
+                    .setParameter("idEcole",idEcole)
+                    .setParameter("moy",8.5)
+                    .setParameter("moy2",9.99)
+                    .setParameter("isClass","O")
+                    .setParameter("classeId",classeId)
+                    .setParameter("annee", libelleAnnee)
+                    .setParameter("periode", libelleTrimestre)
+                    .getSingleResult();
+            return  nbreMoyInf999F    ;
+        } catch (NoResultException e){
+            return 0L ;
+        }
+
+    }
 }
