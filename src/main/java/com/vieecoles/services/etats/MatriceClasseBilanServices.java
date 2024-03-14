@@ -22,12 +22,14 @@ public class MatriceClasseBilanServices {
     InscriptionService inscriptionService ;
     @Inject
     SousceecoleService sousceecoleService ;
-
+    List<matiereMoyenneBilanDto> matiereMoyenneBilanDtoList = new ArrayList<>() ;
+    int sizeMatricule ;
+    Long nombreSupegal10F , nombreInf8_5F ,nombreSup8_5F ,nombreSupegal10G , nombreInf8_5G , nombreSup8_5G ;
+    Double pourSupegal10F = 0d, pourInf8_5F = 0d, pourSup8_5F = 0d, pourSupegal10G = 0d , pourInf8_5G = 0d, pourSup8_5G = 0d ;
+    Long clasFille =0L ,clasgarcon =0L ;
     public List<matiereMoyenneBilanDto> getInfosBilanMatriceClasse(Long idEcole , String libelleAnnee , String periode ,Long anneeId ,Long classe){
 
-         Long nombreSupegal10F , nombreInf8_5F ,nombreSup8_5F ,nombreSupegal10G , nombreInf8_5G , nombreSup8_5G ;
-        Double pourSupegal10F = 0d, pourInf8_5F = 0d, pourSup8_5F = 0d, pourSupegal10G = 0d , pourInf8_5G = 0d, pourSup8_5G = 0d ;
-        Long clasFille =0L ,clasgarcon =0L ;
+
         Branche br = new Branche() ;
         Classe classe1= new Classe() ;
 
@@ -74,7 +76,7 @@ public class MatriceClasseBilanServices {
 
           List<MoyenneBilanDto> rapportMatriceClasseDtoList = new ArrayList<>() ;
 
-        List<matiereMoyenneBilanDto> matiereMoyenneBilanDtoList = new ArrayList<>() ;
+
 
         clasFille = getclassF(idEcole ,classe,libelleAnnee,periode) ;
         clasgarcon = getclassG(idEcole ,classe,libelleAnnee,periode) ;
@@ -103,9 +105,17 @@ public class MatriceClasseBilanServices {
         if(clasFille !=0)
             pourSup8_5F = (double) ((nombreSup8_5F*100d)/clasFille);
 
+        System.out.println ("parallel Bilan started");
+       long startTime = System.currentTimeMillis();
+        classeMatiereList.stream ().parallel ().forEach (eleve-> getBilanMoyenne(eleve ,idEcole ,libelleAnnee , periode ,classe));
+
+        long endTime = System.currentTimeMillis();
+        long executionTime = endTime - startTime;
+        System.out.println("Temps d'exécution total : " + executionTime /1000l + " secondes");
 
 
-     for (int j=0; j< sizeMatiereList;j++) {
+
+        for (int j=0; j< sizeMatiereList;j++) {
             matiereMoyenneBilanDto l = new matiereMoyenneBilanDto() ;
 
             long idMatiere = 0;
@@ -183,18 +193,7 @@ public class MatriceClasseBilanServices {
              l.setEcoleId("1");
              matiereMoyenneBilanDtoList.add(l) ;
          }
-       /*  else if (!libelleMatiere.equals("FR"))   {
-             System.out.println("SSSSSSS3");
-             Matiere mat = new Matiere() ;
-             mat= Matiere.findById(idMatiere);
 
-             System.out.println("libelleMatiere "+libelleMatiere);
-             Double moyMat=  getBilanMoyMatiere(id ,periode ,libelleAnnee ,classe ,idEcole);
-             l.setLibelleMatiereBilan(libelleMatiere);
-             l.setMoyMatiereBilan(moyMat);
-             l.setEcoleId("1");
-             matiereMoyenneBilanDtoList.add(l) ;
-         }*/
 
 
 
@@ -203,7 +202,85 @@ public class MatriceClasseBilanServices {
 
         return  matiereMoyenneBilanDtoList ;
     }
+public void getBilanMoyenne(NiveauDto3 matiere ,Long idEcole ,String libelleAnnee , String  periode ,Long classe){
+    matiereMoyenneBilanDto l = new matiereMoyenneBilanDto() ;
 
+    long idMatiere = 0;
+
+    String libelleMatiere ;
+    String id = String.valueOf(matiere.getIdMatiere ());
+    // idMatiere = Long.parseLong(id);
+
+    idMatiere = matiere.getIdMatiere();
+
+
+    Matiere myMatiere = new Matiere();
+    myMatiere = Matiere.findById(idMatiere);
+    libelleMatiere = getCodeLIbelleById(idMatiere ,idEcole);
+    Integer    numOrdreClasse  = getNiveauOrdreClasse(classe,periode,libelleAnnee,idEcole) ;
+
+
+
+    l.setNombreInf8_5F(nombreInf8_5F);
+    l.setNombreInf8_5G(nombreInf8_5G);
+    l.setPourInf8_5F(pourInf8_5F);
+    l.setPourInf8_5G(pourInf8_5G);
+
+    l.setNombreSup8_5F(nombreSup8_5F);
+    l.setNombreSup8_5G(nombreSup8_5G);
+    l.setPourSup8_5F(pourSup8_5F);
+    l.setPourSup8_5G(pourSup8_5G);
+
+    l.setNombreSupegal10G(nombreSupegal10G);
+    l.setNombreSupegal10F(nombreSupegal10F);
+    l.setPourSupegal10G(pourSupegal10G);
+    l.setPourSupegal10F(pourSupegal10F);
+
+
+
+    if(libelleMatiere.equals("FR") && numOrdreClasse<=2){
+
+        Double moyMat = null;
+        Double moyFr = calculMoycoefFran(classe,libelleAnnee ,periode,idEcole ) ;
+        if(moyFr!=null && moyFr!=0D)
+            moyMat= moyFr/(3d*sizeMatricule) ;
+        l.setLibelleMatiereBilan(libelleMatiere);
+        l.setEcoleId("1");
+        l.setMoyMatiereBilan(moyMat);
+        matiereMoyenneBilanDtoList.add(l) ;
+    } else if(libelleMatiere.equals("FR") && numOrdreClasse>2&& numOrdreClasse<5)   {
+
+        Double moyFr = calculMoycoefFran(classe,libelleAnnee ,periode,idEcole ) ;
+        Double moyMat = null;
+        if(moyFr!=null && moyFr!=0D)
+            moyMat= moyFr/(4d*sizeMatricule) ;
+        l.setLibelleMatiereBilan(libelleMatiere);
+        l.setEcoleId("1");
+        l.setMoyMatiereBilan(moyMat);
+        matiereMoyenneBilanDtoList.add(l) ;
+    }
+    else if (libelleMatiere.equals("FR") && (numOrdreClasse>=5)) {
+
+        Double moyMat=  getBilanMoyMatiere(id ,periode ,libelleAnnee ,classe ,idEcole);
+        l.setLibelleMatiereBilan(libelleMatiere);
+        l.setMoyMatiereBilan(moyMat);
+        l.setEcoleId("1");
+        matiereMoyenneBilanDtoList.add(l) ;
+    }
+    else   {
+
+        Matiere mat = new Matiere() ;
+        mat= Matiere.findById(idMatiere);
+
+
+
+        Double moyMat=  getBilanMoyMatiere(id ,periode ,libelleAnnee ,classe ,idEcole);
+        l.setLibelleMatiereBilan(libelleMatiere);
+        l.setMoyMatiereBilan(moyMat);
+        l.setEcoleId("1");
+        matiereMoyenneBilanDtoList.add(l) ;
+    }
+}
     public  Long getclassF(Long idEcole , Long classeId ,String libelleAnnee , String libelleTrimestre ){
         Long classF;
         try {
