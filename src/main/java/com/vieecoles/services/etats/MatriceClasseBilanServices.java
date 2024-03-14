@@ -11,6 +11,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -112,96 +113,9 @@ public class MatriceClasseBilanServices {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         System.out.println("Temps d'exécution total : " + executionTime /1000l + " secondes");
-
-
-
-        for (int j=0; j< sizeMatiereList;j++) {
-            matiereMoyenneBilanDto l = new matiereMoyenneBilanDto() ;
-
-            long idMatiere = 0;
-
-            String libelleMatiere ;
-            String id = String.valueOf(classeMatiereList.get(j).getIdMatiere());
-           // idMatiere = Long.parseLong(id);
-
-         idMatiere = classeMatiereList.get(j).getIdMatiere();
-
-
-         Matiere myMatiere = new Matiere();
-         myMatiere = Matiere.findById(idMatiere);
-         libelleMatiere = getCodeLIbelleById(idMatiere ,idEcole);
-         Integer    numOrdreClasse  = getNiveauOrdreClasse(classe,periode,libelleAnnee,idEcole) ;
-
-
-
-             l.setNombreInf8_5F(nombreInf8_5F);
-             l.setNombreInf8_5G(nombreInf8_5G);
-             l.setPourInf8_5F(pourInf8_5F);
-             l.setPourInf8_5G(pourInf8_5G);
-
-             l.setNombreSup8_5F(nombreSup8_5F);
-             l.setNombreSup8_5G(nombreSup8_5G);
-             l.setPourSup8_5F(pourSup8_5F);
-             l.setPourSup8_5G(pourSup8_5G);
-
-             l.setNombreSupegal10G(nombreSupegal10G);
-             l.setNombreSupegal10F(nombreSupegal10F);
-             l.setPourSupegal10G(pourSupegal10G);
-             l.setPourSupegal10F(pourSupegal10F);
-
-
-
-         if(libelleMatiere.equals("FR") && numOrdreClasse<=2){
-
-             Double moyMat = null;
-             Double moyFr = calculMoycoefFran(classe,libelleAnnee ,periode,idEcole ) ;
-             if(moyFr!=null && moyFr!=0D)
-              moyMat= moyFr/(3d*sizeMatricule) ;
-             l.setLibelleMatiereBilan(libelleMatiere);
-             l.setEcoleId("1");
-             l.setMoyMatiereBilan(moyMat);
-             matiereMoyenneBilanDtoList.add(l) ;
-         } else if(libelleMatiere.equals("FR") && numOrdreClasse>2&& numOrdreClasse<5)   {
-
-             Double moyFr = calculMoycoefFran(classe,libelleAnnee ,periode,idEcole ) ;
-             Double moyMat = null;
-             if(moyFr!=null && moyFr!=0D)
-              moyMat= moyFr/(4d*sizeMatricule) ;
-             l.setLibelleMatiereBilan(libelleMatiere);
-             l.setEcoleId("1");
-             l.setMoyMatiereBilan(moyMat);
-             matiereMoyenneBilanDtoList.add(l) ;
-         }
-         else if (libelleMatiere.equals("FR") && (numOrdreClasse>=5)) {
-
-             Double moyMat=  getBilanMoyMatiere(id ,periode ,libelleAnnee ,classe ,idEcole);
-             l.setLibelleMatiereBilan(libelleMatiere);
-             l.setMoyMatiereBilan(moyMat);
-             l.setEcoleId("1");
-             matiereMoyenneBilanDtoList.add(l) ;
-         }
-         else   {
-
-             Matiere mat = new Matiere() ;
-             mat= Matiere.findById(idMatiere);
-
-
-
-             Double moyMat=  getBilanMoyMatiere(id ,periode ,libelleAnnee ,classe ,idEcole);
-             l.setLibelleMatiereBilan(libelleMatiere);
-             l.setMoyMatiereBilan(moyMat);
-             l.setEcoleId("1");
-             matiereMoyenneBilanDtoList.add(l) ;
-         }
-
-
-
-
-            }
-
-
         return  matiereMoyenneBilanDtoList ;
     }
+    @Transactional
 public void getBilanMoyenne(NiveauDto3 matiere ,Long idEcole ,String libelleAnnee , String  periode ,Long classe){
     matiereMoyenneBilanDto l = new matiereMoyenneBilanDto() ;
 
@@ -546,6 +460,7 @@ public void getBilanMoyenne(NiveauDto3 matiere ,Long idEcole ,String libelleAnne
 
         return  libelle ;
     }*/
+
     public  Double getMoyMatiere(String matricule,String libelleMatiere,String periode ,String libelleAnnee){
         try {
             Double   moyClasseF = (Double) em.createQuery("select d.moyenne  from DetailBulletin  d join d.bulletin b  where b.matricule=:matricule and d.matiereLibelle=:libelleMatiere  and b.anneeLibelle=:libelleAnnee " +

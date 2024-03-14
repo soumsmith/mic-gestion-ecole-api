@@ -209,9 +209,6 @@ public class MatriceClasseRessource {
 
         detailsBull.setMatriceClasseDto(detailsBull1);
         detailsBull.setMatiereMoyenneBilanDto(detailsBull2);
-        System.out.println("detailsBull2 "+detailsBull2);
-
-
         JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(Collections.singleton(detailsBull)) ;
         JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
         //   JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");

@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +17,7 @@ import java.util.List;
 public class DpspServices {
     @Inject
     EntityManager em;
-
+    List<DspsDto> resultatsListElevesDto = new ArrayList<>();
     public List<DspsDto>  DspspDto(Long idEcole,String libellePeriode ,String libelleAnnee){
         int LongTableau;
 
@@ -29,7 +30,7 @@ public class DpspServices {
                                  .getResultList() ;
 
         LongTableau= classeNiveauDtoList.size();
-        List<DspsDto> resultatsListElevesDto = new ArrayList<>();
+
 
         String matricule ,nom,prenoms,niveau,is_clasCompoFr,is_clasOrthoGram,is_clasExpreOral,is_clasphiloso,is_clasAng,
                 is_clasMath,is_clasPhysiq,is_clasSVT,is_clasHg,is_clasLv2,is_clasEdhc,is_clasArplat,is_clasTic ,
@@ -38,74 +39,90 @@ public class DpspServices {
                 moyenHg,moyenLv2,moyenEdhc,moyenArplat,moyenTic,moyenConduite,moyenEps,moyen_fr;
         Integer rang , ordre_niveau ;
 
-        for (int i=0; i< LongTableau;i++) {
-            DspsDto m = new DspsDto();
-
-            nom_ecole= getNomEcole(classeNiveauDtoList.get(i).getNiveau() ,libellePeriode ,libelleAnnee,idEcole) ;
-
-            moyenTrim = getMoyenTrimes(classeNiveauDtoList.get(i).getNiveau() ,libellePeriode ,libelleAnnee ,idEcole) ;
-
-            rang = getRang(classeNiveauDtoList.get(i).getNiveau() ,libellePeriode ,libelleAnnee ,idEcole) ;
-
-            ordre_niveau = getOrdreNiveau(classeNiveauDtoList.get(i).getNiveau() ,libellePeriode ,libelleAnnee ,idEcole) ;
-
-            nom = getName(classeNiveauDtoList.get(i).getNiveau(),libellePeriode ,libelleAnnee ,idEcole) ;
-
-            prenoms= getSurName(classeNiveauDtoList.get(i).getNiveau(),libellePeriode ,libelleAnnee ,idEcole);
-
-            niveau = getNiveau(classeNiveauDtoList.get(i).getNiveau() ,libellePeriode ,libelleAnnee ,idEcole) ;
-
-            matricule= classeNiveauDtoList.get(i).getNiveau();
-
-            is_class_periode= getIsClassePeriode(classeNiveauDtoList.get(i).getNiveau(),libellePeriode ,libelleAnnee ,idEcole) ;
+        System.out.println ("parallel started");
+        long t = System.currentTimeMillis ();
+        classeNiveauDtoList.stream ().parallel ().forEach (eleve-> getInfosDsps(eleve ,libellePeriode,libelleAnnee,idEcole));
+        System.out.println ("parallel Duree =" + (System.currentTimeMillis () - t) / 1000l);
 
 
 
-            is_class_fr = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),1L,libellePeriode ,libelleAnnee ,idEcole) ;
+        return  resultatsListElevesDto ;
+    }
+    @Transactional
+public void getInfosDsps(NiveauDto eleve, String libellePeriode ,String libelleAnnee,Long idEcole){
+    String matricule ,nom,prenoms,niveau,is_clasCompoFr,is_clasOrthoGram,is_clasExpreOral,is_clasphiloso,is_clasAng,
+            is_clasMath,is_clasPhysiq,is_clasSVT,is_clasHg,is_clasLv2,is_clasEdhc,is_clasArplat,is_clasTic ,
+            is_clasConduite,is_clasEps,is_class_periode ,nom_ecole ,is_class_fr;
+    Double moyenTrim,moyenCompoFr,moyenOrthoGram,moyenExpreOral,moyenphiloso,moyenAng,moyenMath,moyenPhysiq,moyenSVT,
+            moyenHg,moyenLv2,moyenEdhc,moyenArplat,moyenTic,moyenConduite,moyenEps,moyen_fr;
+    Integer rang , ordre_niveau ;
+    DspsDto m = new DspsDto();
 
-            moyen_fr = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),1L,libellePeriode ,libelleAnnee ,idEcole) ;
+    nom_ecole= getNomEcole(eleve.getNiveau() ,libellePeriode ,libelleAnnee,idEcole) ;
 
+    moyenTrim = getMoyenTrimes(eleve.getNiveau() ,libellePeriode ,libelleAnnee ,idEcole) ;
 
+    rang = getRang(eleve.getNiveau() ,libellePeriode ,libelleAnnee ,idEcole) ;
 
-            is_clasCompoFr = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),2L,libellePeriode ,libelleAnnee ,idEcole) ;
+    ordre_niveau = getOrdreNiveau(eleve.getNiveau() ,libellePeriode ,libelleAnnee ,idEcole) ;
 
-            moyenCompoFr = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),2L,libellePeriode ,libelleAnnee ,idEcole) ;
+    nom = getName(eleve.getNiveau(),libellePeriode ,libelleAnnee ,idEcole) ;
 
+    prenoms= getSurName(eleve.getNiveau(),libellePeriode ,libelleAnnee ,idEcole);
 
-            is_clasOrthoGram = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),4L,libellePeriode ,libelleAnnee ,idEcole) ;
-            moyenOrthoGram = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),4L,libellePeriode ,libelleAnnee ,idEcole) ;
+    niveau = getNiveau(eleve.getNiveau() ,libellePeriode ,libelleAnnee ,idEcole) ;
 
-            is_clasExpreOral = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),3L,libellePeriode ,libelleAnnee ,idEcole) ;
-            moyenExpreOral = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),3L,libellePeriode ,libelleAnnee ,idEcole) ;
+    matricule= eleve.getNiveau();
 
-            is_clasphiloso = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),26L,libellePeriode ,libelleAnnee ,idEcole) ;
-            moyenphiloso = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),26L,libellePeriode ,libelleAnnee ,idEcole) ;
-
-            is_clasAng = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),5L,libellePeriode ,libelleAnnee ,idEcole) ;
-            moyenAng = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),5L,libellePeriode ,libelleAnnee ,idEcole) ;
-
-            is_clasMath = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),7L,libellePeriode ,libelleAnnee ,idEcole) ;
-            moyenMath = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),7L,libellePeriode ,libelleAnnee ,idEcole) ;
-
-            is_clasPhysiq = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),8L,libellePeriode ,libelleAnnee ,idEcole) ;
-            moyenPhysiq = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),8L,libellePeriode ,libelleAnnee ,idEcole ) ;
-
-            is_clasSVT = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),9L,libellePeriode ,libelleAnnee ,idEcole) ;
-            moyenSVT = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),9L,libellePeriode ,libelleAnnee ,idEcole) ;
+    is_class_periode= getIsClassePeriode(eleve.getNiveau(),libellePeriode ,libelleAnnee ,idEcole) ;
 
 
-            is_clasHg = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),6L,libellePeriode ,libelleAnnee ,idEcole) ;
 
-            moyenHg = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),6L,libellePeriode ,libelleAnnee ,idEcole) ;
+    is_class_fr = getIsClasseMatiere(eleve.getNiveau(),1L,libellePeriode ,libelleAnnee ,idEcole) ;
 
-
-            is_clasLv2 = getIsClasseMatiereLV2(classeNiveauDtoList.get(i).getNiveau(),libellePeriode ,libelleAnnee ,idEcole) ;
-
-            moyenLv2 = getMoyMatiereLV2(classeNiveauDtoList.get(i).getNiveau(),libellePeriode ,libelleAnnee ,idEcole) ;
+    moyen_fr = getMoyMatiere(eleve.getNiveau(),1L,libellePeriode ,libelleAnnee ,idEcole) ;
 
 
-            is_clasEdhc = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),11L,libellePeriode ,libelleAnnee ,idEcole) ;
-            moyenEdhc = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),11L,libellePeriode ,libelleAnnee ,idEcole) ;
+
+    is_clasCompoFr = getIsClasseMatiere(eleve.getNiveau(),2L,libellePeriode ,libelleAnnee ,idEcole) ;
+
+    moyenCompoFr = getMoyMatiere(eleve.getNiveau(),2L,libellePeriode ,libelleAnnee ,idEcole) ;
+
+
+    is_clasOrthoGram = getIsClasseMatiere(eleve.getNiveau(),4L,libellePeriode ,libelleAnnee ,idEcole) ;
+    moyenOrthoGram = getMoyMatiere(eleve.getNiveau(),4L,libellePeriode ,libelleAnnee ,idEcole) ;
+
+    is_clasExpreOral = getIsClasseMatiere(eleve.getNiveau(),3L,libellePeriode ,libelleAnnee ,idEcole) ;
+    moyenExpreOral = getMoyMatiere(eleve.getNiveau(),3L,libellePeriode ,libelleAnnee ,idEcole) ;
+
+    is_clasphiloso = getIsClasseMatiere(eleve.getNiveau(),26L,libellePeriode ,libelleAnnee ,idEcole) ;
+    moyenphiloso = getMoyMatiere(eleve.getNiveau(),26L,libellePeriode ,libelleAnnee ,idEcole) ;
+
+    is_clasAng = getIsClasseMatiere(eleve.getNiveau(),5L,libellePeriode ,libelleAnnee ,idEcole) ;
+    moyenAng = getMoyMatiere(eleve.getNiveau(),5L,libellePeriode ,libelleAnnee ,idEcole) ;
+
+    is_clasMath = getIsClasseMatiere(eleve.getNiveau(),7L,libellePeriode ,libelleAnnee ,idEcole) ;
+        moyenMath = getMoyMatiere(eleve.getNiveau(),7L,libellePeriode ,libelleAnnee ,idEcole) ;
+
+    is_clasPhysiq = getIsClasseMatiere(eleve.getNiveau(),8L,libellePeriode ,libelleAnnee ,idEcole) ;
+    moyenPhysiq = getMoyMatiere(eleve.getNiveau(),8L,libellePeriode ,libelleAnnee ,idEcole ) ;
+
+    is_clasSVT = getIsClasseMatiere(eleve.getNiveau(),9L,libellePeriode ,libelleAnnee ,idEcole) ;
+    moyenSVT = getMoyMatiere(eleve.getNiveau(),9L,libellePeriode ,libelleAnnee ,idEcole) ;
+
+
+    is_clasHg = getIsClasseMatiere(eleve.getNiveau(),6L,libellePeriode ,libelleAnnee ,idEcole) ;
+
+    moyenHg = getMoyMatiere(eleve.getNiveau(),6L,libellePeriode ,libelleAnnee ,idEcole) ;
+
+
+    is_clasLv2 = getIsClasseMatiereLV2(eleve.getNiveau(),libellePeriode ,libelleAnnee ,idEcole) ;
+
+    moyenLv2 = getMoyMatiereLV2(eleve.getNiveau(),libellePeriode ,libelleAnnee ,idEcole) ;
+
+
+    is_clasEdhc = getIsClasseMatiere(eleve.getNiveau(),11L,libellePeriode ,libelleAnnee ,idEcole) ;
+    moyenEdhc = getMoyMatiere(eleve.getNiveau(),11L,libellePeriode ,libelleAnnee ,idEcole) ;
 
             /*is_clasArplat = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),"19",libellePeriode ,libelleAnnee) ;
             System.out.println("is_clasArplat >>>>>>"+is_clasArplat);
@@ -113,9 +130,9 @@ public class DpspServices {
             System.out.println("moyenArplat >>>>>>"+moyenArplat);*/
 
 
-            is_clasArplat = getIsClasseMatiereArtPlas(classeNiveauDtoList.get(i).getNiveau(),libellePeriode ,libelleAnnee ,idEcole) ;
+    is_clasArplat = getIsClasseMatiereArtPlas(eleve.getNiveau(),libellePeriode ,libelleAnnee ,idEcole) ;
 
-            moyenArplat = getMoyMatiereArtPlas(classeNiveauDtoList.get(i).getNiveau(),libellePeriode ,libelleAnnee ,idEcole) ;
+    moyenArplat = getMoyMatiereArtPlas(eleve.getNiveau(),libellePeriode ,libelleAnnee ,idEcole) ;
 
 
 
@@ -123,82 +140,77 @@ public class DpspServices {
             /*is_clasTic = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),"13",libellePeriode ,libelleAnnee) ;
             moyenTic = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),"13",libellePeriode ,libelleAnnee) ;
 */
-            is_clasTic = getIsClasseMatieretIC(classeNiveauDtoList.get(i).getNiveau(),libellePeriode ,libelleAnnee ,idEcole) ;
-            moyenTic = getMoyMatiereTIC(classeNiveauDtoList.get(i).getNiveau(),libellePeriode ,libelleAnnee ,idEcole) ;
+    is_clasTic = getIsClasseMatieretIC(eleve.getNiveau(),libellePeriode ,libelleAnnee ,idEcole) ;
+    moyenTic = getMoyMatiereTIC(eleve.getNiveau(),libellePeriode ,libelleAnnee ,idEcole) ;
 
 
 
-            is_clasConduite = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),12L,libellePeriode ,libelleAnnee ,idEcole) ;
-            moyenConduite = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),12L,libellePeriode ,libelleAnnee ,idEcole) ;
+    is_clasConduite = getIsClasseMatiere(eleve.getNiveau(),12L,libellePeriode ,libelleAnnee ,idEcole) ;
+    moyenConduite = getMoyMatiere(eleve.getNiveau(),12L,libellePeriode ,libelleAnnee ,idEcole) ;
 
-            is_clasEps = getIsClasseMatiere(classeNiveauDtoList.get(i).getNiveau(),10L,libellePeriode ,libelleAnnee ,idEcole) ;
-            moyenEps = getMoyMatiere(classeNiveauDtoList.get(i).getNiveau(),10L,libellePeriode ,libelleAnnee ,idEcole) ;
+    is_clasEps = getIsClasseMatiere(eleve.getNiveau(),10L,libellePeriode ,libelleAnnee ,idEcole) ;
+    moyenEps = getMoyMatiere(eleve.getNiveau(),10L,libellePeriode ,libelleAnnee ,idEcole) ;
 
-            m.setNiveau(niveau);
-            m.setNom(nom);
-            m.setPrenoms(prenoms);
-            m.setOrdre_niveau(ordre_niveau);
-            m.setRang(rang);
-            m.setMoyenTrim(moyenTrim);
+    m.setNiveau(niveau);
+    m.setNom(nom);
+    m.setPrenoms(prenoms);
+    m.setOrdre_niveau(ordre_niveau);
+    m.setRang(rang);
+    m.setMoyenTrim(moyenTrim);
 
-            m.setIs_class_fr(is_class_fr);
-            m.setMoyen_fr(moyen_fr);
+    m.setIs_class_fr(is_class_fr);
+    m.setMoyen_fr(moyen_fr);
 
-            m.setIs_clasCompoFr(is_clasCompoFr);
-            m.setMoyenCompoFr(moyenCompoFr);
+    m.setIs_clasCompoFr(is_clasCompoFr);
+    m.setMoyenCompoFr(moyenCompoFr);
 
-            m.setIs_clasExpreOral(is_clasExpreOral);
-            m.setMoyenExpreOral(moyenExpreOral);
+    m.setIs_clasExpreOral(is_clasExpreOral);
+    m.setMoyenExpreOral(moyenExpreOral);
 
-            m.setIs_clasOrthoGram(is_clasOrthoGram);
-            m.setMoyenOrthoGram(moyenOrthoGram);
+    m.setIs_clasOrthoGram(is_clasOrthoGram);
+    m.setMoyenOrthoGram(moyenOrthoGram);
 
-            m.setIs_clasphiloso(is_clasphiloso);
-            m.setMoyenphiloso(moyenphiloso);
+    m.setIs_clasphiloso(is_clasphiloso);
+    m.setMoyenphiloso(moyenphiloso);
 
-            m.setIs_clasAng(is_clasAng);
-            m.setMoyenAng(moyenAng);
+    m.setIs_clasAng(is_clasAng);
+    m.setMoyenAng(moyenAng);
 
-            m.setIs_clasMath(is_clasMath);
-            m.setMoyenMath(moyenMath);
+    m.setIs_clasMath(is_clasMath);
+    m.setMoyenMath(moyenMath);
 
-            m.setIs_clasPhysiq(is_clasPhysiq);
-            m.setMoyenPhysiq(moyenPhysiq);
+    m.setIs_clasPhysiq(is_clasPhysiq);
+    m.setMoyenPhysiq(moyenPhysiq);
 
-            m.setIs_clasSVT(is_clasSVT);
-            m.setMoyenSVT(moyenSVT);
+    m.setIs_clasSVT(is_clasSVT);
+    m.setMoyenSVT(moyenSVT);
 
-            m.setIs_clasHg(is_clasHg);
-            m.setMoyenHg(moyenHg);
+    m.setIs_clasHg(is_clasHg);
+    m.setMoyenHg(moyenHg);
 
-            m.setIs_clasLv2(is_clasLv2);
-            m.setMoyenLv2(moyenLv2);
+    m.setIs_clasLv2(is_clasLv2);
+    m.setMoyenLv2(moyenLv2);
 
-            m.setIs_clasEdhc(is_clasEdhc);
-            m.setMoyenEdhc(moyenEdhc);
+    m.setIs_clasEdhc(is_clasEdhc);
+    m.setMoyenEdhc(moyenEdhc);
 
-           m.setIs_clasArplat(is_clasArplat);
-           m.setMoyenArplat(moyenArplat);
+    m.setIs_clasArplat(is_clasArplat);
+    m.setMoyenArplat(moyenArplat);
 
-           m.setIs_clasTic(is_clasTic);
-           m.setMoyenTic(moyenTic);
+    m.setIs_clasTic(is_clasTic);
+    m.setMoyenTic(moyenTic);
 
-           m.setIs_clasConduite(is_clasConduite);
-           m.setMoyenConduite(moyenConduite);
+    m.setIs_clasConduite(is_clasConduite);
+    m.setMoyenConduite(moyenConduite);
 
-           m.setIs_clasEps(is_clasEps);
-           m.setMoyenEps(moyenEps);
+    m.setIs_clasEps(is_clasEps);
+    m.setMoyenEps(moyenEps);
 
-           m.setMatricule(matricule);
-           m.setIs_class_periode(is_class_periode);
-           m.setNom_ecole(nom_ecole);
-           resultatsListElevesDto.add(m);
-
-        }
-
-        return  resultatsListElevesDto ;
-    }
-
+    m.setMatricule(matricule);
+    m.setIs_class_periode(is_class_periode);
+    m.setNom_ecole(nom_ecole);
+    resultatsListElevesDto.add(m);
+}
 
     public  Double getMoyMatiere(String matricule,Long libelleMatiere,String periode ,String libelleAnnee ,Long idEcole){
         try {

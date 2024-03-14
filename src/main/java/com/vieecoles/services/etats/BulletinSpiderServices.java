@@ -31,11 +31,18 @@ public class BulletinSpiderServices {
     InscriptionService inscriptionService ;
     @Inject
     SousceecoleService sousceecoleService ;
-@Transactional
+    List<InfosPersoBulletins> mlist = new ArrayList<>();
+    Double TmoyFr,TcoefFr,TmoyCoefFr,TmoyCoefEMR, moy_1er_trim ,moy_2eme_trim,moy_3eme_trim ,TmoyCoefEMR1 ,TcoefEMR ,TmoyCoefReligio = null,TmoyCoefReligio1,
+            TcoefReligion;
+    Integer rang_1er_trim ,rang_2eme_trim ,rang_3eme_trim ;
+    int TrangEMR = 0, TrangFr = 0;
+    String  codeEcole,is_class_1er_trim,is_class_2e_trim,is_class_3e_trim ;
+    int LongTableau;
+    AnneeScolaire mainAnnee = new AnneeScolaire() ;
+    Ecole mynewEcole = new Ecole() ;
+
     public List<InfosPersoBulletins>  bulletinInfos(Long idEcole ,String libelleAnnee , String libelleTrimestre , Long libelleClasse,boolean logoPosi ,boolean filigranne){
-        int LongTableau;
-         AnneeScolaire mainAnnee = new AnneeScolaire() ;
-         Ecole mynewEcole = new Ecole() ;
+
     mynewEcole = Ecole.findById(idEcole);
     mainAnnee =findMainAnneeByEcole(mynewEcole) ;
         List<NiveauDto> classeNiveauDtoList = new ArrayList<>() ;
@@ -53,178 +60,173 @@ public class BulletinSpiderServices {
         System.out.println("LongTableau "+LongTableau);
         List<InfosPersoBulletins> resultatsListElevesDto = new ArrayList<>();
 
-        Double TmoyFr,TcoefFr,TmoyCoefFr,TmoyCoefEMR, moy_1er_trim ,moy_2eme_trim,moy_3eme_trim ,TmoyCoefEMR1 ,TcoefEMR ,TmoyCoefReligio = null,TmoyCoefReligio1,
-    TcoefReligion;
-       Integer rang_1er_trim ,rang_2eme_trim ,rang_3eme_trim ;
-        int TrangEMR = 0, TrangFr = 0;
-      String  codeEcole,is_class_1er_trim,is_class_2e_trim,is_class_3e_trim ;
 
-
-
-        List<InfosPersoBulletins> mlist = new ArrayList<>();
-        for (int i=0; i< LongTableau;i++) {
-
-            BulletinSpiderDto m = new BulletinSpiderDto();
-            String b ;
-            InfosPersoBulletins l = new InfosPersoBulletins();
-            Inscriptions myIns= new Inscriptions() ;
-            ecole myEcole= new ecole() ;
-            String idBulletin ;
-
-            idBulletin = getIdBulletin(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,libelleTrimestre,idEcole) ;
-
-            TcoefEMR= calculcoefEMR(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,libelleTrimestre,idEcole) ;
-            TcoefReligion = calculcoefReligion(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,libelleTrimestre,idEcole);
-            TcoefFr = calculcoefFran(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,libelleTrimestre,idEcole) ;
-             Double TrangEMR1 = 0d ;
-
-
-            Double TrangFr1 = calculRangFran(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,libelleTrimestre,idEcole) ;
-             TmoyCoefFr = calculMoycoefFran(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,libelleTrimestre,idEcole) ;
-
-           TrangFr1 = calculRangFran(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,libelleTrimestre,idEcole) ;
-            //System.out.println("TrangFr1 "+TrangFr1);
-            if(TrangFr1 !=null)
-                TrangFr = TrangFr1.intValue() ;
-
-           TmoyFr = calculTMoyFran(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,libelleTrimestre,idEcole);
-
-            TrangEMR1 =calculRangEMR(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,libelleTrimestre,idEcole) ;
-
-            if(TrangEMR1 !=null)
-                TrangEMR = TrangEMR1.intValue() ;
-
-            TmoyCoefEMR1 = calculMoycoefEMR(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,libelleTrimestre,idEcole);
-
-            TmoyCoefReligio1 = calculMoycoefReligion(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,libelleTrimestre,idEcole);
-
-            TmoyCoefEMR = (TcoefEMR ==0.0? 0.0: (TmoyCoefEMR1)/TcoefEMR);
-
-            if(TcoefEMR==0.0 && TcoefReligion==0.0) {
-                TmoyCoefReligio= 0.0 ;
-            } else if (TcoefEMR==0.0&& TcoefReligion!=0.0) {
-                TmoyCoefReligio = (TmoyCoefReligio1)/(TcoefReligion) ;
-            } else if(TcoefEMR!=0.0 && TcoefReligion==0.0) {
-                TmoyCoefReligio = TmoyCoefEMR ;
-            } else if (TcoefEMR!=0.0 && TcoefReligion!=0.0) {
-                TmoyCoefReligio = (((TmoyCoefReligio1)/(TcoefReligion))+TmoyCoefEMR) /2L;
-            }
-
-
-
-             moy_1er_trim = calculmoyenTrimesPasse(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,"Premier Trimestre",idEcole) ;
-
-             moy_2eme_trim = calculmoyenTrimesPasse(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,"Deuxième Trimestre",idEcole) ;
-            moy_3eme_trim = calculmoyenTrimesPasse(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,"Troisième Trimestre",idEcole) ;
-
-             rang_1er_trim = calculRangTrimesPasse(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,"Premier Trimestre",idEcole) ;
-            rang_2eme_trim = calculRangTrimesPasse(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,"Deuxième Trimestre",idEcole) ;
-           rang_3eme_trim = calculRangTrimesPasse(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,"Troisième Trimestre",idEcole) ;
-
-             is_class_1er_trim = calculIsClassTrimesPasse(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,"Premier Trimestre",idEcole) ;
-
-             is_class_2e_trim = calculIsClassTrimesPasse(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,"Deuxième Trimestre",idEcole) ;
-
-            is_class_3e_trim = calculIsClassTrimesPasse(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,"Troisième Trimestre",idEcole) ;
-
-           l= getIdBulletinFromInfosBull(idBulletin);
-
-            if(l==null) {
-                InfosPersoBulletins k = new InfosPersoBulletins();
-                k.setTmoyFr(TcoefFr==null ||TcoefFr==0? null:TmoyCoefFr/TcoefFr);
-
-                k.setTrangFr(TrangFr);
-                k.setTrangEMR(TrangEMR);
-                k.setTmoyCoefEMR(TmoyCoefEMR);
-                myEcole=sousceecoleService.getInffosEcoleByID(idEcole);
-
-                myIns = inscriptionService.checkInscrit(idEcole,classeNiveauDtoList.get(i).getNiveau(),mainAnnee.getId());
-
-                parametre mpara = new parametre();
-                mpara = parametre.findById(1L) ;
-                k.setCodeEcole(myEcole.getEcolecode());
-                if(logoPosi){
-                    k.setAmoirie(mpara.getImage() );
-                    k.setLogo(myEcole.getLogoBlob());
-                } else {
-                    k.setAmoirie(myEcole.getLogoBlob());
-                    k.setLogo(mpara.getImage());
-                }
-                if(filigranne)
-                    k.setBg(myEcole.getFiligramme());
-                else
-                    k.setBg(null);
-
-                if(myIns!=null && myIns.getCheminphoto()!=null)
-                {
-                    //k.setPhoto_eleve(myIns.getPhoto_eleve());
-                    k.setCheminphoto(myIns.getCheminphoto());
-                }
-
-                k.setTcoefFr(TcoefFr);
-                k.setTmoyCoefFr(TmoyCoefFr);
-                k.setIs_class_1er_trim(is_class_1er_trim);
-                k.setIs_class_2e_trim(is_class_2e_trim);
-                k.setIs_class_3e_trim(is_class_3e_trim);
-                k.setRang_1er_trim(rang_1er_trim);
-                k.setRang_2eme_trim(rang_2eme_trim);
-                k.setRang_3eme_trim(rang_3eme_trim);
-                k.setMoy_1er_trim(moy_1er_trim);
-                k.setMoy_2eme_trim(moy_2eme_trim);
-                k.setMoy_3eme_trim(moy_3eme_trim);
-                k.setTmoyCoefReligio(TmoyCoefReligio);
-                //System.out.println("idBulletin>> "+idBulletin);
-                k.setIdBulletin(idBulletin);
-                //System.out.println(">>>>>Objet Detail Bulletin "+k.toString());
-                k.persist();
-
-                mlist.add(k);
-            } else {
-
-                l.setTmoyFr(TcoefFr==null||TcoefFr==0? null:TmoyCoefFr/TcoefFr);
-                l.setTrangFr(TrangFr);
-                l.setTrangEMR(TrangEMR);
-                l.setTmoyCoefEMR(TmoyCoefEMR);
-                myEcole=sousceecoleService.getInffosEcoleByID(idEcole);
-                myIns = inscriptionService.checkInscrit(idEcole,classeNiveauDtoList.get(i).getNiveau(),mainAnnee.getId());
-
-                parametre mpara = new parametre();
-                mpara = parametre.findById(1L) ;
-                l.setCodeEcole(myEcole.getEcolecode());
-                if(logoPosi){
-                    l.setAmoirie(mpara.getImage() );
-                    l.setLogo(myEcole.getLogoBlob());
-                } else {
-                    l.setAmoirie(myEcole.getLogoBlob());
-                    l.setLogo(mpara.getImage());
-                }
-                if(filigranne)
-                    l.setBg(myEcole.getFiligramme());
-                else
-                    l.setBg(null);
-                    if(myIns !=null && myIns.getCheminphoto()!=null)
-                    {
-                        l.setCheminphoto(myIns.getCheminphoto());
-                    }
-                l.setTcoefFr(TcoefFr);
-                l.setTmoyCoefFr(TmoyCoefFr);
-                l.setIs_class_1er_trim(is_class_1er_trim);
-                l.setIs_class_2e_trim(is_class_2e_trim);
-                l.setIs_class_3e_trim(is_class_3e_trim);
-                l.setRang_1er_trim(rang_1er_trim);
-                l.setRang_2eme_trim(rang_2eme_trim);
-                l.setRang_3eme_trim(rang_3eme_trim);
-                l.setMoy_1er_trim(moy_1er_trim);
-                l.setMoy_2eme_trim(moy_2eme_trim);
-                l.setMoy_3eme_trim(moy_3eme_trim);
-                l.setTmoyCoefReligio(TmoyCoefReligio);
-                l.setIdBulletin(idBulletin);
-                mlist.add(l);
-            }
-
-        }
+    System.out.println ("parallel started");
+    long t = System.currentTimeMillis ();
+    classeNiveauDtoList.stream ().parallel ().forEach (eleve-> calculMoyenneEleve (eleve ,libelleAnnee , libelleTrimestre ,idEcole,logoPosi ,filigranne));
+    System.out.println ("parallel Duree =" + (System.currentTimeMillis () - t) / 1000l);
 
         return  mlist ;
+    }
+@Transactional
+    public void calculMoyenneEleve(NiveauDto eleve ,String libelleAnnee,String libelleTrimestre,Long idEcole,Boolean logoPosi ,Boolean filigranne) {
+
+        BulletinSpiderDto m = new BulletinSpiderDto();
+        String b ;
+        InfosPersoBulletins l = new InfosPersoBulletins();
+        Inscriptions myIns= new Inscriptions() ;
+        ecole myEcole= new ecole() ;
+        String idBulletin ;
+
+        idBulletin = getIdBulletin(eleve.getNiveau(),libelleAnnee,libelleTrimestre,idEcole) ;
+
+        TcoefEMR= calculcoefEMR(eleve.getNiveau(),libelleAnnee,libelleTrimestre,idEcole) ;
+        TcoefReligion = calculcoefReligion(eleve.getNiveau(),libelleAnnee,libelleTrimestre,idEcole);
+        TcoefFr = calculcoefFran(eleve.getNiveau(),libelleAnnee,libelleTrimestre,idEcole) ;
+        Double TrangEMR1 = 0d ;
+
+
+        Double TrangFr1 = calculRangFran(eleve.getNiveau(),libelleAnnee,libelleTrimestre,idEcole) ;
+        TmoyCoefFr = calculMoycoefFran(eleve.getNiveau(),libelleAnnee,libelleTrimestre,idEcole) ;
+
+        TrangFr1 = calculRangFran(eleve.getNiveau(),libelleAnnee,libelleTrimestre,idEcole) ;
+        //System.out.println("TrangFr1 "+TrangFr1);
+        if(TrangFr1 !=null)
+            TrangFr = TrangFr1.intValue() ;
+
+        TmoyFr = calculTMoyFran(eleve.getNiveau(),libelleAnnee,libelleTrimestre,idEcole);
+
+        TrangEMR1 =calculRangEMR(eleve.getNiveau(),libelleAnnee,libelleTrimestre,idEcole) ;
+
+        if(TrangEMR1 !=null)
+            TrangEMR = TrangEMR1.intValue() ;
+
+        TmoyCoefEMR1 = calculMoycoefEMR(eleve.getNiveau(),libelleAnnee,libelleTrimestre,idEcole);
+
+        TmoyCoefReligio1 = calculMoycoefReligion(eleve.getNiveau(),libelleAnnee,libelleTrimestre,idEcole);
+
+        TmoyCoefEMR = (TcoefEMR ==0.0? 0.0: (TmoyCoefEMR1)/TcoefEMR);
+
+        if(TcoefEMR==0.0 && TcoefReligion==0.0) {
+            TmoyCoefReligio= 0.0 ;
+        } else if (TcoefEMR==0.0&& TcoefReligion!=0.0) {
+            TmoyCoefReligio = (TmoyCoefReligio1)/(TcoefReligion) ;
+        } else if(TcoefEMR!=0.0 && TcoefReligion==0.0) {
+            TmoyCoefReligio = TmoyCoefEMR ;
+        } else if (TcoefEMR!=0.0 && TcoefReligion!=0.0) {
+            TmoyCoefReligio = (((TmoyCoefReligio1)/(TcoefReligion))+TmoyCoefEMR) /2L;
+        }
+
+
+
+        moy_1er_trim = calculmoyenTrimesPasse(eleve.getNiveau(),libelleAnnee,"Premier Trimestre",idEcole) ;
+
+        moy_2eme_trim = calculmoyenTrimesPasse(eleve.getNiveau(),libelleAnnee,"Deuxième Trimestre",idEcole) ;
+        moy_3eme_trim = calculmoyenTrimesPasse(eleve.getNiveau(),libelleAnnee,"Troisième Trimestre",idEcole) ;
+
+        rang_1er_trim = calculRangTrimesPasse(eleve.getNiveau(),libelleAnnee,"Premier Trimestre",idEcole) ;
+        rang_2eme_trim = calculRangTrimesPasse(eleve.getNiveau(),libelleAnnee,"Deuxième Trimestre",idEcole) ;
+        rang_3eme_trim = calculRangTrimesPasse(eleve.getNiveau(),libelleAnnee,"Troisième Trimestre",idEcole) ;
+
+        is_class_1er_trim = calculIsClassTrimesPasse(eleve.getNiveau(),libelleAnnee,"Premier Trimestre",idEcole) ;
+
+        is_class_2e_trim = calculIsClassTrimesPasse(eleve.getNiveau(),libelleAnnee,"Deuxième Trimestre",idEcole) ;
+
+        is_class_3e_trim = calculIsClassTrimesPasse(eleve.getNiveau(),libelleAnnee,"Troisième Trimestre",idEcole) ;
+
+        l= getIdBulletinFromInfosBull(idBulletin);
+
+        if(l==null) {
+            InfosPersoBulletins k = new InfosPersoBulletins();
+            k.setTmoyFr(TcoefFr==null ||TcoefFr==0? null:TmoyCoefFr/TcoefFr);
+
+            k.setTrangFr(TrangFr);
+            k.setTrangEMR(TrangEMR);
+            k.setTmoyCoefEMR(TmoyCoefEMR);
+            myEcole=sousceecoleService.getInffosEcoleByID(idEcole);
+
+            myIns = inscriptionService.checkInscrit(idEcole,eleve.getNiveau(),mainAnnee.getId());
+
+            parametre mpara = new parametre();
+            mpara = parametre.findById(1L) ;
+            k.setCodeEcole(myEcole.getEcolecode());
+            if(logoPosi){
+                k.setAmoirie(mpara.getImage() );
+                k.setLogo(myEcole.getLogoBlob());
+            } else {
+                k.setAmoirie(myEcole.getLogoBlob());
+                k.setLogo(mpara.getImage());
+            }
+            if(filigranne)
+                k.setBg(myEcole.getFiligramme());
+            else
+                k.setBg(null);
+
+            if(myIns!=null && myIns.getCheminphoto()!=null)
+            {
+                //k.setPhoto_eleve(myIns.getPhoto_eleve());
+                k.setCheminphoto(myIns.getCheminphoto());
+            }
+
+            k.setTcoefFr(TcoefFr);
+            k.setTmoyCoefFr(TmoyCoefFr);
+            k.setIs_class_1er_trim(is_class_1er_trim);
+            k.setIs_class_2e_trim(is_class_2e_trim);
+            k.setIs_class_3e_trim(is_class_3e_trim);
+            k.setRang_1er_trim(rang_1er_trim);
+            k.setRang_2eme_trim(rang_2eme_trim);
+            k.setRang_3eme_trim(rang_3eme_trim);
+            k.setMoy_1er_trim(moy_1er_trim);
+            k.setMoy_2eme_trim(moy_2eme_trim);
+            k.setMoy_3eme_trim(moy_3eme_trim);
+            k.setTmoyCoefReligio(TmoyCoefReligio);
+            //System.out.println("idBulletin>> "+idBulletin);
+            k.setIdBulletin(idBulletin);
+            //System.out.println(">>>>>Objet Detail Bulletin "+k.toString());
+            k.persist();
+            mlist.add(k);
+        } else {
+
+            l.setTmoyFr(TcoefFr==null||TcoefFr==0? null:TmoyCoefFr/TcoefFr);
+            l.setTrangFr(TrangFr);
+            l.setTrangEMR(TrangEMR);
+            l.setTmoyCoefEMR(TmoyCoefEMR);
+            myEcole=sousceecoleService.getInffosEcoleByID(idEcole);
+            myIns = inscriptionService.checkInscrit(idEcole,eleve.getNiveau(),mainAnnee.getId());
+
+            parametre mpara = new parametre();
+            mpara = parametre.findById(1L) ;
+            l.setCodeEcole(myEcole.getEcolecode());
+            if(logoPosi){
+                l.setAmoirie(mpara.getImage() );
+                l.setLogo(myEcole.getLogoBlob());
+            } else {
+                l.setAmoirie(myEcole.getLogoBlob());
+                l.setLogo(mpara.getImage());
+            }
+            if(filigranne)
+                l.setBg(myEcole.getFiligramme());
+            else
+                l.setBg(null);
+            if(myIns !=null && myIns.getCheminphoto()!=null)
+            {
+                l.setCheminphoto(myIns.getCheminphoto());
+            }
+            l.setTcoefFr(TcoefFr);
+            l.setTmoyCoefFr(TmoyCoefFr);
+            l.setIs_class_1er_trim(is_class_1er_trim);
+            l.setIs_class_2e_trim(is_class_2e_trim);
+            l.setIs_class_3e_trim(is_class_3e_trim);
+            l.setRang_1er_trim(rang_1er_trim);
+            l.setRang_2eme_trim(rang_2eme_trim);
+            l.setRang_3eme_trim(rang_3eme_trim);
+            l.setMoy_1er_trim(moy_1er_trim);
+            l.setMoy_2eme_trim(moy_2eme_trim);
+            l.setMoy_3eme_trim(moy_3eme_trim);
+            l.setTmoyCoefReligio(TmoyCoefReligio);
+            l.setIdBulletin(idBulletin);
+            mlist.add(l);
+        }
     }
 
     public  Double calculTMoyFran(String matricule, String annee,String periode,Long idEcole){

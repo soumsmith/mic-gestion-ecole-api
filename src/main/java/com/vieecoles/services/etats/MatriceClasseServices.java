@@ -11,6 +11,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +33,7 @@ public class MatriceClasseServices {
     int    sizeMatiereList  ;
     List<MatiereTitreDto> titreList = new ArrayList<>() ;
     List<matriceClasseDto> resultatsListElevesDto = new ArrayList<>() ;
+    List<NiveauDto3>  classeMatiereList = new ArrayList<>() ;
     public List<matriceClasseDto> getInfosMatriceClasse(Long idEcole , String libelleAnnee , String periode ,Long anneeId ,Long classe){
 
         Branche br = new Branche() ;
@@ -57,7 +59,7 @@ public class MatriceClasseServices {
         // System.out.println("matriculeList "+matriculeList.toString());
         int sizeMatricule  = matriculeList.size() ;
 
-        List<NiveauDto3>  classeMatiereList = new ArrayList<>() ;
+
 
         System.out.println("pidEcole "+idEcole);
         System.out.println("plibelleAnnee "+libelleAnnee);
@@ -80,6 +82,7 @@ public class MatriceClasseServices {
         List<RapportMatriceClasseDto> rapportMatriceClasseDtoList = new ArrayList<>() ;
         List<matiereMoyenneBilanDto> matiereMoyenneBilanDtoList = new ArrayList<>() ;
 
+
         //Mise à jour du titre
 
         for (int j=0; j< sizeMatiereList;j++) {
@@ -100,91 +103,13 @@ public class MatriceClasseServices {
             titreList.add(matiereTitreDto) ;
         }
 
-        for (int i=0; i< sizeMatricule;i++) {
-
-            matricule= matriculeList.get(i).getNiveau() ;
-            List<matiereMoyenneDto> matiMoy = new  ArrayList() ;
-            matriceClasseDto m =new matriceClasseDto();
-            Inscriptions myIns= new Inscriptions() ;
-            myIns = inscriptionService.checkInscrit(idEcole,matriculeList.get(i).getNiveau(),anneeId);
+        System.out.println ("matriculeList SIZE " + matriculeList.size ());
+        System.out.println ("parallel started");
+        long t = System.currentTimeMillis ();
+        matriculeList.stream ().parallel ().forEach (eleve-> getMoyenneMatiere(eleve ,anneeId , periode ,libelleAnnee,idEcole,classe,sizeMatiereList));
+        System.out.println ("parallel Duree =" + (System.currentTimeMillis () - t) / 1000l);
 
 
-            if(myIns != null){
-                idEleve =  myIns.getEleve().getEleveid() ;
-                nom = myIns.getEleve().getElevenom() ;
-                prenoms = myIns.getEleve().getEleveprenom() ;
-
-            }
-            rang =  getRang(matriculeList.get(i).getNiveau() ,periode ,libelleAnnee,idEcole);
-            appreciation = getAppreciation(matriculeList.get(i).getNiveau() ,periode ,libelleAnnee,idEcole);
-            moyenTrimes = getMoyennTrimestr(matriculeList.get(i).getNiveau() ,periode ,libelleAnnee,idEcole) ;
-
-
-            System.out.println ("parallel Bilan started");
-          long   startTime = System.currentTimeMillis();
-            classeMatiereList.stream ().parallel ().forEach (eleve-> getMoyenneParMatiere(matriculeList.get(i).getNiveau(), ,idEcole ,libelleAnnee , periode ,classe));
-
-            long endTime = System.currentTimeMillis();
-            long executionTime = endTime - startTime;
-            System.out.println("Temps d'exécution total : " + executionTime /1000l + " secondes");
-
-            for (int k=0; k< sizeMatiereList;k++) {
-                matiereMoyenneDto my = new matiereMoyenneDto() ;
-                long idMatiere = 0;
-                long idMatiere1 = 0;
-                Matiere myMatiere = new Matiere();
-                String libelleMatiere ;
-                String id = String.valueOf(classeMatiereList.get(k).getIdMatiere());
-                //idMatiere = Long.parseLong(id);
-
-                idMatiere = classeMatiereList.get(k).getIdMatiere();
-
-
-                myMatiere = Matiere.findById(idMatiere) ;
-
-                libelleMatiere = getCodeLIbelleById(idMatiere,idMatiere);
-
-                Double moyFr = calculMoycoefFran(matriculeList.get(i).getNiveau(),libelleAnnee ,periode,idEcole ) ;
-                Double coef = calculcoefFran(matriculeList.get(i).getNiveau(),libelleAnnee ,periode,idEcole) ;
-                Double moyMat=  getMoyMatiere(matriculeList.get(i).getNiveau() , id,periode ,libelleAnnee,idEcole);
-                Integer    numOrdreClasse  = getNiveauOrdreClasse(matriculeList.get(i).getNiveau(),periode,libelleAnnee,idEcole) ;
-
-                if(libelleMatiere.equals("FR") && numOrdreClasse<5){
-                    my.setLibelleMatiere(libelleMatiere);
-                    my.setMatricule(matriculeList.get(i).getNiveau());
-                    DecimalFormat decimalFormat = new DecimalFormat("#.##");
-                    if(moyFr !=null)
-                    {
-                        moyMat= moyFr/coef;
-                        my.setMoyMatiere(moyMat);
-                    }
-
-                    my.setNumOrdre(getNumORDREMatiere(idMatiere,idEcole));
-                } else {
-                    my.setLibelleMatiere(libelleMatiere);
-                    my.setMatricule(matriculeList.get(i).getNiveau());
-
-                    my.setMoyMatiere(moyMat);
-                    my.setNumOrdre(getNumORDREMatiere(idMatiere,idEcole));
-                }
-
-                // System.out.println("my MatiereInfos "+my.toString());
-                matiMoy.add(my);
-            }
-            m.setMoyenTrimes(moyenTrimes);
-            m.setAppreciation(appreciation);
-            m.setRang(rang);
-            m.setNom(nom);
-            m.setPrenoms(prenoms);
-            m.setIdEleve(idEleve);
-            m.setMatricule(matricule);
-            m.setMatiereMoyenneDto(matiMoy);
-            m.setMatiereTitreDto(titreList);
-            m.setClasse(classe1.getLibelle());
-
-            resultatsListElevesDto.add(m) ;
-
-        }
 
 
 /*
@@ -238,78 +163,95 @@ public class MatriceClasseServices {
         return  resultatsListElevesDto ;
     }
 
-    public void getMoyenneParMatiere( NiveauDto eleve, NiveauDto3 matiere , String periode ,String libelleAnnee,Long  idEcole ,Long anneeId ){
-        matricule= eleve.getNiveau() ;
-        List<matiereMoyenneDto> matiMoy = new  ArrayList() ;
-        matriceClasseDto m =new matriceClasseDto();
-        Inscriptions myIns= new Inscriptions() ;
-        myIns = inscriptionService.checkInscrit(idEcole,eleve.getNiveau(),anneeId);
 
+    @Transactional
+    public void getMoyenneMatiere(NiveauDto eleve, Long anneeId, String periode, String libelleAnnee, Long idEcole, Long classe, final int finalsizeMatiereList) {
+        MatriceClasseServices bl = new MatriceClasseServices ();
+        Long idEleve = null;
+        String matricule, nom = null, prenoms = null;
+        int rang;
+        Double moyenTrimes;
+        String appreciation;
+        List<matiereMoyenneDto> matiereMoyenneDto = new ArrayList<> ();
 
-        if(myIns != null){
-            idEleve =  myIns.getEleve().getEleveid() ;
-            nom = myIns.getEleve().getElevenom() ;
-            prenoms = myIns.getEleve().getEleveprenom() ;
+        matricule = eleve.getNiveau ();
+        List<matiereMoyenneDto> matiMoy = new ArrayList ();
+        matriceClasseDto m = new matriceClasseDto ();
+        Inscriptions myIns = new Inscriptions ();
+        myIns = inscriptionService.checkInscrit (idEcole, eleve.getNiveau (), anneeId);
+
+        if (myIns != null) {
+            idEleve = myIns.getEleve ().getEleveid ();
+            nom = myIns.getEleve ().getElevenom ();
+            prenoms = myIns.getEleve ().getEleveprenom ();
 
         }
-        rang =  getRang(eleve.getNiveau() ,periode ,libelleAnnee,idEcole);
-        appreciation = getAppreciation(eleve.getNiveau() ,periode ,libelleAnnee,idEcole);
-        moyenTrimes = getMoyennTrimestr(eleve.getNiveau() ,periode ,libelleAnnee,idEcole) ;
 
-        for (int k=0; k< sizeMatiereList;k++) {
-            matiereMoyenneDto my = new matiereMoyenneDto() ;
-            long idMatiere = 0;
-            long idMatiere1 = 0;
-            Matiere myMatiere = new Matiere();
-            String libelleMatiere ;
-            String id = String.valueOf(matiere.getIdMatiere());
-            //idMatiere = Long.parseLong(id);
+        rang = getRang (eleve.getNiveau (), periode, libelleAnnee, idEcole);
 
-            idMatiere = matiere.getIdMatiere();
+        appreciation = getAppreciation (eleve.getNiveau (), periode, libelleAnnee, idEcole);
+        moyenTrimes = getMoyennTrimestr (eleve.getNiveau (), periode, libelleAnnee, idEcole);
+
+        //soum
+        try {
+            for (int k = 0; k < finalsizeMatiereList; k++) {
+                matiereMoyenneDto my = new matiereMoyenneDto ();
+                long idMatiere = 0;
+                long idMatiere1 = 0;
+                Matiere myMatiere = new Matiere ();
+                String libelleMatiere;
+                String id = String.valueOf (classeMatiereList.get (k).getIdMatiere ());
+                //idMatiere = Long.parseLong(id);
+
+                idMatiere = classeMatiereList.get (k).getIdMatiere ();
 
 
-            myMatiere = Matiere.findById(idMatiere) ;
+                myMatiere = Matiere.findById (idMatiere);
 
-            libelleMatiere = getCodeLIbelleById(idMatiere,idMatiere);
+                libelleMatiere = getCodeLIbelleById (idMatiere, idMatiere);
 
-            Double moyFr = calculMoycoefFran(eleve.getNiveau(),libelleAnnee ,periode,idEcole ) ;
-            Double coef = calculcoefFran(eleve.getNiveau(),libelleAnnee ,periode,idEcole) ;
-            Double moyMat=  getMoyMatiere(eleve.getNiveau() , id,periode ,libelleAnnee,idEcole);
-            Integer    numOrdreClasse  = getNiveauOrdreClasse(eleve.getNiveau(),periode,libelleAnnee,idEcole) ;
+                Double moyFr = calculMoycoefFran (eleve.getNiveau (), libelleAnnee, periode, idEcole);
+                Double coef = calculcoefFran (eleve.getNiveau (), libelleAnnee, periode, idEcole);
+                Double moyMat = getMoyMatiere (eleve.getNiveau (), id, periode, libelleAnnee, idEcole);
+                Integer numOrdreClasse = getNiveauOrdreClasse (eleve.getNiveau (), periode, libelleAnnee , idEcole);
 
-            if(libelleMatiere.equals("FR") && numOrdreClasse<5){
-                my.setLibelleMatiere(libelleMatiere);
-                my.setMatricule(eleve.getNiveau());
-                DecimalFormat decimalFormat = new DecimalFormat("#.##");
-                if(moyFr !=null)
-                {
-                    moyMat= moyFr/coef;
-                    my.setMoyMatiere(moyMat);
+                if (libelleMatiere.equals ("FR") && numOrdreClasse < 5) {
+                    my.setLibelleMatiere (libelleMatiere);
+                    my.setMatricule (eleve.getNiveau ());
+                    DecimalFormat decimalFormat = new DecimalFormat ("#.##");
+                    if (moyFr != null) {
+                        moyMat = moyFr / coef;
+                        my.setMoyMatiere (moyMat);
+                    }
+
+                    my.setNumOrdre (getNumORDREMatiere (idMatiere, idEcole));
+                } else {
+                    my.setLibelleMatiere (libelleMatiere);
+                    my.setMatricule (eleve.getNiveau ());
+
+                    my.setMoyMatiere (moyMat);
+                    my.setNumOrdre (getNumORDREMatiere (idMatiere, idEcole));
                 }
 
-                my.setNumOrdre(getNumORDREMatiere(idMatiere,idEcole));
-            } else {
-                my.setLibelleMatiere(libelleMatiere);
-                my.setMatricule(eleve.getNiveau());
-
-                my.setMoyMatiere(moyMat);
-                my.setNumOrdre(getNumORDREMatiere(idMatiere,idEcole));
+                matiMoy.add (my);
             }
-
-            // System.out.println("my MatiereInfos "+my.toString());
-            matiMoy.add(my);
+        } catch (RuntimeException e) {
+            e.printStackTrace ();
         }
-        m.setMoyenTrimes(moyenTrimes);
-        m.setAppreciation(appreciation);
-        m.setRang(rang);
-        m.setNom(nom);
-        m.setPrenoms(prenoms);
-        m.setIdEleve(idEleve);
-        m.setMatricule(matricule);
-        m.setMatiereMoyenneDto(matiMoy);
-        m.setMatiereTitreDto(titreList);
-        m.setClasse(classe1.getLibelle());
-        resultatsListElevesDto.add(m) ;
+
+        m.setMoyenTrimes (moyenTrimes);
+        m.setAppreciation (appreciation);
+        m.setRang (rang);
+        m.setNom (nom);
+        m.setPrenoms (prenoms);
+        m.setIdEleve (idEleve);
+        m.setMatricule (matricule);
+        m.setMatiereMoyenneDto (matiMoy);
+        m.setMatiereTitreDto (titreList);
+        m.setClasse (classe1.getLibelle ());
+        //return  m ;
+        resultatsListElevesDto.add (m);
+
     }
 
 
