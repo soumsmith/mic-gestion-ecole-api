@@ -29,8 +29,6 @@ public class MajorParClasseNiveauServices {
                             .setParameter("periode", libelleTrimestre)
                            . getResultList() ;
 
-  System.out.println("classeNiveauDtoList "+classeNiveauDtoList.toString());
-        System.out.println("Longueur Tableau" +classeNiveauDtoList.size());
       int LongTableau =classeNiveauDtoList.size() ;
 
         Long  effeG,effeF,classF,classG,nonclassF,nonclassG,nbreMoySup10F,nbreMoySup10G,nbreMoyInf999F,nbreMoyInf999G,nbreMoyInf85G,nbreMoyInf85F;
@@ -41,15 +39,13 @@ public class MajorParClasseNiveauServices {
         for (int i=0; i< LongTableau;i++) {
             MajorParClasseNiveauDto resultatsListEleves= new MajorParClasseNiveauDto();
             Double moyMajor = null;
-            System.out.println(" Debut calcul Moyenne Major " + moyMajor);
+
             moyMajor = getMajorDto(idEcole,classeNiveauDtoList.get(i).getNiveau(),classeNiveauDtoList.get(i).getClasse(),libelleAnnee , libelleTrimestre) ;
-            System.out.println("Moyenne Major  " + moyMajor);
-            System.out.println("Niveau   " + classeNiveauDtoList.get(i).getNiveau());
-            System.out.println("Classe   " + classeNiveauDtoList.get(i).getClasse());
+
             majorExeco = getListMajorParClasseNiveau(idEcole,classeNiveauDtoList.get(i).getNiveau(),classeNiveauDtoList.get(i).getClasse(),moyMajor,libelleAnnee , libelleTrimestre) ;
 
             if(majorExeco.size() >1){
-                System.out.println("Mojor et execo   " + majorExeco.toString());
+
                 for (int k=0 ;k< majorExeco.size(); k++){
                     resultatsListEleves = majorExeco.get(k);
                     resultatsListElevesDto.add(resultatsListEleves) ;
@@ -59,10 +55,7 @@ public class MajorParClasseNiveauServices {
                 resultatsListElevesDto.add(resultatsListEleves) ;
             }
 
-           // resultatsListEleves = getListMajorParClasseNiveau(idEcole,classeNiveauDtoList.get(i).getNiveau(),classeNiveauDtoList.get(i).getClasse(),moyMajor) ;
 
-
-           // resultatsListElevesDto.add(resultatsListEleves) ;
         }
 
         return  resultatsListElevesDto ;

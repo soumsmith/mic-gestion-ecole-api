@@ -27,8 +27,6 @@ public class resultatsRecapAffEtNonAffServices {
                                 .setParameter("periode", libelleTrimestre)
                               . getResultList() ;
 
-  //System.out.println("classeNiveauDtoList "+classeNiveauDtoList.toString());
-        System.out.println("Longueur Tableau" +classeNiveauDtoList.size());
       int LongTableau =classeNiveauDtoList.size() ;
 
         Long  effeG,effeF,classF,classG,nonclassF,nonclassG,nbreMoySup10F,nbreMoySup10G,nbreMoyInf999F,nbreMoyInf999G,nbreMoyInf85G,nbreMoyInf85F;

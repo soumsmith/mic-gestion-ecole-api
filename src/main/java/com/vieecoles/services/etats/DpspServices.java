@@ -104,6 +104,7 @@ public class DpspServices {
     }
     @Transactional
 public void getInfosDsps(NiveauDto eleve, String libellePeriode ,String libelleAnnee,Long idEcole){
+        System.out.println ("Niveau >> "+eleve.getNiveau ());
     String matricule ,nom,prenoms,niveau,is_clasCompoFr,is_clasOrthoGram,is_clasExpreOral,is_clasphiloso,is_clasAng,
             is_clasMath,is_clasPhysiq,is_clasSVT,is_clasHg,is_clasLv2,is_clasEdhc,is_clasArplat,is_clasTic ,
             is_clasConduite,is_clasEps,is_class_periode ,nom_ecole ,is_class_fr;
@@ -625,7 +626,7 @@ public void getInfosDsps(NiveauDto eleve, String libellePeriode ,String libelleA
 
     }
     public  String  getNomEcole(String matricule,String periode ,String libelleAnnee ,Long idEcole){
-        System.out.println ("Matricule "+matricule);
+
         try {
             String   nomEcole = (String) em.createQuery("select b.nomEcole  from Bulletin b  where b.matricule=:matricule and b.libellePeriode =:periode " +
                             " and b.libellePeriode=:periode and b.anneeLibelle=:libelleAnnee and b.ecoleId=:idEcole")

@@ -30,9 +30,7 @@ public class resultatsRecapServices {
                            .setParameter("periode", libelleTrimestre)
                            . getResultList() ;
 
-  //System.out.println("classeNiveauDtoList "+classeNiveauDtoList.toString());
-        System.out.println("Longueur Tableau differents niveau " +classeNiveauDtoList.size());
-        System.out.println("Les differents niveau " +classeNiveauDtoList.toString());
+
       int LongTableau =classeNiveauDtoList.size() ;
 
         Long  effeG,effeF,classF,classG,nonclassF,nonclassG,nbreMoySup10F,nbreMoySup10G,nbreMoyInf999F,nbreMoyInf999G,nbreMoyInf85G,nbreMoyInf85F;
@@ -40,42 +38,41 @@ public class resultatsRecapServices {
                 moyClasseF =0d,moyClasseG =0d , moyClasse , moyClasseF_ET,moyClasse_ET,moyClasseG_ET ;
        Integer effectifClasse,orderNiveau ;
         List<RecapDesResultatsElevesAffecteDto> resultatsListElevesDto = new ArrayList<>(LongTableau);
-        System.out.println("Debut for RecapResultatsScolaire "+ resultatsListElevesDto.size());
+
         for (int i=0; i< LongTableau;i++) {
             RecapDesResultatsElevesAffecteDto resultatsListEleves= new RecapDesResultatsElevesAffecteDto();
             orderNiveau =getOrderNiveau(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee , libelleTrimestre);
-            System.out.println("LibelleNiveau  "+classeNiveauDtoList.get(i).getNiveau());
+
             effectifClasse= getEffectifParClasse(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre);
-            System.out.println("effectifClasse "+effectifClasse);
+
             effeG = geteffeG(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre);
-            System.out.println("effeG "+effeG);
+
             effeF = geteffeF(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre);
-            System.out.println("effeF "+effeF);
+
             classF =getclassF(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre);
-            System.out.println("classF "+classF);
+
             classG= getclassG(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre);
-            System.out.println("classG "+classG);
+
             nonclassF= getNonClasseF(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre);
 
-            System.out.println("nonclassF "+nonclassF);
             nonclassG= getNonClasseG(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre);
-            System.out.println("nonclassG "+nonclassG);
+
             nbreMoySup10F = getnbreMoySup10F(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre);
-            System.out.println("nbreMoySup10F "+nbreMoySup10F);
+
             nbreMoySup10G= getnbreMoySup10G(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre);
-            System.out.println("nbreMoySup10G "+nbreMoySup10G);
+
             nbreMoyInf999F= getnbreMoyInf999F(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre);
-            System.out.println("nbreMoyInf999F "+nbreMoyInf999F);
+
             nbreMoyInf999G= getnbreMoyInf999G(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre);
-            System.out.println("nbreMoyInf999G "+nbreMoyInf999G);
+
             nbreMoyInf85F= getnbreMoyInf85F(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre);
-            System.out.println("nbreMoyInf85F "+nbreMoyInf85F);
+
             nbreMoyInf85G= getnbreMoyInf85G(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre);
-            System.out.println("nbreMoyInf85G "+nbreMoyInf85G);
+
             moyClasseF=getmoyClasseF(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre);
-            System.out.println("moyClasseF "+moyClasseF);
+
             moyClasseG=getmoyClasseG(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre);
-            System.out.println("moyClasseG "+moyClasseG);
+
             moyClasse = getmoyClasse(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre) ;
             moyClasse_ET = getmoyClasseET(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre) ;
             moyClasseG_ET = getmoyClasseGET(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre) ;
@@ -84,32 +81,21 @@ public class resultatsRecapServices {
             if(classG !=0)
             pourMoyInf85G= (double) ((nbreMoyInf85G*100d)/classG);
 
-            System.out.println("pourMoyInf85G "+pourMoyInf85G);
-
             if(classF !=0)
             pourMoyInf85F= (double) ((nbreMoyInf85F*100d)/classF);
-            System.out.println("pourMoyInf85F "+pourMoyInf85G);
 
             if(classG !=0)
             pourMoyInf999G=(double) ((nbreMoyInf999G*100d)/classG);
-            System.out.println("pourMoyInf999G "+pourMoyInf999G);
 
             if(classF !=0)
             pourMoyInf999F=(double) ((nbreMoyInf999F*100d)/classF);
-            System.out.println("pourMoyInf999F "+pourMoyInf999F);
-
             if(classF !=0)
             pourMoySup10F = (double) ((nbreMoySup10F*100d)/classF);
-            System.out.println("pourMoySup10F "+pourMoySup10F);
 
             if(classG !=0)
             pourMoySup10G = (double) ((nbreMoySup10G*100d)/classG);
-            System.out.println("pourMoySup10G "+pourMoySup10G);
-            //System.out.println("resultatsListElevesDto "+resultatsListElevesDto.toString());
-            System.out.println("resultats0 ");
+
             resultatsListEleves.setNiveau(classeNiveauDtoList.get(i).getNiveau());
-            System.out.println("resultats1 "+resultatsListEleves.getNiveau());
-           // resultatsListEleves.setClasse(classeNiveauDtoList.get(i).getClasse());
             resultatsListEleves.setEffeG(effeG);
             resultatsListEleves.setEffeF(effeF);
             resultatsListEleves.setClassG(classG);

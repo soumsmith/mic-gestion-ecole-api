@@ -814,7 +814,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="18"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Matrice classe  "+$F{classe}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Matrice classe  "+$F{classe}+"  pour le "+$F{periode}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
