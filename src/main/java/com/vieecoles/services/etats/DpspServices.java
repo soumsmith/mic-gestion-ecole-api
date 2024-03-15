@@ -12,6 +12,8 @@ import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.*;
+import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class DpspServices {
@@ -39,10 +41,62 @@ public class DpspServices {
                 moyenHg,moyenLv2,moyenEdhc,moyenArplat,moyenTic,moyenConduite,moyenEps,moyen_fr;
         Integer rang , ordre_niveau ;
 
-        System.out.println ("parallel started");
+       System.out.println ("parallel started");
         long t = System.currentTimeMillis ();
         classeNiveauDtoList.stream ().parallel ().forEach (eleve-> getInfosDsps(eleve ,libellePeriode,libelleAnnee,idEcole));
         System.out.println ("parallel Duree =" + (System.currentTimeMillis () - t) / 1000l);
+
+        /*System.out.println ("sequential started");
+        long t = System.currentTimeMillis ();
+        for (int k = 0; k < classeNiveauDtoList.size (); k++) {
+            getInfosDsps(classeNiveauDtoList.get (k) ,libellePeriode,libelleAnnee,idEcole);
+        }
+        System.out.println ("sequential Duree =" + (System.currentTimeMillis () - t) / 1000l) ;*/
+
+
+
+
+
+      /*     ExecutorService executorService = Executors.newFixedThreadPool (15);
+        List<Void> resultList = new ArrayList<> ();
+        Boolean retour;
+        long   startTime =0l;
+        try {
+          startTime = System.currentTimeMillis ();
+// Demmarage des processus
+            List<Future<Void>> operationFutures = executorService.invokeAll (
+
+                    classeNiveauDtoList.stream ()
+                            .map (eleve -> (Callable<Void>) () -> {
+                                getInfosDsps(eleve ,libellePeriode,libelleAnnee,idEcole) ;
+                                //resultatsListElevesDto.add(resultat);
+                                return null;
+                            })
+                            .collect (Collectors.toList ()) // Corrected here
+            );
+
+        } catch (Exception e) {
+            e.printStackTrace ();
+        } finally {
+            // Arrêter l'ExecutorService
+
+            long endTime = System.currentTimeMillis ();
+            long executionTime = endTime - startTime;
+
+
+
+
+            try {
+
+                executorService.shutdown ();
+              executorService.awaitTermination (30l, TimeUnit.MINUTES);
+                System.out.println ("Processu terminés>> ");
+                System.out.println ("Temps d'exécution total : " + executionTime / 1000l + " Secondes");
+            } catch (InterruptedException e) {
+                throw new RuntimeException (e);
+            }
+
+        }*/
 
 
 

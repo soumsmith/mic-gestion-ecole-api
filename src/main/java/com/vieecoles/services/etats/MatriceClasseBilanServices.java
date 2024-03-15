@@ -14,6 +14,7 @@ import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
 
 @ApplicationScoped
 public class MatriceClasseBilanServices {
@@ -106,13 +107,20 @@ public class MatriceClasseBilanServices {
         if(clasFille !=0)
             pourSup8_5F = (double) ((nombreSup8_5F*100d)/clasFille);
 
-        System.out.println ("parallel Bilan started");
+      System.out.println ("parallel Bilan started");
        long startTime = System.currentTimeMillis();
         classeMatiereList.stream ().parallel ().forEach (eleve-> getBilanMoyenne(eleve ,idEcole ,libelleAnnee , periode ,classe));
 
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
         System.out.println("Temps d'exécution total : " + executionTime /1000l + " secondes");
+
+
+
+
+
+
+
         return  matiereMoyenneBilanDtoList ;
     }
     @Transactional
