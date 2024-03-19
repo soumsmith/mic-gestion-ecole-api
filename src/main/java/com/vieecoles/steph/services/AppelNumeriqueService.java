@@ -92,7 +92,7 @@ public class AppelNumeriqueService implements PanacheRepositoryBase<AppelNumeriq
 	}
 
 	public AppelNumerique saverFromDto(AppelNumeriqueDto dto) {
-		AppelNumerique appel = getBySeance(dto.getSeanceId());
+		AppelNumerique appel = getBySeance(dto.getSeanceId(), dto.getPosition());
 		System.out.println("Heure debut ::: " + dto.getHeureDebutAppel());
 //		appel.setCode(null);
 		appel.setDate(new Date());
@@ -109,6 +109,7 @@ public class AppelNumeriqueService implements PanacheRepositoryBase<AppelNumeriq
 		Seances seance = new Seances();
 		seance.setId(dto.getSeanceId());
 		appel.setSeance(seance);
+		appel.setPosition(dto.getPosition());
 		if (appel.getId() == null) {
 			save(appel);
 		} else {
@@ -119,17 +120,18 @@ public class AppelNumeriqueService implements PanacheRepositoryBase<AppelNumeriq
 		return appel;
 	}
 
-	public AppelNumeriqueDto getListeAppel(String seanceId) {
+	public AppelNumeriqueDto getListeAppel(String seanceId, int position) {
 		// obtenir la seance
 		Seances seance = seanceService.findById(seanceId);
 		// Liste de la classe pour l'annee
 		List<ClasseEleve> listeClasseEleve = classeEleveService.getByClasseAnnee(seance.getClasse().getId(),
 				Long.parseLong(seance.getAnnee()));
 		// Rechercher un eventuel appel deja effectué et en extraire les presences
-		AppelNumerique appelExistant = getBySeance(seanceId);
+		AppelNumerique appelExistant = getBySeance(seanceId, position);
 		List<DetailAppelNumerique> detailAppelExistant = detailAppel.getByAppel(appelExistant.getId());
 		// Construire le dto
 		AppelNumeriqueDto dto = dtoBuilder(listeClasseEleve, seance, detailAppelExistant);
+		dto.setPosition(position);
 		if (appelExistant.getId() != null)
 			dto.setDateAppel(appelExistant.getDate());
 		return dto;
@@ -138,7 +140,35 @@ public class AppelNumeriqueService implements PanacheRepositoryBase<AppelNumeriq
 	public AppelNumerique getBySeance(String seanceId) {
 		AppelNumerique apNum = new AppelNumerique();
 		try {
+			apNum = AppelNumerique.find("seance.id = ?1 and (position is null or position = 0)", seanceId).singleResult();
+			return apNum;
+		} catch (RuntimeException e) {
+			return apNum;
+		}
+	}
+	
+	public List<AppelNumerique> getBySeanceWithDestruct(String seanceId) {
+		List<AppelNumerique> apNum = new ArrayList<>();
+		try {
 			apNum = AppelNumerique.find("seance.id = ?1", seanceId).singleResult();
+			return apNum;
+		} catch (RuntimeException e) {
+			return apNum;
+		}
+	}
+	
+	/**
+	 * Cette méthode permet de savoir si une séance a deja fait l'objet d'un appel
+	 * avec la position  étant l occurence n d'une séance ayant été destructurée par rapport à l'unité de temps.
+	 *  
+	 * @param seanceId
+	 * @param position
+	 * @return
+	 */
+	public AppelNumerique getBySeance(String seanceId, int position) {
+		AppelNumerique apNum = new AppelNumerique();
+		try {
+			apNum = AppelNumerique.find("seance.id = ?1 and position =?2", seanceId, position).singleResult();
 			return apNum;
 		} catch (RuntimeException e) {
 			return apNum;

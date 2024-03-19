@@ -38,5 +38,6 @@ public class AppelNumerique extends PanacheEntityBase{
 	@Column(name = "progression_id")
 	private String progression;
 	private String commentaire;
+	private Integer position;
 
 }

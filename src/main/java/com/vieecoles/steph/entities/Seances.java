@@ -65,4 +65,13 @@ public class Seances extends PanacheEntityBase {
 	private String user;
 	@Transient
 	private Boolean appelAlreadyExist;
+	// Indique le positionnement au cas où plusieurs séances par rapport à l'unité de temps
+	@Transient
+	private int position;
+	@Transient
+	private Boolean isVerrou;
+	@Transient
+	private Boolean isEnded;
+	@Transient
+	private String isClassEnded;
 }

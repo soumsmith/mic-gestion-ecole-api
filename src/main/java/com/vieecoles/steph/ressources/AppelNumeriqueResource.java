@@ -42,10 +42,10 @@ public class AppelNumeriqueResource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes (MediaType.TEXT_PLAIN)
-	@Path("/get-list-eleve/{seanceId}")
-	public Response getListEleveBySeance(@PathParam("seanceId") String seanceId) {
+	@Path("/get-list-eleve/{seanceId}/{position}")
+	public Response getListEleveBySeance(@PathParam("seanceId") String seanceId, @PathParam("position") Integer position) {
 		try {
-			return Response.ok(appelNumeriqueService.getListeAppel(seanceId)).build();
+			return Response.ok(appelNumeriqueService.getListeAppel(seanceId, position)).build();
 		} catch (RuntimeException e) {
 			return Response.serverError().entity(e).build();
 		}
@@ -71,7 +71,7 @@ public class AppelNumeriqueResource {
 	@Path("/save-handle-dto")
 	public Response save(AppelNumeriqueDto dto) {
 		Gson gson = new Gson();
-		System.out.println(gson.toJson(dto));;
+		System.out.println(gson.toJson(dto));
 		try {
 			AppelNumerique appel = appelNumeriqueService.saverFromDto(dto);
 			// Access-Control-Expose-Headers nécessaire pour que les headers non default soient accessibles requete CORS

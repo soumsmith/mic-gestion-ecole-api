@@ -93,19 +93,88 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 		return Seances.find("dateSeance = ?1", date).list();
 	}
 
+	List<Seances> destructSeanceByTimeUnit(Seances seances, int minutes) {
+		if (minutes == 0)
+			minutes = 60;
+		int duree = DateUtils.calculerDuree(seances.getHeureDeb(), seances.getHeureFin());
+		int nbreSeances = duree / minutes;
+		if (duree % minutes > 0)
+			nbreSeances++;
+		String dateDebNew = seances.getHeureDeb();
+		System.out.println(String.format("Nombre de de seances pour la séance %s = %s", seances.getId(), nbreSeances));
+		List<Seances> list = new ArrayList<>();
+		if (nbreSeances > 1) {
+			for (int i = 0; i < nbreSeances; i++) {
+				Seances seance = new Seances();
+				AppelNumerique ap = new AppelNumerique();
+				ap = appelNumeriqueService.getBySeance(seances.getId(), i);
+				seance.setAppelAlreadyExist(ap.getId() != null);
+				seance.setId(seances.getId());
+				seance.setAnnee(seances.getAnnee());
+				seance.setClasse(seances.getClasse());
+				seance.setDateCreation(seances.getDateCreation());
+				seance.setDateUpdate(seances.getDateUpdate());
+				seance.setDateSeance(seances.getDateSeance());
+				seance.setHeureDeb(dateDebNew);
+				seance.setHeureFin(DateUtils.ajouterMinutes(dateDebNew, minutes));
+				seance.setJour(seances.getJour());
+				seance.setMatiere(seances.getMatiere());
+				seance.setProfesseur(seances.getProfesseur());
+				seance.setSalle(seances.getSalle());
+				seance.setStatut(seances.getStatut());
+				seance.setSurveillant(seances.getSurveillant());
+				seance.setTypeActivite(seances.getTypeActivite());
+				seance.setActivite(seances.getActivite());
+				seance.setPosition(i);
+				seance.setIsVerrou(DateUtils.verifierHeureDansMarge(dateDebNew, 5, 5));
+				seance.setIsEnded(verifySeanceEnded(seance.getHeureFin()));
+				seance.setIsClassEnded(verifySeanceEnded(seance.getHeureFin()) ? "surface-300" : "");
+				list.add(seance);
+				dateDebNew = DateUtils.ajouterMinutes(dateDebNew, minutes);
+				System.out.println(
+						String.format("Heure deb: %s - heure fin: %s ", seance.getHeureDeb(), seance.getHeureFin()));
+			}
+		}
+
+		return list;
+	}
+	
+	public boolean verifySeanceEnded(String heure) {
+		LocalTime heureActuelle = LocalTime.now();
+		LocalTime heureParametre = LocalTime.parse(heure, DateTimeFormatter.ofPattern("HH:mm"));
+		System.out.println("Seance Terminée : "+heureParametre.isBefore(heureActuelle));
+		System.out.println(heureParametre +" "+heureActuelle);
+		return heureParametre.isBefore(heureActuelle);
+	}
+
+	// La signature doit changer vu que l'année n'est plus utiliser
 	public List<Seances> getListByDateAndProf(long anneeId, Date date, long profId) {
 		logger.info(String.format("prof %s - date %s", profId, date));
 		List<Seances> list = Seances.find("dateSeance = ?1 and professeur.id= ?2 order by heureDeb", date, profId)
 				.list();
+		List<Seances> listWithDestructSeances = new ArrayList<Seances>();
+		// Décomposer la liste afin de s'assurer que chaque séance tient sur une unité
+		// de temps (1h par defaut)
 		// indicateur pour savoir si un appel a eu lieu pour la seance
 		if (list != null) {
 			for (Seances s : list) {
-				AppelNumerique ap = new AppelNumerique();
-				ap = appelNumeriqueService.getBySeance(s.getId());
-				s.setAppelAlreadyExist(ap.getId() != null);
+				List<Seances> seanceDestruct = destructSeanceByTimeUnit(s, 0);
+				if (seanceDestruct.size() > 0) {
+					listWithDestructSeances.addAll(seanceDestruct);
+
+				} else {
+					AppelNumerique ap = new AppelNumerique();
+					ap = appelNumeriqueService.getBySeance(s.getId());
+					s.setAppelAlreadyExist(ap.getId() != null);
+					s.setIsVerrou(DateUtils.verifierHeureDansMarge(s.getHeureDeb(), 5, 5));
+					s.setIsEnded(verifySeanceEnded(s.getHeureFin()));
+					s.setIsClassEnded(verifySeanceEnded(s.getHeureFin()) ? "surface-300" : "");
+					listWithDestructSeances.add(s);
+				}
+
 			}
 		}
-		return list;
+		return listWithDestructSeances;
 	}
 
 	public List<Seances> getListByStatut(String anneeId, String statut, long ecoleId) {

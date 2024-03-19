@@ -27,6 +27,7 @@ public abstract class AppelNumeriqueDtoAbstract {
 	private Integer presenceCmpt;
 	private Long matiereId;
 	private String matiereLibelle;
+	private int position;
 	private List<AppelEleveDto> eleves;
 	
 }
