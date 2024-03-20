@@ -26,9 +26,7 @@ public class RepartitionElevParAnNaissServices {
                                 .setParameter("periode", libelleTrimestre)
                              . getResultList() ;
 
-  System.out.println("dateNiveauDtoList "+dateNiveauDtoList.toString());
 
-        System.out.println("Longueur Tableau" +dateNiveauDtoList.size());
       int LongTableau =dateNiveauDtoList.size() ;
 
       Long an6F, an5F,an4F,an3F,an2AF,an2CF,an1AF,an1CF,an1DF,anTAF,anTCF,

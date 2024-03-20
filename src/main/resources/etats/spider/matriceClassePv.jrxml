@@ -707,7 +707,7 @@
 						</crosstab>
 					</frame>
 					<textField textAdjust="ScaleFont">
-						<reportElement x="680" y="0" width="30" height="20" uuid="5f1845df-6c09-47af-910c-139b832242f0">
+						<reportElement x="680" y="0" width="40" height="20" uuid="5f1845df-6c09-47af-910c-139b832242f0">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -730,7 +730,7 @@
 						<textFieldExpression><![CDATA[$F{moyenTrimes}]]></textFieldExpression>
 					</textField>
 					<textField textAdjust="ScaleFont">
-						<reportElement x="710" y="0" width="20" height="20" uuid="57b470ac-fa45-4a3e-9b3f-dbf63de171c9">
+						<reportElement x="720" y="0" width="30" height="20" uuid="57b470ac-fa45-4a3e-9b3f-dbf63de171c9">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -754,7 +754,7 @@
 						<textFieldExpression><![CDATA[$F{rang}]]></textFieldExpression>
 					</textField>
 					<textField textAdjust="ScaleFont">
-						<reportElement x="730" y="0" width="55" height="20" uuid="36e77b51-046f-4199-ac8c-b4d2467f7243">
+						<reportElement x="750" y="0" width="73" height="20" uuid="36e77b51-046f-4199-ac8c-b4d2467f7243">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -999,7 +999,7 @@
 					</crosstab>
 				</frame>
 				<staticText>
-					<reportElement x="680" y="0" width="30" height="20" uuid="af6909a8-1bad-43e2-aa29-6b92e19cf6e7">
+					<reportElement x="680" y="0" width="40" height="20" uuid="af6909a8-1bad-43e2-aa29-6b92e19cf6e7">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1021,7 +1021,7 @@
 					<text><![CDATA[Moyenne]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="710" y="0" width="20" height="20" uuid="6aadc30c-41d1-420a-baac-b76ad329040a">
+					<reportElement x="720" y="0" width="30" height="20" uuid="6aadc30c-41d1-420a-baac-b76ad329040a">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1043,7 +1043,7 @@
 					<text><![CDATA[Rang]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="730" y="0" width="55" height="20" uuid="a1746fa0-38f2-4ae1-bf70-37e455af89ec">
+					<reportElement x="750" y="0" width="73" height="20" uuid="a1746fa0-38f2-4ae1-bf70-37e455af89ec">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1063,28 +1063,6 @@
 						<font size="7"/>
 					</textElement>
 					<text><![CDATA[Appréciation]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="785" y="0" width="38" height="20" uuid="b78fef1f-83da-44dc-bb6d-af579267e973">
-						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
-						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
-						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-						<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					</reportElement>
-					<box>
-						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
-					<textElement verticalAlignment="Middle">
-						<font size="7"/>
-					</textElement>
-					<text><![CDATA[Signature]]></text>
 				</staticText>
 			</frame>
 		</band>

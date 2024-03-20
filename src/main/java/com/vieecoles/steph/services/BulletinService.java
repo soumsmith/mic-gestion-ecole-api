@@ -135,7 +135,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 	 * Obténir les infos du bulletin d'un élève pour une période dans une année
 	 */
 	public BulletinDto getBulletinsEleveByAnneeAndPeriode(Long anneeId, String matricule, Long classeId,
-			Long periodeId) {
+														  Long periodeId) {
 
 		Bulletin myBulletin = new Bulletin();
 		List<DetailBulletin> details = new ArrayList<DetailBulletin>();
@@ -312,7 +312,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 					.project(BulletinIdProjection.class);
 			bulletinsProject = bullProjectIds.list();
 			bulletins = Bulletin.find("classeId = ?1 and anneeId= ?2 and periodeId = ?3 and statut =?4",
-					Long.parseLong(classe), Long.parseLong(annee), Long.parseLong(periode), Constants.MODIFIABLE)
+							Long.parseLong(classe), Long.parseLong(annee), Long.parseLong(periode), Constants.MODIFIABLE)
 					.list();
 			for (BulletinIdProjection bulletin : bulletinsProject) {
 				List<DetailBulletinIdProjection> details = DetailBulletin.find("bulletin.id = ?1", bulletin.getId())

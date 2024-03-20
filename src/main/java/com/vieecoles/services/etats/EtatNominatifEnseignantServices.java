@@ -30,8 +30,6 @@ public class EtatNominatifEnseignantServices {
         List<EnseignantSelectDto> listPers = new ArrayList<>() ;
         List<EtatNominatifEnseignatDto> listEtatNomina = new ArrayList<>() ;
         listPers= getInfosEnseignant(idEcole,AnneeId) ;
-        //System.out.println("listPers AAAAA "+listPers.toString());
-        System.out.println("listPers size "+listPers.size());
 
         for (int k=0; k< listPers.size();k++){
             EtatNominatifEnseignatDto m = new EtatNominatifEnseignatDto() ;

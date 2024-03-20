@@ -85,7 +85,7 @@ public class MatriceClasseServices {
             Matiere myMatiere = new Matiere();
             String libelleMatiere ;
             String id = String.valueOf(classeMatiereList.get(j).getIdMatiere());
-               idMatiere = classeMatiereList.get(j).getIdMatiere();
+            idMatiere = classeMatiereList.get(j).getIdMatiere();
 
             myMatiere = Matiere.findById(idMatiere) ;
 
@@ -112,9 +112,9 @@ public class MatriceClasseServices {
                 prenoms = myIns.getEleve().getEleveprenom() ;
 
             }
-            rang =  getRang(matriculeList.get(i).getNiveau() ,periode ,libelleAnnee);
-            appreciation = getAppreciation(matriculeList.get(i).getNiveau() ,periode ,libelleAnnee);
-            moyenTrimes = getMoyennTrimestr(matriculeList.get(i).getNiveau() ,periode ,libelleAnnee) ;
+            rang =  getRang(matriculeList.get(i).getNiveau() ,periode ,libelleAnnee,idEcole);
+            appreciation = getAppreciation(matriculeList.get(i).getNiveau() ,periode ,libelleAnnee,idEcole);
+            moyenTrimes = getMoyennTrimestr(matriculeList.get(i).getNiveau() ,periode ,libelleAnnee,idEcole) ;
 
             for (int k=0; k< sizeMatiereList;k++) {
                 matiereMoyenneDto my = new matiereMoyenneDto() ;
@@ -134,8 +134,8 @@ public class MatriceClasseServices {
 
                 Double moyFr = calculMoycoefFran(matriculeList.get(i).getNiveau(),libelleAnnee ,periode,idEcole ) ;
                 Double coef = calculcoefFran(matriculeList.get(i).getNiveau(),libelleAnnee ,periode,idEcole) ;
-                Double moyMat=  getMoyMatiere(matriculeList.get(i).getNiveau() , id,periode ,libelleAnnee);
-                Integer    numOrdreClasse  = getNiveauOrdreClasse(matriculeList.get(i).getNiveau(),periode,libelleAnnee) ;
+                Double moyMat=  getMoyMatiere(matriculeList.get(i).getNiveau() , id,periode ,libelleAnnee,idEcole);
+                Integer    numOrdreClasse  = getNiveauOrdreClasse(matriculeList.get(i).getNiveau(),periode,libelleAnnee,idEcole) ;
 
                 if(libelleMatiere.equals("FR") && numOrdreClasse<5){
                     my.setLibelleMatiere(libelleMatiere);
@@ -169,6 +169,7 @@ public class MatriceClasseServices {
             m.setMatiereMoyenneDto(matiMoy);
             m.setMatiereTitreDto(titreList);
             m.setClasse(classe1.getLibelle());
+            m.setPeriode (periode);
 
             resultatsListElevesDto.add(m) ;
 
@@ -341,14 +342,15 @@ public class MatriceClasseServices {
 
 
 
-    public  Double getMoyMatiere(String matricule,String libelleMatiere,String periode ,String libelleAnnee){
+    public  Double getMoyMatiere(String matricule,String libelleMatiere,String periode ,String libelleAnnee, Long idEcole){
         try {
             Double   moyClasseF = (Double) em.createQuery("select d.moyenne  from DetailBulletin  d join d.bulletin b  where b.matricule=:matricule and d.matiereCode=:libelleMatiere  and b.anneeLibelle=:libelleAnnee " +
-                            " and b.libellePeriode=:periode ")
+                            " and b.libellePeriode=:periode and b.ecoleId=:idEcole ")
                     .setParameter("matricule",matricule)
                     .setParameter("libelleMatiere",libelleMatiere)
                     .setParameter("periode",periode)
                     .setParameter("libelleAnnee", libelleAnnee)
+                    .setParameter("idEcole", idEcole)
                     .getSingleResult();
             return  moyClasseF ;
         } catch (NoResultException e){
@@ -400,28 +402,32 @@ public class MatriceClasseServices {
         }
     }
 
-    public  Integer getRang(String matricule,String periode ,String libelleAnnee){
+    public  Integer getRang(String matricule,String periode ,String libelleAnnee, Long idEcole){
         try {
+            //System.out.println ("Matricule>>> "+matricule);
             Integer   moyClasseF = (Integer) em.createQuery("select b.rang  from Bulletin b  where b.matricule=:matricule and  b.anneeLibelle=:libelleAnnee " +
-                            " and b.libellePeriode=:periode ")
+                            " and b.libellePeriode=:periode and b.ecoleId =:idEcole ")
                     .setParameter("matricule",matricule)
                     .setParameter("periode",periode)
                     .setParameter("libelleAnnee", libelleAnnee)
+                    .setParameter("idEcole", idEcole)
                     .getSingleResult();
             return  moyClasseF ;
         } catch (NoResultException e){
+
             return 0 ;
         }
 
     }
 
-    public  Integer getNiveauOrdreClasse(String matricule,String periode ,String libelleAnnee){
+    public  Integer getNiveauOrdreClasse(String matricule,String periode ,String libelleAnnee ,Long idEcole){
         try {
             Integer   moyClasseF = (Integer) em.createQuery("select b.ordreNiveau  from Bulletin b  where b.matricule=:matricule and  b.anneeLibelle=:libelleAnnee " +
-                            " and b.libellePeriode=:periode ")
+                            " and b.libellePeriode=:periode and b.ecoleId=:idEcole")
                     .setParameter("matricule",matricule)
                     .setParameter("periode",periode)
                     .setParameter("libelleAnnee", libelleAnnee)
+                    .setParameter("idEcole", idEcole)
                     .getSingleResult();
             return  moyClasseF ;
         } catch (NoResultException e){
@@ -430,13 +436,14 @@ public class MatriceClasseServices {
 
     }
 
-    public  Double getMoyennTrimestr(String matricule,String periode ,String libelleAnnee){
+    public  Double getMoyennTrimestr(String matricule,String periode ,String libelleAnnee ,Long idEcole){
         try {
             Double   moyClasseF = (Double) em.createQuery("select b.moyGeneral  from Bulletin b  where b.matricule=:matricule and  b.anneeLibelle=:libelleAnnee " +
-                            " and b.libellePeriode=:periode ")
+                            " and b.libellePeriode=:periode and b.ecoleId=:idEcole")
                     .setParameter("matricule",matricule)
                     .setParameter("periode",periode)
                     .setParameter("libelleAnnee", libelleAnnee)
+                    .setParameter("idEcole", idEcole)
                     .getSingleResult();
             return  moyClasseF ;
         } catch (NoResultException e){
@@ -474,8 +481,8 @@ public class MatriceClasseServices {
         try {
             TypedQuery<Branche> q = (TypedQuery<Branche>) em.createQuery( "SELECT  o.branche from Classe o   where o.libelle =:classe and  o.ecole.id=:idEcole");
             Branche branche = q.setParameter("classe" ,classe)
-                                .setParameter("idEcole" ,idEcole)
-                                .getSingleResult() ;
+                    .setParameter("idEcole" ,idEcole)
+                    .getSingleResult() ;
 
             return branche;
         } catch (NoResultException e) {
@@ -483,13 +490,14 @@ public class MatriceClasseServices {
         }
 
     }
-    public  String getAppreciation(String matricule,String periode ,String libelleAnnee){
+    public  String getAppreciation(String matricule,String periode ,String libelleAnnee,Long idEcole){
         try {
             String   moyClasseF = (String) em.createQuery("select b.appreciation  from Bulletin b  where b.matricule=:matricule and  b.anneeLibelle=:libelleAnnee " +
-                            " and b.libellePeriode=:periode ")
+                            " and b.libellePeriode=:periode and b.ecoleId=:idEcole ")
                     .setParameter("matricule",matricule)
                     .setParameter("periode",periode)
                     .setParameter("libelleAnnee", libelleAnnee)
+                    .setParameter("idEcole", idEcole)
                     .getSingleResult();
             return  moyClasseF ;
         } catch (NoResultException e){
@@ -497,5 +505,4 @@ public class MatriceClasseServices {
         }
 
     }
-
 }

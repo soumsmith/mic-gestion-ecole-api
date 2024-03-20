@@ -45,6 +45,15 @@ public class InfosPersoBulletins extends PanacheEntityBase {
     private String  is_class_1er_trim ;
     private String  is_class_2e_trim ;
     private String  is_class_3e_trim ;
+    private  String appreciationFr ;
+
+    public String getAppreciationFr() {
+        return appreciationFr;
+    }
+
+    public void setAppreciationFr(String appreciationFr) {
+        this.appreciationFr = appreciationFr;
+    }
 
     public Double getTmoyCoefReligio() {
         return TmoyCoefReligio;

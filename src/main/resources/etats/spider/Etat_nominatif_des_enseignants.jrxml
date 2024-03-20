@@ -583,4 +583,18 @@
 			</textField>
 		</band>
 	</detail>
+	<summary>
+		<band height="245">
+			<staticText>
+				<reportElement x="4" y="0" width="565" height="245" uuid="6345ebf2-39ce-4c32-bf1b-81645eb5cb7b">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="SansSerif" size="10" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Commentaire :]]></text>
+			</staticText>
+		</band>
+	</summary>
 </jasperReport>

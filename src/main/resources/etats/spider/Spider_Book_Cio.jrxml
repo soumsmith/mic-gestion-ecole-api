@@ -13,6 +13,7 @@
 		<![CDATA[SELECT NOW() as DATE]]>
 	</queryString>
 	<field name="dspsDto" class="java.util.List"/>
+	<field name="moyenneParDisc" class="java.util.List"/>
 
 	<detail>
 		<part uuid="968947e9-d627-441c-a302-1bd9eaebff99">
@@ -28,6 +29,18 @@
 			</p:subreportPart>
 		</part>
 
+		<part uuid="968947e9-d627-441c-a302-1bd9eaebff89">
+			<p:subreportPart xmlns:p="http://jasperreports.sourceforge.net/jasperreports/parts" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/parts http://jasperreports.sourceforge.net/xsd/parts.xsd">
+				<subreportParameter name="REPORT_CONNECTION">
+					<subreportParameterExpression><![CDATA[$P{REPORT_CONNECTION}]]></subreportParameterExpression>
+				</subreportParameter>
+
+				<subreportParameter name="REPORT_DATA_SOURCE">
+					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{moyenneParDisc})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportExpression><![CDATA["etats/spider/Rapport_cioParDiscipline.jasper"]]></subreportExpression>
+			</p:subreportPart>
+		</part>
 
 
 

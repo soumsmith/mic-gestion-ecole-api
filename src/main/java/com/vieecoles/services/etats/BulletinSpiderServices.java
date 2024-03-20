@@ -33,20 +33,21 @@ public class BulletinSpiderServices {
     SousceecoleService sousceecoleService ;
 @Transactional
     public List<InfosPersoBulletins>  bulletinInfos(Long idEcole ,String libelleAnnee , String libelleTrimestre , Long libelleClasse,boolean logoPosi ,boolean filigranne){
+
         int LongTableau;
-         AnneeScolaire mainAnnee = new AnneeScolaire() ;
-         Ecole mynewEcole = new Ecole() ;
-    mynewEcole = Ecole.findById(idEcole);
-    mainAnnee =findMainAnneeByEcole(mynewEcole) ;
+        AnneeScolaire mainAnnee = new AnneeScolaire() ;
+        Ecole mynewEcole = new Ecole() ;
+        mynewEcole = Ecole.findById(idEcole);
+        mainAnnee =findMainAnneeByEcole(mynewEcole) ;
         List<NiveauDto> classeNiveauDtoList = new ArrayList<>() ;
 
-    TypedQuery<NiveauDto> q = em.createQuery( "SELECT new com.vieecoles.dto.NiveauDto(b.matricule) from Bulletin b  where b.ecoleId =:idEcole and b.libellePeriode=:periode and b.anneeLibelle=:annee " +
-            " and b.classeId=:libelleClasse ", NiveauDto.class);
-    classeNiveauDtoList = q.setParameter("idEcole", idEcole)
-            .setParameter("annee", libelleAnnee)
-            .setParameter("periode", libelleTrimestre)
-            .setParameter("libelleClasse", libelleClasse)
-            .getResultList() ;
+        TypedQuery<NiveauDto> q = em.createQuery( "SELECT new com.vieecoles.dto.NiveauDto(b.matricule) from Bulletin b  where b.ecoleId =:idEcole and b.libellePeriode=:periode and b.anneeLibelle=:annee " +
+                " and b.classeId=:libelleClasse ", NiveauDto.class);
+        classeNiveauDtoList = q.setParameter("idEcole", idEcole)
+                .setParameter("annee", libelleAnnee)
+                .setParameter("periode", libelleTrimestre)
+                .setParameter("libelleClasse", libelleClasse)
+                .getResultList() ;
 
 
         LongTableau= classeNiveauDtoList.size();
@@ -54,16 +55,22 @@ public class BulletinSpiderServices {
         List<InfosPersoBulletins> resultatsListElevesDto = new ArrayList<>();
 
         Double TmoyFr,TcoefFr,TmoyCoefFr,TmoyCoefEMR, moy_1er_trim ,moy_2eme_trim,moy_3eme_trim ,TmoyCoefEMR1 ,TcoefEMR ,TmoyCoefReligio = null,TmoyCoefReligio1,
-    TcoefReligion;
-       Integer rang_1er_trim ,rang_2eme_trim ,rang_3eme_trim ;
+                TcoefReligion;
+        Integer rang_1er_trim ,rang_2eme_trim ,rang_3eme_trim ;
         int TrangEMR = 0, TrangFr = 0;
-      String  codeEcole,is_class_1er_trim,is_class_2e_trim,is_class_3e_trim ;
+        String  codeEcole,is_class_1er_trim,is_class_2e_trim,is_class_3e_trim ;
 
 
 
         List<InfosPersoBulletins> mlist = new ArrayList<>();
-        for (int i=0; i< LongTableau;i++) {
 
+
+    /*System.out.println ("parallel started");
+    long t = System.currentTimeMillis ();
+    classeNiveauDtoList.stream ().parallel ().forEach (eleve-> calculMoyenneEleve (eleve ,libelleAnnee , libelleTrimestre ,idEcole,logoPosi ,filigranne));
+    System.out.println ("parallel Duree =" + (System.currentTimeMillis () - t) / 1000l);*/
+
+        for (int i=0; i< classeNiveauDtoList.size ();i++) {
             BulletinSpiderDto m = new BulletinSpiderDto();
             String b ;
             InfosPersoBulletins l = new InfosPersoBulletins();
@@ -76,18 +83,18 @@ public class BulletinSpiderServices {
             TcoefEMR= calculcoefEMR(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,libelleTrimestre,idEcole) ;
             TcoefReligion = calculcoefReligion(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,libelleTrimestre,idEcole);
             TcoefFr = calculcoefFran(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,libelleTrimestre,idEcole) ;
-             Double TrangEMR1 = 0d ;
+            Double TrangEMR1 = 0d ;
 
 
             Double TrangFr1 = calculRangFran(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,libelleTrimestre,idEcole) ;
-             TmoyCoefFr = calculMoycoefFran(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,libelleTrimestre,idEcole) ;
+            TmoyCoefFr = calculMoycoefFran(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,libelleTrimestre,idEcole) ;
 
-           TrangFr1 = calculRangFran(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,libelleTrimestre,idEcole) ;
+            TrangFr1 = calculRangFran(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,libelleTrimestre,idEcole) ;
             //System.out.println("TrangFr1 "+TrangFr1);
             if(TrangFr1 !=null)
                 TrangFr = TrangFr1.intValue() ;
 
-           TmoyFr = calculTMoyFran(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,libelleTrimestre,idEcole);
+            TmoyFr = calculTMoyFran(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,libelleTrimestre,idEcole);
 
             TrangEMR1 =calculRangEMR(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,libelleTrimestre,idEcole) ;
 
@@ -112,22 +119,22 @@ public class BulletinSpiderServices {
 
 
 
-             moy_1er_trim = calculmoyenTrimesPasse(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,"Premier Trimestre",idEcole) ;
+            moy_1er_trim = calculmoyenTrimesPasse(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,"Premier Trimestre",idEcole) ;
 
-             moy_2eme_trim = calculmoyenTrimesPasse(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,"Deuxième Trimestre",idEcole) ;
+            moy_2eme_trim = calculmoyenTrimesPasse(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,"Deuxième Trimestre",idEcole) ;
             moy_3eme_trim = calculmoyenTrimesPasse(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,"Troisième Trimestre",idEcole) ;
 
-             rang_1er_trim = calculRangTrimesPasse(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,"Premier Trimestre",idEcole) ;
+            rang_1er_trim = calculRangTrimesPasse(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,"Premier Trimestre",idEcole) ;
             rang_2eme_trim = calculRangTrimesPasse(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,"Deuxième Trimestre",idEcole) ;
-           rang_3eme_trim = calculRangTrimesPasse(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,"Troisième Trimestre",idEcole) ;
+            rang_3eme_trim = calculRangTrimesPasse(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,"Troisième Trimestre",idEcole) ;
 
-             is_class_1er_trim = calculIsClassTrimesPasse(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,"Premier Trimestre",idEcole) ;
+            is_class_1er_trim = calculIsClassTrimesPasse(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,"Premier Trimestre",idEcole) ;
 
-             is_class_2e_trim = calculIsClassTrimesPasse(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,"Deuxième Trimestre",idEcole) ;
+            is_class_2e_trim = calculIsClassTrimesPasse(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,"Deuxième Trimestre",idEcole) ;
 
             is_class_3e_trim = calculIsClassTrimesPasse(classeNiveauDtoList.get(i).getNiveau(),libelleAnnee,"Troisième Trimestre",idEcole) ;
 
-           l= getIdBulletinFromInfosBull(idBulletin);
+            l= getIdBulletinFromInfosBull(idBulletin);
 
             if(l==null) {
                 InfosPersoBulletins k = new InfosPersoBulletins();
@@ -160,7 +167,7 @@ public class BulletinSpiderServices {
                     //k.setPhoto_eleve(myIns.getPhoto_eleve());
                     k.setCheminphoto(myIns.getCheminphoto());
                 }
-
+                k.setAppreciationFr(appreciation(k.getTmoyFr ()));
                 k.setTcoefFr(TcoefFr);
                 k.setTmoyCoefFr(TmoyCoefFr);
                 k.setIs_class_1er_trim(is_class_1er_trim);
@@ -173,11 +180,9 @@ public class BulletinSpiderServices {
                 k.setMoy_2eme_trim(moy_2eme_trim);
                 k.setMoy_3eme_trim(moy_3eme_trim);
                 k.setTmoyCoefReligio(TmoyCoefReligio);
-                //System.out.println("idBulletin>> "+idBulletin);
                 k.setIdBulletin(idBulletin);
                 //System.out.println(">>>>>Objet Detail Bulletin "+k.toString());
                 k.persist();
-
                 mlist.add(k);
             } else {
 
@@ -202,10 +207,11 @@ public class BulletinSpiderServices {
                     l.setBg(myEcole.getFiligramme());
                 else
                     l.setBg(null);
-                    if(myIns !=null && myIns.getCheminphoto()!=null)
-                    {
-                        l.setCheminphoto(myIns.getCheminphoto());
-                    }
+                if(myIns !=null && myIns.getCheminphoto()!=null)
+                {
+                    l.setCheminphoto(myIns.getCheminphoto());
+                }
+                l.setAppreciationFr(appreciation(l.getTmoyFr()));
                 l.setTcoefFr(TcoefFr);
                 l.setTmoyCoefFr(TmoyCoefFr);
                 l.setIs_class_1er_trim(is_class_1er_trim);
@@ -226,6 +232,30 @@ public class BulletinSpiderServices {
 
         return  mlist ;
     }
+
+    String appreciation(Double moyenne) {
+        String apprec = "";
+        if (moyenne >= 17.0)
+            apprec = "Excellent";
+        else if (moyenne >= 16.0)
+            apprec = "Très Bien";
+        else if (moyenne >= 14.0)
+            apprec = "Bien";
+        else if (moyenne >= 12.0)
+            apprec = "Assez Bien";
+        else if (moyenne >= 10.0)
+            apprec = "Passable";
+        else if (moyenne >= 8.0)
+            apprec = "Insuffisant";
+        else if (moyenne >= 6.0)
+            apprec = "Faible";
+        else
+            apprec = "Très Faible";
+        return apprec;
+    }
+
+
+
 
     public  Double calculTMoyFran(String matricule, String annee,String periode,Long idEcole){
         Integer niveauOrdre= getNiveau(matricule,annee ,periode,idEcole);

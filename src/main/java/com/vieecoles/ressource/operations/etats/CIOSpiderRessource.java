@@ -1,11 +1,9 @@
 package com.vieecoles.ressource.operations.etats;
 
 
-import com.vieecoles.dto.DspsDto;
-import com.vieecoles.dto.RecapResultatsElevesAffeEtNonAffDto;
-import com.vieecoles.dto.spiderCIODto;
-import com.vieecoles.dto.spiderDspsDto;
+import com.vieecoles.dto.*;
 import com.vieecoles.services.etats.DpspServices;
+import com.vieecoles.services.etats.MoyenneParDisciplineService;
 import com.vieecoles.services.etats.resultatsRecapAffEtNonAffServices;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
@@ -37,10 +35,11 @@ public class CIOSpiderRessource {
     EntityManager em;
     @Inject
     resultatsRecapAffEtNonAffServices resultatsServices ;
+    @Inject
+    MoyenneParDisciplineService moyenneParDisciplineService ;
 
 
     private static String UPLOAD_DIR = "/data/";
-
 
     @GET
     @Transactional
@@ -53,19 +52,17 @@ public class CIOSpiderRessource {
 
         spiderCIODto detailsBull= new spiderCIODto() ;
         List<RecapResultatsElevesAffeEtNonAffDto>  dspsDto = new ArrayList<>() ;
-
         dspsDto= resultatsServices.RecapCalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre) ;
 
-
+        List<MoenneParDisciplineDto>  moyenParDiscipline = new ArrayList<>() ;
+        moyenParDiscipline= moyenneParDisciplineService.getMoyenneParDiscipline (idEcole ,libelleAnnee,libelleTrimetre) ;
 
         detailsBull.setDspsDto(dspsDto);
+        detailsBull.setMoyenneParDisc(moyenParDiscipline);
 
         System.out.println("detailsBull "+ detailsBull);
 
-
-
-
-        JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(Collections.singleton(detailsBull)) ;
+       JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(Collections.singleton(detailsBull)) ;
         JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
         //   JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");
         Map<String, Object> map = new HashMap<>();
@@ -83,8 +80,6 @@ public class CIOSpiderRessource {
         // headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Rapport"+myScole.getEcoleclibelle()+".docx");
         headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Rapport Pouls-Scolaire-cio.xls");
         return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.MULTIPART_FORM_DATA).body(data);
-
-
 
     }
 

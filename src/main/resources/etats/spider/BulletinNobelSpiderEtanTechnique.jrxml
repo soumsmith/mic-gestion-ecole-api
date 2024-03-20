@@ -414,6 +414,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 	</field>
 	<field name="cheminphoto" class="java.lang.String"/>
 	<field name="TmoyCoefReligio" class="java.lang.Double"/>
+	<field name="appreciationFr" class="java.lang.String"/>
 	<sortField name="num_ordre"/>
 	<sortField name="parent_matiere"/>
 	<sortField name="matricule"/>
@@ -678,7 +679,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 						<textElement textAlignment="Left" verticalAlignment="Middle">
 							<font fontName="SansSerif" size="8" isItalic="true"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{parent_matiere}.equals("")?"":$F{appreciation}]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{parent_matiere}.equals("FRANCAIS")?$F{appreciationFr}:$F{parent_matiere}.equals("")?"":$F{appreciation}]]></textFieldExpression>
 					</textField>
 					<textField textAdjust="ScaleFont" isBlankWhenNull="true">
 						<reportElement style="champsLibelle" x="348" y="0" width="111" height="18" isRemoveLineWhenBlank="true" uuid="b4200066-a206-4e5c-b3ee-1c1c3d9c5fde">
@@ -1434,7 +1435,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<textElement verticalAlignment="Middle">
 									<font size="8" isBold="true"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$F{boursier}==null?"NON" : $F{boursier}.equals("B") ? " OUI" : $F{boursier}.equals("1/2B") ?  "OUI" :"NON"]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{boursier}==null?"NON" : $F{boursier}.equals("B") ? " OUI" :$F{boursier}.equals("BOURSIER") ? " OUI": $F{boursier}.equals("1/2B") ?  "OUI" :"NON"]]></textFieldExpression>
 							</textField>
 							<textField textAdjust="ScaleFont">
 								<reportElement x="53" y="50" width="42" height="15" isPrintInFirstWholeBand="true" uuid="e894dab7-c79e-4e5d-95b7-b946f1662470">
