@@ -39,5 +39,7 @@ public class AppelNumerique extends PanacheEntityBase{
 	private String progression;
 	private String commentaire;
 	private Integer position;
+	@Column(name = "duree_seance")
+	private Integer duree;
 
 }

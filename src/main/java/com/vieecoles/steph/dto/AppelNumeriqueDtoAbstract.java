@@ -28,6 +28,7 @@ public abstract class AppelNumeriqueDtoAbstract {
 	private Long matiereId;
 	private String matiereLibelle;
 	private int position;
+	private int duree;
 	private List<AppelEleveDto> eleves;
 	
 }

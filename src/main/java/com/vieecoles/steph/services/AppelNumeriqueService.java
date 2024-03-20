@@ -100,6 +100,7 @@ public class AppelNumeriqueService implements PanacheRepositoryBase<AppelNumeriq
 		appel.setEcole(classe.getEcole());
 		appel.setHeureDebut(dto.getHeureDebutAppel());
 		appel.setHeureFin(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+		appel.setDuree(dto.getDuree());
 //		System.out.println("HEURE DE FIN ::: " + LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
 		Personnel personnel = new Personnel();
 		if (dto.getPersonnelId() != null)

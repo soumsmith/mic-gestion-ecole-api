@@ -95,7 +95,7 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 
 	List<Seances> destructSeanceByTimeUnit(Seances seances, int minutes) {
 		if (minutes == 0)
-			minutes = 60;
+			minutes = Constants.DEFAULT_DUREE_SEANCE_MINUTES;
 		int duree = DateUtils.calculerDuree(seances.getHeureDeb(), seances.getHeureFin());
 		int nbreSeances = duree / minutes;
 		if (duree % minutes > 0)
@@ -126,9 +126,10 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 				seance.setTypeActivite(seances.getTypeActivite());
 				seance.setActivite(seances.getActivite());
 				seance.setPosition(i);
-				seance.setIsVerrou(DateUtils.verifierHeureDansMarge(dateDebNew, 5, 5));
+				seance.setIsVerrou(DateUtils.verifierHeureDansMarge(dateDebNew, Constants.DEFAULT_DELAI_AVANT_DESACTIVE_APPEL_MINUTES, Constants.DEFAULT_DELAI_APRES_DESACTIVE_APPEL_MINUTES));
 				seance.setIsEnded(verifySeanceEnded(seance.getHeureFin()));
 				seance.setIsClassEnded(verifySeanceEnded(seance.getHeureFin()) ? "surface-300" : "");
+				seance.setDuree(duree);
 				list.add(seance);
 				dateDebNew = DateUtils.ajouterMinutes(dateDebNew, minutes);
 				System.out.println(
@@ -142,8 +143,9 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 	public boolean verifySeanceEnded(String heure) {
 		LocalTime heureActuelle = LocalTime.now();
 		LocalTime heureParametre = LocalTime.parse(heure, DateTimeFormatter.ofPattern("HH:mm"));
-		System.out.println("Seance Terminée : "+heureParametre.isBefore(heureActuelle));
-		System.out.println(heureParametre +" "+heureActuelle);
+//		System.out.println("Seance Terminée : "+heureParametre.isBefore(heureActuelle));
+//		System.out.println(heureParametre +" "+heureActuelle);
+		//la seance est terminée si l'heure de fin est avant l'heure actuelle 
 		return heureParametre.isBefore(heureActuelle);
 	}
 
@@ -166,9 +168,10 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 					AppelNumerique ap = new AppelNumerique();
 					ap = appelNumeriqueService.getBySeance(s.getId());
 					s.setAppelAlreadyExist(ap.getId() != null);
-					s.setIsVerrou(DateUtils.verifierHeureDansMarge(s.getHeureDeb(), 5, 5));
+					s.setIsVerrou(DateUtils.verifierHeureDansMarge(s.getHeureDeb(), Constants.DEFAULT_DELAI_AVANT_DESACTIVE_APPEL_MINUTES, Constants.DEFAULT_DELAI_APRES_DESACTIVE_APPEL_MINUTES));
 					s.setIsEnded(verifySeanceEnded(s.getHeureFin()));
 					s.setIsClassEnded(verifySeanceEnded(s.getHeureFin()) ? "surface-300" : "");
+					s.setDuree(Constants.DEFAULT_DUREE_SEANCE_MINUTES);
 					listWithDestructSeances.add(s);
 				}
 

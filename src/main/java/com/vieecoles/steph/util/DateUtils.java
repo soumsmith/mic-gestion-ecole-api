@@ -113,21 +113,30 @@ public class DateUtils {
 	}
 
 	/**
-	 * Cette méthode vérifie si l'heure entrée est comprise entre la marge de lheure
-	 * actuelle - marge debut et l'heure actuelle + margefin.
+	 * Cette méthode vérifie si l'heure actuelle est comprise entre la marge de lheure
+	 * entrée - marge debut et l'heure entrée + margefin.
 	 * 
 	 * @param heure
 	 * @param margeDebut
 	 * @param margeFin
-	 * @return un boolean true si l'heure est comprise sinon false
+	 * @return un boolean true si l'heure actuelle est comprise sinon false
 	 */
 	public static boolean verifierHeureDansMarge(String heure, int margeDebut, int margeFin) {
 		LocalTime heureActuelle = LocalTime.now();
 		LocalTime heureParametre = LocalTime.parse(heure, DateTimeFormatter.ofPattern("HH:mm"));
 
-		LocalTime heureDebutMarge = heureActuelle.minusMinutes(margeDebut);
-		LocalTime heureFinMarge = heureActuelle.plusMinutes(margeFin);
+		LocalTime heureDebutMarge = heureParametre.minusMinutes(margeDebut);
+		LocalTime heureFinMarge = heureParametre.plusMinutes(margeFin);
+//		System.out.println(String.format("verifierHeureDansMarge :  %s <  %s  < %s = %s", heureDebutMarge,heureActuelle, heureFinMarge, !heureActuelle.isBefore(heureDebutMarge) && !heureActuelle.isAfter(heureFinMarge)));
+//		System.out.println(String.format("is not before :  %s ", !heureActuelle.isBefore(heureDebutMarge)));
+//		System.out.println(String.format("is not after :  %s ", !heureActuelle.isAfter(heureFinMarge)));
+		return !heureActuelle.isBefore(heureDebutMarge) && !heureActuelle.isAfter(heureFinMarge);
+	}
 
-		return !heureParametre.isBefore(heureDebutMarge) && !heureParametre.isAfter(heureFinMarge);
+	public static boolean timeEnded(String heure) {
+		LocalTime heureActuelle = LocalTime.now();
+		LocalTime heureParametre = LocalTime.parse(heure, DateTimeFormatter.ofPattern("HH:mm"));
+		System.out.println("temps passé? : " + heureParametre.isBefore(heureActuelle));
+		return heureParametre.isBefore(heureActuelle);
 	}
 }

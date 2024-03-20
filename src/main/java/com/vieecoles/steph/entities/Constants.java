@@ -75,5 +75,10 @@ public class Constants {
 	public static final String VALID = "VALID";
 	
 	public static final String INVALID = "INVALID";
+	
+	public static final int DEFAULT_DUREE_SEANCE_MINUTES = 60;
+	public static final int DEFAULT_DELAI_APPEL_MINUTES = 20;
+	public static final int DEFAULT_DELAI_AVANT_DESACTIVE_APPEL_MINUTES = 0;
+	public static final int DEFAULT_DELAI_APRES_DESACTIVE_APPEL_MINUTES = 15;
 
 }
