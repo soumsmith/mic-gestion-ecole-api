@@ -24,7 +24,7 @@
 				</subreportParameter>
 
 				<subreportParameter name="REPORT_DATA_SOURCE">
-					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{matiereMoyenneBilanDto})]]></subreportParameterExpression>
+					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{matriceClasseDto})]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportExpression><![CDATA["etats/spider/matriceClassePv.jasper"]]></subreportExpression>
 			</p:subreportPart>
@@ -36,7 +36,7 @@
 				</subreportParameter>
 
 				<subreportParameter name="REPORT_DATA_SOURCE">
-					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{dspsDto})]]></subreportParameterExpression>
+					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{matiereMoyenneBilanDto})]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportExpression><![CDATA["etats/spider/BilanMatricePv.jasper"]]></subreportExpression>
 			</p:subreportPart>
@@ -48,7 +48,7 @@
 				</subreportParameter>
 
 				<subreportParameter name="REPORT_DATA_SOURCE">
-					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{matriceClasseDto})]]></subreportParameterExpression>
+					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{dspsDto})]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportExpression><![CDATA["etats/spider/PvConseilClasse.jasper"]]></subreportExpression>
 			</p:subreportPart>

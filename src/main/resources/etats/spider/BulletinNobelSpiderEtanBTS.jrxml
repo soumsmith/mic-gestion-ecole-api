@@ -774,7 +774,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<font fontName="SansSerif" size="7"/>
 								<paragraph leftIndent="10"/>
 							</textElement>
-							<textFieldExpression><![CDATA["MINISTERE DE L'ENSEIGNEMENT SUPERIEUR ET DE LA RECHERCHE SCIENTIFIQUE"]]></textFieldExpression>
+							<textFieldExpression><![CDATA["MINISTERE DE L'ENSEIGNEMENT SUPERIEUR \nDE LA RECHERCHE SCIENTIFIQUE"]]></textFieldExpression>
 						</textField>
 						<textField textAdjust="ScaleFont" isBlankWhenNull="true">
 							<reportElement style="TitreLibelle" x="101" y="14" width="311" height="16" isPrintInFirstWholeBand="true" uuid="d2c6fec4-ff6d-4c67-90d2-9c0a5f3a972a">
@@ -809,7 +809,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 							<textElement textAlignment="Center" verticalAlignment="Middle">
 								<font fontName="SansSerif" size="8" isBold="true"/>
 							</textElement>
-							<textFieldExpression><![CDATA[$F{libelle_periode}]]></textFieldExpression>
+							<textFieldExpression><![CDATA[$F{libelle_periode}.toUpperCase()]]></textFieldExpression>
 						</textField>
 						<textField textAdjust="ScaleFont">
 							<reportElement style="champsLibelle" x="0" y="78" width="118" height="18" uuid="96976887-394d-432f-b1bc-fc8e9246a529">
@@ -1036,9 +1036,9 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 							</reportElement>
 							<textElement textAlignment="Left">
-								<font fontName="SansSerif" size="8"/>
+								<font fontName="SansSerif" size="9"/>
 							</textElement>
-							<textFieldExpression><![CDATA["Année Scolaire: "+$F{annee_libelle}]]></textFieldExpression>
+							<textFieldExpression><![CDATA["ANNEE ACADEMIQUE 2023 2024 "]]></textFieldExpression>
 						</textField>
 					</frame>
 				</frame>
@@ -1442,7 +1442,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<textElement>
-						<font size="8" isBold="true"/>
+						<font size="9" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{nom}+' '+$F{prenoms}]]></textFieldExpression>
 				</textField>

@@ -120,6 +120,7 @@ public class resultatsRecapAffEtNonAffServices {
             resultatsListEleves.setNonclassF(nonclassF);
             resultatsListEleves.setNonclassG(nonclassG);
             resultatsListEleves.setCycle(cycle);
+            resultatsListEleves.setPeriode (libelleTrimestre);
 
             resultatsListEleves.setNbreMoySup10F(nbreMoySup10F);
             resultatsListEleves.setNbreMoySup10G(nbreMoySup10G);

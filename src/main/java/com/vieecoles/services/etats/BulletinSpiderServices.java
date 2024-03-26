@@ -167,7 +167,7 @@ public class BulletinSpiderServices {
                     //k.setPhoto_eleve(myIns.getPhoto_eleve());
                     k.setCheminphoto(myIns.getCheminphoto());
                 }
-                k.setAppreciationFr(appreciation(k.getTmoyFr ()));
+                k.setAppreciationFr(appreciation(k.getTmoyFr()));
                 k.setTcoefFr(TcoefFr);
                 k.setTmoyCoefFr(TmoyCoefFr);
                 k.setIs_class_1er_trim(is_class_1er_trim);
@@ -235,22 +235,25 @@ public class BulletinSpiderServices {
 
     String appreciation(Double moyenne) {
         String apprec = "";
-        if (moyenne >= 17.0)
-            apprec = "Excellent";
-        else if (moyenne >= 16.0)
-            apprec = "Très Bien";
-        else if (moyenne >= 14.0)
-            apprec = "Bien";
-        else if (moyenne >= 12.0)
-            apprec = "Assez Bien";
-        else if (moyenne >= 10.0)
-            apprec = "Passable";
-        else if (moyenne >= 8.0)
-            apprec = "Insuffisant";
-        else if (moyenne >= 6.0)
-            apprec = "Faible";
-        else
-            apprec = "Très Faible";
+        if(moyenne !=null) {
+            if (moyenne >= 17.0)
+                apprec = "Excellent";
+            else if (moyenne >= 16.0)
+                apprec = "Très Bien";
+            else if (moyenne >= 14.0)
+                apprec = "Bien";
+            else if (moyenne >= 12.0)
+                apprec = "Assez Bien";
+            else if (moyenne >= 10.0)
+                apprec = "Passable";
+            else if (moyenne >= 8.0)
+                apprec = "Insuffisant";
+            else if (moyenne >= 6.0)
+                apprec = "Faible";
+            else
+                apprec = "Très Faible";
+
+        }
         return apprec;
     }
 

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Liste_Trois_premiers" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4798adcd-b33d-4103-8f41-c1e234463320">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ecolevieDB"/>
+	<property name="net.sf.jasperreports.export.docx.flexible.row.height" value="true"/>
+	<property name="net.sf.jasperreports.export.docx.frames.as.nested.tables" value="false"/>
+	<style name="Titre" fontName="Caladea" fontSize="8">
+		<box>
+			<pen lineWidth="0.25"/>
+			<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+			<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+			<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+			<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Contenu" fontName="Caladea" fontSize="8">
+		<box>
+			<pen lineWidth="0.25"/>
+			<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+			<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+			<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+			<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+		</box>
+	</style>
+	<parameter name="annee" class="java.lang.String"/>
+	<parameter name="periode" class="java.lang.String"/>
+	<parameter name="id_ecole" class="java.lang.Long"/>
+	<queryString>
+		<![CDATA[SELECT  distinct `ecoleviedbv2`.vs_liste_trois_premiers.id_classe ,`ecoleviedbv2`.vs_liste_trois_premiers.niveau, `ecoleviedbv2`.vs_liste_trois_premiers.annee_libelle,
+`ecoleviedbv2`.vs_liste_trois_premiers.libelle_periode,`ecoleviedbv2`.vs_liste_trois_premiers.id_ecole
+FROM `ecoleviedbv2`.vs_liste_trois_premiers
+where  `ecoleviedbv2`.vs_liste_trois_premiers.id_ecole = $P{id_ecole}
+and  `ecoleviedbv2`.vs_liste_trois_premiers.libelle_periode =  $P{periode}
+and  `ecoleviedbv2`.vs_liste_trois_premiers.annee_libelle  =  $P{annee}]]>
+	</queryString>
+	<field name="id_classe" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="id_classe"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_classe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bulletins"/>
+	</field>
+	<field name="niveau" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="niveau"/>
+		<property name="com.jaspersoft.studio.field.label" value="niveau"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bulletins"/>
+	</field>
+	<field name="annee_libelle" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="annee_libelle"/>
+		<property name="com.jaspersoft.studio.field.label" value="annee_libelle"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bulletins"/>
+	</field>
+	<field name="libelle_periode" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="libelle_periode"/>
+		<property name="com.jaspersoft.studio.field.label" value="libelle_periode"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bulletins"/>
+	</field>
+	<field name="id_ecole" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="id_ecole"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_ecole"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bulletins"/>
+	</field>
+	<group name="Niveau">
+		<groupExpression><![CDATA[$F{niveau}]]></groupExpression>
+	</group>
+	<group name="Groupe1"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="263">
+			<subreport>
+				<reportElement x="-10" y="10" width="570" height="240" uuid="8e5aa17e-a335-4f55-92ef-5cda4a828aa8"/>
+				<subreportParameter name="annee">
+					<subreportParameterExpression><![CDATA[$F{annee_libelle}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="periode">
+					<subreportParameterExpression><![CDATA[$F{libelle_periode}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="id_ecole">
+					<subreportParameterExpression><![CDATA[$F{id_ecole}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="id_classe">
+					<subreportParameterExpression><![CDATA[$F{id_classe}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["etats/spider/Liste_Trois_premiersClasse.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>

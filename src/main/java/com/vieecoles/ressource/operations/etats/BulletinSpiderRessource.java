@@ -131,7 +131,12 @@ public class BulletinSpiderRessource {
         List<parametreDto>  dspsDto = new ArrayList<>() ;
 
         System.out.println("entree bulletin>>> ");
-        bulletinSpider.bulletinInfos(idEcole ,libelleAnnee ,libellePeriode ,libelleClasse,positionLogo ,filigranne) ;
+        try {
+            bulletinSpider.bulletinInfos(idEcole ,libelleAnnee ,libellePeriode ,libelleClasse,positionLogo ,filigranne) ;
+        } catch (RuntimeException e) {
+            e.printStackTrace ();
+        }
+
         // deleteEmr(libellePeriode,libelleAnnee,idEcole);
         //connect() ;
 
