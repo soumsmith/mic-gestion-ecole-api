@@ -50,7 +50,20 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 
 	public List<AnneeScolaire> getListByCentral() {
 
-		List<AnneeScolaire> annees = AnneeScolaire.find("ecole is null").list();
+		List<AnneeScolaire> annees = AnneeScolaire.find("ecole is null order by anneeDebut, niveauEnseignement.id ").list();
+		try {
+			if (annees != null && annees.size() > 0)
+				for (AnneeScolaire ans : annees)
+					populateEntity(ans);
+		} catch (RuntimeException r) {
+			r.printStackTrace();
+		}
+		return annees;
+	}
+	
+	public List<AnneeScolaire> getListByCentralByNiveauEnseignement(Long niveau) {
+
+		List<AnneeScolaire> annees = AnneeScolaire.find("ecole is null and niveauEnseignement.id = ?1", niveau).list();
 		try {
 			if (annees != null && annees.size() > 0)
 				for (AnneeScolaire ans : annees)
