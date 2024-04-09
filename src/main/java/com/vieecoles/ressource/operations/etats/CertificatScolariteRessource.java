@@ -123,8 +123,11 @@ public class CertificatScolariteRessource {
         certificatScolariteDto emp= new certificatScolariteDto() ;
 
         List<certificatScolariteDto> detailsBull= new ArrayList<>() ;
-
-        emp = certificatScolariteServices.getInfoCertificat(idEcole ,matricule ,AnneeId ,periode) ;
+try {
+    emp = certificatScolariteServices.getInfoCertificat(idEcole ,matricule ,AnneeId ,periode) ;
+} catch (RuntimeException e){
+    e.printStackTrace ();
+}
 
         detailsBull.add(emp);
         JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(detailsBull) ;
