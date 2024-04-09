@@ -75,12 +75,14 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 	Logger logger = Logger.getLogger(BulletinService.class.getName());
 	Gson g = new Gson();
 
+	@Transactional
 	public void save(Bulletin bulletin) {
 		try {
 			UUID uuid = UUID.randomUUID();
 			bulletin.setId(uuid.toString());
 			bulletin.setDateCreation(new Date());
 			bulletin.persist();
+//			System.out.println("Bulletin id ::: " + bulletin.getId());
 			logger.info("Bulletin persisté !!! ");
 		} catch (RuntimeException e) {
 			logger.warning("Bulletin non persisté !!! ");
@@ -91,6 +93,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 //		System.out.println(g.toJson(findById(bulletin.getId())));
 	}
 
+	@Transactional
 	public void updateBulletinStatut(Long ecoleId, Long anneeId, String statut) {
 		List<Bulletin> bulletinsToUpdate = new ArrayList<Bulletin>();
 		try {
@@ -135,7 +138,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 	 * Obténir les infos du bulletin d'un élève pour une période dans une année
 	 */
 	public BulletinDto getBulletinsEleveByAnneeAndPeriode(Long anneeId, String matricule, Long classeId,
-														  Long periodeId) {
+			Long periodeId) {
 
 		Bulletin myBulletin = new Bulletin();
 		List<DetailBulletin> details = new ArrayList<DetailBulletin>();
@@ -312,7 +315,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 					.project(BulletinIdProjection.class);
 			bulletinsProject = bullProjectIds.list();
 			bulletins = Bulletin.find("classeId = ?1 and anneeId= ?2 and periodeId = ?3 and statut =?4",
-							Long.parseLong(classe), Long.parseLong(annee), Long.parseLong(periode), Constants.MODIFIABLE)
+					Long.parseLong(classe), Long.parseLong(annee), Long.parseLong(periode), Constants.MODIFIABLE)
 					.list();
 			for (BulletinIdProjection bulletin : bulletinsProject) {
 				List<DetailBulletinIdProjection> details = DetailBulletin.find("bulletin.id = ?1", bulletin.getId())
@@ -327,6 +330,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 				logger.info((details != null ? details.size() : 0) + " details de bulletins supprimés");
 			}
 			logger.info((bulletins != null ? bulletins.size() : 0) + " bulletins supprimés");
+			System.out.println((bulletins != null ? bulletins.size() : 0) + " bulletins supprimés");
 
 		} catch (RuntimeException e) {
 			logger.warning("IN THE CATCH OF REMOVER");
@@ -356,13 +360,13 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 			}
 //		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 			Bulletin bulletin;
-			List<NoteBulletin> notesBulletin;
+//			List<NoteBulletin> notesBulletin;
 			NoteBulletin noteBulletin;
 			List<Double> moyGenElevesList = new ArrayList<Double>();
 			List<String> bulletinIdList = new ArrayList<String>();
 			Integer countNonClasses = 0;
 
-			List<Message> messages = new ArrayList<Message>();
+//			List<Message> messages = new ArrayList<Message>();
 
 			logger.info(String.format("Nombre d'élèves concerné %s ", moyenneParEleve.size()));
 
@@ -501,12 +505,14 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 					// Ajout de l'enseignant de la matiere
 					PersonnelMatiereClasse pers = personnelMatiereClasseService.findProfesseurByMatiereAndClasse(
 							Long.parseLong(annee), Long.parseLong(classe), entry.getKey().getId());
-					if (pers != null)
+					if (pers != null && pers.getPersonnel() != null)
 						flag.setNom_prenom_professeur(
 								pers.getPersonnel().getNom() + " " + pers.getPersonnel().getPrenom());
+					else 
+						flag.setNom_prenom_professeur("N/A");
 
 					flag.persist();
-
+//					System.out.println("Detail -> " + flag.getId());
 					UUID idNoteBul;
 					for (Notes note : entry.getValue()) {
 						if (note.getEvaluation().getPec() == 1) {

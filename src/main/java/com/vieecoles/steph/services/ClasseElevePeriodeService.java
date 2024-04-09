@@ -33,7 +33,8 @@ public class ClasseElevePeriodeService implements PanacheRepositoryBase<ClasseEl
 		} catch (RuntimeException e) {
 			if (e.getClass().getName().equals(NoResultException.class.getName()))
 				logger.info("Aucune donnée sur le marquage de non classement d'un élève trouvé");
-			return cep;
+			else
+				e.printStackTrace();
 		}
 
 		return cep;
