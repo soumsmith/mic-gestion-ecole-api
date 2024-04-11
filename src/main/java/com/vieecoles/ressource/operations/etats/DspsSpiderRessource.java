@@ -10,6 +10,7 @@ import net.sf.jasperreports.engine.export.JRXlsExporter;
 import net.sf.jasperreports.engine.export.ooxml.JRDocxExporter;
 import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 
@@ -23,6 +24,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.util.*;
 
 @Path("/imprimer-rapport-dsps")
@@ -34,6 +37,12 @@ public class DspsSpiderRessource {
     EntityManager em;
     @Inject
     DpspServices dpspServices ;
+    @Inject
+    @ConfigProperty(name = "USER")
+    private String USER ;
+    @Inject
+    @ConfigProperty(name = "PASS")
+    private String PASS ;
 
 
     private static String UPLOAD_DIR = "/data/";
@@ -47,28 +56,31 @@ public class DspsSpiderRessource {
                                                  @PathParam("libelleAnnee") String libelleAnnee) throws Exception, JRException {
         InputStream myInpuStream ;
         /*myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/BulletinBean.jrxml");*/
-        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Spider_Book_Dsps.jrxml");
+        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/rapport_dsps.jrxml");
         spiderDspsDto detailsBull= new spiderDspsDto() ;
         List<DspsDto>  dspsDto = new ArrayList<>() ;
 
-        try {
+       /* try {
             dspsDto = dpspServices.DspspDto(idEcole,libellePeriode,libelleAnnee) ;
 
         } catch (RuntimeException e){
             e.printStackTrace ();
-        }
+        }*/
 
 
 
-        detailsBull.setDspsDto(dspsDto);
+       // detailsBull.setDspsDto(dspsDto);
 
-
-        JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(Collections.singleton(detailsBull)) ;
+        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecoleviedbv2", USER, PASS);
         JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
+
         //   JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");
         Map<String, Object> map = new HashMap<>();
+        map.put("idEcole", idEcole);
+        map.put("annee", libelleAnnee);
+        map.put("periode", libellePeriode);
         // map.put("title", type);
-        JasperPrint report = JasperFillManager.fillReport(compileReport, map, beanCollectionDataSource);
+        JasperPrint report = JasperFillManager.fillReport(compileReport, map, connection);
         JRXlsExporter exporter = new JRXlsExporter();
         exporter.setExporterInput(new SimpleExporterInput(report));
         // File exportReportFile = new File("profils" + ".docx");

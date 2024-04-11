@@ -36,6 +36,7 @@ import com.vieecoles.steph.entities.NoteBulletin;
 import com.vieecoles.steph.entities.Notes;
 import com.vieecoles.steph.entities.Periode;
 import com.vieecoles.steph.entities.PersonnelMatiereClasse;
+import com.vieecoles.steph.pojos.CalculMoyenneExceptPojo;
 import com.vieecoles.steph.projections.BulletinIdProjection;
 import com.vieecoles.steph.projections.DetailBulletinIdProjection;
 import com.vieecoles.steph.projections.NotesBulletinIdProjection;
@@ -71,6 +72,12 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 
 	@Inject
 	MoyenneAdjustmentService adjustmentService;
+
+	@Inject
+	DetailBulletinService detailBulletinService;
+
+	@Inject
+	EcoleHasMatiereService ecoleHasMatiereService;
 
 	Logger logger = Logger.getLogger(BulletinService.class.getName());
 	Gson g = new Gson();
@@ -184,6 +191,9 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 				else
 					ex.printStackTrace();
 			}
+
+//			populateMoyennesFrAndReligion(myBulletin.getId());
+
 			dto.setAppreciation(myBulletin.getAppreciation());
 			dto.setMoyGeneral(myBulletin.getMoyGeneral());
 			dto.setMatricule(myBulletin.getMatricule());
@@ -508,7 +518,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 					if (pers != null && pers.getPersonnel() != null)
 						flag.setNom_prenom_professeur(
 								pers.getPersonnel().getNom() + " " + pers.getPersonnel().getPrenom());
-					else 
+					else
 						flag.setNom_prenom_professeur("N/A");
 
 					flag.persist();
@@ -571,6 +581,76 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 			r.printStackTrace();
 			return 0;
 		}
+	}
+
+	public CalculMoyenneExceptPojo populateMoyennesFrAndReligion(String bulletinId) {
+		class MoyenneCoef {
+			public Double moyenne;
+			public Double coef;
+		}
+		CalculMoyenneExceptPojo moyResultObj = new CalculMoyenneExceptPojo();
+		Bulletin bulletin = Bulletin.findById(bulletinId);
+		if (bulletin != null) {
+
+			List<DetailBulletin> details = detailBulletinService.getByBulletin(bulletin.getId());
+			List<MoyenneCoef> moyFrList = new ArrayList<>();
+			List<MoyenneCoef> moyReligionList = new ArrayList<>();
+			for (DetailBulletin detail : details) {
+				if (detail.getMatiereRealId() != null) {
+					EcoleHasMatiere matiereEcole = ecoleHasMatiereService.findById(detail.getMatiereRealId());
+					if (matiereEcole != null && matiereEcole.getMatiereParent() != null
+							&& matiereEcole.getNiveauEnseignement().getCode()
+									.equals(Constants.CODE_NIVEAU_ENS_SECONDAIRE)
+							&& matiereEcole.getMatiereParent().getMatiere().getMatiereParent()
+									.equals(Constants.ID_MATIERE_FRANCAIS_CENTRAL)) {
+						MoyenneCoef moyCoef = new MoyenneCoef();
+						moyCoef.moyenne = detail.getMoyenne();
+						moyCoef.coef = detail.getCoef();
+						moyFrList.add(moyCoef);
+					}
+
+				} else if (detail.getMatiereCode() != null) {
+					EcoleHasMatiere matiereEcoleParent = ecoleHasMatiereService.getByEcoleAndCode(bulletin.getEcoleId(),
+							detail.getMatiereCode());
+					if (matiereEcoleParent != null
+							&& matiereEcoleParent.getNiveauEnseignement().getCode()
+									.equals(Constants.CODE_NIVEAU_ENS_SECONDAIRE)
+							&& matiereEcoleParent.getMatiere().getMatiereParent() != null && matiereEcoleParent
+									.getMatiere().getMatiereParent().equals(Constants.ID_MATIERE_FRANCAIS_CENTRAL)) {
+						MoyenneCoef moyCoef = new MoyenneCoef();
+						moyCoef.moyenne = detail.getMoyenne();
+						moyCoef.coef = detail.getCoef();
+						moyFrList.add(moyCoef);
+					}
+				}
+				if (detail.getCategorie() != null && detail.getCategorie().equals(Constants.CODE_CATEGORIE_RELIGION)) {
+					MoyenneCoef moyCoef = new MoyenneCoef();
+					moyCoef.moyenne = detail.getMoyenne();
+					moyCoef.coef = detail.getCoef();
+					moyReligionList.add(moyCoef);
+				}
+			}
+			if (moyFrList.size() > 0) {
+				Double sumMoy = moyFrList.stream().mapToDouble(o -> o.moyenne * o.coef).reduce(0, (a, b) -> a + b);
+				Double sumCoef = moyFrList.stream().mapToDouble(o -> o.coef).reduce(0, (a, b) -> a + b);
+				Double moyFr = sumMoy / sumCoef;
+
+						
+				moyResultObj = new CalculMoyenneExceptPojo(Double.valueOf(CommonUtils.roundDouble(moyFr, 2)),
+						Double.valueOf(sumCoef), Double.valueOf(CommonUtils.roundDouble(sumMoy, 2)),
+						CommonUtils.appreciation(moyFr), null);
+			}
+			if (moyReligionList.size() > 0) {
+				Double sumMoy = moyReligionList.stream().mapToDouble(o -> o.moyenne * o.coef).reduce(0,
+						(a, b) -> a + b);
+				Double sumCoef = moyReligionList.stream().mapToDouble(o -> o.coef).reduce(0, (a, b) -> a + b);
+				Double moyFr = sumMoy / sumCoef;
+				moyResultObj.setMoyExcpReligion(Double.valueOf(CommonUtils.roundDouble(moyFr, 2)));
+			}
+		}
+		Gson gson = new Gson();
+		System.out.println(gson.toJson(moyResultObj));
+		return moyResultObj;
 	}
 
 	Bulletin convert(MoyenneEleveDto me) {

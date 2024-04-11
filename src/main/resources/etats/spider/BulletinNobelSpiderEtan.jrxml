@@ -29,6 +29,7 @@
 	<parameter name="REPORT_DATE" class="java.util.Date" isForPrompting="false">
 		<defaultValueExpression><![CDATA[new java.util.Date()]]></defaultValueExpression>
 	</parameter>
+	<parameter name="infosAmoirie" class="java.lang.String" isForPrompting="false"/>
 	<queryString language="SQL">
 		<![CDATA[select * from  `ecoleviedbv2`.ve_details_infos_bulletins_spider 
 where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule} and 
@@ -972,7 +973,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 							</textField>
 						</frame>
 						<textField>
-							<reportElement x="0" y="0" width="101" height="14" uuid="dfacbcdd-d978-4c92-83ec-aaa506fd5361">
+							<reportElement x="0" y="0" width="101" height="14" printWhenGroupChanges="InfosPersonnelEleve" uuid="dfacbcdd-d978-4c92-83ec-aaa506fd5361">
 								<property name="com.jaspersoft.layout.grid.x" value="0"/>
 								<property name="com.jaspersoft.layout.grid.y" value="0"/>
 								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -984,7 +985,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 							<textElement>
 								<font size="6"/>
 							</textElement>
-							<textFieldExpression><![CDATA["REPUBLIQUE DE COTE D'IVOIRE"]]></textFieldExpression>
+							<textFieldExpression><![CDATA[$P{infosAmoirie}.equals( "1" )?"REPUBLIQUE DE COTE D'IVOIRE":""]]></textFieldExpression>
 						</textField>
 					</frame>
 				</frame>
@@ -1000,7 +1001,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 					</reportElement>
 					<frame>
-						<reportElement x="0" y="3" width="112" height="77" uuid="b6df39d0-e059-4af5-a0f9-936aaed1814a">
+						<reportElement x="0" y="1" width="112" height="87" uuid="b6df39d0-e059-4af5-a0f9-936aaed1814a">
 							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="1"/>
@@ -1011,9 +1012,9 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 						</reportElement>
 						<image scaleImage="FillFrame" hAlign="Center" onErrorType="Icon">
-							<reportElement x="1" y="1" width="84" height="64" uuid="4986db79-2f2f-4b0f-b870-d4af978eeb73">
-								<property name="com.jaspersoft.layout.grid.x" value="1"/>
-								<property name="com.jaspersoft.layout.grid.y" value="1"/>
+							<reportElement x="0" y="13" width="84" height="64" uuid="4986db79-2f2f-4b0f-b870-d4af978eeb73">
+								<property name="com.jaspersoft.layout.grid.x" value="0"/>
+								<property name="com.jaspersoft.layout.grid.y" value="2"/>
 								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
 								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
 								<property name="com.jaspersoft.layout.grid.rowspan" value="2"/>
@@ -1026,9 +1027,9 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 							<imageExpression><![CDATA[$F{logo}]]></imageExpression>
 						</image>
 						<textField textAdjust="ScaleFont">
-							<reportElement x="0" y="65" width="110" height="12" uuid="de0c3a42-f95f-4db6-bf42-36b79e55f720">
+							<reportElement x="0" y="77" width="110" height="12" uuid="de0c3a42-f95f-4db6-bf42-36b79e55f720">
 								<property name="com.jaspersoft.layout.grid.x" value="0"/>
-								<property name="com.jaspersoft.layout.grid.y" value="3"/>
+								<property name="com.jaspersoft.layout.grid.y" value="4"/>
 								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
 								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
 								<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
@@ -1039,6 +1040,21 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<font fontName="SansSerif" size="8"/>
 							</textElement>
 							<textFieldExpression><![CDATA["Année Scolaire : 2023 -2024"]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="0" width="112" height="13" printWhenGroupChanges="DisciplineLettre" uuid="d52ef5d7-7a27-4937-b49c-6122d87881c0">
+								<property name="com.jaspersoft.layout.grid.x" value="0"/>
+								<property name="com.jaspersoft.layout.grid.y" value="0"/>
+								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+							</reportElement>
+							<textElement>
+								<font size="6"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$P{infosAmoirie}.equals( "0" )?"REPUBLIQUE DE COTE D'IVOIRE":""]]></textFieldExpression>
 						</textField>
 					</frame>
 				</frame>
@@ -1073,22 +1089,22 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 					</reportElement>
-					<image scaleImage="FillFrame" onErrorType="Icon">
-						<reportElement x="446" y="0" width="83" height="75" uuid="ead8d2cf-965c-4bfa-a420-f2630105d2a3">
+					<image scaleImage="FillFrame" rotation="None" hAlign="Center" isLazy="true" onErrorType="Icon">
+						<reportElement positionType="Float" stretchType="ContainerHeight" x="458" y="0" width="71" height="70" uuid="ead8d2cf-965c-4bfa-a420-f2630105d2a3">
 							<property name="com.jaspersoft.layout.grid.x" value="3"/>
 							<property name="com.jaspersoft.layout.grid.y" value="0"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
 							<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
 							<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
 							<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+							<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
 							<property name="com.jaspersoft.studio.unit.width" value="px"/>
 							<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						</reportElement>
 						<imageExpression><![CDATA[$F{cheminphoto}]]></imageExpression>
 					</image>
 					<frame>
-						<reportElement x="0" y="0" width="376" height="70" uuid="bd519287-9e26-4a07-973c-2d404677ee8f">
+						<reportElement x="0" y="0" width="458" height="70" uuid="bd519287-9e26-4a07-973c-2d404677ee8f">
 							<property name="com.jaspersoft.layout.grid.x" value="0"/>
 							<property name="com.jaspersoft.layout.grid.y" value="0"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>

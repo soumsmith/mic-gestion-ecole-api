@@ -76,6 +76,16 @@ public class Constants {
 	
 	public static final String INVALID = "INVALID";
 	
+	public static final String CODE_MATIERE_FRANCAIS_CENTRAL = "01";
+	
+	public static final String ID_MATIERE_FRANCAIS_CENTRAL = "1";
+	
+	public static final String CODE_NIVEAU_ENS_SECONDAIRE = "2";
+	
+	public static final String CATEGORIE_RELIGION = "Religion";
+	
+	public static final String CODE_CATEGORIE_RELIGION = "05";
+	
 	public static final int DEFAULT_DUREE_SEANCE_MINUTES = 60;
 	public static final int DEFAULT_DELAI_APPEL_MINUTES = 20;
 	public static final int DEFAULT_DELAI_AVANT_DESACTIVE_APPEL_MINUTES = 0;

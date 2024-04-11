@@ -105,6 +105,7 @@
 	<field name="pourMoyInf10HgG" class="java.lang.Double"/>
 	<field name="pourMoyInf10Hg" class="java.lang.Double"/>
 	<field name="ordre_niveau" class="java.lang.Integer"/>
+	<field name="periode" class="java.lang.String"/>
 	<sortField name="cycle"/>
 	<variable name="ToCLMathF" class="java.lang.Long" resetType="Group" resetGroup="GroupecYCLE" calculation="Sum">
 		<variableExpression><![CDATA[$F{classMathF}]]></variableExpression>
@@ -355,7 +356,7 @@
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="6"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{ToPourSVT}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($V{ToPourSVT}))]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{ToPourSVT}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) :$V{ToPourSVT}==null? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($V{ToPourSVT}))]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
 					<reportElement x="606" y="40" width="20" height="20" uuid="81ed6bab-ebb4-41c0-90a2-0ab2d7043e11">
@@ -403,7 +404,7 @@
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="6"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{ToPourCompFr}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($V{ToPourCompFr}))]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$V{ToPourCompFr}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) :$V{ToPourCompFr}==null? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($V{ToPourCompFr}))]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
 					<reportElement x="427" y="0" width="21" height="20" uuid="d9799fab-4db3-4d6b-8347-1a96abf296f2">
@@ -435,7 +436,7 @@
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="6"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{ToCLFrancaisG}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$V{ToCLFrancaisG}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
 					<reportElement x="647" y="40" width="25" height="20" uuid="2a6a93ef-bf51-469a-aabb-b8baae0d036f">
@@ -451,7 +452,7 @@
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="6"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{ToCLPHILOF}+$V{ToCLPHILOG}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$V{ToCLPHILOF}+$V{ToCLPHILOG}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
 					<reportElement x="757" y="0" width="20" height="20" uuid="e3fe6032-cb3c-43b0-9b71-d7851a1569d7">
@@ -467,7 +468,7 @@
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="6"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{T_pour_inf_10FrancaisF}  ==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($V{T_pour_inf_10FrancaisF}  ))]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":($V{T_pour_inf_10FrancaisF}  ==0||$V{T_pour_inf_10FrancaisF}  ==null)? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($V{T_pour_inf_10FrancaisF}  ))]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
 					<reportElement x="448" y="40" width="25" height="20" uuid="95473fd5-0a05-45f0-a42f-661199ddbb5b">
@@ -499,7 +500,7 @@
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="6"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{ToCLCompFrF}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$V{ToCLCompFrF}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
 					<reportElement x="692" y="0" width="20" height="20" uuid="c2c29fcb-0005-41cc-9dd9-8170e6eed925">
@@ -515,7 +516,7 @@
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="6"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{T_pour_inf_10PHILOF}  ==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($V{T_pour_inf_10PHILOF}  ))]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":($V{T_pour_inf_10PHILOF}  ==0||$V{T_pour_inf_10PHILOF}  ==null)? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($V{T_pour_inf_10PHILOF}  ))]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
 					<reportElement x="208" y="0" width="20" height="20" uuid="b9d1b796-ad11-4d80-ac5d-6916a0b8cf7d">
@@ -563,7 +564,7 @@
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="6"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{ToeffCompFrF}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$V{ToeffCompFrF}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
 					<reportElement x="514" y="0" width="25" height="20" uuid="fb6d035c-d085-4733-993b-a49abdbc560f">
@@ -691,7 +692,7 @@
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="6"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{T_pour_inf_10OrthGramG}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($V{T_pour_inf_10OrthGramG}))]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$V{T_pour_inf_10OrthGramG}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($V{T_pour_inf_10OrthGramG}))]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
 					<reportElement x="294" y="40" width="21" height="20" uuid="a0292748-4401-473b-8902-585d1117be6e">
@@ -707,7 +708,7 @@
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="6"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{ToPourAll}==0? new DecimalFormat("#.##").format(Double.valueOf(0)): new DecimalFormat("#.##").format(Double.valueOf($V{ToPourAll}))]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{ToPourAll}==0? new DecimalFormat("#.##").format(Double.valueOf(0)):$V{ToPourAll}==null? new DecimalFormat("#.##").format(Double.valueOf(0)): new DecimalFormat("#.##").format(Double.valueOf($V{ToPourAll}))]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
 					<reportElement x="606" y="0" width="20" height="20" uuid="bae4dbe3-f973-46f6-add8-b6c40681fd62">
@@ -739,7 +740,7 @@
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="6"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{ToCLOrthGramF}+$V{ToCLOrthGramG}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$V{ToCLOrthGramF}+$V{ToCLOrthGramG}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
 					<reportElement x="626" y="0" width="21" height="20" uuid="6c8602cb-a7c0-461c-9324-5b9e374c962e">
@@ -787,7 +788,7 @@
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="6"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{T_pour_inf_10FrancaisG}  ==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($V{T_pour_inf_10FrancaisG}  ))]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":($V{T_pour_inf_10FrancaisG}  ==0||$V{T_pour_inf_10FrancaisG}  ==null)? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($V{T_pour_inf_10FrancaisG}  ))]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
 					<reportElement x="208" y="20" width="20" height="20" uuid="fcd43ea0-d64e-4353-9e25-36a0b9c43f2d">
@@ -851,7 +852,7 @@
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="6"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{ToeffPHILOF}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$V{ToeffPHILOF}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
 					<reportElement x="340" y="20" width="21" height="20" uuid="abaf99f0-caa6-4673-9b45-9b2f73bec93b">
@@ -883,7 +884,7 @@
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="6"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{ToeffFrancaisF}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$V{ToeffFrancaisF}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
 					<reportElement x="427" y="40" width="21" height="20" uuid="80f957a6-883a-4ee5-afab-3275a01e8176">
@@ -899,7 +900,7 @@
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="6"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{ToPourHg}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($V{ToPourHg}))]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{ToPourHg}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) :$V{ToPourHg}==null? new DecimalFormat("#.##").format(Double.valueOf(0)): new DecimalFormat("#.##").format(Double.valueOf($V{ToPourHg}))]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
 					<reportElement x="712" y="0" width="25" height="20" uuid="af3af7d7-58df-425a-a4d3-60dfc19768fd">
@@ -915,7 +916,7 @@
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="6"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{ToCLFrancaisF}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$V{ToCLFrancaisF}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
 					<reportElement x="514" y="20" width="25" height="20" uuid="a0f4148a-28ef-4281-acdf-55bdf1f74698">
@@ -947,7 +948,7 @@
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="6"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{ToeffOrthGramF}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$V{ToeffOrthGramF}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
 					<reportElement x="183" y="20" width="25" height="20" uuid="d7271453-04a5-4430-9f14-087c48d0b648">
@@ -979,7 +980,7 @@
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="6"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{ToeffPHILOG}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$V{ToeffPHILOG}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
 					<reportElement x="712" y="40" width="25" height="20" uuid="1072f2cc-467a-4f8e-aaf7-b0d9c9e5f560">
@@ -995,7 +996,7 @@
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="6"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{ToCLFrancaisF}+$V{ToCLFrancaisG}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$V{ToCLFrancaisF}+$V{ToCLFrancaisG}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
 					<reportElement x="228" y="20" width="21" height="20" uuid="8b0c37c5-082f-48ea-8cb7-df984b5e1752">
@@ -1059,7 +1060,7 @@
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="6"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{ToCLCompFrG}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$V{ToCLCompFrG}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
 					<reportElement x="361" y="20" width="21" height="20" uuid="c4ec8df5-32c4-44ed-a132-4d2dd7840337">
@@ -1107,7 +1108,7 @@
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="6"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{T_pour_inf_10OrthGramF}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($V{T_pour_inf_10OrthGramF}))]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$V{T_pour_inf_10OrthGramF}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($V{T_pour_inf_10OrthGramF}))]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
 					<reportElement x="737" y="40" width="20" height="20" uuid="87e63ea7-f4cb-43f3-90b8-9b43189b4a00">
@@ -1123,7 +1124,7 @@
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="6"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{ToeffFrancaisF}+$V{ToeffFrancaisG}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$V{ToeffFrancaisF}+$V{ToeffFrancaisG}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
 					<reportElement x="581" y="0" width="25" height="20" uuid="5b4c0b98-b95e-40ca-a6ae-7a91b444c6fc">
@@ -1203,7 +1204,7 @@
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="6"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{ToPourEsp}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($V{ToPourEsp}))]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{ToPourEsp}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) :$V{ToPourEsp}==null? new DecimalFormat("#.##").format(Double.valueOf(0)): new DecimalFormat("#.##").format(Double.valueOf($V{ToPourEsp}))]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
 					<reportElement x="382" y="40" width="25" height="20" uuid="c306bacd-25ea-4cca-8b6e-83fda40164b0">
@@ -1235,7 +1236,7 @@
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="6"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{ToCLPHILOF}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$V{ToCLPHILOF}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
 					<reportElement x="560" y="40" width="21" height="20" uuid="41d1248b-6dc6-4f23-a5f7-658b3b37f061">
@@ -1251,7 +1252,7 @@
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="6"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{ToPourPC}==0? new DecimalFormat("#.##").format(Double.valueOf(0)): new DecimalFormat("#.##").format(Double.valueOf($V{ToPourPC}))]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{ToPourPC}==0? new DecimalFormat("#.##").format(Double.valueOf(0)):$V{ToPourPC}==null? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($V{ToPourPC}))]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
 					<reportElement x="117" y="20" width="24" height="20" uuid="af40144e-7bbc-4de9-8f69-459b272a5869">
@@ -1267,7 +1268,7 @@
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="6"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{ToCLOrthGramG}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$V{ToCLOrthGramG}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
 					<reportElement x="361" y="0" width="21" height="20" uuid="a9d277bf-14ae-4f72-913a-206169c4297b">
@@ -1347,7 +1348,7 @@
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="6"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{ToCLPHILOG}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$V{ToCLPHILOG}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
 					<reportElement x="560" y="0" width="21" height="20" uuid="127f6b3a-b245-45fa-b47f-d906cced8b1f">
@@ -1395,7 +1396,7 @@
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="6"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{ToCLOrthGramF}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$V{ToCLOrthGramF}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
 					<reportElement x="448" y="0" width="25" height="20" uuid="ff18f08a-323f-4b76-b6b4-2c863056c553">
@@ -1427,7 +1428,7 @@
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="6"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{ToeffPHILOF}+$V{ToeffPHILOG}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$V{ToeffPHILOF}+$V{ToeffPHILOG}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
 					<reportElement x="228" y="0" width="21" height="20" uuid="41fb20a1-03de-4960-891a-760795205ca9">
@@ -1475,7 +1476,7 @@
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="6"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{T_pour_inf_10CompFrG}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($V{T_pour_inf_10CompFrG}))]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$V{T_pour_inf_10CompFrG}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($V{T_pour_inf_10CompFrG}))]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
 					<reportElement x="274" y="40" width="20" height="20" uuid="4bc29244-838c-4f06-bec1-2ce09cb5b851">
@@ -1539,7 +1540,7 @@
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="6"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{T_pour_inf_10CompFrF}==0? new DecimalFormat("#.##").format(Double.valueOf(0)): new DecimalFormat("#.##").format(Double.valueOf($V{T_pour_inf_10CompFrF}))]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$V{T_pour_inf_10CompFrF}==0? new DecimalFormat("#.##").format(Double.valueOf(0)): new DecimalFormat("#.##").format(Double.valueOf($V{T_pour_inf_10CompFrF}))]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
 					<reportElement x="315" y="20" width="25" height="20" uuid="b3b16a64-5f03-4beb-938f-8f193a927529">
@@ -1571,7 +1572,7 @@
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="6"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{ToeffOrthGramG}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$V{ToeffOrthGramG}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
 					<reportElement x="737" y="20" width="20" height="20" uuid="4b1fa87d-6df4-4eb9-a6cf-175694694a37">
@@ -1587,7 +1588,7 @@
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="6"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{ToeffFrancaisG}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$V{ToeffFrancaisG}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
 					<reportElement x="493" y="40" width="21" height="20" uuid="2ef579e5-0a26-4e78-afae-85363c55f667">
@@ -1603,7 +1604,7 @@
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="6"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{ToPourMath}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($V{ToPourMath}))]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{ToPourMath}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) :$V{ToPourMath}==null? new DecimalFormat("#.##").format(Double.valueOf(0)): new DecimalFormat("#.##").format(Double.valueOf($V{ToPourMath}))]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
 					<reportElement x="757" y="40" width="20" height="20" uuid="f643a410-0fe1-4495-9909-2d8dc14d8b52">
@@ -1619,7 +1620,7 @@
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="6"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{ToPourFrancais}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($V{ToPourFrancais}))]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":($V{ToPourFrancais}==0||$V{ToPourFrancais}==null)? new DecimalFormat("#.##").format(Double.valueOf(0)):$V{ToPourFrancais}==null? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($V{ToPourFrancais}))]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
 					<reportElement x="407" y="40" width="20" height="20" uuid="2bef9b06-bc27-4eaa-a8d3-0fa2d749475a">
@@ -1715,7 +1716,7 @@
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="6"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{ToeffCompFrF}+$V{ToeffCompFrG}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$V{ToeffCompFrF}+$V{ToeffCompFrG}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
 					<reportElement x="692" y="40" width="20" height="20" uuid="95300c87-bdb6-4812-a94c-d6060fa099bf">
@@ -1731,7 +1732,7 @@
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="6"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{ToPourPHILO}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($V{ToPourPHILO}))]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":($V{ToPourPHILO}==0||$V{ToPourPHILO}==null)? new DecimalFormat("#.##").format(Double.valueOf(0)):$V{ToPourPHILO}==null? new DecimalFormat("#.##").format(Double.valueOf(0))  : new DecimalFormat("#.##").format(Double.valueOf($V{ToPourPHILO}))]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
 					<reportElement x="-13" y="0" width="39" height="60" uuid="0b1691d0-67c7-466f-9678-6f0af144ad81"/>
@@ -1777,7 +1778,7 @@
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="6"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{T_pour_inf_10PHILOG}  ==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($V{T_pour_inf_10PHILOG}  ))]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":($V{T_pour_inf_10PHILOG}  ==0||$V{T_pour_inf_10PHILOG}  ==null)? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($V{T_pour_inf_10PHILOG}  ))]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
 					<reportElement x="141" y="40" width="21" height="20" uuid="27340e20-89f0-4b0b-b284-f387419c183a">
@@ -1793,7 +1794,7 @@
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="6"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{ToeffOrthGramF}+$V{ToeffOrthGramG}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$V{ToeffOrthGramF}+$V{ToeffOrthGramG}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
 					<reportElement x="382" y="20" width="25" height="20" uuid="7998d846-6a5c-4f5c-aa0b-4a7dcec7f33d">
@@ -1857,7 +1858,7 @@
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="6"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{ToeffCompFrG}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$V{ToeffCompFrG}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
 					<reportElement x="51" y="40" width="24" height="20" uuid="d392da56-4796-4a89-b237-96ad04ce0043">
@@ -1873,7 +1874,7 @@
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="6"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{ToCLCompFrF}+$V{ToCLCompFrG}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$V{ToCLCompFrF}+$V{ToCLCompFrG}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
 					<reportElement x="26" y="40" width="25" height="20" uuid="2f02931f-c6eb-47ce-85bc-144b8a624486">
@@ -1905,7 +1906,7 @@
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="6"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{ToPourAng}==0? new DecimalFormat("#.##").format(Double.valueOf(0)): new DecimalFormat("#.##").format(Double.valueOf($V{ToPourAng}))]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{ToPourAng}==0? new DecimalFormat("#.##").format(Double.valueOf(0)):$V{ToPourAng}==null? new DecimalFormat("#.##").format(Double.valueOf(0)): new DecimalFormat("#.##").format(Double.valueOf($V{ToPourAng}))]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
 					<reportElement x="340" y="0" width="21" height="20" uuid="b6944712-d1c2-4caa-ac07-de8d4048eba0">
@@ -1937,7 +1938,7 @@
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="6"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{ToPourOrthGram}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($V{ToPourOrthGram}))]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$V{ToPourOrthGram}==0? new DecimalFormat("#.##").format(Double.valueOf(0)):$V{ToPourOrthGram}==null? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($V{ToPourOrthGram}))]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
 					<reportElement x="514" y="40" width="25" height="20" uuid="abe735d1-1ca6-4658-bb9a-896e1271063f">
@@ -2034,7 +2035,7 @@
 				<textElement textAlignment="Left">
 					<font fontName="SansSerif" size="10" isBold="true" isUnderline="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Tableau 2 Proportion des élèves n'ayant pas obtenus la moyenne au premier trimestre par niveau et par discipline"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Tableau 2 Proportion des élèves n'ayant pas obtenus la moyenne au "+$F{periode}  +"  par niveau et par discipline"]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
@@ -3496,7 +3497,7 @@ Classés]]></text>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{classOrthGramF}+$F{classOrthGramG}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$F{classOrthGramF}+$F{classOrthGramG}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Band">
 				<reportElement x="493" y="40" width="21" height="20" uuid="84196be2-5b9c-45fa-bed1-2060e291b71a">
@@ -3512,7 +3513,7 @@ Classés]]></text>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{pourMoyInf10Math}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10Math}))]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{pourMoyInf10Math}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) :$F{pourMoyInf10Math}==null? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10Math}))]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Band">
 				<reportElement x="672" y="20" width="20" height="20" uuid="2c07840e-c576-4eea-80ac-206d742ab2ac">
@@ -3528,7 +3529,7 @@ Classés]]></text>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{nbreMoyInf10PHILOG}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$F{nbreMoyInf10PHILOG}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Band">
 				<reportElement x="514" y="40" width="25" height="20" uuid="57f3bb8b-5b28-4d3f-8909-01f02ae98294">
@@ -3560,7 +3561,7 @@ Classés]]></text>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{classCompFrF}+$F{classCompFrG}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$F{classCompFrF}+$F{classCompFrG}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Band">
 				<reportElement x="382" y="20" width="25" height="20" uuid="9c230b05-d4b4-461b-85e7-17a1988e019e">
@@ -3608,7 +3609,7 @@ Classés]]></text>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{pourMoyInf10OrthGram}==0? new DecimalFormat("#.##").format(Double.valueOf(0)): new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10OrthGram}))]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$F{pourMoyInf10OrthGram}==0? new DecimalFormat("#.##").format(Double.valueOf(0)):$F{pourMoyInf10OrthGram}==null? new DecimalFormat("#.##").format(Double.valueOf(0)): new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10OrthGram}))]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Band">
 				<reportElement x="407" y="40" width="20" height="20" uuid="017577ee-73fe-4a26-b7ed-8fc572a041a3">
@@ -3640,7 +3641,7 @@ Classés]]></text>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{classFrancaisG}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$F{classFrancaisG}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Band">
 				<reportElement x="672" y="40" width="20" height="20" uuid="cce65f18-edac-4fc0-94b4-18f8cfb9a110">
@@ -3656,7 +3657,7 @@ Classés]]></text>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{nbreMoyInf10PHILOF}+$F{nbreMoyInf10PHILOG}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$F{nbreMoyInf10PHILOF}+$F{nbreMoyInf10PHILOG}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Band">
 				<reportElement x="141" y="0" width="21" height="20" uuid="f90dc4a8-5659-4c32-b222-963df9a5ab87">
@@ -3672,7 +3673,7 @@ Classés]]></text>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{nbreMoyInf10OrthGramF}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$F{nbreMoyInf10OrthGramF}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Band">
 				<reportElement x="208" y="40" width="20" height="20" uuid="b9b00ec1-e1ec-40bb-9ff5-4c0f1d867e66">
@@ -3720,7 +3721,7 @@ Classés]]></text>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{nbreMoyInf10PHILOF}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$F{nbreMoyInf10PHILOF}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Band">
 				<reportElement x="96" y="20" width="21" height="20" uuid="fc91ef19-e6be-4eb8-86d7-8ff111e67c50">
@@ -3736,7 +3737,7 @@ Classés]]></text>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{pourMoyInf10CompFrG}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10CompFrG}))]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":($F{pourMoyInf10CompFrG}==0||$F{pourMoyInf10CompFrG}==null)? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10CompFrG}))]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Band">
 				<reportElement x="249" y="40" width="25" height="20" uuid="afa33a0f-b894-4e4b-91ea-3c6ab9c7443f">
@@ -3768,7 +3769,7 @@ Classés]]></text>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{classFrancaisF}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$F{classFrancaisF}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Band">
 				<reportElement x="606" y="20" width="20" height="20" uuid="259ee45a-01ed-4f8e-8c0b-96a3e9aaee40">
@@ -3864,7 +3865,7 @@ Classés]]></text>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{nbreMoyInf10FrancaisF}+$F{nbreMoyInf10FrancaisG}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$F{nbreMoyInf10FrancaisF}+$F{nbreMoyInf10FrancaisG}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Band">
 				<reportElement x="75" y="20" width="21" height="20" uuid="667332f3-4296-4458-9071-2e126b678527">
@@ -3880,7 +3881,7 @@ Classés]]></text>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{nbreMoyInf10CompFrG}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$F{nbreMoyInf10CompFrG}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Band">
 				<reportElement x="427" y="0" width="21" height="20" uuid="69726ed2-8b8c-46d0-a25c-1bea18b5b9b8">
@@ -3912,7 +3913,7 @@ Classés]]></text>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{classPHILOG}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$F{classPHILOG}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Band">
 				<reportElement x="626" y="0" width="21" height="20" uuid="7553e6a7-2390-498c-9604-3f2c042567af">
@@ -3944,7 +3945,7 @@ Classés]]></text>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{pourMoyInf10PHILOF} ==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10PHILOF} ))]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$F{pourMoyInf10PHILOF} ==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10PHILOF} ))]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Band">
 				<reportElement x="473" y="20" width="20" height="20" uuid="95ae22ef-46fe-477b-be61-81649284224f">
@@ -3976,7 +3977,7 @@ Classés]]></text>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{classCompFrG}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$F{classCompFrG}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Band">
 				<reportElement x="382" y="0" width="25" height="20" uuid="554f8841-df32-421c-a0fb-601921021543">
@@ -4008,7 +4009,7 @@ Classés]]></text>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{classOrthGramF}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$F{classOrthGramF}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Band">
 				<reportElement x="315" y="0" width="25" height="20" uuid="0bc0959a-b9a1-4e9f-ba22-b16be490f910">
@@ -4056,7 +4057,7 @@ Classés]]></text>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{classPHILOF}+$F{classPHILOG}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$F{classPHILOF}+$F{classPHILOG}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Band">
 				<reportElement x="315" y="20" width="25" height="20" uuid="e8ec1c7e-c9b9-43e4-b11e-000ba0a9b698">
@@ -4088,7 +4089,7 @@ Classés]]></text>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{pourMoyInf10Esp}==0? new DecimalFormat("#.##").format(Double.valueOf(0)): new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10Esp}))]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{pourMoyInf10Esp}==0? new DecimalFormat("#.##").format(Double.valueOf(0)):$F{pourMoyInf10Esp}==null? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10Esp}))]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Band">
 				<reportElement x="162" y="0" width="21" height="20" uuid="5132d210-3d7c-4d7d-a05b-e6981f0a4381">
@@ -4104,7 +4105,7 @@ Classés]]></text>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{pourMoyInf10OrthGramF}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10OrthGramF}))]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$F{pourMoyInf10OrthGramF}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10OrthGramF}))]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Band">
 				<reportElement x="581" y="20" width="25" height="20" uuid="0d54e677-5997-4bf5-b93a-df18c934ae21">
@@ -4168,7 +4169,7 @@ Classés]]></text>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{pourMoyInf10Hg}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10Hg}))]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{pourMoyInf10Hg}==0? new DecimalFormat("#.##").format(Double.valueOf(0)):$F{pourMoyInf10Hg}==null? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10Hg}))]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Band">
 				<reportElement x="141" y="20" width="21" height="20" uuid="2aa8f884-97e6-4237-98cd-93434aa1a019">
@@ -4184,7 +4185,7 @@ Classés]]></text>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{nbreMoyInf10OrthGramG}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$F{nbreMoyInf10OrthGramG}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Band">
 				<reportElement x="757" y="40" width="20" height="20" uuid="06e7b281-d1ba-4868-875b-6c1e53c101fb">
@@ -4200,7 +4201,7 @@ Classés]]></text>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{pourMoyInf10Francais}  ==0? new DecimalFormat("#.##").format(Double.valueOf(0)): new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10Francais} ))]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$F{pourMoyInf10Francais}  ==0? new DecimalFormat("#.##").format(Double.valueOf(0)):$F{pourMoyInf10Francais}==null? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10Francais} ))]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Band">
 				<reportElement x="493" y="0" width="21" height="20" uuid="65238644-2150-4ff7-b6d9-68068b4269c8">
@@ -4232,7 +4233,7 @@ Classés]]></text>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{pourMoyInf10PHILOG} ==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10PHILOG} ))]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$F{pourMoyInf10PHILOG} ==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10PHILOG} ))]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Band">
 				<reportElement x="208" y="20" width="20" height="20" uuid="d56f1885-0aa8-4ff5-a732-39dfe34f91cd">
@@ -4264,7 +4265,7 @@ Classés]]></text>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{pourMoyInf10PHILO} ==0? new DecimalFormat("#.##").format(Double.valueOf(0)): new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10PHILO} ))]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$F{pourMoyInf10PHILO} ==0? new DecimalFormat("#.##").format(Double.valueOf(0)) :$F{pourMoyInf10PHILO}==null? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10PHILO} ))]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Band">
 				<reportElement x="606" y="40" width="20" height="20" uuid="cb9658b9-b9df-4023-a157-3d9c1b18fcbb">
@@ -4360,7 +4361,7 @@ Classés]]></text>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{nbreMoyInf10CompFrF}+$F{nbreMoyInf10CompFrG}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$F{nbreMoyInf10CompFrF}+$F{nbreMoyInf10CompFrG}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Band">
 				<reportElement x="539" y="40" width="21" height="20" uuid="f824f4f2-b15c-4c38-8807-062a634c7054">
@@ -4392,7 +4393,7 @@ Classés]]></text>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{classOrthGramG}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$F{classOrthGramG}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Band">
 				<reportElement x="294" y="20" width="21" height="20" uuid="7d2732cd-b33f-4c6d-8c7c-6a183298fa2f">
@@ -4424,7 +4425,7 @@ Classés]]></text>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{pourMoyInf10PC}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10PC}))]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{pourMoyInf10PC}==0? new DecimalFormat("#.##").format(Double.valueOf(0)):$F{pourMoyInf10PC}==null? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10PC}))]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Band">
 				<reportElement x="249" y="0" width="25" height="20" uuid="83bc9c4c-2578-48c5-b393-1698ebc19473">
@@ -4456,7 +4457,7 @@ Classés]]></text>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{pourMoyInf10Ang}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10Ang}))]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{pourMoyInf10Ang}==0? new DecimalFormat("#.##").format(Double.valueOf(0)):$F{pourMoyInf10Ang}==null? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10Ang}))]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Band">
 				<reportElement x="294" y="40" width="21" height="20" uuid="ea3f25d5-c573-4651-8d61-397a184e641a">
@@ -4472,7 +4473,7 @@ Classés]]></text>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{pourMoyInf10All}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10All}))]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{pourMoyInf10All}==0? new DecimalFormat("#.##").format(Double.valueOf(0)):$F{pourMoyInf10All}==null? new DecimalFormat("#.##").format(Double.valueOf(0))  : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10All}))]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Band">
 				<reportElement x="514" y="0" width="25" height="20" uuid="e20aace3-503f-458b-8a20-0618cea953aa">
@@ -4536,7 +4537,7 @@ Classés]]></text>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{pourMoyInf10OrthGramG}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10OrthGramG}))]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$F{pourMoyInf10OrthGramG}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10OrthGramG}))]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Band">
 				<reportElement x="141" y="40" width="21" height="20" uuid="601ae1a5-1573-449b-aa0e-4dd6306fd204">
@@ -4552,7 +4553,7 @@ Classés]]></text>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{nbreMoyInf10OrthGramF}+$F{nbreMoyInf10OrthGramG}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$F{nbreMoyInf10OrthGramF}+$F{nbreMoyInf10OrthGramG}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Band">
 				<reportElement x="757" y="0" width="20" height="20" uuid="8b85b318-e6e7-44d9-9e00-abdc7d589268">
@@ -4568,7 +4569,7 @@ Classés]]></text>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{pourMoyInf10FrancaisF}  ==0? new DecimalFormat("#.##").format(Double.valueOf(0)): new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10FrancaisF} ))]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$F{pourMoyInf10FrancaisF}  ==0? new DecimalFormat("#.##").format(Double.valueOf(0)): new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10FrancaisF} ))]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Band">
 				<reportElement x="249" y="20" width="25" height="20" uuid="3edc036c-eda3-4505-baf1-a296ae3ea09e">
@@ -4680,7 +4681,7 @@ Classés]]></text>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{classFrancaisF}+$F{classFrancaisG}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$F{classFrancaisF}+$F{classFrancaisG}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Band">
 				<reportElement x="96" y="40" width="21" height="20" uuid="67b2fc14-d29f-459c-bc9d-a4ed3a2e9655">
@@ -4696,7 +4697,7 @@ Classés]]></text>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{pourMoyInf10CompFr}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10CompFr}))]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":($F{pourMoyInf10CompFr}==0||$F{pourMoyInf10CompFr}==null)? new DecimalFormat("#.##").format(Double.valueOf(0)) :$F{pourMoyInf10CompFr}==null? new DecimalFormat("#.##").format(Double.valueOf(0)): new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10CompFr}))]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Band">
 				<reportElement x="75" y="0" width="21" height="20" uuid="f42fd62b-e546-43ba-832d-e54f9569f112">
@@ -4712,7 +4713,7 @@ Classés]]></text>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{nbreMoyInf10CompFrF}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$F{nbreMoyInf10CompFrF}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Band">
 				<reportElement x="539" y="20" width="21" height="20" uuid="b1598af1-5731-459d-b065-fa086563655e">
@@ -4760,7 +4761,7 @@ Classés]]></text>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{classPHILOF}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$F{classPHILOF}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Band">
 				<reportElement x="626" y="40" width="21" height="20" uuid="0d6ecd35-fcec-4905-a304-8011a43e5dbe">
@@ -4776,7 +4777,7 @@ Classés]]></text>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{pourMoyInf10SVT}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10SVT}))]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{pourMoyInf10SVT}==0? new DecimalFormat("#.##").format(Double.valueOf(0)):$F{pourMoyInf10SVT}==null? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10SVT}))]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Band">
 				<reportElement x="757" y="20" width="20" height="20" uuid="0ddcb429-de30-4418-8e71-c92d8387431e">
@@ -4792,7 +4793,7 @@ Classés]]></text>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{pourMoyInf10FrancaisG}  ==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10FrancaisG} ))]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$F{pourMoyInf10FrancaisG}  ==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10FrancaisG} ))]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Band">
 				<reportElement x="473" y="0" width="20" height="20" uuid="ff41e488-8bb5-446f-8f1a-20dc8da29dd0">
@@ -4824,7 +4825,7 @@ Classés]]></text>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{pourMoyInf10CompFrF}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10CompFrF}))]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":($F{pourMoyInf10CompFrF}==0 || $F{pourMoyInf10CompFrF}==null)? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10CompFrF}))]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Band">
 				<reportElement x="737" y="0" width="20" height="20" uuid="5fdc056e-9b0b-4139-8e0b-5f10f239a5e9">
@@ -4840,7 +4841,7 @@ Classés]]></text>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{nbreMoyInf10FrancaisF}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$F{nbreMoyInf10FrancaisF}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Band">
 				<reportElement x="51" y="0" width="24" height="20" uuid="1336a2ab-98f9-4e62-9ed7-210fae0267ff">
@@ -4856,7 +4857,7 @@ Classés]]></text>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{classCompFrF}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$F{classCompFrF}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Band">
 				<reportElement x="340" y="20" width="21" height="20" uuid="6899ef90-f72d-4c54-9b02-3a6a47e8a22b">
@@ -5000,7 +5001,7 @@ Classés]]></text>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{nbreMoyInf10FrancaisG}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$F{nbreMoyInf10FrancaisG}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Band">
 				<reportElement x="448" y="40" width="25" height="20" uuid="31450071-7152-4677-8bac-253fc7d35d8e">

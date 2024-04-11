@@ -35,10 +35,18 @@ public class RecapResultatsElevesAffeEtNonAffDto {
     private Double pourMoySup10;
     private Double pourMoyInf999;
     private Double  pourMoyInf85 ;
+    private String periode ;
 
     public RecapResultatsElevesAffeEtNonAffDto(List<RecapResultatsElevesAffeEtNonAffDto> recapResultatsElevesAffeEtNonAffDtos) {
     }
 
+    public String getPeriode() {
+        return periode;
+    }
+
+    public void setPeriode(String periode) {
+        this.periode = periode;
+    }
 
     public Double getPourMoySup10() {
         return pourMoySup10;

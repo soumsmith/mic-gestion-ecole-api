@@ -55,6 +55,7 @@
 	<field name="pourMoySup10" class="java.lang.Double"/>
 	<field name="pourMoyInf999" class="java.lang.Double"/>
 	<field name="pourMoyInf85" class="java.lang.Double"/>
+	<field name="periode" class="java.lang.String"/>
 	<sortField name="cycle"/>
 	<variable name="ToNF" class="java.lang.Long" calculation="Sum">
 		<variableExpression><![CDATA[$F{effeF}]]></variableExpression>
@@ -546,7 +547,7 @@
 							<textElement textAlignment="Left" verticalAlignment="Middle">
 								<font fontName="SansSerif" size="6" isBold="true"/>
 							</textElement>
-							<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf($V{T_ET_pour_sup_10_F_C}))+"%"]]></textFieldExpression>
+							<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf($V{T_ET_pour_sup_10_F_C}))]]></textFieldExpression>
 						</textField>
 						<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
 							<reportElement mode="Opaque" x="319" y="0" width="24" height="30" backcolor="#FFFF33" uuid="93dcee8a-e5ee-4b00-ae68-cf5fe47ede1f">
@@ -588,7 +589,7 @@
 							<textElement textAlignment="Left" verticalAlignment="Middle">
 								<font fontName="SansSerif" size="6" isBold="true"/>
 							</textElement>
-							<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf($V{T_ET_pour_sup_10_G_C}))+"%"]]></textFieldExpression>
+							<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf($V{T_ET_pour_sup_10_G_C}))]]></textFieldExpression>
 						</textField>
 						<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
 							<reportElement mode="Opaque" x="367" y="0" width="23" height="30" backcolor="#FFFF33" uuid="9d4e4580-c466-4152-99ad-6c3944badaf6">
@@ -630,7 +631,7 @@
 							<textElement textAlignment="Left" verticalAlignment="Middle">
 								<font fontName="SansSerif" size="6" isBold="true"/>
 							</textElement>
-							<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf($V{T_ET_pour_sup_10_C}))+"%"]]></textFieldExpression>
+							<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf($V{T_ET_pour_sup_10_C}))]]></textFieldExpression>
 						</textField>
 						<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
 							<reportElement style="contenu2" mode="Opaque" x="414" y="0" width="31" height="30" backcolor="#FFFF33" uuid="1695ba4b-f7a3-458e-921d-76e4170185f9">
@@ -672,7 +673,7 @@
 							<textElement textAlignment="Left" verticalAlignment="Middle">
 								<font fontName="SansSerif" size="6" isBold="true"/>
 							</textElement>
-							<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf($V{T_ET_pour_sup_9_99_F_C}))+"%"]]></textFieldExpression>
+							<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf($V{T_ET_pour_sup_9_99_F_C}))]]></textFieldExpression>
 						</textField>
 						<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
 							<reportElement style="contenu2" mode="Opaque" x="472" y="0" width="27" height="30" backcolor="#FFFF33" uuid="81871b7e-ca6b-4b2e-9f27-c4cebe16f243">
@@ -714,7 +715,7 @@
 							<textElement textAlignment="Left" verticalAlignment="Middle">
 								<font fontName="SansSerif" size="6" isBold="true"/>
 							</textElement>
-							<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf($V{T_ET_pour_sup_9_99_G_C}))+"%"]]></textFieldExpression>
+							<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf($V{T_ET_pour_sup_9_99_G_C}))]]></textFieldExpression>
 						</textField>
 						<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
 							<reportElement style="contenu2" mode="Opaque" x="526" y="0" width="27" height="30" backcolor="#FFFF33" uuid="cd2db42a-3179-46f3-ac2f-ee22da53e8af">
@@ -756,7 +757,7 @@
 							<textElement textAlignment="Left" verticalAlignment="Middle">
 								<font fontName="SansSerif" size="6" isBold="true"/>
 							</textElement>
-							<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf($V{T_ET_pour_sup_9_99_C}))+"%"]]></textFieldExpression>
+							<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf($V{T_ET_pour_sup_9_99_C}))]]></textFieldExpression>
 						</textField>
 						<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
 							<reportElement style="contenu2" mode="Opaque" x="580" y="0" width="35" height="30" backcolor="#FFFF33" uuid="fff4d8a1-68de-4d3c-93c5-07244f1120e2">
@@ -798,7 +799,7 @@
 							<textElement textAlignment="Left" verticalAlignment="Middle">
 								<font fontName="SansSerif" size="6" isBold="true"/>
 							</textElement>
-							<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf($V{T_ET_pour_inf_8_50_F_C}))+"%"]]></textFieldExpression>
+							<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf($V{T_ET_pour_inf_8_50_F_C}))]]></textFieldExpression>
 						</textField>
 						<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
 							<reportElement style="contenu2" mode="Opaque" x="646" y="0" width="31" height="30" backcolor="#FFFF33" uuid="e82691b4-9fbb-458a-a31d-1b535280b2c4">
@@ -840,7 +841,7 @@
 							<textElement textAlignment="Left" verticalAlignment="Middle">
 								<font fontName="SansSerif" size="6" isBold="true"/>
 							</textElement>
-							<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf($V{T_ET_pour_inf_8_50_G_C}))+"%"]]></textFieldExpression>
+							<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf($V{T_ET_pour_inf_8_50_G_C}))]]></textFieldExpression>
 						</textField>
 						<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
 							<reportElement style="contenu2" mode="Opaque" x="708" y="0" width="31" height="30" backcolor="#FFFF33" uuid="4be3a933-a7f8-4244-bf75-8a4203c9a79d">
@@ -882,7 +883,7 @@
 							<textElement textAlignment="Left" verticalAlignment="Middle">
 								<font fontName="SansSerif" size="6" isBold="true"/>
 							</textElement>
-							<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf($V{T_ET_pour_inf_8_50_C}))+"%"]]></textFieldExpression>
+							<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf($V{T_ET_pour_inf_8_50_C}))]]></textFieldExpression>
 						</textField>
 					</frame>
 				</frame>
@@ -933,7 +934,7 @@
 				<textElement textAlignment="Left">
 					<font fontName="SansSerif" size="10" isBold="true" isUnderline="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[" Tableau 1: Récapitulatif des résultats des élèves par tranche de moyennes générales du 1er trimestre et par sexe au secondaire général"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[" Tableau 1: Récapitulatif des résultats des élèves par tranche de moyennes générales du "+$F{periode}+"  et par sexe au secondaire général"]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
@@ -1833,7 +1834,7 @@
 								<textElement textAlignment="Left" verticalAlignment="Middle">
 									<font fontName="SansSerif" size="6"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$F{nbreMoyInf85F}==0? new DecimalFormat("#.##").format(Double.valueOf(0))+"%" : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf85F}))+"%"]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{nbreMoyInf85F}==0? new DecimalFormat("#.##").format(Double.valueOf(0)): new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf85F}))]]></textFieldExpression>
 							</textField>
 							<textField>
 								<reportElement style="contenu2" mode="Opaque" x="66" y="0" width="31" height="40" backcolor="#FF0000" uuid="52c167f2-4a1a-41c7-916d-8397d20a9e33">
@@ -1875,7 +1876,7 @@
 								<textElement textAlignment="Left" verticalAlignment="Middle">
 									<font fontName="SansSerif" size="6"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$F{nbreMoyInf85G}==0? new DecimalFormat("#.##").format(Double.valueOf(0))+"%" : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf85G}))+"%"]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{nbreMoyInf85G}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf85G}))]]></textFieldExpression>
 							</textField>
 							<textField>
 								<reportElement mode="Opaque" x="128" y="0" width="31" height="40" backcolor="#FF0000" uuid="b1c44c5c-a31d-43b0-a092-213e10f2f793">
@@ -1919,7 +1920,7 @@
 								<textElement textAlignment="Left" verticalAlignment="Middle">
 									<font fontName="SansSerif" size="6" isBold="true"/>
 								</textElement>
-								<textFieldExpression><![CDATA[($F{nbreMoyInf85F}+ $F{nbreMoyInf85G})==0? new DecimalFormat("#.##").format(Double.valueOf(0))+"%" : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf85}))+"%"]]></textFieldExpression>
+								<textFieldExpression><![CDATA[($F{nbreMoyInf85F}+ $F{nbreMoyInf85G})==0? new DecimalFormat("#.##").format(Double.valueOf(0)): new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf85}))]]></textFieldExpression>
 							</textField>
 						</frame>
 						<frame>
@@ -1973,7 +1974,7 @@
 								<textElement textAlignment="Left" verticalAlignment="Middle">
 									<font fontName="SansSerif" size="6"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$F{nbreMoyInf999F}==0? new DecimalFormat("#.##").format(Double.valueOf(0))+"%" : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf999F}))+"%"]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{nbreMoyInf999F}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf999F}))]]></textFieldExpression>
 							</textField>
 							<textField>
 								<reportElement style="contenu2" mode="Opaque" x="57" y="0" width="27" height="40" backcolor="#E09594" uuid="142c0b94-2960-44d9-8b05-4238692937ad">
@@ -2015,7 +2016,7 @@
 								<textElement textAlignment="Left" verticalAlignment="Middle">
 									<font fontName="SansSerif" size="6"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$F{nbreMoyInf999G}==0? new DecimalFormat("#.##").format(Double.valueOf(0))+"%" : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf999G}))+"%"]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{nbreMoyInf999G}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf999G}))]]></textFieldExpression>
 							</textField>
 							<textField>
 								<reportElement mode="Opaque" x="111" y="0" width="27" height="40" backcolor="#E09594" uuid="002b642b-9cd1-496e-9575-998b43617130">
@@ -2059,7 +2060,7 @@
 								<textElement textAlignment="Left" verticalAlignment="Middle">
 									<font fontName="SansSerif" size="6" isBold="true"/>
 								</textElement>
-								<textFieldExpression><![CDATA[($F{nbreMoyInf999F} + $F{nbreMoyInf999G})==0? new DecimalFormat("#.##").format(Double.valueOf(0))+"%" : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf999}))+"%"]]></textFieldExpression>
+								<textFieldExpression><![CDATA[($F{nbreMoyInf999F} + $F{nbreMoyInf999G})==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf999}))]]></textFieldExpression>
 							</textField>
 						</frame>
 						<frame>
@@ -2113,7 +2114,7 @@
 								<textElement textAlignment="Left" verticalAlignment="Middle">
 									<font fontName="SansSerif" size="6"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$F{nbreMoySup10F}==0? new DecimalFormat("#.##").format(Double.valueOf(0))+"%" : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoySup10F}))+"%"]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{nbreMoySup10F}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoySup10F}))]]></textFieldExpression>
 							</textField>
 							<textField evaluationTime="Band">
 								<reportElement style="contenu2" mode="Opaque" x="49" y="0" width="24" height="40" backcolor="#33CC00" uuid="6410800c-e2a3-4d2e-a974-81aa05e88909">
@@ -2155,7 +2156,7 @@
 								<textElement textAlignment="Left" verticalAlignment="Middle">
 									<font fontName="SansSerif" size="6"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$F{nbreMoySup10G}==0? new DecimalFormat("#.##").format(Double.valueOf(0))+"%" : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoySup10G}))+"%"]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{nbreMoySup10G}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoySup10G}))]]></textFieldExpression>
 							</textField>
 							<textField evaluationTime="Band">
 								<reportElement mode="Opaque" x="97" y="0" width="24" height="40" backcolor="#33CC00" uuid="b5e11e4c-b2fc-483b-aafa-bcde2fb2dbba">
@@ -2199,7 +2200,7 @@
 								<textElement textAlignment="Left" verticalAlignment="Middle">
 									<font fontName="SansSerif" size="6" isBold="true"/>
 								</textElement>
-								<textFieldExpression><![CDATA[($F{nbreMoySup10G}+$F{nbreMoySup10F})==0? new DecimalFormat("#.##").format(Double.valueOf(0))+"%" : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoySup10}))+"%"]]></textFieldExpression>
+								<textFieldExpression><![CDATA[($F{nbreMoySup10G}+$F{nbreMoySup10F})==0? new DecimalFormat("#.##").format(Double.valueOf(0)): new DecimalFormat("#.##").format(Double.valueOf($F{pourMoySup10}))]]></textFieldExpression>
 							</textField>
 						</frame>
 						<frame>
@@ -2732,7 +2733,7 @@
 							<textElement textAlignment="Left" verticalAlignment="Middle">
 								<font fontName="SansSerif" size="6" isBold="true"/>
 							</textElement>
-							<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf($V{T_ET_pour_sup_10_F}))+"%"]]></textFieldExpression>
+							<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf($V{T_ET_pour_sup_10_F}))]]></textFieldExpression>
 						</textField>
 						<textField evaluationTime="Report">
 							<reportElement mode="Opaque" x="319" y="0" width="24" height="30" backcolor="#CC66FF" uuid="d9246ac2-1885-4b50-a64e-066ba0050dfb">
@@ -2774,7 +2775,7 @@
 							<textElement textAlignment="Left" verticalAlignment="Middle">
 								<font fontName="SansSerif" size="6" isBold="true"/>
 							</textElement>
-							<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf($V{T_ET_pour_sup_10_G}))+"%"]]></textFieldExpression>
+							<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf($V{T_ET_pour_sup_10_G}))]]></textFieldExpression>
 						</textField>
 						<textField evaluationTime="Report">
 							<reportElement mode="Opaque" x="367" y="0" width="23" height="30" backcolor="#CC66FF" uuid="bd883bc6-0321-4c7c-9792-7d294f15068f">
@@ -2816,7 +2817,7 @@
 							<textElement textAlignment="Left" verticalAlignment="Middle">
 								<font fontName="SansSerif" size="6" isBold="true"/>
 							</textElement>
-							<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf($V{T_ET_pour_sup_10}))+"%"]]></textFieldExpression>
+							<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf($V{T_ET_pour_sup_10}))]]></textFieldExpression>
 						</textField>
 						<textField evaluationTime="Report">
 							<reportElement style="contenu2" mode="Opaque" x="414" y="0" width="31" height="30" backcolor="#CC66FF" uuid="8ae16a8c-cebb-47a9-b9fb-03ae87fc0b82">
@@ -2858,7 +2859,7 @@
 							<textElement textAlignment="Left" verticalAlignment="Middle">
 								<font fontName="SansSerif" size="6" isBold="true"/>
 							</textElement>
-							<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf($V{T_ET_pour_sup_9_99_F}))+"%"]]></textFieldExpression>
+							<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf($V{T_ET_pour_sup_9_99_F}))]]></textFieldExpression>
 						</textField>
 						<textField evaluationTime="Report">
 							<reportElement style="contenu2" mode="Opaque" x="472" y="0" width="28" height="30" backcolor="#CC66FF" uuid="20b2524c-cabd-4512-a94c-e65eed78239f">
@@ -2900,7 +2901,7 @@
 							<textElement textAlignment="Left" verticalAlignment="Middle">
 								<font fontName="SansSerif" size="6" isBold="true"/>
 							</textElement>
-							<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf($V{T_ET_pour_sup_9_99_G}))+"%"]]></textFieldExpression>
+							<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf($V{T_ET_pour_sup_9_99_G}))]]></textFieldExpression>
 						</textField>
 						<textField evaluationTime="Report">
 							<reportElement style="contenu2" mode="Opaque" x="526" y="0" width="27" height="30" backcolor="#CC66FF" uuid="ca50f0f3-1813-4808-b4c5-59e678be4dc2">
@@ -2942,7 +2943,7 @@
 							<textElement textAlignment="Left" verticalAlignment="Middle">
 								<font fontName="SansSerif" size="6" isBold="true"/>
 							</textElement>
-							<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf($V{T_ET_pour_sup_9_99}))+"%"]]></textFieldExpression>
+							<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf($V{T_ET_pour_sup_9_99}))]]></textFieldExpression>
 						</textField>
 						<textField evaluationTime="Report">
 							<reportElement style="contenu2" mode="Opaque" x="580" y="0" width="35" height="30" backcolor="#CC66FF" uuid="f4e65b1f-06d6-495b-b178-2dfd1d8432bd">
@@ -2984,7 +2985,7 @@
 							<textElement textAlignment="Left" verticalAlignment="Middle">
 								<font fontName="SansSerif" size="6" isBold="true"/>
 							</textElement>
-							<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf($V{T_ET_pour_inf_8_50_F}))+"%"]]></textFieldExpression>
+							<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf($V{T_ET_pour_inf_8_50_F}))]]></textFieldExpression>
 						</textField>
 						<textField evaluationTime="Report">
 							<reportElement style="contenu2" mode="Opaque" x="646" y="0" width="31" height="30" backcolor="#CC66FF" uuid="d3129dcd-48e5-4cef-837d-d2583fa6e645">
@@ -3026,7 +3027,7 @@
 							<textElement textAlignment="Left" verticalAlignment="Middle">
 								<font fontName="SansSerif" size="6" isBold="true"/>
 							</textElement>
-							<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf($V{T_ET_pour_inf_8_50_G}))+"%"]]></textFieldExpression>
+							<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf($V{T_ET_pour_inf_8_50_G}))]]></textFieldExpression>
 						</textField>
 						<textField evaluationTime="Report">
 							<reportElement style="contenu2" mode="Opaque" x="708" y="0" width="31" height="30" backcolor="#CC66FF" uuid="af765c53-3970-4d17-b44c-6f6ec80ac5b7">
@@ -3068,7 +3069,7 @@
 							<textElement textAlignment="Left" verticalAlignment="Middle">
 								<font fontName="SansSerif" size="6" isBold="true"/>
 							</textElement>
-							<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf($V{T_ET_pour_inf_8_50}))+"%"]]></textFieldExpression>
+							<textFieldExpression><![CDATA[new DecimalFormat("#.##").format(Double.valueOf($V{T_ET_pour_inf_8_50}))]]></textFieldExpression>
 						</textField>
 					</frame>
 				</frame>
