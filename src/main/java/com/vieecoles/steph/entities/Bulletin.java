@@ -133,5 +133,19 @@ public class Bulletin extends PanacheEntityBase{
 	private Double moyEvaluationInterne;
 	@Column(name = "moy_eval_passage")
 	private Double moyEvaluationPassage;
+	
+	// Pour besoin spécifique lors de la génération des états de bulletin
+	@Column(name = "moy_fr")
+	private Double moyFr;
+	@Column(name = "coef_fr")
+	private Double CoefFr;
+	@Column(name = "moy_coef_fr")
+	private Double moyCoefFr;
+	@Column(name = "appr_fr")
+	private String appreciationFr;
+	@Column(name = "moy_reli")
+	private Double moyReli;
+	@Column(name = "appr_reli")
+	private String appreciationReli;
 
 }
