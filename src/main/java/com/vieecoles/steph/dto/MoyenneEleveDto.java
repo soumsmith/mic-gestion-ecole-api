@@ -37,6 +37,14 @@ public class MoyenneEleveDto implements Comparable<MoyenneEleveDto> {
 	
 	private String numeroEvaluation; 
 	private String numeroIEPP;
+	
+	private Double moyFr;
+	private Double CoefFr;
+	private Double moyCoefFr;
+	private String appreciationFr;
+	
+	private Double moyReli;
+	private String appreciationReli;
 
 	@Override
 	public int compareTo(MoyenneEleveDto o) {

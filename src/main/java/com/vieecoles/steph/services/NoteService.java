@@ -82,7 +82,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 
 	@Inject
 	EcoleHasMatiereService hasMatiereService;
-	
+
 	Logger logger = Logger.getLogger(NoteService.class.getName());
 
 	Gson gson = new Gson();
@@ -276,15 +276,6 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			r.printStackTrace();
 			return new ArrayList<Notes>();
 		}
-	}
-
-	List<MoyenneEleveDto> formatMoyenneMatieres(Map<Eleve, List<Notes>> param) {
-
-		return null;
-	}
-
-	void classement() {
-
 	}
 
 	public List<MoyenneEleveDto> moyennesAndNotesHandle(String classeId, String anneeId, String periodeId) {
@@ -496,14 +487,14 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 		}
 	}
 
-	public synchronized void  collectNotesPec(List<Notes> noteList, Evaluation ev) {
-			List<Notes> listNotesByEvaluation = new ArrayList<Notes>();
+	public synchronized void collectNotesPec(List<Notes> noteList, Evaluation ev) {
+		List<Notes> listNotesByEvaluation = new ArrayList<Notes>();
 //				System.out.println(ev.getMatiereEcole().getLibelle()+" :: pec ->"+ ev.getPec().toString());
-			logger.info(ev.getPec().toString());
-			if (ev.getPec() != null && ev.getPec() == Constants.PEC_1) {
-				listNotesByEvaluation = getNotesClasseWithPec(ev.getCode(), Constants.PEC_1);
-				noteList.addAll(listNotesByEvaluation);
-			}
+		logger.info(ev.getPec().toString());
+		if (ev.getPec() != null && ev.getPec() == Constants.PEC_1) {
+			listNotesByEvaluation = getNotesClasseWithPec(ev.getCode(), Constants.PEC_1);
+			noteList.addAll(listNotesByEvaluation);
+		}
 	}
 
 	public MoyenneEleveDto moyennesAndMatiereAndNotesByMatriculeHandle(String matricule, String matiereId,
@@ -829,7 +820,12 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			diviserEMR = 0.0;
 			moyenneEMR = 0.0;
 			moyenneEMRList = new ArrayList<>();
+			List<Double> moyennesSousMatieresFrancais = new ArrayList<Double>();
+			List<Double> moyennesMatieresReligion = new ArrayList<Double>();
 			Boolean EMRFlat = false;
+			Boolean CheckEMRCalculFlat = false;
+			Boolean calculExcpFrFlat = false;
+			Boolean calculExcpReligionFlat = false;
 //			Map<EcoleHasMatiere, List<Notes>> matiereNoteEMRMap = new HashMap<EcoleHasMatiere, List<Notes>>();
 			for (Map.Entry<EcoleHasMatiere, List<Notes>> entry : me.getNotesMatiereMap().entrySet()) {
 				moyenne = 0.0;
@@ -874,10 +870,23 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				entry.getKey().setAppreciation(appreciation(moyenne));
 				entry.getKey().setIsAdjustment(isAdjustment);
 
+				// Calcul de la matiere Francais pour les Rapports de bulletin (les données ne
+				// figurent pas dans la table DetailBulletin)
+				if (entry.getKey().getNiveauEnseignement().getCode().equals(Constants.CODE_NIVEAU_ENS_SECONDAIRE)
+						&& entry.getKey().getMatiereParent() != null
+						&& entry.getKey().getMatiereParent().getMatiere() != null
+						&& entry.getKey().getMatiereParent().getMatiere().getMatiereParent() != null
+						&& entry.getKey().getMatiereParent().getMatiere().getMatiereParent()
+								.equals(Constants.ID_MATIERE_FRANCAIS_CENTRAL)) {
+					moyennesSousMatieresFrancais.add(CommonUtils.roundDouble(moyenne, 2));
+					calculExcpFrFlat = true;
+				}
+				
+				
 				// Traitement cas des sous matières EMR
 				if (entry.getKey().getMatiereParent() != null && entry.getKey().getMatiereParent().getIsEMR() != null
 						&& entry.getKey().getMatiereParent().getIsEMR().equals(Constants.OUI)) {
-
+					CheckEMRCalculFlat = true;
 					if (diviserEMR == 0.0) {
 
 						// Construction d'un Map
@@ -910,8 +919,30 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 					moyenneEMRList.add(noteEMR);
 
 				}
+				
+				if (!CheckEMRCalculFlat && entry.getKey().getNiveauEnseignement().getCode().equals(Constants.CODE_NIVEAU_ENS_SECONDAIRE)
+						&& entry.getKey().getCategorie().getCode()
+								.equals(Constants.CODE_CATEGORIE_RELIGION)) {
+					moyennesMatieresReligion.add(CommonUtils.roundDouble(moyenne, 2));
+					calculExcpReligionFlat = true;
+					CheckEMRCalculFlat = false;
+				}
+
 //				logger.info("++++> "+g.toJson(me.getNotesMatiereMap()));
 			}
+			if (calculExcpFrFlat) {
+				Double moyFr = CommonUtils
+						.roundDouble(moyennesSousMatieresFrancais.stream().mapToDouble(a -> a).average().orElse(0), 2);
+				Double moyCoefFr = moyennesSousMatieresFrancais.stream().mapToDouble(a -> a).sum();
+//				System.out
+//						.println(String.format("Matricule [%s] Moyenne français = %s - Coef =%s", me.getEleve().getMatricule(),
+//								moyFr, moyCoefFr));
+				me.setMoyFr(moyFr);
+				me.setCoefFr(Double.valueOf(moyennesSousMatieresFrancais.size()));
+				me.setMoyCoefFr(moyCoefFr);
+				me.setAppreciationFr(CommonUtils.appreciation(moyFr));
+			}
+			
 			if (EMRFlat) {
 				// Rechercher l 'id de la matiere emr de l'ecole
 				EcoleHasMatiere hasMatiere = hasMatiereService.getEMRByEcole(me.getClasse().getEcole().getId());
@@ -926,7 +957,9 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 					isAdjustment = Constants.OUI;
 					moyenneEMR = moyenneAdjustment.getMoyenne();
 				}
-
+				// Pour le calcul spécifique des moyennes religieuses
+				moyennesMatieresReligion.add(CommonUtils.roundDouble(moyenneEMR, 2));
+				calculExcpReligionFlat = true;
 //				// pour eviter de partager le meme objet avec les autres eleves
 				EcoleHasMatiere ehm_ = new EcoleHasMatiere();
 				ehm_.setId(ehm.getId());
@@ -945,6 +978,17 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				ehm_.setMatiere(ehm.getMatiere());
 				ehm_.setIsAdjustment(isAdjustment);
 				me.getNotesMatiereMap().put(ehm_, moyenneEMRList);
+			}
+			
+			if(calculExcpReligionFlat) {
+//				System.out.println(g.toJson(moyennesMatieresReligion));
+				Double moyReli = CommonUtils
+						.roundDouble(moyennesMatieresReligion.stream().mapToDouble(a -> a).average().orElse(0), 2);
+//				System.out
+//						.println(String.format("Matricule [%s] Moyenne Religion = %s ", me.getEleve().getMatricule(),
+//								moyReli));
+				me.setMoyReli(moyReli);
+				me.setAppreciationReli(CommonUtils.appreciation(moyReli));
 			}
 //			me.setMoyenne(calculMoyenneGeneralWithCoef(moyenneList));
 		}

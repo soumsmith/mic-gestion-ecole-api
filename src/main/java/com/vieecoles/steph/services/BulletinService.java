@@ -309,6 +309,13 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 		b.setMoyEvaluationInterne(bulletin.getMoyEvaluationInterne());
 		b.setMoyEvaluationIEPP(bulletin.getMoyEvaluationIEPP());
 		b.setMoyEvaluationPassage(bulletin.getMoyEvaluationPassage());
+		
+		b.setMoyFr(bulletin.getMoyFr());
+		b.setCoefFr(bulletin.getCoefFr());
+		b.setMoyCoefFr(bulletin.getMoyCoefFr());
+		b.setAppreciationFr(bulletin.getAppreciationFr());
+		b.setMoyReli(bulletin.getMoyReli());
+		b.setAppreciationReli(bulletin.getAppreciationReli());
 
 	}
 
@@ -648,8 +655,8 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 				moyResultObj.setMoyExcpReligion(Double.valueOf(CommonUtils.roundDouble(moyFr, 2)));
 			}
 		}
-		Gson gson = new Gson();
-		System.out.println(gson.toJson(moyResultObj));
+//		Gson gson = new Gson();
+//		System.out.println(gson.toJson(moyResultObj));
 		return moyResultObj;
 	}
 
@@ -716,6 +723,13 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 		bul.setMoyEvaluationInterne(me.getMoyenneInterne());
 		bul.setMoyEvaluationIEPP(me.getMoyenneIEPP());
 		bul.setMoyEvaluationPassage(me.getMoyennePassage());
+		
+		bul.setMoyFr(me.getMoyFr());
+		bul.setCoefFr(me.getCoefFr());
+		bul.setMoyCoefFr(me.getMoyCoefFr());
+		bul.setAppreciationFr(me.getAppreciationFr());
+		bul.setMoyReli(me.getMoyReli());
+		bul.setAppreciationReli(me.getAppreciationReli());
 
 		return bul;
 	}
