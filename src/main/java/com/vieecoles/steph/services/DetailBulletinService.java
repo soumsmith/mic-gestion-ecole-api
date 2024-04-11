@@ -32,6 +32,20 @@ public class DetailBulletinService {
 
 		return myDetail;
 	}
+	
+	public List<DetailBulletin> getByBulletin(String bullrtinId){
+		List<DetailBulletin> list = new ArrayList<DetailBulletin>();
+		try {
+			list = DetailBulletin.find("bulletin.id = ?1 ", bullrtinId).list();
+		}catch (Exception e) {
+			if(e.getClass().getName().equals(NoResultException.class.getName())) {
+				logger.warning("DetailBulletinService - getByBulletin -Aucune donnée trouvée pour l'id bulletin ::: "+bullrtinId);
+			}else {
+				e.printStackTrace();
+			}
+		}
+		return list;
+	}
 
 	public List<DetailBulletin> getDetailBulletinsEleveByAnneeAndClasseAndMatiere(Long anneeId, Long ClasseId,String matricule, String matiereCode) {
 

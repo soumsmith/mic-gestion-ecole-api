@@ -28,7 +28,7 @@ public class MoenneParDisciplineDto {
     private Long nbreMoyInf10SVTG;
     private Double pourMoyInf10SVTF;
     private Double pourMoyInf10SVTG;
-
+    private String periode ;
     private Long classPHILOF;
     private Long classPHILOG;
     private Long nbreMoyInf10PHILOF;
@@ -159,6 +159,14 @@ public class MoenneParDisciplineDto {
 
     public void setPourMoyInf10OrthGram(Double pourMoyInf10OrthGram) {
         this.pourMoyInf10OrthGram = pourMoyInf10OrthGram;
+    }
+
+    public String getPeriode() {
+        return periode;
+    }
+
+    public void setPeriode(String periode) {
+        this.periode = periode;
     }
 
     public Double getPourMoyInf10Ang() {

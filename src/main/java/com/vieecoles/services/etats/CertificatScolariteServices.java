@@ -25,10 +25,11 @@ public class CertificatScolariteServices {
     public certificatScolariteDto getInfoCertificat(Long idEcole , String matricule , Long anneeId ,String periode){
 
         List<NiveauDto> classeNiveauDtoList = new ArrayList<>() ;
-        TypedQuery<NiveauDto> q = em.createQuery( "SELECT DISTINCT new com.vieecoles.dto.NiveauDto(b.anneeLibelle) from Bulletin b  where b.matricule=:matricule "
+        TypedQuery<NiveauDto> q = em.createQuery( "SELECT DISTINCT new com.vieecoles.dto.NiveauDto(b.anneeLibelle) from Bulletin b  where b.matricule=:matricule and b.anneeId=:anneeId"
                 , NiveauDto.class);
         classeNiveauDtoList = q.setParameter("matricule", matricule)
-        .getResultList() ;
+                               .setParameter("anneeId", anneeId)
+                                .getResultList() ;
 
        int LongTableau = classeNiveauDtoList.size() ;
 

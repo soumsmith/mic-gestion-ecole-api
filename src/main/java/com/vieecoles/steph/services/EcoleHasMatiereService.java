@@ -54,6 +54,24 @@ public class EcoleHasMatiereService implements PanacheRepositoryBase<EcoleHasMat
 			return new ArrayList<EcoleHasMatiere>();
 		}
 	}
+	
+	public EcoleHasMatiere getByEcoleAndCode(Long ecole, String code) {
+		try {
+			return EcoleHasMatiere.find("ecole.id = ?1 and code = ?2",ecole, code).firstResult();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public EcoleHasMatiere getByEcoleAndCodeParent(Long ecole, String code) {
+		try {
+			return EcoleHasMatiere.find("ecole.id = ?1 and matiereParent.code = ?2",ecole, code).firstResult();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 	@Transactional
 	public Response create(EcoleHasMatiere ecoleHasMatiere) {

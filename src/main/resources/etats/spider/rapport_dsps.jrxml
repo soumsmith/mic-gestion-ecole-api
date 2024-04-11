@@ -1,57 +1,208 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rapport_dsps" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ff4cdaef-ee80-4528-a7dd-e3f7220179cf">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ecolevieDB"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="periode" class="java.lang.String"/>
+	<parameter name="annee" class="java.lang.String"/>
+	<parameter name="idEcole" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[]]>
+		<![CDATA[select * from ve_rapport_dsps v 
+where v.id_ecole= $P{idEcole} 
+and v.annee_libelle= $P{annee} 
+and v.libelle_periode= $P{periode}]]>
 	</queryString>
-	<field name="nom" class="java.lang.String"/>
-	<field name="prenoms" class="java.lang.String"/>
-	<field name="matricule" class="java.lang.String"/>
-	<field name="is_class_periode" class="java.lang.String"/>
-	<field name="nom_ecole" class="java.lang.String"/>
-	<field name="niveau" class="java.lang.String"/>
-	<field name="moyenCompoFr" class="java.lang.Double"/>
-	<field name="is_clasCompoFr" class="java.lang.String"/>
-	<field name="moyenOrthoGram" class="java.lang.Double"/>
-	<field name="is_clasOrthoGram" class="java.lang.String"/>
-	<field name="moyenExpreOral" class="java.lang.Double"/>
-	<field name="is_clasExpreOral" class="java.lang.String"/>
-	<field name="moyenphiloso" class="java.lang.Double"/>
-	<field name="is_clasphiloso" class="java.lang.String"/>
-	<field name="moyenAng" class="java.lang.Double"/>
-	<field name="is_clasAng" class="java.lang.String"/>
-	<field name="moyenMath" class="java.lang.Double"/>
-	<field name="is_clasMath" class="java.lang.String"/>
-	<field name="moyenPhysiq" class="java.lang.Double"/>
-	<field name="is_clasPhysiq" class="java.lang.String"/>
-	<field name="moyenSVT" class="java.lang.Double"/>
-	<field name="is_clasSVT" class="java.lang.String"/>
-	<field name="moyenHg" class="java.lang.Double"/>
-	<field name="is_clasHg" class="java.lang.String"/>
-	<field name="moyenLv2" class="java.lang.Double"/>
-	<field name="is_clasLv2" class="java.lang.String"/>
-	<field name="moyenEdhc" class="java.lang.Double"/>
-	<field name="is_clasEdhc" class="java.lang.String"/>
-	<field name="moyenArplat" class="java.lang.Double"/>
-	<field name="is_clasArplat" class="java.lang.String"/>
-	<field name="moyenTic" class="java.lang.Double"/>
-	<field name="is_clasTic" class="java.lang.String"/>
-	<field name="moyenConduite" class="java.lang.Double"/>
-	<field name="is_clasConduite" class="java.lang.String"/>
-	<field name="moyenEps" class="java.lang.Double"/>
-	<field name="is_clasEps" class="java.lang.String"/>
-	<field name="moyenTrim" class="java.lang.Double"/>
-	<field name="rang" class="java.lang.Integer"/>
-	<field name="moyen_fr" class="java.lang.Double"/>
-	<field name="is_class_fr" class="java.lang.String"/>
+	<field name="id_ecole" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="id_ecole"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_ecole"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bulletins"/>
+	</field>
+	<field name="libelle_periode" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="libelle_periode"/>
+		<property name="com.jaspersoft.studio.field.label" value="libelle_periode"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bulletins"/>
+	</field>
+	<field name="annee_libelle" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="annee_libelle"/>
+		<property name="com.jaspersoft.studio.field.label" value="annee_libelle"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bulletins"/>
+	</field>
+	<field name="nom_ecole" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nom_ecole"/>
+		<property name="com.jaspersoft.studio.field.label" value="nom_ecole"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bulletins"/>
+	</field>
+	<field name="nom" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nom"/>
+		<property name="com.jaspersoft.studio.field.label" value="nom"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bulletins"/>
+	</field>
+	<field name="prenoms" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="prenoms"/>
+		<property name="com.jaspersoft.studio.field.label" value="prenoms"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bulletins"/>
+	</field>
+	<field name="matricule" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="matricule"/>
+		<property name="com.jaspersoft.studio.field.label" value="matricule"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bulletins"/>
+	</field>
+	<field name="niveau" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="niveau"/>
+		<property name="com.jaspersoft.studio.field.label" value="niveau"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bulletins"/>
+	</field>
+	<field name="moyen_fr" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="moyen_fr"/>
+		<property name="com.jaspersoft.studio.field.label" value="moyen_fr"/>
+	</field>
+	<field name="is_class_fr" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="is_class_fr"/>
+		<property name="com.jaspersoft.studio.field.label" value="is_class_fr"/>
+	</field>
+	<field name="moyenCompoFr" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="moyenCompoFr"/>
+		<property name="com.jaspersoft.studio.field.label" value="moyenCompoFr"/>
+	</field>
+	<field name="is_clasCompoFr" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="is_clasCompoFr"/>
+		<property name="com.jaspersoft.studio.field.label" value="is_clasCompoFr"/>
+	</field>
+	<field name="moyenOrthoGram" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="moyenOrthoGram"/>
+		<property name="com.jaspersoft.studio.field.label" value="moyenOrthoGram"/>
+	</field>
+	<field name="is_clasOrthoGram" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="is_clasOrthoGram"/>
+		<property name="com.jaspersoft.studio.field.label" value="is_clasOrthoGram"/>
+	</field>
+	<field name="moyenExpreOral" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="moyenExpreOral"/>
+		<property name="com.jaspersoft.studio.field.label" value="moyenExpreOral"/>
+	</field>
+	<field name="is_clasExpreOral" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="is_clasExpreOral"/>
+		<property name="com.jaspersoft.studio.field.label" value="is_clasExpreOral"/>
+	</field>
+	<field name="moyenphiloso" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="moyenphiloso"/>
+		<property name="com.jaspersoft.studio.field.label" value="moyenphiloso"/>
+	</field>
+	<field name="is_clasphiloso" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="is_clasphiloso"/>
+		<property name="com.jaspersoft.studio.field.label" value="is_clasphiloso"/>
+	</field>
+	<field name="moyenAng" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="moyenAng"/>
+		<property name="com.jaspersoft.studio.field.label" value="moyenAng"/>
+	</field>
+	<field name="is_clasAng" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="is_clasAng"/>
+		<property name="com.jaspersoft.studio.field.label" value="is_clasAng"/>
+	</field>
+	<field name="moyenMath" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="moyenMath"/>
+		<property name="com.jaspersoft.studio.field.label" value="moyenMath"/>
+	</field>
+	<field name="is_clasMath" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="is_clasMath"/>
+		<property name="com.jaspersoft.studio.field.label" value="is_clasMath"/>
+	</field>
+	<field name="moyenPhysiq" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="moyenPhysiq"/>
+		<property name="com.jaspersoft.studio.field.label" value="moyenPhysiq"/>
+	</field>
+	<field name="is_clasPhysiq" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="is_clasPhysiq"/>
+		<property name="com.jaspersoft.studio.field.label" value="is_clasPhysiq"/>
+	</field>
+	<field name="moyenSVT" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="moyenSVT"/>
+		<property name="com.jaspersoft.studio.field.label" value="moyenSVT"/>
+	</field>
+	<field name="is_clasSVT" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="is_clasSVT"/>
+		<property name="com.jaspersoft.studio.field.label" value="is_clasSVT"/>
+	</field>
+	<field name="moyenHg" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="moyenHg"/>
+		<property name="com.jaspersoft.studio.field.label" value="moyenHg"/>
+	</field>
+	<field name="is_clasHg" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="is_clasHg"/>
+		<property name="com.jaspersoft.studio.field.label" value="is_clasHg"/>
+	</field>
+	<field name="moyenEdhc" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="moyenEdhc"/>
+		<property name="com.jaspersoft.studio.field.label" value="moyenEdhc"/>
+	</field>
+	<field name="is_clasEdhc" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="is_clasEdhc"/>
+		<property name="com.jaspersoft.studio.field.label" value="is_clasEdhc"/>
+	</field>
+	<field name="moyenArplat" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="moyenArplat"/>
+		<property name="com.jaspersoft.studio.field.label" value="moyenArplat"/>
+	</field>
+	<field name="is_clasArplat" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="is_clasArplat"/>
+		<property name="com.jaspersoft.studio.field.label" value="is_clasArplat"/>
+	</field>
+	<field name="moyenLv2" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="moyenLv2"/>
+		<property name="com.jaspersoft.studio.field.label" value="moyenLv2"/>
+	</field>
+	<field name="is_clasLv2" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="is_clasLv2"/>
+		<property name="com.jaspersoft.studio.field.label" value="is_clasLv2"/>
+	</field>
+	<field name="moyenTic" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="moyenTic"/>
+		<property name="com.jaspersoft.studio.field.label" value="moyenTic"/>
+	</field>
+	<field name="is_clasTic" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="is_clasTic"/>
+		<property name="com.jaspersoft.studio.field.label" value="is_clasTic"/>
+	</field>
+	<field name="moyenConduite" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="moyenConduite"/>
+		<property name="com.jaspersoft.studio.field.label" value="moyenConduite"/>
+	</field>
+	<field name="is_clasConduite" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="is_clasConduite"/>
+		<property name="com.jaspersoft.studio.field.label" value="is_clasConduite"/>
+	</field>
+	<field name="moyenEps" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="moyenEps"/>
+		<property name="com.jaspersoft.studio.field.label" value="moyenEps"/>
+	</field>
+	<field name="is_clasEps" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="is_clasEps"/>
+		<property name="com.jaspersoft.studio.field.label" value="is_clasEps"/>
+	</field>
+	<field name="moyenTrim" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="moyenTrim"/>
+		<property name="com.jaspersoft.studio.field.label" value="moyenTrim"/>
+	</field>
+	<field name="rang" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="rang"/>
+		<property name="com.jaspersoft.studio.field.label" value="rang"/>
+	</field>
+	<field name="ordre_niveau" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="ordre_niveau"/>
+		<property name="com.jaspersoft.studio.field.label" value="ordre_niveau"/>
+	</field>
+	<field name="is_class_periode" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="is_class_periode"/>
+		<property name="com.jaspersoft.studio.field.label" value="is_class_periode"/>
+	</field>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<columnHeader>
 		<band height="19">
 			<frame>
-				<reportElement x="1" y="-1" width="798" height="20" uuid="506ace2e-e67c-410e-8fb7-b069d86c6330">
+				<reportElement x="1" y="-1" width="809" height="20" uuid="506ace2e-e67c-410e-8fb7-b069d86c6330">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 				</reportElement>
 				<box>
@@ -141,7 +292,7 @@
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Serif" size="7"/>
+						<font fontName="Serif" size="6"/>
 					</textElement>
 					<textFieldExpression><![CDATA["etablissement"]]></textFieldExpression>
 				</textField>
@@ -162,7 +313,7 @@
 						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Serif" size="7"/>
+						<font fontName="Serif" size="6"/>
 					</textElement>
 					<textFieldExpression><![CDATA["niveau"]]></textFieldExpression>
 				</textField>
@@ -184,7 +335,7 @@
 						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Serif" size="7"/>
+						<font fontName="Serif" size="6"/>
 					</textElement>
 					<textFieldExpression><![CDATA["français"]]></textFieldExpression>
 				</textField>
@@ -205,7 +356,7 @@
 						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Serif" size="7"/>
+						<font fontName="Serif" size="6"/>
 					</textElement>
 					<textFieldExpression><![CDATA["compo_francais"]]></textFieldExpression>
 				</textField>
@@ -226,7 +377,7 @@
 						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Serif" size="7"/>
+						<font fontName="Serif" size="6"/>
 					</textElement>
 					<textFieldExpression><![CDATA["orthographe"]]></textFieldExpression>
 				</textField>
@@ -247,7 +398,7 @@
 						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Serif" size="7"/>
+						<font fontName="Serif" size="6"/>
 					</textElement>
 					<textFieldExpression><![CDATA["expression_orale"]]></textFieldExpression>
 				</textField>
@@ -268,7 +419,7 @@
 						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Serif" size="7"/>
+						<font fontName="Serif" size="6"/>
 					</textElement>
 					<textFieldExpression><![CDATA["philosophie"]]></textFieldExpression>
 				</textField>
@@ -289,7 +440,7 @@
 						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Serif" size="7"/>
+						<font fontName="Serif" size="6"/>
 					</textElement>
 					<textFieldExpression><![CDATA["anglais"]]></textFieldExpression>
 				</textField>
@@ -310,7 +461,7 @@
 						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Serif" size="7"/>
+						<font fontName="Serif" size="6"/>
 					</textElement>
 					<textFieldExpression><![CDATA["maths"]]></textFieldExpression>
 				</textField>
@@ -331,7 +482,7 @@
 						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Serif" size="7"/>
+						<font fontName="Serif" size="6"/>
 					</textElement>
 					<textFieldExpression><![CDATA["physique"]]></textFieldExpression>
 				</textField>
@@ -352,7 +503,7 @@
 						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Serif" size="7"/>
+						<font fontName="Serif" size="6"/>
 					</textElement>
 					<textFieldExpression><![CDATA["svt"]]></textFieldExpression>
 				</textField>
@@ -373,7 +524,7 @@
 						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Serif" size="7"/>
+						<font fontName="Serif" size="6"/>
 					</textElement>
 					<textFieldExpression><![CDATA["hg"]]></textFieldExpression>
 				</textField>
@@ -394,7 +545,7 @@
 						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Serif" size="7"/>
+						<font fontName="Serif" size="6"/>
 					</textElement>
 					<textFieldExpression><![CDATA["lv2"]]></textFieldExpression>
 				</textField>
@@ -415,12 +566,12 @@
 						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Serif" size="7"/>
+						<font fontName="Serif" size="6"/>
 					</textElement>
 					<textFieldExpression><![CDATA["edhc"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="610" y="0" width="30" height="20" uuid="dfa5f9d2-2f85-474b-a866-2e005222bc80">
+					<reportElement x="610" y="0" width="40" height="20" uuid="dfa5f9d2-2f85-474b-a866-2e005222bc80">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -438,12 +589,12 @@
 						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Serif" size="7"/>
+						<font fontName="Serif" size="6"/>
 					</textElement>
 					<textFieldExpression><![CDATA["art_plastique"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="640" y="0" width="30" height="20" uuid="60cbf0fd-a57d-4bf2-9515-a0f951338830">
+					<reportElement x="650" y="0" width="30" height="20" uuid="60cbf0fd-a57d-4bf2-9515-a0f951338830">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -459,12 +610,12 @@
 						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Serif" size="7"/>
+						<font fontName="Serif" size="6"/>
 					</textElement>
 					<textFieldExpression><![CDATA["tic"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="670" y="0" width="30" height="20" uuid="25db1e35-6efc-4c8a-a269-79abb3b0d146">
+					<reportElement x="680" y="0" width="30" height="20" uuid="25db1e35-6efc-4c8a-a269-79abb3b0d146">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -480,12 +631,12 @@
 						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Serif" size="7"/>
+						<font fontName="Serif" size="6"/>
 					</textElement>
 					<textFieldExpression><![CDATA["conduite"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="700" y="0" width="30" height="20" uuid="4bf1b7f5-2e46-4d6f-9afb-1136dae1a933">
+					<reportElement x="710" y="0" width="30" height="20" uuid="4bf1b7f5-2e46-4d6f-9afb-1136dae1a933">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -501,12 +652,12 @@
 						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Serif" size="7"/>
+						<font fontName="Serif" size="6"/>
 					</textElement>
 					<textFieldExpression><![CDATA["eps"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="730" y="0" width="30" height="20" uuid="f1a6bd15-ceb6-4c60-99c7-4e5f76cb42f8">
+					<reportElement x="740" y="0" width="40" height="20" uuid="f1a6bd15-ceb6-4c60-99c7-4e5f76cb42f8">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -522,12 +673,12 @@
 						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Serif" size="7"/>
+						<font fontName="Serif" size="6"/>
 					</textElement>
 					<textFieldExpression><![CDATA["moy_trim1"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="760" y="0" width="38" height="20" uuid="377d3251-f5f0-4b39-a6e0-05dcc8775e56">
+					<reportElement x="780" y="0" width="29" height="20" uuid="377d3251-f5f0-4b39-a6e0-05dcc8775e56">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -543,7 +694,7 @@
 						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Serif" size="7"/>
+						<font fontName="Serif" size="6"/>
 					</textElement>
 					<textFieldExpression><![CDATA["rang"]]></textFieldExpression>
 				</textField>
@@ -553,7 +704,7 @@
 	<detail>
 		<band height="20" splitType="Stretch">
 			<frame>
-				<reportElement x="1" y="0" width="798" height="20" uuid="6e21a185-da48-47b7-ae92-892f9adf5d24">
+				<reportElement x="1" y="0" width="809" height="20" uuid="6e21a185-da48-47b7-ae92-892f9adf5d24">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 				</reportElement>
 				<box>
@@ -642,7 +793,7 @@
 						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement verticalAlignment="Middle">
+					<textElement verticalAlignment="Top">
 						<font fontName="Serif" size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{nom_ecole}]]></textFieldExpression>
@@ -685,7 +836,7 @@
 						<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement verticalAlignment="Middle">
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Serif" size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{moyen_fr}==null || $F{moyen_fr}==0? "22":$F{is_class_fr}.equals("O" )?$F{moyen_fr}:$F{is_class_fr}.equals("N" )?"21" :"22"]]></textFieldExpression>
@@ -706,7 +857,7 @@
 						<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement verticalAlignment="Middle">
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Serif" size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{moyenCompoFr}==null || $F{moyenCompoFr}==0? "22":$F{is_clasCompoFr}.equals("O" )?$F{moyenCompoFr}:$F{is_clasCompoFr}.equals("N" )?"21" :"22"]]></textFieldExpression>
@@ -727,7 +878,7 @@
 						<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement verticalAlignment="Middle">
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Serif" size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{moyenOrthoGram}==null || $F{moyenOrthoGram}==0? "22":$F{is_clasOrthoGram}.equals("O" )?$F{moyenOrthoGram}:$F{is_clasOrthoGram}.equals("N" )?"21" : "22"]]></textFieldExpression>
@@ -748,7 +899,7 @@
 						<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement verticalAlignment="Middle">
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Serif" size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{moyenExpreOral}==null || $F{moyenExpreOral}==0? "22":$F{is_clasExpreOral}.equals("O" )?$F{moyenExpreOral}:$F{is_clasExpreOral}.equals("N" )?"21" : "22"]]></textFieldExpression>
@@ -769,7 +920,7 @@
 						<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement verticalAlignment="Middle">
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Serif" size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{moyenphiloso}==null || $F{moyenphiloso}==0? "22":$F{is_clasphiloso}.equals("O" )?$F{moyenphiloso}:$F{is_clasphiloso}.equals("N" )?"21" : "22"]]></textFieldExpression>
@@ -790,7 +941,7 @@
 						<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement verticalAlignment="Middle">
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Serif" size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{moyenAng}==null || $F{moyenAng}==0? "22":$F{is_clasAng}.equals("O" )?$F{moyenAng}:$F{is_clasAng}.equals("N" )?"21" : "22"]]></textFieldExpression>
@@ -811,7 +962,7 @@
 						<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement verticalAlignment="Middle">
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Serif" size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{moyenMath}==null || $F{moyenMath}==0? "22":$F{is_clasMath}.equals("O" )?$F{moyenMath}:$F{is_clasMath}.equals("N" )?"21" : "22"]]></textFieldExpression>
@@ -832,7 +983,7 @@
 						<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement verticalAlignment="Middle">
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Serif" size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{moyenPhysiq}==null || $F{moyenPhysiq}==0? "22":$F{is_clasPhysiq}.equals("O" )?$F{moyenPhysiq}:$F{is_clasPhysiq}.equals("N" )?"21" : "22"]]></textFieldExpression>
@@ -853,7 +1004,7 @@
 						<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement verticalAlignment="Middle">
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Serif" size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{moyenSVT}==null || $F{moyenSVT}==0? "22":$F{is_clasSVT}.equals("O" )?$F{moyenSVT}:$F{is_clasSVT}.equals("N" )?"21" : "22"]]></textFieldExpression>
@@ -875,7 +1026,7 @@
 						<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement verticalAlignment="Middle">
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Serif" size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{moyenHg}==null  || $F{moyenHg}==0? "22":$F{is_clasHg}.equals("O" )?$F{moyenHg}:$F{is_clasHg}.equals("N" )?"21" : "22"]]></textFieldExpression>
@@ -896,7 +1047,7 @@
 						<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement verticalAlignment="Middle">
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Serif" size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{moyenLv2}==null  || $F{moyenLv2}==0? "22":$F{is_clasLv2}.equals("O" )?$F{moyenLv2}:$F{is_clasLv2}.equals("N" )?"21" :"22"]]></textFieldExpression>
@@ -917,13 +1068,13 @@
 						<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement verticalAlignment="Middle">
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Serif" size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{moyenEdhc}==null || $F{moyenEdhc}==0? "22":$F{is_clasEdhc}.equals("O" )?$F{moyenEdhc}:$F{is_clasEdhc}.equals("N" )?"21" : "22"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="610" y="0" width="30" height="20" uuid="0bd3fe3f-20b1-4179-aa51-e05e6695ce64">
+					<reportElement x="610" y="0" width="40" height="20" uuid="0bd3fe3f-20b1-4179-aa51-e05e6695ce64">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -938,13 +1089,13 @@
 						<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement verticalAlignment="Middle">
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Serif" size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{moyenArplat}==null  || $F{moyenArplat}==0? "22":$F{is_clasArplat}.equals("O" )?$F{moyenArplat}:$F{is_clasArplat}.equals("N" )?"21" :"22"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="640" y="0" width="30" height="20" uuid="f803557d-c268-4883-b543-8382dca5803e">
+					<reportElement x="650" y="0" width="30" height="20" uuid="f803557d-c268-4883-b543-8382dca5803e">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -959,13 +1110,13 @@
 						<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement verticalAlignment="Middle">
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Serif" size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{moyenTic}==null || $F{moyenTic}==0? "22":$F{is_clasTic}.equals("O" )?$F{moyenTic}:$F{is_clasTic}.equals("N" )?"21" : "22"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="670" y="0" width="30" height="20" uuid="77761a5b-9fa9-439c-81ac-7a7e41d8d53b">
+					<reportElement x="680" y="0" width="30" height="20" uuid="77761a5b-9fa9-439c-81ac-7a7e41d8d53b">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -980,13 +1131,13 @@
 						<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement verticalAlignment="Middle">
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Serif" size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{moyenConduite}==null || $F{moyenConduite}==0? "22":$F{is_clasConduite}.equals("O" )?$F{moyenConduite}:$F{is_clasConduite}.equals("N" )?"21" : "22"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="700" y="0" width="30" height="20" uuid="30844353-151b-4ce2-a6a2-794fe5bcb807">
+					<reportElement x="710" y="0" width="30" height="20" uuid="30844353-151b-4ce2-a6a2-794fe5bcb807">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1001,13 +1152,13 @@
 						<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement verticalAlignment="Middle">
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Serif" size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{moyenEps}==null || $F{moyenEps}==0? "22":$F{is_clasEps}.equals("O" )?$F{moyenEps}:$F{is_clasEps}.equals("N" )? "21":"22"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="730" y="0" width="30" height="20" uuid="8a13a6b6-26aa-419a-b542-e8c44ebf1d62">
+					<reportElement x="740" y="0" width="40" height="20" uuid="8a13a6b6-26aa-419a-b542-e8c44ebf1d62">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1022,13 +1173,13 @@
 						<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement verticalAlignment="Middle">
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Serif" size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{is_class_periode}.equals("N")?"21":$F{moyenTrim}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="760" y="0" width="38" height="20" uuid="750687ff-c259-4409-a554-e35b35d218b8">
+					<reportElement x="780" y="0" width="29" height="20" uuid="750687ff-c259-4409-a554-e35b35d218b8">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1043,7 +1194,7 @@
 						<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement verticalAlignment="Middle">
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Serif" size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{is_class_periode}.equals("N")?"21":$F{rang}]]></textFieldExpression>

@@ -66,24 +66,36 @@ public class MoyenneParDisciplineService {
             System.out.println("effectifClasse "+effectifClasse);
 
             classMathF = getclassF(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre,7L);
+            System.out.println ("classMathF "+classMathF);
             classMathG = getclassG(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre,7L);
+            System.out.println ("classMathG "+classMathG);
             nbreMoyInf10MathG= getnbreMoyInf10G(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre,7L);
+            System.out.println ("nbreMoyInf10MathG "+nbreMoyInf10MathG);
             nbreMoyInf10MathF= getnbreMoyInf10F(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre,7L);
+            System.out.println ("nbreMoyInf10MathF "+nbreMoyInf10MathF);
             if(classMathG !=0)
                 pourMoyInf10MathG = (double) ((nbreMoyInf10MathG*100d)/classMathG);
+            System.out.println ("pourMoyInf10MathG "+pourMoyInf10MathG);
             if(classMathF !=0)
                 pourMoyInf10MathF = (double) ((nbreMoyInf10MathF*100d)/classMathF);
+            System.out.println ("pourMoyInf10MathF "+pourMoyInf10MathF);
             if(classMathG !=0||classMathF !=0)
                 pourMoyInf10Math = (double)((nbreMoyInf10MathG + nbreMoyInf10MathF)*100d/(classMathF+classMathG)) ;
 
             classPCF = getclassF(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre,8L);
+            System.out.println ("classPCF "+classPCF);
             classPCG = getclassG(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre,8L);
+            System.out.println ("classPCG "+classPCG);
             nbreMoyInf10PCG= getnbreMoyInf10G(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre,8L);
+            System.out.println ("nbreMoyInf10PCG "+nbreMoyInf10PCG);
             nbreMoyInf10PCF= getnbreMoyInf10F(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre,8L);
+            System.out.println ("nbreMoyInf10PCF "+nbreMoyInf10PCF);
             if(classPCG !=0)
                 pourMoyInf10PCG = (double) ((nbreMoyInf10PCG*100d)/classPCG);
+            System.out.println ("pourMoyInf10PCG "+pourMoyInf10PCG);
             if(classPCF !=0)
                 pourMoyInf10PCF = (double) ((nbreMoyInf10PCF*100d)/classPCF);
+            System.out.println ("pourMoyInf10PCF "+pourMoyInf10PCF);
 
             if(classPCG !=0||classPCF !=0)
                 pourMoyInf10PC = (double)((nbreMoyInf10PCG + nbreMoyInf10PCF)*100d/(classPCF+classPCG)) ;
@@ -94,8 +106,10 @@ public class MoyenneParDisciplineService {
             nbreMoyInf10SVTF= getnbreMoyInf10F(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre,9L);
             if(classSVTG !=0)
                 pourMoyInf10SVTG = (double) ((nbreMoyInf10SVTG*100d)/classSVTG);
+            System.out.println ("pourMoyInf10SVTG "+pourMoyInf10SVTG);
             if(classSVTF !=0)
                 pourMoyInf10SVTF = (double) ((nbreMoyInf10SVTF*100d)/classSVTF);
+            System.out.println ("pourMoyInf10SVTF "+pourMoyInf10SVTF);
 
             if(classSVTG !=0||classSVTF !=0)
                 pourMoyInf10SVT = (double)((nbreMoyInf10SVTG + nbreMoyInf10SVTF)*100d/(classSVTF+classSVTG)) ;
@@ -130,12 +144,13 @@ public class MoyenneParDisciplineService {
             nbreMoyInf10CompFrF= getnbreMoyInf10F(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre,2l);
             if(classCompFrG !=0)
                     pourMoyInf10CompFrG = (double) ((nbreMoyInf10CompFrG*100d)/classCompFrG);
+            System.out.println ("pourMoyInf10CompFrG "+pourMoyInf10CompFrG);
             if(classCompFrF !=0)
                 pourMoyInf10CompFrF = (double) ((nbreMoyInf10CompFrF*100d)/classCompFrF);
+            System.out.println ("pourMoyInf10CompFrF "+pourMoyInf10CompFrF);
+
             if(classCompFrG !=0||classCompFrF !=0)
                 pourMoyInf10CompFr = (double)((nbreMoyInf10CompFrG + nbreMoyInf10CompFrF)*100d/(classCompFrF+classCompFrG)) ;
-
-
 
 
             classOrthGramF = getclassF(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre,4l);
@@ -144,11 +159,14 @@ public class MoyenneParDisciplineService {
             nbreMoyInf10OrthGramF= getnbreMoyInf10F(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre,4l);
             if(classOrthGramG !=0)
                 pourMoyInf10OrthGramG = (double) ((nbreMoyInf10OrthGramG*100d)/classOrthGramG);
+            System.out.println ("pourMoyInf10OrthGramG "+pourMoyInf10OrthGramG);
             if(classOrthGramF !=0)
                 pourMoyInf10OrthGramF = (double) ((nbreMoyInf10OrthGramF*100d)/classOrthGramF);
-
+            System.out.println ("pourMoyInf10OrthGramF "+pourMoyInf10OrthGramF);
             if(classOrthGramG !=0||classOrthGramF !=0)
                 pourMoyInf10OrthGram = (double)((nbreMoyInf10OrthGramG + nbreMoyInf10OrthGramF)*100d/(classOrthGramF+classOrthGramG)) ;
+
+
 
             classAngF = getclassF(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre,5l);
             classAngG = getclassG(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre,5l);
@@ -156,9 +174,10 @@ public class MoyenneParDisciplineService {
             nbreMoyInf10AngF= getnbreMoyInf10F(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre,5l);
             if(classAngG !=0)
                 pourMoyInf10AngG = (double) ((nbreMoyInf10AngG*100d)/classAngG);
+            System.out.println ("pourMoyInf10AngG "+pourMoyInf10AngG);
             if(classAngF !=0)
                 pourMoyInf10AngF = (double) ((nbreMoyInf10AngF*100d)/classAngF);
-
+            System.out.println ("pourMoyInf10AngF "+pourMoyInf10AngF);
             if(classAngG !=0||classAngF !=0)
                 pourMoyInf10Ang = (double)((nbreMoyInf10AngG + nbreMoyInf10AngF)*100d/(classAngF+classAngG)) ;
 
@@ -191,8 +210,10 @@ public class MoyenneParDisciplineService {
             nbreMoyInf10HgF= getnbreMoyInf10F(idEcole,classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre,6l);
             if(classHgG !=0)
                 pourMoyInf10HgG = (double) ((nbreMoyInf10HgG*100d)/classHgG);
+            System.out.println ("pourMoyInf10HgG "+pourMoyInf10HgG);
             if(classHgF !=0)
                 pourMoyInf10HgF = (double) ((nbreMoyInf10HgF*100d)/classHgF);
+            System.out.println ("pourMoyInf10HgF "+pourMoyInf10HgF);
             if(classHgG !=0||classHgF !=0)
                 pourMoyInf10Hg = (double)((nbreMoyInf10HgG + nbreMoyInf10HgF)*100d/(classHgF+classHgG)) ;
 
@@ -297,7 +318,7 @@ public class MoyenneParDisciplineService {
             resultatsListEleves.setPourMoyInf10Hg(pourMoyInf10Hg);
             resultatsListEleves.setCycle(cycle);
             resultatsListEleves.setOrdre_niveau(orderNiveau);
-
+            resultatsListEleves.setPeriode (libelleTrimestre);
             resultatsListElevesDto.add(resultatsListEleves) ;
 
 
@@ -458,7 +479,7 @@ public class MoyenneParDisciplineService {
     }
     public  Long getnbreMoyInf10F(Long idEcole , String niveau ,String libelleAnnee , String libelleTrimestre ,Long idMatiere){
         try {
-            Long   nbreMoySup10F = (Long) em.createQuery("select count(o.id) from Bulletin o ,DetailBulletin d where o.isClassed=:isClass and  o.sexe=:sexe and o.ecoleId=:idEcole  and o.moyGeneral<:moy and o.isClassed=:isClass and o.libellePeriode=:periode and o.anneeLibelle=:annee " +
+            Long   nbreMoySup10F = (Long) em.createQuery("select count(o.id) from Bulletin o ,DetailBulletin d where o.isClassed=:isClass and  o.sexe=:sexe and o.ecoleId=:idEcole  and d.moyenne<:moy and o.isClassed=:isClass and o.libellePeriode=:periode and o.anneeLibelle=:annee " +
                             "and o.id = d.bulletin.id and d.matiereId=:idMatiere group by  o.niveau having o.niveau=:niveau")
                     .setParameter("sexe","FEMININ")
                     .setParameter("idEcole",idEcole)
@@ -477,7 +498,7 @@ public class MoyenneParDisciplineService {
     }
     public Long getnbreMoyInf10G(Long idEcole , String niveau ,String libelleAnnee , String libelleTrimestre ,Long idMatiere){
         try {
-            Long    nbreMoySup10G = (Long) em.createQuery("select count(o.id) from Bulletin o,DetailBulletin d where o.isClassed=:isClass and o.sexe=:sexe and o.ecoleId=:idEcole  and o.moyGeneral<:moy and o.libellePeriode=:periode and o.anneeLibelle=:annee " +
+            Long    nbreMoySup10G = (Long) em.createQuery("select count(o.id) from Bulletin o,DetailBulletin d where o.isClassed=:isClass and o.sexe=:sexe and o.ecoleId=:idEcole  and d.moyenne<:moy and o.libellePeriode=:periode and o.anneeLibelle=:annee " +
                             "and o.id = d.bulletin.id and d.matiereId=:idMatiere  group by  o.niveau having  o.niveau=:niveau")
                     .setParameter("sexe","MASCULIN")
                     .setParameter("idEcole",idEcole)
