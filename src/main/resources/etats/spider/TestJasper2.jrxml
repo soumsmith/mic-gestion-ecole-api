@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TestJasper2" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b9cc3aa8-5aba-4cad-9a73-50637c4870f3">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ecolevieDB2"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT elevecode,
+	elevenom,
+	eleveprenom,
+	eleve_matricule
+FROM ecoleviedbv2.eleve]]>
+	</queryString>
+	<field name="elevecode" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="elevecode"/>
+		<property name="com.jaspersoft.studio.field.label" value="elevecode"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="eleve"/>
+	</field>
+	<field name="elevenom" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="elevenom"/>
+		<property name="com.jaspersoft.studio.field.label" value="elevenom"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="eleve"/>
+	</field>
+	<field name="eleveprenom" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="eleveprenom"/>
+		<property name="com.jaspersoft.studio.field.label" value="eleveprenom"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="eleve"/>
+	</field>
+	<field name="eleve_matricule" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="eleve_matricule"/>
+		<property name="com.jaspersoft.studio.field.label" value="eleve_matricule"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="eleve"/>
+	</field>
+	<group name="elevecode">
+		<groupExpression><![CDATA[$F{elevecode}]]></groupExpression>
+	</group>
+	<group name="elevenom">
+		<groupExpression><![CDATA[$F{elevenom}]]></groupExpression>
+	</group>
+	<group name="eleveprenom">
+		<groupExpression><![CDATA[$F{eleveprenom}]]></groupExpression>
+	</group>
+	<group name="eleve_matricule">
+		<groupExpression><![CDATA[$F{eleve_matricule}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="-10" y="30" width="100" height="30" uuid="b3fd4915-ab0e-4ab8-bd7c-52c0eb02055a">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1158b2aa-aaf1-41c4-a0f0-fd41d298eca9"/>
+				</reportElement>
+				<text><![CDATA[elevecode]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="90" y="30" width="100" height="30" uuid="e736e485-56cf-4a9a-a94a-15fc2f935415">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="aa244c0f-600f-465c-8f8f-f21ef390d0a5"/>
+				</reportElement>
+				<text><![CDATA[elevenom]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="30" width="100" height="30" uuid="34d99ffe-edbe-4b8a-bb08-2c0ee47884c9">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="70181685-0580-4a3c-9190-1005cb59cd50"/>
+				</reportElement>
+				<text><![CDATA[eleveprenom]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="-10" y="10" width="100" height="30" uuid="0e1786c5-bbae-42c7-bfa0-d3efaf0eb663">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1158b2aa-aaf1-41c4-a0f0-fd41d298eca9"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{elevecode}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="90" y="10" width="100" height="30" uuid="9fe27cf7-67d9-4a59-9606-df386541c2be">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="aa244c0f-600f-465c-8f8f-f21ef390d0a5"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{elevenom}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="200" y="10" width="100" height="30" uuid="f689327c-1a85-4a43-b090-31efecb1a456">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="70181685-0580-4a3c-9190-1005cb59cd50"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{eleveprenom}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

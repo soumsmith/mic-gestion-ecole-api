@@ -18,10 +18,10 @@
 	<parameter name="periode" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="ecoleId" class="java.lang.Long"/>
 	<queryString language="SQL">
-		<![CDATA[select * from  `ecoleviedbv2`.fiche_identification_eleve
-where `ecoleviedbv2`.fiche_identification_eleve.eleve_matricule = $P{matricule} and
-`ecoleviedbv2`.fiche_identification_eleve.annee_scolaire_libelle= $P{annee} and
-`ecoleviedbv2`.fiche_identification_eleve.ecoleid =  $P{ecoleId}
+		<![CDATA[select * from  `ecolevie_dbProd`.fiche_identification_eleve 
+where `ecolevie_dbProd`.fiche_identification_eleve.eleve_matricule = $P{matricule} and 
+`ecolevie_dbProd`.fiche_identification_eleve.annee_scolaire_libelle= $P{annee} and 
+`ecolevie_dbProd`.fiche_identification_eleve.ecoleid =  $P{ecoleId} 
 ]]>
 	</queryString>
 	<field name="ecoleclibelle" class="java.lang.String">

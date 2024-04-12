@@ -787,8 +787,8 @@
 							</datasetRun>
 							<jr:listContents height="30" width="116">
 								<textField textAdjust="ScaleFont">
-									<reportElement x="0" y="0" width="116" height="15" uuid="97346a98-7852-4d6f-b7b1-888c52767c81">
-										<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+									<reportElement x="0" y="0" width="50" height="30" uuid="97346a98-7852-4d6f-b7b1-888c52767c81">
+										<property name="com.jaspersoft.layout.grid.x" value="0"/>
 										<property name="com.jaspersoft.layout.grid.y" value="0"/>
 										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
 										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
@@ -811,9 +811,9 @@
 									<textFieldExpression><![CDATA[$F{heureDebLun}+" "+$F{heureFinLun}]]></textFieldExpression>
 								</textField>
 								<textField textAdjust="ScaleFont">
-									<reportElement x="0" y="15" width="116" height="15" uuid="6af0dd8a-9945-4a78-9df6-5a58e9f4b512">
-										<property name="com.jaspersoft.layout.grid.x" value="-1"/>
-										<property name="com.jaspersoft.layout.grid.y" value="1"/>
+									<reportElement x="50" y="0" width="60" height="30" uuid="6af0dd8a-9945-4a78-9df6-5a58e9f4b512">
+										<property name="com.jaspersoft.layout.grid.x" value="1"/>
+										<property name="com.jaspersoft.layout.grid.y" value="0"/>
 										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
 										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
 										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>

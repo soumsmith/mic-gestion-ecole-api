@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TestWord" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4eca0501-fa52-4d83-80f7-bce7be705914">
+	<property name="com.jaspersoft.studio.data.sql.tables">
+		<![CDATA[ZWNvbGV2aWVkYnYyLmNhdGVnb3JpZV9tYXRpZXJlIEFTICw1OSw2OCxiMjM2NTEzOS01OWIwLTRm
+MmMtODY2ZS0zMTgwZTMzMWYyNDg7]]>
+	</property>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ecolevieDB"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT categorie_matierecode,
+	categorie_matierelibelle,
+	categorie_matiereid
+FROM ecoleviedbv2.categorie_matiere]]>
+	</queryString>
+	<field name="categorie_matierecode" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="categorie_matierecode"/>
+		<property name="com.jaspersoft.studio.field.label" value="categorie_matierecode"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="categorie_matiere"/>
+	</field>
+	<field name="categorie_matierelibelle" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="categorie_matierelibelle"/>
+		<property name="com.jaspersoft.studio.field.label" value="categorie_matierelibelle"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="categorie_matiere"/>
+	</field>
+	<field name="categorie_matiereid" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="categorie_matiereid"/>
+		<property name="com.jaspersoft.studio.field.label" value="categorie_matiereid"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="categorie_matiere"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="185" height="30" uuid="e42c7159-5d79-48db-856a-6acdb88ff02c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d9ab55b3-528d-4a71-b05d-0da56dd0e04d"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[categorie_matierecode]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="185" y="0" width="185" height="30" uuid="e14dc05f-35f4-4071-a793-49e91d520f1f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5a1abc71-9d7e-41d9-bcbc-0a2daa668c45"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[categorie_matierelibelle]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="370" y="0" width="185" height="30" uuid="6a9cebad-251a-42ce-b1a7-7973f6eb9bc8">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="20679bb4-3319-4c23-a84b-7f87c2b2419d"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[categorie_matiereid]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="185" height="30" uuid="5e955c21-f619-472e-a583-c1cfb7ee98c4">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d9ab55b3-528d-4a71-b05d-0da56dd0e04d"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{categorie_matierecode}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="185" y="0" width="185" height="30" uuid="60ffd9c6-8dab-48c9-a290-0e069aacf930">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5a1abc71-9d7e-41d9-bcbc-0a2daa668c45"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{categorie_matierelibelle}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="370" y="0" width="185" height="30" uuid="b57e030e-3e8f-4bb3-acb7-24a44e17646f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="20679bb4-3319-4c23-a84b-7f87c2b2419d"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{categorie_matiereid}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

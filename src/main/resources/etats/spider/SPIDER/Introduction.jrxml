@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Detail_Introduction" pageWidth="555" pageHeight="802" columnWidth="515" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ea3570cf-8a5f-41b3-a9e2-0f69d23d2d9d">
+	<property name="com.jaspersoft.studio.data.sql.tables">
+		<![CDATA[ZWNvbGV2aWVkYnYyLnJfaW5mb19ldGFibGlzc2VtZW50IEFTICwxNjUsNjMsZjVlNTk5Y2YtM2Rh
+Yi00YjQ4LWE1NjEtY2M3NzRlOTI5ZWI3Ow==]]>
+	</property>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ecolevieDB2"/>
+	<property name="net.sf.jasperreports.export.docx.flexible.row.height" value="true"/>
+	<property name="net.sf.jasperreports.export.docx.frames.as.nested.tables" value="false"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT etab_denomination,
+	etab_num_decision_ouverture,
+	etab_code_etablissement,
+	etab_situation_geographique,
+	etab_adresse,
+	etab_telephone,
+	etab_fax,
+	etab_email
+FROM ecoleviedbv2.r_info_etablissement]]>
+	</queryString>
+	<field name="etab_denomination" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="etab_denomination"/>
+		<property name="com.jaspersoft.studio.field.label" value="etab_denomination"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="r_info_etablissement"/>
+	</field>
+	<field name="etab_num_decision_ouverture" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="etab_num_decision_ouverture"/>
+		<property name="com.jaspersoft.studio.field.label" value="etab_num_decision_ouverture"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="r_info_etablissement"/>
+	</field>
+	<field name="etab_code_etablissement" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="etab_code_etablissement"/>
+		<property name="com.jaspersoft.studio.field.label" value="etab_code_etablissement"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="r_info_etablissement"/>
+	</field>
+	<field name="etab_situation_geographique" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="etab_situation_geographique"/>
+		<property name="com.jaspersoft.studio.field.label" value="etab_situation_geographique"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="r_info_etablissement"/>
+	</field>
+	<field name="etab_adresse" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="etab_adresse"/>
+		<property name="com.jaspersoft.studio.field.label" value="etab_adresse"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="r_info_etablissement"/>
+	</field>
+	<field name="etab_telephone" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="etab_telephone"/>
+		<property name="com.jaspersoft.studio.field.label" value="etab_telephone"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="r_info_etablissement"/>
+	</field>
+	<field name="etab_fax" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="etab_fax"/>
+		<property name="com.jaspersoft.studio.field.label" value="etab_fax"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="r_info_etablissement"/>
+	</field>
+	<field name="etab_email" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="etab_email"/>
+		<property name="com.jaspersoft.studio.field.label" value="etab_email"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="r_info_etablissement"/>
+	</field>
+	<group name="Introduction"/>
+	<group name="Groupe1">
+		<groupHeader>
+			<band height="197">
+				<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="52" splitType="Stretch">
+			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+			<staticText>
+				<reportElement x="0" y="0" width="515" height="52" uuid="ec7120b7-12ef-4691-aade-9a39ebe4f8cd"/>
+				<textElement textAlignment="Center">
+					<font fontName="Bodoni MT Black" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[INTRODUCTION]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageFooter>
+		<band height="50">
+			<textField bookmarkLevel="1">
+				<reportElement x="440" y="20" width="100" height="20" uuid="719b1853-9192-4bdb-9af5-7928e16f167d"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+				<anchorNameExpression><![CDATA["INTRODUCTION"]]></anchorNameExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

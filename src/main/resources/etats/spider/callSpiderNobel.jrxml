@@ -18,6 +18,7 @@
 	<parameter name="libellePeriode" class="java.lang.String"/>
 	<parameter name="matricule" class="java.lang.String"/>
 	<parameter name="infosAmoirie" class="java.lang.String"/>
+	<parameter name="distinctin" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select *
 from  `ecoleviedbv2`.ve_details_infos_bulletins_spider
@@ -425,6 +426,9 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.libelle_classe =  $P{clas
 					</subreportParameter>
 					<subreportParameter name="infosAmoirie">
 						<subreportParameterExpression><![CDATA[$P{infosAmoirie}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="distinctin">
+						<subreportParameterExpression><![CDATA[$P{distinctin}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					<subreportExpression><![CDATA["etats/spider/BulletinNobelSpider.jasper"]]></subreportExpression>

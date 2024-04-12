@@ -1,0 +1,1906 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Recap_resultats_scolaire_aff" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7abbf463-a366-4df5-8ac5-a1cd79813d9a">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<style name="Titrecadre">
+		<box>
+			<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+			<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+			<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+			<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="contenu2"/>
+	<style name="contenu"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="niveau" class="java.lang.String"/>
+	<field name="classe" class="java.lang.String"/>
+	<field name="effeF" class="java.lang.Long"/>
+	<field name="effeG" class="java.lang.Long"/>
+	<field name="classF" class="java.lang.Long"/>
+	<field name="classG" class="java.lang.Long"/>
+	<field name="nonclassF" class="java.lang.Long"/>
+	<field name="nonclassG" class="java.lang.Long"/>
+	<field name="nbreMoySup10F" class="java.lang.Long"/>
+	<field name="nbreMoySup10G" class="java.lang.Long"/>
+	<field name="pourMoySup10F" class="java.lang.Double"/>
+	<field name="pourMoySup10G" class="java.lang.Double"/>
+	<field name="nbreMoyInf999F" class="java.lang.Long"/>
+	<field name="pourMoyInf999F" class="java.lang.Double"/>
+	<field name="nbreMoyInf999G" class="java.lang.Long"/>
+	<field name="pourMoyInf999G" class="java.lang.Double"/>
+	<field name="nbreMoyInf85G" class="java.lang.Long"/>
+	<field name="pourMoyInf85G" class="java.lang.Double"/>
+	<field name="nbreMoyInf85F" class="java.lang.Long"/>
+	<field name="pourMoyInf85F" class="java.lang.Double"/>
+	<field name="moyClasseF" class="java.lang.Double"/>
+	<field name="moyClasseG" class="java.lang.Double"/>
+	<variable name="ToNF" class="java.lang.Long" resetType="Group" resetGroup="GroupeNiveau" calculation="Sum"/>
+	<variable name="ToNG" class="java.lang.Long" resetType="Group" resetGroup="GroupeNiveau" calculation="Sum"/>
+	<group name="GroupeNiveau">
+		<groupHeader>
+			<band/>
+		</groupHeader>
+		<groupFooter>
+			<band height="120">
+				<frame>
+					<reportElement x="-10" y="0" width="570" height="120" uuid="5a2bd922-e345-4835-8cae-c89761791f38">
+						<property name="com.jaspersoft.layout.grid.x" value="0"/>
+						<property name="com.jaspersoft.layout.grid.y" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="6"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+					</reportElement>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<frame>
+						<reportElement style="contenu" x="0" y="0" width="50" height="120" uuid="860e9c4d-7c14-4540-9169-14f896484a44">
+							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+						</reportElement>
+						<box>
+							<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<staticText>
+							<reportElement x="0" y="0" width="50" height="120" uuid="baee18eb-5a64-4a03-8feb-da68d5c81011">
+								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+								<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+							</reportElement>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="SansSerif"/>
+							</textElement>
+							<text><![CDATA[Total  Etabl.]]></text>
+						</staticText>
+					</frame>
+					<frame>
+						<reportElement x="50" y="0" width="520" height="120" uuid="a1943d9c-6e48-4142-b5cf-161e0f754e48">
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+						</reportElement>
+						<box>
+							<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<frame>
+							<reportElement x="0" y="0" width="20" height="120" uuid="671f6cde-a6d2-422c-8a8f-22c611e10190">
+								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+								<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+								<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+							</reportElement>
+							<staticText>
+								<reportElement style="contenu2" x="0" y="0" width="20" height="40" uuid="3bbae4af-f97e-46fc-bf5e-ccc8cc0119a9"/>
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+									<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="SansSerif"/>
+								</textElement>
+								<text><![CDATA[F]]></text>
+							</staticText>
+							<staticText>
+								<reportElement style="contenu2" x="0" y="40" width="20" height="40" uuid="605c2855-3f31-4452-8b37-06bdf4be4b95"/>
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+									<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="SansSerif"/>
+								</textElement>
+								<text><![CDATA[G]]></text>
+							</staticText>
+							<staticText>
+								<reportElement style="contenu2" x="0" y="80" width="20" height="40" uuid="6474a8db-fc01-4376-bfbb-3055a316b25d"/>
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+									<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="SansSerif" isBold="true"/>
+								</textElement>
+								<text><![CDATA[T]]></text>
+							</staticText>
+						</frame>
+						<frame>
+							<reportElement x="20" y="0" width="500" height="120" uuid="07e1d69f-d1d5-4442-8619-2a6946e44bea">
+								<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+							</reportElement>
+							<box>
+								<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+								<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+								<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+								<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField evaluationTime="Group" evaluationGroup="GroupeNiveau">
+								<reportElement x="0" y="0" width="40" height="40" uuid="c8f56dcd-d943-4160-90df-ac00ee07ab0e">
+									<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+									<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+								</reportElement>
+								<box>
+									<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="SansSerif" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[0+$F{effeF}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement style="contenu2" x="40" y="0" width="40" height="40" uuid="26307fce-978a-4d2c-983c-2e3bd7c45611">
+									<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+									<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+								</reportElement>
+								<box>
+									<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="SansSerif"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{classF}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement style="contenu2" x="80" y="0" width="40" height="40" uuid="a25eac09-e54d-4f9b-9b96-0a85acd9ca7e">
+									<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+									<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+								</reportElement>
+								<box>
+									<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="SansSerif"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{nonclassF}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement style="contenu2" x="120" y="0" width="45" height="40" uuid="bd779491-6efe-463f-b132-e53bf388e787">
+									<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+									<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+								</reportElement>
+								<box>
+									<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="SansSerif"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{nbreMoySup10F}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement style="contenu2" x="165" y="0" width="45" height="40" uuid="cb47bf1a-e54d-44ad-b51f-3625a43cb9a4">
+									<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+									<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+								</reportElement>
+								<box>
+									<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="SansSerif"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{pourMoySup10F}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement style="contenu2" x="210" y="0" width="45" height="40" uuid="ca3ed565-d591-490c-96d9-ead053149bd0">
+									<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+									<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+								</reportElement>
+								<box>
+									<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="SansSerif"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{nbreMoyInf999F}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement style="contenu2" x="255" y="0" width="45" height="40" uuid="059e63b7-0e3c-4fe2-a1b4-9c7f39ee4231">
+									<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+									<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+								</reportElement>
+								<box>
+									<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="SansSerif"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{pourMoyInf999F}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement style="contenu2" x="300" y="0" width="50" height="40" uuid="4b97067c-7e1d-4484-b3c7-62618dce8a99">
+									<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+									<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+								</reportElement>
+								<box>
+									<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="SansSerif"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{nbreMoyInf85F}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement style="contenu2" x="350" y="0" width="50" height="40" uuid="d04f68b4-c978-45bc-8457-54ef6054bf44">
+									<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+									<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+								</reportElement>
+								<box>
+									<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="SansSerif"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{pourMoyInf85F}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement style="contenu2" x="400" y="0" width="100" height="40" uuid="ef34568d-a13e-41a8-8357-9f117459ecba"/>
+								<box>
+									<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="SansSerif"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{moyClasseF}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="0" y="40" width="40" height="40" uuid="95acac45-d754-4dd8-81d1-bde980bbfa6a">
+									<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+									<property name="com.jaspersoft.layout.grid.y" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+								</reportElement>
+								<box>
+									<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="SansSerif"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{effeG}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement style="contenu2" x="40" y="40" width="40" height="40" uuid="9b98c8b6-a0e9-43c3-bc63-c073bc84ffaf">
+									<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+									<property name="com.jaspersoft.layout.grid.y" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+								</reportElement>
+								<box>
+									<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="SansSerif"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{classG}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement style="contenu2" x="80" y="40" width="40" height="40" uuid="76729ea1-7d84-4dcd-a3b0-efcfd68bdcba">
+									<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+									<property name="com.jaspersoft.layout.grid.y" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+								</reportElement>
+								<box>
+									<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="SansSerif"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{nonclassG}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement style="contenu2" x="120" y="40" width="45" height="40" uuid="99a99503-2482-4590-9392-1c6b81490552">
+									<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+									<property name="com.jaspersoft.layout.grid.y" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+								</reportElement>
+								<box>
+									<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="SansSerif"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{nbreMoySup10G}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement style="contenu2" x="165" y="40" width="45" height="40" uuid="e20a6a7f-de6c-45b1-8899-56bf68e881d1">
+									<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+									<property name="com.jaspersoft.layout.grid.y" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+								</reportElement>
+								<box>
+									<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="SansSerif"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{pourMoySup10G}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement style="contenu2" x="210" y="40" width="45" height="40" uuid="6ea403a4-8a7a-4c51-88b0-9df83fedae28">
+									<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+									<property name="com.jaspersoft.layout.grid.y" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+								</reportElement>
+								<box>
+									<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="SansSerif"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{nbreMoyInf999G}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement style="contenu2" x="255" y="40" width="45" height="40" uuid="1c4c73d4-5ec0-45d9-9e96-4b4069e8d761">
+									<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+									<property name="com.jaspersoft.layout.grid.y" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+								</reportElement>
+								<box>
+									<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="SansSerif"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{pourMoyInf999G}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement style="contenu2" x="300" y="40" width="50" height="40" uuid="28f43384-ecdc-4ee4-98f0-1df51132d01e">
+									<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+									<property name="com.jaspersoft.layout.grid.y" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+								</reportElement>
+								<box>
+									<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="SansSerif"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{nbreMoyInf85G}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement style="contenu2" x="350" y="40" width="50" height="40" uuid="219e93d2-d89d-4280-a9c0-4c84fbd80ddc">
+									<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+									<property name="com.jaspersoft.layout.grid.y" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+								</reportElement>
+								<box>
+									<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="SansSerif"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{pourMoyInf85G}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement style="contenu2" x="400" y="40" width="100" height="40" uuid="7bbb1a90-44be-4fc9-a244-eee44deb7011">
+									<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+									<property name="com.jaspersoft.layout.grid.y" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+								</reportElement>
+								<box>
+									<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="SansSerif"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{moyClasseG}]]></textFieldExpression>
+							</textField>
+							<textField evaluationTime="Group" evaluationGroup="GroupeNiveau">
+								<reportElement x="0" y="80" width="40" height="40" uuid="1ae196e5-8595-400d-9323-04a05ba23fbb">
+									<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+									<property name="com.jaspersoft.layout.grid.y" value="2"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+								</reportElement>
+								<box>
+									<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="SansSerif" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{ToNF}+$V{ToNG}]]></textFieldExpression>
+							</textField>
+							<textField evaluationTime="Group" evaluationGroup="GroupeClasse">
+								<reportElement x="40" y="80" width="40" height="40" uuid="9fb3771e-4727-4a28-8dc8-565c8b45311b">
+									<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+									<property name="com.jaspersoft.layout.grid.y" value="2"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+								</reportElement>
+								<box>
+									<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="SansSerif" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{classF}+$F{classG}]]></textFieldExpression>
+							</textField>
+							<textField evaluationTime="Group" evaluationGroup="GroupeClasse">
+								<reportElement x="80" y="80" width="40" height="40" uuid="73944dc4-1951-43c6-87bb-923357eb8a1d">
+									<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+									<property name="com.jaspersoft.layout.grid.y" value="2"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+								</reportElement>
+								<box>
+									<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="SansSerif" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{nonclassF}+$F{nonclassG}]]></textFieldExpression>
+							</textField>
+							<textField evaluationTime="Group" evaluationGroup="GroupeClasse">
+								<reportElement x="120" y="80" width="45" height="40" uuid="e738a8ab-ce76-4fc8-8ba2-61638348746d">
+									<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+									<property name="com.jaspersoft.layout.grid.y" value="2"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+								</reportElement>
+								<box>
+									<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="SansSerif" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{nbreMoySup10F}+$F{nbreMoySup10G}]]></textFieldExpression>
+							</textField>
+							<textField evaluationTime="Group" evaluationGroup="GroupeNiveau">
+								<reportElement x="165" y="80" width="45" height="40" uuid="523be7cd-fcac-41c9-9b75-2cf4176d5a7b">
+									<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+									<property name="com.jaspersoft.layout.grid.y" value="2"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+								</reportElement>
+								<box>
+									<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="SansSerif" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[($F{pourMoySup10F}+$F{pourMoySup10G})/2]]></textFieldExpression>
+							</textField>
+							<textField evaluationTime="Group" evaluationGroup="GroupeNiveau">
+								<reportElement style="contenu2" x="210" y="80" width="45" height="40" uuid="a815aa60-64d3-4716-8ae6-5f6489dbe68e">
+									<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+									<property name="com.jaspersoft.layout.grid.y" value="2"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+								</reportElement>
+								<box>
+									<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="SansSerif" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{nbreMoyInf999F}+$F{nbreMoyInf999G}]]></textFieldExpression>
+							</textField>
+							<textField evaluationTime="Group" evaluationGroup="GroupeNiveau">
+								<reportElement style="contenu2" x="255" y="80" width="45" height="40" uuid="ee7acedf-ca63-4211-9e61-9ea0900296a6">
+									<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+									<property name="com.jaspersoft.layout.grid.y" value="2"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+								</reportElement>
+								<box>
+									<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="SansSerif" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[($F{pourMoyInf999F}+$F{pourMoyInf999G})/2]]></textFieldExpression>
+							</textField>
+							<textField evaluationTime="Group" evaluationGroup="GroupeNiveau">
+								<reportElement style="contenu2" x="300" y="80" width="50" height="40" uuid="1389e832-86a8-4819-ae86-c9bb2fdae26f">
+									<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+									<property name="com.jaspersoft.layout.grid.y" value="2"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+								</reportElement>
+								<box>
+									<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="SansSerif" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{nbreMoyInf85F}+$F{nbreMoyInf85G}]]></textFieldExpression>
+							</textField>
+							<textField evaluationTime="Group" evaluationGroup="GroupeNiveau">
+								<reportElement style="contenu2" x="350" y="80" width="50" height="40" uuid="4225c45d-7e88-4f3e-b8d1-8d96c09507a2">
+									<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+									<property name="com.jaspersoft.layout.grid.y" value="2"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+								</reportElement>
+								<box>
+									<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="SansSerif" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[($F{pourMoyInf85F}+$F{pourMoyInf85G})/2]]></textFieldExpression>
+							</textField>
+							<textField textAdjust="ScaleFont" evaluationTime="Group" evaluationGroup="GroupeNiveau" pattern="#,#00.00#;(#,#00.00#-)" isBlankWhenNull="true">
+								<reportElement x="400" y="80" width="100" height="40" uuid="e3290fe4-7509-4c45-aa95-a1075a0d53c0">
+									<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+									<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+								</reportElement>
+								<box>
+									<pen lineWidth="0.5" lineStyle="Dotted"/>
+									<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+									<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="SansSerif"/>
+								</textElement>
+								<textFieldExpression><![CDATA[($F{moyClasseF}+$F{moyClasseG})/2]]></textFieldExpression>
+							</textField>
+						</frame>
+					</frame>
+				</frame>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="GroupeClasse">
+		<groupExpression><![CDATA[$F{classe}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="28" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="6" width="560" height="20" uuid="bd447cba-a31c-4f87-a2ee-8481e890a2c9">
+					<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+					<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+					<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+					<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+					<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+					<property name="com.jaspersoft.layout.grid.colspan" value="2"/>
+					<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+				</reportElement>
+				<textElement>
+					<font fontName="SansSerif" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Récapitulatif des résultats des élèves non affectés par niveau]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="60">
+			<frame>
+				<reportElement style="Titrecadre" x="-10" y="20" width="570" height="40" uuid="6694805e-2152-4bc2-bb68-89ecfd2be137">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<frame>
+					<reportElement x="0" y="0" width="50" height="40" uuid="4083e369-c5f6-425c-979b-525d536389af">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+					</reportElement>
+					<staticText>
+						<reportElement x="0" y="0" width="50" height="40" uuid="12b47d1b-71a8-4ddb-80d8-aa0633ce1374">
+							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						</reportElement>
+						<box>
+							<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textElement textAlignment="Center" verticalAlignment="Middle">
+							<font fontName="SansSerif"/>
+						</textElement>
+						<text><![CDATA[Classe]]></text>
+					</staticText>
+				</frame>
+				<frame>
+					<reportElement x="50" y="0" width="140" height="40" uuid="5bd4b94a-5c1a-4782-8991-38aeb95cd639">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+					</reportElement>
+					<staticText>
+						<reportElement style="Titrecadre" x="0" y="0" width="20" height="40" uuid="088b8c51-75f7-4d93-96fa-3a446d933474">
+							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						</reportElement>
+						<textElement textAlignment="Center" verticalAlignment="Middle">
+							<font fontName="SansSerif"/>
+						</textElement>
+						<text><![CDATA[S]]></text>
+					</staticText>
+					<staticText>
+						<reportElement style="Titrecadre" x="20" y="0" width="40" height="40" uuid="02f8b13b-8795-4291-96a2-dee1f2cfa17e">
+							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						</reportElement>
+						<textElement textAlignment="Center" verticalAlignment="Middle">
+							<font fontName="SansSerif"/>
+						</textElement>
+						<text><![CDATA[Effectif]]></text>
+					</staticText>
+					<staticText>
+						<reportElement style="Titrecadre" x="60" y="0" width="40" height="40" uuid="d391cda9-8ba3-48ea-a9df-4c11b56f8798">
+							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						</reportElement>
+						<textElement textAlignment="Center" verticalAlignment="Middle">
+							<font fontName="SansSerif"/>
+						</textElement>
+						<text><![CDATA[Classé]]></text>
+					</staticText>
+					<staticText>
+						<reportElement style="Titrecadre" x="100" y="0" width="40" height="40" uuid="928da581-323c-4056-b581-7c206539a4a3">
+							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						</reportElement>
+						<textElement textAlignment="Center" verticalAlignment="Middle">
+							<font fontName="SansSerif"/>
+						</textElement>
+						<text><![CDATA[Non classé]]></text>
+					</staticText>
+				</frame>
+				<frame>
+					<reportElement x="190" y="0" width="90" height="40" uuid="aec697b5-a611-48ad-90ef-b137e2dd9d62">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+					</reportElement>
+					<staticText>
+						<reportElement x="0" y="0" width="90" height="20" uuid="ccd22262-1a2e-41d7-94b6-e6a6d11bb9d8">
+							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.colspan" value="2"/>
+							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						</reportElement>
+						<box>
+							<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textElement textAlignment="Center" verticalAlignment="Middle">
+							<font fontName="SansSerif"/>
+						</textElement>
+						<text><![CDATA[Moy.sup.ou=10]]></text>
+					</staticText>
+					<staticText>
+						<reportElement style="Titrecadre" x="0" y="20" width="45" height="20" uuid="63199e64-057b-4aab-8fc9-23795b7e5660">
+							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.y" value="1"/>
+							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+						</reportElement>
+						<textElement textAlignment="Center" verticalAlignment="Middle">
+							<font fontName="SansSerif"/>
+						</textElement>
+						<text><![CDATA[Nbre]]></text>
+					</staticText>
+					<staticText>
+						<reportElement style="Titrecadre" x="45" y="20" width="45" height="20" uuid="0016fff1-9c65-4070-a0f8-bc9facf06202"/>
+						<textElement textAlignment="Center" verticalAlignment="Middle">
+							<font fontName="SansSerif"/>
+						</textElement>
+						<text><![CDATA[%]]></text>
+					</staticText>
+				</frame>
+				<frame>
+					<reportElement x="280" y="0" width="90" height="40" uuid="590d8194-5f1b-41e6-980b-14bb040f9b0c">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+					</reportElement>
+					<staticText>
+						<reportElement style="Titrecadre" x="0" y="0" width="90" height="20" uuid="af74ebf8-c8d0-4f35-ac18-f9dc657d849b">
+							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.colspan" value="2"/>
+							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						</reportElement>
+						<textElement textAlignment="Center" verticalAlignment="Middle">
+							<font fontName="SansSerif"/>
+						</textElement>
+						<text><![CDATA[Moy.entre 8.5 et 9.99]]></text>
+					</staticText>
+					<staticText>
+						<reportElement style="Titrecadre" x="0" y="20" width="45" height="20" uuid="8192872c-2383-4ad8-9109-95ef6f51b5d6">
+							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.y" value="1"/>
+							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+						</reportElement>
+						<textElement textAlignment="Center" verticalAlignment="Middle">
+							<font fontName="SansSerif"/>
+						</textElement>
+						<text><![CDATA[Nbre]]></text>
+					</staticText>
+					<staticText>
+						<reportElement style="Titrecadre" x="45" y="20" width="45" height="20" uuid="0f41439b-91dc-484c-a6ae-64c88403e123"/>
+						<textElement textAlignment="Center" verticalAlignment="Middle">
+							<font fontName="SansSerif"/>
+						</textElement>
+						<text><![CDATA[%]]></text>
+					</staticText>
+				</frame>
+				<frame>
+					<reportElement x="370" y="0" width="100" height="40" uuid="6bde0650-623e-48bd-a987-acd8ae6caa17">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+					</reportElement>
+					<staticText>
+						<reportElement style="Titrecadre" x="0" y="0" width="100" height="20" uuid="d727e068-2c94-46a8-ba70-f67092c2fa97">
+							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.colspan" value="2"/>
+							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						</reportElement>
+						<textElement textAlignment="Center" verticalAlignment="Middle">
+							<font fontName="SansSerif"/>
+						</textElement>
+						<text><![CDATA[Moy.inf.à 08.50]]></text>
+					</staticText>
+					<staticText>
+						<reportElement style="Titrecadre" x="0" y="20" width="50" height="20" uuid="4998401a-21eb-4183-821c-65a6b17c1b26">
+							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.y" value="1"/>
+							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+						</reportElement>
+						<textElement textAlignment="Center" verticalAlignment="Middle">
+							<font fontName="SansSerif"/>
+						</textElement>
+						<text><![CDATA[Nbre]]></text>
+					</staticText>
+					<staticText>
+						<reportElement style="Titrecadre" x="50" y="20" width="50" height="20" uuid="482ec3f7-31d0-4ebf-ad88-eeda1ddefdd9"/>
+						<textElement textAlignment="Center" verticalAlignment="Middle">
+							<font fontName="SansSerif"/>
+						</textElement>
+						<text><![CDATA[%]]></text>
+					</staticText>
+				</frame>
+				<frame>
+					<reportElement x="470" y="0" width="100" height="40" uuid="353966fd-4542-402e-80e8-0e010d8662d8">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+					</reportElement>
+					<staticText>
+						<reportElement style="Titrecadre" x="0" y="0" width="100" height="40" uuid="8c17a179-2027-4c1b-b9cc-a0fe154026eb">
+							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						</reportElement>
+						<box>
+							<pen lineWidth="0.5"/>
+							<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textElement textAlignment="Center" verticalAlignment="Middle">
+							<font fontName="SansSerif"/>
+						</textElement>
+						<text><![CDATA[Moy. du
+niveau
+]]></text>
+					</staticText>
+				</frame>
+			</frame>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="120">
+			<frame>
+				<reportElement x="-10" y="0" width="570" height="120" uuid="ce4a7af3-0cbf-434f-854a-0cdf330431e0">
+					<property name="com.jaspersoft.layout.grid.x" value="0"/>
+					<property name="com.jaspersoft.layout.grid.y" value="1"/>
+					<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+					<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+					<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+					<property name="com.jaspersoft.layout.grid.colspan" value="6"/>
+					<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<frame>
+					<reportElement style="contenu" x="0" y="0" width="50" height="120" uuid="3bdd66b3-d0cc-4bfe-b303-72599b02443b">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+					</reportElement>
+					<textField>
+						<reportElement x="0" y="0" width="50" height="80" uuid="83e231a9-20f7-4e1e-910b-b32b34a14bb4">
+							<property name="com.jaspersoft.layout.grid.x" value="0"/>
+							<property name="com.jaspersoft.layout.grid.y" value="0"/>
+							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						</reportElement>
+						<box>
+							<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textElement textAlignment="Center" verticalAlignment="Middle">
+							<font fontName="SansSerif"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{niveau}]]></textFieldExpression>
+					</textField>
+					<textField textAdjust="ScaleFont">
+						<reportElement x="0" y="80" width="50" height="40" uuid="8b9cd9a9-d185-4e28-a620-2028fc5893de">
+							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.y" value="1"/>
+							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						</reportElement>
+						<textElement textAlignment="Center">
+							<font fontName="SansSerif"/>
+						</textElement>
+						<textFieldExpression><![CDATA["Total  "+$F{niveau}]]></textFieldExpression>
+					</textField>
+				</frame>
+				<frame>
+					<reportElement x="50" y="0" width="520" height="120" uuid="6ca203c9-3e6c-4c9f-abd7-2a761f52b213">
+						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+					</reportElement>
+					<frame>
+						<reportElement x="0" y="0" width="20" height="120" uuid="8332ec9b-bac2-4608-928b-6326afd78e37">
+							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+						</reportElement>
+						<staticText>
+							<reportElement style="contenu2" x="0" y="0" width="20" height="40" uuid="794dff0e-7ea4-49bd-b8f9-5aca978b7ae4"/>
+							<box>
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+								<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+								<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+								<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="SansSerif"/>
+							</textElement>
+							<text><![CDATA[F]]></text>
+						</staticText>
+						<staticText>
+							<reportElement style="contenu2" x="0" y="40" width="20" height="40" uuid="864d96af-df57-4dbe-8259-3bb48dce9fb0"/>
+							<box>
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+								<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+								<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+								<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="SansSerif"/>
+							</textElement>
+							<text><![CDATA[G]]></text>
+						</staticText>
+						<staticText>
+							<reportElement style="contenu2" x="0" y="80" width="20" height="40" uuid="c4d6e97c-7e00-4dfd-9c5d-974bee62515e"/>
+							<box>
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+								<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+								<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+								<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="SansSerif" isBold="true"/>
+							</textElement>
+							<text><![CDATA[T]]></text>
+						</staticText>
+					</frame>
+					<frame>
+						<reportElement x="20" y="0" width="500" height="120" uuid="57d45442-f598-49c0-b2d2-3951ca6963f0">
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+						</reportElement>
+						<box>
+							<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement style="contenu2" x="0" y="0" width="40" height="40" uuid="7f9d4001-323d-4a04-9a7f-0113e71b842b">
+								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+								<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+							</reportElement>
+							<box>
+								<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="SansSerif"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{effeF}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement style="contenu2" x="40" y="0" width="40" height="40" uuid="16952e61-36e2-4444-ac4b-f7a9532cea07">
+								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+								<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+							</reportElement>
+							<box>
+								<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="SansSerif"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{classF}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement style="contenu2" x="80" y="0" width="40" height="40" uuid="0831a52e-30de-446c-8cf7-e4b2acfc0993">
+								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+								<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+							</reportElement>
+							<box>
+								<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="SansSerif"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{nonclassF}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement style="contenu2" x="120" y="0" width="45" height="40" uuid="81b752ee-4423-456a-8ba9-b8a9ddd0f677">
+								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+								<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+							</reportElement>
+							<box>
+								<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="SansSerif"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{nbreMoySup10F}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement style="contenu2" x="165" y="0" width="45" height="40" uuid="a19cdd63-6e11-4a69-ac0e-e7ee78c97e45">
+								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+								<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+							</reportElement>
+							<box>
+								<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="SansSerif"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{pourMoySup10F}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement style="contenu2" x="210" y="0" width="45" height="40" uuid="f177ca66-e321-44e8-8256-bfe69287cef2">
+								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+								<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+							</reportElement>
+							<box>
+								<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="SansSerif"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{nbreMoyInf999F}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement style="contenu2" x="255" y="0" width="45" height="40" uuid="d3c51ee9-8163-4729-b50d-c9edd0e2a9bc">
+								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+								<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+							</reportElement>
+							<box>
+								<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="SansSerif"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{pourMoyInf999F}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement style="contenu2" x="300" y="0" width="50" height="40" uuid="fe1bd437-90dd-4392-b826-93fc852a262c">
+								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+								<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+							</reportElement>
+							<box>
+								<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="SansSerif"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{nbreMoyInf85F}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement style="contenu2" x="350" y="0" width="50" height="40" uuid="3d16a211-7a92-4dd8-86db-913c64ed739c">
+								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+								<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+							</reportElement>
+							<box>
+								<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="SansSerif"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{pourMoyInf85F}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement style="contenu2" x="400" y="0" width="100" height="40" uuid="a76c06c7-cc77-46d6-a96e-77db7129e248"/>
+							<box>
+								<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="SansSerif"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{moyClasseF}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="40" width="40" height="40" uuid="d97a5228-6be8-4836-9f7d-78fc488a11e9">
+								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+								<property name="com.jaspersoft.layout.grid.y" value="1"/>
+								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+							</reportElement>
+							<box>
+								<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="SansSerif"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{effeG}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement style="contenu2" x="40" y="40" width="40" height="40" uuid="7cbc1403-8f0d-42bc-a9fa-247f84c4f5d6">
+								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+								<property name="com.jaspersoft.layout.grid.y" value="1"/>
+								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+							</reportElement>
+							<box>
+								<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="SansSerif"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{classG}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement style="contenu2" x="80" y="40" width="40" height="40" uuid="2376de4b-818f-4368-9f82-fa56bfd59dd9">
+								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+								<property name="com.jaspersoft.layout.grid.y" value="1"/>
+								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+							</reportElement>
+							<box>
+								<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="SansSerif"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{nonclassG}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement style="contenu2" x="120" y="40" width="45" height="40" uuid="93df4243-cb86-4080-9161-bc87f7514212">
+								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+								<property name="com.jaspersoft.layout.grid.y" value="1"/>
+								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+							</reportElement>
+							<box>
+								<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="SansSerif"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{nbreMoySup10G}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement style="contenu2" x="165" y="40" width="45" height="40" uuid="bdee91cc-d7cf-47af-b851-6261b3202572">
+								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+								<property name="com.jaspersoft.layout.grid.y" value="1"/>
+								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+							</reportElement>
+							<box>
+								<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="SansSerif"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{pourMoySup10G}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement style="contenu2" x="210" y="40" width="45" height="40" uuid="c7805e7a-20b6-4d28-a5e4-91d83bb9956e">
+								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+								<property name="com.jaspersoft.layout.grid.y" value="1"/>
+								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+							</reportElement>
+							<box>
+								<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="SansSerif"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{nbreMoyInf999G}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement style="contenu2" x="255" y="40" width="45" height="40" uuid="5894b8ea-6f27-43af-8678-8c5a348a931f">
+								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+								<property name="com.jaspersoft.layout.grid.y" value="1"/>
+								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+							</reportElement>
+							<box>
+								<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="SansSerif"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{pourMoyInf999G}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement style="contenu2" x="300" y="40" width="50" height="40" uuid="2bf2ca4a-3265-4a14-8ddc-5b65f1dfd84a">
+								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+								<property name="com.jaspersoft.layout.grid.y" value="1"/>
+								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+							</reportElement>
+							<box>
+								<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="SansSerif"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{nbreMoyInf85G}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement style="contenu2" x="350" y="40" width="50" height="40" uuid="aa88fabc-8f8b-4d9a-926d-7e6de1f4421e">
+								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+								<property name="com.jaspersoft.layout.grid.y" value="1"/>
+								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+							</reportElement>
+							<box>
+								<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="SansSerif"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{pourMoyInf85G}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement style="contenu2" x="400" y="40" width="100" height="40" uuid="7f67d09e-7985-4adf-ab3a-b767baf4ea7b">
+								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+								<property name="com.jaspersoft.layout.grid.y" value="1"/>
+								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+							</reportElement>
+							<box>
+								<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="SansSerif"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{moyClasseG}]]></textFieldExpression>
+						</textField>
+						<textField evaluationTime="Group" evaluationGroup="GroupeNiveau">
+							<reportElement x="0" y="80" width="40" height="40" uuid="cdbd27ea-07fb-44e4-8e22-e45aa6eb2f14">
+								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+								<property name="com.jaspersoft.layout.grid.y" value="2"/>
+								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+							</reportElement>
+							<box>
+								<pen lineWidth="1.0" lineStyle="Dashed"/>
+								<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="SansSerif" isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{effeF}+$F{effeG}]]></textFieldExpression>
+						</textField>
+						<textField evaluationTime="Group" evaluationGroup="GroupeNiveau">
+							<reportElement x="40" y="80" width="40" height="40" uuid="441271c9-62c5-4cee-b29d-c642cea4a9ed">
+								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+								<property name="com.jaspersoft.layout.grid.y" value="2"/>
+								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+							</reportElement>
+							<box>
+								<pen lineWidth="1.0" lineStyle="Dashed"/>
+								<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="SansSerif" isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{classF}+$F{classG}]]></textFieldExpression>
+						</textField>
+						<textField evaluationTime="Group" evaluationGroup="GroupeNiveau">
+							<reportElement x="80" y="80" width="40" height="40" uuid="7e17dfa6-383c-485a-b352-26c41fe1825e">
+								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+								<property name="com.jaspersoft.layout.grid.y" value="2"/>
+								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+							</reportElement>
+							<box>
+								<pen lineWidth="1.0" lineStyle="Dashed"/>
+								<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="SansSerif" isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{nonclassF}+$F{nonclassG}]]></textFieldExpression>
+						</textField>
+						<textField evaluationTime="Group" evaluationGroup="GroupeNiveau">
+							<reportElement x="120" y="80" width="45" height="40" uuid="f978f6f6-1454-4a7d-bd51-a0b6447f12ca">
+								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+								<property name="com.jaspersoft.layout.grid.y" value="2"/>
+								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+							</reportElement>
+							<box>
+								<pen lineWidth="1.0" lineStyle="Dashed"/>
+								<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="SansSerif" isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{nbreMoySup10F}+$F{nbreMoySup10G}]]></textFieldExpression>
+						</textField>
+						<textField evaluationTime="Group" evaluationGroup="GroupeNiveau">
+							<reportElement x="165" y="80" width="45" height="40" uuid="93d8c6d4-05dc-45f0-b94e-23f778d895cc">
+								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+								<property name="com.jaspersoft.layout.grid.y" value="2"/>
+								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+							</reportElement>
+							<box>
+								<pen lineWidth="1.0" lineStyle="Dashed"/>
+								<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="SansSerif" isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[($F{pourMoySup10F}+$F{pourMoySup10G})/2]]></textFieldExpression>
+						</textField>
+						<textField evaluationTime="Group" evaluationGroup="GroupeNiveau">
+							<reportElement x="210" y="80" width="45" height="40" uuid="6de53cbf-8b9e-415c-8d14-7fd8494f348b">
+								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+								<property name="com.jaspersoft.layout.grid.y" value="2"/>
+								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+							</reportElement>
+							<box>
+								<pen lineWidth="1.0" lineStyle="Dashed"/>
+								<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="SansSerif" isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{nbreMoyInf999F}+$F{nbreMoyInf999G}]]></textFieldExpression>
+						</textField>
+						<textField evaluationTime="Group" evaluationGroup="GroupeNiveau">
+							<reportElement x="255" y="80" width="45" height="40" uuid="66d35911-2769-429e-8696-202d408c45b4">
+								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+								<property name="com.jaspersoft.layout.grid.y" value="2"/>
+								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+							</reportElement>
+							<box>
+								<pen lineWidth="1.0" lineStyle="Dashed"/>
+								<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="SansSerif" isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[($F{pourMoyInf999F}+$F{pourMoyInf999G})/2]]></textFieldExpression>
+						</textField>
+						<textField evaluationTime="Group" evaluationGroup="GroupeNiveau">
+							<reportElement x="300" y="80" width="50" height="40" uuid="18bf1670-c411-4839-bb3b-1d97be34c248">
+								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+								<property name="com.jaspersoft.layout.grid.y" value="2"/>
+								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+							</reportElement>
+							<box>
+								<pen lineWidth="1.0" lineStyle="Dashed"/>
+								<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="SansSerif" isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{nbreMoyInf85F}+$F{nbreMoyInf85G}]]></textFieldExpression>
+						</textField>
+						<textField evaluationTime="Group" evaluationGroup="GroupeNiveau">
+							<reportElement x="350" y="80" width="50" height="40" uuid="d321c9bc-8d84-43f1-b26d-d2088bf53a67">
+								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+								<property name="com.jaspersoft.layout.grid.y" value="2"/>
+								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+							</reportElement>
+							<box>
+								<pen lineWidth="1.0" lineStyle="Dashed"/>
+								<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="SansSerif" isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[($F{pourMoyInf85F}+$F{pourMoyInf85G})/2]]></textFieldExpression>
+						</textField>
+						<textField textAdjust="ScaleFont" evaluationTime="Group" evaluationGroup="GroupeNiveau" pattern="#,#00.00#;(#,#00.00#-)" isBlankWhenNull="true">
+							<reportElement x="400" y="80" width="100" height="40" uuid="e41bd64d-7dc7-4a07-951b-d8f680486240">
+								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+								<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+							</reportElement>
+							<box>
+								<pen lineWidth="1.0" lineStyle="Dashed"/>
+								<topPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<leftPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+								<rightPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="SansSerif"/>
+							</textElement>
+							<textFieldExpression><![CDATA[($F{moyClasseF}+$F{moyClasseG})/2]]></textFieldExpression>
+						</textField>
+					</frame>
+				</frame>
+			</frame>
+		</band>
+	</detail>
+</jasperReport>

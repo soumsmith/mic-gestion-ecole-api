@@ -20,6 +20,7 @@
 	<parameter name="REPORT_DATE" class="java.util.Date" isForPrompting="false">
 		<defaultValueExpression><![CDATA[new java.util.Date()]]></defaultValueExpression>
 	</parameter>
+	<parameter name="distinctin" class="java.lang.String"/>
 	<queryString language="SQL">
 		<![CDATA[select * from  `ecoleviedbv2`.ve_details_infos_bulletins_spider 
 where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule} and 
@@ -2445,7 +2446,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 									<text><![CDATA[Refusé]]></text>
 								</staticText>
 								<image scaleImage="FillFrame">
-									<reportElement positionType="Float" x="0" y="0" width="20" height="10" uuid="aa4e60a4-9d65-4639-b3c0-9b150f9a998b">
+									<reportElement positionType="Float" x="0" y="0" width="20" height="10" printWhenGroupChanges="InfosPersonnelEleve" uuid="aa4e60a4-9d65-4639-b3c0-9b150f9a998b">
 										<property name="com.jaspersoft.layout.grid.x" value="0"/>
 										<property name="com.jaspersoft.layout.grid.y" value="0"/>
 										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2453,7 +2454,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
 										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 										<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
-										<printWhenExpression><![CDATA[$F{moy_general} >= 12 && $F{moy_general}<=12.99]]></printWhenExpression>
+										<printWhenExpression><![CDATA[$P{distinctin}.equals( "1" )&&$F{moy_general} >= 12 && $F{moy_general}<=12.99]]></printWhenExpression>
 									</reportElement>
 									<imageExpression><![CDATA["etats/spider/cocher.jpg"]]></imageExpression>
 								</image>
@@ -2466,7 +2467,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
 										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 										<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
-										<printWhenExpression><![CDATA[$F{moy_general} >= 13 && $F{moy_general}<=13.99]]></printWhenExpression>
+										<printWhenExpression><![CDATA[$P{distinctin}.equals( "1" )&&$F{moy_general} >= 13 && $F{moy_general}<=13.99]]></printWhenExpression>
 									</reportElement>
 									<imageExpression><![CDATA["etats/spider/cocher.jpg"]]></imageExpression>
 								</image>
@@ -2479,7 +2480,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
 										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 										<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
-										<printWhenExpression><![CDATA[$F{moy_general} >= 14]]></printWhenExpression>
+										<printWhenExpression><![CDATA[$P{distinctin}.equals( "1" )&&$F{moy_general} >= 14]]></printWhenExpression>
 									</reportElement>
 									<imageExpression><![CDATA["etats/spider/cocher.jpg"]]></imageExpression>
 								</image>
@@ -2492,7 +2493,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
 										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 										<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
-										<printWhenExpression><![CDATA[$F{moy_general} >= 8.5 && $F{moy_general}<=9.99]]></printWhenExpression>
+										<printWhenExpression><![CDATA[$P{distinctin}.equals( "1" )&&$F{moy_general} >= 8.5 && $F{moy_general}<=9.99]]></printWhenExpression>
 									</reportElement>
 									<imageExpression><![CDATA["etats/spider/cocher.jpg"]]></imageExpression>
 								</image>
@@ -2505,7 +2506,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
 										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 										<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
-										<printWhenExpression><![CDATA[$F{moy_general}< 8.5]]></printWhenExpression>
+										<printWhenExpression><![CDATA[$P{distinctin}.equals( "1" )&&$F{moy_general}< 8.5]]></printWhenExpression>
 									</reportElement>
 									<imageExpression><![CDATA["etats/spider/cocher.jpg"]]></imageExpression>
 								</image>
@@ -2518,7 +2519,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
 										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 										<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
-										<printWhenExpression><![CDATA[$F{moyenne}>=10 && $F{moyenne}<12&&$F{libelle_matiere}.equals("CONDUITE")]]></printWhenExpression>
+										<printWhenExpression><![CDATA[$P{distinctin}.equals( "1" )&&$F{moyenne}>=10 && $F{moyenne}<12&&$F{libelle_matiere}.equals("CONDUITE")]]></printWhenExpression>
 									</reportElement>
 									<imageExpression><![CDATA["etats/spider/cocher.jpg"]]></imageExpression>
 								</image>
@@ -2531,7 +2532,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
 										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 										<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
-										<printWhenExpression><![CDATA[$F{moyenne}<10&&$F{libelle_matiere}.equals("CONDUITE")]]></printWhenExpression>
+										<printWhenExpression><![CDATA[$P{distinctin}.equals( "1" )&&$F{moyenne}<10&&$F{libelle_matiere}.equals("CONDUITE")]]></printWhenExpression>
 									</reportElement>
 									<imageExpression><![CDATA["etats/spider/cocher.jpg"]]></imageExpression>
 								</image>
