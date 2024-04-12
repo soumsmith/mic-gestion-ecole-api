@@ -139,38 +139,44 @@ public class ClasseEleveService implements PanacheRepositoryBase<ClasseEleve, Lo
 	}
 
 	public List<ClasseEleve> getByClasseAnnee(Long classeId, Long anneeId) {
-		
+
 		List<ClasseEleve> ces = new ArrayList<>();
 		try {
 			ces = ClasseEleve.find(
 					"classe.id = ?1 and inscription.annee.id = ?2 and (statut is null or statut <> 'RETIRE') order by inscription.eleve.nom, inscription.eleve.prenom",
 					classeId, anneeId).list();
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return ces;
 	}
 
 	public int getCountByClasseAnnee(Long classeId, Long anneeId) {
-		return ClasseEleve
-				.find("classe.id = ?1 and inscription.annee.id = ?2 and (statut is null or statut <> 'RETIRE')",
-						classeId, anneeId)
-				.list().size();
+		int ce = 0;
+		try {
+			ce = ClasseEleve
+					.find("classe.id = ?1 and inscription.annee.id = ?2 and (statut is null or statut <> 'RETIRE')",
+							classeId, anneeId)
+					.list().size();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ce;
 	}
 
 	public List<ClasseEleve> getByBrancheAndAnnee(Long brancheId, Long anneeId, Long ecoleId) {
 		System.out.println(brancheId + " " + anneeId + " " + ecoleId);
-		
+
 		List<ClasseEleve> ces = new ArrayList<>();
 		try {
 			ces = ClasseEleve.find(
 					"inscription.branche.id = ?1 and inscription.annee.id = ?2 and inscription.ecole.id = ?3 and (statut is null or statut <> 'RETIRE')",
 					brancheId, anneeId, ecoleId).list();
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return ces;
 	}
 
@@ -181,52 +187,51 @@ public class ClasseEleveService implements PanacheRepositoryBase<ClasseEleve, Lo
 			ces = ClasseEleve.find(
 					"inscription.branche.id = ?1 and inscription.annee.id = ?2 and inscription.ecole.id = ?3 and (statut is null or statut != ?4)",
 					brancheId, anneeId, ecoleId, Constants.STATUT_ELEVE_RETIRE_CLASSE).list();
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return ces;
 	}
 
 	public ClasseEleve getByClasseAndEleveAndAnnee(Long classeId, Long eleveId, Long anneeId) {
-		
+
 		ClasseEleve ce = new ClasseEleve();
 		try {
 			ce = ClasseEleve.find(
 					"classe.id = ?1 and inscription.annee.id = ?2 and inscription.eleve.id = ?3 and (statut is null or statut <> 'RETIRE')",
 					classeId, anneeId, eleveId).singleResult();
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			ce = null;
 		}
-		
+
 		return ce;
 	}
 
 	public ClasseEleve getByInscription(Long inscriptionId) {
-		
+
 		ClasseEleve ce = new ClasseEleve();
 		try {
-			logger.info("Inscription id = "+inscriptionId);
-			ce = ClasseEleve.find("inscription.id = ?1", inscriptionId)
-					.singleResult();
-		}catch (Exception e) {
+			logger.info("Inscription id = " + inscriptionId);
+			ce = ClasseEleve.find("inscription.id = ?1", inscriptionId).singleResult();
+		} catch (Exception e) {
 			e.printStackTrace();
-			ce =null;
+			ce = null;
 		}
-		
+
 		return ce;
 	}
 
 	public ClasseEleve getByMatriculeAndAnnee(String matricule, Long ecoleId, Long anneeId) {
 		System.out.println("mat :" + matricule + " ecole : " + ecoleId + " annee :" + anneeId);
-		
+
 		ClasseEleve ce = new ClasseEleve();
 		try {
 			ce = ClasseEleve.find(
 					"inscription.eleve.matricule = ?1 and classe.ecole.id = ?2 and inscription.annee.id = ?3 and (statut is null or statut <> 'RETIRE')",
 					matricule, ecoleId, anneeId).singleResult();
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			ce = null;
 		}
@@ -235,17 +240,17 @@ public class ClasseEleveService implements PanacheRepositoryBase<ClasseEleve, Lo
 
 	public ClasseEleve getByMatriculeAndAnnee(String matricule, Long anneeId) {
 		System.out.println("mat :" + matricule + " annee :" + anneeId);
-		
+
 		ClasseEleve ce = new ClasseEleve();
 		try {
 			ce = ClasseEleve.find(
 					"inscription.eleve.matricule = ?1 and inscription.annee.id = ?2 and (statut is null or statut <> 'RETIRE')",
 					matricule, anneeId).singleResult();
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			ce = null;
 		}
-		
+
 		return ce;
 	}
 

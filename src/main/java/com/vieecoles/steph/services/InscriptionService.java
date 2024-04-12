@@ -35,8 +35,13 @@ public class InscriptionService implements PanacheRepositoryBase<Inscription, In
 	}
 
 	public Inscription getByEleveAndEcoleAndAnnee(long eleve, long ecole, long annee) {
-
-		return Inscription.find("eleve.id = ?1 and ecole.id =?2 and annee.id = ?3", eleve, ecole, annee).singleResult();
+		Inscription ins = null;
+		try {
+		ins = Inscription.find("eleve.id = ?1 and ecole.id =?2 and annee.id = ?3", eleve, ecole, annee).singleResult();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ins;
 	}
 
 	// Nombre d'eleves dans une ecole

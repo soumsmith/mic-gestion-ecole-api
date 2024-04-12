@@ -69,8 +69,14 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 					.find("classe.id = ?1 and annee.id= ?2 and matiere.id = ?3 and (statut is null or statut <> 'DELETED') ", classe, annee, matiere).singleResult();
 		} catch (RuntimeException e) {
 //			e.printStackTrace();
+			if(e.getClass().getName().equals(NoResultException.class.getName()))
+				System.out.println("Aucune donnee trouvee");
+			else 
+				e.printStackTrace();
 			logger.warning("Erreur de type : " + e.getClass().getName());
+			return null;
 		}
+//		System.out.println(pmc == null);
 		return pmc;
 	}
 
