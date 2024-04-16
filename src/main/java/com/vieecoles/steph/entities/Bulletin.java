@@ -147,5 +147,7 @@ public class Bulletin extends PanacheEntityBase{
 	private Double moyReli;
 	@Column(name = "appr_reli")
 	private String appreciationReli;
+	@Column(name = "url_photo")
+	private String urlPhoto;
 
 }

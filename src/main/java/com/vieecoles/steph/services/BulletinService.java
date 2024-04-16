@@ -309,7 +309,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 		b.setMoyEvaluationInterne(bulletin.getMoyEvaluationInterne());
 		b.setMoyEvaluationIEPP(bulletin.getMoyEvaluationIEPP());
 		b.setMoyEvaluationPassage(bulletin.getMoyEvaluationPassage());
-		
+
 		b.setMoyFr(bulletin.getMoyFr());
 		b.setCoefFr(bulletin.getCoefFr());
 		b.setMoyCoefFr(bulletin.getMoyCoefFr());
@@ -467,6 +467,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 					bulletin.setNumDecisionAffecte(infosInscriptionsEleve.getNumDecisionAffecte());
 					bulletin.setEcoleOrigine(infosInscriptionsEleve.getEcoleOrigine());
 					bulletin.setTransfert(infosInscriptionsEleve.getTransfert());
+					bulletin.setUrlPhoto(infosInscriptionsEleve.getUrlPhoto());
 				}
 
 				logger.info("Création bulletin ...");
@@ -642,7 +643,6 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 				Double sumCoef = moyFrList.stream().mapToDouble(o -> o.coef).reduce(0, (a, b) -> a + b);
 				Double moyFr = sumMoy / sumCoef;
 
-						
 				moyResultObj = new CalculMoyenneExceptPojo(Double.valueOf(CommonUtils.roundDouble(moyFr, 2)),
 						Double.valueOf(sumCoef), Double.valueOf(CommonUtils.roundDouble(sumMoy, 2)),
 						CommonUtils.appreciation(moyFr), null);
@@ -723,7 +723,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 		bul.setMoyEvaluationInterne(me.getMoyenneInterne());
 		bul.setMoyEvaluationIEPP(me.getMoyenneIEPP());
 		bul.setMoyEvaluationPassage(me.getMoyennePassage());
-		
+
 		bul.setMoyFr(me.getMoyFr());
 		bul.setCoefFr(me.getCoefFr());
 		bul.setMoyCoefFr(me.getMoyCoefFr());
