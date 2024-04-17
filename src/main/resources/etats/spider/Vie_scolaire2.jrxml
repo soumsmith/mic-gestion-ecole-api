@@ -74,7 +74,7 @@
 					<text><![CDATA["2.1 Activités des Clubs et Associations"]]></text>
 				</staticText>
 				<textField textAdjust="ScaleFont">
-					<reportElement x="-8" y="23" width="120" height="18" uuid="c71f5f43-e9fd-4a78-a162-fa3046b96867"/>
+					<reportElement stretchType="ContainerHeight" x="-8" y="23" width="120" height="18" uuid="c71f5f43-e9fd-4a78-a162-fa3046b96867"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -85,7 +85,7 @@
 					<textFieldExpression><![CDATA["N"]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement x="112" y="41" width="170" height="18" uuid="aefd8bb6-2ba9-4c06-a61c-73cab3929dd4"/>
+					<reportElement stretchType="ContainerHeight" x="112" y="41" width="170" height="18" uuid="aefd8bb6-2ba9-4c06-a61c-73cab3929dd4"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -96,7 +96,7 @@
 					<textFieldExpression><![CDATA[""]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement x="112" y="23" width="170" height="18" uuid="bac612ab-dbe0-4b45-81a3-4490fe7b8c97"/>
+					<reportElement stretchType="ContainerHeight" x="112" y="23" width="170" height="18" uuid="bac612ab-dbe0-4b45-81a3-4490fe7b8c97"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -107,7 +107,7 @@
 					<textFieldExpression><![CDATA["Clubs / Associations"]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement x="282" y="41" width="60" height="18" uuid="1566b1ad-e219-4433-8156-b6c7256f5e42"/>
+					<reportElement stretchType="ContainerHeight" x="282" y="41" width="60" height="18" uuid="1566b1ad-e219-4433-8156-b6c7256f5e42"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -118,7 +118,7 @@
 					<textFieldExpression><![CDATA[""]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement x="-8" y="41" width="120" height="18" uuid="0d2c963a-4d71-4d63-9c7c-aafb272d265b"/>
+					<reportElement stretchType="ContainerHeight" x="-8" y="41" width="120" height="18" uuid="0d2c963a-4d71-4d63-9c7c-aafb272d265b"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -129,7 +129,7 @@
 					<textFieldExpression><![CDATA[""]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement x="282" y="23" width="60" height="18" uuid="431d9aa9-2198-4748-9ebf-1052b9453e5b"/>
+					<reportElement stretchType="ContainerHeight" x="282" y="23" width="60" height="18" uuid="431d9aa9-2198-4748-9ebf-1052b9453e5b"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -140,7 +140,7 @@
 					<textFieldExpression><![CDATA["Dates"]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement x="342" y="23" width="130" height="18" uuid="a9621f9d-e450-474c-a1c2-817adc5142d8"/>
+					<reportElement stretchType="ContainerHeight" x="342" y="23" width="130" height="18" uuid="a9621f9d-e450-474c-a1c2-817adc5142d8"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -151,7 +151,7 @@
 					<textFieldExpression><![CDATA["Activités menées"]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement x="342" y="41" width="130" height="18" uuid="a73112bb-e9e5-48ab-8567-9d5711b188ce"/>
+					<reportElement stretchType="ContainerHeight" x="342" y="41" width="130" height="18" uuid="a73112bb-e9e5-48ab-8567-9d5711b188ce"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -162,7 +162,7 @@
 					<textFieldExpression><![CDATA[""]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement x="288" y="341" width="60" height="18" uuid="c1e523ad-dc9c-4881-8882-882b859d952b"/>
+					<reportElement stretchType="ContainerHeight" x="288" y="341" width="60" height="18" uuid="c1e523ad-dc9c-4881-8882-882b859d952b"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -173,7 +173,7 @@
 					<textFieldExpression><![CDATA["Dates"]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement x="-2" y="341" width="120" height="18" uuid="ac391d44-83ae-4cbe-8a97-5578e16d77e0"/>
+					<reportElement stretchType="ContainerHeight" x="-2" y="341" width="120" height="18" uuid="ac391d44-83ae-4cbe-8a97-5578e16d77e0"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -184,7 +184,7 @@
 					<textFieldExpression><![CDATA["N"]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement x="348" y="341" width="130" height="18" uuid="66dc8b22-46d7-4ca7-b65f-c0aef86a2cd2"/>
+					<reportElement stretchType="ContainerHeight" x="348" y="341" width="130" height="18" uuid="66dc8b22-46d7-4ca7-b65f-c0aef86a2cd2"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -195,7 +195,7 @@
 					<textFieldExpression><![CDATA["Activités menées"]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement x="-2" y="359" width="120" height="18" uuid="58259a19-a9f2-4ea3-b299-aa4771d9546a"/>
+					<reportElement stretchType="ContainerHeight" x="-2" y="359" width="120" height="18" uuid="58259a19-a9f2-4ea3-b299-aa4771d9546a"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -206,7 +206,7 @@
 					<textFieldExpression><![CDATA[""]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement x="118" y="341" width="170" height="18" uuid="30e83afa-84d7-440b-b9af-544b7079d2aa"/>
+					<reportElement stretchType="ContainerHeight" x="118" y="341" width="170" height="18" uuid="30e83afa-84d7-440b-b9af-544b7079d2aa"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -217,7 +217,7 @@
 					<textFieldExpression><![CDATA["Sports"]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement x="288" y="359" width="60" height="18" uuid="93d19fd2-4cc7-4563-9f02-4f123751036b"/>
+					<reportElement stretchType="ContainerHeight" x="288" y="359" width="60" height="18" uuid="93d19fd2-4cc7-4563-9f02-4f123751036b"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -228,7 +228,7 @@
 					<textFieldExpression><![CDATA[""]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement x="118" y="359" width="170" height="18" uuid="42744201-47b7-44b4-a6f1-c7cb1d7b3f2a"/>
+					<reportElement stretchType="ContainerHeight" x="118" y="359" width="170" height="18" uuid="42744201-47b7-44b4-a6f1-c7cb1d7b3f2a"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -239,7 +239,7 @@
 					<textFieldExpression><![CDATA[""]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement x="348" y="359" width="130" height="18" uuid="0d69c7eb-132f-4914-9298-f1483e45ea61"/>
+					<reportElement stretchType="ContainerHeight" x="348" y="359" width="130" height="18" uuid="0d69c7eb-132f-4914-9298-f1483e45ea61"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -250,7 +250,7 @@
 					<textFieldExpression><![CDATA[""]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="-10" y="321" width="500" height="13" uuid="8be882ce-03e5-4113-a641-703aab516ec3">
+					<reportElement stretchType="ContainerHeight" x="-10" y="321" width="500" height="13" uuid="8be882ce-03e5-4113-a641-703aab516ec3">
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<textElement>
@@ -259,22 +259,22 @@
 					<text><![CDATA["2.2 Les activités sportives"]]></text>
 				</staticText>
 				<frame>
-					<reportElement x="-18" y="63" width="572" height="246" uuid="981629ad-c493-41d9-8641-8f4577d62470">
+					<reportElement stretchType="ContainerHeight" x="-18" y="63" width="572" height="246" uuid="981629ad-c493-41d9-8641-8f4577d62470">
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
 					</reportElement>
 					<staticText>
-						<reportElement x="0" y="0" width="572" height="246" uuid="cedfd2f8-7c5a-4944-a7aa-1d8ff14b30b3">
+						<reportElement stretchType="ContainerHeight" x="0" y="0" width="572" height="246" uuid="cedfd2f8-7c5a-4944-a7aa-1d8ff14b30b3">
 							<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						</reportElement>
 						<text><![CDATA[Commentaire:]]></text>
 					</staticText>
 				</frame>
 				<frame>
-					<reportElement x="-18" y="391" width="570" height="264" uuid="84ec1c8b-9c6d-4038-84ab-25825b3f674a">
+					<reportElement stretchType="ContainerHeight" x="-18" y="391" width="570" height="264" uuid="84ec1c8b-9c6d-4038-84ab-25825b3f674a">
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
 					</reportElement>
 					<staticText>
-						<reportElement x="0" y="0" width="570" height="264" uuid="18359c05-6ec5-4f6f-99eb-515103492c2e">
+						<reportElement stretchType="ContainerHeight" x="0" y="0" width="570" height="264" uuid="18359c05-6ec5-4f6f-99eb-515103492c2e">
 							<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						</reportElement>
 						<text><![CDATA[Commentaire:]]></text>

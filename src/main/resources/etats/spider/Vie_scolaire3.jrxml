@@ -56,7 +56,7 @@
 		<groupHeader>
 			<band height="655">
 				<textField textAdjust="ScaleFont">
-					<reportElement x="-10" y="28" width="120" height="18" uuid="2d2526f5-1f45-4f0f-80b8-80b2bda6dd54"/>
+					<reportElement stretchType="ContainerHeight" x="-10" y="28" width="120" height="18" uuid="2d2526f5-1f45-4f0f-80b8-80b2bda6dd54"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -67,7 +67,7 @@
 					<textFieldExpression><![CDATA[""]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement x="340" y="10" width="130" height="18" uuid="31a56116-76f0-4a6a-81f2-b2e628163eed"/>
+					<reportElement stretchType="ContainerHeight" x="340" y="10" width="130" height="18" uuid="31a56116-76f0-4a6a-81f2-b2e628163eed"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -78,7 +78,7 @@
 					<textFieldExpression><![CDATA["Activités menées"]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement x="280" y="28" width="60" height="18" uuid="d242b8e6-9bc6-45b6-a94f-43e9945795aa"/>
+					<reportElement stretchType="ContainerHeight" x="280" y="28" width="60" height="18" uuid="d242b8e6-9bc6-45b6-a94f-43e9945795aa"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -89,7 +89,7 @@
 					<textFieldExpression><![CDATA[""]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement x="-10" y="10" width="120" height="18" uuid="0b5b0183-2eaf-4a29-b21f-8a2acff6f17c"/>
+					<reportElement stretchType="ContainerHeight" x="-10" y="10" width="120" height="18" uuid="0b5b0183-2eaf-4a29-b21f-8a2acff6f17c"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -100,7 +100,7 @@
 					<textFieldExpression><![CDATA["N"]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement x="340" y="28" width="130" height="18" uuid="abac1f20-1c1b-4935-9815-4334e3142321"/>
+					<reportElement stretchType="ContainerHeight" x="340" y="28" width="130" height="18" uuid="abac1f20-1c1b-4935-9815-4334e3142321"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -111,7 +111,7 @@
 					<textFieldExpression><![CDATA[""]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement x="110" y="28" width="170" height="18" uuid="5e762e70-7f79-41f4-a4ec-add44fd797da"/>
+					<reportElement stretchType="ContainerHeight" x="110" y="28" width="170" height="18" uuid="5e762e70-7f79-41f4-a4ec-add44fd797da"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -122,7 +122,7 @@
 					<textFieldExpression><![CDATA[""]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement x="110" y="10" width="170" height="18" uuid="c545ee71-fb91-4f9e-80d6-09155e440334"/>
+					<reportElement stretchType="ContainerHeight" x="110" y="10" width="170" height="18" uuid="c545ee71-fb91-4f9e-80d6-09155e440334"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -133,7 +133,7 @@
 					<textFieldExpression><![CDATA["coopératives"]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement x="280" y="10" width="60" height="18" uuid="f8f27d06-11f4-47b5-a955-c76a078c99e4"/>
+					<reportElement stretchType="ContainerHeight" x="280" y="10" width="60" height="18" uuid="f8f27d06-11f4-47b5-a955-c76a078c99e4"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -144,7 +144,7 @@
 					<textFieldExpression><![CDATA["Dates"]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="-12" y="60" width="562" height="330" uuid="95441cb5-c13c-4a3a-801c-605e97b0ffc7">
+					<reportElement stretchType="ContainerHeight" x="-12" y="60" width="562" height="330" uuid="95441cb5-c13c-4a3a-801c-605e97b0ffc7">
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<text><![CDATA[Commentaire:]]></text>

@@ -43,8 +43,7 @@
 		</field>
 	</subDataset>
 	<queryString>
-		<![CDATA[SELECT   'intro' AS intro ;
-]]>
+		<![CDATA[SELECT   'intro' AS intro ;]]>
 	</queryString>
 	<field name="intro" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="intro"/>
@@ -65,7 +64,7 @@
 				<textElement textAlignment="Left">
 					<font fontName="SansSerif" size="16" isBold="true" isUnderline="true"/>
 				</textElement>
-				<text><![CDATA[ CHAPITRE I.	VIE PEDAGOGIQUE ET RESULTATS SCOLAIRES]]></text>
+				<text><![CDATA[ CHAPITRE I. Soum	VIE PEDAGOGIQUE ET RESULTATS SCOLAIRES]]></text>
 			</staticText>
 			<frame>
 				<reportElement x="0" y="34" width="555" height="20" uuid="8a756b2f-74ff-48d2-b099-b70932b553f7"/>
@@ -111,7 +110,7 @@
 	<detail>
 		<band height="596">
 			<textField textAdjust="ScaleFont">
-				<reportElement x="-10" y="3" width="20" height="20" uuid="a03f4d28-71d5-4964-a95e-54857dc42c07"/>
+				<reportElement x="-10" y="0" width="20" height="20" uuid="a03f4d28-71d5-4964-a95e-54857dc42c07"/>
 				<box>
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -125,7 +124,7 @@
 				<textFieldExpression><![CDATA["N°"]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="ScaleFont">
-				<reportElement x="10" y="3" width="60" height="20" uuid="3e70acab-f569-4472-880a-120975ba5c33"/>
+				<reportElement x="10" y="0" width="60" height="20" uuid="3e70acab-f569-4472-880a-120975ba5c33"/>
 				<box>
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -139,7 +138,7 @@
 				<textFieldExpression><![CDATA["DISCIPLINES"]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="ScaleFont">
-				<reportElement x="70" y="3" width="90" height="20" uuid="687c7dd4-ee6a-4721-86c0-466e8687e414"/>
+				<reportElement x="70" y="0" width="90" height="20" uuid="687c7dd4-ee6a-4721-86c0-466e8687e414"/>
 				<box>
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -153,7 +152,7 @@
 				<textFieldExpression><![CDATA["DATES / PERIODES"]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="ScaleFont">
-				<reportElement x="160" y="3" width="90" height="20" uuid="3d382c68-188a-49e7-a9c6-50b6dd182c74"/>
+				<reportElement x="160" y="0" width="90" height="20" uuid="3d382c68-188a-49e7-a9c6-50b6dd182c74"/>
 				<box>
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -167,7 +166,7 @@
 				<textFieldExpression><![CDATA["TYPES D'ACTIVITES :THEMES"]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="ScaleFont">
-				<reportElement x="250" y="3" width="90" height="20" uuid="466d744e-89c1-40b4-86f7-c1e6f72e0698"/>
+				<reportElement x="250" y="0" width="90" height="20" uuid="466d744e-89c1-40b4-86f7-c1e6f72e0698"/>
 				<box>
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -181,7 +180,7 @@
 				<textFieldExpression><![CDATA["ANIMATEUR DU THEME"]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="ScaleFont">
-				<reportElement x="340" y="3" width="90" height="20" uuid="e04df597-ec40-4f2b-9fbd-7da47431ba73"/>
+				<reportElement x="340" y="0" width="90" height="20" uuid="e04df597-ec40-4f2b-9fbd-7da47431ba73"/>
 				<box>
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -195,7 +194,7 @@
 				<textFieldExpression><![CDATA["PROCES VERBAL"]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="ScaleFont">
-				<reportElement x="-10" y="23" width="20" height="20" uuid="0d72f1b5-1332-40b2-9323-9b97793e749c"/>
+				<reportElement stretchType="ElementGroupHeight" x="-10" y="20" width="20" height="20" uuid="0d72f1b5-1332-40b2-9323-9b97793e749c"/>
 				<box>
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -209,7 +208,7 @@
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="ScaleFont">
-				<reportElement x="160" y="23" width="90" height="20" uuid="d91efbe2-5ad0-418e-8285-5e4fe9d40050"/>
+				<reportElement stretchType="ElementGroupHeight" x="160" y="20" width="90" height="20" uuid="d91efbe2-5ad0-418e-8285-5e4fe9d40050"/>
 				<box>
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -223,7 +222,7 @@
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="ScaleFont">
-				<reportElement x="250" y="23" width="90" height="20" uuid="9ad9fdf1-366b-4efa-89e4-8459df1750f8"/>
+				<reportElement stretchType="ElementGroupHeight" x="250" y="20" width="90" height="20" uuid="9ad9fdf1-366b-4efa-89e4-8459df1750f8"/>
 				<box>
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -237,7 +236,7 @@
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="ScaleFont">
-				<reportElement x="340" y="23" width="90" height="20" uuid="ec726ee0-a9ee-4aea-b3cc-8892475b6b95"/>
+				<reportElement stretchType="ElementGroupHeight" x="340" y="20" width="90" height="20" uuid="ec726ee0-a9ee-4aea-b3cc-8892475b6b95"/>
 				<box>
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -251,7 +250,7 @@
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="ScaleFont">
-				<reportElement x="10" y="23" width="60" height="20" uuid="ed1f7c82-e5a2-4d0b-bb3c-acd3dd54836e"/>
+				<reportElement stretchType="ElementGroupHeight" x="10" y="20" width="60" height="20" uuid="ed1f7c82-e5a2-4d0b-bb3c-acd3dd54836e"/>
 				<box>
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -265,7 +264,7 @@
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="ScaleFont">
-				<reportElement x="70" y="23" width="90" height="20" uuid="82165924-98c4-427b-a416-462eec8a7901"/>
+				<reportElement stretchType="ElementGroupHeight" x="70" y="20" width="90" height="20" uuid="82165924-98c4-427b-a416-462eec8a7901"/>
 				<box>
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -279,7 +278,7 @@
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<frame>
-				<reportElement x="430" y="3" width="130" height="20" uuid="880fa26e-464e-47ec-b483-5b91c6da043e">
+				<reportElement x="430" y="0" width="130" height="20" uuid="880fa26e-464e-47ec-b483-5b91c6da043e">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 				</reportElement>
 				<box>
@@ -359,7 +358,7 @@
 				</textField>
 			</frame>
 			<textField textAdjust="ScaleFont">
-				<reportElement x="430" y="23" width="60" height="20" uuid="fb72bdf0-015d-4321-bc12-b0da97cb6b78">
+				<reportElement stretchType="ElementGroupHeight" x="430" y="20" width="60" height="20" uuid="fb72bdf0-015d-4321-bc12-b0da97cb6b78">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<box>
@@ -375,11 +374,11 @@
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<frame>
-				<reportElement x="-10" y="45" width="565" height="245" uuid="8570dc78-5a66-4cb7-a1a2-6d9370d81e18">
+				<reportElement stretchType="ElementGroupHeight" x="-10" y="45" width="565" height="245" uuid="8570dc78-5a66-4cb7-a1a2-6d9370d81e18">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
 				</reportElement>
 				<staticText>
-					<reportElement x="0" y="0" width="565" height="245" uuid="e919631a-3dc2-4f51-ad55-2cc0762052a0">
+					<reportElement stretchType="ElementGroupHeight" x="0" y="0" width="565" height="245" uuid="e919631a-3dc2-4f51-ad55-2cc0762052a0">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
@@ -390,7 +389,7 @@
 				</staticText>
 			</frame>
 			<frame>
-				<reportElement x="-3" y="301" width="260" height="20" uuid="f12b4607-a306-46bf-8cb2-e1c7b482f696">
+				<reportElement stretchType="ElementGroupHeight" x="-3" y="301" width="260" height="20" uuid="f12b4607-a306-46bf-8cb2-e1c7b482f696">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
 				</reportElement>
 				<staticText>
@@ -405,7 +404,7 @@
 				</staticText>
 			</frame>
 			<textField textAdjust="ScaleFont">
-				<reportElement x="-13" y="323" width="20" height="20" uuid="57fea41d-24b0-4b51-9119-e5e94ee44b19"/>
+				<reportElement stretchType="ElementGroupHeight" x="-13" y="329" width="20" height="20" uuid="57fea41d-24b0-4b51-9119-e5e94ee44b19"/>
 				<box>
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -419,7 +418,7 @@
 				<textFieldExpression><![CDATA["N°"]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="ScaleFont">
-				<reportElement x="157" y="323" width="90" height="20" uuid="bda34a48-728f-48f8-95c1-f3b3d0a0ac57"/>
+				<reportElement stretchType="ElementGroupHeight" x="157" y="329" width="90" height="20" uuid="bda34a48-728f-48f8-95c1-f3b3d0a0ac57"/>
 				<box>
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -433,7 +432,7 @@
 				<textFieldExpression><![CDATA["TYPES D'ACTIVITES :THEMES"]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="ScaleFont">
-				<reportElement x="67" y="343" width="90" height="20" uuid="997e0ad1-5845-4866-b82c-4255651e5f9b"/>
+				<reportElement stretchType="ElementGroupHeight" x="67" y="349" width="90" height="20" uuid="997e0ad1-5845-4866-b82c-4255651e5f9b"/>
 				<box>
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -447,7 +446,7 @@
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="ScaleFont">
-				<reportElement x="337" y="343" width="90" height="20" uuid="4677a193-754c-4359-a2f2-a06128ce18a6"/>
+				<reportElement stretchType="ElementGroupHeight" x="337" y="349" width="90" height="20" uuid="4677a193-754c-4359-a2f2-a06128ce18a6"/>
 				<box>
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -461,7 +460,7 @@
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="ScaleFont">
-				<reportElement x="7" y="323" width="60" height="20" uuid="49490b19-6987-434f-930b-24892f61cc75"/>
+				<reportElement stretchType="ElementGroupHeight" x="7" y="329" width="60" height="20" uuid="49490b19-6987-434f-930b-24892f61cc75"/>
 				<box>
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -475,7 +474,7 @@
 				<textFieldExpression><![CDATA["DISCIPLINES"]]></textFieldExpression>
 			</textField>
 			<frame>
-				<reportElement x="427" y="323" width="130" height="20" uuid="754d9f08-73f2-42c5-ba48-bad4fd4a898f">
+				<reportElement stretchType="ContainerHeight" x="427" y="329" width="130" height="20" uuid="754d9f08-73f2-42c5-ba48-bad4fd4a898f">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 				</reportElement>
 				<box>
@@ -486,7 +485,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textField>
-					<reportElement x="0" y="0" width="130" height="10" uuid="7339eb27-b0d1-43ee-a822-b286c9a1e4cc">
+					<reportElement stretchType="ContainerHeight" x="0" y="0" width="130" height="10" uuid="7339eb27-b0d1-43ee-a822-b286c9a1e4cc">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="0"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -508,7 +507,7 @@
 					<textFieldExpression><![CDATA["Procès-verbal"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="0" y="10" width="60" height="10" uuid="ffdff190-3f46-4fe7-93ee-61dccae3bf31">
+					<reportElement stretchType="ElementGroupHeight" x="0" y="10" width="60" height="10" uuid="ffdff190-3f46-4fe7-93ee-61dccae3bf31">
 						<property name="com.jaspersoft.layout.grid.x" value="0"/>
 						<property name="com.jaspersoft.layout.grid.y" value="1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -531,7 +530,7 @@
 					<textFieldExpression><![CDATA["Oui"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="60" y="10" width="70" height="10" uuid="86bd923d-ead3-4a20-9987-2bd9f0bbf91a">
+					<reportElement stretchType="ContainerHeight" x="60" y="10" width="70" height="10" uuid="86bd923d-ead3-4a20-9987-2bd9f0bbf91a">
 						<property name="com.jaspersoft.layout.grid.x" value="1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -555,7 +554,7 @@
 				</textField>
 			</frame>
 			<textField textAdjust="ScaleFont">
-				<reportElement x="427" y="343" width="60" height="20" uuid="12bafaaf-4421-4df4-b8fc-4cf188e2affe">
+				<reportElement stretchType="ElementGroupHeight" x="427" y="349" width="60" height="20" uuid="12bafaaf-4421-4df4-b8fc-4cf188e2affe">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<box>
@@ -571,7 +570,7 @@
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="ScaleFont">
-				<reportElement x="7" y="343" width="60" height="20" uuid="929c5f2f-a61a-4f73-a110-434a8827fb94"/>
+				<reportElement stretchType="ElementGroupHeight" x="7" y="349" width="60" height="20" uuid="929c5f2f-a61a-4f73-a110-434a8827fb94"/>
 				<box>
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -585,7 +584,7 @@
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="ScaleFont">
-				<reportElement x="247" y="323" width="90" height="20" uuid="feefad2e-a35f-498b-914b-80757c36ff8c"/>
+				<reportElement stretchType="ElementGroupHeight" x="247" y="329" width="90" height="20" uuid="feefad2e-a35f-498b-914b-80757c36ff8c"/>
 				<box>
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -599,7 +598,7 @@
 				<textFieldExpression><![CDATA["ANIMATEUR DU THEME"]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="ScaleFont">
-				<reportElement x="337" y="323" width="90" height="20" uuid="41b36130-48b9-4aed-9966-a0bd880a2aa3"/>
+				<reportElement stretchType="ElementGroupHeight" x="337" y="329" width="90" height="20" uuid="41b36130-48b9-4aed-9966-a0bd880a2aa3"/>
 				<box>
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -613,7 +612,7 @@
 				<textFieldExpression><![CDATA["PROCES VERBAL"]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="ScaleFont">
-				<reportElement x="-13" y="343" width="20" height="20" uuid="7a231580-ea93-4b93-9be6-f27a3bc83e1c"/>
+				<reportElement stretchType="ElementGroupHeight" x="-13" y="349" width="20" height="20" uuid="7a231580-ea93-4b93-9be6-f27a3bc83e1c"/>
 				<box>
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -627,7 +626,7 @@
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="ScaleFont">
-				<reportElement x="247" y="343" width="90" height="20" uuid="e2cc6e42-c718-4565-bf4b-c9b070980733"/>
+				<reportElement stretchType="ElementGroupHeight" x="247" y="349" width="90" height="20" uuid="e2cc6e42-c718-4565-bf4b-c9b070980733"/>
 				<box>
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -641,7 +640,7 @@
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="ScaleFont">
-				<reportElement x="67" y="323" width="90" height="20" uuid="77c510d1-0e3c-48cb-b1df-bbfa119f351f"/>
+				<reportElement stretchType="ElementGroupHeight" x="67" y="329" width="90" height="20" uuid="77c510d1-0e3c-48cb-b1df-bbfa119f351f"/>
 				<box>
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -655,7 +654,7 @@
 				<textFieldExpression><![CDATA["DATES / PERIODES"]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="ScaleFont">
-				<reportElement x="157" y="343" width="90" height="20" uuid="430ecf79-2087-4e79-9e25-a404a37840c5"/>
+				<reportElement stretchType="ElementGroupHeight" x="157" y="349" width="90" height="20" uuid="430ecf79-2087-4e79-9e25-a404a37840c5"/>
 				<box>
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -669,18 +668,18 @@
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<frame>
-				<reportElement x="-14" y="376" width="564" height="220" uuid="540b9951-12af-4326-8618-eb5804fbbee2">
+				<reportElement stretchType="ElementGroupHeight" x="-14" y="376" width="564" height="220" uuid="540b9951-12af-4326-8618-eb5804fbbee2">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
 				</reportElement>
 				<staticText>
-					<reportElement x="0" y="0" width="564" height="220" uuid="338c47b8-d8c2-433a-bffe-42fda5131c22">
+					<reportElement stretchType="ElementGroupHeight" x="0" y="0" width="564" height="220" uuid="338c47b8-d8c2-433a-bffe-42fda5131c22">
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<text><![CDATA[Commentaire:]]></text>
 				</staticText>
 			</frame>
 			<textField textAdjust="ScaleFont">
-				<reportElement x="490" y="23" width="70" height="20" uuid="5f2a54bf-dbc5-4364-b0d4-ae5fe089fab2">
+				<reportElement stretchType="ContainerHeight" x="490" y="20" width="70" height="20" uuid="5f2a54bf-dbc5-4364-b0d4-ae5fe089fab2">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<box>
@@ -696,7 +695,7 @@
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="ScaleFont">
-				<reportElement x="487" y="343" width="70" height="20" uuid="552e1c00-ffb7-408b-acc8-9e8e9dc9f656">
+				<reportElement stretchType="ContainerHeight" x="487" y="349" width="70" height="20" uuid="552e1c00-ffb7-408b-acc8-9e8e9dc9f656">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<box>
