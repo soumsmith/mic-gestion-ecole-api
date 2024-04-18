@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rapport_dsps" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ff4cdaef-ee80-4528-a7dd-e3f7220179cf">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ecolevieDB"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="idEcole" class="java.lang.String"/>
+	<parameter name="annee" class="java.lang.String"/>
+	<parameter name="periode" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[]]>
+		<![CDATA[select * from ve_rapport_dsps v 
+where v.id_ecole= $P{idEcole} 
+and v.annee_libelle= $P{annee} 
+and v.libelle_periode= $P{periode}]]>
 	</queryString>
 	<field name="nom" class="java.lang.String"/>
 	<field name="prenoms" class="java.lang.String"/>
@@ -955,7 +962,7 @@
 					<textElement verticalAlignment="Middle">
 						<font fontName="Serif" size="9"/>
 					</textElement>
-					<textFieldExpression><![CDATA[ $F{moyenEps}==null || $F{moyenEps}==0? "22":$F{is_clasEps}.equals("O" )?$F{moyenEps}:$F{is_clasEps}.equals("N" )? "21":"22"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{moyenEps}==null || $F{moyenEps}==0? "22":$F{is_clasEps}.equals("O" )?$F{moyenEps}:$F{is_clasEps}.equals("N" )? "21":"22"]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="766" y="0" width="38" height="20" uuid="8a13a6b6-26aa-419a-b542-e8c44ebf1d62">
