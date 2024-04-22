@@ -331,7 +331,7 @@ System.out.println("Statut0 "+lisImpo.get(i).getStatut());
    public eleve   CreerUnEleve(EleveDto eleveDto) {
     eleve myeleve = new eleve() ;
     try {
-
+System.out.println("Soumm>>>>>");
         myeleve= (eleve) em.createQuery("select o from eleve o  where o.eleve_matricule =:matricule " )
                 .setParameter("matricule", eleveDto.getElevematricule_national()).getSingleResult() ;
         System.out.println(eleveDto.getElevematricule_national());
