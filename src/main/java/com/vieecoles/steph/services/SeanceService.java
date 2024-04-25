@@ -345,14 +345,13 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 	}
 
 	@Transactional
-	public List<Message> generateSeances(Date date, String classe, Long ecoleId) {
+	public List<Message> generateSeances(Date date, String classe, Long ecoleId, Long anneeId) {
 		// si classe est non nulle verifier existence de la séance, si existe alors
 		// passer rechercher le Jour a partir d une date
 //		Gson gson = new Gson();
 		int jourNum;
 		jourNum = DateUtils.getNumDay(date);
 		Jour jour = jourService.findByIdSys(jourNum);
-		System.out.println("Ecole ::: " + ecoleId);
 		List<Activite> activites = new ArrayList<Activite>();
 
 		// Recuperer la liste des emploi du temps en fonction du jour et/ou de la classe
@@ -386,9 +385,9 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 					seance = new Seances();
 					UUID uuid = UUID.randomUUID();
 					pers = personnelMatiereClasseService.findByMatiereAndClasse(atv.getMatiere().getId(),
-							Long.parseLong(atv.getAnnee()), atv.getClasse().getId());
+							anneeId, atv.getClasse().getId());
 					seance.setId(uuid.toString());
-					seance.setAnnee(atv.getAnnee());
+					seance.setAnnee(String.valueOf(anneeId));
 					seance.setClasse(atv.getClasse());
 					seance.setDateCreation(new Date());
 					seance.setDateUpdate(new Date());
