@@ -62,7 +62,7 @@
 					<textFieldExpression><![CDATA["3.5	Cas de maladies"]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement x="20" y="9" width="50" height="18" uuid="4964160d-9e9a-4d08-b7a0-f29515fdc17e"/>
+					<reportElement stretchType="ContainerHeight" x="20" y="9" width="50" height="18" uuid="4964160d-9e9a-4d08-b7a0-f29515fdc17e"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -73,7 +73,7 @@
 					<textFieldExpression><![CDATA[""]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement x="160" y="9" width="30" height="18" uuid="184b97ee-3f66-49af-91d4-c0de6300688e"/>
+					<reportElement stretchType="ContainerHeight" x="160" y="9" width="30" height="18" uuid="184b97ee-3f66-49af-91d4-c0de6300688e"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -84,7 +84,7 @@
 					<textFieldExpression><![CDATA[""]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement x="190" y="-20" width="50" height="29" uuid="56563d3e-c409-4434-adb2-2c36597d5b6c"/>
+					<reportElement stretchType="ContainerHeight" x="190" y="-20" width="50" height="29" uuid="56563d3e-c409-4434-adb2-2c36597d5b6c"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -95,7 +95,7 @@
 					<textFieldExpression><![CDATA["Classe"]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement x="240" y="-20" width="80" height="29" uuid="77111879-10ed-4a65-8290-816c850ac039"/>
+					<reportElement stretchType="ContainerHeight" x="240" y="-20" width="80" height="29" uuid="77111879-10ed-4a65-8290-816c850ac039"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -106,7 +106,7 @@
 					<textFieldExpression><![CDATA["Date de dépôt du certificat Medical"]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement x="240" y="9" width="80" height="18" uuid="e1afa470-1f41-414a-b3ee-9abff0022772"/>
+					<reportElement stretchType="ContainerHeight" x="240" y="9" width="80" height="18" uuid="e1afa470-1f41-414a-b3ee-9abff0022772"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -117,7 +117,7 @@
 					<textFieldExpression><![CDATA[""]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement x="320" y="-20" width="60" height="29" uuid="d3deed34-ec16-4f94-ae8c-1473a65444df"/>
+					<reportElement stretchType="ContainerHeight" x="320" y="-20" width="60" height="29" uuid="d3deed34-ec16-4f94-ae8c-1473a65444df"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -128,7 +128,7 @@
 					<textFieldExpression><![CDATA["Type de maladie"]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement x="190" y="9" width="50" height="18" uuid="f028b3f5-5a6f-4bfe-a459-b0b01dae0387"/>
+					<reportElement stretchType="ContainerHeight" x="190" y="9" width="50" height="18" uuid="f028b3f5-5a6f-4bfe-a459-b0b01dae0387"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -139,7 +139,7 @@
 					<textFieldExpression><![CDATA[""]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement x="0" y="-20" width="20" height="29" uuid="487cbf86-d8ed-4d0d-9c1f-778f7fd44c3b"/>
+					<reportElement stretchType="ContainerHeight" x="0" y="-20" width="20" height="29" uuid="487cbf86-d8ed-4d0d-9c1f-778f7fd44c3b"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -150,7 +150,7 @@
 					<textFieldExpression><![CDATA["N"]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement x="320" y="9" width="60" height="18" uuid="1fed4aac-28f6-48b2-b38b-100df91e6815"/>
+					<reportElement stretchType="ContainerHeight" x="320" y="9" width="60" height="18" uuid="1fed4aac-28f6-48b2-b38b-100df91e6815"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -161,7 +161,7 @@
 					<textFieldExpression><![CDATA[""]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement x="20" y="-20" width="50" height="29" uuid="f12d5603-7cad-4127-98e2-1593b53ebe17"/>
+					<reportElement stretchType="ContainerHeight" x="20" y="-20" width="50" height="29" uuid="f12d5603-7cad-4127-98e2-1593b53ebe17"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -172,7 +172,7 @@
 					<textFieldExpression><![CDATA["Matricule"]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement x="0" y="9" width="20" height="18" uuid="9bedc536-e2fd-4499-976b-eeebe3cef6d1"/>
+					<reportElement stretchType="ContainerHeight" x="0" y="9" width="20" height="18" uuid="9bedc536-e2fd-4499-976b-eeebe3cef6d1"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -183,7 +183,7 @@
 					<textFieldExpression><![CDATA[""]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement x="70" y="-20" width="90" height="29" uuid="84e03bba-edc9-4399-89cd-2659f79794a0"/>
+					<reportElement stretchType="ContainerHeight" x="70" y="-20" width="90" height="29" uuid="84e03bba-edc9-4399-89cd-2659f79794a0"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -194,7 +194,7 @@
 					<textFieldExpression><![CDATA["Nom et Prénoms"]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement x="160" y="-20" width="30" height="29" uuid="d610c8e9-eed3-496c-9361-6d64927f3f85"/>
+					<reportElement stretchType="ContainerHeight" x="160" y="-20" width="30" height="29" uuid="d610c8e9-eed3-496c-9361-6d64927f3f85"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -205,7 +205,7 @@
 					<textFieldExpression><![CDATA["Age"]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement x="70" y="9" width="90" height="18" uuid="5ea8bdb5-e3a5-476a-8649-3295df519a9b"/>
+					<reportElement stretchType="ContainerHeight" x="70" y="9" width="90" height="18" uuid="5ea8bdb5-e3a5-476a-8649-3295df519a9b"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -216,7 +216,7 @@
 					<textFieldExpression><![CDATA[""]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement x="380" y="-20" width="60" height="29" uuid="968737d7-f1cb-45b7-b4ec-c1dc037b003d"/>
+					<reportElement stretchType="ContainerHeight" x="380" y="-20" width="60" height="29" uuid="968737d7-f1cb-45b7-b4ec-c1dc037b003d"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -227,7 +227,7 @@
 					<textFieldExpression><![CDATA["Durée de l’arrêté des cours"]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement x="380" y="9" width="60" height="18" uuid="a3056029-f209-475c-970a-9941147d0394"/>
+					<reportElement stretchType="ContainerHeight" x="380" y="9" width="60" height="18" uuid="a3056029-f209-475c-970a-9941147d0394"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -238,7 +238,7 @@
 					<textFieldExpression><![CDATA[""]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement x="385" y="376" width="74" height="18" uuid="ef20a0a6-3b88-43dc-80bc-4d8437d89cdd"/>
+					<reportElement stretchType="ContainerHeight" x="385" y="376" width="74" height="18" uuid="ef20a0a6-3b88-43dc-80bc-4d8437d89cdd"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -249,7 +249,7 @@
 					<textFieldExpression><![CDATA[""]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement x="205" y="376" width="60" height="18" uuid="a1d8b06c-7091-4ef1-9121-3234a51ed3ce"/>
+					<reportElement stretchType="ContainerHeight" x="205" y="376" width="60" height="18" uuid="a1d8b06c-7091-4ef1-9121-3234a51ed3ce"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -260,7 +260,7 @@
 					<textFieldExpression><![CDATA[""]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement x="325" y="358" width="60" height="18" uuid="db786be2-d07d-4afa-ba88-3904e76e2b19"/>
+					<reportElement stretchType="ContainerHeight" x="325" y="358" width="60" height="18" uuid="db786be2-d07d-4afa-ba88-3904e76e2b19"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -271,7 +271,7 @@
 					<textFieldExpression><![CDATA["Date du décès"]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement x="5" y="376" width="60" height="18" uuid="58dcc68f-7603-4747-9bd3-49d1fb924618"/>
+					<reportElement stretchType="ContainerHeight" x="5" y="376" width="60" height="18" uuid="58dcc68f-7603-4747-9bd3-49d1fb924618"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -282,7 +282,7 @@
 					<textFieldExpression><![CDATA[""]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement x="325" y="376" width="60" height="18" uuid="a2ec5f3b-aee2-448a-9aef-796ceb4c72e3"/>
+					<reportElement stretchType="ContainerHeight" x="325" y="376" width="60" height="18" uuid="a2ec5f3b-aee2-448a-9aef-796ceb4c72e3"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -304,7 +304,7 @@
 					<textFieldExpression><![CDATA["N"]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement x="65" y="358" width="140" height="18" uuid="619bd7af-8d35-49f8-9da4-4e57349f1a02"/>
+					<reportElement stretchType="ContainerHeight" x="65" y="358" width="140" height="18" uuid="619bd7af-8d35-49f8-9da4-4e57349f1a02"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -315,7 +315,7 @@
 					<textFieldExpression><![CDATA["Nom et Prénoms"]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement x="205" y="358" width="60" height="18" uuid="82e34483-69af-48bc-a26d-d64b717f75ef"/>
+					<reportElement stretchType="ContainerHeight" x="205" y="358" width="60" height="18" uuid="82e34483-69af-48bc-a26d-d64b717f75ef"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -326,7 +326,7 @@
 					<textFieldExpression><![CDATA["Classe"]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement x="385" y="358" width="74" height="18" uuid="01b00ee0-3a8c-41e0-9821-7a46e44b7f26"/>
+					<reportElement stretchType="ContainerHeight" x="385" y="358" width="74" height="18" uuid="01b00ee0-3a8c-41e0-9821-7a46e44b7f26"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -337,7 +337,7 @@
 					<textFieldExpression><![CDATA["Cause du décès"]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement x="5" y="358" width="60" height="18" uuid="e5cdf543-352e-4e2c-a8e6-bebf322a1146"/>
+					<reportElement stretchType="ContainerHeight" x="5" y="358" width="60" height="18" uuid="e5cdf543-352e-4e2c-a8e6-bebf322a1146"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -359,7 +359,7 @@
 					<textFieldExpression><![CDATA[""]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement x="265" y="358" width="60" height="18" uuid="fa542cfd-da04-435b-8fb9-2dd78359a29b"/>
+					<reportElement stretchType="ContainerHeight" x="265" y="358" width="60" height="18" uuid="fa542cfd-da04-435b-8fb9-2dd78359a29b"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -370,7 +370,7 @@
 					<textFieldExpression><![CDATA["Genre"]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement x="65" y="376" width="140" height="18" uuid="543a7c17-47a1-49d6-b142-2897bfad483e"/>
+					<reportElement stretchType="ContainerHeight" x="65" y="376" width="140" height="18" uuid="543a7c17-47a1-49d6-b142-2897bfad483e"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -381,7 +381,7 @@
 					<textFieldExpression><![CDATA[""]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement x="265" y="376" width="60" height="18" uuid="32a3286f-8ea6-41ed-ab5e-78f9c0a88851"/>
+					<reportElement stretchType="ContainerHeight" x="265" y="376" width="60" height="18" uuid="32a3286f-8ea6-41ed-ab5e-78f9c0a88851"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -392,7 +392,7 @@
 					<textFieldExpression><![CDATA[""]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="-10" y="340" width="180" height="13" uuid="de1d707a-c520-4b6d-9bf4-7ef39c4077b0">
+					<reportElement stretchType="ContainerHeight" x="-10" y="340" width="180" height="13" uuid="de1d707a-c520-4b6d-9bf4-7ef39c4077b0">
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<textElement>
@@ -401,22 +401,22 @@
 					<textFieldExpression><![CDATA["3.6	 Cas de décès "]]></textFieldExpression>
 				</textField>
 				<frame>
-					<reportElement x="-10" y="40" width="564" height="280" uuid="e3a5853d-b391-4e84-a28d-d8f274868d90">
+					<reportElement stretchType="ContainerHeight" x="-10" y="40" width="564" height="280" uuid="e3a5853d-b391-4e84-a28d-d8f274868d90">
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
 					</reportElement>
 					<staticText>
-						<reportElement x="0" y="0" width="564" height="280" uuid="08df9597-098f-4b3b-83e2-58f6b769436a">
+						<reportElement stretchType="ContainerHeight" x="0" y="0" width="564" height="280" uuid="08df9597-098f-4b3b-83e2-58f6b769436a">
 							<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						</reportElement>
 						<text><![CDATA[Commentaire:]]></text>
 					</staticText>
 				</frame>
 				<frame>
-					<reportElement x="-15" y="400" width="564" height="320" uuid="ef6362fe-0b16-4268-828e-b7f049bc355e">
+					<reportElement stretchType="ContainerHeight" x="-15" y="400" width="564" height="320" uuid="ef6362fe-0b16-4268-828e-b7f049bc355e">
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
 					</reportElement>
 					<staticText>
-						<reportElement x="0" y="0" width="564" height="320" uuid="d1ad96b5-12e6-4e94-a7c1-40225499d308">
+						<reportElement stretchType="ContainerHeight" x="0" y="0" width="564" height="320" uuid="d1ad96b5-12e6-4e94-a7c1-40225499d308">
 							<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						</reportElement>
 						<text><![CDATA[Commentaire:]]></text>

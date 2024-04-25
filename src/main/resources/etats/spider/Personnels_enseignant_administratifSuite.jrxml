@@ -41,7 +41,7 @@
 	<detail>
 		<band height="776">
 			<frame>
-				<reportElement x="-14" y="69" width="570" height="20" uuid="9fe97307-90f6-46cc-acd0-d25500af1b1b">
+				<reportElement stretchType="ContainerHeight" x="-14" y="69" width="570" height="20" uuid="9fe97307-90f6-46cc-acd0-d25500af1b1b">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 				</reportElement>
 				<box>
@@ -51,7 +51,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<staticText>
-					<reportElement x="0" y="0" width="44" height="20" uuid="0c35d3e2-ac87-41f2-a09c-dced6a169ad1">
+					<reportElement stretchType="ContainerHeight" x="0" y="0" width="44" height="20" uuid="0c35d3e2-ac87-41f2-a09c-dced6a169ad1">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -72,7 +72,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="44" y="0" width="15" height="20" uuid="03aabf6f-9e2a-4128-95ba-2709ce2fb45a">
+					<reportElement stretchType="ContainerHeight" x="44" y="0" width="15" height="20" uuid="03aabf6f-9e2a-4128-95ba-2709ce2fb45a">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -93,7 +93,7 @@
 					<text><![CDATA[H]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="59" y="0" width="16" height="20" uuid="d1ee1649-f5e3-4210-b66f-fb3ae1ce44fd">
+					<reportElement stretchType="ContainerHeight" x="59" y="0" width="16" height="20" uuid="d1ee1649-f5e3-4210-b66f-fb3ae1ce44fd">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -114,7 +114,7 @@
 					<text><![CDATA[F]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="75" y="0" width="13" height="20" uuid="17184ccb-9bba-4819-92a1-f99a04f13e44">
+					<reportElement stretchType="ContainerHeight" x="75" y="0" width="13" height="20" uuid="17184ccb-9bba-4819-92a1-f99a04f13e44">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -135,7 +135,7 @@
 					<text><![CDATA[H]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="88" y="0" width="16" height="20" uuid="94fc5521-938a-4d55-a430-3fd989502386">
+					<reportElement stretchType="ContainerHeight" x="88" y="0" width="16" height="20" uuid="94fc5521-938a-4d55-a430-3fd989502386">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -156,7 +156,7 @@
 					<text><![CDATA[F]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="104" y="0" width="17" height="20" uuid="5546a6d0-d5a0-4c4f-8cee-89c61f7d6f5c">
+					<reportElement stretchType="ContainerHeight" x="104" y="0" width="17" height="20" uuid="5546a6d0-d5a0-4c4f-8cee-89c61f7d6f5c">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -177,7 +177,7 @@
 					<text><![CDATA[H]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="121" y="0" width="16" height="20" uuid="22b2e650-c1a2-4113-b8ea-817090d64453">
+					<reportElement stretchType="ContainerHeight" x="121" y="0" width="16" height="20" uuid="22b2e650-c1a2-4113-b8ea-817090d64453">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -198,7 +198,7 @@
 					<text><![CDATA[F]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="137" y="0" width="17" height="20" uuid="ca64ad9d-308c-4133-9c53-3fdf8166b3ac">
+					<reportElement stretchType="ContainerHeight" x="137" y="0" width="17" height="20" uuid="ca64ad9d-308c-4133-9c53-3fdf8166b3ac">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -219,7 +219,7 @@
 					<text><![CDATA[H]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="154" y="0" width="14" height="20" uuid="ee0c2a62-e383-4356-848e-783145606281">
+					<reportElement stretchType="ContainerHeight" x="154" y="0" width="14" height="20" uuid="ee0c2a62-e383-4356-848e-783145606281">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -240,7 +240,7 @@
 					<text><![CDATA[F]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="168" y="0" width="14" height="20" uuid="83a5ca63-57e1-4581-92fe-76a7ed62e8e8">
+					<reportElement stretchType="ContainerHeight" x="168" y="0" width="14" height="20" uuid="83a5ca63-57e1-4581-92fe-76a7ed62e8e8">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -261,7 +261,7 @@
 					<text><![CDATA[H]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="182" y="0" width="16" height="20" uuid="05b6f57a-abae-489c-95c8-5ac6a02da91f">
+					<reportElement stretchType="ContainerHeight" x="182" y="0" width="16" height="20" uuid="05b6f57a-abae-489c-95c8-5ac6a02da91f">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -282,7 +282,7 @@
 					<text><![CDATA[F]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="198" y="0" width="16" height="20" uuid="c690fc19-7b9d-48ed-9bee-05e7dda5a4bb">
+					<reportElement stretchType="ContainerHeight" x="198" y="0" width="16" height="20" uuid="c690fc19-7b9d-48ed-9bee-05e7dda5a4bb">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -303,7 +303,7 @@
 					<text><![CDATA[H]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="214" y="0" width="15" height="20" uuid="545fd3a4-f2c3-492d-98e0-81fdff91c28e">
+					<reportElement stretchType="ContainerHeight" x="214" y="0" width="15" height="20" uuid="545fd3a4-f2c3-492d-98e0-81fdff91c28e">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -324,7 +324,7 @@
 					<text><![CDATA[F]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="229" y="0" width="18" height="20" uuid="0e650408-b829-4b52-9ace-415234c3bb31">
+					<reportElement stretchType="ContainerHeight" x="229" y="0" width="18" height="20" uuid="0e650408-b829-4b52-9ace-415234c3bb31">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -345,7 +345,7 @@
 					<text><![CDATA[H]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="247" y="0" width="15" height="20" uuid="5136b2ff-0ca4-46ce-87ee-c05fc43b201a">
+					<reportElement stretchType="ContainerHeight" x="247" y="0" width="15" height="20" uuid="5136b2ff-0ca4-46ce-87ee-c05fc43b201a">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -366,7 +366,7 @@
 					<text><![CDATA[F]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="262" y="0" width="16" height="20" uuid="a4605336-ab21-4e42-83ba-d8b2620dd68d">
+					<reportElement stretchType="ContainerHeight" x="262" y="0" width="16" height="20" uuid="a4605336-ab21-4e42-83ba-d8b2620dd68d">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -387,7 +387,7 @@
 					<text><![CDATA[H]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="278" y="0" width="15" height="20" uuid="2c74a0fe-665e-4946-979f-6dfddffc54b4">
+					<reportElement stretchType="ContainerHeight" x="278" y="0" width="15" height="20" uuid="2c74a0fe-665e-4946-979f-6dfddffc54b4">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -408,7 +408,7 @@
 					<text><![CDATA[F]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="293" y="0" width="15" height="20" uuid="2dca51c4-ffe2-49c5-b670-723700065721">
+					<reportElement stretchType="ContainerHeight" x="293" y="0" width="15" height="20" uuid="2dca51c4-ffe2-49c5-b670-723700065721">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -429,7 +429,7 @@
 					<text><![CDATA[H]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="308" y="0" width="16" height="20" uuid="f3210efd-7493-47cd-9345-ac90c0bc21d0">
+					<reportElement stretchType="ContainerHeight" x="308" y="0" width="16" height="20" uuid="f3210efd-7493-47cd-9345-ac90c0bc21d0">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -450,7 +450,7 @@
 					<text><![CDATA[F]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="324" y="0" width="16" height="20" uuid="f15ea098-2cc7-48fe-9c4f-398c4e99a788">
+					<reportElement stretchType="ContainerHeight" x="324" y="0" width="16" height="20" uuid="f15ea098-2cc7-48fe-9c4f-398c4e99a788">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -471,7 +471,7 @@
 					<text><![CDATA[H]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="340" y="0" width="16" height="20" uuid="18d00a17-d680-4f6c-a24e-8545a6bcf9db">
+					<reportElement stretchType="ContainerHeight" x="340" y="0" width="16" height="20" uuid="18d00a17-d680-4f6c-a24e-8545a6bcf9db">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -492,7 +492,7 @@
 					<text><![CDATA[F]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="356" y="0" width="16" height="20" uuid="9db906a0-98d5-41b2-baff-be055c3aa48e">
+					<reportElement stretchType="ContainerHeight" x="356" y="0" width="16" height="20" uuid="9db906a0-98d5-41b2-baff-be055c3aa48e">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -513,7 +513,7 @@
 					<text><![CDATA[H]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="372" y="0" width="16" height="20" uuid="53ecbfa5-4e9d-4e1e-a70f-6d9391e14601">
+					<reportElement stretchType="ContainerHeight" x="372" y="0" width="16" height="20" uuid="53ecbfa5-4e9d-4e1e-a70f-6d9391e14601">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -534,7 +534,7 @@
 					<text><![CDATA[F]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="388" y="0" width="16" height="20" uuid="7a150857-495a-471e-9d4a-33f6fcfec039">
+					<reportElement stretchType="ContainerHeight" x="388" y="0" width="16" height="20" uuid="7a150857-495a-471e-9d4a-33f6fcfec039">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -555,7 +555,7 @@
 					<text><![CDATA[H]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="404" y="0" width="16" height="20" uuid="6f9b1954-ae47-4ada-8691-32d278a476e8">
+					<reportElement stretchType="ContainerHeight" x="404" y="0" width="16" height="20" uuid="6f9b1954-ae47-4ada-8691-32d278a476e8">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -576,7 +576,7 @@
 					<text><![CDATA[F]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="420" y="0" width="15" height="20" uuid="9e784708-c4ce-4db0-b1b5-bb33974838dd">
+					<reportElement stretchType="ContainerHeight" x="420" y="0" width="15" height="20" uuid="9e784708-c4ce-4db0-b1b5-bb33974838dd">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -597,7 +597,7 @@
 					<text><![CDATA[H]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="435" y="0" width="16" height="20" uuid="98abcbe1-1390-4e6e-82fb-ef67233b4055">
+					<reportElement stretchType="ContainerHeight" x="435" y="0" width="16" height="20" uuid="98abcbe1-1390-4e6e-82fb-ef67233b4055">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -618,7 +618,7 @@
 					<text><![CDATA[F]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="451" y="0" width="14" height="20" uuid="379b62eb-e66a-4ac3-9e21-1e1e39654731">
+					<reportElement stretchType="ContainerHeight" x="451" y="0" width="14" height="20" uuid="379b62eb-e66a-4ac3-9e21-1e1e39654731">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -639,7 +639,7 @@
 					<text><![CDATA[H]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="465" y="0" width="13" height="20" uuid="84da276d-06e1-42f0-ace6-5fb3b9f15190">
+					<reportElement stretchType="ContainerHeight" x="465" y="0" width="13" height="20" uuid="84da276d-06e1-42f0-ace6-5fb3b9f15190">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -660,7 +660,7 @@
 					<text><![CDATA[F]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="478" y="0" width="20" height="20" uuid="787c8fa1-26aa-47b5-9872-a8fdf9c99960">
+					<reportElement stretchType="ContainerHeight" x="478" y="0" width="20" height="20" uuid="787c8fa1-26aa-47b5-9872-a8fdf9c99960">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -682,7 +682,7 @@
 					<text><![CDATA[H]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="498" y="0" width="18" height="20" uuid="df1b0be3-bf7a-44f6-8fef-edc34a933e96">
+					<reportElement stretchType="ContainerHeight" x="498" y="0" width="18" height="20" uuid="df1b0be3-bf7a-44f6-8fef-edc34a933e96">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -703,7 +703,7 @@
 					<text><![CDATA[F]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="516" y="0" width="20" height="20" uuid="a939620f-3f7e-4473-ab9e-4b647a86de27">
+					<reportElement stretchType="ContainerHeight" x="516" y="0" width="20" height="20" uuid="a939620f-3f7e-4473-ab9e-4b647a86de27">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -725,7 +725,7 @@
 					<text><![CDATA[H]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="536" y="0" width="20" height="20" uuid="9ae8c39b-9bac-4b55-9b7d-43ddae0d0dd2">
+					<reportElement stretchType="ContainerHeight" x="536" y="0" width="20" height="20" uuid="9ae8c39b-9bac-4b55-9b7d-43ddae0d0dd2">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -747,7 +747,7 @@
 					<text><![CDATA[F]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="556" y="0" width="14" height="20" uuid="1fb719bd-071e-4827-bfdd-77b237b0a583">
+					<reportElement stretchType="ContainerHeight" x="556" y="0" width="14" height="20" uuid="1fb719bd-071e-4827-bfdd-77b237b0a583">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1123,7 +1123,7 @@
 				</staticText>
 			</frame>
 			<frame>
-				<reportElement x="-14" y="90" width="570" height="26" uuid="29d09ec5-6182-4f23-ae80-8b566c0a41f5">
+				<reportElement stretchType="ContainerHeight" x="-14" y="90" width="570" height="26" uuid="29d09ec5-6182-4f23-ae80-8b566c0a41f5">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 				</reportElement>
 				<box>
@@ -1134,7 +1134,7 @@
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<staticText>
-					<reportElement x="0" y="0" width="44" height="26" uuid="1f7e1c6f-8d0c-4b06-b89f-00d4401e4d09">
+					<reportElement stretchType="ContainerHeight" x="0" y="0" width="44" height="26" uuid="1f7e1c6f-8d0c-4b06-b89f-00d4401e4d09">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1155,7 +1155,7 @@
 					<text><![CDATA[Permanents]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="44" y="0" width="15" height="26" uuid="5f8b15a7-5008-4014-a270-e49108586476">
+					<reportElement stretchType="ContainerHeight" x="44" y="0" width="15" height="26" uuid="5f8b15a7-5008-4014-a270-e49108586476">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1177,7 +1177,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="59" y="0" width="16" height="26" uuid="c308c9c7-7b57-4ada-be83-df253745b808">
+					<reportElement stretchType="ContainerHeight" x="59" y="0" width="16" height="26" uuid="c308c9c7-7b57-4ada-be83-df253745b808">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1199,7 +1199,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="75" y="0" width="13" height="26" uuid="4aed4e1c-f56c-416b-add9-12372eb78862">
+					<reportElement stretchType="ContainerHeight" x="75" y="0" width="13" height="26" uuid="4aed4e1c-f56c-416b-add9-12372eb78862">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1221,7 +1221,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="88" y="0" width="16" height="26" uuid="0adfb982-527c-4157-bf26-32e502771701">
+					<reportElement stretchType="ContainerHeight" x="88" y="0" width="16" height="26" uuid="0adfb982-527c-4157-bf26-32e502771701">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1243,7 +1243,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="104" y="0" width="17" height="26" uuid="02b5fd15-c0f1-457f-91a8-b13dfdc8f980">
+					<reportElement stretchType="ContainerHeight" x="104" y="0" width="17" height="26" uuid="02b5fd15-c0f1-457f-91a8-b13dfdc8f980">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1265,7 +1265,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="121" y="0" width="16" height="26" uuid="687d6409-91d7-4328-a66f-9c7fbf9387fd">
+					<reportElement stretchType="ContainerHeight" x="121" y="0" width="16" height="26" uuid="687d6409-91d7-4328-a66f-9c7fbf9387fd">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1287,7 +1287,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="137" y="0" width="17" height="26" uuid="5052d010-9202-4ff0-871f-02830a56e8e5">
+					<reportElement stretchType="ContainerHeight" x="137" y="0" width="17" height="26" uuid="5052d010-9202-4ff0-871f-02830a56e8e5">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1309,7 +1309,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="154" y="0" width="14" height="26" uuid="bf32f393-4265-4da0-bb21-74b43889c587">
+					<reportElement stretchType="ContainerHeight" x="154" y="0" width="14" height="26" uuid="bf32f393-4265-4da0-bb21-74b43889c587">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1331,7 +1331,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="168" y="0" width="14" height="26" uuid="672872d8-eae1-44c9-b65c-4235e61f7c15">
+					<reportElement stretchType="ContainerHeight" x="168" y="0" width="14" height="26" uuid="672872d8-eae1-44c9-b65c-4235e61f7c15">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1353,7 +1353,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="182" y="0" width="16" height="26" uuid="cf981891-113d-4fc1-803b-f4f1a42b4384">
+					<reportElement stretchType="ContainerHeight" x="182" y="0" width="16" height="26" uuid="cf981891-113d-4fc1-803b-f4f1a42b4384">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1375,7 +1375,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="198" y="0" width="16" height="26" uuid="7171182f-8213-48f1-b10f-2d19347717fc">
+					<reportElement stretchType="ContainerHeight" x="198" y="0" width="16" height="26" uuid="7171182f-8213-48f1-b10f-2d19347717fc">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1397,7 +1397,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="214" y="0" width="15" height="26" uuid="dc74e3d1-2da4-47e3-864f-ec06267ff9d2">
+					<reportElement stretchType="ContainerHeight" x="214" y="0" width="15" height="26" uuid="dc74e3d1-2da4-47e3-864f-ec06267ff9d2">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1419,7 +1419,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="229" y="0" width="18" height="26" uuid="af1d95f1-5d67-4df7-af40-4b8a9ec38718">
+					<reportElement stretchType="ContainerHeight" x="229" y="0" width="18" height="26" uuid="af1d95f1-5d67-4df7-af40-4b8a9ec38718">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1441,7 +1441,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="247" y="0" width="15" height="26" uuid="a9482cce-ec9f-43e4-87a3-8199511ef4a8">
+					<reportElement stretchType="ContainerHeight" x="247" y="0" width="15" height="26" uuid="a9482cce-ec9f-43e4-87a3-8199511ef4a8">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1463,7 +1463,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="262" y="0" width="16" height="26" uuid="9d1047c8-2b15-433b-9490-4e75f60c9aac">
+					<reportElement stretchType="ContainerHeight" x="262" y="0" width="16" height="26" uuid="9d1047c8-2b15-433b-9490-4e75f60c9aac">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1485,7 +1485,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="278" y="0" width="15" height="26" uuid="e8f42935-cb59-4e68-84fa-cf27b8f53826">
+					<reportElement stretchType="ContainerHeight" x="278" y="0" width="15" height="26" uuid="e8f42935-cb59-4e68-84fa-cf27b8f53826">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1507,7 +1507,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="293" y="0" width="15" height="26" uuid="b5caf1bc-bd42-4043-bdd5-76a371221cb3">
+					<reportElement stretchType="ContainerHeight" x="293" y="0" width="15" height="26" uuid="b5caf1bc-bd42-4043-bdd5-76a371221cb3">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1529,7 +1529,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="308" y="0" width="16" height="26" uuid="493db632-46f6-4f6c-92c8-4bbbbea78475">
+					<reportElement stretchType="ContainerHeight" x="308" y="0" width="16" height="26" uuid="493db632-46f6-4f6c-92c8-4bbbbea78475">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1551,7 +1551,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="324" y="0" width="16" height="26" uuid="1701dd28-121f-4027-b12a-94c7ddafaba6">
+					<reportElement stretchType="ContainerHeight" x="324" y="0" width="16" height="26" uuid="1701dd28-121f-4027-b12a-94c7ddafaba6">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1573,7 +1573,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="340" y="0" width="16" height="26" uuid="a904336f-df8a-44e9-b19a-3ad9b482a2b2">
+					<reportElement stretchType="ContainerHeight" x="340" y="0" width="16" height="26" uuid="a904336f-df8a-44e9-b19a-3ad9b482a2b2">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1595,7 +1595,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="356" y="0" width="16" height="26" uuid="014c1434-6fe7-4b37-b836-3b87cb0cf0e6">
+					<reportElement stretchType="ContainerHeight" x="356" y="0" width="16" height="26" uuid="014c1434-6fe7-4b37-b836-3b87cb0cf0e6">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1617,7 +1617,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="372" y="0" width="16" height="26" uuid="2bf9ee70-27d3-4b7e-93c0-f35acadad764">
+					<reportElement stretchType="ContainerHeight" x="372" y="0" width="16" height="26" uuid="2bf9ee70-27d3-4b7e-93c0-f35acadad764">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1639,7 +1639,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="388" y="0" width="16" height="26" uuid="9df49263-4133-4dca-abf1-467578f3ed8b">
+					<reportElement stretchType="ContainerHeight" x="388" y="0" width="16" height="26" uuid="9df49263-4133-4dca-abf1-467578f3ed8b">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1661,7 +1661,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="404" y="0" width="16" height="26" uuid="5391cc58-199b-4ef2-ae8e-2b7ef9198c74">
+					<reportElement stretchType="ContainerHeight" x="404" y="0" width="16" height="26" uuid="5391cc58-199b-4ef2-ae8e-2b7ef9198c74">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1683,7 +1683,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="420" y="0" width="15" height="26" uuid="cfd4c93a-c728-4bed-9302-495f25c48e1d">
+					<reportElement stretchType="ContainerHeight" x="420" y="0" width="15" height="26" uuid="cfd4c93a-c728-4bed-9302-495f25c48e1d">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1705,7 +1705,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="435" y="0" width="16" height="26" uuid="c6a49bd9-278b-4e23-a1ff-5c3bb79c487a">
+					<reportElement stretchType="ContainerHeight" x="435" y="0" width="16" height="26" uuid="c6a49bd9-278b-4e23-a1ff-5c3bb79c487a">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1727,7 +1727,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="451" y="0" width="14" height="26" uuid="fc09ae72-533e-4884-a8f1-dcf9a0a3a4cb">
+					<reportElement stretchType="ContainerHeight" x="451" y="0" width="14" height="26" uuid="fc09ae72-533e-4884-a8f1-dcf9a0a3a4cb">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1749,7 +1749,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="465" y="0" width="13" height="26" uuid="57d112d8-8848-4e3b-892c-dab19f6c796d">
+					<reportElement stretchType="ContainerHeight" x="465" y="0" width="13" height="26" uuid="57d112d8-8848-4e3b-892c-dab19f6c796d">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1771,52 +1771,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="478" y="0" width="20" height="26" uuid="6e10b4a1-66b5-4e39-80de-42ac526be4df">
-						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
-						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
-						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-						<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					</reportElement>
-					<box>
-						<pen lineWidth="0.25"/>
-						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
-						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="SansSerif" size="6"/>
-					</textElement>
-					<text><![CDATA[]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="498" y="0" width="18" height="26" uuid="422a217f-4f64-42cf-ad7e-d764f58ae8a3">
-						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
-						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
-						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-					</reportElement>
-					<box>
-						<pen lineWidth="0.25"/>
-						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
-						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="SansSerif" size="6"/>
-					</textElement>
-					<text><![CDATA[]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="516" y="0" width="20" height="26" uuid="c8b629f5-8b1b-4631-acfc-42c659e5873d">
+					<reportElement stretchType="ContainerHeight" x="478" y="0" width="20" height="26" uuid="6e10b4a1-66b5-4e39-80de-42ac526be4df">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1839,7 +1794,29 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="536" y="0" width="20" height="26" uuid="2700ac17-ca7f-4492-98af-94a65d5404f7">
+					<reportElement stretchType="ContainerHeight" x="498" y="0" width="18" height="26" uuid="422a217f-4f64-42cf-ad7e-d764f58ae8a3">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="6"/>
+					</textElement>
+					<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement stretchType="ContainerHeight" x="516" y="0" width="20" height="26" uuid="c8b629f5-8b1b-4631-acfc-42c659e5873d">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1862,7 +1839,30 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="556" y="0" width="14" height="26" uuid="0ade82c5-1bfe-44a9-b63f-c05a9d9a755c">
+					<reportElement stretchType="ContainerHeight" x="536" y="0" width="20" height="26" uuid="2700ac17-ca7f-4492-98af-94a65d5404f7">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="6"/>
+					</textElement>
+					<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement stretchType="ContainerHeight" x="556" y="0" width="14" height="26" uuid="0ade82c5-1bfe-44a9-b63f-c05a9d9a755c">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1975,7 +1975,7 @@
 				</staticText>
 			</frame>
 			<frame>
-				<reportElement x="-14" y="117" width="570" height="26" uuid="b9c72c31-dc26-488b-bc71-6aaceced3f28">
+				<reportElement stretchType="ContainerHeight" x="-14" y="117" width="570" height="26" uuid="b9c72c31-dc26-488b-bc71-6aaceced3f28">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 				</reportElement>
 				<box>
@@ -1986,7 +1986,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<staticText>
-					<reportElement x="0" y="0" width="44" height="26" uuid="e8efc2e1-5839-4273-bf1a-ef6ed301ad7b">
+					<reportElement stretchType="ContainerHeight" x="0" y="0" width="44" height="26" uuid="e8efc2e1-5839-4273-bf1a-ef6ed301ad7b">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2007,7 +2007,7 @@
 					<text><![CDATA[Vacataires fonctionnaires]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="44" y="0" width="15" height="26" uuid="b314ebba-f7fb-498c-b41b-ab1d59cdc5ec">
+					<reportElement stretchType="ContainerHeight" x="44" y="0" width="15" height="26" uuid="b314ebba-f7fb-498c-b41b-ab1d59cdc5ec">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2029,7 +2029,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="59" y="0" width="16" height="26" uuid="1b7d25c2-fe2c-463b-8d6d-93fad518e60e">
+					<reportElement stretchType="ContainerHeight" x="59" y="0" width="16" height="26" uuid="1b7d25c2-fe2c-463b-8d6d-93fad518e60e">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2051,7 +2051,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="75" y="0" width="13" height="26" uuid="8b1fbf85-73d6-4f08-a438-31d3b8d0d786">
+					<reportElement stretchType="ContainerHeight" x="75" y="0" width="13" height="26" uuid="8b1fbf85-73d6-4f08-a438-31d3b8d0d786">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2073,7 +2073,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="88" y="0" width="16" height="26" uuid="2b420460-2e6d-416c-995a-9e67175be853">
+					<reportElement stretchType="ContainerHeight" x="88" y="0" width="16" height="26" uuid="2b420460-2e6d-416c-995a-9e67175be853">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2095,7 +2095,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="104" y="0" width="17" height="26" uuid="b27e857d-68c8-4c62-90c9-61a4b0e62cb2">
+					<reportElement stretchType="ContainerHeight" x="104" y="0" width="17" height="26" uuid="b27e857d-68c8-4c62-90c9-61a4b0e62cb2">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2117,7 +2117,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="121" y="0" width="16" height="26" uuid="e29a823d-95e9-458c-a77c-1813e280febf">
+					<reportElement stretchType="ContainerHeight" x="121" y="0" width="16" height="26" uuid="e29a823d-95e9-458c-a77c-1813e280febf">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2139,7 +2139,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="137" y="0" width="17" height="26" uuid="fdbdeda8-d8d6-4fe7-8014-ea1401e2c39e">
+					<reportElement stretchType="ContainerHeight" x="137" y="0" width="17" height="26" uuid="fdbdeda8-d8d6-4fe7-8014-ea1401e2c39e">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2161,7 +2161,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="154" y="0" width="14" height="26" uuid="65406192-31fb-409a-a556-111542ef8b08">
+					<reportElement stretchType="ContainerHeight" x="154" y="0" width="14" height="26" uuid="65406192-31fb-409a-a556-111542ef8b08">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2183,7 +2183,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="168" y="0" width="14" height="26" uuid="d5265e6d-005a-4dfe-9713-d4b24eab69aa">
+					<reportElement stretchType="ContainerHeight" x="168" y="0" width="14" height="26" uuid="d5265e6d-005a-4dfe-9713-d4b24eab69aa">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2205,7 +2205,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="182" y="0" width="16" height="26" uuid="2e4ccd53-eab9-461c-bb61-7f0a988b834d">
+					<reportElement stretchType="ContainerHeight" x="182" y="0" width="16" height="26" uuid="2e4ccd53-eab9-461c-bb61-7f0a988b834d">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2227,7 +2227,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="198" y="0" width="16" height="26" uuid="fe448676-1202-447b-ba3f-4d3c698ae223">
+					<reportElement stretchType="ContainerHeight" x="198" y="0" width="16" height="26" uuid="fe448676-1202-447b-ba3f-4d3c698ae223">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2249,7 +2249,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="214" y="0" width="15" height="26" uuid="4581ab15-1bfb-4fbd-9980-9d59419eac2f">
+					<reportElement stretchType="ContainerHeight" x="214" y="0" width="15" height="26" uuid="4581ab15-1bfb-4fbd-9980-9d59419eac2f">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2271,7 +2271,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="229" y="0" width="18" height="26" uuid="25a6fc25-fd9a-4d26-822b-b518a79d5047">
+					<reportElement stretchType="ContainerHeight" x="229" y="0" width="18" height="26" uuid="25a6fc25-fd9a-4d26-822b-b518a79d5047">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2293,7 +2293,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="247" y="0" width="15" height="26" uuid="ac88b152-6964-4550-8b9a-ab897c3ace58">
+					<reportElement stretchType="ContainerHeight" x="247" y="0" width="15" height="26" uuid="ac88b152-6964-4550-8b9a-ab897c3ace58">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2315,7 +2315,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="262" y="0" width="16" height="26" uuid="c6c62d2e-a586-4d9c-b3ac-71c441e59332">
+					<reportElement stretchType="ContainerHeight" x="262" y="0" width="16" height="26" uuid="c6c62d2e-a586-4d9c-b3ac-71c441e59332">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2337,7 +2337,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="278" y="0" width="15" height="26" uuid="87362e70-1d5b-4120-83e7-55b365216da7">
+					<reportElement stretchType="ContainerHeight" x="278" y="0" width="15" height="26" uuid="87362e70-1d5b-4120-83e7-55b365216da7">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2359,7 +2359,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="293" y="0" width="15" height="26" uuid="21aa9355-3ee2-425c-93be-2bd25a73e12e">
+					<reportElement stretchType="ContainerHeight" x="293" y="0" width="15" height="26" uuid="21aa9355-3ee2-425c-93be-2bd25a73e12e">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2381,7 +2381,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="308" y="0" width="16" height="26" uuid="ca41f481-4822-4a08-afb4-16836f83987b">
+					<reportElement stretchType="ContainerHeight" x="308" y="0" width="16" height="26" uuid="ca41f481-4822-4a08-afb4-16836f83987b">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2403,7 +2403,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="324" y="0" width="16" height="26" uuid="4f7d754d-ea40-4254-bb8d-d5bd69bed5aa">
+					<reportElement stretchType="ContainerHeight" x="324" y="0" width="16" height="26" uuid="4f7d754d-ea40-4254-bb8d-d5bd69bed5aa">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2425,7 +2425,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="340" y="0" width="16" height="26" uuid="f9b6c223-4ef2-4255-bd77-49d8d3d5e2b5">
+					<reportElement stretchType="ContainerHeight" x="340" y="0" width="16" height="26" uuid="f9b6c223-4ef2-4255-bd77-49d8d3d5e2b5">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2447,7 +2447,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="356" y="0" width="16" height="26" uuid="b4196628-17ec-4909-bfd2-01af201685d1">
+					<reportElement stretchType="ContainerHeight" x="356" y="0" width="16" height="26" uuid="b4196628-17ec-4909-bfd2-01af201685d1">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2469,7 +2469,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="372" y="0" width="16" height="26" uuid="b4334a82-ff40-4a84-abad-57411e25e050">
+					<reportElement stretchType="ContainerHeight" x="372" y="0" width="16" height="26" uuid="b4334a82-ff40-4a84-abad-57411e25e050">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2491,7 +2491,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="388" y="0" width="16" height="26" uuid="512a8a54-3f2e-49bc-b1d1-c5ee727aff21">
+					<reportElement stretchType="ContainerHeight" x="388" y="0" width="16" height="26" uuid="512a8a54-3f2e-49bc-b1d1-c5ee727aff21">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2513,7 +2513,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="404" y="0" width="16" height="26" uuid="f659fd6b-6f49-4963-a9d0-2ed7159d743d">
+					<reportElement stretchType="ContainerHeight" x="404" y="0" width="16" height="26" uuid="f659fd6b-6f49-4963-a9d0-2ed7159d743d">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2535,7 +2535,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="420" y="0" width="15" height="26" uuid="589bd62f-7f03-471d-8c34-bf56ef7330f5">
+					<reportElement stretchType="ContainerHeight" x="420" y="0" width="15" height="26" uuid="589bd62f-7f03-471d-8c34-bf56ef7330f5">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2557,7 +2557,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="435" y="0" width="16" height="26" uuid="d63f24aa-f003-47ac-a7b9-2ce4cc419d0c">
+					<reportElement stretchType="ContainerHeight" x="435" y="0" width="16" height="26" uuid="d63f24aa-f003-47ac-a7b9-2ce4cc419d0c">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2579,7 +2579,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="451" y="0" width="14" height="26" uuid="6bbc2e2a-16e8-40a3-b2ab-cf0b9a06c1a8">
+					<reportElement stretchType="ContainerHeight" x="451" y="0" width="14" height="26" uuid="6bbc2e2a-16e8-40a3-b2ab-cf0b9a06c1a8">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2601,7 +2601,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="465" y="0" width="13" height="26" uuid="5131e18f-f249-4ed4-a9d2-cb70fac74167">
+					<reportElement stretchType="ContainerHeight" x="465" y="0" width="13" height="26" uuid="5131e18f-f249-4ed4-a9d2-cb70fac74167">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2623,52 +2623,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="478" y="0" width="20" height="26" uuid="dfefefef-80ca-41ac-9968-59cf4ef24e2a">
-						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
-						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
-						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-						<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					</reportElement>
-					<box>
-						<pen lineWidth="0.25"/>
-						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
-						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="SansSerif" size="6"/>
-					</textElement>
-					<text><![CDATA[]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="498" y="0" width="18" height="26" uuid="86b51c72-cbde-4fe2-84ce-8b98d45f6e69">
-						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
-						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
-						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-					</reportElement>
-					<box>
-						<pen lineWidth="0.25"/>
-						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
-						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="SansSerif" size="6"/>
-					</textElement>
-					<text><![CDATA[]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="516" y="0" width="20" height="26" uuid="0cd16123-ca21-4b4b-a2b2-0a10ff54a0e3">
+					<reportElement stretchType="ContainerHeight" x="478" y="0" width="20" height="26" uuid="dfefefef-80ca-41ac-9968-59cf4ef24e2a">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2691,7 +2646,29 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="536" y="0" width="20" height="26" uuid="7e1699bb-735c-4792-b7ea-18e75377b3eb">
+					<reportElement stretchType="ContainerHeight" x="498" y="0" width="18" height="26" uuid="86b51c72-cbde-4fe2-84ce-8b98d45f6e69">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="6"/>
+					</textElement>
+					<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement stretchType="ContainerHeight" x="516" y="0" width="20" height="26" uuid="0cd16123-ca21-4b4b-a2b2-0a10ff54a0e3">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2714,7 +2691,30 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="556" y="0" width="14" height="26" uuid="d98bcbb2-b1d9-4879-9cba-71352f441abb">
+					<reportElement stretchType="ContainerHeight" x="536" y="0" width="20" height="26" uuid="7e1699bb-735c-4792-b7ea-18e75377b3eb">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="6"/>
+					</textElement>
+					<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement stretchType="ContainerHeight" x="556" y="0" width="14" height="26" uuid="d98bcbb2-b1d9-4879-9cba-71352f441abb">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2737,7 +2737,7 @@
 				</staticText>
 			</frame>
 			<frame>
-				<reportElement x="-14" y="143" width="570" height="26" uuid="8abe6b86-7884-4230-a103-4c87bbe567b7">
+				<reportElement stretchType="ContainerHeight" x="-14" y="143" width="570" height="26" uuid="8abe6b86-7884-4230-a103-4c87bbe567b7">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 				</reportElement>
 				<box>
@@ -2748,7 +2748,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<staticText>
-					<reportElement x="0" y="0" width="44" height="26" uuid="151ea0eb-4e87-4af3-aa3a-9ddef28ecd6b">
+					<reportElement stretchType="ContainerHeight" x="0" y="0" width="44" height="26" uuid="151ea0eb-4e87-4af3-aa3a-9ddef28ecd6b">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2769,7 +2769,7 @@
 					<text><![CDATA[Vacataires non fonctionnaires]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="44" y="0" width="15" height="26" uuid="2468849e-7f38-409e-9675-b71cbba0f969">
+					<reportElement stretchType="ContainerHeight" x="44" y="0" width="15" height="26" uuid="2468849e-7f38-409e-9675-b71cbba0f969">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2791,7 +2791,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="59" y="0" width="16" height="26" uuid="4a794b08-6e17-430c-8d73-6d36c1394e86">
+					<reportElement stretchType="ContainerHeight" x="59" y="0" width="16" height="26" uuid="4a794b08-6e17-430c-8d73-6d36c1394e86">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2813,7 +2813,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="75" y="0" width="13" height="26" uuid="be163c6c-bef5-4b6b-b7e5-9fe9fe2612ad">
+					<reportElement stretchType="ContainerHeight" x="75" y="0" width="13" height="26" uuid="be163c6c-bef5-4b6b-b7e5-9fe9fe2612ad">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2835,7 +2835,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="88" y="0" width="16" height="26" uuid="49ba5b2b-e93c-4487-a676-72b7e6a97654">
+					<reportElement stretchType="ContainerHeight" x="88" y="0" width="16" height="26" uuid="49ba5b2b-e93c-4487-a676-72b7e6a97654">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2857,7 +2857,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="104" y="0" width="17" height="26" uuid="a3f34f32-cfbf-4542-8336-156b1c8dd353">
+					<reportElement stretchType="ContainerHeight" x="104" y="0" width="17" height="26" uuid="a3f34f32-cfbf-4542-8336-156b1c8dd353">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2879,7 +2879,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="121" y="0" width="16" height="26" uuid="6a226b7b-aa30-46f4-8093-ce25b1dce632">
+					<reportElement stretchType="ContainerHeight" x="121" y="0" width="16" height="26" uuid="6a226b7b-aa30-46f4-8093-ce25b1dce632">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2901,7 +2901,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="137" y="0" width="17" height="26" uuid="0fc4d76b-5d70-481e-a0c2-88cbd08ff3bc">
+					<reportElement stretchType="ContainerHeight" x="137" y="0" width="17" height="26" uuid="0fc4d76b-5d70-481e-a0c2-88cbd08ff3bc">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2923,7 +2923,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="154" y="0" width="14" height="26" uuid="d2e9614c-e768-4e59-b96b-af2a262c1cb2">
+					<reportElement stretchType="ContainerHeight" x="154" y="0" width="14" height="26" uuid="d2e9614c-e768-4e59-b96b-af2a262c1cb2">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2945,7 +2945,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="168" y="0" width="14" height="26" uuid="f3e9c798-25f6-40dd-a7e0-4fdbcfc43b4d">
+					<reportElement stretchType="ContainerHeight" x="168" y="0" width="14" height="26" uuid="f3e9c798-25f6-40dd-a7e0-4fdbcfc43b4d">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2967,7 +2967,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="182" y="0" width="16" height="26" uuid="d8d5e54a-366c-43da-807a-c0224f6a0c2d">
+					<reportElement stretchType="ContainerHeight" x="182" y="0" width="16" height="26" uuid="d8d5e54a-366c-43da-807a-c0224f6a0c2d">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2989,7 +2989,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="198" y="0" width="16" height="26" uuid="7f13ef74-b117-427a-9b5e-accb507e054d">
+					<reportElement stretchType="ContainerHeight" x="198" y="0" width="16" height="26" uuid="7f13ef74-b117-427a-9b5e-accb507e054d">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -3011,7 +3011,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="214" y="0" width="15" height="26" uuid="dfd43e98-61b1-4154-99f2-d961e1333d55">
+					<reportElement stretchType="ContainerHeight" x="214" y="0" width="15" height="26" uuid="dfd43e98-61b1-4154-99f2-d961e1333d55">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -3033,7 +3033,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="229" y="0" width="18" height="26" uuid="76b6c40e-73e1-453d-a671-26ee2d43a42f">
+					<reportElement stretchType="ContainerHeight" x="229" y="0" width="18" height="26" uuid="76b6c40e-73e1-453d-a671-26ee2d43a42f">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -3055,7 +3055,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="247" y="0" width="15" height="26" uuid="7e893e90-a80e-44c9-8f25-386d147c5796">
+					<reportElement stretchType="ContainerHeight" x="247" y="0" width="15" height="26" uuid="7e893e90-a80e-44c9-8f25-386d147c5796">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -3077,7 +3077,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="262" y="0" width="16" height="26" uuid="8b2b0ea0-ed1c-49e3-855f-b3409756f22f">
+					<reportElement stretchType="ContainerHeight" x="262" y="0" width="16" height="26" uuid="8b2b0ea0-ed1c-49e3-855f-b3409756f22f">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -3099,7 +3099,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="278" y="0" width="15" height="26" uuid="27395bc5-ee99-43d2-86a0-8c5f86fc353e">
+					<reportElement stretchType="ContainerHeight" x="278" y="0" width="15" height="26" uuid="27395bc5-ee99-43d2-86a0-8c5f86fc353e">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -3121,7 +3121,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="293" y="0" width="15" height="26" uuid="36c0efcd-8322-497b-a7aa-e5b432fbfd11">
+					<reportElement stretchType="ContainerHeight" x="293" y="0" width="15" height="26" uuid="36c0efcd-8322-497b-a7aa-e5b432fbfd11">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -3143,7 +3143,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="308" y="0" width="16" height="26" uuid="830f74d5-e5db-42cb-96a0-89706c448938">
+					<reportElement stretchType="ContainerHeight" x="308" y="0" width="16" height="26" uuid="830f74d5-e5db-42cb-96a0-89706c448938">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -3165,7 +3165,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="324" y="0" width="16" height="26" uuid="56a88684-2e52-4065-83b3-8cbfd51b72e9">
+					<reportElement stretchType="ContainerHeight" x="324" y="0" width="16" height="26" uuid="56a88684-2e52-4065-83b3-8cbfd51b72e9">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -3187,7 +3187,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="340" y="0" width="16" height="26" uuid="9981a136-4276-49f9-9018-c57b8e36f9bb">
+					<reportElement stretchType="ContainerHeight" x="340" y="0" width="16" height="26" uuid="9981a136-4276-49f9-9018-c57b8e36f9bb">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -3209,7 +3209,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="356" y="0" width="16" height="26" uuid="5f7fc35e-7651-442c-b2c2-95accea0d9af">
+					<reportElement stretchType="ContainerHeight" x="356" y="0" width="16" height="26" uuid="5f7fc35e-7651-442c-b2c2-95accea0d9af">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -3231,7 +3231,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="372" y="0" width="16" height="26" uuid="184c6d7b-1638-4fa6-915f-6fb3ae72468f">
+					<reportElement stretchType="ContainerHeight" x="372" y="0" width="16" height="26" uuid="184c6d7b-1638-4fa6-915f-6fb3ae72468f">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -3253,7 +3253,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="388" y="0" width="16" height="26" uuid="254dde54-b560-42ac-a22d-04bd0f080eb9">
+					<reportElement stretchType="ContainerHeight" x="388" y="0" width="16" height="26" uuid="254dde54-b560-42ac-a22d-04bd0f080eb9">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -3275,7 +3275,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="404" y="0" width="16" height="26" uuid="93d143da-0881-4880-b2f4-19a466eed09b">
+					<reportElement stretchType="ContainerHeight" x="404" y="0" width="16" height="26" uuid="93d143da-0881-4880-b2f4-19a466eed09b">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -3297,7 +3297,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="420" y="0" width="15" height="26" uuid="ea592547-be4b-4e9f-a54b-dc6e768aa754">
+					<reportElement stretchType="ContainerHeight" x="420" y="0" width="15" height="26" uuid="ea592547-be4b-4e9f-a54b-dc6e768aa754">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -3319,7 +3319,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="435" y="0" width="16" height="26" uuid="1aeb03aa-0729-44c5-8354-8f5947404426">
+					<reportElement stretchType="ContainerHeight" x="435" y="0" width="16" height="26" uuid="1aeb03aa-0729-44c5-8354-8f5947404426">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -3341,7 +3341,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="451" y="0" width="14" height="26" uuid="dc8f32df-d7c9-48cf-9ce7-464c8d760e67">
+					<reportElement stretchType="ContainerHeight" x="451" y="0" width="14" height="26" uuid="dc8f32df-d7c9-48cf-9ce7-464c8d760e67">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -3363,7 +3363,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="465" y="0" width="13" height="26" uuid="3fa13943-7ab3-4da4-911d-9bdae6536132">
+					<reportElement stretchType="ContainerHeight" x="465" y="0" width="13" height="26" uuid="3fa13943-7ab3-4da4-911d-9bdae6536132">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -3385,52 +3385,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="478" y="0" width="20" height="26" uuid="206c9e7e-29ab-4696-ad70-36a2852be2c1">
-						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
-						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
-						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-						<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					</reportElement>
-					<box>
-						<pen lineWidth="0.25"/>
-						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
-						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="SansSerif" size="6"/>
-					</textElement>
-					<text><![CDATA[]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="498" y="0" width="18" height="26" uuid="42b1a519-e360-4ccd-884d-c301be7350c9">
-						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
-						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
-						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-					</reportElement>
-					<box>
-						<pen lineWidth="0.25"/>
-						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
-						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="SansSerif" size="6"/>
-					</textElement>
-					<text><![CDATA[]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="516" y="0" width="20" height="26" uuid="cbe075f5-c091-41ab-9ac9-f98b9f444330">
+					<reportElement stretchType="ContainerHeight" x="478" y="0" width="20" height="26" uuid="206c9e7e-29ab-4696-ad70-36a2852be2c1">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -3453,7 +3408,29 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="536" y="0" width="20" height="26" uuid="e936ef44-8398-4dbc-888a-af1048bbe05f">
+					<reportElement stretchType="ContainerHeight" x="498" y="0" width="18" height="26" uuid="42b1a519-e360-4ccd-884d-c301be7350c9">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="6"/>
+					</textElement>
+					<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement stretchType="ContainerHeight" x="516" y="0" width="20" height="26" uuid="cbe075f5-c091-41ab-9ac9-f98b9f444330">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -3476,7 +3453,30 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="556" y="0" width="14" height="26" uuid="01bd302c-3c56-4e19-9fda-abe54717290e">
+					<reportElement stretchType="ContainerHeight" x="536" y="0" width="20" height="26" uuid="e936ef44-8398-4dbc-888a-af1048bbe05f">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="6"/>
+					</textElement>
+					<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement stretchType="ContainerHeight" x="556" y="0" width="14" height="26" uuid="01bd302c-3c56-4e19-9fda-abe54717290e">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -3499,7 +3499,7 @@
 				</staticText>
 			</frame>
 			<frame>
-				<reportElement x="-14" y="169" width="570" height="26" uuid="8f79a7cd-85d3-445f-b35a-099e42c62170">
+				<reportElement stretchType="ContainerHeight" x="-14" y="169" width="570" height="26" uuid="8f79a7cd-85d3-445f-b35a-099e42c62170">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 				</reportElement>
 				<box>
@@ -3510,7 +3510,7 @@
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<staticText>
-					<reportElement x="0" y="0" width="44" height="26" uuid="ec5519f7-d54a-42e0-95d8-b51f9ae92dcb">
+					<reportElement stretchType="ContainerHeight" x="0" y="0" width="44" height="26" uuid="ec5519f7-d54a-42e0-95d8-b51f9ae92dcb">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -3531,7 +3531,7 @@
 					<text><![CDATA[TOTAL]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="44" y="0" width="15" height="26" uuid="7ed68fe4-449d-4fc5-a2f3-c5e0f23d0503">
+					<reportElement stretchType="ContainerHeight" x="44" y="0" width="15" height="26" uuid="7ed68fe4-449d-4fc5-a2f3-c5e0f23d0503">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -3553,7 +3553,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="59" y="0" width="16" height="26" uuid="487c9805-77b1-451e-967d-e0c6f1503594">
+					<reportElement stretchType="ContainerHeight" x="59" y="0" width="16" height="26" uuid="487c9805-77b1-451e-967d-e0c6f1503594">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -3575,7 +3575,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="75" y="0" width="13" height="26" uuid="7a2281ba-8396-4599-8680-3aaf87a2b5a2">
+					<reportElement stretchType="ContainerHeight" x="75" y="0" width="13" height="26" uuid="7a2281ba-8396-4599-8680-3aaf87a2b5a2">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -3597,7 +3597,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="88" y="0" width="16" height="26" uuid="378854e8-c43f-4cd1-8dd1-7f406d840116">
+					<reportElement stretchType="ContainerHeight" x="88" y="0" width="16" height="26" uuid="378854e8-c43f-4cd1-8dd1-7f406d840116">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -3619,7 +3619,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="104" y="0" width="17" height="26" uuid="8c40aa5a-3874-4e99-a0c8-0b692643877a">
+					<reportElement stretchType="ContainerHeight" x="104" y="0" width="17" height="26" uuid="8c40aa5a-3874-4e99-a0c8-0b692643877a">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -3641,7 +3641,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="121" y="0" width="16" height="26" uuid="0eb38bd5-e449-4b59-8416-f25d58a38057">
+					<reportElement stretchType="ContainerHeight" x="121" y="0" width="16" height="26" uuid="0eb38bd5-e449-4b59-8416-f25d58a38057">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -3663,7 +3663,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="137" y="0" width="17" height="26" uuid="2512b0a0-9715-4420-ac21-418b5df24c65">
+					<reportElement stretchType="ContainerHeight" x="137" y="0" width="17" height="26" uuid="2512b0a0-9715-4420-ac21-418b5df24c65">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -3685,7 +3685,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="154" y="0" width="14" height="26" uuid="80f3bcf1-4728-49cb-9d77-4efb388aa800">
+					<reportElement stretchType="ContainerHeight" x="154" y="0" width="14" height="26" uuid="80f3bcf1-4728-49cb-9d77-4efb388aa800">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -3707,7 +3707,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="168" y="0" width="14" height="26" uuid="85302def-561e-4d45-a82b-e2e1a08e039a">
+					<reportElement stretchType="ContainerHeight" x="168" y="0" width="14" height="26" uuid="85302def-561e-4d45-a82b-e2e1a08e039a">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -3729,7 +3729,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="182" y="0" width="16" height="26" uuid="4f7918d7-8839-44dc-984f-02d517dd0e48">
+					<reportElement stretchType="ContainerHeight" x="182" y="0" width="16" height="26" uuid="4f7918d7-8839-44dc-984f-02d517dd0e48">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -3751,7 +3751,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="198" y="0" width="16" height="26" uuid="327064b4-da42-460c-aba1-dbb9bda0b709">
+					<reportElement stretchType="ContainerHeight" x="198" y="0" width="16" height="26" uuid="327064b4-da42-460c-aba1-dbb9bda0b709">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -3773,7 +3773,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="214" y="0" width="15" height="26" uuid="65b80108-f687-4c6b-99e5-45cad1de7193">
+					<reportElement stretchType="ContainerHeight" x="214" y="0" width="15" height="26" uuid="65b80108-f687-4c6b-99e5-45cad1de7193">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -3795,7 +3795,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="229" y="0" width="18" height="26" uuid="077438b5-6196-4ba6-81e4-f5ee7e22f9e5">
+					<reportElement stretchType="ContainerHeight" x="229" y="0" width="18" height="26" uuid="077438b5-6196-4ba6-81e4-f5ee7e22f9e5">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -3817,7 +3817,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="247" y="0" width="15" height="26" uuid="b7798401-975d-409c-9966-2afb7c575870">
+					<reportElement stretchType="ContainerHeight" x="247" y="0" width="15" height="26" uuid="b7798401-975d-409c-9966-2afb7c575870">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -3839,7 +3839,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="262" y="0" width="16" height="26" uuid="02448ec2-5ae4-46fd-b600-6af28b93cb9a">
+					<reportElement stretchType="ContainerHeight" x="262" y="0" width="16" height="26" uuid="02448ec2-5ae4-46fd-b600-6af28b93cb9a">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -3861,7 +3861,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="278" y="0" width="15" height="26" uuid="97de5841-1bf1-4125-b4a5-5944d10e57a2">
+					<reportElement stretchType="ContainerHeight" x="278" y="0" width="15" height="26" uuid="97de5841-1bf1-4125-b4a5-5944d10e57a2">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -3883,7 +3883,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="293" y="0" width="15" height="26" uuid="615edcea-4012-4545-9a0a-557490190edc">
+					<reportElement stretchType="ContainerHeight" x="293" y="0" width="15" height="26" uuid="615edcea-4012-4545-9a0a-557490190edc">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -3905,7 +3905,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="308" y="0" width="16" height="26" uuid="45cd7439-e1a5-423a-bef4-e2eb4356b205">
+					<reportElement stretchType="ContainerHeight" x="308" y="0" width="16" height="26" uuid="45cd7439-e1a5-423a-bef4-e2eb4356b205">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -3927,7 +3927,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="324" y="0" width="16" height="26" uuid="27ff760e-06ad-4524-9db1-5f428bb4219b">
+					<reportElement stretchType="ContainerHeight" x="324" y="0" width="16" height="26" uuid="27ff760e-06ad-4524-9db1-5f428bb4219b">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -3949,7 +3949,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="340" y="0" width="16" height="26" uuid="f457ed29-8dcb-4031-8c6f-2e157f7260d5">
+					<reportElement stretchType="ContainerHeight" x="340" y="0" width="16" height="26" uuid="f457ed29-8dcb-4031-8c6f-2e157f7260d5">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -3971,7 +3971,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="356" y="0" width="16" height="26" uuid="dadc27b7-ddcb-48bf-9a42-1fce1640c668">
+					<reportElement stretchType="ContainerHeight" x="356" y="0" width="16" height="26" uuid="dadc27b7-ddcb-48bf-9a42-1fce1640c668">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -3993,7 +3993,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="372" y="0" width="16" height="26" uuid="c13327d7-93e9-4985-b5ab-79ec80b8c2e3">
+					<reportElement stretchType="ContainerHeight" x="372" y="0" width="16" height="26" uuid="c13327d7-93e9-4985-b5ab-79ec80b8c2e3">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -4015,7 +4015,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="388" y="0" width="16" height="26" uuid="af6b2800-2f2f-4eb9-abb3-b2c5b327504d">
+					<reportElement stretchType="ContainerHeight" x="388" y="0" width="16" height="26" uuid="af6b2800-2f2f-4eb9-abb3-b2c5b327504d">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -4037,7 +4037,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="404" y="0" width="16" height="26" uuid="0cb45679-a52c-4ce5-a084-c56b9b441875">
+					<reportElement stretchType="ContainerHeight" x="404" y="0" width="16" height="26" uuid="0cb45679-a52c-4ce5-a084-c56b9b441875">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -4059,7 +4059,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="420" y="0" width="15" height="26" uuid="0c75d468-4def-4dee-ac85-8021010eefa5">
+					<reportElement stretchType="ContainerHeight" x="420" y="0" width="15" height="26" uuid="0c75d468-4def-4dee-ac85-8021010eefa5">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -4081,7 +4081,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="435" y="0" width="16" height="26" uuid="51ec0371-a783-4e0f-9b44-512b6b5d43e8">
+					<reportElement stretchType="ContainerHeight" x="435" y="0" width="16" height="26" uuid="51ec0371-a783-4e0f-9b44-512b6b5d43e8">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -4103,7 +4103,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="451" y="0" width="14" height="26" uuid="b16503b7-edbb-4817-91b3-81bd3841926e">
+					<reportElement stretchType="ContainerHeight" x="451" y="0" width="14" height="26" uuid="b16503b7-edbb-4817-91b3-81bd3841926e">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -4125,7 +4125,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="465" y="0" width="13" height="26" uuid="57515af0-94af-4896-8045-ab5249ce9fd1">
+					<reportElement stretchType="ContainerHeight" x="465" y="0" width="13" height="26" uuid="57515af0-94af-4896-8045-ab5249ce9fd1">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -4147,52 +4147,7 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="478" y="0" width="20" height="26" uuid="6a53203e-7801-49e7-8c97-8ef7e994f1ee">
-						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
-						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
-						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-						<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					</reportElement>
-					<box>
-						<pen lineWidth="0.25"/>
-						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
-						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="SansSerif" size="6"/>
-					</textElement>
-					<text><![CDATA[]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="498" y="0" width="18" height="26" uuid="b31c6f1b-5537-4872-92fa-f5fc206ba47f">
-						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
-						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
-						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-					</reportElement>
-					<box>
-						<pen lineWidth="0.25"/>
-						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
-						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="SansSerif" size="6"/>
-					</textElement>
-					<text><![CDATA[]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="516" y="0" width="20" height="26" uuid="de47c557-f7b0-466b-ab42-b562f0f12327">
+					<reportElement stretchType="ContainerHeight" x="478" y="0" width="20" height="26" uuid="6a53203e-7801-49e7-8c97-8ef7e994f1ee">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -4215,7 +4170,29 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="536" y="0" width="20" height="26" uuid="28a25f5f-f5c0-4fa2-9fcc-6fe70b620cff">
+					<reportElement stretchType="ContainerHeight" x="498" y="0" width="18" height="26" uuid="b31c6f1b-5537-4872-92fa-f5fc206ba47f">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="6"/>
+					</textElement>
+					<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement stretchType="ContainerHeight" x="516" y="0" width="20" height="26" uuid="de47c557-f7b0-466b-ab42-b562f0f12327">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -4238,7 +4215,30 @@
 					<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="556" y="0" width="14" height="26" uuid="6e283092-3480-4b9c-825e-9524aa30e381">
+					<reportElement stretchType="ContainerHeight" x="536" y="0" width="20" height="26" uuid="28a25f5f-f5c0-4fa2-9fcc-6fe70b620cff">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="6"/>
+					</textElement>
+					<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement stretchType="ContainerHeight" x="556" y="0" width="14" height="26" uuid="6e283092-3480-4b9c-825e-9524aa30e381">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -4261,7 +4261,7 @@
 				</staticText>
 			</frame>
 			<staticText>
-				<reportElement x="0" y="440" width="490" height="18" uuid="196f5d31-e4b8-4172-8aba-e27a56c11a48">
+				<reportElement stretchType="ContainerHeight" x="0" y="440" width="490" height="18" uuid="196f5d31-e4b8-4172-8aba-e27a56c11a48">
 					<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 					<property name="com.jaspersoft.layout.grid.y" value="2"/>
 					<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -4288,7 +4288,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<staticText>
-					<reportElement style="titre" x="0" y="0" width="33" height="30" uuid="226a0cf4-5dd9-4d30-8ebd-d33338dbe6b5">
+					<reportElement style="titre" stretchType="ContainerHeight" x="0" y="0" width="33" height="30" uuid="226a0cf4-5dd9-4d30-8ebd-d33338dbe6b5">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -4311,7 +4311,7 @@
 					<text><![CDATA[DISCIPLINE]]></text>
 				</staticText>
 				<frame>
-					<reportElement x="33" y="0" width="40" height="30" uuid="84f22f70-a1f2-4718-9f6d-f819010b800c">
+					<reportElement stretchType="ContainerHeight" x="33" y="0" width="40" height="30" uuid="84f22f70-a1f2-4718-9f6d-f819010b800c">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -4322,7 +4322,7 @@
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 					</reportElement>
 					<staticText>
-						<reportElement style="titre" x="0" y="0" width="40" height="15" uuid="ab5d188d-ec96-4038-a5ba-b1ea6337ce9b">
+						<reportElement style="titre" stretchType="ContainerHeight" x="0" y="0" width="40" height="15" uuid="ab5d188d-ec96-4038-a5ba-b1ea6337ce9b">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -4344,7 +4344,7 @@
 						<text><![CDATA[FR]]></text>
 					</staticText>
 					<staticText>
-						<reportElement style="titre" x="0" y="15" width="20" height="15" uuid="198f1f19-4cd7-44c7-9c81-24d4854c0038">
+						<reportElement style="titre" stretchType="ContainerHeight" x="0" y="15" width="20" height="15" uuid="198f1f19-4cd7-44c7-9c81-24d4854c0038">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -4367,7 +4367,7 @@
 						<text><![CDATA[1c]]></text>
 					</staticText>
 					<staticText>
-						<reportElement style="titre" x="20" y="15" width="20" height="15" uuid="24c67a1b-4e19-4d68-bb0d-3ed2e5081219">
+						<reportElement style="titre" stretchType="ContainerHeight" x="20" y="15" width="20" height="15" uuid="24c67a1b-4e19-4d68-bb0d-3ed2e5081219">
 							<property name="com.jaspersoft.layout.grid.x" value="2"/>
 							<property name="com.jaspersoft.layout.grid.y" value="1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -4391,7 +4391,7 @@
 					</staticText>
 				</frame>
 				<frame>
-					<reportElement x="73" y="0" width="40" height="30" uuid="929a4cdd-d68f-42db-8b44-24f72f88ddcd">
+					<reportElement stretchType="ContainerHeight" x="73" y="0" width="40" height="30" uuid="929a4cdd-d68f-42db-8b44-24f72f88ddcd">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -4402,7 +4402,7 @@
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 					</reportElement>
 					<staticText>
-						<reportElement style="titre" x="0" y="0" width="40" height="15" uuid="a217f4b1-9c26-4caf-8be9-d0d104d10479">
+						<reportElement style="titre" stretchType="ContainerHeight" x="0" y="0" width="40" height="15" uuid="a217f4b1-9c26-4caf-8be9-d0d104d10479">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -4424,7 +4424,7 @@
 						<text><![CDATA[PHILO]]></text>
 					</staticText>
 					<staticText>
-						<reportElement style="titre" x="0" y="15" width="20" height="15" uuid="6be96473-45ed-4d46-8483-844aafbbbe7e">
+						<reportElement style="titre" stretchType="ContainerHeight" x="0" y="15" width="20" height="15" uuid="6be96473-45ed-4d46-8483-844aafbbbe7e">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -4446,7 +4446,7 @@
 						<text><![CDATA[1c]]></text>
 					</staticText>
 					<staticText>
-						<reportElement style="titre" x="20" y="15" width="20" height="15" uuid="87dc9ff3-022e-4562-a629-9f4a8733773a">
+						<reportElement style="titre" stretchType="ContainerHeight" x="20" y="15" width="20" height="15" uuid="87dc9ff3-022e-4562-a629-9f4a8733773a">
 							<property name="com.jaspersoft.layout.grid.x" value="2"/>
 							<property name="com.jaspersoft.layout.grid.y" value="1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -4469,7 +4469,7 @@
 					</staticText>
 				</frame>
 				<frame>
-					<reportElement x="113" y="0" width="40" height="30" uuid="2398619c-c7c9-42f6-8583-9222c1d6c370">
+					<reportElement stretchType="ContainerHeight" x="113" y="0" width="40" height="30" uuid="2398619c-c7c9-42f6-8583-9222c1d6c370">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -4480,7 +4480,7 @@
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 					</reportElement>
 					<staticText>
-						<reportElement style="titre" x="0" y="0" width="40" height="15" uuid="c02c3852-fb51-4540-8920-b5cbd486b0c5">
+						<reportElement style="titre" stretchType="ContainerHeight" x="0" y="0" width="40" height="15" uuid="c02c3852-fb51-4540-8920-b5cbd486b0c5">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -4502,7 +4502,7 @@
 						<text><![CDATA[ANGL]]></text>
 					</staticText>
 					<staticText>
-						<reportElement style="titre" x="0" y="15" width="20" height="15" uuid="88f2730d-da33-4016-aad5-c6b454dc2785">
+						<reportElement style="titre" stretchType="ContainerHeight" x="0" y="15" width="20" height="15" uuid="88f2730d-da33-4016-aad5-c6b454dc2785">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -4524,7 +4524,7 @@
 						<text><![CDATA[1c]]></text>
 					</staticText>
 					<staticText>
-						<reportElement style="titre" x="20" y="15" width="20" height="15" uuid="f6e2dca3-7353-4d4d-89b1-f208dc4c43ce">
+						<reportElement style="titre" stretchType="ContainerHeight" x="20" y="15" width="20" height="15" uuid="f6e2dca3-7353-4d4d-89b1-f208dc4c43ce">
 							<property name="com.jaspersoft.layout.grid.x" value="2"/>
 							<property name="com.jaspersoft.layout.grid.y" value="1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -4547,7 +4547,7 @@
 					</staticText>
 				</frame>
 				<frame>
-					<reportElement x="153" y="0" width="40" height="30" uuid="9cc7439d-ffee-477f-a3e5-1b3bf57d3a7d">
+					<reportElement stretchType="ContainerHeight" x="153" y="0" width="40" height="30" uuid="9cc7439d-ffee-477f-a3e5-1b3bf57d3a7d">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -4558,7 +4558,7 @@
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 					</reportElement>
 					<staticText>
-						<reportElement style="titre" x="0" y="0" width="40" height="15" uuid="a217891f-e9af-477d-b991-62c46fd0e854">
+						<reportElement style="titre" stretchType="ContainerHeight" x="0" y="0" width="40" height="15" uuid="a217891f-e9af-477d-b991-62c46fd0e854">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -4580,7 +4580,7 @@
 						<text><![CDATA[ESP]]></text>
 					</staticText>
 					<staticText>
-						<reportElement style="titre" x="0" y="15" width="20" height="15" uuid="49ecb28e-5087-4479-ba9e-e7f1fc720588">
+						<reportElement style="titre" stretchType="ContainerHeight" x="0" y="15" width="20" height="15" uuid="49ecb28e-5087-4479-ba9e-e7f1fc720588">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -4602,7 +4602,7 @@
 						<text><![CDATA[1c]]></text>
 					</staticText>
 					<staticText>
-						<reportElement style="titre" x="20" y="15" width="20" height="15" uuid="17812850-6fd7-4918-a1aa-ac956a861b37">
+						<reportElement style="titre" stretchType="ContainerHeight" x="20" y="15" width="20" height="15" uuid="17812850-6fd7-4918-a1aa-ac956a861b37">
 							<property name="com.jaspersoft.layout.grid.x" value="2"/>
 							<property name="com.jaspersoft.layout.grid.y" value="1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -4625,7 +4625,7 @@
 					</staticText>
 				</frame>
 				<frame>
-					<reportElement x="193" y="0" width="40" height="30" uuid="54a16551-c5f4-4368-8e78-38fbd657712a">
+					<reportElement stretchType="ContainerHeight" x="193" y="0" width="40" height="30" uuid="54a16551-c5f4-4368-8e78-38fbd657712a">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -4636,7 +4636,7 @@
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 					</reportElement>
 					<staticText>
-						<reportElement style="titre" x="0" y="0" width="40" height="15" uuid="79d2ccd1-2333-45b7-923c-0d679d532a69">
+						<reportElement style="titre" stretchType="ContainerHeight" x="0" y="0" width="40" height="15" uuid="79d2ccd1-2333-45b7-923c-0d679d532a69">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -4658,7 +4658,7 @@
 						<text><![CDATA[ALL]]></text>
 					</staticText>
 					<staticText>
-						<reportElement style="titre" x="0" y="15" width="20" height="15" uuid="455fe14a-d1aa-4a04-a766-1b146ba06fb9">
+						<reportElement style="titre" stretchType="ContainerHeight" x="0" y="15" width="20" height="15" uuid="455fe14a-d1aa-4a04-a766-1b146ba06fb9">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -4680,7 +4680,7 @@
 						<text><![CDATA[1c]]></text>
 					</staticText>
 					<staticText>
-						<reportElement style="titre" x="20" y="15" width="20" height="15" uuid="47de3dec-a6bd-42a9-b513-22f2c7b46c25">
+						<reportElement style="titre" stretchType="ContainerHeight" x="20" y="15" width="20" height="15" uuid="47de3dec-a6bd-42a9-b513-22f2c7b46c25">
 							<property name="com.jaspersoft.layout.grid.x" value="2"/>
 							<property name="com.jaspersoft.layout.grid.y" value="1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -4703,7 +4703,7 @@
 					</staticText>
 				</frame>
 				<frame>
-					<reportElement x="233" y="0" width="40" height="30" uuid="6affdac6-7933-4c1e-94b2-bac4f498de6d">
+					<reportElement stretchType="ContainerHeight" x="233" y="0" width="40" height="30" uuid="6affdac6-7933-4c1e-94b2-bac4f498de6d">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -4714,7 +4714,7 @@
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 					</reportElement>
 					<staticText>
-						<reportElement style="titre" x="0" y="0" width="40" height="15" uuid="77bd9627-68ca-4916-b9e0-d6d1f3d8e59c">
+						<reportElement style="titre" stretchType="ContainerHeight" x="0" y="0" width="40" height="15" uuid="77bd9627-68ca-4916-b9e0-d6d1f3d8e59c">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -4736,7 +4736,7 @@
 						<text><![CDATA[HG]]></text>
 					</staticText>
 					<staticText>
-						<reportElement style="titre" x="0" y="15" width="20" height="15" uuid="fe765088-14df-482f-9e48-eb567a466449">
+						<reportElement style="titre" stretchType="ContainerHeight" x="0" y="15" width="20" height="15" uuid="fe765088-14df-482f-9e48-eb567a466449">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -4758,7 +4758,7 @@
 						<text><![CDATA[1c]]></text>
 					</staticText>
 					<staticText>
-						<reportElement style="titre" x="20" y="15" width="20" height="15" uuid="4aa84be4-e8c5-43b6-9a94-b1ea55952e47">
+						<reportElement style="titre" stretchType="ContainerHeight" x="20" y="15" width="20" height="15" uuid="4aa84be4-e8c5-43b6-9a94-b1ea55952e47">
 							<property name="com.jaspersoft.layout.grid.x" value="2"/>
 							<property name="com.jaspersoft.layout.grid.y" value="1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -4781,7 +4781,7 @@
 					</staticText>
 				</frame>
 				<frame>
-					<reportElement x="273" y="0" width="40" height="30" uuid="ffa44922-0262-44b7-8816-8cc0ae9e8724">
+					<reportElement stretchType="ContainerHeight" x="273" y="0" width="40" height="30" uuid="ffa44922-0262-44b7-8816-8cc0ae9e8724">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -4792,7 +4792,7 @@
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 					</reportElement>
 					<staticText>
-						<reportElement style="titre" x="0" y="0" width="40" height="15" uuid="945cc301-2ae0-4677-a70e-40fd1668c056">
+						<reportElement style="titre" stretchType="ContainerHeight" x="0" y="0" width="40" height="15" uuid="945cc301-2ae0-4677-a70e-40fd1668c056">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -4814,7 +4814,7 @@
 						<text><![CDATA[MATH]]></text>
 					</staticText>
 					<staticText>
-						<reportElement style="titre" x="0" y="15" width="20" height="15" uuid="e774e641-a99f-4743-adb2-012aca20ebd7">
+						<reportElement style="titre" stretchType="ContainerHeight" x="0" y="15" width="20" height="15" uuid="e774e641-a99f-4743-adb2-012aca20ebd7">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -4836,7 +4836,7 @@
 						<text><![CDATA[1c]]></text>
 					</staticText>
 					<staticText>
-						<reportElement style="titre" x="20" y="15" width="20" height="15" uuid="3b032b5a-dd26-40f6-bfc6-4c1891cec7d0">
+						<reportElement style="titre" stretchType="ContainerHeight" x="20" y="15" width="20" height="15" uuid="3b032b5a-dd26-40f6-bfc6-4c1891cec7d0">
 							<property name="com.jaspersoft.layout.grid.x" value="2"/>
 							<property name="com.jaspersoft.layout.grid.y" value="1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -4859,7 +4859,7 @@
 					</staticText>
 				</frame>
 				<frame>
-					<reportElement x="313" y="0" width="40" height="30" uuid="508c10dc-c1c1-46c8-a2d1-5382f8e431fa">
+					<reportElement stretchType="ContainerHeight" x="313" y="0" width="40" height="30" uuid="508c10dc-c1c1-46c8-a2d1-5382f8e431fa">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -4870,7 +4870,7 @@
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 					</reportElement>
 					<staticText>
-						<reportElement style="titre" x="0" y="0" width="40" height="15" uuid="738eb422-93f7-46d6-b7ff-96511416b06e">
+						<reportElement style="titre" stretchType="ContainerHeight" x="0" y="0" width="40" height="15" uuid="738eb422-93f7-46d6-b7ff-96511416b06e">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -4892,7 +4892,7 @@
 						<text><![CDATA[PC]]></text>
 					</staticText>
 					<staticText>
-						<reportElement style="titre" x="0" y="15" width="20" height="15" uuid="8a33f0d4-b5bd-4e6d-92b8-8cec35de3767">
+						<reportElement style="titre" stretchType="ContainerHeight" x="0" y="15" width="20" height="15" uuid="8a33f0d4-b5bd-4e6d-92b8-8cec35de3767">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -4914,7 +4914,7 @@
 						<text><![CDATA[1c]]></text>
 					</staticText>
 					<staticText>
-						<reportElement style="titre" x="20" y="15" width="20" height="15" uuid="3271ca74-7822-4ced-9008-fbb38c95e27d">
+						<reportElement style="titre" stretchType="ContainerHeight" x="20" y="15" width="20" height="15" uuid="3271ca74-7822-4ced-9008-fbb38c95e27d">
 							<property name="com.jaspersoft.layout.grid.x" value="2"/>
 							<property name="com.jaspersoft.layout.grid.y" value="1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -4937,7 +4937,7 @@
 					</staticText>
 				</frame>
 				<frame>
-					<reportElement x="353" y="0" width="40" height="30" uuid="0a96fe50-d808-43a5-9145-bd3bd35afe95">
+					<reportElement stretchType="ContainerHeight" x="353" y="0" width="40" height="30" uuid="0a96fe50-d808-43a5-9145-bd3bd35afe95">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -4948,7 +4948,7 @@
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 					</reportElement>
 					<staticText>
-						<reportElement style="titre" x="0" y="0" width="40" height="15" uuid="7dc5f866-6fb5-411f-98de-c1895fdc9a03">
+						<reportElement style="titre" stretchType="ContainerHeight" x="0" y="0" width="40" height="15" uuid="7dc5f866-6fb5-411f-98de-c1895fdc9a03">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -4970,7 +4970,7 @@
 						<text><![CDATA[SVT]]></text>
 					</staticText>
 					<staticText>
-						<reportElement style="titre" x="0" y="15" width="20" height="15" uuid="a348c191-e465-4372-8907-51c19a3f2269">
+						<reportElement style="titre" stretchType="ContainerHeight" x="0" y="15" width="20" height="15" uuid="a348c191-e465-4372-8907-51c19a3f2269">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -4992,7 +4992,7 @@
 						<text><![CDATA[1c]]></text>
 					</staticText>
 					<staticText>
-						<reportElement style="titre" x="20" y="15" width="20" height="15" uuid="ce0d85d8-1617-47ec-b332-78d3a8ad84d3">
+						<reportElement style="titre" stretchType="ContainerHeight" x="20" y="15" width="20" height="15" uuid="ce0d85d8-1617-47ec-b332-78d3a8ad84d3">
 							<property name="com.jaspersoft.layout.grid.x" value="2"/>
 							<property name="com.jaspersoft.layout.grid.y" value="1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -5015,7 +5015,7 @@
 					</staticText>
 				</frame>
 				<frame>
-					<reportElement x="393" y="0" width="40" height="30" uuid="0be50284-9c08-47ec-8c73-f34796cbe342">
+					<reportElement stretchType="ContainerHeight" x="393" y="0" width="40" height="30" uuid="0be50284-9c08-47ec-8c73-f34796cbe342">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -5026,7 +5026,7 @@
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 					</reportElement>
 					<staticText>
-						<reportElement style="titre" x="0" y="0" width="40" height="15" uuid="5f374e88-ea87-487a-97b4-e29e0b02aa37">
+						<reportElement style="titre" stretchType="ContainerHeight" x="0" y="0" width="40" height="15" uuid="5f374e88-ea87-487a-97b4-e29e0b02aa37">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -5048,7 +5048,7 @@
 						<text><![CDATA[FR]]></text>
 					</staticText>
 					<staticText>
-						<reportElement style="titre" x="0" y="15" width="20" height="15" uuid="0b45eb93-24e3-4b50-862b-381585596175">
+						<reportElement style="titre" stretchType="ContainerHeight" x="0" y="15" width="20" height="15" uuid="0b45eb93-24e3-4b50-862b-381585596175">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -5070,7 +5070,7 @@
 						<text><![CDATA[1c]]></text>
 					</staticText>
 					<staticText>
-						<reportElement style="titre" x="20" y="15" width="20" height="15" uuid="37a2ebde-dc56-4bef-ba00-5efdece34c49">
+						<reportElement style="titre" stretchType="ContainerHeight" x="20" y="15" width="20" height="15" uuid="37a2ebde-dc56-4bef-ba00-5efdece34c49">
 							<property name="com.jaspersoft.layout.grid.x" value="2"/>
 							<property name="com.jaspersoft.layout.grid.y" value="1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -5093,7 +5093,7 @@
 					</staticText>
 				</frame>
 				<frame>
-					<reportElement x="433" y="0" width="40" height="30" uuid="339247a4-6804-4eba-b82d-488697737936">
+					<reportElement stretchType="ContainerHeight" x="433" y="0" width="40" height="30" uuid="339247a4-6804-4eba-b82d-488697737936">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -5104,7 +5104,7 @@
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 					</reportElement>
 					<staticText>
-						<reportElement style="titre" x="0" y="0" width="40" height="15" uuid="31c36998-e4d6-4a32-bc1d-8d39c2bf0945">
+						<reportElement style="titre" stretchType="ContainerHeight" x="0" y="0" width="40" height="15" uuid="31c36998-e4d6-4a32-bc1d-8d39c2bf0945">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -5126,7 +5126,7 @@
 						<text><![CDATA[EPS]]></text>
 					</staticText>
 					<staticText>
-						<reportElement style="titre" x="0" y="15" width="20" height="15" uuid="5462bbb9-123c-49c4-9550-242c49fc642e">
+						<reportElement style="titre" stretchType="ContainerHeight" x="0" y="15" width="20" height="15" uuid="5462bbb9-123c-49c4-9550-242c49fc642e">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -5148,7 +5148,7 @@
 						<text><![CDATA[1c]]></text>
 					</staticText>
 					<staticText>
-						<reportElement style="titre" x="20" y="15" width="20" height="15" uuid="ced30b78-acef-462f-a1ed-20d9ea727a01">
+						<reportElement style="titre" stretchType="ContainerHeight" x="20" y="15" width="20" height="15" uuid="ced30b78-acef-462f-a1ed-20d9ea727a01">
 							<property name="com.jaspersoft.layout.grid.x" value="2"/>
 							<property name="com.jaspersoft.layout.grid.y" value="1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -5171,7 +5171,7 @@
 					</staticText>
 				</frame>
 				<frame>
-					<reportElement x="473" y="0" width="40" height="30" uuid="f9345a41-ead5-48c4-b7c4-39a9952fa4f1">
+					<reportElement stretchType="ContainerHeight" x="473" y="0" width="40" height="30" uuid="f9345a41-ead5-48c4-b7c4-39a9952fa4f1">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -5182,7 +5182,7 @@
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 					</reportElement>
 					<staticText>
-						<reportElement style="titre" x="0" y="0" width="40" height="15" uuid="4c18c204-6e0e-4579-a2b2-4dedaac009b4">
+						<reportElement style="titre" stretchType="ContainerHeight" x="0" y="0" width="40" height="15" uuid="4c18c204-6e0e-4579-a2b2-4dedaac009b4">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -5204,7 +5204,7 @@
 						<text><![CDATA[AP]]></text>
 					</staticText>
 					<staticText>
-						<reportElement style="titre" x="0" y="15" width="20" height="15" uuid="d6decbbe-6b97-4e34-8c64-dfd040e235f9">
+						<reportElement style="titre" stretchType="ContainerHeight" x="0" y="15" width="20" height="15" uuid="d6decbbe-6b97-4e34-8c64-dfd040e235f9">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -5226,7 +5226,7 @@
 						<text><![CDATA[1c]]></text>
 					</staticText>
 					<staticText>
-						<reportElement style="titre" x="20" y="15" width="20" height="15" uuid="f3afd69a-381f-4fe8-89be-6e9be9dc34f1">
+						<reportElement style="titre" stretchType="ContainerHeight" x="20" y="15" width="20" height="15" uuid="f3afd69a-381f-4fe8-89be-6e9be9dc34f1">
 							<property name="com.jaspersoft.layout.grid.x" value="2"/>
 							<property name="com.jaspersoft.layout.grid.y" value="1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -5249,7 +5249,7 @@
 					</staticText>
 				</frame>
 				<frame>
-					<reportElement x="513" y="0" width="40" height="30" uuid="a29ca0d6-d851-4947-906d-246693685164">
+					<reportElement stretchType="ContainerHeight" x="513" y="0" width="40" height="30" uuid="a29ca0d6-d851-4947-906d-246693685164">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -5260,7 +5260,7 @@
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 					</reportElement>
 					<staticText>
-						<reportElement style="titre" x="0" y="0" width="40" height="15" uuid="ef9593de-05cb-4815-8d78-898d6b7076d1">
+						<reportElement style="titre" stretchType="ContainerHeight" x="0" y="0" width="40" height="15" uuid="ef9593de-05cb-4815-8d78-898d6b7076d1">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -5282,7 +5282,7 @@
 						<text><![CDATA[MUS]]></text>
 					</staticText>
 					<staticText>
-						<reportElement style="titre" x="0" y="15" width="20" height="15" uuid="9b6fd4aa-f89d-457a-9c51-8d0a602378ca">
+						<reportElement style="titre" stretchType="ContainerHeight" x="0" y="15" width="20" height="15" uuid="9b6fd4aa-f89d-457a-9c51-8d0a602378ca">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -5304,7 +5304,7 @@
 						<text><![CDATA[1c]]></text>
 					</staticText>
 					<staticText>
-						<reportElement style="titre" x="20" y="15" width="20" height="15" uuid="9aca6c43-45b5-47d0-8363-d1889a38cbf8">
+						<reportElement style="titre" stretchType="ContainerHeight" x="20" y="15" width="20" height="15" uuid="9aca6c43-45b5-47d0-8363-d1889a38cbf8">
 							<property name="com.jaspersoft.layout.grid.x" value="2"/>
 							<property name="com.jaspersoft.layout.grid.y" value="1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -5360,7 +5360,7 @@
 						<text><![CDATA[TOTAL]]></text>
 					</staticText>
 					<staticText>
-						<reportElement style="titre" x="0" y="15" width="15" height="15" uuid="f140ab0d-18fc-4d28-9447-8816232dd2d3">
+						<reportElement style="titre" stretchType="ContainerHeight" x="0" y="15" width="15" height="15" uuid="f140ab0d-18fc-4d28-9447-8816232dd2d3">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -5418,7 +5418,7 @@
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<staticText>
-					<reportElement style="titre" x="0" y="0" width="33" height="15" uuid="593e13d5-e4a3-4981-b7c0-8a736da1ec29">
+					<reportElement style="titre" stretchType="ContainerHeight" x="0" y="0" width="33" height="15" uuid="593e13d5-e4a3-4981-b7c0-8a736da1ec29">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -5441,7 +5441,7 @@
 					<text><![CDATA[TOTAL]]></text>
 				</staticText>
 				<frame>
-					<reportElement x="33" y="0" width="40" height="15" uuid="ca314313-d74c-4709-a7f3-56f2ce7bf241">
+					<reportElement stretchType="ContainerHeight" x="33" y="0" width="40" height="15" uuid="ca314313-d74c-4709-a7f3-56f2ce7bf241">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -5452,7 +5452,7 @@
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 					</reportElement>
 					<staticText>
-						<reportElement style="titre" x="0" y="0" width="20" height="15" uuid="88199a05-7b10-4c91-ac89-c03c8445d0db">
+						<reportElement style="titre" stretchType="ContainerHeight" x="0" y="0" width="20" height="15" uuid="88199a05-7b10-4c91-ac89-c03c8445d0db">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="0"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -5475,7 +5475,7 @@
 						<text><![CDATA[]]></text>
 					</staticText>
 					<staticText>
-						<reportElement style="titre" x="20" y="0" width="20" height="15" uuid="50165ffe-9836-41a2-9cd7-48671855911e">
+						<reportElement style="titre" stretchType="ContainerHeight" x="20" y="0" width="20" height="15" uuid="50165ffe-9836-41a2-9cd7-48671855911e">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="0"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -5499,7 +5499,7 @@
 					</staticText>
 				</frame>
 				<frame>
-					<reportElement x="73" y="0" width="40" height="15" uuid="40c37cd9-8c26-446e-aeb2-f67d43d3b924">
+					<reportElement stretchType="ContainerHeight" x="73" y="0" width="40" height="15" uuid="40c37cd9-8c26-446e-aeb2-f67d43d3b924">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -5510,7 +5510,7 @@
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 					</reportElement>
 					<staticText>
-						<reportElement style="titre" x="0" y="0" width="20" height="15" uuid="0bc9f881-a3c2-4ff9-9823-9a9fb7055620">
+						<reportElement style="titre" stretchType="ContainerHeight" x="0" y="0" width="20" height="15" uuid="0bc9f881-a3c2-4ff9-9823-9a9fb7055620">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="0"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -5532,7 +5532,7 @@
 						<text><![CDATA[]]></text>
 					</staticText>
 					<staticText>
-						<reportElement style="titre" x="20" y="0" width="20" height="15" uuid="6887c5cf-2296-4f78-8a69-eb65114a8b70">
+						<reportElement style="titre" stretchType="ContainerHeight" x="20" y="0" width="20" height="15" uuid="6887c5cf-2296-4f78-8a69-eb65114a8b70">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="0"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -5555,7 +5555,7 @@
 					</staticText>
 				</frame>
 				<frame>
-					<reportElement x="113" y="0" width="40" height="15" uuid="d7877bb5-f151-48b7-a9c1-d8fab444af81">
+					<reportElement stretchType="ContainerHeight" x="113" y="0" width="40" height="15" uuid="d7877bb5-f151-48b7-a9c1-d8fab444af81">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -5566,7 +5566,7 @@
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 					</reportElement>
 					<staticText>
-						<reportElement style="titre" x="0" y="0" width="20" height="15" uuid="958b1dc7-2fa0-4d5c-ac9f-74339b29c5bf">
+						<reportElement style="titre" stretchType="ContainerHeight" x="0" y="0" width="20" height="15" uuid="958b1dc7-2fa0-4d5c-ac9f-74339b29c5bf">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="0"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -5588,7 +5588,7 @@
 						<text><![CDATA[]]></text>
 					</staticText>
 					<staticText>
-						<reportElement style="titre" x="20" y="0" width="20" height="15" uuid="c7a856b2-37d7-434c-bb13-2d336976acef">
+						<reportElement style="titre" stretchType="ContainerHeight" x="20" y="0" width="20" height="15" uuid="c7a856b2-37d7-434c-bb13-2d336976acef">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="0"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -5611,7 +5611,7 @@
 					</staticText>
 				</frame>
 				<frame>
-					<reportElement x="153" y="0" width="40" height="15" uuid="8a324a36-6677-402b-9ea9-baa012fec791">
+					<reportElement stretchType="ContainerHeight" x="153" y="0" width="40" height="15" uuid="8a324a36-6677-402b-9ea9-baa012fec791">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -5622,7 +5622,7 @@
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 					</reportElement>
 					<staticText>
-						<reportElement style="titre" x="0" y="0" width="20" height="15" uuid="610c128e-9c16-4c75-a9ea-47d3708bb986">
+						<reportElement style="titre" stretchType="ContainerHeight" x="0" y="0" width="20" height="15" uuid="610c128e-9c16-4c75-a9ea-47d3708bb986">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="0"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -5644,7 +5644,7 @@
 						<text><![CDATA[]]></text>
 					</staticText>
 					<staticText>
-						<reportElement style="titre" x="20" y="0" width="20" height="15" uuid="edc072bc-e706-4d08-a47a-ce5dfb3755f4">
+						<reportElement style="titre" stretchType="ContainerHeight" x="20" y="0" width="20" height="15" uuid="edc072bc-e706-4d08-a47a-ce5dfb3755f4">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="0"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -5667,7 +5667,7 @@
 					</staticText>
 				</frame>
 				<frame>
-					<reportElement x="193" y="0" width="40" height="15" uuid="b6a5c2db-42f9-4d29-b3cd-0fed7cc61f64">
+					<reportElement stretchType="ContainerHeight" x="193" y="0" width="40" height="15" uuid="b6a5c2db-42f9-4d29-b3cd-0fed7cc61f64">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -5678,7 +5678,7 @@
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 					</reportElement>
 					<staticText>
-						<reportElement style="titre" x="0" y="0" width="20" height="15" uuid="7a26e6aa-680d-4330-8fdc-64624089fa77">
+						<reportElement style="titre" stretchType="ContainerHeight" x="0" y="0" width="20" height="15" uuid="7a26e6aa-680d-4330-8fdc-64624089fa77">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="0"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -5700,7 +5700,7 @@
 						<text><![CDATA[]]></text>
 					</staticText>
 					<staticText>
-						<reportElement style="titre" x="20" y="0" width="20" height="15" uuid="d8d8f81e-6808-45c0-a355-e91eb616a6e6">
+						<reportElement style="titre" stretchType="ContainerHeight" x="20" y="0" width="20" height="15" uuid="d8d8f81e-6808-45c0-a355-e91eb616a6e6">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="0"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -5723,7 +5723,7 @@
 					</staticText>
 				</frame>
 				<frame>
-					<reportElement x="233" y="0" width="40" height="15" uuid="6679924f-fc0b-48eb-966d-08f84772e2a4">
+					<reportElement stretchType="ContainerHeight" x="233" y="0" width="40" height="15" uuid="6679924f-fc0b-48eb-966d-08f84772e2a4">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -5734,7 +5734,7 @@
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 					</reportElement>
 					<staticText>
-						<reportElement style="titre" x="0" y="0" width="20" height="15" uuid="9159b368-61e3-4e77-bbbe-c06aa4e4c828">
+						<reportElement style="titre" stretchType="ContainerHeight" x="0" y="0" width="20" height="15" uuid="9159b368-61e3-4e77-bbbe-c06aa4e4c828">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="0"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -5756,7 +5756,7 @@
 						<text><![CDATA[]]></text>
 					</staticText>
 					<staticText>
-						<reportElement style="titre" x="20" y="0" width="20" height="15" uuid="3b8f47a8-38af-48cc-8541-a6606bb839b2">
+						<reportElement style="titre" stretchType="ContainerHeight" x="20" y="0" width="20" height="15" uuid="3b8f47a8-38af-48cc-8541-a6606bb839b2">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="0"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -5779,7 +5779,7 @@
 					</staticText>
 				</frame>
 				<frame>
-					<reportElement x="273" y="0" width="40" height="15" uuid="ad3df9a2-5a18-4b81-b58e-093368feb6a3">
+					<reportElement stretchType="ContainerHeight" x="273" y="0" width="40" height="15" uuid="ad3df9a2-5a18-4b81-b58e-093368feb6a3">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -5790,7 +5790,7 @@
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 					</reportElement>
 					<staticText>
-						<reportElement style="titre" x="0" y="0" width="20" height="15" uuid="20d22d92-74a6-4db8-8585-9fe3d7163b3a">
+						<reportElement style="titre" stretchType="ContainerHeight" x="0" y="0" width="20" height="15" uuid="20d22d92-74a6-4db8-8585-9fe3d7163b3a">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="0"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -5812,7 +5812,7 @@
 						<text><![CDATA[]]></text>
 					</staticText>
 					<staticText>
-						<reportElement style="titre" x="20" y="0" width="20" height="15" uuid="dc181a48-f5ad-4dc8-8254-9af0113fa352">
+						<reportElement style="titre" stretchType="ContainerHeight" x="20" y="0" width="20" height="15" uuid="dc181a48-f5ad-4dc8-8254-9af0113fa352">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="0"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -5835,7 +5835,7 @@
 					</staticText>
 				</frame>
 				<frame>
-					<reportElement x="313" y="0" width="40" height="15" uuid="4082f525-b972-478f-be25-688754c41781">
+					<reportElement stretchType="ContainerHeight" x="313" y="0" width="40" height="15" uuid="4082f525-b972-478f-be25-688754c41781">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -5846,7 +5846,7 @@
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 					</reportElement>
 					<staticText>
-						<reportElement style="titre" x="0" y="0" width="20" height="15" uuid="605c5706-6e48-44cf-b774-141fed63d09a">
+						<reportElement style="titre" stretchType="ContainerHeight" x="0" y="0" width="20" height="15" uuid="605c5706-6e48-44cf-b774-141fed63d09a">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="0"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -5868,7 +5868,7 @@
 						<text><![CDATA[]]></text>
 					</staticText>
 					<staticText>
-						<reportElement style="titre" x="20" y="0" width="20" height="15" uuid="f5bb640b-5ec3-491c-98d9-12e75c7da917">
+						<reportElement style="titre" stretchType="ContainerHeight" x="20" y="0" width="20" height="15" uuid="f5bb640b-5ec3-491c-98d9-12e75c7da917">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="0"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -5891,7 +5891,7 @@
 					</staticText>
 				</frame>
 				<frame>
-					<reportElement x="353" y="0" width="40" height="15" uuid="0202f4a4-b71d-479e-86be-ad33a62d394c">
+					<reportElement stretchType="ContainerHeight" x="353" y="0" width="40" height="15" uuid="0202f4a4-b71d-479e-86be-ad33a62d394c">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -5902,7 +5902,7 @@
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 					</reportElement>
 					<staticText>
-						<reportElement style="titre" x="0" y="0" width="20" height="15" uuid="ae44fc1f-0077-449f-b117-36b171b65bf0">
+						<reportElement style="titre" stretchType="ContainerHeight" x="0" y="0" width="20" height="15" uuid="ae44fc1f-0077-449f-b117-36b171b65bf0">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="0"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -5924,7 +5924,7 @@
 						<text><![CDATA[]]></text>
 					</staticText>
 					<staticText>
-						<reportElement style="titre" x="20" y="0" width="20" height="15" uuid="e0c5c938-99c8-41ac-a7bf-2fad9a7b2a4c">
+						<reportElement style="titre" stretchType="ContainerHeight" x="20" y="0" width="20" height="15" uuid="e0c5c938-99c8-41ac-a7bf-2fad9a7b2a4c">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="0"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -5947,7 +5947,7 @@
 					</staticText>
 				</frame>
 				<frame>
-					<reportElement x="393" y="0" width="40" height="15" uuid="dfa36315-36a2-41c2-8e1d-c4f4e8601a3d">
+					<reportElement stretchType="ContainerHeight" x="393" y="0" width="40" height="15" uuid="dfa36315-36a2-41c2-8e1d-c4f4e8601a3d">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -5958,7 +5958,7 @@
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 					</reportElement>
 					<staticText>
-						<reportElement style="titre" x="0" y="0" width="20" height="15" uuid="666b6b43-45c4-48ef-b7c5-2c2df2fbbb17">
+						<reportElement style="titre" stretchType="ContainerHeight" x="0" y="0" width="20" height="15" uuid="666b6b43-45c4-48ef-b7c5-2c2df2fbbb17">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="0"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -5980,7 +5980,7 @@
 						<text><![CDATA[]]></text>
 					</staticText>
 					<staticText>
-						<reportElement style="titre" x="20" y="0" width="20" height="15" uuid="82a12717-385f-4e96-99e5-539fea9e239e">
+						<reportElement style="titre" stretchType="ContainerHeight" x="20" y="0" width="20" height="15" uuid="82a12717-385f-4e96-99e5-539fea9e239e">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="0"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -6003,7 +6003,7 @@
 					</staticText>
 				</frame>
 				<frame>
-					<reportElement x="433" y="0" width="40" height="15" uuid="92029e27-5245-4a06-b0eb-5350825fb594">
+					<reportElement stretchType="ContainerHeight" x="433" y="0" width="40" height="15" uuid="92029e27-5245-4a06-b0eb-5350825fb594">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -6014,7 +6014,7 @@
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 					</reportElement>
 					<staticText>
-						<reportElement style="titre" x="0" y="0" width="20" height="15" uuid="45494d64-c74a-4145-a4be-4d754dc48348">
+						<reportElement style="titre" stretchType="ContainerHeight" x="0" y="0" width="20" height="15" uuid="45494d64-c74a-4145-a4be-4d754dc48348">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="0"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -6036,7 +6036,7 @@
 						<text><![CDATA[]]></text>
 					</staticText>
 					<staticText>
-						<reportElement style="titre" x="20" y="0" width="20" height="15" uuid="9dd74aab-04c3-4c26-9de0-8fb99eed0f75">
+						<reportElement style="titre" stretchType="ContainerHeight" x="20" y="0" width="20" height="15" uuid="9dd74aab-04c3-4c26-9de0-8fb99eed0f75">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="0"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -6059,7 +6059,7 @@
 					</staticText>
 				</frame>
 				<frame>
-					<reportElement x="473" y="0" width="40" height="15" uuid="79454264-15c1-4687-ba8e-042f4bd35498">
+					<reportElement stretchType="ContainerHeight" x="473" y="0" width="40" height="15" uuid="79454264-15c1-4687-ba8e-042f4bd35498">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -6070,7 +6070,7 @@
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 					</reportElement>
 					<staticText>
-						<reportElement style="titre" x="0" y="0" width="20" height="15" uuid="6770c8be-580a-4cff-9a42-7f681d1589c1">
+						<reportElement style="titre" stretchType="ContainerHeight" x="0" y="0" width="20" height="15" uuid="6770c8be-580a-4cff-9a42-7f681d1589c1">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="0"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -6092,7 +6092,7 @@
 						<text><![CDATA[]]></text>
 					</staticText>
 					<staticText>
-						<reportElement style="titre" x="20" y="0" width="20" height="15" uuid="9635d13f-76fe-43c3-8d1d-3605b97fa1af">
+						<reportElement style="titre" stretchType="ContainerHeight" x="20" y="0" width="20" height="15" uuid="9635d13f-76fe-43c3-8d1d-3605b97fa1af">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="0"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -6115,7 +6115,7 @@
 					</staticText>
 				</frame>
 				<frame>
-					<reportElement x="513" y="0" width="40" height="15" uuid="004b8855-d281-4867-8cb3-cdc30537568e">
+					<reportElement stretchType="ContainerHeight" x="513" y="0" width="40" height="15" uuid="004b8855-d281-4867-8cb3-cdc30537568e">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -6126,7 +6126,7 @@
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 					</reportElement>
 					<staticText>
-						<reportElement style="titre" x="0" y="0" width="20" height="15" uuid="dd8da5b1-77fb-465e-b6ac-cd867e18aa54">
+						<reportElement style="titre" stretchType="ContainerHeight" x="0" y="0" width="20" height="15" uuid="dd8da5b1-77fb-465e-b6ac-cd867e18aa54">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="0"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -6148,7 +6148,7 @@
 						<text><![CDATA[]]></text>
 					</staticText>
 					<staticText>
-						<reportElement style="titre" x="20" y="0" width="20" height="15" uuid="224070cd-5794-42ac-ba7d-82ef6b3672b4">
+						<reportElement style="titre" stretchType="ContainerHeight" x="20" y="0" width="20" height="15" uuid="224070cd-5794-42ac-ba7d-82ef6b3672b4">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="0"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -6182,7 +6182,7 @@
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 					</reportElement>
 					<staticText>
-						<reportElement style="titre" x="0" y="0" width="15" height="15" uuid="f6254f3c-64b5-48b1-bad1-fc5adb791639">
+						<reportElement style="titre" stretchType="ContainerHeight" x="0" y="0" width="15" height="15" uuid="f6254f3c-64b5-48b1-bad1-fc5adb791639">
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="0"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -6230,7 +6230,7 @@
 				</frame>
 			</frame>
 			<staticText>
-				<reportElement x="-13" y="210" width="565" height="220" uuid="23766a42-935d-4715-a10f-d4b3bb2d2317">
+				<reportElement stretchType="ContainerHeight" x="-13" y="210" width="565" height="220" uuid="23766a42-935d-4715-a10f-d4b3bb2d2317">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
@@ -6240,7 +6240,7 @@
 				<text><![CDATA[Commentaire :]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="-3" y="523" width="565" height="245" uuid="1484cc9e-8dad-4969-b55f-58ab1f745372">
+				<reportElement stretchType="ContainerHeight" x="-3" y="523" width="565" height="245" uuid="1484cc9e-8dad-4969-b55f-58ab1f745372">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>

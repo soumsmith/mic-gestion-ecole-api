@@ -427,6 +427,9 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.libelle_classe =  $P{clas
 					<subreportParameter name="infosAmoirie">
 						<subreportParameterExpression><![CDATA[$P{infosAmoirie}]]></subreportParameterExpression>
 					</subreportParameter>
+					<subreportParameter name="distinctin">
+						<subreportParameterExpression><![CDATA[$P{distinctin}]]></subreportParameterExpression>
+					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					<subreportExpression><![CDATA["etats/spider/BulletinNobelSpiderEtanBTSPointCarre.jasper"]]></subreportExpression>
 				</subreport>
