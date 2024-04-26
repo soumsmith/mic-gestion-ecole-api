@@ -1,6 +1,7 @@
 package com.vieecoles.steph.ressources;
 
 import com.vieecoles.steph.entities.NiveauEnseignement;
+import com.vieecoles.steph.projections.GenericBasicProjectionLongId;
 import com.vieecoles.steph.services.NiveauEnseignementService;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
@@ -23,6 +24,14 @@ public class NiveauEnseignementResource {
 	@Tag(name = "Niveau Enseignement")
 	public List<NiveauEnseignement> getList(){
 		return niveauEnseignementService.getList();
+	}
+	
+	@Path("/list-projection")
+	@Produces(MediaType.APPLICATION_JSON)
+	@GET
+	@Tag(name = "Niveau Enseignement")
+	public List<GenericBasicProjectionLongId> getListProjection(){
+		return niveauEnseignementService.getListProjection();
 	}
 
 }

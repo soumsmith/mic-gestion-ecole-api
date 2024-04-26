@@ -2,6 +2,7 @@ package com.vieecoles.steph.services;
 
 import com.vieecoles.steph.entities.Branche;
 import com.vieecoles.steph.entities.Ecole;
+import com.vieecoles.steph.projections.GenericBasicProjectionLongId;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
@@ -9,6 +10,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Response;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 @RequestScoped
@@ -31,6 +33,16 @@ public class BrancheService implements PanacheRepositoryBase<Branche, Long> {
 	public List<Branche> findByNiveauEnseignement(Long id) {
 
 		return Branche.find("niveauEnseignement.id =?1", id).list();
+	}
+
+	public List<GenericBasicProjectionLongId> findByNiveauEnseignementProjection(Long id) {
+		List<GenericBasicProjectionLongId> branches = new ArrayList<GenericBasicProjectionLongId>();
+		try {
+			branches = Branche.find("niveauEnseignement.id =?1", id).project(GenericBasicProjectionLongId.class).list();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return branches;
 	}
 
 	public Response create(Branche branche) {

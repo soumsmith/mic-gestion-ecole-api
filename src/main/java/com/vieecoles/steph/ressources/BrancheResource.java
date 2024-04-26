@@ -39,5 +39,13 @@ public class BrancheResource {
 	public Response getByNiveauEnseignementOnly(@QueryParam("id") Long id) {
 		return Response.ok().entity(brancheService.findByNiveauEnseignement(id)).build();
 	}
+	
+	@GET
+	@Path("/get-by-niveau-enseignement-projection")
+	@Operation(description = "Obtenir la liste des branches", summary = "")
+	@Tag(name = "Branche")
+	public Response getByNiveauEnseignementProjection(@QueryParam("niveau") Long niveau) {
+		return Response.ok().entity(brancheService.findByNiveauEnseignementProjection(niveau)).build();
+	}
 
 }

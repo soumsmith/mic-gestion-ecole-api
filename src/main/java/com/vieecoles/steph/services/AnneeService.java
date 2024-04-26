@@ -9,6 +9,7 @@ import com.vieecoles.steph.entities.Ecole;
 import com.vieecoles.steph.entities.Periode;
 import com.vieecoles.steph.pojos.AnneePeriodePojo;
 import com.vieecoles.steph.pojos.SorterAnneePeriodePojo;
+import com.vieecoles.steph.projections.GenericBasicProjectionLongId;
 import com.vieecoles.steph.util.DateUtils;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
@@ -63,11 +64,23 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 	
 	public List<AnneeScolaire> getListByCentralByNiveauEnseignement(Long niveau) {
 
-		List<AnneeScolaire> annees = AnneeScolaire.find("ecole is null and niveauEnseignement.id = ?1", niveau).list();
+		List<AnneeScolaire> annees = null;
 		try {
+			annees = AnneeScolaire.find("ecole is null and niveauEnseignement.id = ?1", niveau).list();
 			if (annees != null && annees.size() > 0)
 				for (AnneeScolaire ans : annees)
 					populateEntity(ans);
+		} catch (RuntimeException r) {
+			r.printStackTrace();
+		}
+		return annees;
+	}
+	
+	public List<GenericBasicProjectionLongId> getBasicListInCentralByNiveauEnseignementProjection(Long niveau) {
+		List<GenericBasicProjectionLongId> annees = null;
+		try {
+			annees = AnneeScolaire.find("ecole is null and niveauEnseignement.id = ?1", niveau).project(GenericBasicProjectionLongId.class).list();
+			
 		} catch (RuntimeException r) {
 			r.printStackTrace();
 		}

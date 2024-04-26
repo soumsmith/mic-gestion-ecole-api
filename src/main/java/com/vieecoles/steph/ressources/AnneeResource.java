@@ -56,6 +56,14 @@ public class AnneeResource {
 	}
 	
 	@GET
+	@Path("/list-to-central-niveau-enseignement-projection")
+	@Operation(description = "Obtenir la liste (de type projection) des années en central pour un niveau d'enseignement", summary = "")
+	@Tag(name = "Année scolaire")
+	public Response listCentralNiveauProjection(@QueryParam("niveau") Long niveau) {
+		return Response.ok().entity(anneeService.getBasicListInCentralByNiveauEnseignementProjection(niveau)).build();
+	}
+	
+	@GET
 	@Path("/list-to-ecole")
 	@Operation(description = "Obtenir la liste des années pour une école", summary = "")
 	@Tag(name = "Année scolaire")
