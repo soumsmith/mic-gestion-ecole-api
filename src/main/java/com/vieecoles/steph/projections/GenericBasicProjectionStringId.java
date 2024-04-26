@@ -12,6 +12,4 @@ import lombok.Setter;
 public class GenericBasicProjectionStringId {
 	
 	private final String id;
-	private final String libelle;
-
 }

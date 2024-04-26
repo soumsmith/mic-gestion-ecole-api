@@ -14,6 +14,7 @@ import javax.transaction.Transactional;
 import org.hibernate.internal.build.AllowSysOut;
 
 import com.vieecoles.steph.entities.PersonnelMatiereClasse;
+import com.vieecoles.steph.projections.GenericProjectionLongId;
 import com.vieecoles.steph.dto.ProfEducDto;
 import com.vieecoles.steph.entities.ClasseMatiere;
 import com.vieecoles.steph.entities.Constants;
@@ -108,6 +109,19 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 			return null;
 		}
 		return pmc;
+	}
+	
+	public GenericProjectionLongId findPersonneProjectionByMatiereAndClasse(long matiereId, long annee, long classeId) {
+		logger.info(
+				String.format("find by Matiere id :: %s and annee :: %s and classe :: %s", matiereId, annee, classeId));
+		try {
+			return PersonnelMatiereClasse
+					.find("matiere.id = ?1 and annee.id = ?2 and classe.id = ?3 and (statut is null or statut <> 'DELETED') ", matiereId, annee, classeId)
+					.project(GenericProjectionLongId.class).singleResult();
+		} catch (RuntimeException re) {
+			logger.log(Level.WARNING, "Aucun PersonnelMatiereClasse trouve");
+			return null;
+		}
 	}
 
 	public List<PersonnelMatiereClasse> findByProfesseur(long profId, long annee, long ecole) {

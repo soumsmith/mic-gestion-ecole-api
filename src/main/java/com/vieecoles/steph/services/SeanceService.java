@@ -3,6 +3,7 @@ package com.vieecoles.steph.services;
 import com.google.gson.Gson;
 import com.vieecoles.services.operations.ecoleService;
 import com.vieecoles.steph.entities.*;
+import com.vieecoles.steph.projections.GenericProjectionLongId;
 import com.vieecoles.steph.util.DateUtils;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 import io.quarkus.scheduler.Scheduled;
@@ -468,14 +469,19 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 		try {
 			if (!checkIfSeancesGenerate(DateUtils.asDate(tomorrow), ecole.getId())) {
 				List<Activite> activites = activiteService.getListByEcole(ecole.getId());
+				GenericProjectionLongId anneeCentrale = anneeService.findMainAnneeWithProjectionByEcole(ecole);
 				for (Activite atv : activites) {
 					Seances seance = new Seances();
 					UUID uuid = UUID.randomUUID();
-					PersonnelMatiereClasse pers = new PersonnelMatiereClasse();
-					pers = personnelMatiereClasseService.findByMatiereAndClasse(atv.getMatiere().getId(), 1,
+					Personnel pers = null;
+					GenericProjectionLongId persGeneric = personnelMatiereClasseService.findPersonneProjectionByMatiereAndClasse(atv.getMatiere().getId(), anneeCentrale.getId(),
 							atv.getClasse().getId());
+					if(persGeneric!=null) {
+						pers = new Personnel();
+						pers.setId(persGeneric.getId());
+					}
 					seance.setId(uuid.toString());
-					seance.setAnnee(atv.getAnnee());
+					seance.setAnnee(String.valueOf(anneeCentrale.getId()));
 					seance.setClasse(atv.getClasse());
 					seance.setDateCreation(new Date());
 					seance.setDateUpdate(new Date());
@@ -484,7 +490,7 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 					seance.setHeureFin(atv.getHeureFin());
 					seance.setJour(jour);
 					seance.setMatiere(atv.getMatiere());
-					seance.setProfesseur(pers != null ? pers.getPersonnel() : null);
+					seance.setProfesseur(pers);
 					seance.setSalle(atv.getSalle());
 					seance.setStatut(Constants.AUTOMATIQUE);
 					seance.setSurveillant(null);

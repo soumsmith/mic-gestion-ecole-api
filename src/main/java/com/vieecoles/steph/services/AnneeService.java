@@ -9,6 +9,7 @@ import com.vieecoles.steph.entities.Ecole;
 import com.vieecoles.steph.entities.Periode;
 import com.vieecoles.steph.pojos.AnneePeriodePojo;
 import com.vieecoles.steph.pojos.SorterAnneePeriodePojo;
+import com.vieecoles.steph.projections.GenericProjectionLongId;
 import com.vieecoles.steph.util.DateUtils;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
@@ -300,6 +301,14 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 			return findCentralAnneeReference(anneeOuverte.get(0));
 		return new AnneeScolaire();
 	}
+	
+	public GenericProjectionLongId findMainAnneeWithProjectionByEcole(Ecole ecole) {
+		// find annee ouverte by ecole
+		List<AnneeScolaire> anneeOuverte = getByEcoleAndStatut(ecole==null ? 0 : ecole.getId() , Constants.OUVERT);
+		if (anneeOuverte.size() >= 1)
+			return findCentralAnneeWithProjectionReference(anneeOuverte.get(0));
+		return new GenericProjectionLongId(0L);
+	}
 
 	public AnneeScolaire findCentralAnneeReference(AnneeScolaire ecoleAnneeOuvert) {
 		AnneeScolaire centralAnnee = new AnneeScolaire();
@@ -314,6 +323,20 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 			e.printStackTrace();
 		}
 		return centralAnnee;
+	}
+	
+	public GenericProjectionLongId findCentralAnneeWithProjectionReference(AnneeScolaire ecoleAnneeOuvert) {
+		try {
+			 return  AnneeScolaire
+					.find("anneeDebut =?1 and niveauEnseignement.id=?2 and periodicite.id =?3 and ecole is null",
+							ecoleAnneeOuvert.getAnneeDebut(), ecoleAnneeOuvert.getNiveauEnseignement().getId(),
+							ecoleAnneeOuvert.getPeriodicite().getId()).project(GenericProjectionLongId.class)
+					.singleResult();
+
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+		}
+		return new GenericProjectionLongId(0L);
 	}
 
 	@Transactional
