@@ -80,6 +80,12 @@ public class DspsSpiderRessource {
         map.put("annee", libelleAnnee);
         map.put("periode", libellePeriode);
         // map.put("title", type);
+          try {
+            JasperPrint report = JasperFillManager.fillReport(compileReport, map, connection);
+
+        } catch (RuntimeException e){
+            e.printStackTrace ();
+        }
         JasperPrint report = JasperFillManager.fillReport(compileReport, map, connection);
         JRXlsExporter exporter = new JRXlsExporter();
         exporter.setExporterInput(new SimpleExporterInput(report));

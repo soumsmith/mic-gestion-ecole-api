@@ -1,5 +1,6 @@
 package com.vieecoles.ressource;
 
+import com.vieecoles.dto.fonctionDto;
 import com.vieecoles.entities.fonction;
 import com.vieecoles.services.fonctionService;
 
@@ -69,6 +70,6 @@ public class fonctionRessource {
     public Long count() {
         return matService.count();
     }
-
+   
 
 }
