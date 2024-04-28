@@ -352,6 +352,10 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 //		Gson gson = new Gson();
 		int jourNum;
 		jourNum = DateUtils.getNumDay(date);
+//		System.out.println(date);
+//		System.out.println(jourNum);
+//		System.out.println("anneeid ::: "+anneeId);
+//		System.out.println("ecoleid :::" +ecoleId);
 		Jour jour = jourService.findByIdSys(jourNum);
 		List<Activite> activites = new ArrayList<Activite>();
 
@@ -430,7 +434,7 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 		return messages;
 	}
 
-	@Scheduled(cron = "0 0 23 * * ?")
+	@Scheduled(cron = "0 00 23 * * ?")
 	public void generatorSeanceScheduler() {
 		List<Ecole> ecoles = ecoleService.getList();
 		int jourNum;
@@ -442,7 +446,13 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 
 		for (Ecole ecole : ecoles) {
 			System.out.println(String.format("Ecole %s", ecole.getLibelle()));
-			handlePersist(tomorrow, jour, ecole);
+//			handlePersist(tomorrow, jour, ecole);
+			GenericProjectionLongId anneeCentrale = anneeService.findMainAnneeWithProjectionByEcole(ecole);
+			try {
+			generateSeances(DateUtils.asDate(tomorrow), null, ecole.getId(), anneeCentrale.getId());
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		logger.info("*** FIN GENERATION ***");
 	}
@@ -473,13 +483,16 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 				for (Activite atv : activites) {
 					Seances seance = new Seances();
 					UUID uuid = UUID.randomUUID();
-					Personnel pers = null;
-					GenericProjectionLongId persGeneric = personnelMatiereClasseService.findPersonneProjectionByMatiereAndClasse(atv.getMatiere().getId(), anneeCentrale.getId(),
-							atv.getClasse().getId());
-					if(persGeneric!=null) {
-						pers = new Personnel();
-						pers.setId(persGeneric.getId());
-					}
+//					GenericProjectionLongId persGeneric = personnelMatiereClasseService.findPersonnelProjectionByMatiereAndClasse(atv.getMatiere().getId(), anneeCentrale.getId(),
+//							atv.getClasse().getId());
+					PersonnelMatiereClasse pers = personnelMatiereClasseService.findByMatiereAndClasse(atv.getMatiere().getId(),
+							anneeCentrale.getId(), atv.getClasse().getId());
+					Gson g = new Gson();
+//					System.out.println(g.toJson(persGeneric));
+//					if(persGeneric!=null) {
+//						pers = new Personnel();
+//						pers.setId(persGeneric.getId());
+//					}
 					seance.setId(uuid.toString());
 					seance.setAnnee(String.valueOf(anneeCentrale.getId()));
 					seance.setClasse(atv.getClasse());
@@ -490,7 +503,7 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 					seance.setHeureFin(atv.getHeureFin());
 					seance.setJour(jour);
 					seance.setMatiere(atv.getMatiere());
-					seance.setProfesseur(pers);
+					seance.setProfesseur(pers != null ? pers.getPersonnel() : null);
 					seance.setSalle(atv.getSalle());
 					seance.setStatut(Constants.AUTOMATIQUE);
 					seance.setSurveillant(null);
