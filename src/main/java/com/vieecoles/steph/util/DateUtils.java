@@ -61,6 +61,7 @@ public class DateUtils {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
 		jourNum = calendar.get(Calendar.DAY_OF_WEEK);
+		System.out.println("num jour is "+jourNum);
 		return jourNum;
 	}
 

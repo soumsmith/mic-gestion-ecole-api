@@ -104,14 +104,14 @@ public class ActiviteService implements PanacheRepositoryBase<Activite, Integer>
 	}
 
 	public List<Activite> getListByJourAndEcole(int jourId, Long ecoleId) {
-		// logger.info(String.format("Annee %s - classe %s - jour %s",1, anneeId,
-		// jourId));
 		List<Activite> list = new ArrayList<Activite>();
+		System.out.println("ActiviteService.getListByJourAndEcole() Jour :::"+jourId+" ecole "+ecoleId);
 		try {
 			list = Activite.find("jour.id = ?1 and statut = ?2 and ecole.id=?3", jourId, Constants.ACTIF, ecoleId).list();
 		} catch (RuntimeException e) {
 			e.printStackTrace();// TODO: handle exception
 		}
+		System.out.println("Nombre activites trouvees ::: "+list.size());
 		return list;
 	}
 
