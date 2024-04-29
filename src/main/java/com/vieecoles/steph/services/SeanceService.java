@@ -352,10 +352,10 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 //		Gson gson = new Gson();
 		int jourNum;
 		jourNum = DateUtils.getNumDay(date);
-//		System.out.println(date);
-//		System.out.println(jourNum);
-//		System.out.println("anneeid ::: "+anneeId);
-//		System.out.println("ecoleid :::" +ecoleId);
+		System.out.println(date);
+		System.out.println(jourNum);
+		System.out.println("anneeid ::: "+anneeId);
+		System.out.println("ecoleid :::" +ecoleId);
 		Jour jour = jourService.findByIdSys(jourNum);
 		List<Activite> activites = new ArrayList<Activite>();
 
@@ -434,13 +434,13 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 		return messages;
 	}
 
-	@Scheduled(cron = "0 00 23 * * ?")
+	@Scheduled(cron = "0 20 9 * * ?")
 	public void generatorSeanceScheduler() {
 		List<Ecole> ecoles = ecoleService.getList();
-		int jourNum;
-		LocalDate tomorrow = LocalDate.now().plusDays(1);
-		jourNum = DateUtils.getNumDay(DateUtils.asDate(tomorrow));
-		Jour jour = jourService.findByIdSys(jourNum);
+//		int jourNum;
+		LocalDate tomorrow = LocalDate.now();
+//		jourNum = DateUtils.getNumDay(DateUtils.asDate(tomorrow));
+//		Jour jour = jourService.findByIdSys(jourNum);
 		logger.info("*** GENERATION AUTOMATIQUE DES EMPLOI DU TEMPS ***");
 		logger.info(String.format("Date de generation des bulletins %s", DateUtils.asDate(tomorrow)));
 
