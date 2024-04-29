@@ -21,6 +21,7 @@
 		<defaultValueExpression><![CDATA[new java.util.Date()]]></defaultValueExpression>
 	</parameter>
 	<parameter name="infosAmoirie" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="distinctin" class="java.lang.String" isForPrompting="false"/>
 	<queryString language="SQL">
 		<![CDATA[select * from  `ecoleviedbv2`.ve_details_infos_bulletins_spider 
 where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule} and 
@@ -2446,7 +2447,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
 										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 										<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
-										<printWhenExpression><![CDATA[$F{moy_general} >= 12 && $F{moy_general}<=12.99]]></printWhenExpression>
+										<printWhenExpression><![CDATA[$P{distinctin}.equals( "1" )&&$F{moy_general} >= 12 && $F{moy_general}<=12.99]]></printWhenExpression>
 									</reportElement>
 									<imageExpression><![CDATA["etats/spider/cocher.jpg"]]></imageExpression>
 								</image>
@@ -2459,7 +2460,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
 										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 										<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
-										<printWhenExpression><![CDATA[$F{moy_general} >= 13 && $F{moy_general}<=13.99]]></printWhenExpression>
+										<printWhenExpression><![CDATA[$P{distinctin}.equals( "1" )&&$F{moy_general} >= 13 && $F{moy_general}<=13.99]]></printWhenExpression>
 									</reportElement>
 									<imageExpression><![CDATA["etats/spider/cocher.jpg"]]></imageExpression>
 								</image>
@@ -2472,7 +2473,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
 										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 										<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
-										<printWhenExpression><![CDATA[$F{moy_general} >= 14]]></printWhenExpression>
+										<printWhenExpression><![CDATA[$P{distinctin}.equals( "1" )&&$F{moy_general} >= 14]]></printWhenExpression>
 									</reportElement>
 									<imageExpression><![CDATA["etats/spider/cocher.jpg"]]></imageExpression>
 								</image>
@@ -2485,7 +2486,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
 										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 										<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
-										<printWhenExpression><![CDATA[$F{moy_general} >= 8.5 && $F{moy_general}<=9.99]]></printWhenExpression>
+										<printWhenExpression><![CDATA[$P{distinctin}.equals( "1" )&&$F{moy_general} >= 8.5 && $F{moy_general}<=9.99]]></printWhenExpression>
 									</reportElement>
 									<imageExpression><![CDATA["etats/spider/cocher.jpg"]]></imageExpression>
 								</image>
@@ -2498,7 +2499,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
 										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 										<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
-										<printWhenExpression><![CDATA[$F{moy_general}< 8.5]]></printWhenExpression>
+										<printWhenExpression><![CDATA[$P{distinctin}.equals( "1" )&&$F{moy_general}< 8.5]]></printWhenExpression>
 									</reportElement>
 									<imageExpression><![CDATA["etats/spider/cocher.jpg"]]></imageExpression>
 								</image>
@@ -2511,7 +2512,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
 										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 										<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
-										<printWhenExpression><![CDATA[$F{moyenne}>=10 && $F{moyenne}<12&&$F{libelle_matiere}.equals("CONDUITE")]]></printWhenExpression>
+										<printWhenExpression><![CDATA[$P{distinctin}.equals( "1" )&&$F{moyenne}>=10 && $F{moyenne}<12&&$F{libelle_matiere}.equals("CONDUITE")]]></printWhenExpression>
 									</reportElement>
 									<imageExpression><![CDATA["etats/spider/cocher.jpg"]]></imageExpression>
 								</image>
@@ -2524,7 +2525,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
 										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 										<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
-										<printWhenExpression><![CDATA[$F{moyenne}<10&&$F{libelle_matiere}.equals("CONDUITE")]]></printWhenExpression>
+										<printWhenExpression><![CDATA[$P{distinctin}.equals( "1" )&&$F{moyenne}<10&&$F{libelle_matiere}.equals("CONDUITE")]]></printWhenExpression>
 									</reportElement>
 									<imageExpression><![CDATA["etats/spider/cocher.jpg"]]></imageExpression>
 								</image>

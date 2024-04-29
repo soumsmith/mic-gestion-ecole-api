@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Entete" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ed037e30-77b5-426c-9347-2135cd92d167">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ecolevieDB"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="122"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="873"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="709"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="281"/>
+	<parameter name="matricule_eleve" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT ecoleviedb.ecole.ecoleclibelle,
+	ecoleviedb.ecole.ecole_statut,
+	ecoleviedb.ecole.ecole_telephone,
+	ecoleviedb.ecole.ecole_adresse,
+	ecoleviedb.ecole.ecole_libelle_groupe,
+	ecoleviedb.eleve.elevecode,
+	ecoleviedb.eleve.elevenom,
+	ecoleviedb.eleve.eleve_sexe,
+	ecoleviedb.eleve.eleve_nationalite,
+	ecoleviedb.eleve.eleve_matricule,
+	ecoleviedb.classe.classelibelle,
+	ecoleviedb.inscriptions.inscriptions_boursier,
+	ecoleviedb.inscriptions.inscriptions_redoublant,
+	ecoleviedb.inscriptions.inscriptions_etat_affectation,
+	ecoleviedb.inscriptions.eleve_eleveid,
+	ecoleviedb.eleve.eleveprenom,
+	ecoleviedb.eleve.elevedate_naissance,
+	ecoleviedb.eleve.elevelieu_naissance,
+	ecoleviedb.annee_scolaire.annee_scolaire_libelle,
+	ecoleviedb.ecole.ecolecode
+FROM ecoleviedb.eleve , ecoleviedb.inscriptions , ecoleviedb.classe, ecoleviedb.eleve_classe , ecoleviedb.annee_scolaire  , ecoleviedb.ecole
+
+where ecoleviedb.eleve.eleveid= ecoleviedb.inscriptions.eleve_eleveid 
+and ecoleviedb.eleve.eleveid = ecoleviedb.eleve_classe.eleve_eleveid and 
+     ecoleviedb.eleve_classe.classe_classeid = ecoleviedb.classe.classeid and 
+     ecoleviedb.eleve_classe.annee_scolaire_annee_scolaireid = ecoleviedb.annee_scolaire.annee_scolaireid and 
+     ecoleviedb.inscriptions.annee_scolaire_annee_scolaireid= ecoleviedb.annee_scolaire.annee_scolaireid  
+     and ecoleviedb.ecole.ecoleid =ecoleviedb.inscriptions.ecole_ecoleid
+and  
+	 ecoleviedb.eleve.eleve_matricule = $P{matricule_eleve}]]>
+	</queryString>
+	<field name="ecoleclibelle" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ecoleclibelle"/>
+		<property name="com.jaspersoft.studio.field.label" value="ecoleclibelle"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ecole"/>
+	</field>
+	<field name="ecole_statut" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ecole_statut"/>
+		<property name="com.jaspersoft.studio.field.label" value="ecole_statut"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ecole"/>
+	</field>
+	<field name="ecole_telephone" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ecole_telephone"/>
+		<property name="com.jaspersoft.studio.field.label" value="ecole_telephone"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ecole"/>
+	</field>
+	<field name="ecole_adresse" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ecole_adresse"/>
+		<property name="com.jaspersoft.studio.field.label" value="ecole_adresse"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ecole"/>
+	</field>
+	<field name="ecole_libelle_groupe" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ecole_libelle_groupe"/>
+		<property name="com.jaspersoft.studio.field.label" value="ecole_libelle_groupe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ecole"/>
+	</field>
+	<field name="elevecode" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="elevecode"/>
+		<property name="com.jaspersoft.studio.field.label" value="elevecode"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="eleve"/>
+	</field>
+	<field name="elevenom" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="elevenom"/>
+		<property name="com.jaspersoft.studio.field.label" value="elevenom"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="eleve"/>
+	</field>
+	<field name="eleve_sexe" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="eleve_sexe"/>
+		<property name="com.jaspersoft.studio.field.label" value="eleve_sexe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="eleve"/>
+	</field>
+	<field name="eleve_nationalite" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="eleve_nationalite"/>
+		<property name="com.jaspersoft.studio.field.label" value="eleve_nationalite"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="eleve"/>
+	</field>
+	<field name="eleve_matricule" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="eleve_matricule"/>
+		<property name="com.jaspersoft.studio.field.label" value="eleve_matricule"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="eleve"/>
+	</field>
+	<field name="classelibelle" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="classelibelle"/>
+		<property name="com.jaspersoft.studio.field.label" value="classelibelle"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="classe"/>
+	</field>
+	<field name="inscriptions_boursier" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="inscriptions_boursier"/>
+		<property name="com.jaspersoft.studio.field.label" value="inscriptions_boursier"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="inscriptions"/>
+	</field>
+	<field name="inscriptions_redoublant" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="inscriptions_redoublant"/>
+		<property name="com.jaspersoft.studio.field.label" value="inscriptions_redoublant"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="inscriptions"/>
+	</field>
+	<field name="inscriptions_etat_affectation" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="inscriptions_etat_affectation"/>
+		<property name="com.jaspersoft.studio.field.label" value="inscriptions_etat_affectation"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="inscriptions"/>
+	</field>
+	<field name="eleve_eleveid" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="eleve_eleveid"/>
+		<property name="com.jaspersoft.studio.field.label" value="eleve_eleveid"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="inscriptions"/>
+	</field>
+	<field name="eleveprenom" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="eleveprenom"/>
+		<property name="com.jaspersoft.studio.field.label" value="eleveprenom"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="eleve"/>
+	</field>
+	<field name="elevedate_naissance" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="elevedate_naissance"/>
+		<property name="com.jaspersoft.studio.field.label" value="elevedate_naissance"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="eleve"/>
+	</field>
+	<field name="elevelieu_naissance" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="elevelieu_naissance"/>
+		<property name="com.jaspersoft.studio.field.label" value="elevelieu_naissance"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="eleve"/>
+	</field>
+	<field name="annee_scolaire_libelle" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="annee_scolaire_libelle"/>
+		<property name="com.jaspersoft.studio.field.label" value="annee_scolaire_libelle"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="annee_scolaire"/>
+	</field>
+	<field name="ecolecode" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ecolecode"/>
+		<property name="com.jaspersoft.studio.field.label" value="ecolecode"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ecole"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="141" splitType="Stretch">
+			<staticText>
+				<reportElement x="41" y="4" width="235" height="45" uuid="806c6d03-aae3-4dd4-ac21-ae1947bbf942"/>
+				<text><![CDATA[REPUBLIQUE DE COTE D'IVOIRE
+MINISTERE DE L'EDUCATION NATIONALE ET DE L’ALPHABETISATION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="284" y="4" width="40" height="16" uuid="e27f9963-03f9-4475-aec2-b075c6db96d7"/>
+				<textElement textAlignment="Left"/>
+				<text><![CDATA[Adresse]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="284" y="20" width="50" height="16" uuid="1fdffe8c-ad3f-4e30-ad10-ab795afbaa8c"/>
+				<textElement textAlignment="Left"/>
+				<text><![CDATA[Téléphone]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="440" y="4" width="40" height="16" uuid="9a848ae5-9243-4523-a72c-178be03f6bdd"/>
+				<text><![CDATA[Code]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="440" y="23" width="40" height="16" uuid="22de15e1-8a83-49ee-a1ac-e4ab552c5f5c"/>
+				<text><![CDATA[Statut]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-16" y="83" width="106" height="20" uuid="f9709a16-35cf-4edf-bfd6-45935267c5e7"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[BULLETIN DE NOTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="360" y="85" width="80" height="16" uuid="571b3f7e-f277-43f3-8505-8d1e79a3c0e7"/>
+				<text><![CDATA[Année Scolaire]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="-10" y="56" width="230" height="21" uuid="5469edc6-354f-494f-afb8-dfb8e057f392"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ecoleclibelle}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="336" y="4" width="84" height="16" uuid="d0b8659d-3437-4a29-a0ef-e76d8bf11a49"/>
+				<textFieldExpression><![CDATA[$F{ecole_adresse}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="340" y="20" width="100" height="16" uuid="fc79ee4d-9a16-4830-994a-5f52e99a62f3"/>
+				<textFieldExpression><![CDATA[$F{ecole_telephone}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="484" y="23" width="80" height="16" uuid="0cba5d55-b1f3-4ab8-80a8-fe5d3fb7638e"/>
+				<textFieldExpression><![CDATA[$F{ecole_statut}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="484" y="4" width="80" height="17" uuid="e695df3d-8f8c-4ea5-907b-ce5549035d22"/>
+				<textFieldExpression><![CDATA[$F{ecolecode}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="450" y="82" width="119" height="23" uuid="9e213979-0c84-40b9-9529-a0f7e79a142e"/>
+				<textFieldExpression><![CDATA[$F{annee_scolaire_libelle}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

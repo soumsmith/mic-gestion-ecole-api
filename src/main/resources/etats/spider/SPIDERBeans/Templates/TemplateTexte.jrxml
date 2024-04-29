@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TableModifiable" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3b0324ab-9bae-4a86-b093-ff6707b9768b">
+	<style name="TableStyle" fontName="Arial" fontSize="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<parameter name="Title" class="java.lang.String"/>
+	<field name="Nom" class="java.lang.String"/>
+	<field name="Prénom" class="java.lang.String"/>
+	<field name="Age" class="java.lang.Integer"/>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="70">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="20" uuid="e2dce3e3-41e5-4033-9219-a4b82f070a0b"/>
+				<textElement textAlignment="Center">
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[${Title}]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band/>
+	</pageHeader>
+	<columnHeader>
+		<band height="20">
+			<staticText>
+				<reportElement style="TableStyle" x="0" y="0" width="100" height="20" uuid="10271f19-4e0e-450e-994d-78d0a30ce251"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Nom]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="TableStyle" x="100" y="0" width="100" height="20" uuid="e9c0244f-6efe-451e-bdde-2abec008c618"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Prénom]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="TableStyle" x="200" y="0" width="100" height="20" uuid="35541f10-6481-4c6b-ae52-52b7682ff094"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Age]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="30">
+			<textField>
+				<reportElement style="TableStyle" x="0" y="0" width="100" height="30" uuid="5f21438a-b93c-40fc-b8ac-f80df46c67ee"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{Nom}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="TableStyle" x="100" y="0" width="100" height="30" uuid="d0c33272-1f66-40be-b715-3703dab90b6a"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{Prénom}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="TableStyle" x="200" y="0" width="100" height="30" uuid="f46a5946-7f01-4275-9680-0553b9d6d931"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{Age}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

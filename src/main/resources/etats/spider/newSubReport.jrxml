@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="newSubReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1fd4a21d-c7ba-4e25-82ed-f63639dafb6d">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="matricule" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="83" splitType="Stretch">
+			<staticText>
+				<reportElement x="127" y="10" width="300" height="30" uuid="04bef839-adda-4b53-8793-e78c2c8be1b1"/>
+				<textElement textAlignment="Center">
+					<font fontName="Algerian" size="14"/>
+				</textElement>
+				<text><![CDATA[SubReport]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="264" y="0" width="100" height="30" uuid="69258cca-2286-475e-8792-38b6ba2019f2">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4d3c5045-4ce9-4f1c-8b72-c9d4d03bb6b5"/>
+				</reportElement>
+				<text><![CDATA[matricule]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="200" y="30" width="100" height="30" uuid="83df80e3-b5f8-4287-baf1-550e229b123c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4d3c5045-4ce9-4f1c-8b72-c9d4d03bb6b5"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{matricule}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

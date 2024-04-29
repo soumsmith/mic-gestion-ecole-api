@@ -138,6 +138,20 @@ public class AnneeResource {
 	}
 
 	@GET
+	@Path("/get-main-annee-projection-by-ecole/{ecoleId}")
+	@Operation(description = "Obtenir année scolaire à utiliser pour toute action dans le systeme si année ouverte", summary = "")
+	@Tag(name = "Année scolaire")
+	public Response getMainAnneeProjection(@PathParam("ecoleId") Long ecoleId) {
+		try {
+			Ecole ecole = ecoleService.getById(ecoleId);
+			return Response.ok(anneeService.findMainAnneeWithProjectionByEcole(ecole)).build();
+		} catch (RuntimeException r) {
+			r.printStackTrace();
+			return Response.serverError().build();
+		}
+	}
+
+	@GET
 	@Path("/init-annee-for-ecole/{ecoleId}")
 	@Operation(description = "Initialiser les années scolaires pour une nouvelle école créee", summary = "")
 	@Tag(name = "Année scolaire")

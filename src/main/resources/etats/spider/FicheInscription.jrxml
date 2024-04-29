@@ -18,10 +18,10 @@
 	<parameter name="ecoleId" class="java.lang.Long"/>
 	<queryString language="SQL">
 		<![CDATA[SELECT *
-FROM `ecoleviedbv2`.fiche_inscription_reinscription
-where `ecoleviedbv2`.fiche_inscription_reinscription.eleve_matricule = $P{matricule} and
-`ecoleviedbv2`.fiche_inscription_reinscription.annee_scolaire_libelle =  $P{annee} and
-`ecoleviedbv2`.fiche_inscription_reinscription.ecoleId =   $P{ecoleId} ]]>
+FROM `ecolevie_dbProd`.fiche_inscription_reinscription
+where `ecolevie_dbProd`.fiche_inscription_reinscription.eleve_matricule = $P{matricule} and 
+`ecolevie_dbProd`.fiche_inscription_reinscription.annee_scolaire_libelle =  $P{annee} and 
+`ecolevie_dbProd`.fiche_inscription_reinscription.ecoleId =   $P{ecoleId} ]]>
 	</queryString>
 	<field name="ecoleclibelle" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="ecoleclibelle"/>

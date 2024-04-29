@@ -12,8 +12,8 @@
 		<![CDATA[SELECT filigramme,
 	libelle,
 	idparametre
-FROM    ecoleviedbv2.ve_parametre
-where  ecoleviedbv2.ve_parametre.idparametre = $P{idEcole}]]>
+FROM    ecolevie_dbProd.ve_parametre 
+where  ecolevie_dbProd.ve_parametre.idparametre = $P{idEcole}]]>
 	</queryString>
 	<field name="filigramme" class="byte[]">
 		<property name="com.jaspersoft.studio.field.name" value="filigramme"/>

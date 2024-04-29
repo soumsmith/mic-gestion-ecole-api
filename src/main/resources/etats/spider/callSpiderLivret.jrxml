@@ -10,18 +10,18 @@
 	<parameter name="matricule" class="java.lang.String" isForPrompting="false"/>
 	<queryString>
 		<![CDATA[SELECT *
-FROM `ecolevie_dbProd`.livret_spider
-where `ecolevie_dbProd`.livret_spider.id_ecole = $P{idEcole}
-and  `ecolevie_dbProd`.livret_spider.annee_libelle =    $P{libelleAnnee}
-and  `ecolevie_dbProd`.livret_spider.libelle_periode =  $P{libellePeriode}
-and  `ecolevie_dbProd`.livret_spider.libelle_classe =   $P{classe}]]>
+FROM `ecolevie_dbProd`.livret_spider 
+where `ecolevie_dbProd`.livret_spider.id_ecole = $P{idEcole} 
+and  `ecolevie_dbProd`.livret_spider.annee_libelle =    $P{libelleAnnee} 
+and  `ecolevie_dbProd`.livret_spider.libelle_periode =  $P{libellePeriode} 
+and  `ecolevie_dbProd`.livret_spider.libelle_classe =   $P{classe} ]]>
 	</queryString>
 	<field name="id_bull" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="id_bull"/>
 		<property name="com.jaspersoft.studio.field.label" value="id_bull"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="livret_spider"/>
 	</field>
-	<field name="id_ecole" class="java.lang.Long">
+	<field name="id_ecole" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="id_ecole"/>
 		<property name="com.jaspersoft.studio.field.label" value="id_ecole"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="livret_spider"/>
@@ -503,7 +503,7 @@ and  `ecolevie_dbProd`.livret_spider.libelle_classe =   $P{classe}]]>
 						<subreportParameterExpression><![CDATA[$F{libelle_periode}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression><![CDATA["etats/spider/Livret_scolaireSpider.jasper"]]></subreportExpression>
+					<subreportExpression><![CDATA["Livret_scolaireSpider.jasper"]]></subreportExpression>
 				</subreport>
 			</band>
 		</groupHeader>

@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="MoyenneParCategorieMatiere" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e6d6ff2c-7db0-4afa-8c24-cb098817363c">
+	<property name="com.jaspersoft.studio.data.sql.tables">
+		<![CDATA[ZWNvbGV2aWVkYi5wZXJzb25uZWwgLDkxOCw3NyxjNDgzYzQzOS1mNDczLTQxMWUtYmZhNy0wNjlm
+YzI0OTY5YzU7ZWNvbGV2aWVkYi5ub3RlX2VsZXZlICwyNDIsMTU1LGViZTNlZDE1LWEzNDUtNGU1
+Ny05MzQ4LWNmN2U5NTQ5YWU4ODtlY29sZXZpZWRiLmZvbmN0aW9uICwxODA2LDIwMSw3NWQ3ZWVi
+Yy01MjM1LTQ5MmUtYWNmMi01ZDdjZmRhYWUxNTY7ZWNvbGV2aWVkYi50eXBlX2V2YWx1YXRpb24g
+LDI5NjcsMjAxLGZmM2UwOThhLWYzNzUtNGJkNC04ZmY0LWVkZWMyZmNhMGYxYTtlY29sZXZpZWRi
+LmVsZXZlICwxOTk0LDE1LDQ3Yjk3Yjc4LTJkNjMtNGU2NS04Y2UxLTE4NzJlMzdlMjk3NztlY29s
+ZXZpZWRiLnBlcmlvZGUgLDE2MTgsMjAxLDVjZjdmODlhLTA0YWMtNGQ1Yi05Y2MyLTM5MGY2OGU4
+OWU0MjtlY29sZXZpZWRiLmNsYXNzZSAsMTI0MCwyMDEsOGUxZTY3OTMtMWFmMC00Mzc0LWJmOTQt
+MGFkYWNkN2RlOTNiO2Vjb2xldmllZGIubWF0aWVyZSAsNTc0LDE3MCwwNDc4YjBjYy00ZjBmLTRj
+MWYtYTk3ZS1lMjYwOTM1ZWU3NWY7ZWNvbGV2aWVkYi50ZW5hbnQgLDIyODUsMjE3LGRiYTYxMmJh
+LTQwNmYtNGE1OS05MTRhLWI1MGU3ZGZmNjEzZDtlY29sZXZpZWRiLmNhdGVnb3JpZV9tYXRpZXJl
+ICwxNSwyMDEsZjg3MGM3YjAtNmFkNS00ZDE0LTliNDYtMTM2YzRhMjM5YTYxO2Vjb2xldmllZGIu
+ZXZhbHVhdGlvbiAsMjY1NSwxMjQsNGU3OTZmN2YtZGMxNi00ODM2LTliZjMtNDk2Y2YyZWIwZWE3
+O2Vjb2xldmllZGIubm90ZV9vYnNlcnZhdGlvbiAsMjQzNCwyMDEsYWE4Y2U0NmMtMDE3Mi00Mjk4
+LWI5MmMtZjU5NGQ3ZjI2OWFkO2Vjb2xldmllZGIubml2ZWF1ICwxNDMwLDIwMSwwODM2MjI2Yy03
+YzY1LTRkNjYtODU3YS04ZDY2NTY3OTU0ZjM7]]>
+	</property>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="0"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="1000"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ecolevieDB"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT ecoleviedb.categorie_matiere.categorie_matierelibelle,
+	ecoleviedb.matiere.matierelibelle,
+	ecoleviedb.matiere.matierecoefficien,
+	ecoleviedb.personnel.personnelnom,
+	ecoleviedb.personnel.personnelprenom,
+	ecoleviedb.classe.classelibelle,
+	ecoleviedb.niveau.niveaulibelle,
+	ecoleviedb.periode.periodelibelle,
+	ecoleviedb.fonction.fonctionlibelle,
+	ecoleviedb.eleve.elevenom,
+	ecoleviedb.eleve.eleveprenom,
+	ecoleviedb.eleve.eleveid,
+	ecoleviedb.tenant.tenantid,
+	ecoleviedb.note_observation.note_observationlibelle,
+	ecoleviedb.note_eleve.note_elevenote
+FROM ecoleviedb.note_eleve,
+	ecoleviedb.matiere,
+	ecoleviedb.personnel,
+	ecoleviedb.classe,
+	ecoleviedb.niveau,
+	ecoleviedb.periode,
+	ecoleviedb.fonction,
+	ecoleviedb.eleve,
+	ecoleviedb.tenant,
+	ecoleviedb.note_observation,
+	ecoleviedb.evaluation,
+	ecoleviedb.type_evaluation,
+	ecoleviedb.categorie_matiere
+WHERE 
+	 ecoleviedb.matiere.categorie_matiere_categorie_matiereid = ecoleviedb.categorie_matiere.categorie_matiereid 
+	 AND ecoleviedb.matiere.tenant_tenantid = ecoleviedb.tenant.tenantid 
+	 AND ecoleviedb.tenant.tenantid = ecoleviedb.fonction.tenant_tenantid 
+	 AND ecoleviedb.tenant.tenantid = ecoleviedb.personnel.tenant_tenantid 
+	 AND ecoleviedb.tenant.tenantid = ecoleviedb.note_observation.tenant_tenantid 
+	 AND ecoleviedb.tenant.tenantid = ecoleviedb.categorie_matiere.tenant_tenantid 
+	 AND ecoleviedb.tenant.tenantid = ecoleviedb.niveau.tenant_tenantid 
+	 AND ecoleviedb.tenant.tenantid = ecoleviedb.type_evaluation.tenant_tenantid 
+	 AND ecoleviedb.tenant.tenantid = ecoleviedb.eleve.tenant_tenantid 
+	 AND ecoleviedb.tenant.tenantid = ecoleviedb.periode.tenant_tenantid 
+	 AND ecoleviedb.evaluation.matiere_matiereid = ecoleviedb.matiere.matiereid 
+	 AND ecoleviedb.evaluation.classe_classeid = ecoleviedb.classe.classeid 
+	 AND ecoleviedb.evaluation.type_evaluation_type_evaluationid = ecoleviedb.type_evaluation.type_evaluationid 
+	 AND ecoleviedb.evaluation.periode_periodeid = ecoleviedb.periode.periodeid 
+	 AND ecoleviedb.note_eleve.eleve_eleveid = ecoleviedb.eleve.eleveid 
+	 AND ecoleviedb.note_eleve.evaluation_evaluationid = ecoleviedb.evaluation.evaluationid 
+	 AND ecoleviedb.note_eleve.note_observation_note_observationid = ecoleviedb.note_observation.note_observationid 
+	 AND ecoleviedb.note_eleve.personnel_personnelid = ecoleviedb.personnel.personnelid 
+	 AND ecoleviedb.personnel.type_personnel_type_personnelid = 'NULL' 
+	 AND ecoleviedb.personnel.personnel_status_personnel_statusid = 'NULL' 
+	 AND ecoleviedb.personnel.fonction_fonctionid = ecoleviedb.fonction.fonctionid 
+	 AND ecoleviedb.classe.niveau_niveauid = ecoleviedb.niveau.niveauid]]>
+	</queryString>
+	<field name="categorie_matierelibelle" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="categorie_matierelibelle"/>
+		<property name="com.jaspersoft.studio.field.label" value="categorie_matierelibelle"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="categorie_matiere"/>
+	</field>
+	<field name="matierelibelle" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="matierelibelle"/>
+		<property name="com.jaspersoft.studio.field.label" value="matierelibelle"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="matiere"/>
+	</field>
+	<field name="matierecoefficien" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="matierecoefficien"/>
+		<property name="com.jaspersoft.studio.field.label" value="matierecoefficien"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="matiere"/>
+	</field>
+	<field name="personnelnom" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="personnelnom"/>
+		<property name="com.jaspersoft.studio.field.label" value="personnelnom"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="personnel"/>
+	</field>
+	<field name="personnelprenom" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="personnelprenom"/>
+		<property name="com.jaspersoft.studio.field.label" value="personnelprenom"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="personnel"/>
+	</field>
+	<field name="classelibelle" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="classelibelle"/>
+		<property name="com.jaspersoft.studio.field.label" value="classelibelle"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="classe"/>
+	</field>
+	<field name="niveaulibelle" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="niveaulibelle"/>
+		<property name="com.jaspersoft.studio.field.label" value="niveaulibelle"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="niveau"/>
+	</field>
+	<field name="periodelibelle" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="periodelibelle"/>
+		<property name="com.jaspersoft.studio.field.label" value="periodelibelle"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="periode"/>
+	</field>
+	<field name="fonctionlibelle" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="fonctionlibelle"/>
+		<property name="com.jaspersoft.studio.field.label" value="fonctionlibelle"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="fonction"/>
+	</field>
+	<field name="elevenom" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="elevenom"/>
+		<property name="com.jaspersoft.studio.field.label" value="elevenom"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="eleve"/>
+	</field>
+	<field name="eleveprenom" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="eleveprenom"/>
+		<property name="com.jaspersoft.studio.field.label" value="eleveprenom"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="eleve"/>
+	</field>
+	<field name="eleveid" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="eleveid"/>
+		<property name="com.jaspersoft.studio.field.label" value="eleveid"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="eleve"/>
+	</field>
+	<field name="tenantid" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="tenantid"/>
+		<property name="com.jaspersoft.studio.field.label" value="tenantid"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tenant"/>
+	</field>
+	<field name="note_observationlibelle" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="note_observationlibelle"/>
+		<property name="com.jaspersoft.studio.field.label" value="note_observationlibelle"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="note_observation"/>
+	</field>
+	<field name="note_elevenote" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="note_elevenote"/>
+		<property name="com.jaspersoft.studio.field.label" value="note_elevenote"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="note_eleve"/>
+	</field>
+	<group name="categorie_matierelibelle">
+		<groupExpression><![CDATA[$F{categorie_matierelibelle}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CallLivretScolaire" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a9cbbd0c-2c8f-4107-a7bf-fb229c1c35a9">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ecolevieDB2"/>
+	<property name="com.jaspersoft.studio.data.sql.tables">
+		<![CDATA[YGVjb2xldmllX2RiUHJvZGAubGl2cmV0X3NwaWRlciBBUyAsMzc2LDIyMCw0NTg1MjYzMS0yOGI4
+LTRlNDctYTFmYy1kZTkxM2FiMTU2OGI7]]>
+	</property>
+	<parameter name="Parameter1d" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="idEcole" class="java.lang.Long"/>
+	<parameter name="annee" class="java.lang.String"/>
+	<parameter name="libellePeriode" class="java.lang.String"/>
+	<parameter name="matricule" class="java.lang.String"/>
+	<parameter name="classe" class="java.lang.String" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[SELECT *
+FROM `ecolevie_dbProd`.livret_spider 
+where `ecolevie_dbProd`.livret_spider.id_ecole= $P{idEcole} 
+and `ecolevie_dbProd`.livret_spider.annee_libelle = $P{annee} 
+and  `ecolevie_dbProd`.livret_spider.libelle_periode =  $P{libellePeriode} 
+
+]]>
+	</queryString>
+	<field name="matricule" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="329" splitType="Stretch"/>
+	</detail>
+</jasperReport>

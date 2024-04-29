@@ -1,0 +1,897 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Detail_IdentiteRapportGlobal" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e5b5a591-36bb-4f37-9156-ca7fcdf8244a">
+	<property name="com.jaspersoft.studio.data.sql.tables">
+		<![CDATA[ZWNvbGV2aWVkYnYyLnJfZGlyZWN0ZXVyX2Rlc19ldHVkZXMgQVMgLDY0NCw1MywwYzAzMDRkZC0z
+MTNhLTQ3MTgtOGVlYi1hMjhlNDMzMTQ5NDI7ZWNvbGV2aWVkYnYyLnJfaW5mb19mb25kYXRldXIg
+QVMgLDgzLDY3LDM5NTVhMzZkLTYyNTUtNDMxYS1hMjAyLTk2MjU1NDI2NmMyZTtlY29sZXZpZWRi
+djIucl9pbmZvX2V0YWJsaXNzZW1lbnQgQVMgLDM0Myw0OSw0NmU3MzUyNy05YzEwLTQzNjktODBm
+OC0zZDI4YzEyMjQxNzk7]]>
+	</property>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ecolevieDB2"/>
+	<property name="net.sf.jasperreports.export.docx.flexible.row.height" value="true"/>
+	<property name="net.sf.jasperreports.export.docx.frames.as.nested.tables" value="false"/>
+	<subDataset name="InfoEtablissement" uuid="1cba8d97-56a1-42b6-a1a7-2f3b44e59423">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ecolevieDB2"/>
+		<parameter name="codeEcole" class="java.lang.String">
+			<defaultValueExpression><![CDATA["01"]]></defaultValueExpression>
+		</parameter>
+		<queryString language="SQL">
+			<![CDATA[SELECT denomination,
+	num_decision_ouverture,
+	id,
+	code_etablissement,
+	situation_geographique,
+	adresse,
+	telephone,
+	fax,
+	email
+FROM ecoleviedbv2.r_info_etablissement 
+where code_etablissement =  $P{codeEcole}]]>
+		</queryString>
+		<field name="denomination" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="denomination"/>
+			<property name="com.jaspersoft.studio.field.label" value="denomination"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="r_info_etablissement"/>
+		</field>
+		<field name="num_decision_ouverture" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="num_decision_ouverture"/>
+			<property name="com.jaspersoft.studio.field.label" value="num_decision_ouverture"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="r_info_etablissement"/>
+		</field>
+		<field name="id" class="java.lang.Long">
+			<property name="com.jaspersoft.studio.field.name" value="id"/>
+			<property name="com.jaspersoft.studio.field.label" value="id"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="r_info_etablissement"/>
+		</field>
+		<field name="code_etablissement" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="code_etablissement"/>
+			<property name="com.jaspersoft.studio.field.label" value="code_etablissement"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="r_info_etablissement"/>
+		</field>
+		<field name="situation_geographique" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="situation_geographique"/>
+			<property name="com.jaspersoft.studio.field.label" value="situation_geographique"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="r_info_etablissement"/>
+		</field>
+		<field name="adresse" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="adresse"/>
+			<property name="com.jaspersoft.studio.field.label" value="adresse"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="r_info_etablissement"/>
+		</field>
+		<field name="telephone" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="telephone"/>
+			<property name="com.jaspersoft.studio.field.label" value="telephone"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="r_info_etablissement"/>
+		</field>
+		<field name="fax" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="fax"/>
+			<property name="com.jaspersoft.studio.field.label" value="fax"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="r_info_etablissement"/>
+		</field>
+		<field name="email" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="email"/>
+			<property name="com.jaspersoft.studio.field.label" value="email"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="r_info_etablissement"/>
+		</field>
+	</subDataset>
+	<parameter name="codeEcole" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT ecoleviedbv2.r_info_fondateur.`fon_nomPrenoms`,
+	ecoleviedbv2.r_info_fondateur.fon_fonction,
+	ecoleviedbv2.r_info_fondateur.fon_adresse,
+	ecoleviedbv2.r_info_fondateur.fon_telephone,
+	ecoleviedbv2.r_info_fondateur.fon_cellulaire,
+	ecoleviedbv2.r_info_fondateur.fon_email,
+	ecoleviedbv2.r_info_fondateur.fon_code_etablissement,
+	ecoleviedbv2.r_info_etablissement.etab_denomination,
+	ecoleviedbv2.r_info_etablissement.etab_num_decision_ouverture,
+	ecoleviedbv2.r_info_etablissement.etab_code_etablissement,
+	ecoleviedbv2.r_info_etablissement.etab_situation_geographique,
+	ecoleviedbv2.r_info_etablissement.etab_adresse,
+	ecoleviedbv2.r_info_etablissement.etab_telephone,
+	ecoleviedbv2.r_info_etablissement.etab_fax,
+	ecoleviedbv2.r_info_etablissement.etab_email,
+	ecoleviedbv2.r_directeur_des_etudes.direct_telephone,
+	ecoleviedbv2.r_directeur_des_etudes.direct_adresse,
+	ecoleviedbv2.r_directeur_des_etudes.direct_cellulaire,
+	ecoleviedbv2.r_directeur_des_etudes.direct_email,
+	ecoleviedbv2.r_directeur_des_etudes.direct_numero_autorisation_enseigner,
+	ecoleviedbv2.r_directeur_des_etudes.direct_nom_prenom,
+	ecoleviedbv2.r_directeur_des_etudes.direct_code_etablissement
+FROM ecoleviedbv2.r_info_etablissement,
+	ecoleviedbv2.r_info_fondateur,
+	ecoleviedbv2.r_directeur_des_etudes
+	where ecoleviedbv2.r_directeur_des_etudes.direct_code_etablissement=  $P{codeEcole} and ecoleviedbv2.r_info_etablissement.etab_code_etablissement= $P{codeEcole}
+	and ecoleviedbv2.r_info_fondateur.fon_code_etablissement = $P{codeEcole}]]>
+	</queryString>
+	<field name="fon_nomPrenoms" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="fon_nomPrenoms"/>
+		<property name="com.jaspersoft.studio.field.label" value="fon_nomPrenoms"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="r_info_fondateur"/>
+	</field>
+	<field name="fon_fonction" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="fon_fonction"/>
+		<property name="com.jaspersoft.studio.field.label" value="fon_fonction"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="r_info_fondateur"/>
+	</field>
+	<field name="fon_adresse" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="fon_adresse"/>
+		<property name="com.jaspersoft.studio.field.label" value="fon_adresse"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="r_info_fondateur"/>
+	</field>
+	<field name="fon_telephone" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="fon_telephone"/>
+		<property name="com.jaspersoft.studio.field.label" value="fon_telephone"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="r_info_fondateur"/>
+	</field>
+	<field name="fon_cellulaire" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="fon_cellulaire"/>
+		<property name="com.jaspersoft.studio.field.label" value="fon_cellulaire"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="r_info_fondateur"/>
+	</field>
+	<field name="fon_email" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="fon_email"/>
+		<property name="com.jaspersoft.studio.field.label" value="fon_email"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="r_info_fondateur"/>
+	</field>
+	<field name="fon_code_etablissement" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="fon_code_etablissement"/>
+		<property name="com.jaspersoft.studio.field.label" value="fon_code_etablissement"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="r_info_fondateur"/>
+	</field>
+	<field name="etab_denomination" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="etab_denomination"/>
+		<property name="com.jaspersoft.studio.field.label" value="etab_denomination"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="r_info_etablissement"/>
+	</field>
+	<field name="etab_num_decision_ouverture" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="etab_num_decision_ouverture"/>
+		<property name="com.jaspersoft.studio.field.label" value="etab_num_decision_ouverture"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="r_info_etablissement"/>
+	</field>
+	<field name="etab_code_etablissement" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="etab_code_etablissement"/>
+		<property name="com.jaspersoft.studio.field.label" value="etab_code_etablissement"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="r_info_etablissement"/>
+	</field>
+	<field name="etab_situation_geographique" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="etab_situation_geographique"/>
+		<property name="com.jaspersoft.studio.field.label" value="etab_situation_geographique"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="r_info_etablissement"/>
+	</field>
+	<field name="etab_adresse" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="etab_adresse"/>
+		<property name="com.jaspersoft.studio.field.label" value="etab_adresse"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="r_info_etablissement"/>
+	</field>
+	<field name="etab_telephone" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="etab_telephone"/>
+		<property name="com.jaspersoft.studio.field.label" value="etab_telephone"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="r_info_etablissement"/>
+	</field>
+	<field name="etab_fax" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="etab_fax"/>
+		<property name="com.jaspersoft.studio.field.label" value="etab_fax"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="r_info_etablissement"/>
+	</field>
+	<field name="etab_email" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="etab_email"/>
+		<property name="com.jaspersoft.studio.field.label" value="etab_email"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="r_info_etablissement"/>
+	</field>
+	<field name="direct_telephone" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="direct_telephone"/>
+		<property name="com.jaspersoft.studio.field.label" value="direct_telephone"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="r_directeur_des_etudes"/>
+	</field>
+	<field name="direct_adresse" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="direct_adresse"/>
+		<property name="com.jaspersoft.studio.field.label" value="direct_adresse"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="r_directeur_des_etudes"/>
+	</field>
+	<field name="direct_cellulaire" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="direct_cellulaire"/>
+		<property name="com.jaspersoft.studio.field.label" value="direct_cellulaire"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="r_directeur_des_etudes"/>
+	</field>
+	<field name="direct_email" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="direct_email"/>
+		<property name="com.jaspersoft.studio.field.label" value="direct_email"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="r_directeur_des_etudes"/>
+	</field>
+	<field name="direct_numero_autorisation_enseigner" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="direct_numero_autorisation_enseigner"/>
+		<property name="com.jaspersoft.studio.field.label" value="direct_numero_autorisation_enseigner"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="r_directeur_des_etudes"/>
+	</field>
+	<field name="direct_nom_prenom" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="direct_nom_prenom"/>
+		<property name="com.jaspersoft.studio.field.label" value="direct_nom_prenom"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="r_directeur_des_etudes"/>
+	</field>
+	<field name="direct_code_etablissement" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="direct_code_etablissement"/>
+		<property name="com.jaspersoft.studio.field.label" value="direct_code_etablissement"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="r_directeur_des_etudes"/>
+	</field>
+	<group name="idendentiteEtablissem">
+		<groupHeader>
+			<band height="530">
+				<rectangle>
+					<reportElement x="12" y="28" width="530" height="30" backcolor="#A19C9C" uuid="f8f26e43-de26-455e-a473-080202e51ca4"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="212" y="28" width="130" height="30" uuid="b4e2d1bd-906d-43f5-a364-13c74d7ed60f"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Gill Sans Ultra Bold" size="14"/>
+					</textElement>
+					<text><![CDATA[Etablissement]]></text>
+				</staticText>
+				<rectangle>
+					<reportElement x="12" y="241" width="530" height="30" backcolor="#A19C9C" uuid="93b9a625-f330-4c91-bc02-914ca85aa622"/>
+				</rectangle>
+				<rectangle>
+					<reportElement x="12" y="396" width="530" height="30" backcolor="#A19C9C" uuid="a16925f9-8463-47f5-884a-332d0da8e1c2"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="203" y="246" width="130" height="21" uuid="b7570105-52a1-45b6-8c67-6904478c0f24"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Gill Sans Ultra Bold" size="14"/>
+					</textElement>
+					<text><![CDATA[FONDATEUR]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="152" y="397" width="250" height="30" uuid="bec0ae91-a2f0-48fd-9671-dcce8a647934"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Gill Sans Ultra Bold" size="14"/>
+					</textElement>
+					<text><![CDATA[DIRECTEUR DES ETUDES]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="12" y="58" width="150" height="20" uuid="34403864-4ebd-406f-8cbe-5bfa2f6466fa"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="14"/>
+					</textElement>
+					<text><![CDATA[Dénomination]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="12" y="78" width="150" height="20" uuid="4da80b6e-32fd-4190-ba6e-aee1ccb09a19"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="14"/>
+					</textElement>
+					<text><![CDATA[N° Décision d’ouverture]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="12" y="120" width="150" height="20" uuid="d263c015-79a2-477f-8dc2-8732b1c3a546"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="14"/>
+					</textElement>
+					<text><![CDATA[Code Etablissement]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="12" y="141" width="150" height="20" uuid="809cb5b4-310d-4b2d-b877-44ca03c44bc1"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="14"/>
+					</textElement>
+					<text><![CDATA[Situation Géographique]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="12" y="161" width="150" height="20" uuid="d80cef97-76dc-4266-82f4-1c8add55fff6"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="14"/>
+					</textElement>
+					<text><![CDATA[Adresse]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="12" y="181" width="150" height="20" uuid="fb0940cf-3898-4930-b388-f14151d73f41"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="14"/>
+					</textElement>
+					<text><![CDATA[Téléphone]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="12" y="201" width="150" height="20" uuid="b5e34a9d-8d15-4d28-aebe-f3f3f815ebad"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="14"/>
+					</textElement>
+					<text><![CDATA[Fax]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="12" y="221" width="150" height="20" uuid="9c166376-5d48-4440-877c-e84707a08686"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="14"/>
+					</textElement>
+					<text><![CDATA[E-mail]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="162" y="59" width="380" height="20" uuid="3d0914a9-f3cb-4abb-9471-82889b13dbab">
+						<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="14"/>
+						<paragraph lineSpacingSize="1.0" firstLineIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{etab_denomination}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="162" y="79" width="380" height="20" uuid="d8d4cab2-1809-4d4d-8774-526f31b9d11d">
+						<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="14"/>
+						<paragraph firstLineIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{etab_num_decision_ouverture}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="162" y="121" width="380" height="20" uuid="f72873c3-e223-49ad-ab48-03438faf6810">
+						<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="14"/>
+						<paragraph firstLineIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{etab_code_etablissement}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="162" y="142" width="380" height="20" uuid="d67ed3f6-c495-4b45-b92e-9ee8499b3b48">
+						<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="14"/>
+						<paragraph firstLineIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{etab_situation_geographique}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="162" y="162" width="380" height="20" uuid="3d09c78c-3e66-424c-9cde-837fc3207380">
+						<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="14"/>
+						<paragraph firstLineIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{etab_adresse}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="162" y="182" width="380" height="20" uuid="7714a6a1-7542-4cfd-b384-64af67d22a92">
+						<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="14"/>
+						<paragraph firstLineIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{etab_telephone}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="162" y="202" width="380" height="20" uuid="7ee1b2df-e029-47e6-9370-8689b44b3261">
+						<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="14"/>
+						<paragraph firstLineIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{etab_fax}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="162" y="222" width="380" height="20" uuid="1dbb084f-f052-4b2c-9e00-926644fb5ae1">
+						<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="14"/>
+						<paragraph firstLineIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{etab_email}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="12" y="99" width="150" height="20" uuid="825ecf21-a0a2-473f-a772-c36fb4ece412"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="14"/>
+					</textElement>
+					<text><![CDATA[Code Etablissement]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="162" y="100" width="380" height="20" uuid="58c6a54f-7b45-4000-9c34-adb20def8248">
+						<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="14"/>
+						<paragraph firstLineIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{etab_num_decision_ouverture}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="12" y="272" width="150" height="20" uuid="a4c9f971-cacb-48d9-8391-0f9cd3606175"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="14"/>
+					</textElement>
+					<text><![CDATA[Nom et Prénoms]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="162" y="272" width="380" height="20" uuid="8b8c2f39-5fc5-4b19-a150-aa7eca15d80b">
+						<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="14"/>
+						<paragraph firstLineIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{fon_nomPrenoms}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="162" y="292" width="380" height="20" uuid="f0d55a83-ae48-4eeb-977a-1e748542b987">
+						<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="14"/>
+						<paragraph firstLineIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{fon_fonction}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="12" y="292" width="150" height="20" uuid="2725b477-1f84-4465-a452-6bf207cccb49"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="14"/>
+					</textElement>
+					<text><![CDATA[Fonction]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="12" y="313" width="150" height="20" uuid="09e9995c-c5be-4264-8df5-6a733942fbc8"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="14"/>
+					</textElement>
+					<text><![CDATA[Adresse]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="162" y="313" width="380" height="20" uuid="a3a3c31f-58c7-4af0-a4c6-bed9764d56de">
+						<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="14"/>
+						<paragraph firstLineIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{fon_adresse}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="162" y="334" width="380" height="20" uuid="d981b8c2-84db-434c-bc04-8517efeda5aa">
+						<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="14"/>
+						<paragraph firstLineIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{fon_telephone}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="12" y="355" width="150" height="20" uuid="6f3c887a-e305-411e-9f45-4efdef7d89dc"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="14"/>
+					</textElement>
+					<text><![CDATA[Cellulaire]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="162" y="355" width="380" height="20" uuid="68d2264e-34f9-41bb-adfc-d2d5fe4e8379">
+						<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="14"/>
+						<paragraph firstLineIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{fon_cellulaire}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="162" y="375" width="380" height="20" uuid="4c7aba1f-7c16-490e-95d4-3b06f5d4dcc3">
+						<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="14"/>
+						<paragraph firstLineIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{fon_email}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="12" y="375" width="150" height="20" uuid="c28e19d0-5a85-4430-a393-b8ce0ce93f1f"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="14"/>
+					</textElement>
+					<text><![CDATA[E-mail]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="12" y="334" width="150" height="20" uuid="c8c7bb13-c03c-4462-8cd0-a5c582a11d5b"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="14"/>
+					</textElement>
+					<text><![CDATA[Téléphone]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="12" y="427" width="150" height="20" uuid="0b2be88d-54e4-49ca-a558-023d357c171b"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="14"/>
+					</textElement>
+					<text><![CDATA[Nom et Prénoms]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="162" y="427" width="380" height="20" uuid="4d92bb85-56ea-4587-a982-759d6c89adda">
+						<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="14"/>
+						<paragraph firstLineIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{direct_nom_prenom}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="12" y="448" width="150" height="20" uuid="a81f3edd-dd1f-4103-b6cd-f24b6396e346"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="14"/>
+					</textElement>
+					<text><![CDATA[Adresse]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="162" y="448" width="380" height="20" uuid="56221ea7-9a93-4a50-8036-7c692a6be8e9">
+						<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="14"/>
+						<paragraph firstLineIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{direct_adresse}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="12" y="469" width="150" height="20" uuid="4451ff3f-1ebb-463b-85d1-fac2036d5311"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="14"/>
+					</textElement>
+					<text><![CDATA[Téléphone]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="162" y="469" width="380" height="20" uuid="dbd7fed7-ee1f-4fe0-98d1-aa0e814f5b4a">
+						<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="14"/>
+						<paragraph firstLineIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{direct_telephone}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="162" y="490" width="380" height="20" uuid="71af0f86-8917-4082-9a6b-11847dacf0ec">
+						<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="14"/>
+						<paragraph firstLineIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{direct_cellulaire}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="12" y="490" width="150" height="20" uuid="234d7488-e220-41f6-aabe-18d338d80a92"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="14"/>
+					</textElement>
+					<text><![CDATA[Cellulaire]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="12" y="510" width="150" height="20" uuid="19ca8be8-a576-41b9-ac97-a007ff84fad1"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="14"/>
+					</textElement>
+					<text><![CDATA[E-mail]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="162" y="510" width="380" height="20" uuid="e111f0f0-4320-4c9b-961c-6303a9fe8105">
+						<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="14"/>
+						<paragraph firstLineIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{direct_email}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="60" y="0" width="390" height="28" uuid="d05cc88f-d7c3-4d92-bf32-f8aab4d4c38f"/>
+					<textElement textAlignment="Center">
+						<font fontName="Times New Roman" size="18" isBold="true"/>
+					</textElement>
+					<text><![CDATA[IDENTITE]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<pageFooter>
+		<band height="63">
+			<textField bookmarkLevel="1">
+				<reportElement x="442" y="30" width="100" height="20" uuid="b9b3e999-9313-4056-962e-66d6eff3aaa8"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+				<anchorNameExpression><![CDATA["IDENTITE"]]></anchorNameExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

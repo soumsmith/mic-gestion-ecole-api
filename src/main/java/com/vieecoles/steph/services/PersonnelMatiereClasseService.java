@@ -14,6 +14,8 @@ import javax.transaction.Transactional;
 import org.hibernate.internal.build.AllowSysOut;
 
 import com.vieecoles.steph.entities.PersonnelMatiereClasse;
+import com.vieecoles.steph.projections.GenericPersonelProjectionLongIdFonctionEcole;
+import com.vieecoles.steph.projections.GenericProjectionLongId;
 import com.vieecoles.steph.dto.ProfEducDto;
 import com.vieecoles.steph.entities.ClasseMatiere;
 import com.vieecoles.steph.entities.Constants;
@@ -108,6 +110,44 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 			return null;
 		}
 		return pmc;
+	}
+	
+	public GenericProjectionLongId findPersonnelProjectionByMatiereAndClasse(long matiereId, long annee, long classeId) {
+		logger.info(
+				String.format("find by Matiere id :: %s and annee :: %s and classe :: %s", matiereId, annee, classeId));
+		System.out.println(String.format("find by Matiere id :: %s and annee :: %s and classe :: %s", matiereId, annee, classeId));
+		GenericProjectionLongId obj = null;
+		try {
+			 obj = PersonnelMatiereClasse
+					.find("matiere.id = ?1 and annee.id = ?2 and classe.id = ?3 and (statut is null or statut <> 'DELETED') ", matiereId, annee, classeId)
+					.project(GenericProjectionLongId.class).singleResult();
+			 System.out.println(obj);
+			 return obj;
+		} catch (RuntimeException re) {
+			System.out.println(obj);
+			re.printStackTrace();
+			logger.log(Level.WARNING, "Aucun PersonnelMatiereClasse trouve");
+			return null;
+		}
+	}
+	
+	public GenericPersonelProjectionLongIdFonctionEcole findPersonnelProjectionIdFonctionEcoleByMatiereAndClasse(long matiereId, long annee, long classeId) {
+		logger.info(
+				String.format("find by Matiere id :: %s and annee :: %s and classe :: %s", matiereId, annee, classeId));
+		System.out.println(String.format("find by Matiere id :: %s and annee :: %s and classe :: %s", matiereId, annee, classeId));
+		GenericPersonelProjectionLongIdFonctionEcole obj = null;
+		try {
+			 obj = PersonnelMatiereClasse
+					.find("matiere.id = ?1 and annee.id = ?2 and classe.id = ?3 and (statut is null or statut <> 'DELETED') ", matiereId, annee, classeId)
+					.project(GenericPersonelProjectionLongIdFonctionEcole.class).singleResult();
+			 System.out.println(obj);
+			 return obj;
+		} catch (RuntimeException re) {
+			System.out.println(obj);
+			re.printStackTrace();
+			logger.log(Level.WARNING, "Aucun PersonnelMatiereClasse trouve");
+			return null;
+		}
 	}
 
 	public List<PersonnelMatiereClasse> findByProfesseur(long profId, long annee, long ecole) {

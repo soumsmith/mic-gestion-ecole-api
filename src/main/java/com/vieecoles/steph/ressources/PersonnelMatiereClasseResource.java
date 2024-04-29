@@ -22,6 +22,7 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import com.vieecoles.steph.dto.ProfEducDto;
 import com.vieecoles.steph.entities.Constants;
 import com.vieecoles.steph.entities.PersonnelMatiereClasse;
+import com.vieecoles.steph.projections.GenericPersonelProjectionLongIdFonctionEcole;
 import com.vieecoles.steph.services.PersonnelMatiereClasseService;
 /**
  * 
@@ -181,7 +182,17 @@ public class PersonnelMatiereClasseResource {
     	return personnel;
     	
 	}
-	
+    
+    @GET
+    @Path("/get-projection-enseignant")
+    @Operation(description = "Obtenir le professeur enseignant une matière dans une classe", summary = "")
+	@Tag(name = "PersonnelMatiereClasse")
+	public Response findProjectionProfesseurByMatiereAndClasse( @QueryParam("annee") Long annee,@QueryParam("matiere") Long matiere, @QueryParam("classe") Long classe) {
+		
+    	GenericPersonelProjectionLongIdFonctionEcole personnel = persMatClasService.findPersonnelProjectionIdFonctionEcoleByMatiereAndClasse(matiere, annee, classe);
+    	return Response.ok(personnel).build();
+    	
+	}
     
     @POST
     @Path("/save")

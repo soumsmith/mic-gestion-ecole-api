@@ -3,6 +3,7 @@ package com.vieecoles.steph.services;
 import com.google.gson.Gson;
 import com.vieecoles.services.operations.ecoleService;
 import com.vieecoles.steph.entities.*;
+import com.vieecoles.steph.projections.GenericProjectionLongId;
 import com.vieecoles.steph.util.DateUtils;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 import io.quarkus.scheduler.Scheduled;
@@ -126,7 +127,9 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 				seance.setTypeActivite(seances.getTypeActivite());
 				seance.setActivite(seances.getActivite());
 				seance.setPosition(i);
-				seance.setIsVerrou(DateUtils.verifierHeureDansMarge(dateDebNew, Constants.DEFAULT_DELAI_AVANT_DESACTIVE_APPEL_MINUTES, Constants.DEFAULT_DELAI_APRES_DESACTIVE_APPEL_MINUTES));
+				seance.setIsVerrou(DateUtils.verifierHeureDansMarge(dateDebNew,
+						Constants.DEFAULT_DELAI_AVANT_DESACTIVE_APPEL_MINUTES,
+						Constants.DEFAULT_DELAI_APRES_DESACTIVE_APPEL_MINUTES));
 				seance.setIsEnded(verifySeanceEnded(seance.getHeureFin()));
 				seance.setIsClassEnded(verifySeanceEnded(seance.getHeureFin()) ? "surface-300" : "");
 				seance.setDuree(duree);
@@ -139,25 +142,22 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 
 		return list;
 	}
-	
+
 	public boolean verifySeanceEnded(String heure) {
 		LocalTime heureActuelle = LocalTime.now();
 		LocalTime heureParametre = LocalTime.parse(heure, DateTimeFormatter.ofPattern("HH:mm"));
 //		System.out.println("Seance Terminée : "+heureParametre.isBefore(heureActuelle));
 //		System.out.println(heureParametre +" "+heureActuelle);
-		//la seance est terminée si l'heure de fin est avant l'heure actuelle 
+		// la seance est terminée si l'heure de fin est avant l'heure actuelle
 		return heureParametre.isBefore(heureActuelle);
 	}
 
 	// La signature doit changer vu que l'année n'est plus utiliser
-	public List<Seances> getListByDateAndProf(Date date, long profId) {
+	public List<Seances> getListByDateAndProf(long anneeId, Date date, long profId) {
 		logger.info(String.format("prof %s - date %s", profId, date));
 		List<Seances> list = Seances.find("dateSeance = ?1 and professeur.id= ?2 order by heureDeb", date, profId)
 				.list();
 		List<Seances> listWithDestructSeances = new ArrayList<Seances>();
-		
-		System.out.println(String.format("prof %s - date %s", profId, date));
-		System.out.println(list.size());
 		// Décomposer la liste afin de s'assurer que chaque séance tient sur une unité
 		// de temps (1h par defaut)
 		// indicateur pour savoir si un appel a eu lieu pour la seance
@@ -171,7 +171,9 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 					AppelNumerique ap = new AppelNumerique();
 					ap = appelNumeriqueService.getBySeance(s.getId());
 					s.setAppelAlreadyExist(ap.getId() != null);
-					s.setIsVerrou(DateUtils.verifierHeureDansMarge(s.getHeureDeb(), Constants.DEFAULT_DELAI_AVANT_DESACTIVE_APPEL_MINUTES, Constants.DEFAULT_DELAI_APRES_DESACTIVE_APPEL_MINUTES));
+					s.setIsVerrou(DateUtils.verifierHeureDansMarge(s.getHeureDeb(),
+							Constants.DEFAULT_DELAI_AVANT_DESACTIVE_APPEL_MINUTES,
+							Constants.DEFAULT_DELAI_APRES_DESACTIVE_APPEL_MINUTES));
 					s.setIsEnded(verifySeanceEnded(s.getHeureFin()));
 					s.setIsClassEnded(verifySeanceEnded(s.getHeureFin()) ? "surface-300" : "");
 					s.setDuree(Constants.DEFAULT_DUREE_SEANCE_MINUTES);
@@ -354,6 +356,10 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 //		Gson gson = new Gson();
 		int jourNum;
 		jourNum = DateUtils.getNumDay(date);
+//		System.out.println(date);
+//		System.out.println(jourNum);
+//		System.out.println("anneeid ::: " + anneeId);
+//		System.out.println("ecoleid :::" + ecoleId);
 		Jour jour = jourService.findByIdSys(jourNum);
 		List<Activite> activites = new ArrayList<Activite>();
 
@@ -387,8 +393,8 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 				if (seanceExist.size() == 0) {
 					seance = new Seances();
 					UUID uuid = UUID.randomUUID();
-					pers = personnelMatiereClasseService.findByMatiereAndClasse(atv.getMatiere().getId(),
-							anneeId, atv.getClasse().getId());
+					pers = personnelMatiereClasseService.findByMatiereAndClasse(atv.getMatiere().getId(), anneeId,
+							atv.getClasse().getId());
 					seance.setId(uuid.toString());
 					seance.setAnnee(String.valueOf(anneeId));
 					seance.setClasse(atv.getClasse());
@@ -432,19 +438,25 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 		return messages;
 	}
 
-	@Scheduled(cron = "0 0 23 * * ?")
+	@Scheduled(cron = "0 00 23 * * ?")
 	public void generatorSeanceScheduler() {
 		List<Ecole> ecoles = ecoleService.getList();
-		int jourNum;
+//		int jourNum;
 		LocalDate tomorrow = LocalDate.now().plusDays(1);
-		jourNum = DateUtils.getNumDay(DateUtils.asDate(tomorrow));
-		Jour jour = jourService.findByIdSys(jourNum);
+//		jourNum = DateUtils.getNumDay(DateUtils.asDate(tomorrow));
+//		Jour jour = jourService.findByIdSys(jourNum);
 		logger.info("*** GENERATION AUTOMATIQUE DES EMPLOI DU TEMPS ***");
 		logger.info(String.format("Date de generation des bulletins %s", DateUtils.asDate(tomorrow)));
 
 		for (Ecole ecole : ecoles) {
 			System.out.println(String.format("Ecole %s", ecole.getLibelle()));
-			handlePersist(tomorrow, jour, ecole);
+//			handlePersist(tomorrow, jour, ecole);
+			GenericProjectionLongId anneeCentrale = anneeService.findMainAnneeWithProjectionByEcole(ecole);
+			try {
+				generateSeances(DateUtils.asDate(tomorrow), null, ecole.getId(), anneeCentrale.getId());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		logger.info("*** FIN GENERATION ***");
 	}
@@ -471,14 +483,22 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 		try {
 			if (!checkIfSeancesGenerate(DateUtils.asDate(tomorrow), ecole.getId())) {
 				List<Activite> activites = activiteService.getListByEcole(ecole.getId());
+				GenericProjectionLongId anneeCentrale = anneeService.findMainAnneeWithProjectionByEcole(ecole);
 				for (Activite atv : activites) {
 					Seances seance = new Seances();
 					UUID uuid = UUID.randomUUID();
-					PersonnelMatiereClasse pers = new PersonnelMatiereClasse();
-					pers = personnelMatiereClasseService.findByMatiereAndClasse(atv.getMatiere().getId(), 1,
-							atv.getClasse().getId());
+//					GenericProjectionLongId persGeneric = personnelMatiereClasseService.findPersonnelProjectionByMatiereAndClasse(atv.getMatiere().getId(), anneeCentrale.getId(),
+//							atv.getClasse().getId());
+					PersonnelMatiereClasse pers = personnelMatiereClasseService.findByMatiereAndClasse(
+							atv.getMatiere().getId(), anneeCentrale.getId(), atv.getClasse().getId());
+					Gson g = new Gson();
+//					System.out.println(g.toJson(persGeneric));
+//					if(persGeneric!=null) {
+//						pers = new Personnel();
+//						pers.setId(persGeneric.getId());
+//					}
 					seance.setId(uuid.toString());
-					seance.setAnnee(atv.getAnnee());
+					seance.setAnnee(String.valueOf(anneeCentrale.getId()));
 					seance.setClasse(atv.getClasse());
 					seance.setDateCreation(new Date());
 					seance.setDateUpdate(new Date());
