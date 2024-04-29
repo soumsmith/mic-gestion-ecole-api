@@ -13,6 +13,7 @@ import net.sf.jasperreports.engine.export.JRXlsExporter;
 import net.sf.jasperreports.engine.export.ooxml.JRDocxExporter;
 import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 
@@ -27,6 +28,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.util.*;
 
 @Path("/imprimer-matrice-classe")
@@ -40,7 +43,12 @@ public class MatriceClasseRessource {
     @Inject
     MatriceClasseBilanServices matriceBilanClasseServices ;
 
-
+    @Inject
+    @ConfigProperty(name = "USER")
+    private String USER ;
+    @Inject
+    @ConfigProperty(name = "PASS")
+    private String PASS ;
     private static String UPLOAD_DIR = "/data/";
 
 
@@ -56,7 +64,7 @@ public class MatriceClasseRessource {
         SpiderMatriceClasseDto detailsBull= new SpiderMatriceClasseDto() ;
 
         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Spider_Book_matriceClasse.jrxml");
-        List<matriceClasseDto> detailsBull1= new ArrayList<>() ;
+        /*List<matriceClasseDto> detailsBull1= new ArrayList<>() ;
         List<matiereMoyenneBilanDto> detailsBull2= new ArrayList<>() ;
         detailsBull2=  matriceBilanClasseServices.getInfosBilanMatriceClasse(idEcole ,libelleAnnee ,periode ,anneeId, classe) ;
 
@@ -64,15 +72,25 @@ public class MatriceClasseRessource {
 
         detailsBull.setMatriceClasseDto(detailsBull1);
         detailsBull.setMatiereMoyenneBilanDto(detailsBull2);
-        System.out.println("detailsBull2 "+detailsBull2);
+        System.out.println("detailsBull2 "+detailsBull2);*/
 
-
-        JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(Collections.singleton(detailsBull)) ;
+        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecoleviedbv2", USER, PASS);
         JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
+
         //   JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");
         Map<String, Object> map = new HashMap<>();
+        map.put("idEcole", idEcole);
+        map.put("annee", libelleAnnee);
+        map.put("periode", periode);
+        map.put("classe", classe);
         // map.put("title", type);
-        JasperPrint report = JasperFillManager.fillReport(compileReport, map, beanCollectionDataSource);
+        try {
+            JasperPrint report = JasperFillManager.fillReport(compileReport, map, connection);
+
+        } catch (RuntimeException e){
+            e.printStackTrace ();
+        }
+        JasperPrint report = JasperFillManager.fillReport(compileReport, map, connection);
         JRXlsExporter exporter = new JRXlsExporter();
         exporter.setExporterInput(new SimpleExporterInput(report));
         // File exportReportFile = new File("profils" + ".docx");
@@ -166,8 +184,6 @@ public class MatriceClasseRessource {
         List<matriceClasseDto> detailsBull1= new ArrayList<>() ;
         List<matiereMoyenneBilanDto> detailsBull2= new ArrayList<>() ;
         try {
-
-
 
 
             detailsBull2=  matriceBilanClasseServices.getInfosBilanMatriceClasse(idEcole ,libelleAnnee ,periode ,anneeId, classe) ;
