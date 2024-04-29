@@ -63,7 +63,7 @@ public class MatriceClasseRessource {
 
         SpiderMatriceClasseDto detailsBull= new SpiderMatriceClasseDto() ;
 
-        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Spider_Book_matriceClasse.jrxml");
+        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/matriceTest.jrxml");
         /*List<matriceClasseDto> detailsBull1= new ArrayList<>() ;
         List<matiereMoyenneBilanDto> detailsBull2= new ArrayList<>() ;
         detailsBull2=  matriceBilanClasseServices.getInfosBilanMatriceClasse(idEcole ,libelleAnnee ,periode ,anneeId, classe) ;
@@ -180,15 +180,15 @@ public class MatriceClasseRessource {
 
         SpiderMatriceClasseDto detailsBull= new SpiderMatriceClasseDto() ;
 
-        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Spider_Book_matriceClasse.jrxml");
+        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/matriceClasse.jrxml");
         List<matriceClasseDto> detailsBull1= new ArrayList<>() ;
         List<matiereMoyenneBilanDto> detailsBull2= new ArrayList<>() ;
         try {
 
-
+/*
             detailsBull2=  matriceBilanClasseServices.getInfosBilanMatriceClasse(idEcole ,libelleAnnee ,periode ,anneeId, classe) ;
 
-            detailsBull1=   matriceClasseServices.getInfosMatriceClasse(idEcole ,libelleAnnee ,periode ,anneeId, classe) ;
+            detailsBull1=   matriceClasseServices.getInfosMatriceClasse(idEcole ,libelleAnnee ,periode ,anneeId, classe) ;*/
 
             clasFille = getclassF(idEcole ,classe,libelleAnnee,periode) ;
             clasgarcon = getclassG(idEcole ,classe,libelleAnnee,periode) ;
@@ -223,11 +223,9 @@ public class MatriceClasseRessource {
         }
 
 
-        detailsBull.setMatriceClasseDto(detailsBull1);
-        detailsBull.setMatiereMoyenneBilanDto(detailsBull2);
-        JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(Collections.singleton(detailsBull)) ;
+        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecoleviedbv2", USER, PASS);
         JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
-        //   JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");
+        Classe myClasse = Classe.findById(classe);
         Map<String, Object> map = new HashMap<>();
          map.put("nombreSupegal10F", nombreSupegal10F);
         map.put("nombreSupegal10G", nombreSupegal10G);
@@ -241,8 +239,18 @@ public class MatriceClasseRessource {
         map.put("pourInf8_5F", pourInf8_5F);
         map.put("pourSup8_5G", pourSup8_5G);
         map.put("pourSup8_5F", pourSup8_5F);
+        map.put("idEcole", idEcole);
+        map.put("annee", libelleAnnee);
+        map.put("periode", periode);
+        map.put("classe", myClasse.getId());
+        // map.put("title", type);
+        try {
+            JasperPrint report = JasperFillManager.fillReport(compileReport, map, connection);
 
-        JasperPrint report = JasperFillManager.fillReport(compileReport, map, beanCollectionDataSource);
+        } catch (RuntimeException e){
+            e.printStackTrace ();
+        }
+        JasperPrint report = JasperFillManager.fillReport(compileReport, map, connection);
 
         //*********************************
         /*JRDocxExporter exporter = new JRDocxExporter();
