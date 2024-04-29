@@ -127,7 +127,9 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 				seance.setTypeActivite(seances.getTypeActivite());
 				seance.setActivite(seances.getActivite());
 				seance.setPosition(i);
-				seance.setIsVerrou(DateUtils.verifierHeureDansMarge(dateDebNew, Constants.DEFAULT_DELAI_AVANT_DESACTIVE_APPEL_MINUTES, Constants.DEFAULT_DELAI_APRES_DESACTIVE_APPEL_MINUTES));
+				seance.setIsVerrou(DateUtils.verifierHeureDansMarge(dateDebNew,
+						Constants.DEFAULT_DELAI_AVANT_DESACTIVE_APPEL_MINUTES,
+						Constants.DEFAULT_DELAI_APRES_DESACTIVE_APPEL_MINUTES));
 				seance.setIsEnded(verifySeanceEnded(seance.getHeureFin()));
 				seance.setIsClassEnded(verifySeanceEnded(seance.getHeureFin()) ? "surface-300" : "");
 				seance.setDuree(duree);
@@ -140,13 +142,13 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 
 		return list;
 	}
-	
+
 	public boolean verifySeanceEnded(String heure) {
 		LocalTime heureActuelle = LocalTime.now();
 		LocalTime heureParametre = LocalTime.parse(heure, DateTimeFormatter.ofPattern("HH:mm"));
 //		System.out.println("Seance Terminée : "+heureParametre.isBefore(heureActuelle));
 //		System.out.println(heureParametre +" "+heureActuelle);
-		//la seance est terminée si l'heure de fin est avant l'heure actuelle 
+		// la seance est terminée si l'heure de fin est avant l'heure actuelle
 		return heureParametre.isBefore(heureActuelle);
 	}
 
@@ -169,7 +171,9 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 					AppelNumerique ap = new AppelNumerique();
 					ap = appelNumeriqueService.getBySeance(s.getId());
 					s.setAppelAlreadyExist(ap.getId() != null);
-					s.setIsVerrou(DateUtils.verifierHeureDansMarge(s.getHeureDeb(), Constants.DEFAULT_DELAI_AVANT_DESACTIVE_APPEL_MINUTES, Constants.DEFAULT_DELAI_APRES_DESACTIVE_APPEL_MINUTES));
+					s.setIsVerrou(DateUtils.verifierHeureDansMarge(s.getHeureDeb(),
+							Constants.DEFAULT_DELAI_AVANT_DESACTIVE_APPEL_MINUTES,
+							Constants.DEFAULT_DELAI_APRES_DESACTIVE_APPEL_MINUTES));
 					s.setIsEnded(verifySeanceEnded(s.getHeureFin()));
 					s.setIsClassEnded(verifySeanceEnded(s.getHeureFin()) ? "surface-300" : "");
 					s.setDuree(Constants.DEFAULT_DUREE_SEANCE_MINUTES);
@@ -352,10 +356,10 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 //		Gson gson = new Gson();
 		int jourNum;
 		jourNum = DateUtils.getNumDay(date);
-		System.out.println(date);
-		System.out.println(jourNum);
-		System.out.println("anneeid ::: "+anneeId);
-		System.out.println("ecoleid :::" +ecoleId);
+//		System.out.println(date);
+//		System.out.println(jourNum);
+//		System.out.println("anneeid ::: " + anneeId);
+//		System.out.println("ecoleid :::" + ecoleId);
 		Jour jour = jourService.findByIdSys(jourNum);
 		List<Activite> activites = new ArrayList<Activite>();
 
@@ -389,8 +393,8 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 				if (seanceExist.size() == 0) {
 					seance = new Seances();
 					UUID uuid = UUID.randomUUID();
-					pers = personnelMatiereClasseService.findByMatiereAndClasse(atv.getMatiere().getId(),
-							anneeId, atv.getClasse().getId());
+					pers = personnelMatiereClasseService.findByMatiereAndClasse(atv.getMatiere().getId(), anneeId,
+							atv.getClasse().getId());
 					seance.setId(uuid.toString());
 					seance.setAnnee(String.valueOf(anneeId));
 					seance.setClasse(atv.getClasse());
@@ -449,8 +453,8 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 //			handlePersist(tomorrow, jour, ecole);
 			GenericProjectionLongId anneeCentrale = anneeService.findMainAnneeWithProjectionByEcole(ecole);
 			try {
-			generateSeances(DateUtils.asDate(tomorrow), null, ecole.getId(), anneeCentrale.getId());
-			}catch (Exception e) {
+				generateSeances(DateUtils.asDate(tomorrow), null, ecole.getId(), anneeCentrale.getId());
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
@@ -485,8 +489,8 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 					UUID uuid = UUID.randomUUID();
 //					GenericProjectionLongId persGeneric = personnelMatiereClasseService.findPersonnelProjectionByMatiereAndClasse(atv.getMatiere().getId(), anneeCentrale.getId(),
 //							atv.getClasse().getId());
-					PersonnelMatiereClasse pers = personnelMatiereClasseService.findByMatiereAndClasse(atv.getMatiere().getId(),
-							anneeCentrale.getId(), atv.getClasse().getId());
+					PersonnelMatiereClasse pers = personnelMatiereClasseService.findByMatiereAndClasse(
+							atv.getMatiere().getId(), anneeCentrale.getId(), atv.getClasse().getId());
 					Gson g = new Gson();
 //					System.out.println(g.toJson(persGeneric));
 //					if(persGeneric!=null) {

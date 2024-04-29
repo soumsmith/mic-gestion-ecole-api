@@ -111,7 +111,6 @@ public class ActiviteService implements PanacheRepositoryBase<Activite, Integer>
 		} catch (RuntimeException e) {
 			e.printStackTrace();// TODO: handle exception
 		}
-		System.out.println("Nombre activites trouvees ::: "+list.size());
 		return list;
 	}
 
