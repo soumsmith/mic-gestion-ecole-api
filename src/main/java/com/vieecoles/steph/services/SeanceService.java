@@ -434,11 +434,11 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 		return messages;
 	}
 
-	@Scheduled(cron = "0 20 9 * * ?")
+	@Scheduled(cron = "0 00 23 * * ?")
 	public void generatorSeanceScheduler() {
 		List<Ecole> ecoles = ecoleService.getList();
 //		int jourNum;
-		LocalDate tomorrow = LocalDate.now();
+		LocalDate tomorrow = LocalDate.now().plusDays(1);
 //		jourNum = DateUtils.getNumDay(DateUtils.asDate(tomorrow));
 //		Jour jour = jourService.findByIdSys(jourNum);
 		logger.info("*** GENERATION AUTOMATIQUE DES EMPLOI DU TEMPS ***");
