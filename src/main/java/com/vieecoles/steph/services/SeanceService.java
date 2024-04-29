@@ -140,13 +140,13 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 
 		return list;
 	}
-
+	
 	public boolean verifySeanceEnded(String heure) {
 		LocalTime heureActuelle = LocalTime.now();
 		LocalTime heureParametre = LocalTime.parse(heure, DateTimeFormatter.ofPattern("HH:mm"));
 //		System.out.println("Seance Terminée : "+heureParametre.isBefore(heureActuelle));
 //		System.out.println(heureParametre +" "+heureActuelle);
-		//la seance est terminée si l'heure de fin est avant l'heure actuelle
+		//la seance est terminée si l'heure de fin est avant l'heure actuelle 
 		return heureParametre.isBefore(heureActuelle);
 	}
 
@@ -434,11 +434,11 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 		return messages;
 	}
 
-	@Scheduled(cron = "0 00 10 * * ?")
+	@Scheduled(cron = "0 00 23 * * ?")
 	public void generatorSeanceScheduler() {
 		List<Ecole> ecoles = ecoleService.getList();
 //		int jourNum;
-		LocalDate tomorrow = LocalDate.now();
+		LocalDate tomorrow = LocalDate.now().plusDays(1);
 //		jourNum = DateUtils.getNumDay(DateUtils.asDate(tomorrow));
 //		Jour jour = jourService.findByIdSys(jourNum);
 		logger.info("*** GENERATION AUTOMATIQUE DES EMPLOI DU TEMPS ***");
@@ -458,12 +458,12 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param dateSeance
 	 * @param ecoleId
 	 * @return true si une generation automatique a eu deja lieu pour une ecole
 	 *         sinon false
-	 *
+	 * 
 	 */
 	public Boolean checkIfSeancesGenerate(Date dateSeance, Long ecoleId) {
 		List<Seances> seances = getListByEcoleAndDateAndStatut(dateSeance, Constants.AUTOMATIQUE, ecoleId);
