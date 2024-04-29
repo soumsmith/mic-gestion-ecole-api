@@ -9,7 +9,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @RegisterForReflection
-public class GenericBasicProjectionStringId {
+public class GenericBasicProjectionStringIdLibelle {
 	
 	private final String id;
+	private final String libelle;
 }

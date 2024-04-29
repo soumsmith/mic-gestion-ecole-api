@@ -9,6 +9,7 @@ import com.vieecoles.steph.entities.Ecole;
 import com.vieecoles.steph.entities.Periode;
 import com.vieecoles.steph.pojos.AnneePeriodePojo;
 import com.vieecoles.steph.pojos.SorterAnneePeriodePojo;
+import com.vieecoles.steph.projections.GenericBasicProjectionLongId;
 import com.vieecoles.steph.projections.GenericProjectionLongId;
 import com.vieecoles.steph.util.DateUtils;
 
