@@ -149,5 +149,7 @@ public class Bulletin extends PanacheEntityBase{
 	private String appreciationReli;
 	@Column(name = "url_photo")
 	private String urlPhoto;
+	@Column(name = "niveau_enseignement_id")
+	private Long niveauEnseignementId;
 
 }

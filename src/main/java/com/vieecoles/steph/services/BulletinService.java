@@ -409,6 +409,8 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 				else
 					countNonClasses++;
 
+				System.out.println("Niveau ens ::: " + me.getClasse().getEcole().getNiveauEnseignement().getId());
+
 				bulletin = new Bulletin();
 				bulletin = convert(me);
 				bulletin.setAnneeId(Long.parseLong(annee));
@@ -417,6 +419,15 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 				bulletin.setAnneeLibelle(anDb.getLibelle());
 				bulletin.setPeriodeId(periodeDb.getId());
 				bulletin.setLibellePeriode(periodeDb.getLibelle());
+
+				try {
+					bulletin.setNiveauEnseignementId(me.getClasse().getEcole().getNiveauEnseignement() != null
+							? me.getClasse().getEcole().getNiveauEnseignement().getId()
+							: null);
+				} catch (RuntimeException r) {
+					r.printStackTrace();
+				}
+
 //			System.out.println("rang ->"+me.getRang());
 //			bulletin.setRang(Integer.parseInt(me.getRang()));
 				// Ajout du professeur principal
