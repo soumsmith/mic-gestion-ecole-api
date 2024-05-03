@@ -15,6 +15,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -804,6 +805,8 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 		Double moyenneEMR;
 		List<Double> noteList;
 		List<Notes> moyenneEMRList;
+		
+		List<Double> moyennesFrExcpt = new ArrayList<Double>();
 
 		Double diviser;
 		Double somme;
@@ -941,6 +944,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				me.setCoefFr(Double.valueOf(moyennesSousMatieresFrancais.size()));
 				me.setMoyCoefFr(moyCoefFr);
 				me.setAppreciationFr(CommonUtils.appreciation(moyFr));
+				moyennesFrExcpt.add(moyFr);
 			}
 			
 			if (EMRFlat) {
@@ -993,6 +997,18 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 //			me.setMoyenne(calculMoyenneGeneralWithCoef(moyenneList));
 		}
 //		logger.info("++++> "+g.toJson(moyEleve));
+		if(moyennesFrExcpt.size()>0) {
+			moyennesFrExcpt = moyennesFrExcpt.stream().sorted(Comparator.reverseOrder()).collect(Collectors.toList());
+			
+			for(MoyenneEleveDto m : moyEleve) {
+				if(m.getMoyFr() != null) {
+					m.setRangFr(moyennesFrExcpt.indexOf(m.getMoyFr()));
+				}else {
+					m.setRangFr(moyennesFrExcpt.size());
+				}
+			}
+//			moyEleve.set
+		}
 		return moyEleve;
 	}
 
