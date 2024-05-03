@@ -409,7 +409,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 				else
 					countNonClasses++;
 
-				System.out.println("Niveau ens ::: " + me.getClasse().getEcole().getNiveauEnseignement().getId());
+//				System.out.println("Niveau ens ::: " + me.getClasse().getEcole().getNiveauEnseignement().getId());
 
 				bulletin = new Bulletin();
 				bulletin = convert(me);
@@ -741,6 +741,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 		bul.setAppreciationFr(me.getAppreciationFr());
 		bul.setMoyReli(me.getMoyReli());
 		bul.setAppreciationReli(me.getAppreciationReli());
+		bul.setRangFr(me.getRangFr());
 
 		return bul;
 	}
