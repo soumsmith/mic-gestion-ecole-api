@@ -1548,7 +1548,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				// La conversion en String car remarque que l'égalité entre de Double arrondis
 				// de même valeur ne se fait pas correctement
 //				System.out.println("++++ ::: " + elmt + "value : " + value);
-				if (elmt.toString().equals(value.toString())) {
+				if (value!= null && elmt.toString().equals(value.toString())) {
 					return i; // Retourne le rang si la valeur est trouvée
 				}
 				i++;
