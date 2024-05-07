@@ -12,8 +12,8 @@
 	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
-	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="175"/>
-	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="812"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="538"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="451"/>
 	<parameter name="classe" class="java.lang.String"/>
 	<parameter name="idEcole" class="java.lang.Long"/>
 	<parameter name="libelleAnnee" class="java.lang.String"/>
@@ -26,12 +26,12 @@
 	<parameter name="setBg" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select *
-from  `ecoleviedbv2`.ve_details_infos_bulletins_spider
-where `ecoleviedbv2`.ve_details_infos_bulletins_spider.libelle_classe =  $P{classe} and
-   `ecoleviedbv2`.ve_details_infos_bulletins_spider.id_ecole  =  $P{idEcole}  and
-    `ecoleviedbv2`.ve_details_infos_bulletins_spider.annee_libelle =  $P{libelleAnnee}
-    and  `ecoleviedbv2`.ve_details_infos_bulletins_spider.libelle_periode like  $P{libellePeriode}
-     order by `ecoleviedbv2`.ve_details_infos_bulletins_spider.nom , `ecoleviedbv2`.ve_details_infos_bulletins_spider.prenoms]]>
+from  `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois
+where `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.libelle_classe =  $P{classe} and
+   `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.id_ecole  =  $P{idEcole}  and
+    `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.annee_libelle =  $P{libelleAnnee}
+    and  `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.libelle_periode like  $P{libellePeriode}
+     order by `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.nom , `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.prenoms]]>
 	</queryString>
 	<field name="id_ecole" class="java.lang.Long">
 		<property name="com.jaspersoft.studio.field.name" value="id_ecole"/>
