@@ -21,11 +21,7 @@
 		<defaultValueExpression><![CDATA[new java.util.Date()]]></defaultValueExpression>
 	</parameter>
 	<parameter name="infosAmoirie" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="distinctin" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="amoirie" class="java.lang.String"/>
-	<parameter name="logo" class="java.lang.String"/>
-	<parameter name="bg" class="java.lang.String"/>
-	<parameter name="codeEcole" class="java.lang.String"/>
+	<parameter name="distinctin" class="java.lang.String"/>
 	<parameter name="positionLogo" class="java.lang.String"/>
 	<parameter name="setBg" class="java.lang.String"/>
 	<queryString language="SQL">
@@ -36,7 +32,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 `ecoleviedbv2`.ve_details_infos_bulletins_spider.libelle_periode= $P{libellePeriode}
    order by `ecoleviedbv2`.ve_details_infos_bulletins_spider.nom , `ecoleviedbv2`.ve_details_infos_bulletins_spider.prenoms]]>
 	</queryString>
-	<field name="id_ecole" class="java.lang.String">
+	<field name="id_ecole" class="java.lang.Long">
 		<property name="com.jaspersoft.studio.field.name" value="id_ecole"/>
 		<property name="com.jaspersoft.studio.field.label" value="id_ecole"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
@@ -211,6 +207,11 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 		<property name="com.jaspersoft.studio.field.label" value="statut"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
 	</field>
+	<field name="ordre_niveau" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="ordre_niveau"/>
+		<property name="com.jaspersoft.studio.field.label" value="ordre_niveau"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
 	<field name="libelle_matiere" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="libelle_matiere"/>
 		<property name="com.jaspersoft.studio.field.label" value="libelle_matiere"/>
@@ -331,13 +332,40 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 		<property name="com.jaspersoft.studio.field.label" value="appr_reli"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
 	</field>
-	<field name="url_photo" class="java.lang.String"/>
-	<field name="logo" class="byte[]"/>
-	<field name="bg" class="byte[]"/>
-	<field name="amoirie" class="byte[]"/>
-	<field name="ordre_niveau" class="java.lang.Integer"/>
-	<field name="codeEcole" class="java.lang.String"/>
-	<field name="rang_fr" class="java.lang.Integer"/>
+	<field name="url_photo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="url_photo"/>
+		<property name="com.jaspersoft.studio.field.label" value="url_photo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="amoirie" class="byte[]">
+		<property name="com.jaspersoft.studio.field.name" value="amoirie"/>
+		<property name="com.jaspersoft.studio.field.label" value="amoirie"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="bg" class="byte[]">
+		<property name="com.jaspersoft.studio.field.name" value="bg"/>
+		<property name="com.jaspersoft.studio.field.label" value="bg"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="codeEcole" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="codeEcole"/>
+		<property name="com.jaspersoft.studio.field.label" value="codeEcole"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="logo" class="byte[]">
+		<property name="com.jaspersoft.studio.field.name" value="logo"/>
+		<property name="com.jaspersoft.studio.field.label" value="logo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="moy_1er_trim" class="java.lang.Double"/>
+	<field name="moy_2eme_trim" class="java.lang.Double"/>
+	<field name="moy_3eme_trim" class="java.lang.Double"/>
+	<field name="is_class_1er_trim" class="java.lang.String"/>
+	<field name="rang_1er_trim" class="java.lang.Integer"/>
+	<field name="is_class_2e_trim" class="java.lang.String"/>
+	<field name="rang_2eme_trim" class="java.lang.Integer"/>
+	<field name="is_class_3e_trim" class="java.lang.String"/>
+	<field name="rang_3eme_trim" class="java.lang.Integer"/>
 	<sortField name="num_ordre"/>
 	<sortField name="parent_matiere"/>
 	<sortField name="matricule"/>
@@ -461,7 +489,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 						<textElement textAlignment="Center">
 							<font fontName="SansSerif" size="7" isBold="true"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$F{libelle_categorie}.equals("Religion")? $F{moy_reli}:$V{TotalMoyeCoefParCategorie}]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$F{libelle_categorie}.equals("Religion")?$F{moy_reli}:$V{TotalMoyeCoefParCategorie}]]></textFieldExpression>
 					</textField>
 				</frame>
 			</band>
@@ -580,7 +608,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 						<textElement verticalAlignment="Middle">
 							<font fontName="SansSerif" size="7"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":($F{parent_matiere}.equals("FRANCAIS")&&$F{ordre_niveau}<5) ? $F{rang_fr}+"e":$F{rang}==1 ?  $F{rang}+" er" :$F{rang}!=1? $F{rang} +" e": $F{rang} +" e"]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":($F{parent_matiere}.equals("FRANCAIS")&&$F{ordre_niveau}<5) ? " ":$F{rang}==1 ?  $F{rang}+" er" :$F{rang}!=1? $F{rang} +" e": $F{rang} +" e"]]></textFieldExpression>
 					</textField>
 					<textField textAdjust="ScaleFont" isBlankWhenNull="true">
 						<reportElement style="champsLibelle" x="275" y="0" width="73" height="15" isRemoveLineWhenBlank="true" uuid="38db39fa-1ab5-4ff7-b6aa-c0b44fdccdcc">
@@ -1011,7 +1039,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 					</reportElement>
-					<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle" onErrorType="Icon">
+					<image scaleImage="RetainShape" rotation="Right" hAlign="Center" vAlign="Middle" onErrorType="Icon">
 						<reportElement x="446" y="0" width="83" height="65" uuid="ead8d2cf-965c-4bfa-a420-f2630105d2a3">
 							<property name="com.jaspersoft.layout.grid.x" value="3"/>
 							<property name="com.jaspersoft.layout.grid.y" value="0"/>
@@ -1774,7 +1802,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<frame>
-					<reportElement x="0" y="0" width="538" height="40" uuid="ac8fe4c6-25cf-47a2-a67f-55bd593ff3bc">
+					<reportElement x="0" y="0" width="538" height="30" uuid="ac8fe4c6-25cf-47a2-a67f-55bd593ff3bc">
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
@@ -1930,7 +1958,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 						</textField>
 					</frame>
 					<frame>
-						<reportElement x="357" y="0" width="181" height="40" uuid="2c500178-d04f-4397-8836-de965921bb8b">
+						<reportElement x="357" y="0" width="181" height="30" uuid="2c500178-d04f-4397-8836-de965921bb8b">
 							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 							<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
@@ -1942,7 +1970,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 						</reportElement>
 						<staticText>
-							<reportElement x="0" y="0" width="136" height="10" uuid="893b2b0e-bc61-430f-9a11-9cce6802c54b">
+							<reportElement x="0" y="0" width="138" height="10" uuid="893b2b0e-bc61-430f-9a11-9cce6802c54b">
 								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 								<property name="com.jaspersoft.layout.grid.y" value="0"/>
 								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -1959,40 +1987,9 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 							<text><![CDATA[Résultat de la classe]]></text>
 						</staticText>
 						<textField isBlankWhenNull="true">
-							<reportElement style="champsLibelle" x="0" y="10" width="136" height="10" uuid="f15bac83-da0c-4913-a5b0-f45fba595f18">
-								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
-								<property name="com.jaspersoft.layout.grid.y" value="1"/>
-								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-								<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-								<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-							</reportElement>
-							<textElement>
-								<font fontName="SansSerif" size="7"/>
-							</textElement>
-							<textFieldExpression><![CDATA["Plus forte moyenne: "+$F{moy_max}]]></textFieldExpression>
-						</textField>
-						<textField isBlankWhenNull="true">
-							<reportElement style="champsLibelle" x="0" y="20" width="158" height="10" uuid="f0b1c72e-c69f-48fe-9e65-97112de6ebec">
+							<reportElement style="champsLibelle" x="0" y="20" width="158" height="10" uuid="215b2a93-18f7-4ba7-a979-cc0046153981">
 								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 								<property name="com.jaspersoft.layout.grid.y" value="2"/>
-								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-								<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-								<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-								<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
-							</reportElement>
-							<textElement>
-								<font fontName="SansSerif" size="7"/>
-							</textElement>
-							<textFieldExpression><![CDATA["Plus faible moyenne: "+$F{moy_min}]]></textFieldExpression>
-						</textField>
-						<textField isBlankWhenNull="true">
-							<reportElement style="champsLibelle" x="0" y="30" width="158" height="10" uuid="215b2a93-18f7-4ba7-a979-cc0046153981">
-								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
-								<property name="com.jaspersoft.layout.grid.y" value="3"/>
 								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
 								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
 								<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
@@ -2005,10 +2002,53 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 							</textElement>
 							<textFieldExpression><![CDATA["Moyenne de la classe: "+$F{moy_avg}]]></textFieldExpression>
 						</textField>
+						<frame>
+							<reportElement x="0" y="10" width="178" height="10" uuid="ff18f992-71ab-4afc-81a4-67c3bb3f7dd3">
+								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+								<property name="com.jaspersoft.layout.grid.y" value="1"/>
+								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+								<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
+							</reportElement>
+							<textField isBlankWhenNull="true">
+								<reportElement style="champsLibelle" x="0" y="0" width="89" height="10" uuid="f15bac83-da0c-4913-a5b0-f45fba595f18">
+									<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+									<property name="com.jaspersoft.layout.grid.y" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+								</reportElement>
+								<textElement>
+									<font fontName="SansSerif" size="7"/>
+								</textElement>
+								<textFieldExpression><![CDATA["Plus forte moyenne: "+$F{moy_max}]]></textFieldExpression>
+							</textField>
+							<textField isBlankWhenNull="true">
+								<reportElement style="champsLibelle" x="89" y="0" width="89" height="10" uuid="f0b1c72e-c69f-48fe-9e65-97112de6ebec">
+									<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+									<property name="com.jaspersoft.layout.grid.y" value="2"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+									<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+								</reportElement>
+								<textElement>
+									<font fontName="SansSerif" size="7"/>
+								</textElement>
+								<textFieldExpression><![CDATA["Plus faible moyenne: "+$F{moy_min}]]></textFieldExpression>
+							</textField>
+						</frame>
 					</frame>
 				</frame>
 				<frame>
-					<reportElement x="0" y="40" width="538" height="100" uuid="830e37d6-7957-45f9-920d-6faa7b2d2916">
+					<reportElement x="0" y="30" width="538" height="100" uuid="830e37d6-7957-45f9-920d-6faa7b2d2916">
 						<property name="com.jaspersoft.layout.grid.x" value="0"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2028,443 +2068,9 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<frame>
-						<reportElement style="TitreLibelle" x="0" y="0" width="233" height="100" uuid="7a533f36-ac92-440a-a056-cc576b0b47c4">
-							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
-							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
-							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
-							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-							<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-							<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-							<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-						</reportElement>
-						<box>
-							<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-							<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
-							<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-							<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
-						</box>
-						<frame>
-							<reportElement x="0" y="0" width="228" height="100" uuid="4c22db5d-c3ca-43f5-878e-02d3c6e2f343">
-								<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
-								<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-							</reportElement>
-							<box>
-								<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-								<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-								<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-								<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-							</box>
-							<staticText>
-								<reportElement style="TitreLibelle" x="0" y="0" width="223" height="20" uuid="01a6ef7d-691b-43d7-982d-69c42f6c96ed">
-									<property name="com.jaspersoft.layout.grid.x" value="-1"/>
-									<property name="com.jaspersoft.layout.grid.y" value="0"/>
-									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-									<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-									<property name="com.jaspersoft.studio.unit.height" value="px"/>
-								</reportElement>
-								<textElement textAlignment="Center" verticalAlignment="Top">
-									<font fontName="SansSerif" size="7" isBold="true" isUnderline="true"/>
-								</textElement>
-								<text><![CDATA[DISTINCTIONS]]></text>
-							</staticText>
-							<frame>
-								<reportElement x="0" y="20" width="223" height="81" uuid="21f514a0-e669-4b79-a527-85baf2fa5115">
-									<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
-									<property name="com.jaspersoft.layout.grid.x" value="-1"/>
-									<property name="com.jaspersoft.layout.grid.y" value="2"/>
-									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-									<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-									<property name="com.jaspersoft.studio.unit.height" value="px"/>
-								</reportElement>
-								<box>
-									<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-									<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-									<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-									<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-								</box>
-								<rectangle>
-									<reportElement x="0" y="0" width="20" height="10" uuid="4531198c-a24c-45d1-a641-84543aedcae8">
-										<property name="com.jaspersoft.layout.grid.x" value="-1"/>
-										<property name="com.jaspersoft.layout.grid.y" value="-1"/>
-										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-										<property name="com.jaspersoft.studio.unit.height" value="px"/>
-									</reportElement>
-								</rectangle>
-								<staticText>
-									<reportElement style="champsLibelle" x="20" y="0" width="120" height="10" uuid="7f7d979a-3a38-4d2b-80ef-560a68f6b222">
-										<property name="com.jaspersoft.layout.grid.x" value="-1"/>
-										<property name="com.jaspersoft.layout.grid.y" value="0"/>
-										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-										<property name="com.jaspersoft.studio.unit.height" value="px"/>
-									</reportElement>
-									<textElement textAlignment="Left" verticalAlignment="Middle">
-										<font fontName="SansSerif" size="7"/>
-									</textElement>
-									<text><![CDATA[Tableau d'honneur]]></text>
-								</staticText>
-								<rectangle>
-									<reportElement x="140" y="0" width="20" height="10" uuid="7ab7131d-792f-4f51-bb09-7af538dbbbb9">
-										<property name="com.jaspersoft.layout.grid.x" value="-1"/>
-										<property name="com.jaspersoft.layout.grid.y" value="-1"/>
-										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-										<property name="com.jaspersoft.studio.unit.height" value="px"/>
-										<property name="com.jaspersoft.studio.unit.width" value="px"/>
-									</reportElement>
-								</rectangle>
-								<rectangle>
-									<reportElement x="0" y="10" width="20" height="10" uuid="4703bf0c-c99c-4a41-af87-c034b7467896">
-										<property name="com.jaspersoft.layout.grid.x" value="-1"/>
-										<property name="com.jaspersoft.layout.grid.y" value="1"/>
-										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-									</reportElement>
-								</rectangle>
-								<staticText>
-									<reportElement style="champsLibelle" x="20" y="10" width="153" height="10" uuid="746324cb-2416-4f8c-a3d3-a8fc74f94815">
-										<property name="com.jaspersoft.layout.grid.x" value="-1"/>
-										<property name="com.jaspersoft.layout.grid.y" value="1"/>
-										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-										<property name="com.jaspersoft.layout.grid.colspan" value="4"/>
-										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-										<property name="com.jaspersoft.studio.unit.height" value="px"/>
-									</reportElement>
-									<textElement textAlignment="Left" verticalAlignment="Middle">
-										<font fontName="SansSerif" size="7"/>
-									</textElement>
-									<text><![CDATA[Tableau d'honneur +Encouragement]]></text>
-								</staticText>
-								<rectangle>
-									<reportElement x="0" y="20" width="20" height="10" uuid="aa480fba-2869-4862-bd7a-9a6adb73eaa9">
-										<property name="com.jaspersoft.layout.grid.x" value="-1"/>
-										<property name="com.jaspersoft.layout.grid.y" value="2"/>
-										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-									</reportElement>
-								</rectangle>
-								<staticText>
-									<reportElement style="champsLibelle" x="20" y="20" width="163" height="10" uuid="65f0989a-0d78-4379-864c-e2daf997d5c7">
-										<property name="com.jaspersoft.layout.grid.x" value="-1"/>
-										<property name="com.jaspersoft.layout.grid.y" value="2"/>
-										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-										<property name="com.jaspersoft.layout.grid.colspan" value="4"/>
-										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-										<property name="com.jaspersoft.studio.unit.height" value="px"/>
-									</reportElement>
-									<textElement textAlignment="Left" verticalAlignment="Middle">
-										<font fontName="SansSerif" size="7"/>
-									</textElement>
-									<text><![CDATA[Tableau d'honneur +Félicitation]]></text>
-								</staticText>
-								<staticText>
-									<reportElement style="TitreLibelle" x="0" y="30" width="188" height="10" printWhenGroupChanges="DisciplineLettre" uuid="4f87f035-5f87-4b79-9a80-bed73b2785f4">
-										<property name="com.jaspersoft.layout.grid.x" value="-1"/>
-										<property name="com.jaspersoft.layout.grid.y" value="3"/>
-										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-										<property name="com.jaspersoft.layout.grid.colspan" value="4"/>
-										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-										<property name="com.jaspersoft.studio.unit.height" value="px"/>
-									</reportElement>
-									<textElement textAlignment="Center" verticalAlignment="Middle">
-										<font fontName="SansSerif" size="7" isBold="true" isUnderline="true"/>
-									</textElement>
-									<text><![CDATA[SANCTIONS]]></text>
-								</staticText>
-								<staticText>
-									<reportElement style="champsLibelle" x="20" y="40" width="173" height="10" uuid="1d6bce73-8941-487a-9cff-2ab8ce2de199">
-										<property name="com.jaspersoft.layout.grid.x" value="1"/>
-										<property name="com.jaspersoft.layout.grid.y" value="4"/>
-										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-										<property name="com.jaspersoft.layout.grid.colspan" value="4"/>
-										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-										<property name="com.jaspersoft.studio.unit.height" value="px"/>
-									</reportElement>
-									<textElement>
-										<font fontName="SansSerif" size="7"/>
-									</textElement>
-									<text><![CDATA[Avertissement pour travail insuffisant]]></text>
-								</staticText>
-								<staticText>
-									<reportElement x="0" y="40" width="18" height="10" uuid="8b99a34b-0fc5-405f-9f46-7a190ba25f3b">
-										<property name="com.jaspersoft.layout.grid.x" value="0"/>
-										<property name="com.jaspersoft.layout.grid.y" value="4"/>
-										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-										<property name="com.jaspersoft.studio.unit.height" value="px"/>
-									</reportElement>
-									<box>
-										<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-										<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-										<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-										<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-									</box>
-									<textElement>
-										<font fontName="SansSerif" size="7"/>
-									</textElement>
-									<text><![CDATA[]]></text>
-								</staticText>
-								<staticText>
-									<reportElement x="0" y="50" width="18" height="10" uuid="012707ed-7f2c-4c83-ac59-ee1cc26412a3">
-										<property name="com.jaspersoft.layout.grid.x" value="0"/>
-										<property name="com.jaspersoft.layout.grid.y" value="5"/>
-										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-										<property name="com.jaspersoft.studio.unit.height" value="px"/>
-									</reportElement>
-									<box>
-										<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-										<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-										<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-										<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-									</box>
-									<textElement>
-										<font fontName="SansSerif" size="7"/>
-									</textElement>
-									<text><![CDATA[]]></text>
-								</staticText>
-								<staticText>
-									<reportElement style="champsLibelle" x="20" y="50" width="173" height="10" uuid="7eeb084f-dfb9-40a6-a7a6-434b4a6428c6">
-										<property name="com.jaspersoft.layout.grid.x" value="1"/>
-										<property name="com.jaspersoft.layout.grid.y" value="5"/>
-										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-										<property name="com.jaspersoft.layout.grid.colspan" value="4"/>
-										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-										<property name="com.jaspersoft.studio.unit.height" value="px"/>
-									</reportElement>
-									<textElement>
-										<font fontName="SansSerif" size="7"/>
-									</textElement>
-									<text><![CDATA[Blâme pour travail insuffisant]]></text>
-								</staticText>
-								<staticText>
-									<reportElement x="0" y="60" width="18" height="10" uuid="12e85f0c-6b4b-4f2f-9158-9e1c7c8b069f">
-										<property name="com.jaspersoft.layout.grid.x" value="0"/>
-										<property name="com.jaspersoft.layout.grid.y" value="6"/>
-										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-										<property name="com.jaspersoft.studio.unit.height" value="px"/>
-									</reportElement>
-									<box>
-										<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-										<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-										<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-										<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-									</box>
-									<textElement>
-										<font fontName="SansSerif" size="7"/>
-									</textElement>
-									<text><![CDATA[]]></text>
-								</staticText>
-								<staticText>
-									<reportElement style="champsLibelle" x="20" y="60" width="173" height="10" uuid="4bb5057d-ee64-470a-87f2-313a3276e038">
-										<property name="com.jaspersoft.layout.grid.x" value="1"/>
-										<property name="com.jaspersoft.layout.grid.y" value="6"/>
-										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-										<property name="com.jaspersoft.layout.grid.colspan" value="4"/>
-										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-										<property name="com.jaspersoft.studio.unit.height" value="px"/>
-									</reportElement>
-									<textElement>
-										<font fontName="SansSerif" size="7"/>
-									</textElement>
-									<text><![CDATA[Avertissement pour mauvaise conduite]]></text>
-								</staticText>
-								<staticText>
-									<reportElement x="0" y="70" width="18" height="10" uuid="a4223a4c-d073-473b-9a77-ef39dfc04db0">
-										<property name="com.jaspersoft.layout.grid.x" value="0"/>
-										<property name="com.jaspersoft.layout.grid.y" value="7"/>
-										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-									</reportElement>
-									<box>
-										<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-										<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-										<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-										<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-									</box>
-									<textElement>
-										<font fontName="SansSerif" size="7"/>
-									</textElement>
-									<text><![CDATA[]]></text>
-								</staticText>
-								<staticText>
-									<reportElement style="champsLibelle" x="20" y="70" width="173" height="10" uuid="95e4f3ba-b23b-4a82-8d58-c60bc204ea36">
-										<property name="com.jaspersoft.layout.grid.x" value="1"/>
-										<property name="com.jaspersoft.layout.grid.y" value="7"/>
-										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-										<property name="com.jaspersoft.layout.grid.colspan" value="4"/>
-										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-										<property name="com.jaspersoft.studio.unit.height" value="px"/>
-									</reportElement>
-									<textElement>
-										<font fontName="SansSerif" size="7"/>
-									</textElement>
-									<text><![CDATA[Blâme pour mauvaise conduite]]></text>
-								</staticText>
-								<staticText>
-									<reportElement style="champsLibelle" x="160" y="0" width="48" height="10" uuid="d68dbb03-93ef-4bcd-b31e-dec036c02e42">
-										<property name="com.jaspersoft.layout.grid.x" value="-1"/>
-										<property name="com.jaspersoft.layout.grid.y" value="0"/>
-										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-										<property name="com.jaspersoft.studio.unit.height" value="px"/>
-									</reportElement>
-									<textElement textAlignment="Left" verticalAlignment="Middle">
-										<font fontName="SansSerif" size="7"/>
-									</textElement>
-									<text><![CDATA[Refusé]]></text>
-								</staticText>
-								<image scaleImage="FillFrame">
-									<reportElement positionType="Float" x="0" y="0" width="20" height="10" uuid="aa4e60a4-9d65-4639-b3c0-9b150f9a998b">
-										<property name="com.jaspersoft.layout.grid.x" value="0"/>
-										<property name="com.jaspersoft.layout.grid.y" value="0"/>
-										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-										<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
-										<printWhenExpression><![CDATA[$P{distinctin}.equals( "1" )&&$F{moy_general} >= 12 && $F{moy_general}<=12.99]]></printWhenExpression>
-									</reportElement>
-									<imageExpression><![CDATA["etats/spider/cocher.jpg"]]></imageExpression>
-								</image>
-								<image scaleImage="FillFrame">
-									<reportElement positionType="Float" x="0" y="10" width="20" height="10" uuid="d1e41079-4c1d-446e-9500-eb24ef3dcd7b">
-										<property name="com.jaspersoft.layout.grid.x" value="0"/>
-										<property name="com.jaspersoft.layout.grid.y" value="1"/>
-										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-										<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
-										<printWhenExpression><![CDATA[$P{distinctin}.equals( "1" )&&$F{moy_general} >= 13 && $F{moy_general}<=13.99]]></printWhenExpression>
-									</reportElement>
-									<imageExpression><![CDATA["etats/spider/cocher.jpg"]]></imageExpression>
-								</image>
-								<image scaleImage="FillFrame">
-									<reportElement positionType="Float" x="0" y="20" width="20" height="10" uuid="e2b85590-9135-4170-85c4-2d7f8c344709">
-										<property name="com.jaspersoft.layout.grid.x" value="0"/>
-										<property name="com.jaspersoft.layout.grid.y" value="2"/>
-										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-										<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
-										<printWhenExpression><![CDATA[$P{distinctin}.equals( "1" )&&$F{moy_general} >= 14]]></printWhenExpression>
-									</reportElement>
-									<imageExpression><![CDATA["etats/spider/cocher.jpg"]]></imageExpression>
-								</image>
-								<image scaleImage="FillFrame">
-									<reportElement positionType="Float" x="0" y="40" width="20" height="10" uuid="3f1be997-d634-4ae2-9bfa-d2013841fce2">
-										<property name="com.jaspersoft.layout.grid.x" value="0"/>
-										<property name="com.jaspersoft.layout.grid.y" value="4"/>
-										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-										<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
-										<printWhenExpression><![CDATA[$P{distinctin}.equals( "1" )&&$F{moy_general} >= 8.5 && $F{moy_general}<=9.99]]></printWhenExpression>
-									</reportElement>
-									<imageExpression><![CDATA["etats/spider/cocher.jpg"]]></imageExpression>
-								</image>
-								<image scaleImage="FillFrame">
-									<reportElement positionType="Float" x="0" y="50" width="20" height="10" uuid="f27e95b6-f991-4a2d-9919-e9757e2ca7d3">
-										<property name="com.jaspersoft.layout.grid.x" value="0"/>
-										<property name="com.jaspersoft.layout.grid.y" value="5"/>
-										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-										<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
-										<printWhenExpression><![CDATA[$P{distinctin}.equals( "1" )&&$F{moy_general}< 8.5]]></printWhenExpression>
-									</reportElement>
-									<imageExpression><![CDATA["etats/spider/cocher.jpg"]]></imageExpression>
-								</image>
-								<image scaleImage="FillFrame">
-									<reportElement positionType="Float" x="0" y="60" width="20" height="10" uuid="296b97d6-8621-4cae-a26f-46208a8d2cdc">
-										<property name="com.jaspersoft.layout.grid.x" value="0"/>
-										<property name="com.jaspersoft.layout.grid.y" value="6"/>
-										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-										<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
-										<printWhenExpression><![CDATA[$P{distinctin}.equals( "1" )&&$F{moyenne}>=10 && $F{moyenne}<12&&$F{libelle_matiere}.equals("CONDUITE")]]></printWhenExpression>
-									</reportElement>
-									<imageExpression><![CDATA["etats/spider/cocher.jpg"]]></imageExpression>
-								</image>
-								<image scaleImage="FillFrame">
-									<reportElement positionType="Float" x="0" y="70" width="20" height="10" uuid="9289e314-6d8f-4914-9c83-6e92f7fa8b46">
-										<property name="com.jaspersoft.layout.grid.x" value="0"/>
-										<property name="com.jaspersoft.layout.grid.y" value="7"/>
-										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-										<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
-										<printWhenExpression><![CDATA[$P{distinctin}.equals( "1" )&&$F{moyenne}<10&&$F{libelle_matiere}.equals("CONDUITE")]]></printWhenExpression>
-									</reportElement>
-									<imageExpression><![CDATA["etats/spider/cocher.jpg"]]></imageExpression>
-								</image>
-							</frame>
-						</frame>
-					</frame>
-					<frame>
 						<reportElement x="233" y="0" width="160" height="101" uuid="4dfdf4f8-0fc2-483c-ad12-d51574518ca4">
 							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
-							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.x" value="1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
 							<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
@@ -2552,7 +2158,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 					<frame>
 						<reportElement x="393" y="0" width="145" height="101" uuid="64c222f1-70ce-452d-9525-3a18a30e1e35">
 							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
-							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.x" value="2"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
 							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
 							<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
@@ -2642,6 +2248,959 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 							</textElement>
 							<textFieldExpression><![CDATA[$F{signataire}==null ? " ": $F{signataire}]]></textFieldExpression>
 						</textField>
+					</frame>
+					<frame>
+						<reportElement style="TitreLibelle" x="0" y="0" width="233" height="100" uuid="a3f48a63-8efa-4e56-a82d-0daadf37aa30">
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+							<property name="com.jaspersoft.layout.grid.x" value="0"/>
+							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						</reportElement>
+						<box>
+							<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+							<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+							<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+							<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<frame>
+							<reportElement x="0" y="0" width="228" height="100" uuid="4068e856-f346-4156-b392-6cd71729333a">
+								<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+								<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+							</reportElement>
+							<box>
+								<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+								<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+								<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+								<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<staticText>
+								<reportElement style="TitreLibelle" x="0" y="0" width="105" height="10" uuid="439a08b5-0895-451a-89cc-2fbf823d5c2f">
+									<property name="com.jaspersoft.layout.grid.x" value="0"/>
+									<property name="com.jaspersoft.layout.grid.y" value="0"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+									<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Top">
+									<font fontName="SansSerif" size="7" isBold="true" isUnderline="true"/>
+								</textElement>
+								<text><![CDATA[DISTINCTIONS]]></text>
+							</staticText>
+							<staticText>
+								<reportElement style="TitreLibelle" x="105" y="0" width="112" height="10" uuid="3d051365-9fd6-4c83-97e2-79980cc9bc4f">
+									<property name="com.jaspersoft.layout.grid.x" value="1"/>
+									<property name="com.jaspersoft.layout.grid.y" value="0"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+									<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Top">
+									<font fontName="SansSerif" size="7" isBold="true" isUnderline="true"/>
+								</textElement>
+								<text><![CDATA[SANCTIONS]]></text>
+							</staticText>
+							<frame>
+								<reportElement x="0" y="10" width="228" height="40" uuid="fadf1267-6977-4ffe-ae55-c02230ac0542">
+									<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+									<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+									<property name="com.jaspersoft.layout.grid.y" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="2"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+									<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								</reportElement>
+								<box>
+									<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<rectangle>
+									<reportElement x="0" y="0" width="15" height="10" uuid="d34b2dbf-d9ed-4484-b0ad-cfd521978cd4">
+										<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+										<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+										<property name="com.jaspersoft.studio.unit.height" value="px"/>
+									</reportElement>
+								</rectangle>
+								<staticText>
+									<reportElement style="champsLibelle" x="15" y="0" width="90" height="10" uuid="539c847f-7db9-42fb-be66-37371ac8f25b">
+										<property name="com.jaspersoft.layout.grid.x" value="1"/>
+										<property name="com.jaspersoft.layout.grid.y" value="0"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+										<property name="com.jaspersoft.studio.unit.height" value="px"/>
+										<property name="com.jaspersoft.studio.unit.width" value="px"/>
+									</reportElement>
+									<textElement textAlignment="Left" verticalAlignment="Middle">
+										<font fontName="SansSerif" size="6"/>
+									</textElement>
+									<text><![CDATA[Tableau d'honneur.]]></text>
+								</staticText>
+								<rectangle>
+									<reportElement x="0" y="10" width="15" height="10" uuid="0e83c7ab-77ce-400e-9ca7-d8c83c34cac1">
+										<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+										<property name="com.jaspersoft.layout.grid.y" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+									</reportElement>
+								</rectangle>
+								<staticText>
+									<reportElement style="champsLibelle" x="15" y="10" width="90" height="10" uuid="0af75ad3-7ae3-4b57-84ec-a66d069da64a">
+										<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+										<property name="com.jaspersoft.layout.grid.y" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="4"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+										<property name="com.jaspersoft.studio.unit.height" value="px"/>
+									</reportElement>
+									<textElement textAlignment="Left" verticalAlignment="Middle">
+										<font fontName="SansSerif" size="6"/>
+									</textElement>
+									<text><![CDATA[Tableau d'honneur. +Enc.]]></text>
+								</staticText>
+								<rectangle>
+									<reportElement x="0" y="20" width="15" height="10" uuid="9df4bdfb-a42f-4654-b44a-8ef01e69cf12">
+										<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+										<property name="com.jaspersoft.layout.grid.y" value="2"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+									</reportElement>
+								</rectangle>
+								<staticText>
+									<reportElement style="champsLibelle" x="15" y="20" width="90" height="10" uuid="ad858414-9be6-4c97-80fe-6b7ceea719d2">
+										<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+										<property name="com.jaspersoft.layout.grid.y" value="2"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="4"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+										<property name="com.jaspersoft.studio.unit.height" value="px"/>
+									</reportElement>
+									<textElement textAlignment="Left" verticalAlignment="Middle">
+										<font fontName="SansSerif" size="6"/>
+									</textElement>
+									<text><![CDATA[Tableau d'honneur. +Féli.]]></text>
+								</staticText>
+								<staticText>
+									<reportElement style="champsLibelle" x="120" y="0" width="103" height="10" uuid="1f1778d1-43ad-4b54-a149-6e99f29d1e49">
+										<property name="com.jaspersoft.layout.grid.x" value="3"/>
+										<property name="com.jaspersoft.layout.grid.y" value="0"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="4"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+										<property name="com.jaspersoft.studio.unit.height" value="px"/>
+									</reportElement>
+									<textElement>
+										<font fontName="SansSerif" size="6"/>
+									</textElement>
+									<text><![CDATA[Avertissement pour travail insuff.]]></text>
+								</staticText>
+								<staticText>
+									<reportElement x="105" y="0" width="15" height="10" uuid="04c64695-31e8-4628-82d6-0d7c7cee193e">
+										<property name="com.jaspersoft.layout.grid.x" value="2"/>
+										<property name="com.jaspersoft.layout.grid.y" value="0"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+										<property name="com.jaspersoft.studio.unit.height" value="px"/>
+									</reportElement>
+									<box>
+										<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+										<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+										<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+										<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+									</box>
+									<textElement>
+										<font fontName="SansSerif" size="7"/>
+									</textElement>
+									<text><![CDATA[]]></text>
+								</staticText>
+								<staticText>
+									<reportElement x="105" y="10" width="15" height="10" uuid="9adae1e8-3700-415e-a91f-243c3453a0e9">
+										<property name="com.jaspersoft.layout.grid.x" value="2"/>
+										<property name="com.jaspersoft.layout.grid.y" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+										<property name="com.jaspersoft.studio.unit.height" value="px"/>
+									</reportElement>
+									<box>
+										<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+										<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+										<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+										<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+									</box>
+									<textElement>
+										<font fontName="SansSerif" size="7"/>
+									</textElement>
+									<text><![CDATA[]]></text>
+								</staticText>
+								<staticText>
+									<reportElement style="champsLibelle" x="120" y="10" width="103" height="10" uuid="455b9bb7-504e-478d-8ce7-0f4d72595be3">
+										<property name="com.jaspersoft.layout.grid.x" value="3"/>
+										<property name="com.jaspersoft.layout.grid.y" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="4"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+										<property name="com.jaspersoft.studio.unit.height" value="px"/>
+									</reportElement>
+									<textElement>
+										<font fontName="SansSerif" size="6"/>
+									</textElement>
+									<text><![CDATA[Blâme pour travail insuffisant]]></text>
+								</staticText>
+								<staticText>
+									<reportElement x="105" y="20" width="15" height="10" uuid="8652a71d-ba7f-479d-8d4d-1cafec4f26d5">
+										<property name="com.jaspersoft.layout.grid.x" value="2"/>
+										<property name="com.jaspersoft.layout.grid.y" value="2"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+										<property name="com.jaspersoft.studio.unit.height" value="px"/>
+									</reportElement>
+									<box>
+										<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+										<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+										<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+										<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+									</box>
+									<textElement>
+										<font fontName="SansSerif" size="7"/>
+									</textElement>
+									<text><![CDATA[]]></text>
+								</staticText>
+								<staticText>
+									<reportElement style="champsLibelle" x="120" y="20" width="103" height="10" uuid="d6a260eb-7bc6-4c43-8d20-4046ed655c2a">
+										<property name="com.jaspersoft.layout.grid.x" value="3"/>
+										<property name="com.jaspersoft.layout.grid.y" value="2"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="4"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+										<property name="com.jaspersoft.studio.unit.height" value="px"/>
+									</reportElement>
+									<textElement>
+										<font fontName="SansSerif" size="6"/>
+									</textElement>
+									<text><![CDATA[Avertissement pour mauvaise conduite]]></text>
+								</staticText>
+								<staticText>
+									<reportElement x="105" y="30" width="15" height="10" uuid="e4807350-7682-4486-aaa5-118b0c3a6def">
+										<property name="com.jaspersoft.layout.grid.x" value="2"/>
+										<property name="com.jaspersoft.layout.grid.y" value="3"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+									</reportElement>
+									<box>
+										<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+										<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+										<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+										<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+									</box>
+									<textElement>
+										<font fontName="SansSerif" size="7"/>
+									</textElement>
+									<text><![CDATA[]]></text>
+								</staticText>
+								<staticText>
+									<reportElement style="champsLibelle" x="120" y="30" width="103" height="10" uuid="0ae1c3ef-2aa2-442b-b9c2-4046748c02fe">
+										<property name="com.jaspersoft.layout.grid.x" value="3"/>
+										<property name="com.jaspersoft.layout.grid.y" value="3"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="4"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+										<property name="com.jaspersoft.studio.unit.height" value="px"/>
+									</reportElement>
+									<textElement>
+										<font fontName="SansSerif" size="6"/>
+									</textElement>
+									<text><![CDATA[Blâme pour mauvaise conduite]]></text>
+								</staticText>
+								<image scaleImage="FillFrame">
+									<reportElement positionType="Float" x="0" y="0" width="15" height="10" uuid="36434613-ccb3-4302-a715-ba1e1fe5253e">
+										<property name="com.jaspersoft.layout.grid.x" value="0"/>
+										<property name="com.jaspersoft.layout.grid.y" value="0"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+										<property name="com.jaspersoft.studio.unit.width" value="px"/>
+										<printWhenExpression><![CDATA[$P{distinctin}.equals( "1" )&&$F{moy_general} >= 12 && $F{moy_general}<=12.99]]></printWhenExpression>
+									</reportElement>
+									<imageExpression><![CDATA["etats/spider/cocher.jpg"]]></imageExpression>
+								</image>
+								<image scaleImage="FillFrame">
+									<reportElement positionType="Float" x="0" y="10" width="15" height="10" uuid="6ede0406-48d7-45cd-ac5d-1b363d69e0f4">
+										<property name="com.jaspersoft.layout.grid.x" value="0"/>
+										<property name="com.jaspersoft.layout.grid.y" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+										<property name="com.jaspersoft.studio.unit.width" value="px"/>
+										<printWhenExpression><![CDATA[$P{distinctin}.equals( "1" )&&$F{moy_general} >= 13 && $F{moy_general}<=13.99]]></printWhenExpression>
+									</reportElement>
+									<imageExpression><![CDATA["etats/spider/cocher.jpg"]]></imageExpression>
+								</image>
+								<image scaleImage="FillFrame">
+									<reportElement positionType="Float" x="0" y="20" width="15" height="10" uuid="f0617894-ae23-4b21-a42c-0d3f82de058b">
+										<property name="com.jaspersoft.layout.grid.x" value="0"/>
+										<property name="com.jaspersoft.layout.grid.y" value="2"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+										<property name="com.jaspersoft.studio.unit.width" value="px"/>
+										<printWhenExpression><![CDATA[$P{distinctin}.equals( "1" )&&$F{moy_general} >= 14]]></printWhenExpression>
+									</reportElement>
+									<imageExpression><![CDATA["etats/spider/cocher.jpg"]]></imageExpression>
+								</image>
+								<image scaleImage="FillFrame">
+									<reportElement positionType="Float" x="105" y="0" width="15" height="10" uuid="974287ee-0287-47ee-953b-13b6bd0c7424">
+										<property name="com.jaspersoft.layout.grid.x" value="2"/>
+										<property name="com.jaspersoft.layout.grid.y" value="0"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+										<printWhenExpression><![CDATA[$P{distinctin}.equals( "1" )&&$F{moy_general} >= 8.5 && $F{moy_general}<=9.99]]></printWhenExpression>
+									</reportElement>
+									<imageExpression><![CDATA["etats/spider/cocher.jpg"]]></imageExpression>
+								</image>
+								<image scaleImage="FillFrame">
+									<reportElement positionType="Float" x="105" y="10" width="15" height="10" uuid="d53e38d2-0079-488f-aaf0-9fd67de4ba1f">
+										<property name="com.jaspersoft.layout.grid.x" value="2"/>
+										<property name="com.jaspersoft.layout.grid.y" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+										<printWhenExpression><![CDATA[$P{distinctin}.equals( "1" )&&$F{moy_general}< 8.5]]></printWhenExpression>
+									</reportElement>
+									<imageExpression><![CDATA["etats/spider/cocher.jpg"]]></imageExpression>
+								</image>
+								<image scaleImage="FillFrame">
+									<reportElement positionType="Float" x="105" y="20" width="15" height="10" uuid="c6b8f70b-3ff4-4568-b0d3-de95d11fec27">
+										<property name="com.jaspersoft.layout.grid.x" value="2"/>
+										<property name="com.jaspersoft.layout.grid.y" value="2"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+										<printWhenExpression><![CDATA[$P{distinctin}.equals( "1" )&&$F{moyenne}>=10 && $F{moyenne}<12&&$F{libelle_matiere}.equals("CONDUITE")]]></printWhenExpression>
+									</reportElement>
+									<imageExpression><![CDATA["etats/spider/cocher.jpg"]]></imageExpression>
+								</image>
+								<image scaleImage="FillFrame">
+									<reportElement positionType="Float" x="105" y="30" width="15" height="10" uuid="fa2d9d5d-bd0f-484d-afda-ee9ee5066c16">
+										<property name="com.jaspersoft.layout.grid.x" value="2"/>
+										<property name="com.jaspersoft.layout.grid.y" value="3"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+										<printWhenExpression><![CDATA[$P{distinctin}.equals( "1" )&&$F{moyenne}<10&&$F{libelle_matiere}.equals("CONDUITE")]]></printWhenExpression>
+									</reportElement>
+									<imageExpression><![CDATA["etats/spider/cocher.jpg"]]></imageExpression>
+								</image>
+							</frame>
+							<frame>
+								<reportElement x="0" y="50" width="228" height="50" uuid="eed564f4-2235-4b9e-a186-3aac7eb2fc36">
+									<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+									<property name="com.jaspersoft.layout.grid.y" value="2"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="2"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+									<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+								</reportElement>
+								<textField>
+									<reportElement x="0" y="0" width="223" height="10" uuid="297b15e0-4260-49bf-8037-ddcc4379a2cb">
+										<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+										<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="6"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+										<property name="com.jaspersoft.studio.unit.height" value="px"/>
+									</reportElement>
+									<textElement textAlignment="Center">
+										<font size="7"/>
+									</textElement>
+									<textFieldExpression><![CDATA["RECAPITULATIF"]]></textFieldExpression>
+								</textField>
+								<textField>
+									<reportElement x="0" y="20" width="30" height="10" uuid="117c84da-754a-4459-8f35-3201ea2df5be">
+										<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+										<property name="com.jaspersoft.layout.grid.y" value="2"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+										<property name="com.jaspersoft.studio.unit.height" value="px"/>
+									</reportElement>
+									<box>
+										<pen lineWidth="0.25"/>
+										<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+									</box>
+									<textElement textAlignment="Center">
+										<font size="7"/>
+									</textElement>
+									<textFieldExpression><![CDATA["1e Trim"]]></textFieldExpression>
+								</textField>
+								<textField>
+									<reportElement x="30" y="10" width="30" height="10" uuid="a1c6bfe3-4bf6-4416-9bb0-1bfdbbb6dc7d">
+										<property name="com.jaspersoft.layout.grid.x" value="1"/>
+										<property name="com.jaspersoft.layout.grid.y" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+										<property name="com.jaspersoft.studio.unit.height" value="px"/>
+										<property name="com.jaspersoft.studio.unit.width" value="px"/>
+									</reportElement>
+									<box>
+										<pen lineWidth="0.25"/>
+										<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+									</box>
+									<textElement textAlignment="Center">
+										<font size="7"/>
+									</textElement>
+									<textFieldExpression><![CDATA["Moy."]]></textFieldExpression>
+								</textField>
+								<textField>
+									<reportElement x="0" y="30" width="30" height="10" uuid="b6a53894-1ef5-4413-b674-e314ffd55858">
+										<property name="com.jaspersoft.layout.grid.x" value="0"/>
+										<property name="com.jaspersoft.layout.grid.y" value="3"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+										<property name="com.jaspersoft.studio.unit.height" value="px"/>
+									</reportElement>
+									<box>
+										<pen lineWidth="0.25"/>
+										<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+									</box>
+									<textElement textAlignment="Center">
+										<font size="7"/>
+									</textElement>
+									<textFieldExpression><![CDATA["2e Trim"]]></textFieldExpression>
+								</textField>
+								<textField>
+									<reportElement x="0" y="40" width="30" height="10" uuid="163ab39a-bf03-4bd5-bbec-698f8f59ec0c">
+										<property name="com.jaspersoft.layout.grid.x" value="0"/>
+										<property name="com.jaspersoft.layout.grid.y" value="4"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+										<property name="com.jaspersoft.studio.unit.height" value="px"/>
+									</reportElement>
+									<box>
+										<pen lineWidth="0.25"/>
+										<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+									</box>
+									<textElement textAlignment="Center">
+										<font size="7"/>
+									</textElement>
+									<textFieldExpression><![CDATA["3e Trim"]]></textFieldExpression>
+								</textField>
+								<textField>
+									<reportElement x="30" y="20" width="30" height="10" uuid="4de62b0e-3af6-4255-b22a-a9b4d1342663">
+										<property name="com.jaspersoft.layout.grid.x" value="1"/>
+										<property name="com.jaspersoft.layout.grid.y" value="2"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+										<property name="com.jaspersoft.studio.unit.height" value="px"/>
+										<property name="com.jaspersoft.studio.unit.width" value="px"/>
+									</reportElement>
+									<box>
+										<pen lineWidth="0.25"/>
+										<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+									</box>
+									<textElement textAlignment="Center">
+										<font size="7"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{moy_1er_trim}]]></textFieldExpression>
+								</textField>
+								<textField>
+									<reportElement x="30" y="30" width="30" height="10" uuid="d0c013df-0ac4-47c4-aed7-9a77e5cd8dac">
+										<property name="com.jaspersoft.layout.grid.x" value="1"/>
+										<property name="com.jaspersoft.layout.grid.y" value="3"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+										<property name="com.jaspersoft.studio.unit.height" value="px"/>
+										<property name="com.jaspersoft.studio.unit.width" value="px"/>
+									</reportElement>
+									<box>
+										<pen lineWidth="0.25"/>
+										<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+									</box>
+									<textElement textAlignment="Center">
+										<font size="7"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{moy_2eme_trim}]]></textFieldExpression>
+								</textField>
+								<textField>
+									<reportElement x="30" y="40" width="30" height="10" uuid="ea220835-29b0-4b29-9de5-893da727b1b6">
+										<property name="com.jaspersoft.layout.grid.x" value="1"/>
+										<property name="com.jaspersoft.layout.grid.y" value="4"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+										<property name="com.jaspersoft.studio.unit.height" value="px"/>
+										<property name="com.jaspersoft.studio.unit.width" value="px"/>
+									</reportElement>
+									<box>
+										<pen lineWidth="0.25"/>
+										<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+									</box>
+									<textElement textAlignment="Center">
+										<font size="7"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{moy_3eme_trim}]]></textFieldExpression>
+								</textField>
+								<textField>
+									<reportElement x="60" y="10" width="20" height="10" uuid="b5607db0-46e0-4ae8-ba95-98abca3dd6ed">
+										<property name="com.jaspersoft.layout.grid.x" value="2"/>
+										<property name="com.jaspersoft.layout.grid.y" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+										<property name="com.jaspersoft.studio.unit.height" value="px"/>
+										<property name="com.jaspersoft.studio.unit.width" value="px"/>
+									</reportElement>
+									<box>
+										<pen lineWidth="0.25"/>
+										<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+									</box>
+									<textElement textAlignment="Center">
+										<font size="7"/>
+									</textElement>
+									<textFieldExpression><![CDATA["Coef."]]></textFieldExpression>
+								</textField>
+								<textField>
+									<reportElement x="80" y="10" width="35" height="10" uuid="4ea42645-c78e-4e80-948b-ffe4bc23051b">
+										<property name="com.jaspersoft.layout.grid.x" value="3"/>
+										<property name="com.jaspersoft.layout.grid.y" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+										<property name="com.jaspersoft.studio.unit.height" value="px"/>
+										<property name="com.jaspersoft.studio.unit.width" value="px"/>
+									</reportElement>
+									<box>
+										<pen lineWidth="0.25"/>
+										<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+									</box>
+									<textElement textAlignment="Center">
+										<font size="7"/>
+									</textElement>
+									<textFieldExpression><![CDATA["Moy.x C."]]></textFieldExpression>
+								</textField>
+								<textField>
+									<reportElement x="115" y="10" width="20" height="10" uuid="def3a57a-3f95-4800-b503-5dc4da998c72">
+										<property name="com.jaspersoft.layout.grid.x" value="4"/>
+										<property name="com.jaspersoft.layout.grid.y" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+										<property name="com.jaspersoft.studio.unit.height" value="px"/>
+									</reportElement>
+									<box>
+										<pen lineWidth="0.25"/>
+										<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+									</box>
+									<textElement textAlignment="Center">
+										<font size="7"/>
+									</textElement>
+									<textFieldExpression><![CDATA["Rang."]]></textFieldExpression>
+								</textField>
+								<textField>
+									<reportElement x="60" y="20" width="20" height="10" uuid="7b4bbbae-093d-48a3-9617-af00de30c373">
+										<property name="com.jaspersoft.layout.grid.x" value="2"/>
+										<property name="com.jaspersoft.layout.grid.y" value="2"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+										<property name="com.jaspersoft.studio.unit.height" value="px"/>
+										<property name="com.jaspersoft.studio.unit.width" value="px"/>
+									</reportElement>
+									<box>
+										<pen lineWidth="0.25"/>
+										<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+									</box>
+									<textElement textAlignment="Center">
+										<font size="7"/>
+									</textElement>
+									<textFieldExpression><![CDATA["1"]]></textFieldExpression>
+								</textField>
+								<textField>
+									<reportElement x="80" y="20" width="35" height="10" uuid="1db19c06-e528-478a-ada8-8a2e5a03e67f">
+										<property name="com.jaspersoft.layout.grid.x" value="3"/>
+										<property name="com.jaspersoft.layout.grid.y" value="2"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+										<property name="com.jaspersoft.studio.unit.height" value="px"/>
+										<property name="com.jaspersoft.studio.unit.width" value="px"/>
+									</reportElement>
+									<box>
+										<pen lineWidth="0.25"/>
+										<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+									</box>
+									<textElement textAlignment="Center">
+										<font size="7"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{moy_1er_trim}]]></textFieldExpression>
+								</textField>
+								<textField>
+									<reportElement x="115" y="20" width="20" height="10" uuid="c7d34a6c-ab7e-4391-b1b2-0a6b5a65a4fd">
+										<property name="com.jaspersoft.layout.grid.x" value="4"/>
+										<property name="com.jaspersoft.layout.grid.y" value="2"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+										<property name="com.jaspersoft.studio.unit.height" value="px"/>
+										<property name="com.jaspersoft.studio.unit.width" value="px"/>
+									</reportElement>
+									<box>
+										<pen lineWidth="0.25"/>
+										<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+									</box>
+									<textElement textAlignment="Center">
+										<font size="7"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{is_class_1er_trim}.equals("N")? "NC":$F{rang_1er_trim}.equals("1") ? $F{rang_1er_trim}+"èr(e)": $F{rang_1er_trim}+"e"]]></textFieldExpression>
+								</textField>
+								<textField>
+									<reportElement x="60" y="30" width="20" height="10" uuid="4feab088-11d8-49b0-a91c-2e4005d117e1">
+										<property name="com.jaspersoft.layout.grid.x" value="2"/>
+										<property name="com.jaspersoft.layout.grid.y" value="3"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+										<property name="com.jaspersoft.studio.unit.height" value="px"/>
+										<property name="com.jaspersoft.studio.unit.width" value="px"/>
+									</reportElement>
+									<box>
+										<pen lineWidth="0.25"/>
+										<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+									</box>
+									<textElement textAlignment="Center">
+										<font size="7"/>
+									</textElement>
+									<textFieldExpression><![CDATA["2"]]></textFieldExpression>
+								</textField>
+								<textField>
+									<reportElement x="80" y="30" width="35" height="10" uuid="8f6ac79a-c34c-45e8-aa59-b6bec05d8c37">
+										<property name="com.jaspersoft.layout.grid.x" value="3"/>
+										<property name="com.jaspersoft.layout.grid.y" value="3"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+										<property name="com.jaspersoft.studio.unit.height" value="px"/>
+										<property name="com.jaspersoft.studio.unit.width" value="px"/>
+									</reportElement>
+									<box>
+										<pen lineWidth="0.25"/>
+										<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+									</box>
+									<textElement textAlignment="Center">
+										<font size="7"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{moy_2eme_trim}*2]]></textFieldExpression>
+								</textField>
+								<textField>
+									<reportElement x="115" y="30" width="20" height="10" uuid="3eb605a9-7b3a-4b98-b577-be943fe93a75">
+										<property name="com.jaspersoft.layout.grid.x" value="4"/>
+										<property name="com.jaspersoft.layout.grid.y" value="3"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+										<property name="com.jaspersoft.studio.unit.height" value="px"/>
+									</reportElement>
+									<box>
+										<pen lineWidth="0.25"/>
+										<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+									</box>
+									<textElement textAlignment="Center">
+										<font size="7"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{is_class_2e_trim}.equals("N")? "NC":$F{rang_2eme_trim}.equals("1") ? $F{rang_2eme_trim}+"èr(e)": $F{rang_2eme_trim}+"e"]]></textFieldExpression>
+								</textField>
+								<textField>
+									<reportElement x="60" y="40" width="20" height="10" uuid="549bd01e-5bc6-4859-8fd9-2eaacad4f1e4">
+										<property name="com.jaspersoft.layout.grid.x" value="2"/>
+										<property name="com.jaspersoft.layout.grid.y" value="4"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+										<property name="com.jaspersoft.studio.unit.height" value="px"/>
+										<property name="com.jaspersoft.studio.unit.width" value="px"/>
+									</reportElement>
+									<box>
+										<pen lineWidth="0.25"/>
+										<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+									</box>
+									<textElement textAlignment="Center">
+										<font size="7"/>
+									</textElement>
+									<textFieldExpression><![CDATA["2"]]></textFieldExpression>
+								</textField>
+								<textField>
+									<reportElement x="80" y="40" width="35" height="10" uuid="38e858f6-16c6-43a9-91bd-3a8d10db016f">
+										<property name="com.jaspersoft.layout.grid.x" value="3"/>
+										<property name="com.jaspersoft.layout.grid.y" value="4"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+										<property name="com.jaspersoft.studio.unit.height" value="px"/>
+										<property name="com.jaspersoft.studio.unit.width" value="px"/>
+									</reportElement>
+									<box>
+										<pen lineWidth="0.25"/>
+										<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+									</box>
+									<textElement textAlignment="Center">
+										<font size="7"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{moy_3eme_trim}*3]]></textFieldExpression>
+								</textField>
+								<textField>
+									<reportElement x="115" y="40" width="20" height="10" uuid="864196c5-5491-41c2-85a8-ef479359dd66">
+										<property name="com.jaspersoft.layout.grid.x" value="4"/>
+										<property name="com.jaspersoft.layout.grid.y" value="4"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+										<property name="com.jaspersoft.studio.unit.height" value="px"/>
+									</reportElement>
+									<box>
+										<pen lineWidth="0.25"/>
+										<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+									</box>
+									<textElement textAlignment="Center">
+										<font size="7"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{is_class_3e_trim}.equals("N")? "NC":$F{rang_3eme_trim}.equals("1") ? $F{rang_3eme_trim}+"èr(e)": $F{rang_3eme_trim}+"e"]]></textFieldExpression>
+								</textField>
+								<textField>
+									<reportElement x="135" y="10" width="93" height="10" uuid="6e26bfdc-f079-4ab9-9d0d-d1b4513cb08c">
+										<property name="com.jaspersoft.layout.grid.x" value="5"/>
+										<property name="com.jaspersoft.layout.grid.y" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+									</reportElement>
+									<box>
+										<pen lineWidth="0.25"/>
+										<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+									</box>
+									<textElement>
+										<font size="7" isBold="false"/>
+									</textElement>
+									<textFieldExpression><![CDATA["Moyenne générale annuelle"]]></textFieldExpression>
+								</textField>
+								<textField>
+									<reportElement x="135" y="20" width="93" height="10" uuid="608e9282-c057-47a3-954b-e836e3cbfcd7">
+										<property name="com.jaspersoft.layout.grid.x" value="5"/>
+										<property name="com.jaspersoft.layout.grid.y" value="2"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+									</reportElement>
+									<box>
+										<pen lineWidth="0.25"/>
+										<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font size="7" isBold="true"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{moy_annuelle}+" / 20"]]></textFieldExpression>
+								</textField>
+								<textField>
+									<reportElement x="135" y="30" width="93" height="21" uuid="3566c944-b2c6-41f0-8eff-f51a85d7594c">
+										<property name="com.jaspersoft.layout.grid.x" value="5"/>
+										<property name="com.jaspersoft.layout.grid.y" value="3"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="2"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+									</reportElement>
+									<box>
+										<pen lineWidth="0.25"/>
+										<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+										<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+									</box>
+									<textElement>
+										<font size="7" isBold="false"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{rang_annuelle}.equals("1") ?  "RANG ANNUEL: "+$F{rang_annuelle}+" èr(e) / " + $V{TotalEleveClasse} : "RANG ANNUEL: "+$F{rang_annuelle}+"e/ "+$V{TotalEleveClasse}]]></textFieldExpression>
+								</textField>
+							</frame>
+						</frame>
 					</frame>
 				</frame>
 			</frame>

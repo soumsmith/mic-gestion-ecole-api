@@ -15,7 +15,7 @@
 
 
 
-  docker build -f src/main/docker/Dockerfile.jvm -t europe-west1-docker.pkg.dev/fair-splice-361010/vie-ecole-docker-repo/vie-ecole-api:202404291317 .
+  docker build -f src/main/docker/Dockerfile.jvm -t europe-west1-docker.pkg.dev/fair-splice-361010/vie-ecole-docker-repo/vie-ecole-api:202405061556 .
 
 
 
@@ -28,3 +28,4 @@
 
 --- pull from artifact registry
   docker pull europe-west1-docker.pkg.dev/fair-splice-361010/vie-ecole-docker-repo/example:latest
+3
