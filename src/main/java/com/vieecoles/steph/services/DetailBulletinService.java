@@ -32,37 +32,40 @@ public class DetailBulletinService {
 
 		return myDetail;
 	}
-	
-	public List<DetailBulletin> getByBulletin(String bullrtinId){
+
+	public List<DetailBulletin> getByBulletin(String bullrtinId) {
 		List<DetailBulletin> list = new ArrayList<DetailBulletin>();
 		try {
 			list = DetailBulletin.find("bulletin.id = ?1 ", bullrtinId).list();
-		}catch (Exception e) {
-			if(e.getClass().getName().equals(NoResultException.class.getName())) {
-				logger.warning("DetailBulletinService - getByBulletin -Aucune donnée trouvée pour l'id bulletin ::: "+bullrtinId);
-			}else {
+		} catch (Exception e) {
+			if (e.getClass().getName().equals(NoResultException.class.getName())) {
+				logger.warning("DetailBulletinService - getByBulletin -Aucune donnée trouvée pour l'id bulletin ::: "
+						+ bullrtinId);
+			} else {
 				e.printStackTrace();
 			}
 		}
 		return list;
 	}
 
-	public List<DetailBulletin> getDetailBulletinsEleveByAnneeAndClasseAndMatiere(Long anneeId, Long ClasseId,String matricule, String matiereCode) {
+	public List<DetailBulletin> getDetailBulletinsEleveByAnneeAndClasseAndMatiere(Long anneeId, Long ClasseId,
+			String matricule, Long matiereId) {
 
 		List<DetailBulletin> myDetails = new ArrayList<DetailBulletin>();
-//		System.out.println(anneeId+" "+ClasseId+" "+matricule+" "+matiereCode);
+//		System.out.println(anneeId + " " + ClasseId + " " + matricule + " " + matiereId);
 
 		try {
-			myDetails = DetailBulletin.find("bulletin.anneeId = ?1 and bulletin.classeId = ?2 and bulletin.matricule=?3 and matiereCode = ?4", anneeId,ClasseId,matricule, matiereCode)
-					.list();
-			logger.info(myDetails.size()+" Detail(s) trouvé(s) pour l'élève de matricule : " + matricule);
+			myDetails = DetailBulletin.find(
+					"bulletin.anneeId = ?1 and bulletin.classeId = ?2 and bulletin.matricule=?3 and matiereRealId = ?4",
+					anneeId, ClasseId, matricule, matiereId).list();
+			logger.info(myDetails.size() + " Detail(s) trouvé(s) pour l'élève de matricule : " + matricule);
 		} catch (RuntimeException ex) {
 			if (ex.getClass().getName().equals(NoResultException.class.getName()))
 				logger.info("Aucun Detail bulletin trouvé pour l'élève de matricule : " + matricule);
 			else
 				ex.printStackTrace();
 		}
-
+//		System.out.println("SIZE :::::: "+myDetails.size());
 		return myDetails;
 	}
 }
