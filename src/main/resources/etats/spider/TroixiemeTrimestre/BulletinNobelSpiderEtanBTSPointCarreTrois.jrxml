@@ -580,7 +580,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.matricule =  $P{matr
 						<textElement verticalAlignment="Middle">
 							<font fontName="SansSerif" size="8"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":($F{parent_matiere}.equals("FRANCAIS")&&$F{ordre_niveau}<5) ? " ":$F{rang}==1 ?  $F{rang}+" er" :$F{rang}!=1? $F{rang} +" e": $F{rang} +" e"]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":($F{parent_matiere}.equals("FRANCAIS")&&$F{ordre_niveau}<5) ? $F{rang_fr}+"e":$F{rang}==1 ?  $F{rang}+" er" :$F{rang}!=1? $F{rang} +" e": $F{rang} +" e"]]></textFieldExpression>
 					</textField>
 					<textField textAdjust="ScaleFont" isBlankWhenNull="true">
 						<reportElement style="champsLibelle" x="275" y="0" width="73" height="18" isRemoveLineWhenBlank="true" uuid="38db39fa-1ab5-4ff7-b6aa-c0b44fdccdcc">
@@ -2207,7 +2207,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.matricule =  $P{matr
 								<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<staticText>
-								<reportElement style="TitreLibelle" x="0" y="0" width="105" height="10" uuid="979e6763-3216-4981-878f-c8f5c6fb9a36">
+								<reportElement style="TitreLibelle" x="0" y="0" width="105" height="20" uuid="979e6763-3216-4981-878f-c8f5c6fb9a36">
 									<property name="com.jaspersoft.layout.grid.x" value="0"/>
 									<property name="com.jaspersoft.layout.grid.y" value="0"/>
 									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2223,7 +2223,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.matricule =  $P{matr
 								<text><![CDATA[DISTINCTIONS]]></text>
 							</staticText>
 							<staticText>
-								<reportElement style="TitreLibelle" x="105" y="0" width="112" height="10" uuid="b4c72bf9-edbe-496a-ab56-466857b6fe10">
+								<reportElement style="TitreLibelle" x="105" y="0" width="112" height="20" uuid="b4c72bf9-edbe-496a-ab56-466857b6fe10">
 									<property name="com.jaspersoft.layout.grid.x" value="1"/>
 									<property name="com.jaspersoft.layout.grid.y" value="0"/>
 									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2239,10 +2239,10 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.matricule =  $P{matr
 								<text><![CDATA[SANCTIONS]]></text>
 							</staticText>
 							<frame>
-								<reportElement x="0" y="10" width="228" height="40" uuid="642895eb-c64b-4c2e-a561-cda92665bf36">
+								<reportElement x="0" y="48" width="228" height="40" uuid="642895eb-c64b-4c2e-a561-cda92665bf36">
 									<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 									<property name="com.jaspersoft.layout.grid.x" value="-1"/>
-									<property name="com.jaspersoft.layout.grid.y" value="1"/>
+									<property name="com.jaspersoft.layout.grid.y" value="2"/>
 									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
 									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
 									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
@@ -2586,9 +2586,9 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.matricule =  $P{matr
 								</image>
 							</frame>
 							<frame>
-								<reportElement x="0" y="50" width="228" height="50" uuid="2a547bf0-8dbf-4c46-aa10-1aeb0b68e2a4">
+								<reportElement x="0" y="88" width="228" height="50" uuid="2a547bf0-8dbf-4c46-aa10-1aeb0b68e2a4">
 									<property name="com.jaspersoft.layout.grid.x" value="-1"/>
-									<property name="com.jaspersoft.layout.grid.y" value="2"/>
+									<property name="com.jaspersoft.layout.grid.y" value="3"/>
 									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
 									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
 									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
@@ -2597,23 +2597,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.matricule =  $P{matr
 									<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 								</reportElement>
 								<textField>
-									<reportElement x="0" y="0" width="223" height="20" uuid="713192d1-960c-4f76-bc2f-0f061de5c239">
-										<property name="com.jaspersoft.layout.grid.x" value="-1"/>
-										<property name="com.jaspersoft.layout.grid.y" value="-1"/>
-										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-										<property name="com.jaspersoft.layout.grid.colspan" value="6"/>
-										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-										<property name="com.jaspersoft.studio.unit.height" value="px"/>
-									</reportElement>
-									<textElement textAlignment="Center" verticalAlignment="Middle">
-										<font size="7"/>
-									</textElement>
-									<textFieldExpression><![CDATA["RECAPITULATIF"]]></textFieldExpression>
-								</textField>
-								<textField>
-									<reportElement x="0" y="30" width="30" height="10" uuid="2654a0e9-b7b1-486c-8ad0-b9da57741f3d">
+									<reportElement x="0" y="19" width="30" height="10" uuid="2654a0e9-b7b1-486c-8ad0-b9da57741f3d">
 										<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 										<property name="com.jaspersoft.layout.grid.y" value="2"/>
 										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2636,7 +2620,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.matricule =  $P{matr
 									<textFieldExpression><![CDATA["1e Sem"]]></textFieldExpression>
 								</textField>
 								<textField>
-									<reportElement x="30" y="20" width="30" height="10" uuid="1e0b666f-5270-4938-975a-4ee1d9c5eb2b">
+									<reportElement x="30" y="9" width="30" height="10" uuid="1e0b666f-5270-4938-975a-4ee1d9c5eb2b">
 										<property name="com.jaspersoft.layout.grid.x" value="1"/>
 										<property name="com.jaspersoft.layout.grid.y" value="1"/>
 										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2660,7 +2644,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.matricule =  $P{matr
 									<textFieldExpression><![CDATA["Moy."]]></textFieldExpression>
 								</textField>
 								<textField>
-									<reportElement x="0" y="40" width="30" height="10" uuid="35ef72fa-292c-4ce8-9d9f-75c16617627c">
+									<reportElement x="0" y="29" width="30" height="10" uuid="35ef72fa-292c-4ce8-9d9f-75c16617627c">
 										<property name="com.jaspersoft.layout.grid.x" value="0"/>
 										<property name="com.jaspersoft.layout.grid.y" value="3"/>
 										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2683,7 +2667,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.matricule =  $P{matr
 									<textFieldExpression><![CDATA["2e Sem"]]></textFieldExpression>
 								</textField>
 								<textField>
-									<reportElement x="30" y="30" width="30" height="10" uuid="7c5faf8b-e77f-4b68-bd52-030de77c7b02">
+									<reportElement x="30" y="19" width="30" height="10" uuid="7c5faf8b-e77f-4b68-bd52-030de77c7b02">
 										<property name="com.jaspersoft.layout.grid.x" value="1"/>
 										<property name="com.jaspersoft.layout.grid.y" value="2"/>
 										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2707,7 +2691,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.matricule =  $P{matr
 									<textFieldExpression><![CDATA[$F{moy_1er_trim}]]></textFieldExpression>
 								</textField>
 								<textField>
-									<reportElement x="30" y="40" width="30" height="10" uuid="46ec2c16-da02-405f-b100-60899e1fe2d1">
+									<reportElement x="30" y="29" width="30" height="10" uuid="46ec2c16-da02-405f-b100-60899e1fe2d1">
 										<property name="com.jaspersoft.layout.grid.x" value="1"/>
 										<property name="com.jaspersoft.layout.grid.y" value="3"/>
 										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2731,7 +2715,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.matricule =  $P{matr
 									<textFieldExpression><![CDATA[$F{moy_2eme_trim}]]></textFieldExpression>
 								</textField>
 								<textField>
-									<reportElement x="60" y="20" width="20" height="10" uuid="35d500ae-206a-4128-aec4-d59f325c5acb">
+									<reportElement x="60" y="9" width="20" height="10" uuid="35d500ae-206a-4128-aec4-d59f325c5acb">
 										<property name="com.jaspersoft.layout.grid.x" value="2"/>
 										<property name="com.jaspersoft.layout.grid.y" value="1"/>
 										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2755,7 +2739,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.matricule =  $P{matr
 									<textFieldExpression><![CDATA["Coef."]]></textFieldExpression>
 								</textField>
 								<textField>
-									<reportElement x="80" y="20" width="35" height="10" uuid="0d9d6162-571c-4a01-babe-7d7ed177efc9">
+									<reportElement x="80" y="9" width="35" height="10" uuid="0d9d6162-571c-4a01-babe-7d7ed177efc9">
 										<property name="com.jaspersoft.layout.grid.x" value="3"/>
 										<property name="com.jaspersoft.layout.grid.y" value="1"/>
 										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2779,7 +2763,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.matricule =  $P{matr
 									<textFieldExpression><![CDATA["Moy.x C."]]></textFieldExpression>
 								</textField>
 								<textField>
-									<reportElement x="115" y="20" width="20" height="10" uuid="ed84af62-c91d-4e3f-a638-3d65d12b38d8">
+									<reportElement x="115" y="9" width="20" height="10" uuid="ed84af62-c91d-4e3f-a638-3d65d12b38d8">
 										<property name="com.jaspersoft.layout.grid.x" value="4"/>
 										<property name="com.jaspersoft.layout.grid.y" value="1"/>
 										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2802,7 +2786,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.matricule =  $P{matr
 									<textFieldExpression><![CDATA["Rang."]]></textFieldExpression>
 								</textField>
 								<textField>
-									<reportElement x="60" y="30" width="20" height="10" uuid="11060c3b-fcb6-49ac-bd2b-40fed45275fa">
+									<reportElement x="60" y="19" width="20" height="10" uuid="11060c3b-fcb6-49ac-bd2b-40fed45275fa">
 										<property name="com.jaspersoft.layout.grid.x" value="2"/>
 										<property name="com.jaspersoft.layout.grid.y" value="2"/>
 										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2826,7 +2810,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.matricule =  $P{matr
 									<textFieldExpression><![CDATA["2"]]></textFieldExpression>
 								</textField>
 								<textField>
-									<reportElement x="80" y="30" width="35" height="10" uuid="9c4a2885-3ebc-4f36-99e3-871403a0c476">
+									<reportElement x="80" y="19" width="35" height="10" uuid="9c4a2885-3ebc-4f36-99e3-871403a0c476">
 										<property name="com.jaspersoft.layout.grid.x" value="3"/>
 										<property name="com.jaspersoft.layout.grid.y" value="2"/>
 										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2850,7 +2834,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.matricule =  $P{matr
 									<textFieldExpression><![CDATA[$F{moy_1er_trim}*2]]></textFieldExpression>
 								</textField>
 								<textField>
-									<reportElement x="115" y="30" width="20" height="10" uuid="db501c93-3888-4966-9745-bca1aea6a123">
+									<reportElement x="115" y="19" width="20" height="10" uuid="db501c93-3888-4966-9745-bca1aea6a123">
 										<property name="com.jaspersoft.layout.grid.x" value="4"/>
 										<property name="com.jaspersoft.layout.grid.y" value="2"/>
 										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2874,7 +2858,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.matricule =  $P{matr
 									<textFieldExpression><![CDATA[$F{is_class_1er_trim}.equals("N")? "NC":$F{rang_1er_trim}.equals("1") ? $F{rang_1er_trim}+"èr(e)": $F{rang_1er_trim}+"e"]]></textFieldExpression>
 								</textField>
 								<textField>
-									<reportElement x="60" y="40" width="20" height="10" uuid="86f2553d-39a2-4b52-b4aa-9ed7229d07c0">
+									<reportElement x="60" y="29" width="20" height="10" uuid="86f2553d-39a2-4b52-b4aa-9ed7229d07c0">
 										<property name="com.jaspersoft.layout.grid.x" value="2"/>
 										<property name="com.jaspersoft.layout.grid.y" value="3"/>
 										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2898,7 +2882,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.matricule =  $P{matr
 									<textFieldExpression><![CDATA["3"]]></textFieldExpression>
 								</textField>
 								<textField>
-									<reportElement x="80" y="40" width="35" height="10" uuid="c84a911b-d4d0-447a-890d-056ff7869d99">
+									<reportElement x="80" y="29" width="35" height="10" uuid="c84a911b-d4d0-447a-890d-056ff7869d99">
 										<property name="com.jaspersoft.layout.grid.x" value="3"/>
 										<property name="com.jaspersoft.layout.grid.y" value="3"/>
 										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2922,7 +2906,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.matricule =  $P{matr
 									<textFieldExpression><![CDATA[$F{moy_2eme_trim}*3]]></textFieldExpression>
 								</textField>
 								<textField>
-									<reportElement x="115" y="40" width="20" height="10" uuid="1b0f3c91-f3bc-4eb1-8a21-de433026a770">
+									<reportElement x="115" y="29" width="20" height="10" uuid="1b0f3c91-f3bc-4eb1-8a21-de433026a770">
 										<property name="com.jaspersoft.layout.grid.x" value="4"/>
 										<property name="com.jaspersoft.layout.grid.y" value="3"/>
 										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2945,7 +2929,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.matricule =  $P{matr
 									<textFieldExpression><![CDATA[$F{is_class_2e_trim}.equals("N")? "NC":$F{rang_2eme_trim}.equals("1") ? $F{rang_2eme_trim}+"èr(e)": $F{rang_2eme_trim}+"e"]]></textFieldExpression>
 								</textField>
 								<textField>
-									<reportElement x="135" y="20" width="93" height="10" uuid="d2f482a6-f849-47e8-b122-1deacb8cde0d">
+									<reportElement x="135" y="9" width="93" height="10" uuid="d2f482a6-f849-47e8-b122-1deacb8cde0d">
 										<property name="com.jaspersoft.layout.grid.x" value="5"/>
 										<property name="com.jaspersoft.layout.grid.y" value="1"/>
 										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2967,7 +2951,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.matricule =  $P{matr
 									<textFieldExpression><![CDATA["Moyenne générale annuelle"]]></textFieldExpression>
 								</textField>
 								<textField>
-									<reportElement x="135" y="30" width="93" height="10" uuid="f6d4a062-93e0-431f-92df-6e2a543f6f91">
+									<reportElement x="135" y="19" width="93" height="10" uuid="f6d4a062-93e0-431f-92df-6e2a543f6f91">
 										<property name="com.jaspersoft.layout.grid.x" value="5"/>
 										<property name="com.jaspersoft.layout.grid.y" value="2"/>
 										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2989,7 +2973,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.matricule =  $P{matr
 									<textFieldExpression><![CDATA[$F{moy_annuelle}+" / 20"]]></textFieldExpression>
 								</textField>
 								<textField>
-									<reportElement x="135" y="40" width="93" height="21" uuid="3d176d95-3b29-492b-a5e2-4e1add8d93b7">
+									<reportElement x="135" y="29" width="93" height="21" uuid="3d176d95-3b29-492b-a5e2-4e1add8d93b7">
 										<property name="com.jaspersoft.layout.grid.x" value="5"/>
 										<property name="com.jaspersoft.layout.grid.y" value="3"/>
 										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>

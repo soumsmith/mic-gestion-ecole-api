@@ -581,7 +581,7 @@
 	<parameter name="periode" class="java.lang.String"/>
 	<parameter name="annee" class="java.lang.String"/>
 	<queryString language="SQL">
-		<![CDATA[select v.* from ve_matrice_classe v 
+		<![CDATA[select v.* from ve_matrice_classe2 v 
 where v.id_ecole= $P{idEcole}  and v.anneScolaire= $P{annee}  and v.periode= $P{periode} and v.classe=  $P{classe} 
  order by v.nom ,v.prenoms,v.numOrdre]]>
 	</queryString>

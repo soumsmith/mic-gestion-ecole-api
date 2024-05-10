@@ -93,7 +93,7 @@ public class BulletinSpiderRessource {
                 if(!pivoter) {
                     System.out.println("Entree Pivot ");
                     if(libellePeriode.equals("Troisième Trimestre")) {
-                        System.out.println("callSpiderNobel90Troisxxxx.jrxml") ;
+                        System.out.println("callSpiderNobel90Troissoummmm.jrxml") ;
                         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/callSpiderNobel90Trois.jrxml");
                     }
                 else  {
@@ -103,11 +103,16 @@ public class BulletinSpiderRessource {
                     }
 
                 } else {
-                    if(libellePeriode.equals("Troisième Trimestre"))
-                    myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/callSpiderNobelTrois.jrxml");
-                else
-                    System.out.println("callSpiderNobel.jrxml") ;
-                 myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderNobel.jrxml");
+                    if(libellePeriode.equals("Troisième Trimestre")) {
+                        System.out.println("callSpiderNobelTrois.jrxmlMouuuuu") ;
+                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/callSpiderNobelTrois.jrxml");
+
+                    }
+                    else {
+                        System.out.println("callSpiderNobel.jrxml") ;
+                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderNobel.jrxml");
+
+                    }
 
 
                 }
@@ -284,13 +289,13 @@ public class BulletinSpiderRessource {
         ecole myEcole= new ecole() ;
         myEcole=sousceecoleService.getInffosEcoleByID(idEcole);
         map.put("classe", classe.getLibelle());
-        // map.put("classe", 	"5EME A");
+         //map.put("classe", 	"5EME A");
         map.put("idEcole", idEcole);
         map.put("libelleAnnee", libelleAnnee);
         map.put("libellePeriode", libellePeriode);
         map.put("infosAmoirie", infos);
         map.put("distinctin", pdistinct);
-        map.put("codeEcole", myEcole.getEcolecode());
+       map.put("codeEcole", myEcole.getEcolecode());
         map.put("positionLogo", plogoPosi);
         map.put("setBg", psetBg);
 
@@ -309,11 +314,11 @@ public class BulletinSpiderRessource {
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public ResponseEntity<byte[]>  getDtoRapport(@PathParam("idEcole") Long idEcole ,@PathParam("libellePeriode") String libellePeriode ,
                                                  @PathParam("libelleAnnee") String libelleAnnee , @PathParam("idClasse") Long libelleClasse ,@PathParam("matricule") String matricule,@PathParam("compress") Boolean compress,
-                                                 @PathParam("niveauEnseign") Long niveauEnseign,@PathParam("positionLogo") boolean positionLogo ,@PathParam("filigranne") boolean filigranne ,
+                                                 @PathParam("niveauEnseign") Long niveauEnseign,@PathParam("positionLogo") boolean positionLogo
+                                               ,@PathParam("filigranne") boolean filigranne ,
                                                  @PathParam("infoAmoirie") boolean infoAmoiri,
                                                  @PathParam("pivoter") boolean pivoter ,
-                                                 @PathParam("modelePoincarre") boolean modelePoincarre
-                                                 ,
+                                                 @PathParam("modelePoincarre") boolean modelePoincarre,
                                                  @PathParam("distinct") boolean distinct ,
                                                  @PathParam("modelelmd") boolean modelelmd
      ) throws Exception, JRException {
@@ -322,11 +327,19 @@ if (!compress){
     if(niveauEnseign ==2) {
         if(!pivoter){
             if(libellePeriode.equals("Troisième Trimestre"))
-            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/BulletinNobelSpider90Trois.jrxml");
+            {
+                myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/BulletinNobelSpider90Trois.jrxml");
+
+            }
+
         else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinNobelSpider90.jrxml");
         } else {
             if(libellePeriode.equals("Troisième Trimestre"))
-            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/BulletinNobelSpiderTrois.jrxml");
+            {
+                myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/BulletinNobelSpiderTrois.jrxml");
+
+            }
+
         else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinNobelSpider.jrxml");
         }
 
@@ -392,13 +405,20 @@ if (!compress){
 } else {
     if(niveauEnseign==2) {
         if(!pivoter){
-            if(libellePeriode.equals("Troisième Trimestre"))
-            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/BulletinNobelSpiderEtan90Trois.jrxml");
-        else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinNobelSpiderEtan90.jrxml");
+            if(libellePeriode.equals("Troisième Trimestre")) {
+                myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/BulletinNobelSpiderEtan90Trois.jrxml");
+
+            }
+
+            else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinNobelSpiderEtan90.jrxml");
 
         } else {
-            if(libellePeriode.equals("Troisième Trimestre"))
-            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/BulletinNobelSpiderEtan.jrxml");
+            if(libellePeriode.equals("Troisième Trimestre")) {
+                myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/BulletinNobelSpiderEtanTrois.jrxml");
+
+            }
+
+
         else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinNobelSpiderEtan.jrxml");
         }
 
@@ -461,8 +481,9 @@ if (!compress){
         Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecoleviedbv2", USER, PASS);
         JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
         String infos= null ;
-
         String pdistinct= null ;
+        String plogoPosi= null ;
+        String psetBg= null ;
         if(distinct){
             pdistinct="1";
         } else{
@@ -474,6 +495,16 @@ if (!compress){
         } else{
             infos="0";
         }
+        if(positionLogo){
+            plogoPosi="1";
+        } else{
+            plogoPosi="0";
+        }
+        if(filigranne){
+            psetBg="1";
+        } else{
+            psetBg="0";
+        }
 
         Map<String, Object> map = new HashMap<>();
          map.put("idEcole", idEcole);
@@ -482,6 +513,9 @@ if (!compress){
         map.put("matricule",matricule);
         map.put("infosAmoirie", infos);
         map.put("distinctin", pdistinct);
+        //  map.put("codeEcole", myEcole.getEcolecode());
+        map.put("positionLogo", plogoPosi);
+        map.put("setBg", psetBg);
       JasperPrint report = JasperFillManager.fillReport(compileReport, map, connection);
         byte[] data =JasperExportManager.exportReportToPdf(report);
 

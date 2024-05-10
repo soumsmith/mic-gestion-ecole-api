@@ -242,7 +242,7 @@ public class MatriceClasseRessource {
         map.put("idEcole", idEcole);
         map.put("annee", libelleAnnee);
         map.put("periode", periode);
-        map.put("classe", myClasse.getId());
+        map.put("classe", myClasse.getLibelle());
         // map.put("title", type);
         try {
             JasperPrint report = JasperFillManager.fillReport(compileReport, map, connection);
