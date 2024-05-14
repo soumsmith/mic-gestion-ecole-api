@@ -522,6 +522,8 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 					flag.setParentMatiere(entry.getKey().getParentMatiereLibelle());
 					flag.setMoyAn(entry.getKey().getMoyenneAnnuelle());
 					flag.setRangAn(entry.getKey().getRangAnnuel());
+					if (entry.getKey().getRangAnnuel() != null)
+						flag.setAppreciationAn(CommonUtils.appreciation(Double.valueOf(entry.getKey().getRangAnnuel())));
 					flag.setIsAdjustment(entry.getKey().getIsAdjustment());
 					flag.setDateCreation(new Date());
 					// Inscrire si oui ou non l'élève est classé dans la matiere
@@ -697,7 +699,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 		// bul.setLibellePeriode(me.getPeriode().getLibelle());
 		bul.setLieuNaissance(me.getEleve().getLieuNaissance());
 		bul.setMatricule(me.getEleve().getMatricule());
-		bul.setRang(Integer.parseInt(me.getRang()));
+		bul.setRang(me.getRang()!= null ? Integer.parseInt(me.getRang()): null);
 		bul.setMoyAn(me.getMoyenneAnnuelle());
 		bul.setRangAn(me.getRangAnnuel());
 //		bul.setMoyAvg(null);
@@ -742,6 +744,9 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 		bul.setMoyReli(me.getMoyReli());
 		bul.setAppreciationReli(me.getAppreciationReli());
 		bul.setRangFr(me.getRangFr());
+		bul.setMoyFrAn(me.getMoyAnFr());
+		bul.setRangFrAn(me.getRangAnFr());
+		bul.setAppreciationFrAn(me.getAppreciationAnFr());
 
 		return bul;
 	}
