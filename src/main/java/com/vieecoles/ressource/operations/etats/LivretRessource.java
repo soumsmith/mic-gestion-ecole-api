@@ -4,6 +4,8 @@ package com.vieecoles.ressource.operations.etats;
 
 import com.vieecoles.dto.MatriculeClasseDto;
 import com.vieecoles.dto.NiveauDto;
+import com.vieecoles.dto.parametreDto;
+import com.vieecoles.dto.spiderBulletinDto;
 import com.vieecoles.entities.operations.Inscriptions;
 import com.vieecoles.entities.operations.ecole;
 import com.vieecoles.entities.operations.eleve;
@@ -53,10 +55,13 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import net.sf.jasperreports.export.SimplePdfExporterConfiguration;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.hibernate.Session;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
@@ -80,7 +85,15 @@ public class LivretRessource {
     LivretScolaireServices bulletinClasseServices ;
 
     private static String UPLOAD_DIR = "/data/";
-
+    static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
+    static final String DB_URL = "jdbc:mysql://127.0.0.1:3306/ecoleviedbv2";
+    @Inject
+    @ConfigProperty(name = "USER")
+    private String USER ;
+    @Inject
+    @ConfigProperty(name = "PASS")
+    private String PASS ;
+    Connection dbConnection = null;
 
 
 
@@ -92,195 +105,37 @@ public class LivretRessource {
     @Transactional
     public ResponseEntity<byte[]>  getdetailsLivret(@PathParam("matricule") String matricule,@PathParam("idEcole") Long idEcole,@PathParam("libelleAnnee") String libelleAnnee,
                                                       @PathParam("libelleTrimetre") String libelleTrimetre) throws Exception, JRException {
-System.out.println(" entree >>> "+1);
-        InputStream myInpuStream ;
-            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/Livret_scolaire.jrxml");
+            InputStream myInpuStream ;
 
-        //  myInpuStream = this.getClass().getClassLoader().getResourceAsStream("spider/test.jrxml");
-        List<LivretScolaireSelectDto>  detailsBull = new ArrayList<>() ;
+            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/LivretScolaire/Livret_scolaireSpider.jrxml");
 
-        Inscriptions myIns= new Inscriptions() ;
-        ecole myEcole= new ecole() ;
-        parametre  mpara = new parametre();
-        mpara = parametre.findById(1L) ;
-        eleve myelev = new eleve() ;
-        String DateNaiss = null;
+            spiderBulletinDto detailsBull= new spiderBulletinDto() ;
+            List<parametreDto>  dspsDto = new ArrayList<>() ;
 
 
-        myEcole=sousceecoleService.getInffosEcoleByID(idEcole);
-        //System.out.println("myEcole "+myEcole.toString());
-        myIns = inscriptionService.checkInscrit(idEcole,matricule,1L);
-        // System.out.println("Inscription "+ myIns.toString());
-            byte[] imagebytes = new byte[0],imagebytes2 = new byte[0],imagebytes3 = new byte[0] ,imagebytes4 = new byte[0] ;
-            if(myIns.getPhoto_eleve()!=null)
-           imagebytes = myIns.getPhoto_eleve() ;
-            if(myEcole.getLogoBlob()!=null)
-         imagebytes2 = myEcole.getLogoBlob() ;
-
-         imagebytes3 = mpara.getImage() ;
-            if(myEcole.getFiligramme()!=null)
-         imagebytes4 = myEcole.getFiligramme() ;
-        BufferedImage photo_eleve = null,logo= null ,amoirie= null,bg= null;
-        String codeEcole = myEcole.getEcolecode() ;
-        String statut = myEcole.getEcole_statut() ;
-        myelev= eleve.findById(myIns.getEleve().getEleveid()) ;
-
-        LocalDate date ;
-        date = myelev.getElevedate_naissance();
+            // bulletinSpider.bulletinInfos(idEcole ,libelleAnnee ,libellePeriode ,libelleClasse) ;
 
 
-        if(date!=null){
-            DateNaiss= String.valueOf(date.getDayOfMonth())+'/'+String.valueOf(date.getMonthValue())+'/'+String.valueOf(date.getYear()) ;
-
-        }
-
-        if(imagebytes!=null){
-          photo_eleve= ImageIO.read(new ByteArrayInputStream(imagebytes));
-        }
-        if(imagebytes2!=null){
-            logo= ImageIO.read(new ByteArrayInputStream(imagebytes2));
-        }
-
-        if(imagebytes3!=null){
-            amoirie = ImageIO.read(new ByteArrayInputStream(imagebytes3));
-        }
-
-        if(imagebytes4!=null){
-            bg = ImageIO.read(new ByteArrayInputStream(imagebytes4)) ;
-        }
-
-        detailsBull = livretScolaireServices.livretScolaire(idEcole,libelleTrimetre,matricule,libelleAnnee);
-
-        Double TmoyFr= calculTMoyFran(matricule,libelleAnnee,libelleTrimetre,idEcole) ;
-            Double TcoefFr=0D;
-            Double  TmoyCoefFr=0D;
-
-         TcoefFr = calculcoefFran(matricule,libelleAnnee,libelleTrimetre,idEcole) ;
-         TmoyCoefFr = calculMoycoefFran(matricule,libelleAnnee,libelleTrimetre,idEcole) ;
-        Double TmoyCoefFrPermier= calculMoycoefFran(matricule,libelleAnnee,"Premier Trimestre",idEcole) ;
-        Double TmoyCoefFrDeuxieme= calculMoycoefFran(matricule,libelleAnnee,"Deuxième Trimestre",idEcole) ;
-        Double TmoyFrAnn = null;
-            String is_class_1er_trim = calculIsClassTrimesPasse(matricule,libelleAnnee,"Premier Trimestre",idEcole) ;
-            String is_class_2e_trim = calculIsClassTrimesPasse(matricule,libelleAnnee,"Deuxième Trimestre",idEcole) ;
-            String is_class_3e_trim = calculIsClassTrimesPasse(matricule,libelleAnnee,"Troisième Trimestre",idEcole) ;
-
-           /* String is_class_mat_1er_trim = calculIsClassMatiere(matricule,libelleAnnee,"Premier Trimestre",idEcole) ;
-            String is_class_mat_2e_trim = calculIsClassMatiere(matricule,libelleAnnee,"Deuxième Trimestre",idEcole) ;
-            String is_class_mat_3e_trim = calculIsClassMatiere(matricule,libelleAnnee,"Troisième Trimestre",idEcole) ;*/
-            if(is_class_1er_trim.equals("N")) {
-                TmoyCoefFrPermier=0D ;
-            }
-
-            if(is_class_2e_trim.equals("N")) {
-                TmoyCoefFrDeuxieme=0D ;
-
-            }
-            if(is_class_3e_trim.equals("N")||TmoyCoefFr==null) {
-                TmoyCoefFr=0D ;
-            }
-
-            if(TcoefFr!=null)
-            TmoyFrAnn= ( (TmoyCoefFrPermier/TcoefFr) + (TmoyCoefFrDeuxieme/TcoefFr)*2 + (TmoyCoefFr/TcoefFr)*2 )/5 ;
-
-
-
-        Double TrangFr1 = calculRangFran(matricule,libelleAnnee,libelleTrimetre,idEcole) ;
-        Double TrangFrAnnuel1 = calculRangFranAnnuel(matricule,libelleAnnee,libelleTrimetre,idEcole) ;
-        Double TrangFrPremier1 = calculRangFran(matricule,libelleAnnee,"Premier Trimestre",idEcole) ;
-        Double TrangFrDeuxieme1 = calculRangFran(matricule,libelleAnnee,"Deuxième Trimestre",idEcole) ;
-
-        Integer TrangEMR =calculRangEMR(matricule,libelleAnnee,libelleTrimetre,idEcole) ;
-        Integer TrangEMRPremier =calculRangEMR(matricule,libelleAnnee,"Premier Trimestre",idEcole) ;
-        Integer TrangEMRDeuxieme =calculRangEMR(matricule,libelleAnnee,"Deuxième Trimestre",idEcole) ;
-        Double TmoyCoefEMR = calculMoycoefEMR(matricule,libelleAnnee,libelleTrimetre,idEcole);
-        Double TmoyCoefEMRPremier = calculMoycoefEMR(matricule,libelleAnnee,"Premier Trimestre",idEcole);
-        Double TmoyCoefEMRDeuxieme = calculMoycoefEMR(matricule,libelleAnnee,"Deuxième Trimestre",idEcole);
-        Double TcoefEMR  = calculcoefEMR(matricule,libelleAnnee,libelleTrimetre,idEcole);
-        Double TmoyEMRANN ;
-
-            TmoyEMRANN = ( TmoyCoefEMRPremier + (TmoyCoefEMRDeuxieme * 2) + (TmoyCoefEMR*2) )/5 ;
-
-
-        Double moy_1er_trim = calculmoyenTrimesPasse(matricule,libelleAnnee,"Premier Trimestre",idEcole) ;
-        Double moy_2eme_trim = calculmoyenTrimesPasse(matricule,libelleAnnee,"Deuxième Trimestre",idEcole) ;
-        Double moy_3eme_trim = calculmoyenTrimesPasse(matricule,libelleAnnee,"Troisième Trimestre",idEcole) ;
-
-        Integer rang_1er_trim = calculRangTrimesPasse(matricule,libelleAnnee,"Premier Trimestre",idEcole) ;
-        Integer rang_2eme_trim = calculRangTrimesPasse(matricule,libelleAnnee,"Deuxième Trimestre",idEcole) ;
-        Integer rang_3eme_trim = calculRangTrimesPasse(matricule,libelleAnnee,"Troisième Trimestre",idEcole) ;
-
-
-
-
-
-            int TrangFr = 0;
-        int TrangFrPremier = 0;
-        int TrangFrDeuxieme = 0;
-        int TrangFrAnnuel = 0 ;
-            if(TrangFrAnnuel1 !=null)
-                TrangFrAnnuel = TrangFrAnnuel1.intValue() ;
-
-         if(TrangFr1 !=null)
-         TrangFr = TrangFr1.intValue() ;
-
-        if(TrangFrPremier1 !=null)
-            TrangFrPremier = TrangFrPremier1.intValue() ;
-
-            if(TrangFrDeuxieme1 !=null)
-                TrangFrDeuxieme = TrangFrDeuxieme1.intValue() ;
-
-
-            JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(detailsBull) ;
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecoleviedbv2", USER, PASS);
             JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
-            //JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");
+
+
             Map<String, Object> map = new HashMap<>();
-            map.put("photo_eleve",photo_eleve);
-            map.put("logo",logo);
-            map.put("amoirie",amoirie);
-            map.put("bg",bg);
-            map.put("TmoyFr",TcoefFr == null?TmoyCoefFr/1:TmoyCoefFr/TcoefFr);
-            map.put("TmoyFrPremier", TcoefFr == null? TmoyCoefFrPermier/1: TmoyCoefFrPermier/TcoefFr);
-            map.put("TmoyFrDeuxieme",TcoefFr == null?TmoyCoefFrDeuxieme/1: TmoyCoefFrDeuxieme/TcoefFr);
-            map.put("TcoefFr",TcoefFr);
-            map.put("TmoyFrAnn",TmoyFrAnn);
-            map.put("TrangFrAnnuel",TrangFrAnnuel);
-            map.put("TmoyEMRANN",TmoyEMRANN);
-            map.put("TmoyCoefFr",TmoyCoefFr);
-            map.put("TrangFr",TrangFr);
-            map.put("TrangFrPremier",TrangFrPremier);
-            map.put("TrangFrDeuxieme",TrangFrDeuxieme);
-            map.put("TrangEMRPremier",TrangEMRPremier);
-            map.put("TrangEMRDeuxieme",TrangEMRDeuxieme);
-            map.put("codeEcole",codeEcole);
-            map.put("statut",statut);
-            map.put("DateNaiss",DateNaiss);
-            map.put("TmoyCoefEMR",TmoyCoefEMR);
-            map.put("TmoyCoefEMRPremier",TmoyCoefEMRPremier);
-            map.put("TmoyCoefEMRDeuxieme",TmoyCoefEMRDeuxieme);
-            map.put("TrangEMR",TrangEMR);
-            map.put("moy_1er_trim",moy_1er_trim);
-            map.put("moy_2eme_trim",moy_2eme_trim);
-            map.put("moy_3eme_trim",moy_3eme_trim);
+            map.put("idEcole", idEcole);
+            map.put("annee", libelleAnnee);
+            map.put("libellePeriode", libelleTrimetre);
+            map.put("matricule",matricule);
+            JasperPrint report = JasperFillManager.fillReport(compileReport, map, connection);
 
-            map.put("rang_1er_trim",rang_1er_trim);
-            map.put("rang_2eme_trim",rang_2eme_trim);
-            map.put("rang_3eme_trim",rang_3eme_trim);
-
-            map.put("is_class_1er_trim",is_class_1er_trim);
-            map.put("is_class_2e_trim",is_class_2e_trim);
-            map.put("is_class_3e_trim",is_class_3e_trim);
-            JasperPrint report = JasperFillManager.fillReport(compileReport, map, beanCollectionDataSource);
-
-            //to pdf ;
             byte[] data =JasperExportManager.exportReportToPdf(report);
+
             HttpHeaders headers= new HttpHeaders();
-            headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Livret-scolaire.pdf");
+            // headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Rapport"+myScole.getEcoleclibelle()+".docx");
+            headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Bulletin-spider-"+matricule+".pdf");
+            return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.MULTIPART_FORM_DATA).body(data);
 
-            return    ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.APPLICATION_PDF).body(data);
 
-
-
-    }
+        }
 
     @GET
     @Path("/livret-scolaire-information/{matricule}/{idEcole}/{libelleAnnee}/{libelleTrimetre}")

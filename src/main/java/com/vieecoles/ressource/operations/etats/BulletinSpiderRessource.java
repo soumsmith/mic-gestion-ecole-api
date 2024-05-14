@@ -383,7 +383,12 @@ if (!compress){
         else if(modelelmd){
             if(libellePeriode.equals("Deuxième Semestre"))
                 myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/BulletinNobelSpiderBTSPointCareeSupTrois.jrxml");
-            else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinNobelSpiderLMD.jrxml");
+            else  {
+                System.out.println("BulletinNobelSpiderLMD >>>>>>");
+                myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinNobelSpiderLMD.jrxml");
+
+            }
+
         }
 
         else {
@@ -454,6 +459,14 @@ if (!compress){
             if(libellePeriode.equals("Deuxième Semestre"))
             myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/BulletinNobelSpiderEtanBTSPointCarreTrois.jrxml");
         else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinNobelSpiderEtanBTSPointCarre.jrxml");
+        }
+        else if(modelelmd){
+                if(libellePeriode.equals("Deuxième Semestre"))
+                    myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/BulletinNobelSpiderBTSPointCareeSupTrois.jrxml");
+                else  {
+                    System.out.println("BulletinNobelSpiderLMD >>>>>>");
+                    myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinNobelSpiderLMD.jrxml");
+                }
 
         } else{
             if(!pivoter){

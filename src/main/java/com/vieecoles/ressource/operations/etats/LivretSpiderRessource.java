@@ -83,16 +83,16 @@ public class LivretSpiderRessource {
                                                  @PathParam("libelleAnnee") String libelleAnnee , @PathParam("libelleClasse") String libelleClasse) throws Exception, JRException {
         InputStream myInpuStream ;
 
-         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderLivret.jrxml");
+         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/LivretScolaire/callLivretScolaire.jrxml");
 
         spiderBulletinDto detailsBull= new spiderBulletinDto() ;
         List<parametreDto>  dspsDto = new ArrayList<>() ;
 
 
-        bulletinSpider.bulletinInfos(idEcole ,libelleAnnee ,libellePeriode ,libelleClasse) ;
+        //bulletinSpider.bulletinInfos(idEcole ,libelleAnnee ,libellePeriode ,libelleClasse) ;
 
 
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3308/ecolevie_dbProd", USER, PASS);
+        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecoleviedbv2", USER, PASS);
         JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
         //   JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");
         Map<String, Object> map = new HashMap<>();
@@ -117,16 +117,16 @@ public class LivretSpiderRessource {
                                                  @PathParam("libelleAnnee") String libelleAnnee , @PathParam("libelleClasse") String libelleClasse ,@PathParam("matricule") String matricule) throws Exception, JRException {
         InputStream myInpuStream ;
 
-        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Livret_scolaireSpider.jrxml");
+        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/LivretScolaire/Livret_scolaireSpider.jrxml");
 
         spiderBulletinDto detailsBull= new spiderBulletinDto() ;
         List<parametreDto>  dspsDto = new ArrayList<>() ;
 
 
-       bulletinSpider.bulletinInfos(idEcole ,libelleAnnee ,libellePeriode ,libelleClasse) ;
+      // bulletinSpider.bulletinInfos(idEcole ,libelleAnnee ,libellePeriode ,libelleClasse) ;
 
 
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3308/ecolevie_dbProd", USER, PASS);
+        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecoleviedbv2", USER, PASS);
         JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
 
 
@@ -143,6 +143,7 @@ public class LivretSpiderRessource {
         // headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Rapport"+myScole.getEcoleclibelle()+".docx");
         headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Bulletin-spider-"+matricule+".pdf");
         return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.MULTIPART_FORM_DATA).body(data);
+
     }
 
 

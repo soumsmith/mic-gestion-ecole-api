@@ -1945,7 +1945,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.matricule =  $P{matr
 								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 								<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
 							</reportElement>
-							<textField isBlankWhenNull="true">
+							<textField textAdjust="ScaleFont" isBlankWhenNull="true">
 								<reportElement style="champsLibelle" x="0" y="0" width="89" height="10" uuid="f15bac83-da0c-4913-a5b0-f45fba595f18">
 									<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 									<property name="com.jaspersoft.layout.grid.y" value="1"/>
@@ -1960,7 +1960,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.matricule =  $P{matr
 								</textElement>
 								<textFieldExpression><![CDATA["Plus forte moyenne: "+$F{moy_max}]]></textFieldExpression>
 							</textField>
-							<textField isBlankWhenNull="true">
+							<textField textAdjust="ScaleFont" isBlankWhenNull="true">
 								<reportElement style="champsLibelle" x="89" y="0" width="89" height="10" uuid="f0b1c72e-c69f-48fe-9e65-97112de6ebec">
 									<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 									<property name="com.jaspersoft.layout.grid.y" value="2"/>
