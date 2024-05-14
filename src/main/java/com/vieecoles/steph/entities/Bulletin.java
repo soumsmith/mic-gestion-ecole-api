@@ -149,7 +149,7 @@ public class Bulletin extends PanacheEntityBase{
 	private Double moyFrAn;
 	@Column(name = "rang_an_fr")
 	private Integer rangFrAn;
-	@Column(name = "appr_an_fr")
+	@Column(name = "appr_fr_an")
 	private String appreciationFrAn;
 	@Column(name = "moy_reli")
 	private Double moyReli;
