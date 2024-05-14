@@ -145,6 +145,12 @@ public class Bulletin extends PanacheEntityBase{
 	private String appreciationFr;
 	@Column(name = "rang_fr")
 	private Integer rangFr;
+	@Column(name = "moy_an_fr")
+	private Double moyFrAn;
+	@Column(name = "rang_an_fr")
+	private Integer rangFrAn;
+	@Column(name = "appr_an_fr")
+	private String appreciationFrAn;
 	@Column(name = "moy_reli")
 	private Double moyReli;
 	@Column(name = "appr_reli")
