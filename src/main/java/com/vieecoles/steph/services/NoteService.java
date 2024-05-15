@@ -344,7 +344,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			long endTime2 = System.nanoTime();
 			long durationInSeconds2 = (endTime2 - startTime2) / 1000000000;
 			System.out.println(
-					"Temps d'exécution NOte Regroupement des notes par élève: " + durationInSeconds2 + " secondes");
+					"Temps d'exécution Note Regroupement des notes par élève: " + durationInSeconds2 + " secondes");
 			classe = classeService.findById(Long.parseLong(classeId));
 //		logger.info(g.toJson(classe));listNotesByEvaluation
 
