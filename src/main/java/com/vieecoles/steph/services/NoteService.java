@@ -1477,15 +1477,17 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 		Double coefAnFr = 0.0;
 
 		for (Bulletin bul : bulletinsElevesList) {
-//			System.out.println("--------------------- matricule : "+bul.getMatricule());
+			System.out.println("--------------------- matricule : " + bul.getMatricule());
 			for (Periode p : periodes) {
 				if (bul.getPeriodeId().equals(p.getId())) {
 					if (bul.getIsClassed() != null && bul.getIsClassed().equals(Constants.OUI)) {
 						if (p.getIsfinal() == null) {
 							moyAn = moyAn + bul.getMoyGeneral() * Double.parseDouble(p.getCoef());
 							coef = coef + Double.parseDouble(p.getCoef());
-//							System.out.println("############################################1");
-//							System.out.println(String.format("Moy periode %s : %s et coef : %s et moy total : %s et coef tot : %s", p.getId(),bul.getMoyGeneral(),p.getCoef(), moyAn, coef));
+							System.out.println("############################################1");
+							System.out.println(
+									String.format("Moy periode %s : %s et coef : %s et moy total : %s et coef tot : %s",
+											p.getId(), bul.getMoyGeneral(), p.getCoef(), moyAn, coef));
 							if (bul.getMoyFr() != null) {
 //								System.out.println("############################################2");
 								if (coefAnFr == 0.0) {
@@ -1521,9 +1523,9 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 //			System.out.println("####################################***4" + moyenneAnSuperFrencais);
 				moyenneAnSuperFrencais = moyenneAnSuperFrencais + me.getMoyFr() * coefFinalPeriode;
 				coefAnFr = coefAnFr + coefFinalPeriode;
+				moyenneAnSuperFrencais = CommonUtils
+						.roundDouble(moyenneAnSuperFrencais / (coefAnFr == 0.0 ? 1.0 : coefAnFr), 2);
 			}
-			moyenneAnSuperFrencais = CommonUtils
-					.roundDouble(moyenneAnSuperFrencais / (coefAnFr == 0.0 ? 1.0 : coefAnFr), 2);
 		}
 //		System.out.println("Moy an Super Francais ::: " + moyenneAnSuperFrencais);
 //		}
