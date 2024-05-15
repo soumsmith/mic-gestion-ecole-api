@@ -77,10 +77,14 @@ public class LivretSpiderRessource {
 
      @GET
 
-    @Path("/spider-livret/{idEcole}/{libellePeriode}/{libelleAnnee}/{libelleClasse}")
+    @Path("/spider-livret/{idEcole}/{libellePeriode}/{libelleAnnee}/{libelleClasse}/{positionLogo}/{filigranne}/{infoAmoirie}/{pivoter}/{distinct}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public ResponseEntity<byte[]>  getDtoRapport(@PathParam("idEcole") Long idEcole ,@PathParam("libellePeriode") String libellePeriode ,
-                                                 @PathParam("libelleAnnee") String libelleAnnee , @PathParam("libelleClasse") String libelleClasse) throws Exception, JRException {
+                                                 @PathParam("libelleAnnee") String libelleAnnee , @PathParam("libelleClasse") String libelleClasse,
+                                                @PathParam("positionLogo") boolean positionLogo ,
+                                                 @PathParam("filigranne") boolean filigranne, @PathParam("infoAmoirie") boolean infoAmoiri,
+                                                 @PathParam("pivoter") boolean pivoter ,
+                                                 @PathParam("distinct") boolean distinct ) throws Exception, JRException {
         InputStream myInpuStream ;
 
          myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/LivretScolaire/callLivretScolaire.jrxml");
@@ -96,11 +100,40 @@ public class LivretSpiderRessource {
         JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
         //   JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");
         Map<String, Object> map = new HashMap<>();
+         String infos= null ;
+         String pdistinct= null ;
+         String plogoPosi= null ;
+         String psetBg= null ;
+         if(distinct){
+             pdistinct="1";
+         } else{
+             pdistinct="0";
+         }
+
+         if(infoAmoiri){
+             infos="1";
+         } else{
+             infos="0";
+         }
+         if(positionLogo){
+             plogoPosi="1";
+         } else{
+             plogoPosi="0";
+         }
+         if(filigranne){
+             psetBg="1";
+         } else{
+             psetBg="0";
+         }
 
         map.put("classe", libelleClasse);
         map.put("idEcole", idEcole);
         map.put("libelleAnnee", libelleAnnee);
         map.put("libellePeriode", libellePeriode);
+         map.put("infosAmoirie", infos);
+         map.put("distinctin", pdistinct);
+         map.put("positionLogo", plogoPosi);
+         map.put("setBg", psetBg);
         JasperPrint report = JasperFillManager.fillReport(compileReport, map, connection);
         byte[] data =JasperExportManager.exportReportToPdf(report);
 
@@ -111,10 +144,15 @@ public class LivretSpiderRessource {
     }
 
     @GET
-    @Path("/spider-livret-matricule/{idEcole}/{libellePeriode}/{libelleAnnee}/{libelleClasse}/{matricule}")
+    @Path("/spider-livret-matricule/{idEcole}/{libellePeriode}/{libelleAnnee}/{libelleClasse}/{matricule}/{positionLogo}/{filigranne}/{infoAmoirie}/{pivoter}/{distinct}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public ResponseEntity<byte[]>  getDtoRapport(@PathParam("idEcole") Long idEcole ,@PathParam("libellePeriode") String libellePeriode ,
-                                                 @PathParam("libelleAnnee") String libelleAnnee , @PathParam("libelleClasse") String libelleClasse ,@PathParam("matricule") String matricule) throws Exception, JRException {
+                                                 @PathParam("libelleAnnee") String libelleAnnee , @PathParam("libelleClasse") String libelleClasse ,@PathParam("matricule") String matricule,
+                                                 @PathParam("positionLogo") boolean positionLogo ,
+                                                 @PathParam("filigranne") boolean filigranne,
+                                                 @PathParam("infoAmoirie") boolean infoAmoiri,
+                                                 @PathParam("pivoter") boolean pivoter ,
+                                                 @PathParam("distinct") boolean distinct) throws Exception, JRException {
         InputStream myInpuStream ;
 
         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/LivretScolaire/Livret_scolaireSpider.jrxml");
@@ -131,11 +169,41 @@ public class LivretSpiderRessource {
 
 
         Map<String, Object> map = new HashMap<>();
+        String infos= null ;
+        String pdistinct= null ;
+        String plogoPosi= null ;
+        String psetBg= null ;
+        if(distinct){
+            pdistinct="1";
+        } else{
+            pdistinct="0";
+        }
+
+        if(infoAmoiri){
+            infos="1";
+        } else{
+            infos="0";
+        }
+        if(positionLogo){
+            plogoPosi="1";
+        } else{
+            plogoPosi="0";
+        }
+        if(filigranne){
+            psetBg="1";
+        } else{
+            psetBg="0";
+        }
          map.put("idEcole", idEcole);
         map.put("annee", libelleAnnee);
         map.put("libellePeriode", libellePeriode);
         map.put("matricule",matricule);
-      JasperPrint report = JasperFillManager.fillReport(compileReport, map, connection);
+        map.put("infosAmoirie", infos);
+        map.put("distinctin", pdistinct);
+        map.put("positionLogo", plogoPosi);
+        map.put("setBg", psetBg);
+
+        JasperPrint report = JasperFillManager.fillReport(compileReport, map, connection);
 
         byte[] data =JasperExportManager.exportReportToPdf(report);
 
