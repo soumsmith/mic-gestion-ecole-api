@@ -317,6 +317,7 @@ public class MatriceClasseRessource {
         return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.MULTIPART_FORM_DATA).body(data);
     }
 
+
     @GET
     @Transactional
     @Path("/matieres-ecole/{idEcole}/{classe}")

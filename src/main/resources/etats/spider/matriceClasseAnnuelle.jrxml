@@ -1115,7 +1115,7 @@ where v.id_ecole= $P{idEcole}  and v.anneScolaire= $P{annee}  and v.periode= $P{
 					</crosstabCell>
 				</crosstab>
 				<crosstab>
-					<reportElement x="730" y="0" width="100" height="40" uuid="bf388bf4-9649-4cb9-a7a8-1b90e99cdca1">
+					<reportElement x="730" y="0" width="100" height="40" isPrintInFirstWholeBand="true" uuid="bf388bf4-9649-4cb9-a7a8-1b90e99cdca1">
 						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
 						<property name="com.jaspersoft.studio.crosstab.style.header" value="Crosstab 11_CH"/>
 						<property name="com.jaspersoft.studio.crosstab.style.group" value="Crosstab 11_CG"/>
