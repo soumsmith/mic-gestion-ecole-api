@@ -23,7 +23,7 @@ public class souscriptionEcoleDto {
     private  String fonctionLibelle ;
     private  String lienAutorisationEnseign;
     private String niveauEnseignement ;
-    private String idcommune ;
+    private Long idcommune ;
     private String libelleCommune ;
     private  String sousc_atten_etabliss_lien_logo ;
     @Enumerated(EnumType.STRING)
@@ -60,7 +60,7 @@ public class souscriptionEcoleDto {
     public souscriptionEcoleDto() {
     }
 
-    public String getIdcommune() {
+    public Long getIdcommune() {
         return idcommune;
     }
 
@@ -79,7 +79,7 @@ public class souscriptionEcoleDto {
                                 String fonctionLibelle,
                                 String lienAutorisationEnseign,
                                 String niveauEnseignement,
-                                String idcommune,
+                                Long idcommune,
                                 String libelleCommune,
                                 Inscriptions.status statuts) {
         this.idSouscr = idSouscr;
@@ -102,7 +102,7 @@ public class souscriptionEcoleDto {
         this.statuts = statuts;
     }
 
-    public void setIdcommune(String idcommune) {
+    public void setIdcommune(Long idcommune) {
         this.idcommune = idcommune;
     }
 

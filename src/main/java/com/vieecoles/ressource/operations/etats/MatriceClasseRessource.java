@@ -13,6 +13,7 @@ import net.sf.jasperreports.engine.export.JRXlsExporter;
 import net.sf.jasperreports.engine.export.ooxml.JRDocxExporter;
 import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 
@@ -27,6 +28,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.util.*;
 
 @Path("/imprimer-matrice-classe")
@@ -40,7 +43,12 @@ public class MatriceClasseRessource {
     @Inject
     MatriceClasseBilanServices matriceBilanClasseServices ;
 
-
+    @Inject
+    @ConfigProperty(name = "USER")
+    private String USER ;
+    @Inject
+    @ConfigProperty(name = "PASS")
+    private String PASS ;
     private static String UPLOAD_DIR = "/data/";
 
 
@@ -50,29 +58,84 @@ public class MatriceClasseRessource {
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public ResponseEntity<byte[]>  getDtoRapportxls(@PathParam("idEcole") Long idEcole ,@PathParam("libelleAnnee") String libelleAnnee ,
                                                  @PathParam("periode") String periode , @PathParam("anneeId") Long anneeId ,@PathParam("classe") Long classe) throws Exception, JRException {
+
+        Long nombreSupegal10F = 0L, nombreInf8_5F= 0L ,nombreSup8_5F=0L ,nombreSupegal10G=0L , nombreInf8_5G=0L , nombreSup8_5G=0L ;
+        Double pourSupegal10F = 0d, pourInf8_5F = 0d, pourSup8_5F = 0d, pourSupegal10G = 0d , pourInf8_5G = 0d, pourSup8_5G = 0d ;
+        Long clasFille =0L ,clasgarcon =0L ;
+
+
         InputStream myInpuStream ;
         /*myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/BulletinBean.jrxml");*/
 
         SpiderMatriceClasseDto detailsBull= new SpiderMatriceClasseDto() ;
 
-        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Spider_Book_matriceClasse.jrxml");
+        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/matriceClasse.jrxml");
         List<matriceClasseDto> detailsBull1= new ArrayList<>() ;
         List<matiereMoyenneBilanDto> detailsBull2= new ArrayList<>() ;
-        detailsBull2=  matriceBilanClasseServices.getInfosBilanMatriceClasse(idEcole ,libelleAnnee ,periode ,anneeId, classe) ;
+        try {
 
-        detailsBull1=   matriceClasseServices.getInfosMatriceClasse(idEcole ,libelleAnnee ,periode ,anneeId, classe) ;
+/*
+            detailsBull2=  matriceBilanClasseServices.getInfosBilanMatriceClasse(idEcole ,libelleAnnee ,periode ,anneeId, classe) ;
 
-        detailsBull.setMatriceClasseDto(detailsBull1);
-        detailsBull.setMatiereMoyenneBilanDto(detailsBull2);
-        System.out.println("detailsBull2 "+detailsBull2);
+            detailsBull1=   matriceClasseServices.getInfosMatriceClasse(idEcole ,libelleAnnee ,periode ,anneeId, classe) ;*/
+
+            clasFille = getclassF(idEcole ,classe,libelleAnnee,periode) ;
+            clasgarcon = getclassG(idEcole ,classe,libelleAnnee,periode) ;
+            nombreSupegal10F = getnbreMoySupEgal10F(idEcole,classe,libelleAnnee,periode);
+            nombreSupegal10G = getnbreMoySupEgal10G(idEcole,classe,libelleAnnee,periode) ;
+            nombreInf8_5F = getnbreMoyInf8_5F(idEcole,classe,libelleAnnee,periode) ;
+            nombreInf8_5G =getnbreMoyInf8_5G(idEcole,classe,libelleAnnee,periode) ;
+
+            nombreSup8_5F =getnbreMoyInf999F(idEcole,classe,libelleAnnee,periode) ;
+            nombreSup8_5G =getnbreMoyInf999G(idEcole,classe,libelleAnnee,periode) ;
+
+            if(clasFille !=0)
+                pourSupegal10F = (double) ((nombreSupegal10F*100d)/clasFille);
+            if(clasgarcon !=0)
+                pourSupegal10G = (double) ((nombreSupegal10G*100d)/clasgarcon);
+
+            if(clasgarcon !=0)
+                pourInf8_5G = (double) ((nombreInf8_5G*100d)/clasgarcon);
+
+            if(clasFille !=0)
+                pourInf8_5F = (double) ((nombreInf8_5F*100d)/clasFille);
+
+            if(clasgarcon !=0)
+                pourSup8_5G = (double) ((nombreSup8_5G*100d)/clasgarcon);
+
+            if(clasFille !=0)
+                pourSup8_5F = (double) ((nombreSup8_5F*100d)/clasFille);
 
 
-        JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(Collections.singleton(detailsBull)) ;
+        } catch (RuntimeException e){
+            e.printStackTrace ();
+        }
+
+
+        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecoleviedbv2", USER, PASS);
         JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
-        //   JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");
+        Classe myClasse = Classe.findById(classe);
         Map<String, Object> map = new HashMap<>();
+        map.put("nombreSupegal10F", nombreSupegal10F);
+        map.put("nombreSupegal10G", nombreSupegal10G);
+        map.put("nombreInf8_5F", nombreInf8_5F);
+        map.put("nombreInf8_5G", nombreInf8_5G);
+        map.put("nombreInf8_5F", nombreInf8_5F);
+        map.put("nombreInf8_5G", nombreInf8_5G);
+        map.put("pourSupegal10F", pourSupegal10F);
+        map.put("pourSupegal10G", pourSupegal10G);
+        map.put("pourInf8_5G", pourInf8_5G);
+        map.put("pourInf8_5F", pourInf8_5F);
+        map.put("pourSup8_5G", pourSup8_5G);
+        map.put("pourSup8_5F", pourSup8_5F);
+        map.put("idEcole", idEcole);
+        map.put("annee", libelleAnnee);
+        map.put("periode", periode);
+        map.put("classe", myClasse.getLibelle());
         // map.put("title", type);
-        JasperPrint report = JasperFillManager.fillReport(compileReport, map, beanCollectionDataSource);
+
+        JasperPrint report = JasperFillManager.fillReport(compileReport, map, connection);
+
         JRXlsExporter exporter = new JRXlsExporter();
         exporter.setExporterInput(new SimpleExporterInput(report));
         // File exportReportFile = new File("profils" + ".docx");
@@ -162,17 +225,15 @@ public class MatriceClasseRessource {
 
         SpiderMatriceClasseDto detailsBull= new SpiderMatriceClasseDto() ;
 
-        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Spider_Book_matriceClasse.jrxml");
+        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/matriceClasse.jrxml");
         List<matriceClasseDto> detailsBull1= new ArrayList<>() ;
         List<matiereMoyenneBilanDto> detailsBull2= new ArrayList<>() ;
         try {
 
-
-
-
+/*
             detailsBull2=  matriceBilanClasseServices.getInfosBilanMatriceClasse(idEcole ,libelleAnnee ,periode ,anneeId, classe) ;
 
-            detailsBull1=   matriceClasseServices.getInfosMatriceClasse(idEcole ,libelleAnnee ,periode ,anneeId, classe) ;
+            detailsBull1=   matriceClasseServices.getInfosMatriceClasse(idEcole ,libelleAnnee ,periode ,anneeId, classe) ;*/
 
             clasFille = getclassF(idEcole ,classe,libelleAnnee,periode) ;
             clasgarcon = getclassG(idEcole ,classe,libelleAnnee,periode) ;
@@ -207,11 +268,9 @@ public class MatriceClasseRessource {
         }
 
 
-        detailsBull.setMatriceClasseDto(detailsBull1);
-        detailsBull.setMatiereMoyenneBilanDto(detailsBull2);
-        JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(Collections.singleton(detailsBull)) ;
+        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecoleviedbv2", USER, PASS);
         JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
-        //   JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");
+        Classe myClasse = Classe.findById(classe);
         Map<String, Object> map = new HashMap<>();
          map.put("nombreSupegal10F", nombreSupegal10F);
         map.put("nombreSupegal10G", nombreSupegal10G);
@@ -225,8 +284,18 @@ public class MatriceClasseRessource {
         map.put("pourInf8_5F", pourInf8_5F);
         map.put("pourSup8_5G", pourSup8_5G);
         map.put("pourSup8_5F", pourSup8_5F);
+        map.put("idEcole", idEcole);
+        map.put("annee", libelleAnnee);
+        map.put("periode", periode);
+        map.put("classe", myClasse.getLibelle());
+        // map.put("title", type);
+        try {
+            JasperPrint report = JasperFillManager.fillReport(compileReport, map, connection);
 
-        JasperPrint report = JasperFillManager.fillReport(compileReport, map, beanCollectionDataSource);
+        } catch (RuntimeException e){
+            e.printStackTrace ();
+        }
+        JasperPrint report = JasperFillManager.fillReport(compileReport, map, connection);
 
         //*********************************
         /*JRDocxExporter exporter = new JRDocxExporter();
@@ -247,6 +316,7 @@ public class MatriceClasseRessource {
 
         return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.MULTIPART_FORM_DATA).body(data);
     }
+
 
     @GET
     @Transactional
