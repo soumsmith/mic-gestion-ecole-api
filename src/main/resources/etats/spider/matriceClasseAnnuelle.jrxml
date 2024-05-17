@@ -706,7 +706,7 @@ where v.id_ecole= $P{idEcole}  and v.anneScolaire= $P{annee}  and v.periode= $P{
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="18"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Matrice classe  "+$F{classe}+"  pour le "+$F{periode}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Matrice annuelle  "+$F{classe}+"  pour le "+$F{periode}]]></textFieldExpression>
 			</textField>
 		</band>
 	</columnHeader>
@@ -879,7 +879,7 @@ where v.id_ecole= $P{idEcole}  and v.anneScolaire= $P{annee}  and v.periode= $P{
 									<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 									<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 								</box>
-								<textElement>
+								<textElement verticalAlignment="Middle">
 									<font size="6"/>
 								</textElement>
 								<text><![CDATA[Matricule]]></text>
@@ -901,7 +901,7 @@ where v.id_ecole= $P{idEcole}  and v.anneScolaire= $P{annee}  and v.periode= $P{
 									<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 									<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 								</box>
-								<textElement>
+								<textElement verticalAlignment="Middle">
 									<font size="6"/>
 								</textElement>
 								<text><![CDATA[Nom]]></text>
@@ -923,7 +923,7 @@ where v.id_ecole= $P{idEcole}  and v.anneScolaire= $P{annee}  and v.periode= $P{
 									<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 									<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 								</box>
-								<textElement>
+								<textElement verticalAlignment="Middle">
 									<font size="6"/>
 								</textElement>
 								<text><![CDATA[Prénom]]></text>
@@ -948,7 +948,7 @@ where v.id_ecole= $P{idEcole}  and v.anneScolaire= $P{annee}  and v.periode= $P{
 										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 									</reportElement>
-									<textElement>
+									<textElement verticalAlignment="Middle">
 										<font size="6"/>
 									</textElement>
 									<textFieldExpression><![CDATA[$V{matricule}]]></textFieldExpression>
@@ -978,7 +978,7 @@ where v.id_ecole= $P{idEcole}  and v.anneScolaire= $P{annee}  and v.periode= $P{
 										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 									</reportElement>
-									<textElement>
+									<textElement verticalAlignment="Middle">
 										<font size="6"/>
 									</textElement>
 									<textFieldExpression><![CDATA[$V{nom}]]></textFieldExpression>
@@ -1009,7 +1009,7 @@ where v.id_ecole= $P{idEcole}  and v.anneScolaire= $P{annee}  and v.periode= $P{
 										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 									</reportElement>
-									<textElement>
+									<textElement verticalAlignment="Middle">
 										<font size="6"/>
 									</textElement>
 									<textFieldExpression><![CDATA[$V{prenoms}]]></textFieldExpression>
@@ -1034,7 +1034,7 @@ where v.id_ecole= $P{idEcole}  and v.anneScolaire= $P{annee}  and v.periode= $P{
 									<reportElement x="0" y="0" width="0" height="20" uuid="06e2c85c-2fc4-45ec-941b-a8be8ee260f0">
 										<property name="com.jaspersoft.studio.unit.width" value="px"/>
 									</reportElement>
-									<textElement>
+									<textElement verticalAlignment="Middle">
 										<font size="6"/>
 									</textElement>
 									<textFieldExpression><![CDATA[""]]></textFieldExpression>

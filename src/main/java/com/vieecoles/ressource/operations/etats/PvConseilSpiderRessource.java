@@ -54,10 +54,11 @@ public class PvConseilSpiderRessource {
 
         List<matriceClasseDto> detailsBull1= new ArrayList<>() ;
         List<matiereMoyenneBilanDto> detailsBull2= new ArrayList<>() ;
-       detailsBull2=  matriceBilanClasseServices.getInfosBilanMatriceClasse(idEcole ,libelleAnnee ,libelleTrimetre ,anneeId, idclasse) ;
+        detailsBull2=  matriceBilanClasseServices.getInfosBilanMatriceClasse(idEcole ,libelleAnnee ,libelleTrimetre ,anneeId, idclasse) ;
 
-       detailsBull1=   matriceClasseServices.getInfosMatriceClasse(idEcole ,libelleAnnee ,libelleTrimetre ,anneeId, idclasse) ;
-       dspsDto= resultatsServices.RecapCalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,classe) ;
+        detailsBull1=   matriceClasseServices.getInfosMatriceClasse(idEcole ,libelleAnnee ,libelleTrimetre ,anneeId, idclasse) ;
+        dspsDto= resultatsServices.RecapCalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,classe) ;
+
 
         detailsBull.setMatiereMoyenneBilanDto(detailsBull2);
         detailsBull.setMatriceClasseDto(detailsBull1);
