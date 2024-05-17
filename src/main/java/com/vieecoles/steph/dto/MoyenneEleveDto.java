@@ -26,7 +26,7 @@ public class MoyenneEleveDto implements Comparable<MoyenneEleveDto> {
 	private Double moyenneInterne;
 	private Double moyenneIEPP;
 	private Double moyennePassage;
-
+	
 	private String rangAnnuel;
 	
 	private Integer absJust;

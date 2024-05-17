@@ -862,6 +862,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 								noteTestLourdList.add(note.getNote());
 								diviserTestLourd = diviserTestLourd + (Double.parseDouble(note.getEvaluation().getNoteSur())
 										/ Double.parseDouble(Constants.DEFAULT_NOTE_SUR));
+								entry.getKey().setTestLourdNoteSur(Integer.parseInt(note.getEvaluation().getNoteSur()));
 //								System.out.println("TEST LOURD DETECTE note :: "+note.getNote());
 							} else {
 								noteList.add(note.getNote());
@@ -891,6 +892,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 						}
 						moyenneTstLourd = sommeTstLourd / diviserTestLourd;
 //						System.out.println("Moyenne test lourd = "+moyenneTstLourd);
+						entry.getKey().setTestLourdNote(sommeTstLourd);
 						moyenne = (moyenne + moyenneTstLourd)/2;
 //						System.out.println("Moyenne finale = "+ moyenne);
 					}

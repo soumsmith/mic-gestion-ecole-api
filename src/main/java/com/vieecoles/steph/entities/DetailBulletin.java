@@ -53,6 +53,11 @@ public class DetailBulletin extends PanacheEntityBase {
 	private Integer bonus;
 	@Column(name = "parent_matiere")
 	private String parentMatiere;
+	
+	@Column(name = "test_lourd_note")
+	private Double testLourdNote;
+	@Column(name = "test_lourd_note_sur")
+	private Integer testLourdNoteSur;
 
 	@Column(name = "is_classed")
 	private String isRanked;
