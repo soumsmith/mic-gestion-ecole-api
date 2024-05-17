@@ -42,6 +42,7 @@ import com.vieecoles.steph.entities.MoyenneAdjustment;
 import com.vieecoles.steph.entities.Notes;
 import com.vieecoles.steph.entities.Periode;
 import com.vieecoles.steph.pojos.InfoCalculMoyennePojo;
+import com.vieecoles.steph.pojos.MoyenneCoefPojo;
 import com.vieecoles.steph.util.CommonUtils;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
@@ -84,6 +85,9 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 
 	@Inject
 	EcoleHasMatiereService hasMatiereService;
+	
+	@Inject
+	ClasseMatiereService classeMatiereService;
 
 	Logger logger = Logger.getLogger(NoteService.class.getName());
 
@@ -826,7 +830,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			diviserEMR = 0.0;
 			moyenneEMR = 0.0;
 			moyenneEMRList = new ArrayList<>();
-			List<Double> moyennesSousMatieresFrancais = new ArrayList<Double>();
+			List<MoyenneCoefPojo> moyennesSousMatieresFrancais = new ArrayList<MoyenneCoefPojo>();
 			List<Double> moyennesMatieresReligion = new ArrayList<Double>();
 			Boolean EMRFlat = false;
 			Boolean CheckEMRCalculFlat = false;
@@ -884,7 +888,12 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 						&& entry.getKey().getMatiereParent().getMatiere().getMatiereParent() != null
 						&& entry.getKey().getMatiereParent().getMatiere().getMatiereParent()
 								.equals(Constants.ID_MATIERE_FRANCAIS_CENTRAL)) {
-					moyennesSousMatieresFrancais.add(CommonUtils.roundDouble(moyenne, 2));
+					MoyenneCoefPojo mc = new MoyenneCoefPojo();
+					ClasseMatiere cm = new ClasseMatiere();
+					cm = classeMatiereService.getByMatiereAndBranche(entry.getKey().getId(), me.getClasse().getBranche().getId(), me.getClasse().getEcole().getId());
+					mc.setCoef(cm != null ? Double.valueOf(cm.getCoef()) : null);
+					mc.setMoyenne(CommonUtils.roundDouble(moyenne, 2));
+					moyennesSousMatieresFrancais.add(mc);
 					calculExcpFrFlat = true;
 				}
 
@@ -936,16 +945,29 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 //				logger.info("++++> "+g.toJson(me.getNotesMatiereMap()));
 			}
 			if (calculExcpFrFlat) {
-				Double moyFr = CommonUtils
-						.roundDouble(moyennesSousMatieresFrancais.stream().mapToDouble(a -> a).average().orElse(0), 2);
-				Double moyCoefFr = moyennesSousMatieresFrancais.stream().mapToDouble(a -> a).sum();
+				Double sumMoyFr = 0.0;
+				Double moyFr = 0.0;
+				Double moyCoefFr = 0.0;
+				Double coefFr = 0.0;
+//				CommonUtils
+//						.roundDouble(moyennesSousMatieresFrancais.stream().mapToDouble(a -> a).average().orElse(0), 2);
+				for(MoyenneCoefPojo msmf : moyennesSousMatieresFrancais) {
+					sumMoyFr = sumMoyFr + msmf.getMoyenne()*msmf.getCoef();
+					coefFr = coefFr + msmf.getCoef();
+					
+				}
+				moyFr = CommonUtils.roundDouble(sumMoyFr/(coefFr!= 0.0 ? coefFr :1),2);
+				moyCoefFr = moyFr * coefFr;
+//						moyennesSousMatieresFrancais.stream().mapToDouble(a -> a).sum();
 //				System.out
 //						.println(String.format("Matricule [%s] Moyenne français = %s - Coef =%s", me.getEleve().getMatricule(),
 //								moyFr, moyCoefFr));
 				me.setMoyFr(moyFr);
-				me.setCoefFr(Double.valueOf(moyennesSousMatieresFrancais.size()));
+				me.setCoefFr(coefFr);
 				me.setMoyCoefFr(moyCoefFr);
 				me.setAppreciationFr(CommonUtils.appreciation(moyFr));
+				System.out.println(String.format("MATRICULE %s MOYENNE %s cCOEF %s MOY COEF %s APPPR %s", me.getEleve().getMatricule(), moyFr,coefFr,moyCoefFr, CommonUtils.appreciation(moyFr)));
+				
 				moyennesFrExcpt.add(moyFr);
 			}
 
