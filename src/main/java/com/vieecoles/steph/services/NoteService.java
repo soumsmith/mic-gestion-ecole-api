@@ -85,7 +85,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 
 	@Inject
 	EcoleHasMatiereService hasMatiereService;
-	
+
 	@Inject
 	ClasseMatiereService classeMatiereService;
 
@@ -840,10 +840,12 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			for (Map.Entry<EcoleHasMatiere, List<Notes>> entry : me.getNotesMatiereMap().entrySet()) {
 				moyenne = 0.0;
 				noteList = new ArrayList<Double>();
+				List<Double> noteTestLourdList = new ArrayList<Double>();
 //				System.out.println(entry.getKey().getLibelle());
 //				System.out.println("Taille notes "+entry.getValue().size());
 				diviser = 0.0;
 				somme = 0.0;
+				Double diviserTestLourd = 0.0;
 				// Vérifier l'existence de modification de moyenne
 				MoyenneAdjustment moyenneAdjustment = adjustmentService.getByAnneePeriodeMatriculeAndMatiereAndStatut(
 						me.getAnnee().getId(), me.getPeriode().getId(), me.getEleve().getMatricule(),
@@ -854,10 +856,19 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 // On vérifie que l'evaluation et la note sont prises en compte dans le calcul de moyenne
 						if (note.getEvaluation().getPec() == Constants.PEC_1 && note.getPec() != null
 								&& note.getPec() == Constants.PEC_1) {
-							noteList.add(note.getNote());
+							if (note.getEvaluation().getType() != null
+									&& note.getEvaluation().getType().getCode() != null
+									&& note.getEvaluation().getType().getCode().equals(Constants.CODE_TEST_LOURD)) {
+								noteTestLourdList.add(note.getNote());
+								diviserTestLourd = diviserTestLourd + (Double.parseDouble(note.getEvaluation().getNoteSur())
+										/ Double.parseDouble(Constants.DEFAULT_NOTE_SUR));
+//								System.out.println("TEST LOURD DETECTE note :: "+note.getNote());
+							} else {
+								noteList.add(note.getNote());
 //						System.out.println(String.format("PEC value >>> %s", note.getEvaluation().getPec()));
-							diviser = diviser + (Double.parseDouble(note.getEvaluation().getNoteSur())
-									/ Double.parseDouble(Constants.DEFAULT_NOTE_SUR));
+								diviser = diviser + (Double.parseDouble(note.getEvaluation().getNoteSur())
+										/ Double.parseDouble(Constants.DEFAULT_NOTE_SUR));
+							}
 						}
 					}
 
@@ -870,6 +881,20 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 					}
 
 					moyenne = somme / (diviser.equals(Double.parseDouble("0")) ? Double.parseDouble("1") : diviser);
+					
+					if(noteTestLourdList.size() > 0) {
+						Double moyenneTstLourd = 0.0;
+						Double sommeTstLourd = 0.0;
+						
+						for(Double noteTestLrd : noteTestLourdList) {
+							sommeTstLourd = sommeTstLourd + noteTestLrd;
+						}
+						moyenneTstLourd = sommeTstLourd / diviserTestLourd;
+//						System.out.println("Moyenne test lourd = "+moyenneTstLourd);
+						moyenne = (moyenne + moyenneTstLourd)/2;
+//						System.out.println("Moyenne finale = "+ moyenne);
+					}
+					
 					logger.info("Moyenne = " + somme + " / " + diviser + " = " + CommonUtils.roundDouble(moyenne, 2));
 				} else {
 					isAdjustment = Constants.OUI;
@@ -890,7 +915,8 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 								.equals(Constants.ID_MATIERE_FRANCAIS_CENTRAL)) {
 					MoyenneCoefPojo mc = new MoyenneCoefPojo();
 					ClasseMatiere cm = new ClasseMatiere();
-					cm = classeMatiereService.getByMatiereAndBranche(entry.getKey().getId(), me.getClasse().getBranche().getId(), me.getClasse().getEcole().getId());
+					cm = classeMatiereService.getByMatiereAndBranche(entry.getKey().getId(),
+							me.getClasse().getBranche().getId(), me.getClasse().getEcole().getId());
 					mc.setCoef(cm != null ? Double.valueOf(cm.getCoef()) : null);
 					mc.setMoyenne(CommonUtils.roundDouble(moyenne, 2));
 					moyennesSousMatieresFrancais.add(mc);
@@ -951,12 +977,12 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				Double coefFr = 0.0;
 //				CommonUtils
 //						.roundDouble(moyennesSousMatieresFrancais.stream().mapToDouble(a -> a).average().orElse(0), 2);
-				for(MoyenneCoefPojo msmf : moyennesSousMatieresFrancais) {
-					sumMoyFr = sumMoyFr + msmf.getMoyenne()*msmf.getCoef();
+				for (MoyenneCoefPojo msmf : moyennesSousMatieresFrancais) {
+					sumMoyFr = sumMoyFr + msmf.getMoyenne() * msmf.getCoef();
 					coefFr = coefFr + msmf.getCoef();
-					
+
 				}
-				moyFr = CommonUtils.roundDouble(sumMoyFr/(coefFr!= 0.0 ? coefFr :1),2);
+				moyFr = CommonUtils.roundDouble(sumMoyFr / (coefFr != 0.0 ? coefFr : 1), 2);
 				moyCoefFr = moyFr * coefFr;
 //						moyennesSousMatieresFrancais.stream().mapToDouble(a -> a).sum();
 //				System.out
@@ -966,8 +992,8 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				me.setCoefFr(coefFr);
 				me.setMoyCoefFr(moyCoefFr);
 				me.setAppreciationFr(CommonUtils.appreciation(moyFr));
-				System.out.println(String.format("MATRICULE %s MOYENNE %s cCOEF %s MOY COEF %s APPPR %s", me.getEleve().getMatricule(), moyFr,coefFr,moyCoefFr, CommonUtils.appreciation(moyFr)));
-				
+//				System.out.println(String.format("MATRICULE %s MOYENNE %s cCOEF %s MOY COEF %s APPPR %s", me.getEleve().getMatricule(), moyFr,coefFr,moyCoefFr, CommonUtils.appreciation(moyFr)));
+
 				moyennesFrExcpt.add(moyFr);
 			}
 
