@@ -507,6 +507,8 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 					flag.setMatiereId(entry.getKey().getMatiere().getId());
 					// attribut de l'id de la matiere
 					flag.setMatiereRealId(entry.getKey().getId());
+					flag.setTestLourdNote(entry.getKey().getTestLourdNote());
+					flag.setTestLourdNoteSur(entry.getKey().getTestLourdNoteSur());
 					flag.setMatiereLibelle(entry.getKey().getLibelle());
 					flag.setMoyenne(CommonUtils.roundDouble(entry.getKey().getMoyenne(), 2));
 					flag.setMoyCoef(CommonUtils.roundDouble(moyCoef, 2));
@@ -522,10 +524,9 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 					flag.setParentMatiere(entry.getKey().getParentMatiereLibelle());
 					flag.setMoyAn(entry.getKey().getMoyenneAnnuelle());
 					flag.setRangAn(entry.getKey().getRangAnnuel());
-					if (entry.getKey().getRangAnnuel() != null) {
-						if(entry.getKey().getMoyenneAnnuelle()!=null)
-							flag.setAppreciationAn(CommonUtils.appreciation(Double.valueOf(entry.getKey().getMoyenneAnnuelle())));
-					}
+
+					if (entry.getKey().getMoyenneAnnuelle() != null)
+						flag.setAppreciationAn(CommonUtils.appreciation(Double.valueOf(entry.getKey().getMoyenneAnnuelle())));
 
 					flag.setIsAdjustment(entry.getKey().getIsAdjustment());
 					flag.setDateCreation(new Date());

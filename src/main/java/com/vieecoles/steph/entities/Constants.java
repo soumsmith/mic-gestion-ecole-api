@@ -90,5 +90,7 @@ public class Constants {
 	public static final int DEFAULT_DELAI_APPEL_MINUTES = 20;
 	public static final int DEFAULT_DELAI_AVANT_DESACTIVE_APPEL_MINUTES = 0;
 	public static final int DEFAULT_DELAI_APRES_DESACTIVE_APPEL_MINUTES = 15;
+	
+	public static final String CODE_TEST_LOURD = "TSTLRD";
 
 }
