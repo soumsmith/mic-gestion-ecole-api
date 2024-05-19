@@ -704,7 +704,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 		bul.setRang(me.getRang()!= null ? Integer.parseInt(me.getRang()): null);
 		bul.setMoyAn(me.getMoyenneAnnuelle());
 		bul.setRangAn(me.getRangAnnuel());
-//		bul.setMoyAvg(null);
+		bul.setApprAn(me.getApprAnnuelle());
 //		bul.setMoyGeneral(me.getMoyenne().toString());
 		bul.setMoyGeneral(me.getMoyenne());
 //		bul.setMoyMax(null);

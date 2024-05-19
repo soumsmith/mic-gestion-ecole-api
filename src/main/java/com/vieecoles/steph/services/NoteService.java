@@ -1670,6 +1670,10 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 					moyAnPassage.stream().mapToDouble(Double::doubleValue).average().orElse(0.0)));
 
 			me.setMoyenneAnnuelle(infoCalcul.getMoyenneAnnuelle());
+			if(infoCalcul.getMoyenneAnnuelle() != null) {
+				me.setApprAnnuelle(CommonUtils.appreciation(infoCalcul.getMoyenneAnnuelle()));
+			}
+				
 			me.setMoyAnFr(infoCalcul.getMoyenneAnSuperFrancais());
 			if (infoCalcul.getMoyenneAnSuperFrancais() != null) {
 //				System.out.println("moyenneAnSuperFrencais ::: " + infoCalcul.getMoyenneAnSuperFrancais());

@@ -83,6 +83,8 @@ public class Bulletin extends PanacheEntityBase{
 	private Double moyAn;
 	@Column(name = "rang_annuelle")
 	private String rangAn;
+	@Column(name = "appr_an")
+	private String apprAn;
 	@Column(name = "appreciation_conseil")
 	private String appreciation;
 	@Column(name = "date_creation")
