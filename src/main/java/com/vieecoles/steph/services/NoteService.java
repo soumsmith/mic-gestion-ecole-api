@@ -463,7 +463,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 //		logger.info(moyenneList.toString());
 //		logger.info("-------------------------------------------");
 			startTime = System.nanoTime();
-			classementEleveParMatiere(calculMoyenneMatiereHinnehPremierTrimestre(moyenneList), classe.getBranche().getId(),
+			classementEleveParMatiere(calculMoyenneMatiere(moyenneList), classe.getBranche().getId(),
 					classe.getEcole().getId());
 			calculMoyenneGeneralEleve(moyenneList);
 			endTime = System.nanoTime();
