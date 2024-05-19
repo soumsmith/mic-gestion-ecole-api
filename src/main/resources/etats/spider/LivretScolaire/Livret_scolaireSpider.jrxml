@@ -459,6 +459,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.matricule =  $P{matr
 	<field name="rang_an_fr" class="java.lang.String"/>
 	<field name="appr_fr_an" class="java.lang.String"/>
 	<field name="appr_an" class="java.lang.String"/>
+	<field name="appr_an_bull" class="java.lang.String"/>
 	<sortField name="matricule"/>
 	<sortField name="num_ordre"/>
 	<sortField name="parent_matiere"/>
@@ -2788,7 +2789,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.matricule =  $P{matr
 							<textElement textAlignment="Center">
 								<font fontName="SansSerif" isBold="true"/>
 							</textElement>
-							<textFieldExpression><![CDATA[$F{appreciation_conseil}]]></textFieldExpression>
+							<textFieldExpression><![CDATA[$F{appr_an_bull}]]></textFieldExpression>
 						</textField>
 						<staticText>
 							<reportElement x="0" y="0" width="172" height="20" uuid="5702f201-3d0f-4eb8-b8c2-37847d209303">
