@@ -58,6 +58,9 @@ public class DetailBulletin extends PanacheEntityBase {
 	private Double testLourdNote;
 	@Column(name = "test_lourd_note_sur")
 	private Integer testLourdNoteSur;
+	
+	@Column(name = "moy_intermediate")
+	private Double moyenneIntermediaire;
 
 	@Column(name = "is_classed")
 	private String isRanked;
