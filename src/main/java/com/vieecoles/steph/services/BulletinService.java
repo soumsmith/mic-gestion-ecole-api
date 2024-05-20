@@ -525,6 +525,8 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 					flag.setMoyAn(entry.getKey().getMoyenneAnnuelle());
 					flag.setRangAn(entry.getKey().getRangAnnuel());
 
+					flag.setMoyenneIntermediaire(entry.getKey().getMoyenneIntermediaire());
+
 					if (entry.getKey().getMoyenneAnnuelle() != null)
 						flag.setAppreciationAn(CommonUtils.appreciation(Double.valueOf(entry.getKey().getMoyenneAnnuelle())));
 
