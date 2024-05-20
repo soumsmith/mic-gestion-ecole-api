@@ -741,6 +741,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 		bul.setMoyEvaluationPassage(me.getMoyennePassage());
 
 		bul.setMoyFr(me.getMoyFr());
+		bul.setMoyFrIntermediaire(me.getMoyFrIntermediaire());
 		bul.setCoefFr(me.getCoefFr());
 		bul.setMoyCoefFr(me.getMoyCoefFr());
 		bul.setAppreciationFr(me.getAppreciationFr());

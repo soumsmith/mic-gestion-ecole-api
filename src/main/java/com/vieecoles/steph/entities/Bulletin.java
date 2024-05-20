@@ -143,6 +143,8 @@ public class Bulletin extends PanacheEntityBase{
 	private Double CoefFr;
 	@Column(name = "moy_coef_fr")
 	private Double moyCoefFr;
+	@Column(name = "moy_fr_intermediate")
+	private Double moyFrIntermediaire;
 	@Column(name = "appr_fr")
 	private String appreciationFr;
 	@Column(name = "rang_fr")

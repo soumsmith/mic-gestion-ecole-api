@@ -40,6 +40,7 @@ public class MoyenneEleveDto implements Comparable<MoyenneEleveDto> {
 	private String numeroIEPP;
 	
 	private Double moyFr;
+	private Double moyFrIntermediaire;
 	private Double CoefFr;
 	private Double moyCoefFr;
 	private Double moyAnFr;
