@@ -3,9 +3,7 @@ package com.vieecoles.ressource.operations.etats;
 
 import com.vieecoles.dto.*;
 import com.vieecoles.entities.operations.ecole;
-import com.vieecoles.projection.BulletinSelectDto;
 import com.vieecoles.services.etats.*;
-import com.vieecoles.steph.entities.Ecole;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.ooxml.JRDocxExporter;
@@ -16,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -24,12 +21,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.InputStream;
-import java.net.URL;
-import java.nio.file.Paths;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -321,7 +313,11 @@ public class spiderRessource {
             eleveNonAffecteParClasseDto = eleveNonAffecteParClasseServices.eleveNonAffecteParClasse(idEcole ,libelleAnnee,libelleTrimetre);
             System.out.println("FIN eleveNonAffecteParClasse ");
             majorParClasseNiveauDto = majorServices.MajorParNiveauClasse(idEcole ,libelleAnnee,libelleTrimetre) ;
-            majorParClasseNiveauAnnuelsDto = majorServicesAnnuels.MajorParNiveauClasse(idEcole ,libelleAnnee,libelleTrimetre) ;
+            try {
+                majorParClasseNiveauAnnuelsDto = majorServicesAnnuels.MajorParNiveauClasse(idEcole ,libelleAnnee,libelleTrimetre) ;
+            } catch (RuntimeException e){
+                e.printStackTrace();
+            }
 
             System.out.println("FIN major ");
             transfertsDto= transfertsServices.transferts(idEcole) ;
