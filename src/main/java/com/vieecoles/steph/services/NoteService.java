@@ -810,6 +810,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 		logger.info("---> Calcul des moyennes par matiere");
 		Double moyenne;
 		Double moyenneEMR;
+		Double moyenneEMRIntermediaire;
 		List<Double> noteList;
 		List<Notes> moyenneEMRList;
 
@@ -820,6 +821,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 
 		Double diviserEMR;
 		Double sommeEMR;
+		Double sommeEMRIntermediaire;
 
 		Gson g = new Gson();
 
@@ -827,6 +829,8 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 		for (MoyenneEleveDto me : moyEleve) {
 			EcoleHasMatiere ehm = new EcoleHasMatiere();
 			sommeEMR = 0.0;
+			sommeEMRIntermediaire = 0.0;
+			moyenneEMRIntermediaire = 0.0;
 			diviserEMR = 0.0;
 			moyenneEMR = 0.0;
 			moyenneEMRList = new ArrayList<>();
@@ -942,6 +946,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 					}
 
 					sommeEMR += moyenne;
+					sommeEMRIntermediaire+=entry.getKey().getMoyenneIntermediaire();
 					diviserEMR++;
 					Evaluation evalEMR = new Evaluation();
 					evalEMR.setAnnee(me.getAnnee());
@@ -1011,6 +1016,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				String isAdjustment = Constants.NON;
 				if (moyenneAdjustment.getId() == null) {
 					moyenneEMR = sommeEMR / (diviserEMR == 0.0 ? 1.0 : diviserEMR);
+					moyenneEMRIntermediaire = sommeEMRIntermediaire / (diviserEMR == 0.0 ? 1.0 : diviserEMR);
 				} else {
 					isAdjustment = Constants.OUI;
 					moyenneEMR = moyenneAdjustment.getMoyenne();
@@ -1029,6 +1035,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				ehm_.setCategorie(ehm.getCategorie());
 				ehm_.setMoyenne(CommonUtils.roundDouble(moyenneEMR, 2));
 				ehm_.setAppreciation(CommonUtils.appreciation(moyenneEMR));
+				ehm_.setMoyenneIntermediaire(CommonUtils.roundDouble(moyenneEMRIntermediaire, 2));
 				ehm_.setBonus(ehm.getBonus());
 				ehm_.setEcole(ehm.getEcole());
 				ehm_.setParentMatiereLibelle(ehm.getParentMatiereLibelle());
