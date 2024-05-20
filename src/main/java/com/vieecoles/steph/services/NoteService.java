@@ -907,6 +907,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				} else {
 					isAdjustment = Constants.OUI;
 					moyenne = moyenneAdjustment.getMoyenne();
+					entry.getKey().setMoyenneIntermediaire(moyenne);
 					logger.info("Moyenne repêchage trouvée = " + CommonUtils.roundDouble(moyenne, 2));
 				}
 				entry.getKey().setMoyenne(CommonUtils.roundDouble(moyenne, 2));
