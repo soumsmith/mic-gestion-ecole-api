@@ -424,7 +424,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.matricule =  $P{matr
 						</textElement>
 						<textFieldExpression><![CDATA["Bilan "+$F{libelle_categorie}]]></textFieldExpression>
 					</textField>
-					<textField textAdjust="ScaleFont" evaluationTime="Band">
+					<textField textAdjust="ScaleFont" evaluationTime="Band" isBlankWhenNull="true">
 						<reportElement style="TitreLibelle" x="110" y="0" width="36" height="15" uuid="ae8ecd4c-5eb3-4f26-9467-bdb8923ad8fa">
 							<property name="com.jaspersoft.layout.grid.x" value="1"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
@@ -449,7 +449,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.matricule =  $P{matr
 						<textFieldExpression><![CDATA[$F{libelle_categorie}.equals("Religion")? $F{moy_reli}:$V{TotalMoyeCoefParCategorie}/$V{TotalCoeffParCategParMatier}]]></textFieldExpression>
 						<patternExpression><![CDATA["##.##"]]></patternExpression>
 					</textField>
-					<textField textAdjust="ScaleFont" evaluationTime="Band">
+					<textField textAdjust="ScaleFont" evaluationTime="Band" isBlankWhenNull="true">
 						<reportElement style="TitreLibelle" x="146" y="0" width="43" height="15" uuid="00be9039-970f-45df-b973-7232c7ab4716">
 							<property name="com.jaspersoft.layout.grid.x" value="2"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
