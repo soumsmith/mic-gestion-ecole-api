@@ -883,10 +883,10 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 
 					moyenne = somme / (diviser.equals(Double.parseDouble("0")) ? Double.parseDouble("1") : diviser);
 					
+					entry.getKey().setMoyenneIntermediaire(CommonUtils.roundDouble(somme / (diviser.equals(Double.parseDouble("0")) ? Double.parseDouble("1") : diviser),2));
 					if(noteTestLourdList.size() > 0) {
 						Double moyenneTstLourd = 0.0;
 						Double sommeTstLourd = 0.0;
-						entry.getKey().setMoyenneIntermediaire(CommonUtils.roundDouble(somme / (diviser.equals(Double.parseDouble("0")) ? Double.parseDouble("1") : diviser),2));
 						for(Double noteTestLrd : noteTestLourdList) {
 							sommeTstLourd = sommeTstLourd + noteTestLrd;
 						}
