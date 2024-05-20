@@ -907,6 +907,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				} else {
 					isAdjustment = Constants.OUI;
 					moyenne = moyenneAdjustment.getMoyenne();
+					entry.getKey().setMoyenneIntermediaire(moyenne);
 					logger.info("Moyenne repêchage trouvée = " + CommonUtils.roundDouble(moyenne, 2));
 				}
 				entry.getKey().setMoyenne(CommonUtils.roundDouble(moyenne, 2));
@@ -927,6 +928,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 							me.getClasse().getBranche().getId(), me.getClasse().getEcole().getId());
 					mc.setCoef(cm != null ? Double.valueOf(cm.getCoef()) : null);
 					mc.setMoyenne(CommonUtils.roundDouble(moyenne, 2));
+					mc.setMoyenneIntermediaire(entry.getKey().getMoyenneIntermediaire());
 					moyennesSousMatieresFrancais.add(mc);
 					calculExcpFrFlat = true;
 				}
@@ -981,7 +983,9 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			}
 			if (calculExcpFrFlat) {
 				Double sumMoyFr = 0.0;
+				Double sumMoyFrIntrmd = 0.0;
 				Double moyFr = 0.0;
+				Double moyFrIntrmd = 0.0;
 				Double moyCoefFr = 0.0;
 				Double coefFr = 0.0;
 //				CommonUtils
@@ -989,15 +993,18 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				for (MoyenneCoefPojo msmf : moyennesSousMatieresFrancais) {
 					sumMoyFr = sumMoyFr + msmf.getMoyenne() * msmf.getCoef();
 					coefFr = coefFr + msmf.getCoef();
+					sumMoyFrIntrmd = sumMoyFrIntrmd + msmf.getMoyenneIntermediaire()* msmf.getCoef();
 
 				}
 				moyFr = CommonUtils.roundDouble(sumMoyFr / (coefFr != 0.0 ? coefFr : 1), 2);
+				moyFrIntrmd = CommonUtils.roundDouble(sumMoyFrIntrmd / (coefFr != 0.0 ? coefFr : 1), 2);
 				moyCoefFr = moyFr * coefFr;
 //						moyennesSousMatieresFrancais.stream().mapToDouble(a -> a).sum();
 //				System.out
-//						.println(String.format("Matricule [%s] Moyenne français = %s - Coef =%s", me.getEleve().getMatricule(),
-//								moyFr, moyCoefFr));
+//						.println(String.format("Matricule [%s] Moyenne Interm. français = %s - Coef =%s", me.getEleve().getMatricule(),
+//								moyFrIntrmd, moyCoefFr));
 				me.setMoyFr(moyFr);
+				me.setMoyFrIntermediaire(moyFrIntrmd);
 				me.setCoefFr(coefFr);
 				me.setMoyCoefFr(moyCoefFr);
 				me.setAppreciationFr(CommonUtils.appreciation(moyFr));

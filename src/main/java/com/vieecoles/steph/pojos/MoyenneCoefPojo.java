@@ -9,6 +9,7 @@ public class MoyenneCoefPojo {
 	private Long matiereId;
 	private String matiere;
 	private Double moyenne;
+	private Double moyenneIntermediaire;
 	private Double coef;
 
 }
