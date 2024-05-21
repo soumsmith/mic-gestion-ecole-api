@@ -1,7 +1,9 @@
 package com.vieecoles.steph.services;
 
 import com.google.gson.Gson;
+import com.vieecoles.steph.dto.AnneeDto;
 import com.vieecoles.steph.dto.AnneeInfoDto;
+import com.vieecoles.steph.dto.DetailAnneeDto;
 import com.vieecoles.steph.entities.AnneePeriode;
 import com.vieecoles.steph.entities.AnneeScolaire;
 import com.vieecoles.steph.entities.Constants;
@@ -32,7 +34,7 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 	EcoleService ecoleService;
 	@Inject
 	BulletinService bulletinService;
-	
+
 	@Inject
 	PeriodeService periodeService;
 
@@ -74,6 +76,62 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 			r.printStackTrace();
 		}
 		return annees;
+	}
+
+	public AnneeDto getListByEcoleDto(Long ecoleId) {
+
+		AnneeDto dto = new AnneeDto();
+		try {
+			List<AnneeScolaire> annees = AnneeScolaire.find("ecole.id = ?1 and niveau =?2", ecoleId, Constants.ECOLE)
+					.list();
+			Ecole ecole = ecoleService.getById(ecoleId);
+			dto.setEcoleId(ecoleId);
+			dto.setEcoleLibelle(ecole.getLibelle());
+			if (annees != null && annees.size() > 0)
+				for (AnneeScolaire ans : annees) {
+					if (ans.getStatut() != null && ans.getStatut().equals(Constants.OUVERT)) {
+						GenericProjectionLongId generic = findCentralAnneeWithProjectionReference(ans);
+						dto.setAnneeOuverteCentraleId(generic.getId());
+					}
+					dto.getAnneeEcoleList().add(populateDtoEcole(ans));
+				}
+		} catch (RuntimeException r) {
+			r.printStackTrace();
+		}
+		return dto;
+	}
+	
+	public AnneeDto getOpenAnneeByEcoleDto(Long ecoleId) {
+
+		AnneeDto dto = new AnneeDto();
+		try {
+			List<AnneeScolaire> annees = AnneeScolaire.find("ecole.id = ?1 and niveau =?2 and statut=?3", ecoleId, Constants.ECOLE, Constants.OUVERT)
+					.list();
+			Ecole ecole = ecoleService.getById(ecoleId);
+			dto.setEcoleId(ecoleId);
+			dto.setEcoleLibelle(ecole.getLibelle());
+			if (annees != null && annees.size() > 0)
+				for (AnneeScolaire ans : annees) {
+					if (ans.getStatut() != null && ans.getStatut().equals(Constants.OUVERT)) {
+						GenericProjectionLongId generic = findCentralAnneeWithProjectionReference(ans);
+						dto.setAnneeOuverteCentraleId(generic.getId());
+					}
+					dto.getAnneeEcoleList().add(populateDtoEcole(ans));
+				}
+		} catch (RuntimeException r) {
+			r.printStackTrace();
+		}
+		return dto;
+	}
+
+	public DetailAnneeDto populateDtoEcole(AnneeScolaire as) {
+		DetailAnneeDto dto = new DetailAnneeDto();
+
+		dto.setAnneeId(as.getId());
+		dto.setAnneeLibelle(as.getLibelle());
+		dto.setStatut(as.getStatut());
+
+		return dto;
 	}
 
 	public List<AnneeScolaire> getListOpenOrCloseByEcole(Long ecoleId) {
@@ -301,10 +359,10 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 			return findCentralAnneeReference(anneeOuverte.get(0));
 		return new AnneeScolaire();
 	}
-	
+
 	public GenericProjectionLongId findMainAnneeWithProjectionByEcole(Ecole ecole) {
 		// find annee ouverte by ecole
-		List<AnneeScolaire> anneeOuverte = getByEcoleAndStatut(ecole==null ? 0 : ecole.getId() , Constants.OUVERT);
+		List<AnneeScolaire> anneeOuverte = getByEcoleAndStatut(ecole == null ? 0 : ecole.getId(), Constants.OUVERT);
 		if (anneeOuverte.size() >= 1)
 			return findCentralAnneeWithProjectionReference(anneeOuverte.get(0));
 		return new GenericProjectionLongId(0L);
@@ -324,14 +382,14 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 		}
 		return centralAnnee;
 	}
-	
+
 	public GenericProjectionLongId findCentralAnneeWithProjectionReference(AnneeScolaire ecoleAnneeOuvert) {
 		try {
-			 return  AnneeScolaire
+			return AnneeScolaire
 					.find("anneeDebut =?1 and niveauEnseignement.id=?2 and periodicite.id =?3 and ecole is null",
 							ecoleAnneeOuvert.getAnneeDebut(), ecoleAnneeOuvert.getNiveauEnseignement().getId(),
-							ecoleAnneeOuvert.getPeriodicite().getId()).project(GenericProjectionLongId.class)
-					.singleResult();
+							ecoleAnneeOuvert.getPeriodicite().getId())
+					.project(GenericProjectionLongId.class).singleResult();
 
 		} catch (RuntimeException e) {
 			e.printStackTrace();
@@ -359,7 +417,7 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 			for (AnneeScolaire an : annees) {
 				AnneeScolaire anneeTemp = new AnneeScolaire();
 				anneeTemp.setAnneeDebut(an.getAnneeDebut());
-				anneeTemp.setAnneeFin(an.getAnneeDebut()+1);
+				anneeTemp.setAnneeFin(an.getAnneeDebut() + 1);
 				anneeTemp.setLibelle(an.getCustomLibelle());
 				anneeTemp.setNbreEval(an.getNbreEval());
 				anneeTemp.setNiveauEnseignement(an.getNiveauEnseignement());
@@ -397,7 +455,8 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 		if (ecoles != null && ecoles.size() > 0)
 			for (Ecole ecole : ecoles) {
 				System.out.println(String.format("==> %s", ecole.getLibelle()));
-				//Vérifier que l'année n'existe pas (à prendre comme précaution  au cas où on reprend le process manuellement)
+				// Vérifier que l'année n'existe pas (à prendre comme précaution au cas où on
+				// reprend le process manuellement)
 				AnneeScolaire anneeTemp = new AnneeScolaire();
 				anneeTemp.setLibelle(annee.getCustomLibelle());
 				anneeTemp.setAnneeDebut(annee.getAnneeDebut());
@@ -466,12 +525,12 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 						sap.setPeriodeFin(DateUtils.getLastTimeFromDate(ap.getValue()));
 					list.add(sap);
 
-				}else {
+				} else {
 					if (pattern[0].equals("deb"))
 						list.get(index).setPeriodeDebut(ap.getValue());
 					else if (pattern[0].equals("fin"))
 						list.get(index).setPeriodeFin(DateUtils.getLastTimeFromDate(ap.getValue()));
-					
+
 				}
 			}
 
@@ -491,9 +550,9 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 			infos.setAnneeId(anneeOuverte.getId());
 			infos.setAnneeLibelle(anneeOuverte.getCustomLibelle());
 //			System.out.println(anneeOuverte.getCustomLibelle());
-			for(SorterAnneePeriodePojo sap : sorterList) {
+			for (SorterAnneePeriodePojo sap : sorterList) {
 				infos.setSeverity(Constants.SEVERITY_SUCCESS);
-				if(today.after(sap.getPeriodeDebut()) && today.before(sap.getPeriodeFin())) {
+				if (today.after(sap.getPeriodeDebut()) && today.before(sap.getPeriodeFin())) {
 					Periode per = Periode.findById(sap.getId());
 					infos.setDateDebut(sap.getPeriodeDebut());
 					infos.setDateFin(sap.getPeriodeFin());
@@ -502,8 +561,8 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 					break;
 				}
 			}
-			
-		}else {
+
+		} else {
 			infos.setAnneeLibelle("Aucune année ouverte");
 			infos.setSeverity(Constants.SEVERITY_DANGER);
 		}
