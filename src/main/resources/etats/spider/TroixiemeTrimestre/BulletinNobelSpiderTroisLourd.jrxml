@@ -380,7 +380,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.matricule =  $P{matr
 		<variableExpression><![CDATA[$F{is_classed_mat}.equals("O")?$F{test_lourd_note}*$F{coef}:0]]></variableExpression>
 	</variable>
 	<variable name="TotalCoeffParCategParMatierLourd" class="java.lang.Double" resetType="Group" resetGroup="MyCategorie" calculation="Sum">
-		<variableExpression><![CDATA[$F{is_classed_mat}.equals("O")&&$F{bonus}.equals("0")? $F{coef} : 0]]></variableExpression>
+		<variableExpression><![CDATA[$F{is_classed_mat}.equals("O")&&$F{bonus}.equals("0")&&$F{test_lourd_note}!=null? $F{coef} : 0]]></variableExpression>
 	</variable>
 	<variable name="TotalMoyeCoefParCategorTrim" class="java.lang.Double" resetType="Group" resetGroup="MyCategorie" calculation="Sum">
 		<variableExpression><![CDATA[$F{is_classed_mat}.equals("O")?$V{TotalMoyeTrim}*$F{coef}:0]]></variableExpression>
@@ -470,7 +470,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.matricule =  $P{matr
 						<textElement textAlignment="Left">
 							<font fontName="SansSerif" size="7" isBold="true"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$F{libelle_categorie}.equals("Religion")? $F{moy_reli}:$V{TotalMoyeCoefParCategorTestLourd}/$V{TotalCoeffParCategParMatierLourd}]]></textFieldExpression>
+						<textFieldExpression><![CDATA[($V{TotalMoyeCoefParCategorTestLourd}/$V{TotalCoeffParCategParMatierLourd})/2]]></textFieldExpression>
 						<patternExpression><![CDATA["##.##"]]></patternExpression>
 					</textField>
 					<textField evaluationTime="Band" isBlankWhenNull="true">
@@ -560,11 +560,11 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.matricule =  $P{matr
 							<property name="com.jaspersoft.studio.unit.width" value="px"/>
 						</reportElement>
 						<box>
-							<pen lineWidth="0.5"/>
-							<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-							<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-							<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-							<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+							<pen lineWidth="0.25"/>
+							<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+							<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+							<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+							<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textElement textAlignment="Left">
 							<font fontName="SansSerif" size="7" isBold="true"/>
@@ -583,11 +583,11 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.matricule =  $P{matr
 							<property name="com.jaspersoft.studio.unit.width" value="px"/>
 						</reportElement>
 						<box>
-							<pen lineWidth="0.5"/>
-							<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-							<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-							<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-							<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+							<pen lineWidth="0.25"/>
+							<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+							<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+							<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+							<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textElement textAlignment="Left">
 							<font fontName="SansSerif" size="7" isBold="true"/>
@@ -1749,11 +1749,11 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.matricule =  $P{matr
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
 					<box>
-						<pen lineWidth="0.5"/>
-						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Left">
 						<font fontName="SansSerif" size="7" isBold="true"/>
@@ -1772,11 +1772,11 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.matricule =  $P{matr
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
 					<box>
-						<pen lineWidth="0.5"/>
-						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Left">
 						<font fontName="SansSerif" size="7" isBold="true"/>
