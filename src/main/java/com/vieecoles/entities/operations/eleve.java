@@ -49,17 +49,7 @@ public class eleve extends PanacheEntityBase {
             inverseJoinColumns = @JoinColumn( name = "parent_parentid" ) )
     private List<Parent> parents = new ArrayList<>();
 
-
-
-
-
-
- // @JsonbTransient
-@ManyToMany
-  @JoinTable( name = "eleve_appel_numerique",
-          joinColumns = @JoinColumn( name = "eleve_eleveid" ),
-          inverseJoinColumns = @JoinColumn( name = "appel_numerique_appel_numeriqueid" ) )
-  private List<appel_numerique> appel_numerique = new ArrayList<>();
+ 
     public enum sexeEleve{
         MASCULIN, FEMININ
     }
@@ -79,7 +69,6 @@ public class eleve extends PanacheEntityBase {
                 ", elevecellulaire='" + elevecellulaire + '\'' +
                 ", eleve_mail='" + eleve_mail + '\'' +
                  ", parents=" + parents +
-                ", appel_numerique=" + appel_numerique +
                 '}';
     }
 
@@ -92,13 +81,6 @@ public class eleve extends PanacheEntityBase {
     }
 
 
-    public List<com.vieecoles.entities.operations.appel_numerique> getAppel_numerique() {
-        return appel_numerique;
-    }
-
-    public void setAppel_numerique(List<com.vieecoles.entities.operations.appel_numerique> appel_numerique) {
-        this.appel_numerique = appel_numerique;
-    }
 
     public eleve() {
     }

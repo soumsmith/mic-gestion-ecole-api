@@ -18,6 +18,7 @@ public class TypeActivite extends PanacheEntityBase {
 
 	@Id
 	private long id;
+	private String code;
 	private String libelle;
 	@Column(name = "niveau_enseignement")
 	private Long niveauEnseignement;

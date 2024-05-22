@@ -409,6 +409,8 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 				else
 					countNonClasses++;
 
+//				System.out.println("Niveau ens ::: " + me.getClasse().getEcole().getNiveauEnseignement().getId());
+
 				bulletin = new Bulletin();
 				bulletin = convert(me);
 				bulletin.setAnneeId(Long.parseLong(annee));
@@ -417,6 +419,15 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 				bulletin.setAnneeLibelle(anDb.getLibelle());
 				bulletin.setPeriodeId(periodeDb.getId());
 				bulletin.setLibellePeriode(periodeDb.getLibelle());
+
+				try {
+					bulletin.setNiveauEnseignementId(me.getClasse().getEcole().getNiveauEnseignement() != null
+							? me.getClasse().getEcole().getNiveauEnseignement().getId()
+							: null);
+				} catch (RuntimeException r) {
+					r.printStackTrace();
+				}
+
 //			System.out.println("rang ->"+me.getRang());
 //			bulletin.setRang(Integer.parseInt(me.getRang()));
 				// Ajout du professeur principal
@@ -496,6 +507,8 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 					flag.setMatiereId(entry.getKey().getMatiere().getId());
 					// attribut de l'id de la matiere
 					flag.setMatiereRealId(entry.getKey().getId());
+					flag.setTestLourdNote(entry.getKey().getTestLourdNote());
+					flag.setTestLourdNoteSur(entry.getKey().getTestLourdNoteSur());
 					flag.setMatiereLibelle(entry.getKey().getLibelle());
 					flag.setMoyenne(CommonUtils.roundDouble(entry.getKey().getMoyenne(), 2));
 					flag.setMoyCoef(CommonUtils.roundDouble(moyCoef, 2));
@@ -511,6 +524,9 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 					flag.setParentMatiere(entry.getKey().getParentMatiereLibelle());
 					flag.setMoyAn(entry.getKey().getMoyenneAnnuelle());
 					flag.setRangAn(entry.getKey().getRangAnnuel());
+					flag.setMoyenneIntermediaire(entry.getKey().getMoyenneIntermediaire());
+					if (entry.getKey().getMoyenneAnnuelle() != null)
+						flag.setAppreciationAn(CommonUtils.appreciation(Double.valueOf(entry.getKey().getMoyenneAnnuelle())));
 					flag.setIsAdjustment(entry.getKey().getIsAdjustment());
 					flag.setDateCreation(new Date());
 					// Inscrire si oui ou non l'élève est classé dans la matiere
@@ -686,10 +702,10 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 		// bul.setLibellePeriode(me.getPeriode().getLibelle());
 		bul.setLieuNaissance(me.getEleve().getLieuNaissance());
 		bul.setMatricule(me.getEleve().getMatricule());
-		bul.setRang(Integer.parseInt(me.getRang()));
+		bul.setRang(me.getRang()!= null ? Integer.parseInt(me.getRang()): null);
 		bul.setMoyAn(me.getMoyenneAnnuelle());
 		bul.setRangAn(me.getRangAnnuel());
-//		bul.setMoyAvg(null);
+		bul.setApprAn(me.getApprAnnuelle());
 //		bul.setMoyGeneral(me.getMoyenne().toString());
 		bul.setMoyGeneral(me.getMoyenne());
 //		bul.setMoyMax(null);
@@ -725,11 +741,16 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 		bul.setMoyEvaluationPassage(me.getMoyennePassage());
 
 		bul.setMoyFr(me.getMoyFr());
+		bul.setMoyFrIntermediaire(me.getMoyFrIntermediaire());
 		bul.setCoefFr(me.getCoefFr());
 		bul.setMoyCoefFr(me.getMoyCoefFr());
 		bul.setAppreciationFr(me.getAppreciationFr());
 		bul.setMoyReli(me.getMoyReli());
 		bul.setAppreciationReli(me.getAppreciationReli());
+		bul.setRangFr(me.getRangFr());
+		bul.setMoyFrAn(me.getMoyAnFr());
+		bul.setRangFrAn(me.getRangAnFr());
+		bul.setAppreciationFrAn(me.getAppreciationAnFr());
 
 		return bul;
 	}

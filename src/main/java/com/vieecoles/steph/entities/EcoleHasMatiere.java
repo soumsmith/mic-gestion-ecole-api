@@ -63,6 +63,15 @@ public class EcoleHasMatiere extends PanacheEntityBase{
     @Transient
     private String rangAnnuel;
     
+    @Transient
+    private Double testLourdNote;
+    @Transient
+	private Integer testLourdNoteSur; 
+    
+    // Moyenne intermediaire sans l'ajout des tests lourds
+    @Transient
+    private Double moyenneIntermediaire;
+    
     @ManyToOne
     @JoinColumn(name = "matiere_parent_id")
     private EcoleHasMatiere matiereParent;

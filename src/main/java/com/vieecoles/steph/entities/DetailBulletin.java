@@ -16,7 +16,7 @@ import lombok.EqualsAndHashCode;
 @Table(name = "Detail_bulletins")
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class DetailBulletin extends PanacheEntityBase{
+public class DetailBulletin extends PanacheEntityBase {
 
 	@Id
 	private String id;
@@ -37,21 +37,30 @@ public class DetailBulletin extends PanacheEntityBase{
 	private Double moyCoef;
 	private String appreciation;
 	@Column(name = "code_categorie")
-	private String  categorie;
-    private Integer  num_ordre;
-	private String nom_prenom_professeur ;
+	private String categorie;
+	private Integer num_ordre;
+	private String nom_prenom_professeur;
 	@Column(name = "is_adjustment")
 	private String isAdjustment;
-	
+
 	@Column(name = "moy_An")
 	private Double moyAn;
 	@Column(name = "rang_An")
 	private String rangAn;
-
+	@Column(name = "appr_an")
+	private String appreciationAn;
 	private Integer pec;
 	private Integer bonus;
 	@Column(name = "parent_matiere")
-	private String parentMatiere ;
+	private String parentMatiere;
+	
+	@Column(name = "test_lourd_note")
+	private Double testLourdNote;
+	@Column(name = "test_lourd_note_sur")
+	private Integer testLourdNoteSur;
+	
+	@Column(name = "moy_intermediate")
+	private Double moyenneIntermediaire;
 
 	@Column(name = "is_classed")
 	private String isRanked;

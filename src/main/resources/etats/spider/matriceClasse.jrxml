@@ -1,196 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="matriceClasse" printOrder="Horizontal" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0603fb74-49e5-475e-a1b3-4afd2488d6db">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
-	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Table_CH" mode="Opaque" backcolor="#BFE1FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Table 1_TH" mode="Opaque" backcolor="#F0F8FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Table 1_CH" mode="Opaque" backcolor="#BFE1FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Table 1_TD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Table 2_TH" mode="Opaque" backcolor="#F0F8FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Table 2_CH" mode="Opaque" backcolor="#BFE1FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Table 2_TD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Table 3_TH" mode="Opaque" backcolor="#F0F8FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Table 3_CH" mode="Opaque" backcolor="#BFE1FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Table 3_TD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Table 4_TH" mode="Opaque" backcolor="#F0F8FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Table 4_CH" mode="Opaque" backcolor="#BFE1FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Table 4_TD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Table 5_TH" mode="Opaque" backcolor="#F0F8FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Table 5_CH" mode="Opaque" backcolor="#BFE1FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Table 5_TD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Table 6_TH" mode="Opaque" backcolor="#F0F8FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Table 6_CH" mode="Opaque" backcolor="#BFE1FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Table 6_TD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="matriceTest" printOrder="Horizontal" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="563cc758-7d26-488e-8909-a6e056001beb">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ecolevieDB"/>
 	<style name="Crosstab_CH" mode="Opaque" backcolor="#F0F8FF">
 		<box>
 			<pen lineWidth="0.5" lineColor="#000000"/>
@@ -227,7 +39,7 @@
 			<rightPen lineWidth="0.5" lineColor="#000000"/>
 		</box>
 	</style>
-	<style name="Crosstab 1_CH" mode="Opaque" backcolor="#BFE1FF">
+	<style name="Crosstab 1_CH" mode="Opaque" backcolor="#F0F8FF">
 		<box>
 			<pen lineWidth="0.5" lineColor="#000000"/>
 			<topPen lineWidth="0.5" lineColor="#000000"/>
@@ -236,7 +48,7 @@
 			<rightPen lineWidth="0.5" lineColor="#000000"/>
 		</box>
 	</style>
-	<style name="Crosstab 1_CG" mode="Opaque" backcolor="#E6F3FF">
+	<style name="Crosstab 1_CG" mode="Opaque" backcolor="#BFE1FF">
 		<box>
 			<pen lineWidth="0.5" lineColor="#000000"/>
 			<topPen lineWidth="0.5" lineColor="#000000"/>
@@ -245,7 +57,7 @@
 			<rightPen lineWidth="0.5" lineColor="#000000"/>
 		</box>
 	</style>
-	<style name="Crosstab 1_CT" mode="Opaque" backcolor="#6093BF">
+	<style name="Crosstab 1_CT" mode="Opaque" backcolor="#005FB3">
 		<box>
 			<pen lineWidth="0.5" lineColor="#000000"/>
 			<topPen lineWidth="0.5" lineColor="#000000"/>
@@ -299,76 +111,103 @@
 			<rightPen lineWidth="0.5" lineColor="#000000"/>
 		</box>
 	</style>
+	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
 	<style name="Crosstab 3_CH" mode="Opaque" backcolor="#F0F8FF">
 		<box>
-			<pen lineWidth="0.5" lineColor="#FFFFFF"/>
-			<topPen lineWidth="0.5" lineColor="#FFFFFF"/>
-			<leftPen lineWidth="0.5" lineColor="#FFFFFF"/>
-			<bottomPen lineWidth="0.5" lineColor="#FFFFFF"/>
-			<rightPen lineWidth="0.5" lineColor="#FFFFFF"/>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
 		</box>
 	</style>
 	<style name="Crosstab 3_CG" mode="Opaque" backcolor="#BFE1FF">
 		<box>
-			<pen lineWidth="0.5" lineColor="#FFFFFF"/>
-			<topPen lineWidth="0.5" lineColor="#FFFFFF"/>
-			<leftPen lineWidth="0.5" lineColor="#FFFFFF"/>
-			<bottomPen lineWidth="0.5" lineColor="#FFFFFF"/>
-			<rightPen lineWidth="0.5" lineColor="#FFFFFF"/>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
 		</box>
 	</style>
 	<style name="Crosstab 3_CT" mode="Opaque" backcolor="#005FB3">
 		<box>
-			<pen lineWidth="0.5" lineColor="#FFFFFF"/>
-			<topPen lineWidth="0.5" lineColor="#FFFFFF"/>
-			<leftPen lineWidth="0.5" lineColor="#FFFFFF"/>
-			<bottomPen lineWidth="0.5" lineColor="#FFFFFF"/>
-			<rightPen lineWidth="0.5" lineColor="#FFFFFF"/>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
 		</box>
 	</style>
 	<style name="Crosstab 3_CD" mode="Opaque" backcolor="#FFFFFF">
 		<box>
-			<pen lineWidth="0.5" lineColor="#FFFFFF"/>
-			<topPen lineWidth="0.5" lineColor="#FFFFFF"/>
-			<leftPen lineWidth="0.5" lineColor="#FFFFFF"/>
-			<bottomPen lineWidth="0.5" lineColor="#FFFFFF"/>
-			<rightPen lineWidth="0.5" lineColor="#FFFFFF"/>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
 		</box>
 	</style>
 	<style name="Crosstab 4_CH" mode="Opaque" backcolor="#F0F8FF">
 		<box>
-			<pen lineWidth="0.0" lineColor="#FFFFFF"/>
-			<topPen lineWidth="0.0" lineColor="#FFFFFF"/>
-			<leftPen lineWidth="0.0" lineColor="#FFFFFF"/>
-			<bottomPen lineWidth="0.0" lineColor="#FFFFFF"/>
-			<rightPen lineWidth="0.0" lineColor="#FFFFFF"/>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
 		</box>
 	</style>
 	<style name="Crosstab 4_CG" mode="Opaque" backcolor="#BFE1FF">
 		<box>
-			<pen lineWidth="0.0" lineColor="#FFFFFF"/>
-			<topPen lineWidth="0.0" lineColor="#FFFFFF"/>
-			<leftPen lineWidth="0.0" lineColor="#FFFFFF"/>
-			<bottomPen lineWidth="0.0" lineColor="#FFFFFF"/>
-			<rightPen lineWidth="0.0" lineColor="#FFFFFF"/>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
 		</box>
 	</style>
 	<style name="Crosstab 4_CT" mode="Opaque" backcolor="#005FB3">
 		<box>
-			<pen lineWidth="0.0" lineColor="#FFFFFF"/>
-			<topPen lineWidth="0.0" lineColor="#FFFFFF"/>
-			<leftPen lineWidth="0.0" lineColor="#FFFFFF"/>
-			<bottomPen lineWidth="0.0" lineColor="#FFFFFF"/>
-			<rightPen lineWidth="0.0" lineColor="#FFFFFF"/>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
 		</box>
 	</style>
 	<style name="Crosstab 4_CD" mode="Opaque" backcolor="#FFFFFF">
 		<box>
-			<pen lineWidth="0.0" lineColor="#FFFFFF"/>
-			<topPen lineWidth="0.0" lineColor="#FFFFFF"/>
-			<leftPen lineWidth="0.0" lineColor="#FFFFFF"/>
-			<bottomPen lineWidth="0.0" lineColor="#FFFFFF"/>
-			<rightPen lineWidth="0.0" lineColor="#FFFFFF"/>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
 		</box>
 	</style>
 	<style name="Crosstab 5_CH" mode="Opaque" backcolor="#F0F8FF">
@@ -443,565 +282,818 @@
 			<rightPen lineWidth="0.5" lineColor="#000000"/>
 		</box>
 	</style>
-	<subDataset name="DatasetMatiereMoyene" uuid="657417f4-ab87-48f5-8c9d-d69f4e5ddc27">
-		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<style name="Crosstab 7_CH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Crosstab 7_CG" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Crosstab 7_CT" mode="Opaque" backcolor="#005FB3">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Crosstab 7_CD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Crosstab 8_CH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Crosstab 8_CG" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Crosstab 8_CT" mode="Opaque" backcolor="#005FB3">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Crosstab 8_CD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Crosstab 9_CH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Crosstab 9_CG" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Crosstab 9_CT" mode="Opaque" backcolor="#005FB3">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Crosstab 9_CD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Crosstab 10_CH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Crosstab 10_CG" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Crosstab 10_CT" mode="Opaque" backcolor="#005FB3">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Crosstab 10_CD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Crosstab 11_CH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Crosstab 11_CG" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Crosstab 11_CT" mode="Opaque" backcolor="#005FB3">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Crosstab 11_CD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Crosstab 12_CH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Crosstab 12_CG" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Crosstab 12_CT" mode="Opaque" backcolor="#005FB3">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Crosstab 12_CD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Crosstab 13_CH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Crosstab 13_CG" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Crosstab 13_CT" mode="Opaque" backcolor="#005FB3">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Crosstab 13_CD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Dataset1" uuid="25d9fb08-76e4-4bee-a3b7-5eaa392f3a41">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ecolevieDB"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 		<queryString>
-			<![CDATA[]]>
+			<![CDATA[select * from test_matrice]]>
 		</queryString>
-		<field name="libelleMatiere" class="java.lang.String"/>
-		<field name="moyMatiere" class="java.lang.Double"/>
-		<field name="matricule" class="java.lang.String"/>
-		<field name="numOrdre" class="java.lang.Integer"/>
-		<sortField name="numOrdre"/>
-		<sortField name="libelleMatiere"/>
+		<field name="nom" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="nom"/>
+			<property name="com.jaspersoft.studio.field.label" value="nom"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="test_matrice"/>
+		</field>
+		<field name="prenoms" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="prenoms"/>
+			<property name="com.jaspersoft.studio.field.label" value="prenoms"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="test_matrice"/>
+		</field>
+		<field name="matricule" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="matricule"/>
+			<property name="com.jaspersoft.studio.field.label" value="matricule"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="test_matrice"/>
+		</field>
+		<field name="rang" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.name" value="rang"/>
+			<property name="com.jaspersoft.studio.field.label" value="rang"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="test_matrice"/>
+		</field>
+		<field name="appreciation" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="appreciation"/>
+			<property name="com.jaspersoft.studio.field.label" value="appreciation"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="test_matrice"/>
+		</field>
+		<field name="matiere" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="matiere"/>
+			<property name="com.jaspersoft.studio.field.label" value="matiere"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="test_matrice"/>
+		</field>
+		<field name="moyenne" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="moyenne"/>
+			<property name="com.jaspersoft.studio.field.label" value="moyenne"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="test_matrice"/>
+		</field>
 	</subDataset>
-	<subDataset name="DatasetTitre" uuid="c0684bda-1190-40f2-9456-2a4addc45b08">
-		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
-		<queryString>
-			<![CDATA[]]>
-		</queryString>
-		<field name="libelleMatiere" class="java.lang.String"/>
-		<field name="titre" class="java.lang.Double"/>
-		<field name="ecoleId" class="java.lang.String"/>
-		<field name="numOrdre" class="java.lang.Integer"/>
-		<sortField name="numOrdre"/>
-		<sortField name="libelleMatiere"/>
-	</subDataset>
-	<queryString>
-		<![CDATA[]]>
+	<parameter name="idEcole" class="java.lang.Long"/>
+	<parameter name="classe" class="java.lang.String"/>
+	<parameter name="periode" class="java.lang.String"/>
+	<parameter name="annee" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[select v.* from ve_matrice_classe2 v 
+where v.id_ecole= $P{idEcole}  and v.anneScolaire= $P{annee}  and v.periode= $P{periode} and v.classe=  $P{classe} 
+ order by v.nom ,v.prenoms,v.numOrdre]]>
 	</queryString>
-	<field name="matricule" class="java.lang.String"/>
-	<field name="nom" class="java.lang.String"/>
-	<field name="prenoms" class="java.lang.String"/>
-	<field name="rang" class="java.lang.Integer"/>
-	<field name="appreciation" class="java.lang.String"/>
-	<field name="matiereMoyenneDto" class="java.util.List"/>
-	<field name="anneScolaire" class="java.lang.String"/>
-	<field name="periode" class="java.lang.String"/>
-	<field name="ideleve" class="java.lang.Long"/>
-	<field name="moyenTrimes" class="java.lang.Double"/>
-	<field name="matiereTitreDto" class="java.util.List"/>
-	<field name="classe" class="java.lang.String"/>
-	<variable name="comp" class="java.lang.Integer" calculation="DistinctCount">
-		<variableExpression><![CDATA[$V{comp}]]></variableExpression>
-	</variable>
-	<group name="Groupe1">
-		<groupExpression><![CDATA[$F{matiereMoyenneDto}]]></groupExpression>
-		<groupHeader>
-			<band height="20">
-				<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
-				<frame>
-					<reportElement x="-8" y="0" width="823" height="20" uuid="6271be23-f5b7-4a17-be5f-70f2ee7b8161">
-						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
-						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
-						<property name="com.jaspersoft.layout.grid.y" value="0"/>
-						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-					</reportElement>
-					<box>
-						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
-					<textField isBlankWhenNull="true">
-						<reportElement x="0" y="0" width="14" height="20" uuid="4b5f844a-ed4b-4a02-b268-c22bf044ef1e">
-							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
-							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
-							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-							<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-							<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-							<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-							<property name="com.jaspersoft.studio.unit.width" value="px"/>
-							<property name="com.jaspersoft.studio.unit.height" value="px"/>
-						</reportElement>
-						<box>
-							<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-							<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-						</box>
-						<textElement textAlignment="Center" verticalAlignment="Middle">
-							<font fontName="SansSerif" size="7"/>
-						</textElement>
-						<textFieldExpression><![CDATA[$V{REPORT_COUNT}+1]]></textFieldExpression>
-					</textField>
-					<textField textAdjust="ScaleFont">
-						<reportElement x="14" y="0" width="40" height="20" uuid="8cfabd84-473b-469b-bd7d-007077e25f2c">
-							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
-							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
-							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-							<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-							<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-							<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-							<property name="com.jaspersoft.studio.unit.width" value="px"/>
-							<property name="com.jaspersoft.studio.unit.height" value="px"/>
-						</reportElement>
-						<box>
-							<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-							<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-						</box>
-						<textElement textAlignment="Center" verticalAlignment="Middle">
-							<font fontName="SansSerif" size="7"/>
-						</textElement>
-						<textFieldExpression><![CDATA[$F{matricule}]]></textFieldExpression>
-					</textField>
-					<textField textAdjust="ScaleFont">
-						<reportElement x="54" y="0" width="45" height="20" uuid="c2579a28-2258-4b81-a4bc-c5b67e92756d">
-							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
-							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
-							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-							<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-							<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-							<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-							<property name="com.jaspersoft.studio.unit.width" value="px"/>
-							<property name="com.jaspersoft.studio.unit.height" value="px"/>
-							<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
-						</reportElement>
-						<box>
-							<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-							<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-						</box>
-						<textElement textAlignment="Left" verticalAlignment="Middle">
-							<font fontName="SansSerif" size="7"/>
-							<paragraph leftIndent="5"/>
-						</textElement>
-						<textFieldExpression><![CDATA[$F{nom}]]></textFieldExpression>
-					</textField>
-					<textField textAdjust="ScaleFont">
-						<reportElement x="99" y="0" width="50" height="20" uuid="f1c5ab99-828e-4910-838b-d76a24881b66">
-							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
-							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
-							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-							<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-							<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-							<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-							<property name="com.jaspersoft.studio.unit.height" value="px"/>
-							<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
-							<property name="com.jaspersoft.studio.unit.width" value="px"/>
-						</reportElement>
-						<box>
-							<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-							<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-						</box>
-						<textElement textAlignment="Left" verticalAlignment="Middle">
-							<font fontName="SansSerif" size="7"/>
-							<paragraph leftIndent="5"/>
-						</textElement>
-						<textFieldExpression><![CDATA[$F{prenoms}]]></textFieldExpression>
-					</textField>
-					<frame>
-						<reportElement x="149" y="0" width="531" height="20" uuid="5e78348d-5aee-4ca4-bcea-a767112803c8">
-							<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-							<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-							<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
-							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
-							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
-							<property name="com.jaspersoft.studio.unit.x" value="px"/>
-						</reportElement>
-						<crosstab>
-							<reportElement x="0" y="0" width="531" height="20" isPrintInFirstWholeBand="true" uuid="9492530b-666e-4974-838a-37537f3e41bb">
-								<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
-								<property name="com.jaspersoft.studio.crosstab.style.header" value="Crosstab 6_CH"/>
-								<property name="com.jaspersoft.studio.crosstab.style.group" value="Crosstab 6_CG"/>
-								<property name="com.jaspersoft.studio.crosstab.style.total" value="Crosstab 6_CT"/>
-								<property name="com.jaspersoft.studio.crosstab.style.detail" value="Crosstab 6_CD"/>
-							</reportElement>
-							<crosstabDataset>
-								<dataset resetType="Report">
-									<datasetRun subDataset="DatasetMatiereMoyene" uuid="b75ba2c5-b9dc-4400-a474-d62bf51af592">
-										<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{matiereMoyenneDto})]]></dataSourceExpression>
-									</datasetRun>
-								</dataset>
-							</crosstabDataset>
-							<rowGroup name="matricule" width="0" totalPosition="End">
-								<bucket order="None" class="java.lang.String">
-									<bucketExpression><![CDATA[$F{matricule}]]></bucketExpression>
-								</bucket>
-								<crosstabRowHeader>
-									<cellContents mode="Opaque" style="Crosstab 6_CH">
-										<property name="com.jaspersoft.studio.unit.width" value="px"/>
-										<textField>
-											<reportElement x="0" y="0" width="0" height="20" uuid="1e4a4b82-3ec7-4447-a3cb-479645d1bd29"/>
-											<textFieldExpression><![CDATA[$V{matricule}]]></textFieldExpression>
-										</textField>
-									</cellContents>
-								</crosstabRowHeader>
-								<crosstabTotalRowHeader>
-									<cellContents mode="Opaque" style="Crosstab 6_CT">
-										<staticText>
-											<reportElement x="0" y="0" width="0" height="0" forecolor="#FFFFFF" uuid="dba49490-bb12-49ca-bc09-4cdcde05d2dc"/>
-											<text><![CDATA[Total matricule]]></text>
-										</staticText>
-									</cellContents>
-								</crosstabTotalRowHeader>
-							</rowGroup>
-							<columnGroup name="libelleMatiere" height="0" totalPosition="End">
-								<bucket order="None" class="java.lang.String">
-									<bucketExpression><![CDATA[$F{libelleMatiere}]]></bucketExpression>
-								</bucket>
-								<crosstabColumnHeader>
-									<cellContents mode="Opaque" style="Crosstab 6_CH">
-										<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
-										<property name="com.jaspersoft.studio.unit.height" value="px"/>
-									</cellContents>
-								</crosstabColumnHeader>
-								<crosstabTotalColumnHeader>
-									<cellContents mode="Opaque" style="Crosstab 6_CT">
-										<property name="com.jaspersoft.studio.unit.width" value="px"/>
-									</cellContents>
-								</crosstabTotalColumnHeader>
-							</columnGroup>
-							<measure name="moyMatiere_MEASURE" class="java.lang.Double">
-								<measureExpression><![CDATA[$F{moyMatiere}]]></measureExpression>
-							</measure>
-							<crosstabCell width="20" height="20">
-								<cellContents mode="Opaque" style="Crosstab 6_CD">
-									<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
-									<property name="com.jaspersoft.studio.unit.width" value="px"/>
-									<textField>
-										<reportElement x="0" y="0" width="20" height="20" uuid="1f993d6d-c688-448e-a0ce-622c87dc1261">
-											<property name="com.jaspersoft.layout.grid.x" value="-1"/>
-											<property name="com.jaspersoft.layout.grid.y" value="-1"/>
-											<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-											<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-											<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-											<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-											<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-											<property name="com.jaspersoft.studio.unit.width" value="px"/>
-										</reportElement>
-										<textElement textAlignment="Center" verticalAlignment="Middle">
-											<font size="7"/>
-										</textElement>
-										<textFieldExpression><![CDATA[$V{libelleMatiere}.equals("FRA")?new DecimalFormat("#.##").format(Double.valueOf($V{moyMatiere_MEASURE})):$V{moyMatiere_MEASURE}]]></textFieldExpression>
-									</textField>
-								</cellContents>
-							</crosstabCell>
-							<crosstabCell width="0" height="20" columnTotalGroup="libelleMatiere">
-								<cellContents mode="Opaque" style="Crosstab 6_CT"/>
-							</crosstabCell>
-							<crosstabCell width="20" height="0" rowTotalGroup="matricule">
-								<cellContents mode="Opaque" style="Crosstab 6_CT">
-									<property name="com.jaspersoft.studio.unit.height" value="px"/>
-								</cellContents>
-							</crosstabCell>
-							<crosstabCell width="0" height="0" rowTotalGroup="matricule" columnTotalGroup="libelleMatiere">
-								<cellContents mode="Opaque" style="Crosstab 6_CT"/>
-							</crosstabCell>
-						</crosstab>
-					</frame>
-					<textField textAdjust="ScaleFont">
-						<reportElement x="680" y="0" width="30" height="20" uuid="5f1845df-6c09-47af-910c-139b832242f0">
-							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
-							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
-							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-							<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-							<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-							<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-							<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
-						</reportElement>
-						<box>
-							<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-							<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-						</box>
-						<textElement textAlignment="Center" verticalAlignment="Middle">
-							<font size="7"/>
-							<paragraph leftIndent="5"/>
-						</textElement>
-						<textFieldExpression><![CDATA[$F{moyenTrimes}]]></textFieldExpression>
-					</textField>
-					<textField textAdjust="ScaleFont">
-						<reportElement x="710" y="0" width="20" height="20" uuid="57b470ac-fa45-4a3e-9b3f-dbf63de171c9">
-							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
-							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
-							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-							<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-							<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-							<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-							<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
-							<property name="com.jaspersoft.studio.unit.width" value="px"/>
-						</reportElement>
-						<box>
-							<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-							<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-						</box>
-						<textElement textAlignment="Center" verticalAlignment="Middle">
-							<font size="7"/>
-							<paragraph leftIndent="5"/>
-						</textElement>
-						<textFieldExpression><![CDATA[$F{rang}]]></textFieldExpression>
-					</textField>
-					<textField textAdjust="ScaleFont">
-						<reportElement x="730" y="0" width="55" height="20" uuid="36e77b51-046f-4199-ac8c-b4d2467f7243">
-							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
-							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
-							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-							<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-							<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-							<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-							<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
-						</reportElement>
-						<box>
-							<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-							<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-						</box>
-						<textElement verticalAlignment="Middle">
-							<font size="7"/>
-							<paragraph leftIndent="5"/>
-						</textElement>
-						<textFieldExpression><![CDATA[$F{appreciation}]]></textFieldExpression>
-					</textField>
-				</frame>
-			</band>
-		</groupHeader>
-	</group>
+	<field name="id_ecole" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="id_ecole"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_ecole"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="matrice_classetest"/>
+	</field>
+	<field name="nom_ecole" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nom_ecole"/>
+		<property name="com.jaspersoft.studio.field.label" value="nom_ecole"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="matrice_classetest"/>
+	</field>
+	<field name="matricule" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="matricule"/>
+		<property name="com.jaspersoft.studio.field.label" value="matricule"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="matrice_classetest"/>
+	</field>
+	<field name="nom" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nom"/>
+		<property name="com.jaspersoft.studio.field.label" value="nom"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="matrice_classetest"/>
+	</field>
+	<field name="prenoms" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="prenoms"/>
+		<property name="com.jaspersoft.studio.field.label" value="prenoms"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="matrice_classetest"/>
+	</field>
+	<field name="classe" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="classe"/>
+		<property name="com.jaspersoft.studio.field.label" value="classe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="matrice_classetest"/>
+	</field>
+	<field name="ordre_niveau" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="ordre_niveau"/>
+		<property name="com.jaspersoft.studio.field.label" value="ordre_niveau"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="matrice_classetest"/>
+	</field>
+	<field name="anneScolaire" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="anneScolaire"/>
+		<property name="com.jaspersoft.studio.field.label" value="anneScolaire"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="matrice_classetest"/>
+	</field>
+	<field name="periode" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="periode"/>
+		<property name="com.jaspersoft.studio.field.label" value="periode"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="matrice_classetest"/>
+	</field>
+	<field name="moyenTrimes" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="moyenTrimes"/>
+		<property name="com.jaspersoft.studio.field.label" value="moyenTrimes"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="matrice_classetest"/>
+	</field>
+	<field name="rang" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="rang"/>
+		<property name="com.jaspersoft.studio.field.label" value="rang"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="matrice_classetest"/>
+	</field>
+	<field name="appreciation" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="appreciation"/>
+		<property name="com.jaspersoft.studio.field.label" value="appreciation"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="matrice_classetest"/>
+	</field>
+	<field name="matiere" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="matiere"/>
+		<property name="com.jaspersoft.studio.field.label" value="matiere"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="matrice_classetest"/>
+	</field>
+	<field name="MoyMatiere" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="MoyMatiere"/>
+		<property name="com.jaspersoft.studio.field.label" value="MoyMatiere"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="matrice_classetest"/>
+	</field>
+	<field name="numOrdre" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="numOrdre"/>
+		<property name="com.jaspersoft.studio.field.label" value="numOrdre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="matrice_classetest"/>
+	</field>
+	<field name="AVGMoyMatiere" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="AVGMoyMatiere"/>
+		<property name="com.jaspersoft.studio.field.label" value="AVGMoyMatiere"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="matrice_classetest"/>
+	</field>
+	<group name="Groupe1"/>
 	<group name="Groupe2"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
-	<title>
-		<band height="49" splitType="Stretch">
-			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
+	<columnHeader>
+		<band height="50" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="802" height="49" uuid="1c2fd471-0601-41f9-a09b-3b23e7c84549"/>
+				<reportElement x="0" y="0" width="802" height="49" uuid="f5884ac8-307e-4ff1-b92f-4148409dab59"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="18"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Matrice classe  "+$F{classe}+"  pour le "+$F{periode}]]></textFieldExpression>
 			</textField>
 		</band>
-	</title>
-	<pageHeader>
-		<band height="20">
+	</columnHeader>
+	<summary>
+		<band height="100" splitType="Stretch">
 			<frame>
-				<reportElement x="-8" y="0" width="823" height="20" uuid="83ec129f-1d91-47bb-910d-18b0ec62a953">
+				<reportElement x="-14" y="10" width="830" height="40" uuid="8e2cb87e-aabf-4df0-9468-0cb403079450">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
 				</reportElement>
-				<box>
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<staticText>
-					<reportElement x="0" y="0" width="14" height="20" uuid="5dd4950f-7821-4863-ab77-827cf3f14e27">
-						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
-						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
-						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-						<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					</reportElement>
-					<box>
-						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="SansSerif" size="7"/>
-					</textElement>
-					<text><![CDATA[N°]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="14" y="0" width="40" height="20" uuid="19201d74-d824-4701-bd56-a5c10be908b7">
-						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
-						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
-						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-						<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					</reportElement>
-					<box>
-						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="SansSerif" size="7"/>
-					</textElement>
-					<text><![CDATA[Matricule]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="54" y="0" width="45" height="20" uuid="00398917-be4a-400d-a165-70a84f70d485">
-						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
-						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
-						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-						<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					</reportElement>
-					<box>
-						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="SansSerif" size="7"/>
-					</textElement>
-					<text><![CDATA[Nom]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="99" y="0" width="50" height="20" uuid="a2501a98-eca4-4034-92f7-50115a382cfd">
-						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
-						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
-						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-					</reportElement>
-					<box>
-						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="SansSerif" size="7"/>
-					</textElement>
-					<text><![CDATA[Prénoms]]></text>
-				</staticText>
 				<frame>
-					<reportElement x="149" y="0" width="531" height="20" uuid="4fdd67b3-780a-4639-80ef-0beb032ce752">
+					<reportElement x="140" y="0" width="590" height="40" uuid="0afcf9c2-c82d-4cef-a890-9c9c9475b5f0">
 						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
 						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
-						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.x" value="1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="0"/>
 						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
-						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
 					</reportElement>
+					<box>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					</box>
 					<crosstab>
-						<reportElement x="0" y="0" width="531" height="20" isPrintInFirstWholeBand="true" uuid="10981609-fb66-4647-a1e3-a1e4243ce568">
-							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
-							<property name="com.jaspersoft.studio.crosstab.style.header" value="Crosstab 6_CH"/>
-							<property name="com.jaspersoft.studio.crosstab.style.group" value="Crosstab 6_CG"/>
-							<property name="com.jaspersoft.studio.crosstab.style.total" value="Crosstab 6_CT"/>
-							<property name="com.jaspersoft.studio.crosstab.style.detail" value="Crosstab 6_CD"/>
+						<reportElement x="0" y="0" width="590" height="40" isPrintInFirstWholeBand="true" uuid="de108465-aad4-4e02-9682-f15fd790ced0">
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+							<property name="com.jaspersoft.studio.crosstab.style.header" value="Crosstab 9_CH"/>
+							<property name="com.jaspersoft.studio.crosstab.style.group" value="Crosstab 9_CG"/>
+							<property name="com.jaspersoft.studio.crosstab.style.total" value="Crosstab 9_CT"/>
+							<property name="com.jaspersoft.studio.crosstab.style.detail" value="Crosstab 9_CD"/>
+							<property name="com.jaspersoft.layout.grid.x" value="1"/>
+							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 						</reportElement>
-						<crosstabDataset>
-							<dataset resetType="Report">
-								<datasetRun subDataset="DatasetTitre" uuid="b0384d75-c9f4-4eab-be93-0c56a1af88f9">
-									<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{matiereTitreDto})]]></dataSourceExpression>
-								</datasetRun>
-							</dataset>
+						<crosstabDataset isDataPreSorted="true">
+							<dataset resetType="Report"/>
 						</crosstabDataset>
 						<rowGroup name="matricule" width="0" totalPosition="End">
-							<bucket order="None" class="java.lang.String">
-								<bucketExpression><![CDATA[$F{ecoleId}]]></bucketExpression>
+							<bucket class="java.lang.String">
+								<bucketExpression><![CDATA[$F{matricule}]]></bucketExpression>
 							</bucket>
 							<crosstabRowHeader>
-								<cellContents mode="Opaque" style="Crosstab 6_CH">
+								<cellContents mode="Opaque" style="Crosstab 9_CH">
 									<property name="com.jaspersoft.studio.unit.width" value="px"/>
+									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 									<textField>
-										<reportElement x="0" y="0" width="0" height="0" uuid="81d17ea0-3b3a-42fb-a2f7-5cd39bfd4d50"/>
+										<reportElement x="0" y="0" width="0" height="20" uuid="b6d06f40-1174-4e28-b4fc-2c90661e9cce"/>
+										<textElement>
+											<font size="7"/>
+										</textElement>
 										<textFieldExpression><![CDATA[$V{matricule}]]></textFieldExpression>
 									</textField>
 								</cellContents>
 							</crosstabRowHeader>
 							<crosstabTotalRowHeader>
-								<cellContents mode="Opaque" style="Crosstab 6_CT">
-									<staticText>
-										<reportElement x="0" y="0" width="0" height="0" forecolor="#FFFFFF" uuid="db3954e1-4d40-4a81-bfc3-6385518e7a5c"/>
-										<text><![CDATA[Total matricule]]></text>
-									</staticText>
-								</cellContents>
+								<cellContents mode="Opaque" style="Crosstab 9_CT"/>
 							</crosstabTotalRowHeader>
 						</rowGroup>
-						<columnGroup name="libelleMatiere" height="20" totalPosition="End">
-							<bucket order="None" class="java.lang.String">
-								<bucketExpression><![CDATA[$F{libelleMatiere}]]></bucketExpression>
+						<columnGroup name="matiere" height="20" totalPosition="End">
+							<bucket class="java.lang.String">
+								<bucketExpression><![CDATA[$F{matiere}]]></bucketExpression>
 							</bucket>
 							<crosstabColumnHeader>
-								<cellContents mode="Opaque" style="Crosstab 6_CH">
-									<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+								<cellContents mode="Opaque" style="Crosstab 9_CH">
+									<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
 									<textField textAdjust="ScaleFont">
-										<reportElement x="0" y="0" width="20" height="20" uuid="97f777e9-0e78-4b1a-ab3d-d0f1ff0ff451">
-											<property name="com.jaspersoft.layout.grid.x" value="-1"/>
-											<property name="com.jaspersoft.layout.grid.y" value="-1"/>
-											<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-											<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-											<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-											<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-											<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+										<reportElement x="0" y="0" width="25" height="20" uuid="6db31ce7-02ff-4102-855a-fd7c93bb85d4">
 											<property name="com.jaspersoft.studio.unit.width" value="px"/>
 										</reportElement>
-										<textElement textAlignment="Center" verticalAlignment="Middle">
-											<font size="7"/>
+										<textElement>
+											<font size="6"/>
 										</textElement>
-										<textFieldExpression><![CDATA[$V{libelleMatiere}]]></textFieldExpression>
+										<textFieldExpression><![CDATA[$V{matiere}]]></textFieldExpression>
 									</textField>
 								</cellContents>
 							</crosstabColumnHeader>
 							<crosstabTotalColumnHeader>
-								<cellContents mode="Opaque" style="Crosstab 6_CT">
+								<cellContents mode="Opaque" style="Crosstab 9_CT">
 									<property name="com.jaspersoft.studio.unit.width" value="px"/>
 								</cellContents>
 							</crosstabTotalColumnHeader>
 						</columnGroup>
-						<measure name="moyMatiere_MEASURE" class="java.lang.Double">
-							<measureExpression><![CDATA[$F{titre}]]></measureExpression>
+						<measure name="MoyMatiere_MEASURE" class="java.math.BigDecimal">
+							<measureExpression><![CDATA[$F{MoyMatiere}]]></measureExpression>
 						</measure>
-						<crosstabCell width="20" height="0">
-							<cellContents mode="Opaque" style="Crosstab 6_CD">
-								<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
-								<property name="com.jaspersoft.studio.unit.width" value="px"/>
-								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<crosstabCell width="25" height="20">
+							<cellContents mode="Opaque" style="Crosstab 9_CD">
+								<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+								<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+								<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+								<textField textAdjust="ScaleFont">
+									<reportElement x="0" y="0" width="25" height="20" uuid="a3a697cd-987f-47ba-9397-a7e4590f1b3b">
+										<property name="com.jaspersoft.studio.unit.width" value="px"/>
+									</reportElement>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font size="6"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$V{MoyMatiere_MEASURE}]]></textFieldExpression>
+								</textField>
 							</cellContents>
 						</crosstabCell>
-						<crosstabCell width="0" height="0" columnTotalGroup="libelleMatiere">
-							<cellContents mode="Opaque" style="Crosstab 6_CT"/>
+						<crosstabCell width="0" height="20" columnTotalGroup="matiere">
+							<cellContents mode="Opaque" style="Crosstab 9_CT"/>
 						</crosstabCell>
-						<crosstabCell width="20" height="0" rowTotalGroup="matricule">
-							<cellContents mode="Opaque" style="Crosstab 6_CT">
-								<property name="com.jaspersoft.studio.unit.height" value="px"/>
-							</cellContents>
+						<crosstabCell width="25" height="5" rowTotalGroup="matricule">
+							<cellContents mode="Opaque" style="Crosstab 9_CT"/>
 						</crosstabCell>
-						<crosstabCell width="0" height="0" rowTotalGroup="matricule" columnTotalGroup="libelleMatiere">
-							<cellContents mode="Opaque" style="Crosstab 6_CT"/>
+						<crosstabCell width="0" height="5" rowTotalGroup="matricule" columnTotalGroup="matiere">
+							<cellContents mode="Opaque" style="Crosstab 9_CT"/>
 						</crosstabCell>
 					</crosstab>
 				</frame>
-				<staticText>
-					<reportElement x="680" y="0" width="30" height="20" uuid="af6909a8-1bad-43e2-aa29-6b92e19cf6e7">
-						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
-						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+				<crosstab>
+					<reportElement x="0" y="0" width="140" height="40" uuid="67daa50c-6c5d-47be-b6cd-2d53584ea09e">
+						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+						<property name="com.jaspersoft.studio.crosstab.style.header" value="Crosstab 10_CH"/>
+						<property name="com.jaspersoft.studio.crosstab.style.group" value="Crosstab 10_CG"/>
+						<property name="com.jaspersoft.studio.crosstab.style.total" value="Crosstab 10_CT"/>
+						<property name="com.jaspersoft.studio.crosstab.style.detail" value="Crosstab 10_CD"/>
+						<property name="com.jaspersoft.layout.grid.x" value="0"/>
+						<property name="com.jaspersoft.layout.grid.y" value="0"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.components.autoresize.proportional" value="true"/>
+					</reportElement>
+					<crosstabDataset isDataPreSorted="true">
+						<dataset resetType="Report"/>
+					</crosstabDataset>
+					<crosstabHeaderCell>
+						<cellContents>
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+							<staticText>
+								<reportElement x="0" y="0" width="38" height="20" uuid="af21f0a5-0e82-458e-bbca-34da5bef87b8">
+									<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+									<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+								</reportElement>
+								<box>
+									<pen lineWidth="0.25"/>
+									<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+									<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<textElement>
+									<font size="6"/>
+								</textElement>
+								<text><![CDATA[Matricule]]></text>
+							</staticText>
+							<staticText>
+								<reportElement x="38" y="0" width="42" height="20" uuid="438b4c07-c8d7-4bc0-b2c4-f86209b41675">
+									<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+									<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+								</reportElement>
+								<box>
+									<pen lineWidth="0.25"/>
+									<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+									<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<textElement>
+									<font size="6"/>
+								</textElement>
+								<text><![CDATA[Nom]]></text>
+							</staticText>
+							<staticText>
+								<reportElement x="80" y="0" width="52" height="20" uuid="bb832c18-b08c-4770-b4c1-8eee28870de2">
+									<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+									<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+								</reportElement>
+								<box>
+									<pen lineWidth="0.25"/>
+									<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+									<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<textElement>
+									<font size="6"/>
+								</textElement>
+								<text><![CDATA[Prénom]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabHeaderCell>
+					<rowGroup name="matricule" width="38" totalPosition="End">
+						<bucket class="java.lang.String">
+							<bucketExpression><![CDATA[$F{matricule}]]></bucketExpression>
+						</bucket>
+						<crosstabRowHeader>
+							<cellContents mode="Opaque" style="Crosstab 10_CH">
+								<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+								<property name="com.jaspersoft.studio.unit.width" value="px"/>
+								<textField>
+									<reportElement x="0" y="0" width="38" height="20" uuid="3ba36241-7171-49fa-a459-8cf87fe1fd23">
+										<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+										<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+									</reportElement>
+									<textElement>
+										<font size="6"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$V{matricule}]]></textFieldExpression>
+								</textField>
+							</cellContents>
+						</crosstabRowHeader>
+						<crosstabTotalRowHeader>
+							<cellContents mode="Opaque" style="Crosstab 10_CT">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							</cellContents>
+						</crosstabTotalRowHeader>
+					</rowGroup>
+					<rowGroup name="nom" width="42" totalPosition="End">
+						<bucket class="java.lang.String">
+							<bucketExpression><![CDATA[$F{nom}]]></bucketExpression>
+						</bucket>
+						<crosstabRowHeader>
+							<cellContents mode="Opaque" style="Crosstab 10_CH">
+								<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+								<textField>
+									<reportElement x="0" y="0" width="42" height="20" uuid="da53bd35-a4fa-4f20-bad3-996eea1afdce">
+										<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+										<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+									</reportElement>
+									<textElement>
+										<font size="6"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$V{nom}]]></textFieldExpression>
+								</textField>
+							</cellContents>
+						</crosstabRowHeader>
+						<crosstabTotalRowHeader>
+							<cellContents mode="Opaque" style="Crosstab 10_CG">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							</cellContents>
+						</crosstabTotalRowHeader>
+					</rowGroup>
+					<rowGroup name="prenoms" width="54" totalPosition="End">
+						<bucket class="java.lang.String">
+							<bucketExpression><![CDATA[$F{prenoms}]]></bucketExpression>
+						</bucket>
+						<crosstabRowHeader>
+							<cellContents mode="Opaque" style="Crosstab 10_CH">
+								<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+								<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+								<textField>
+									<reportElement x="0" y="0" width="54" height="20" uuid="5a224d97-24af-472c-8753-89d57c5d8b50">
+										<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+										<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+										<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+										<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+									</reportElement>
+									<textElement>
+										<font size="6"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$V{prenoms}]]></textFieldExpression>
+								</textField>
+							</cellContents>
+						</crosstabRowHeader>
+						<crosstabTotalRowHeader>
+							<cellContents mode="Opaque" style="Crosstab 10_CG">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							</cellContents>
+						</crosstabTotalRowHeader>
+					</rowGroup>
+					<columnGroup name="id_ecole" height="20" mergeHeaderCells="true">
+						<bucket class="java.lang.String">
+							<bucketExpression><![CDATA[$F{id_ecole}]]></bucketExpression>
+						</bucket>
+						<crosstabColumnHeader>
+							<cellContents mode="Opaque" style="Crosstab 10_CH">
+								<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+								<property name="com.jaspersoft.studio.unit.width" value="px"/>
+								<textField>
+									<reportElement x="0" y="0" width="0" height="20" uuid="06e2c85c-2fc4-45ec-941b-a8be8ee260f0">
+										<property name="com.jaspersoft.studio.unit.width" value="px"/>
+									</reportElement>
+									<textElement>
+										<font size="6"/>
+									</textElement>
+									<textFieldExpression><![CDATA[""]]></textFieldExpression>
+								</textField>
+							</cellContents>
+						</crosstabColumnHeader>
+						<crosstabTotalColumnHeader>
+							<cellContents mode="Opaque" style="Crosstab 10_CT">
+								<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+								<property name="com.jaspersoft.studio.unit.width" value="px"/>
+								<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+							</cellContents>
+						</crosstabTotalColumnHeader>
+					</columnGroup>
+					<measure name="classe_MEASURE" class="java.lang.String">
+						<measureExpression><![CDATA[$F{classe}]]></measureExpression>
+					</measure>
+					<crosstabCell width="6" height="20">
+						<cellContents mode="Opaque" style="Crosstab 10_CD">
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+							<textField>
+								<reportElement x="0" y="0" width="1" height="20" uuid="675e9edc-b427-4ecc-9253-44b20985956b">
+									<property name="com.jaspersoft.studio.unit.width" value="px"/>
+								</reportElement>
+								<textFieldExpression><![CDATA[""]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell width="0" height="20" columnTotalGroup="id_ecole">
+						<cellContents mode="Opaque" style="Crosstab 10_CT"/>
+					</crosstabCell>
+					<crosstabCell width="6" height="0" rowTotalGroup="matricule">
+						<cellContents mode="Opaque" style="Crosstab 10_CT"/>
+					</crosstabCell>
+					<crosstabCell width="0" height="0" rowTotalGroup="matricule" columnTotalGroup="id_ecole">
+						<cellContents mode="Opaque" style="Crosstab 10_CT"/>
+					</crosstabCell>
+					<crosstabCell width="6" height="0" rowTotalGroup="nom">
+						<cellContents mode="Opaque" style="Crosstab 10_CG">
+							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell width="0" height="0" rowTotalGroup="nom" columnTotalGroup="id_ecole">
+						<cellContents mode="Opaque" style="Crosstab 10_CT"/>
+					</crosstabCell>
+					<crosstabCell width="6" height="0" rowTotalGroup="prenoms">
+						<cellContents mode="Opaque" style="Crosstab 10_CG">
+							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell width="0" height="0" rowTotalGroup="prenoms" columnTotalGroup="id_ecole">
+						<cellContents mode="Opaque" style="Crosstab 10_CT">
+							<textField>
+								<reportElement x="0" y="0" width="0" height="0" forecolor="#FFFFFF" uuid="161e993b-a0ca-44e8-80d0-08fef4a7fbce"/>
+								<textFieldExpression><![CDATA[$V{classe_MEASURE}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabCell>
+				</crosstab>
+				<crosstab>
+					<reportElement x="730" y="0" width="100" height="40" uuid="bf388bf4-9649-4cb9-a7a8-1b90e99cdca1">
+						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
+						<property name="com.jaspersoft.studio.crosstab.style.header" value="Crosstab 11_CH"/>
+						<property name="com.jaspersoft.studio.crosstab.style.group" value="Crosstab 11_CG"/>
+						<property name="com.jaspersoft.studio.crosstab.style.total" value="Crosstab 11_CT"/>
+						<property name="com.jaspersoft.studio.crosstab.style.detail" value="Crosstab 11_CD"/>
+						<property name="com.jaspersoft.layout.grid.x" value="2"/>
+						<property name="com.jaspersoft.layout.grid.y" value="0"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
 						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
 						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
@@ -1009,84 +1101,314 @@
 						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
-					<box>
-						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
-					<textElement verticalAlignment="Middle">
-						<font size="7"/>
-					</textElement>
-					<text><![CDATA[Moyenne]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="710" y="0" width="20" height="20" uuid="6aadc30c-41d1-420a-baac-b76ad329040a">
-						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
-						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
-						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-						<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					</reportElement>
-					<box>
-						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
-					<textElement verticalAlignment="Middle">
-						<font size="7"/>
-					</textElement>
-					<text><![CDATA[Rang]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="730" y="0" width="55" height="20" uuid="a1746fa0-38f2-4ae1-bf70-37e455af89ec">
-						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
-						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
-						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-						<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					</reportElement>
-					<box>
-						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
-					<textElement verticalAlignment="Middle">
-						<font size="7"/>
-					</textElement>
-					<text><![CDATA[Appréciation]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="785" y="0" width="38" height="20" uuid="b78fef1f-83da-44dc-bb6d-af579267e973">
-						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
-						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
-						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
-						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
-						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
-						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
-						<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					</reportElement>
-					<box>
-						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
-					<textElement verticalAlignment="Middle">
-						<font size="7"/>
-					</textElement>
-					<text><![CDATA[Signature]]></text>
-				</staticText>
+					<crosstabDataset isDataPreSorted="true">
+						<dataset resetType="Report"/>
+					</crosstabDataset>
+					<crosstabHeaderCell>
+						<cellContents>
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+							<staticText>
+								<reportElement x="0" y="0" width="20" height="20" uuid="b2afd8cc-bdd9-45bb-a10a-a7ee4be3a42c">
+									<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+									<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+								</reportElement>
+								<box>
+									<pen lineWidth="0.25"/>
+									<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+									<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="6"/>
+								</textElement>
+								<text><![CDATA[MG]]></text>
+							</staticText>
+							<staticText>
+								<reportElement x="20" y="0" width="20" height="20" uuid="781f21c3-79d4-4ddd-ae02-87be0b435470">
+									<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+									<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+								</reportElement>
+								<box>
+									<pen lineWidth="0.25"/>
+									<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+									<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<textElement>
+									<font size="6"/>
+								</textElement>
+								<text><![CDATA[Rang]]></text>
+							</staticText>
+							<staticText>
+								<reportElement x="40" y="0" width="30" height="20" uuid="bf203431-ab7f-4bf3-9ac9-7ab2307a6110"/>
+								<box>
+									<pen lineWidth="0.25"/>
+									<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+									<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<textElement>
+									<font size="6"/>
+								</textElement>
+								<text><![CDATA[Appréc.]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabHeaderCell>
+					<rowGroup name="moyenTrimes" width="20" totalPosition="End">
+						<bucket class="java.math.BigDecimal">
+							<bucketExpression><![CDATA[$F{moyenTrimes}]]></bucketExpression>
+						</bucket>
+						<crosstabRowHeader>
+							<cellContents mode="Opaque" style="Crosstab 11_CH">
+								<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+								<textField textAdjust="ScaleFont">
+									<reportElement x="0" y="0" width="20" height="20" uuid="4d134991-717b-4d6d-9451-7598c354c6c9">
+										<property name="com.jaspersoft.studio.unit.width" value="px"/>
+									</reportElement>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font size="6"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$V{moyenTrimes}]]></textFieldExpression>
+								</textField>
+							</cellContents>
+						</crosstabRowHeader>
+						<crosstabTotalRowHeader>
+							<cellContents mode="Opaque" style="Crosstab 11_CT">
+								<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							</cellContents>
+						</crosstabTotalRowHeader>
+					</rowGroup>
+					<rowGroup name="rang" width="20" totalPosition="End">
+						<bucket class="java.lang.Integer">
+							<bucketExpression><![CDATA[$F{rang}]]></bucketExpression>
+						</bucket>
+						<crosstabRowHeader>
+							<cellContents mode="Opaque" style="Crosstab 11_CH">
+								<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+								<textField textAdjust="ScaleFont">
+									<reportElement x="0" y="0" width="20" height="20" uuid="59478427-dc5d-4c7e-92f7-1246e68245d9">
+										<property name="com.jaspersoft.studio.unit.width" value="px"/>
+									</reportElement>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font size="6"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$V{rang}]]></textFieldExpression>
+								</textField>
+							</cellContents>
+						</crosstabRowHeader>
+						<crosstabTotalRowHeader>
+							<cellContents mode="Opaque" style="Crosstab 11_CG">
+								<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							</cellContents>
+						</crosstabTotalRowHeader>
+					</rowGroup>
+					<rowGroup name="appreciation" width="30" totalPosition="End">
+						<bucket class="java.lang.String">
+							<bucketExpression><![CDATA[$F{appreciation}]]></bucketExpression>
+						</bucket>
+						<crosstabRowHeader>
+							<cellContents mode="Opaque" style="Crosstab 11_CH">
+								<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+								<textField textAdjust="ScaleFont">
+									<reportElement x="0" y="0" width="30" height="20" uuid="1aa94d85-a59e-4242-a002-2527c2e08d8a">
+										<property name="com.jaspersoft.studio.unit.width" value="px"/>
+									</reportElement>
+									<textElement textAlignment="Left" verticalAlignment="Middle">
+										<font size="6"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$V{appreciation}]]></textFieldExpression>
+								</textField>
+							</cellContents>
+						</crosstabRowHeader>
+						<crosstabTotalRowHeader>
+							<cellContents mode="Opaque" style="Crosstab 11_CG">
+								<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							</cellContents>
+						</crosstabTotalRowHeader>
+					</rowGroup>
+					<columnGroup name="id_ecole" height="20" totalPosition="End">
+						<bucket class="java.lang.String">
+							<bucketExpression><![CDATA[$F{id_ecole}]]></bucketExpression>
+						</bucket>
+						<crosstabColumnHeader>
+							<cellContents mode="Opaque" style="Crosstab 11_CH">
+								<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+								<property name="com.jaspersoft.studio.unit.width" value="px"/>
+								<textField>
+									<reportElement x="0" y="0" width="1" height="20" uuid="565aaf47-fdfb-4294-8098-b92b7db6c3f2">
+										<property name="com.jaspersoft.studio.unit.width" value="px"/>
+									</reportElement>
+									<textElement>
+										<font size="6"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$V{id_ecole}]]></textFieldExpression>
+								</textField>
+							</cellContents>
+						</crosstabColumnHeader>
+						<crosstabTotalColumnHeader>
+							<cellContents mode="Opaque" style="Crosstab 11_CT">
+								<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+								<staticText>
+									<reportElement x="0" y="0" width="29" height="20" forecolor="#FFFFFF" uuid="50dbec74-9ebc-48ec-a07c-c64f46f39684">
+										<property name="com.jaspersoft.studio.unit.width" value="px"/>
+									</reportElement>
+									<textElement>
+										<font size="6"/>
+									</textElement>
+									<text><![CDATA[Signature]]></text>
+								</staticText>
+							</cellContents>
+						</crosstabTotalColumnHeader>
+					</columnGroup>
+					<measure name="id_ecole_MEASURE" class="java.lang.String">
+						<measureExpression><![CDATA[$F{id_ecole}]]></measureExpression>
+					</measure>
+					<crosstabCell width="1" height="20">
+						<cellContents mode="Opaque" style="Crosstab 11_CD">
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+							<textField>
+								<reportElement x="0" y="0" width="1" height="20" uuid="de4f0e7b-94d5-4eae-b8f6-23895d393a80">
+									<property name="com.jaspersoft.studio.unit.width" value="px"/>
+								</reportElement>
+								<textFieldExpression><![CDATA[$V{id_ecole_MEASURE}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell width="29" height="20" columnTotalGroup="id_ecole">
+						<cellContents backcolor="#FFFFFF" mode="Opaque" style="Crosstab 11_CT">
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell width="1" height="0" rowTotalGroup="moyenTrimes">
+						<cellContents mode="Opaque" style="Crosstab 11_CT"/>
+					</crosstabCell>
+					<crosstabCell width="29" height="0" rowTotalGroup="moyenTrimes" columnTotalGroup="id_ecole">
+						<cellContents mode="Opaque" style="Crosstab 11_CT"/>
+					</crosstabCell>
+					<crosstabCell width="1" height="0" rowTotalGroup="rang">
+						<cellContents mode="Opaque" style="Crosstab 11_CG"/>
+					</crosstabCell>
+					<crosstabCell width="29" height="0" rowTotalGroup="rang" columnTotalGroup="id_ecole">
+						<cellContents mode="Opaque" style="Crosstab 11_CT"/>
+					</crosstabCell>
+					<crosstabCell width="1" height="0" rowTotalGroup="appreciation">
+						<cellContents mode="Opaque" style="Crosstab 11_CG"/>
+					</crosstabCell>
+					<crosstabCell width="29" height="0" rowTotalGroup="appreciation" columnTotalGroup="id_ecole">
+						<cellContents mode="Opaque" style="Crosstab 11_CT"/>
+					</crosstabCell>
+				</crosstab>
 			</frame>
+			<crosstab>
+				<reportElement positionType="Float" x="60" y="60" width="721" height="40" isPrintInFirstWholeBand="true" uuid="73646f81-e178-4886-abfe-add9ef540020">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
+					<property name="com.jaspersoft.studio.crosstab.style.header" value="Crosstab 13_CH"/>
+					<property name="com.jaspersoft.studio.crosstab.style.group" value="Crosstab 13_CG"/>
+					<property name="com.jaspersoft.studio.crosstab.style.total" value="Crosstab 13_CT"/>
+					<property name="com.jaspersoft.studio.crosstab.style.detail" value="Crosstab 13_CD"/>
+					<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+					<property name="com.jaspersoft.layout.grid.y" value="1"/>
+					<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+					<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+					<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+					<property name="com.jaspersoft.layout.grid.colspan" value="3"/>
+					<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+				</reportElement>
+				<crosstabDataset isDataPreSorted="true">
+					<dataset resetType="Report"/>
+				</crosstabDataset>
+				<rowGroup name="id_ecole" width="30" totalPosition="End">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{id_ecole}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents mode="Opaque" style="Crosstab 13_CH">
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+							<textField>
+								<reportElement x="0" y="0" width="30" height="20" uuid="27aeac13-34c1-4efd-920e-443a09e4c44e"/>
+								<textElement>
+									<font size="6"/>
+								</textElement>
+								<textFieldExpression><![CDATA["Bilan"]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents mode="Opaque" style="Crosstab 13_CT"/>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<columnGroup name="matiere" height="20" totalPosition="End">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{matiere}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents mode="Opaque" style="Crosstab 13_CH">
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+							<textField textAdjust="ScaleFont">
+								<reportElement x="0" y="0" width="25" height="20" uuid="750d9311-b1d4-4633-936e-bcc8ecbdfeb5">
+									<property name="com.jaspersoft.studio.unit.width" value="px"/>
+								</reportElement>
+								<textElement>
+									<font size="6"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{matiere}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents mode="Opaque" style="Crosstab 13_CT">
+							<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						</cellContents>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<measure name="AVGMoyMatiere_MEASURE" class="java.math.BigDecimal">
+					<measureExpression><![CDATA[$F{AVGMoyMatiere}]]></measureExpression>
+				</measure>
+				<crosstabCell width="30" height="20">
+					<cellContents mode="Opaque" style="Crosstab 13_CD">
+						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+						<textField textAdjust="ScaleFont">
+							<reportElement x="0" y="0" width="30" height="20" uuid="05de14a0-0892-4919-a47c-81a5023a4519">
+								<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+							</reportElement>
+							<textElement>
+								<font size="6"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{AVGMoyMatiere_MEASURE}]]></textFieldExpression>
+							<patternExpression><![CDATA["#.##"]]></patternExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="0" height="20" columnTotalGroup="matiere">
+					<cellContents mode="Opaque" style="Crosstab 13_CT">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="30" height="0" rowTotalGroup="id_ecole">
+					<cellContents mode="Opaque" style="Crosstab 13_CT">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="0" height="0" rowTotalGroup="id_ecole" columnTotalGroup="matiere">
+					<cellContents mode="Opaque" style="Crosstab 13_CT"/>
+				</crosstabCell>
+			</crosstab>
 		</band>
-	</pageHeader>
+	</summary>
 </jasperReport>

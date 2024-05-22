@@ -331,7 +331,7 @@ System.out.println("Statut0 "+lisImpo.get(i).getStatut());
    public eleve   CreerUnEleve(EleveDto eleveDto) {
     eleve myeleve = new eleve() ;
     try {
-
+System.out.println("Soumm>>>>>");
         myeleve= (eleve) em.createQuery("select o from eleve o  where o.eleve_matricule =:matricule " )
                 .setParameter("matricule", eleveDto.getElevematricule_national()).getSingleResult() ;
         System.out.println(eleveDto.getElevematricule_national());
@@ -361,7 +361,7 @@ System.out.println("Statut0 "+lisImpo.get(i).getStatut());
            myElev.setElevedate_naissance(eleveDto.getElevedate_naissance());
            myElev.setElevedate_etabli_extrait_naiss(eleveDto.getElevedate_etabli_extrait_naiss());
            myElev.setElevelieu_etabliss_etrait_naissance(eleveDto.getElevelieu_etabliss_etrait_naissance());
-           myElev.setParents(parentsList);
+         
            myElev.setEleve_sexe(eleveDto.getEleveSexe());
            myElev.setEleveadresse(eleveDto.getEleveadresse());
            myElev.setEleve_matricule(eleveDto.getElevematricule_national());
@@ -436,7 +436,7 @@ tenant mytenant= tenant.findById(code) ;
        entity.setElevelieu_naissance(elev.getElevelieu_naissance());
        entity.setElevenom(elev.getElevenom());
        entity.setEleve_sexe(elev.getEleveSexe());
-       entity.setParents(parentsList);
+       
        entity.setEleve_matricule(elev.getElevematricule_national());
        entity.setEleveprenom(elev.getEleveprenom());
         return  entity;

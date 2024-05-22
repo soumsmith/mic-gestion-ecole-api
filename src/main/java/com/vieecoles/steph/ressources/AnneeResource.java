@@ -72,6 +72,22 @@ public class AnneeResource {
 	}
 	
 	@GET
+	@Path("/list-to-ecole-dto")
+	@Operation(description = "Obtenir la liste des années pour une école dto et l année centrale", summary = "")
+	@Tag(name = "Année scolaire")
+	public Response listCentralDto(@QueryParam("ecole") Long ecoleId) {
+		return Response.ok().entity(anneeService.getListByEcoleDto(ecoleId)).build();
+	}
+	
+	@GET
+	@Path("/list-ouverte-to-ecole-dto")
+	@Operation(description = "Obtenir l année ouverte pour une école dto et l année centrale", summary = "")
+	@Tag(name = "Année scolaire")
+	public Response listCentralOuvertDto(@QueryParam("ecole") Long ecoleId) {
+		return Response.ok().entity(anneeService.getOpenAnneeByEcoleDto(ecoleId)).build();
+	}
+	
+	@GET
 	@Path("/list-opened-or-closed-to-ecole")
 	@Operation(description = "Obtenir la liste des années centrales au moins ouvertes pour une école", summary = "")
 	@Tag(name = "Année scolaire")

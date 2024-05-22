@@ -83,6 +83,8 @@ public class Bulletin extends PanacheEntityBase{
 	private Double moyAn;
 	@Column(name = "rang_annuelle")
 	private String rangAn;
+	@Column(name = "appr_an")
+	private String apprAn;
 	@Column(name = "appreciation_conseil")
 	private String appreciation;
 	@Column(name = "date_creation")
@@ -141,13 +143,25 @@ public class Bulletin extends PanacheEntityBase{
 	private Double CoefFr;
 	@Column(name = "moy_coef_fr")
 	private Double moyCoefFr;
+	@Column(name = "moy_fr_intermediate")
+	private Double moyFrIntermediaire;
 	@Column(name = "appr_fr")
 	private String appreciationFr;
+	@Column(name = "rang_fr")
+	private Integer rangFr;
+	@Column(name = "moy_an_fr")
+	private Double moyFrAn;
+	@Column(name = "rang_an_fr")
+	private Integer rangFrAn;
+	@Column(name = "appr_fr_an")
+	private String appreciationFrAn;
 	@Column(name = "moy_reli")
 	private Double moyReli;
 	@Column(name = "appr_reli")
 	private String appreciationReli;
 	@Column(name = "url_photo")
 	private String urlPhoto;
+	@Column(name = "niveau_enseignement_id")
+	private Long niveauEnseignementId;
 
 }
