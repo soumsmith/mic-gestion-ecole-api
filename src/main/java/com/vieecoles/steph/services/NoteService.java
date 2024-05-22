@@ -475,6 +475,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			Periode periodeCtrl = Periode.findById(Long.parseLong(periodeId));
 			if (periodeCtrl != null) {
 				if (periodeCtrl.getIsfinal() != null && periodeCtrl.getIsfinal().equals(Constants.OUI)) {
+					System.out.println("CALCUL MOYENNE ANNUELLE");
 					try {
 						List<ClasseMatiere> classeMatList = ClasseMatiere.find("branche.id = ?1 and ecole.id =?2",
 								classe.getBranche().getId(), classe.getEcole().getId()).list();
@@ -1412,8 +1413,8 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				handleMoyenneAnnuelleEnsPrimaire(periodes,
 						Double.parseDouble(per.getCoef().equals("") ? "1" : finalPeriode.getCoef()), me,
 						bulletinsElevesList, moyAn, moyAnInterne, moyAnIEPP, moyAnPassage);
-			} else if (ecole.getNiveauEnseignement().getId() == Constants.NIVEAU_ENSEIGNEMENT_SECONDAIRE) {
-				logger.info("ENS SECONDAIRE");
+			} else  {
+				logger.info("ENS SECONDAIRE ET AUTRES");
 				infoCalcul = handleMoyenneAnnuelleEnsSecondaire(periodes,
 						Double.parseDouble(per.getCoef().equals("") ? "1" : finalPeriode.getCoef()), me,
 						bulletinsElevesList, moyAnFr);
@@ -1527,7 +1528,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				me.setRangAnFr(classeurAnnuelSuperFrList.indexOf(me.getMoyAnFr()) + 1);
 			}
 		}
-
+System.out.println("classeurAnuelleList size "+classeurAnnuelList.size()+" NULL INDEX = "+classeurAnnuelList.indexOf(null));
 		Collections.sort(classeurAnnuelList);
 		Collections.reverse(classeurAnnuelList);
 
