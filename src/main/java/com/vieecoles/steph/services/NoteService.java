@@ -475,7 +475,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			Periode periodeCtrl = Periode.findById(Long.parseLong(periodeId));
 			if (periodeCtrl != null) {
 				if (periodeCtrl.getIsfinal() != null && periodeCtrl.getIsfinal().equals(Constants.OUI)) {
-					System.out.println("CALCUL MOYENNE ANNUELLE");
+//					System.out.println("CALCUL MOYENNE ANNUELLE");
 					try {
 						List<ClasseMatiere> classeMatList = ClasseMatiere.find("branche.id = ?1 and ecole.id =?2",
 								classe.getBranche().getId(), classe.getEcole().getId()).list();
