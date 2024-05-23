@@ -936,7 +936,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 
 				// Traitement cas des sous matières EMR
 				if (entry.getKey().getMatiereParent() != null && entry.getKey().getMatiereParent().getIsEMR() != null
-						&& entry.getKey().getMatiereParent().getIsEMR().equals(Constants.OUI) && false) {
+						&& entry.getKey().getMatiereParent().getIsEMR().equals(Constants.OUI)) {
 					CheckEMRCalculFlat = true;
 					if (diviserEMR == 0.0) {
 
