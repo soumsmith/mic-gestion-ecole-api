@@ -47,6 +47,8 @@ public class spiderRessource {
     IdentiteEtatService identiteEtatService ;
     @Inject
     resultatsServices resultatsServices ;
+    @Inject
+    resultatsServicesAnnuels resultatsServicesAnnuels ;
 
     @Inject
     EtatNominatifEnseignantServices etatNominatifEnseignantServices ;
@@ -68,6 +70,8 @@ public class spiderRessource {
     TransfertsServices transfertsServices ;
     @Inject
     MajorParClasseNiveauServices majorServices ;
+    @Inject
+    MajorParClasseNiveauServicesAnnuels majorServicesAnnuels ;
 
     @Inject
     EleveNonAffecteParClasseServices eleveNonAffecteParClasseServices ;
@@ -78,11 +82,19 @@ public class spiderRessource {
     @Inject
     resultatsRecapServices resultatsRecapServices ;
     @Inject
+    resultatsRecapServicesAnnuels resultatsRecapServicesAnnuels ;
+    @Inject
     resultatsNonAffecteServices resultatsNonAffecteServices ;
+    @Inject
+    resultatsNonAffecteServicesAnnuels resultatsNonAffecteServicesAnnuels ;
     @Inject
     resultatsRecapNonAffServices resultatsRecapNonAffServices ;
     @Inject
+    resultatsRecapNonAffServicesAnnuels resultatsRecapNonAffServicesAnnuels ;
+    @Inject
     resultatsRecapAffEtNonAffServices resultatsRecapAffEtNonAffServices ;
+    @Inject
+    resultatsRecapAffEtNonAffServicesAnnuels resultatsRecapAffEtNonAffServicesAnnuels ;
 
 
 
@@ -249,19 +261,25 @@ public class spiderRessource {
                                                  @PathParam("libelleTrimetre") String libelleTrimetre,@PathParam("anneeId") Long anneeId) throws Exception, JRException {
         InputStream myInpuStream ;
         /*myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/BulletinBean.jrxml");*/
-        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Spider_Book.jrxml");
+
 
         EmptyDto myIntro = new EmptyDto();
         myIntro.setIntro("INTRODUCTION");
          List<IdentiteEtatDto>  identiteEtatDto = new ArrayList<>() ;
         List<ResultatsElevesAffecteDto> resultatsElevesAffecteDto = new ArrayList<>() ;
+        List<ResultatsElevesAffecteDto> resultatsElevesAffecteAnnuelsDto = new ArrayList<>() ;
          List<RecapDesResultatsElevesAffecteDto> recapDesResultatsElevesAffecteDto= new ArrayList<>();
+        List<RecapDesResultatsElevesAffecteDto> recapDesResultatsElevesAffecteAnnuelsDto= new ArrayList<>();
           List<ResultatsElevesNonAffecteDto> resultatsElevesNonAffecteDto = new ArrayList<>();
+        List<ResultatsElevesNonAffecteDto> resultatsElevesNonAffecteAnnuelsDto = new ArrayList<>();
           List<RecapDesResultatsElevesNonAffecteDto> recapDesResultatsElevesNonAffecteDto = new ArrayList<>();
+        List<RecapDesResultatsElevesNonAffecteDto> recapDesResultatsElevesNonAffecteAnnuelsDto = new ArrayList<>();
           List<RecapResultatsElevesAffeEtNonAffDto> recapResultatsElevesAffeEtNonAffDto = new ArrayList<>();
+        List<RecapResultatsElevesAffeEtNonAffDto> recapResultatsElevesAffeEtNonAffAnnuelsDto = new ArrayList<>();
           List<eleveAffecteParClasseDto> eleveAffecteParClasseDto = new ArrayList<>();
           List<eleveNonAffecteParClasseDto> eleveNonAffecteParClasseDto = new ArrayList<>();
           List<MajorParClasseNiveauDto> majorParClasseNiveauDto = new ArrayList<>();
+        List<MajorParClasseNiveauDto> majorParClasseNiveauAnnuelsDto = new ArrayList<>();
           List<TransfertsDto>transfertsDto= new ArrayList<>() ;
           List<RepartitionEleveParAnNaissDto> repartitionEleveParAnNaissDto = new ArrayList<>() ;
           List<BoursierDto> boursierDto = new ArrayList<>() ;
@@ -276,93 +294,201 @@ public class spiderRessource {
        List<EmptyDto> introLis= new ArrayList<>() ;
         introLis.add(myIntro) ;
          spiderDto detailsBull= new spiderDto() ;
-
+         spiderAnnuelsDto detailsAnnuels= new spiderAnnuelsDto() ;
          ecole myScole= new ecole() ;
         myScole= ecole.findById(idEcole) ;
 
-        identiteEtatDto= identiteEtatService.getIdentiteDto(idEcole) ;
-        resultatsElevesAffecteDto= resultatsServices.CalculResultatsEleveAffecte(idEcole,libelleAnnee,libelleTrimetre) ;
-        System.out.println("FIN ResultatsEleveAffecte ");
-        recapDesResultatsElevesAffecteDto= resultatsRecapServices.RecapCalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre);
-        System.out.println("FIN RecapResultatsEleveAffecte ");
-        resultatsElevesNonAffecteDto = resultatsNonAffecteServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre);
-        System.out.println("FIN resultatsNonAffecte ");
-        recapDesResultatsElevesNonAffecteDto= resultatsRecapNonAffServices.RecapCalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre) ;
-        System.out.println("FIN resultatsRecapNonAff ");
-        recapResultatsElevesAffeEtNonAffDto = resultatsRecapAffEtNonAffServices.RecapCalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre) ;
-        System.out.println("FIN resultatsRecapAffEtNonAff ");
-        eleveAffecteParClasseDto= eleveAffecteParClasseServices.eleveAffecteParClasse(idEcole ,libelleAnnee,libelleTrimetre) ;
-        System.out.println("FIN eleveAffecteParClasse ");
-        eleveNonAffecteParClasseDto = eleveNonAffecteParClasseServices.eleveNonAffecteParClasse(idEcole ,libelleAnnee,libelleTrimetre);
-        System.out.println("FIN eleveNonAffecteParClasse ");
-        majorParClasseNiveauDto = majorServices.MajorParNiveauClasse(idEcole ,libelleAnnee,libelleTrimetre) ;
-        System.out.println("FIN major ");
-        transfertsDto= transfertsServices.transferts(idEcole) ;
-        System.out.println(" FIN transfert ");
-        repartitionEleveParAnNaissDto= repartitionElevParAnNaissServices.CalculRepartElevParAnnNaiss(idEcole ,libelleAnnee,libelleTrimetre);
-        System.out.println("FIN repartitionElevParAnNaiss ");
-        boursierDto = boursiersServices.boursier(idEcole ,libelleAnnee , libelleTrimetre);
-        System.out.println("FIN Boursier ");
-        effApprocheNive= approcheParNiveauParGenreServices.EffApprocheNiveauGenre(idEcole ,libelleAnnee , libelleTrimetre) ;
-        System.out.println("FIN approcheParNiveauParGenre ");
-        effApprocheNiveauGenreDto.add(effApprocheNive)   ;
-        m = effectifParLangueServices.getLangueVivante(idEcole,anneeId);
-        etatNominatifEnseignatDto = etatNominatifEnseignantServices.infosEtatNominEnseignant(idEcole ,anneeId) ;
-        effectifElevLangueVivante2Dto.add(m);
+        if(libelleTrimetre.equals("Troisième Trimestre")||libelleTrimetre.equals("Deuxième Semestre")) {
+            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Drena3/Spider_BookAnnuels.jrxml");
+            identiteEtatDto= identiteEtatService.getIdentiteDto(idEcole) ;
+            resultatsElevesAffecteDto= resultatsServices.CalculResultatsEleveAffecte(idEcole,libelleAnnee,libelleTrimetre) ;
+            resultatsElevesAffecteAnnuelsDto= resultatsServicesAnnuels.CalculResultatsEleveAffecte(idEcole,libelleAnnee,libelleTrimetre) ;
+            System.out.println("FIN ResultatsEleveAffecte ");
+            recapDesResultatsElevesAffecteDto= resultatsRecapServices.RecapCalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre);
+            recapDesResultatsElevesAffecteAnnuelsDto= resultatsRecapServicesAnnuels.RecapCalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre);
+            System.out.println("FIN RecapResultatsEleveAffecte ");
+            resultatsElevesNonAffecteDto = resultatsNonAffecteServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre);
+            resultatsElevesNonAffecteAnnuelsDto = resultatsNonAffecteServicesAnnuels.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre);
+            System.out.println("FIN resultatsNonAffecte ");
+            recapDesResultatsElevesNonAffecteDto= resultatsRecapNonAffServices.RecapCalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre) ;
+            recapDesResultatsElevesNonAffecteAnnuelsDto= resultatsRecapNonAffServicesAnnuels.RecapCalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre) ;
+            System.out.println("FIN resultatsRecapNonAff ");
+            recapResultatsElevesAffeEtNonAffDto = resultatsRecapAffEtNonAffServices.RecapCalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre) ;
+            recapResultatsElevesAffeEtNonAffAnnuelsDto = resultatsRecapAffEtNonAffServicesAnnuels.RecapCalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre) ;
+            System.out.println("FIN resultatsRecapAffEtNonAff ");
+            eleveAffecteParClasseDto= eleveAffecteParClasseServices.eleveAffecteParClasse(idEcole ,libelleAnnee,libelleTrimetre) ;
+            System.out.println("FIN eleveAffecteParClasse ");
+            eleveNonAffecteParClasseDto = eleveNonAffecteParClasseServices.eleveNonAffecteParClasse(idEcole ,libelleAnnee,libelleTrimetre);
+            System.out.println("FIN eleveNonAffecteParClasse ");
+            majorParClasseNiveauDto = majorServices.MajorParNiveauClasse(idEcole ,libelleAnnee,libelleTrimetre) ;
+            majorParClasseNiveauAnnuelsDto = majorServicesAnnuels.MajorParNiveauClasse(idEcole ,libelleAnnee,libelleTrimetre) ;
+
+            System.out.println("FIN major ");
+            transfertsDto= transfertsServices.transferts(idEcole) ;
+            System.out.println(" FIN transfert ");
+            repartitionEleveParAnNaissDto= repartitionElevParAnNaissServices.CalculRepartElevParAnnNaiss(idEcole ,libelleAnnee,libelleTrimetre);
+            System.out.println("FIN repartitionElevParAnNaiss ");
+            boursierDto = boursiersServices.boursier(idEcole ,libelleAnnee , libelleTrimetre);
+            System.out.println("FIN Boursier ");
+            effApprocheNive= approcheParNiveauParGenreServices.EffApprocheNiveauGenre(idEcole ,libelleAnnee , libelleTrimetre) ;
+            System.out.println("FIN approcheParNiveauParGenre ");
+            effApprocheNiveauGenreDto.add(effApprocheNive)   ;
+            m = effectifParLangueServices.getLangueVivante(idEcole,anneeId);
+            etatNominatifEnseignatDto = etatNominatifEnseignantServices.infosEtatNominEnseignant(idEcole ,anneeId) ;
+            effectifElevLangueVivante2Dto.add(m);
+
+            detailsAnnuels.setIdentiteEtatDto(identiteEtatDto);
+            detailsAnnuels.setResultatsElevesAffecteDto(resultatsElevesAffecteDto);
+            detailsAnnuels.setResultatsElevesAffecteAnnuelsDto(resultatsElevesAffecteAnnuelsDto);
+
+            detailsAnnuels.setIntro(introLis);
+            detailsAnnuels.setRecapDesResultatsElevesAffecteDto(recapDesResultatsElevesAffecteDto);
+            detailsAnnuels.setRecapDesResultatsElevesAffecteAnnuelsDto(recapDesResultatsElevesAffecteAnnuelsDto);
+
+            detailsAnnuels.setResultatsElevesNonAffecteDto(resultatsElevesNonAffecteDto);
+            detailsAnnuels.setResultatsElevesNonAffecteAnnuelsDto(resultatsElevesNonAffecteAnnuelsDto);
+
+            detailsAnnuels.setRecapDesResultatsElevesNonAffecteDto(recapDesResultatsElevesNonAffecteDto);
+            detailsAnnuels.setRecapDesResultatsElevesNonAffecteAnnuelsDto(recapDesResultatsElevesNonAffecteAnnuelsDto);
+
+            detailsAnnuels.setRecapResultatsElevesAffeEtNonAffDto(recapResultatsElevesAffeEtNonAffDto);
+            detailsAnnuels.setRecapResultatsElevesAffeEtNonAffAnnuelsDto(recapResultatsElevesAffeEtNonAffAnnuelsDto);
 
 
-        // Le reste de votre code après l'exécution parallèle
-        detailsBull.setIdentiteEtatDto(identiteEtatDto);
-        detailsBull.setResultatsElevesAffecteDto(resultatsElevesAffecteDto);
+            detailsAnnuels.setEleveAffecteParClasseDto(eleveAffecteParClasseDto);
+            detailsAnnuels.setEleveNonAffecteParClasseDto(eleveNonAffecteParClasseDto);
 
-        detailsBull.setIdentiteEtatDto(identiteEtatDto);
-        detailsBull.setResultatsElevesAffecteDto(resultatsElevesAffecteDto);
-        detailsBull.setIntro(introLis);
-        detailsBull.setRecapDesResultatsElevesAffecteDto(recapDesResultatsElevesAffecteDto);
-        detailsBull.setResultatsElevesNonAffecteDto(resultatsElevesNonAffecteDto);
-        detailsBull.setRecapDesResultatsElevesNonAffecteDto(recapDesResultatsElevesNonAffecteDto);
-        detailsBull.setRecapResultatsElevesAffeEtNonAffDto(recapResultatsElevesAffeEtNonAffDto);
-        detailsBull.setEleveAffecteParClasseDto(eleveAffecteParClasseDto);
-        detailsBull.setEleveNonAffecteParClasseDto(eleveNonAffecteParClasseDto);
-        detailsBull.setMajorParClasseNiveauDto(majorParClasseNiveauDto);
-        detailsBull.setTransfertsDto(transfertsDto);
-        detailsBull.setRepartitionEleveParAnNaissDto(repartitionEleveParAnNaissDto);
-        detailsBull.setBoursierDto(boursierDto);
-        detailsBull.setEffApprocheNiveauGenreDto(effApprocheNiveauGenreDto);
-        detailsBull.setEffectifElevLangueVivante2Dto(effectifElevLangueVivante2Dto);
-        detailsBull.setEtatNominatifEnseignatDto(etatNominatifEnseignatDto);
+            detailsAnnuels.setMajorParClasseNiveauDto(majorParClasseNiveauDto);
+            detailsAnnuels.setMajorParClasseNiveauAnnuelsDto(majorParClasseNiveauAnnuelsDto);
 
-      // System.out.print("soummm"+resultatsElevesAffecteDto.toString());
-        if(type.toUpperCase().equals("PDF")){
-            JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(Collections.singleton(detailsBull)) ;
-            JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
-             //JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");
-             Map<String, Object> map = new HashMap<>();
-             JasperPrint report = JasperFillManager.fillReport(compileReport, map, beanCollectionDataSource);
-    //to pdf ;
-      byte[] data =JasperExportManager.exportReportToPdf(report);
-      HttpHeaders headers= new HttpHeaders();
-      headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=RapportPouls.pdf");
-        return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.APPLICATION_PDF).body(data);
-    } else {
-        JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(Collections.singleton(detailsBull)) ;
-            JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
-       //   JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");
-        Map<String, Object> map = new HashMap<>();
-       // map.put("title", type);
-        JasperPrint report = JasperFillManager.fillReport(compileReport, map, beanCollectionDataSource);
-        JRDocxExporter exporter = new JRDocxExporter();
-        exporter.setExporterInput(new SimpleExporterInput(report));
-       // File exportReportFile = new File("profils" + ".docx");
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(baos));
-        exporter.exportReport();
-        byte[] data = baos.toByteArray() ;
-        HttpHeaders headers= new HttpHeaders();
-     // headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Rapport"+myScole.getEcoleclibelle()+".docx");
-            headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Rapport Pouls-Scolaire.docx");
-        return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.MULTIPART_FORM_DATA).body(data);
-    }
+            detailsAnnuels.setTransfertsDto(transfertsDto);
+            detailsAnnuels.setRepartitionEleveParAnNaissDto(repartitionEleveParAnNaissDto);
+            detailsAnnuels.setBoursierDto(boursierDto);
+            detailsAnnuels.setEffApprocheNiveauGenreDto(effApprocheNiveauGenreDto);
+            detailsAnnuels.setEffectifElevLangueVivante2Dto(effectifElevLangueVivante2Dto);
+            detailsAnnuels.setEtatNominatifEnseignatDto(etatNominatifEnseignatDto);
+            // System.out.print("soummm"+resultatsElevesAffecteDto.toString());
+            if(type.toUpperCase().equals("PDF")){
+                JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(Collections.singleton(detailsBull)) ;
+                JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
+                //JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");
+                Map<String, Object> map = new HashMap<>();
+                JasperPrint report = JasperFillManager.fillReport(compileReport, map, beanCollectionDataSource);
+                //to pdf ;
+                byte[] data =JasperExportManager.exportReportToPdf(report);
+                HttpHeaders headers= new HttpHeaders();
+                headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=RapportPouls.pdf");
+                return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.APPLICATION_PDF).body(data);
+            } else {
+                JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(Collections.singleton(detailsAnnuels)) ;
+                JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
+                //   JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");
+                Map<String, Object> map = new HashMap<>();
+                // map.put("title", type);
+                JasperPrint report = JasperFillManager.fillReport(compileReport, map, beanCollectionDataSource);
+                JRDocxExporter exporter = new JRDocxExporter();
+                exporter.setExporterInput(new SimpleExporterInput(report));
+                // File exportReportFile = new File("profils" + ".docx");
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(baos));
+                exporter.exportReport();
+                byte[] data = baos.toByteArray() ;
+                HttpHeaders headers= new HttpHeaders();
+                // headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Rapport"+myScole.getEcoleclibelle()+".docx");
+                headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Rapport Pouls-Scolaire.docx");
+                return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.MULTIPART_FORM_DATA).body(data);
+            }
+
+
+        } else {
+            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Spider_Book.jrxml");
+            identiteEtatDto= identiteEtatService.getIdentiteDto(idEcole) ;
+            resultatsElevesAffecteDto= resultatsServices.CalculResultatsEleveAffecte(idEcole,libelleAnnee,libelleTrimetre) ;
+            System.out.println("FIN ResultatsEleveAffecte ");
+            recapDesResultatsElevesAffecteDto= resultatsRecapServices.RecapCalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre);
+            System.out.println("FIN RecapResultatsEleveAffecte ");
+            resultatsElevesNonAffecteDto = resultatsNonAffecteServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre);
+            System.out.println("FIN resultatsNonAffecte ");
+            recapDesResultatsElevesNonAffecteDto= resultatsRecapNonAffServices.RecapCalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre) ;
+            System.out.println("FIN resultatsRecapNonAff ");
+            recapResultatsElevesAffeEtNonAffDto = resultatsRecapAffEtNonAffServices.RecapCalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre) ;
+            System.out.println("FIN resultatsRecapAffEtNonAff ");
+            eleveAffecteParClasseDto= eleveAffecteParClasseServices.eleveAffecteParClasse(idEcole ,libelleAnnee,libelleTrimetre) ;
+            System.out.println("FIN eleveAffecteParClasse ");
+            eleveNonAffecteParClasseDto = eleveNonAffecteParClasseServices.eleveNonAffecteParClasse(idEcole ,libelleAnnee,libelleTrimetre);
+            System.out.println("FIN eleveNonAffecteParClasse ");
+            majorParClasseNiveauDto = majorServices.MajorParNiveauClasse(idEcole ,libelleAnnee,libelleTrimetre) ;
+            System.out.println("FIN major ");
+            transfertsDto= transfertsServices.transferts(idEcole) ;
+            System.out.println(" FIN transfert ");
+            repartitionEleveParAnNaissDto= repartitionElevParAnNaissServices.CalculRepartElevParAnnNaiss(idEcole ,libelleAnnee,libelleTrimetre);
+            System.out.println("FIN repartitionElevParAnNaiss ");
+            boursierDto = boursiersServices.boursier(idEcole ,libelleAnnee , libelleTrimetre);
+            System.out.println("FIN Boursier ");
+            effApprocheNive= approcheParNiveauParGenreServices.EffApprocheNiveauGenre(idEcole ,libelleAnnee , libelleTrimetre) ;
+            System.out.println("FIN approcheParNiveauParGenre ");
+            effApprocheNiveauGenreDto.add(effApprocheNive)   ;
+            m = effectifParLangueServices.getLangueVivante(idEcole,anneeId);
+            etatNominatifEnseignatDto = etatNominatifEnseignantServices.infosEtatNominEnseignant(idEcole ,anneeId) ;
+            effectifElevLangueVivante2Dto.add(m);
+
+
+            // Le reste de votre code après l'exécution parallèle
+            detailsBull.setIdentiteEtatDto(identiteEtatDto);
+            detailsBull.setResultatsElevesAffecteDto(resultatsElevesAffecteDto);
+
+            detailsBull.setIdentiteEtatDto(identiteEtatDto);
+            detailsBull.setResultatsElevesAffecteDto(resultatsElevesAffecteDto);
+            detailsBull.setIntro(introLis);
+            detailsBull.setRecapDesResultatsElevesAffecteDto(recapDesResultatsElevesAffecteDto);
+            detailsBull.setResultatsElevesNonAffecteDto(resultatsElevesNonAffecteDto);
+            detailsBull.setRecapDesResultatsElevesNonAffecteDto(recapDesResultatsElevesNonAffecteDto);
+            detailsBull.setRecapResultatsElevesAffeEtNonAffDto(recapResultatsElevesAffeEtNonAffDto);
+            detailsBull.setEleveAffecteParClasseDto(eleveAffecteParClasseDto);
+            detailsBull.setEleveNonAffecteParClasseDto(eleveNonAffecteParClasseDto);
+            detailsBull.setMajorParClasseNiveauDto(majorParClasseNiveauDto);
+            detailsBull.setTransfertsDto(transfertsDto);
+            detailsBull.setRepartitionEleveParAnNaissDto(repartitionEleveParAnNaissDto);
+            detailsBull.setBoursierDto(boursierDto);
+            detailsBull.setEffApprocheNiveauGenreDto(effApprocheNiveauGenreDto);
+            detailsBull.setEffectifElevLangueVivante2Dto(effectifElevLangueVivante2Dto);
+            detailsBull.setEtatNominatifEnseignatDto(etatNominatifEnseignatDto);
+            // System.out.print("soummm"+resultatsElevesAffecteDto.toString());
+            if(type.toUpperCase().equals("PDF")){
+                JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(Collections.singleton(detailsBull)) ;
+                JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
+                //JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");
+                Map<String, Object> map = new HashMap<>();
+                JasperPrint report = JasperFillManager.fillReport(compileReport, map, beanCollectionDataSource);
+                //to pdf ;
+                byte[] data =JasperExportManager.exportReportToPdf(report);
+                HttpHeaders headers= new HttpHeaders();
+                headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=RapportPouls.pdf");
+                return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.APPLICATION_PDF).body(data);
+            } else {
+                JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(Collections.singleton(detailsBull)) ;
+                JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
+                //   JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");
+                Map<String, Object> map = new HashMap<>();
+                // map.put("title", type);
+                JasperPrint report = JasperFillManager.fillReport(compileReport, map, beanCollectionDataSource);
+                JRDocxExporter exporter = new JRDocxExporter();
+                exporter.setExporterInput(new SimpleExporterInput(report));
+                // File exportReportFile = new File("profils" + ".docx");
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(baos));
+                exporter.exportReport();
+                byte[] data = baos.toByteArray() ;
+                HttpHeaders headers= new HttpHeaders();
+                // headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Rapport"+myScole.getEcoleclibelle()+".docx");
+                headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Rapport Pouls-Scolaire.docx");
+                return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.MULTIPART_FORM_DATA).body(data);
+            }
+
+        }
+
+
+
 
 
 

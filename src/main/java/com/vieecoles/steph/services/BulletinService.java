@@ -524,9 +524,12 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 					flag.setParentMatiere(entry.getKey().getParentMatiereLibelle());
 					flag.setMoyAn(entry.getKey().getMoyenneAnnuelle());
 					flag.setRangAn(entry.getKey().getRangAnnuel());
+
 					flag.setMoyenneIntermediaire(entry.getKey().getMoyenneIntermediaire());
+
 					if (entry.getKey().getMoyenneAnnuelle() != null)
 						flag.setAppreciationAn(CommonUtils.appreciation(Double.valueOf(entry.getKey().getMoyenneAnnuelle())));
+
 					flag.setIsAdjustment(entry.getKey().getIsAdjustment());
 					flag.setDateCreation(new Date());
 					// Inscrire si oui ou non l'élève est classé dans la matiere

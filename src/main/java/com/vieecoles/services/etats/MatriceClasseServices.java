@@ -69,7 +69,7 @@ public class MatriceClasseServices {
 
         Long idEleve = null;
         String matricule , nom = null, prenoms = null;
-        int rang ;
+        Integer rang ;
         Double moyenTrimes ;
         String appreciation  ;
         List<matiereMoyenneDto>  matiereMoyenneDto = new ArrayList<>() ;
@@ -161,6 +161,7 @@ public class MatriceClasseServices {
             }
             m.setMoyenTrimes(moyenTrimes);
             m.setAppreciation(appreciation);
+            if(rang!= null)
             m.setRang(rang);
             m.setNom(nom);
             m.setPrenoms(prenoms);

@@ -532,7 +532,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.matricule =  $P{matr
 						<textElement textAlignment="Center" verticalAlignment="Middle">
 							<font fontName="SansSerif" size="7"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{parent_matiere}.equals("FRANCAIS")&&$F{ordre_niveau}<5?$F{coef_fr}:$F{parent_matiere}.equals("")?"":$F{coef}]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{parent_matiere}.equals("FRANCAIS")&&$F{ordre_niveau}<3?3:$F{parent_matiere}.equals("FRANCAIS")&&$F{ordre_niveau}<5?4:$F{parent_matiere}.equals("")?"":$F{coef}]]></textFieldExpression>
 					</textField>
 					<textField evaluationTime="Band" isBlankWhenNull="true">
 						<reportElement style="champsLibelle" x="215" y="0" width="30" height="15" isRemoveLineWhenBlank="true" uuid="4863f765-b56c-4e96-b748-68ff7b46689c">

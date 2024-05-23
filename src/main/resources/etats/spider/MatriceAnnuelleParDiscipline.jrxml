@@ -1029,7 +1029,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.libelle_classe =  $P
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="7"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{moyMat_1er_trim}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{isClassMat_1er_trim}.equals("N")? "NC": $F{moyMat_1er_trim}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="325" y="0" width="25" height="20" uuid="6d7aa644-80dc-40f5-a207-d90e83a271b8">
@@ -1052,7 +1052,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.libelle_classe =  $P
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="7"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{RangMat_1er_trim}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{isClassMat_1er_trim}.equals("N")? "NC":$F{RangMat_1er_trim}.equals("1") ?  $F{RangMat_1er_trim}+" er" :$F{RangMat_1er_trim}+" e"]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="350" y="0" width="25" height="20" uuid="324396d0-5729-406b-bf57-012c29517c16">
@@ -1075,7 +1075,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.libelle_classe =  $P
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="7"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{moyMat_2eme_trim}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{isClassMat_2eme_trim}.equals("N")? "NC": $F{moyMat_2eme_trim}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="375" y="0" width="25" height="20" uuid="4bbf53b5-a491-4944-99b1-2c5ed3ba40ab">
@@ -1099,7 +1099,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.libelle_classe =  $P
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="7"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{RangMat_2eme_trim}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{isClassMat_2eme_trim}.equals("N")? "NC":$F{RangMat_2eme_trim}.equals("1") ? $F{RangMat_2eme_trim}+" er" :$F{RangMat_2eme_trim}+" e"]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="400" y="0" width="25" height="20" uuid="a854ff65-4d57-41af-bfbf-cf3815f218ad">
@@ -1121,7 +1121,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.libelle_classe =  $P
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="7"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{moyenne}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC": $F{moyenne}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="425" y="0" width="25" height="20" uuid="590facb3-3291-4cdf-963a-219ab39aa10a">
@@ -1143,7 +1143,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.libelle_classe =  $P
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="7"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{rang}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{rang}.equals("1") ? $F{rang}+" er" :$F{rang}+" e"]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="450" y="0" width="25" height="20" uuid="bbbcbf81-bf13-4da8-8892-1ff5109cdb13">
