@@ -387,7 +387,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.libelle_classe =  $P
 						<subreportParameterExpression><![CDATA[$P{setBg}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression><![CDATA["BulletinNobelSpiderEtanTechniqueTrois.jasper"]]></subreportExpression>
+					<subreportExpression><![CDATA["etats/spider/TroixiemeTrimestre/BulletinNobelSpiderEtanTechniqueTrois.jasper"]]></subreportExpression>
 				</subreport>
 			</band>
 		</groupHeader>
