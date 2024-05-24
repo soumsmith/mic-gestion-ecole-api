@@ -10,10 +10,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -936,7 +932,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 
 				// Traitement cas des sous matières EMR
 				if (entry.getKey().getMatiereParent() != null && entry.getKey().getMatiereParent().getIsEMR() != null
-						&& entry.getKey().getMatiereParent().getIsEMR().equals(Constants.OUI) && false) {
+						&& entry.getKey().getMatiereParent().getIsEMR().equals(Constants.OUI)) {
 					CheckEMRCalculFlat = true;
 					if (diviserEMR == 0.0) {
 
