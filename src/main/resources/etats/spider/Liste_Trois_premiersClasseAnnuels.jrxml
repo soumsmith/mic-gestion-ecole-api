@@ -5,8 +5,8 @@
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ecolevieDB"/>
 	<property name="net.sf.jasperreports.export.docx.flexible.row.height" value="true"/>
 	<property name="net.sf.jasperreports.export.docx.frames.as.nested.tables" value="false"/>
-	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="349"/>
-	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="638"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="526"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="461"/>
 	<style name="Titre" fontName="Caladea" fontSize="8">
 		<box>
 			<pen lineWidth="0.25"/>
@@ -234,12 +234,12 @@ LIMIT 3]]>
 	<parameter name="id_classe" class="java.lang.Long"/>
 	<queryString>
 		<![CDATA[SELECT *
-FROM `ecoleviedbv2`.vs_liste_trois_premiers 
-where  `ecoleviedbv2`.vs_liste_trois_premiers.id_ecole = $P{id_ecole} 
-and  `ecoleviedbv2`.vs_liste_trois_premiers.libelle_periode =  $P{periode} 
-and  `ecoleviedbv2`.vs_liste_trois_premiers.annee_libelle  =  $P{annee}
-and  `ecoleviedbv2`.vs_liste_trois_premiers.id_classe  =  $P{id_classe} ORDER BY
-    `ecoleviedbv2`.vs_liste_trois_premiers.moyGeneral
+FROM `ecoleviedbv2`.liste_premiers_annuels 
+where  `ecoleviedbv2`.liste_premiers_annuels.id_ecole = $P{id_ecole} 
+and  `ecoleviedbv2`.liste_premiers_annuels.libelle_periode =  $P{periode} 
+and  `ecoleviedbv2`.liste_premiers_annuels.annee_libelle  =  $P{annee}
+and  `ecoleviedbv2`.liste_premiers_annuels.id_classe  =  $P{id_classe} ORDER BY
+    `ecoleviedbv2`.liste_premiers_annuels.moyGeneral
 DESC
 LIMIT 3]]>
 	</queryString>
@@ -278,7 +278,7 @@ LIMIT 3]]>
 		<property name="com.jaspersoft.studio.field.label" value="niveau"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="bulletins"/>
 	</field>
-	<field name="id_classe" class="java.lang.Long">
+	<field name="id_classe" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="id_classe"/>
 		<property name="com.jaspersoft.studio.field.label" value="id_classe"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="bulletins"/>
@@ -286,7 +286,7 @@ LIMIT 3]]>
 	<field name="anneeNaiss" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="anneeNaiss"/>
 		<property name="com.jaspersoft.studio.field.label" value="anneeNaiss"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="liste_major_ecole_par_ecole"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="liste_premiers_annuels"/>
 	</field>
 	<field name="lv2" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="lv2"/>
@@ -316,19 +316,23 @@ LIMIT 3]]>
 	<field name="cheminphoto" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="cheminphoto"/>
 		<property name="com.jaspersoft.studio.field.label" value="cheminphoto"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="eleve"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bulletins"/>
 	</field>
-	<field name="id_ecole" class="java.lang.Long">
+	<field name="id_ecole" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="id_ecole"/>
 		<property name="com.jaspersoft.studio.field.label" value="id_ecole"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="liste_major_ecole_par_ecole"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="liste_premiers_annuels"/>
 	</field>
 	<field name="rang" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="rang"/>
 		<property name="com.jaspersoft.studio.field.label" value="rang"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="bulletins"/>
 	</field>
-	<field name="total_coef" class="java.lang.Double"/>
+	<field name="total_coef" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="total_coef"/>
+		<property name="com.jaspersoft.studio.field.label" value="total_coef"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="liste_premiers_annuels"/>
+	</field>
 	<sortField name="ordre_niveau"/>
 	<sortField name="niveau"/>
 	<sortField name="classeLibelle"/>
@@ -354,7 +358,7 @@ LIMIT 3]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="14" isBold="true" isUnderline="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Liste des trois premiers par classe: "+$F{classeLibelle}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Liste des trois premiers par classe  Annuellement: "+$F{classeLibelle}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement mode="Opaque" x="87" y="50" width="420" height="50" backcolor="#3333FF" uuid="735d9d37-1a06-44bc-a847-d91b24900377">

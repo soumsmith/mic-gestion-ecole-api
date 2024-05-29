@@ -2,9 +2,7 @@ package com.vieecoles.ressource.operations.etats;
 
 
 import com.vieecoles.dto.*;
-import com.vieecoles.services.etats.DpspServices;
-import com.vieecoles.services.etats.MoyenneParDisciplineService;
-import com.vieecoles.services.etats.resultatsRecapAffEtNonAffServices;
+import com.vieecoles.services.etats.*;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRXlsExporter;
@@ -37,6 +35,10 @@ public class CIOSpiderRessource {
     resultatsRecapAffEtNonAffServices resultatsServices ;
     @Inject
     MoyenneParDisciplineService moyenneParDisciplineService ;
+    @Inject
+    resultatsRecapAffEtNonAffServicesAnnuels resultatsServicesAnnuels ;
+    @Inject
+    MoyenneParDisciplineServiceAnnuels moyenneParDisciplineServiceAnnuels ;
 
 
     private static String UPLOAD_DIR = "/data/";
@@ -48,38 +50,81 @@ public class CIOSpiderRessource {
     public ResponseEntity<byte[]>  getDtoRapport(@PathParam("idEcole") Long idEcole ,@PathParam("libelleAnnee") String libelleAnnee,@PathParam("libelleTrimetre") String libelleTrimetre) throws Exception, JRException {
         InputStream myInpuStream ;
         /*myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/BulletinBean.jrxml");*/
-        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Spider_Book_Cio.jrxml");
 
-        spiderCIODto detailsBull= new spiderCIODto() ;
-        List<RecapResultatsElevesAffeEtNonAffDto>  dspsDto = new ArrayList<>() ;
-        dspsDto= resultatsServices.RecapCalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre) ;
+        if((libelleTrimetre.equals("Troisième Trimestre"))||(libelleTrimetre.equals("Troisième Semestre"))){
+            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Spider_Book_AnnuelsCio.jrxml");
+            spiderCIODto detailsBull= new spiderCIODto() ;
+            List<RecapResultatsElevesAffeEtNonAffDto>  dspsDto = new ArrayList<>() ;
+            dspsDto= resultatsServicesAnnuels.RecapCalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre) ;
 
-        List<MoenneParDisciplineDto>  moyenParDiscipline = new ArrayList<>() ;
-        moyenParDiscipline= moyenneParDisciplineService.getMoyenneParDiscipline (idEcole ,libelleAnnee,libelleTrimetre) ;
+            List<MoenneParDisciplineDto>  moyenParDiscipline = new ArrayList<>() ;
+            moyenParDiscipline= moyenneParDisciplineServiceAnnuels.getMoyenneParDiscipline (idEcole ,libelleAnnee,libelleTrimetre) ;
 
-        detailsBull.setDspsDto(dspsDto);
-        detailsBull.setMoyenneParDisc(moyenParDiscipline);
+            detailsBull.setDspsDto(dspsDto);
+            detailsBull.setMoyenneParDisc(moyenParDiscipline);
 
-        System.out.println("detailsBull "+ detailsBull);
+            System.out.println("detailsBull "+ detailsBull);
 
-       JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(Collections.singleton(detailsBull)) ;
-        JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
-        //   JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");
-        Map<String, Object> map = new HashMap<>();
-        // map.put("title", type);
+            JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(Collections.singleton(detailsBull)) ;
+            JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
+            //   JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");
+            Map<String, Object> map = new HashMap<>();
+            // map.put("title", type);
 
-        JasperPrint report = JasperFillManager.fillReport(compileReport, map, beanCollectionDataSource);
-        JRXlsExporter exporter = new JRXlsExporter();
-        exporter.setExporterInput(new SimpleExporterInput(report));
-        // File exportReportFile = new File("profils" + ".docx");
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(baos));
-        exporter.exportReport();
-        byte[] data = baos.toByteArray() ;
-        HttpHeaders headers= new HttpHeaders();
-        // headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Rapport"+myScole.getEcoleclibelle()+".docx");
-        headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Rapport Pouls-Scolaire-cio.xls");
-        return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.MULTIPART_FORM_DATA).body(data);
+            JasperPrint report = JasperFillManager.fillReport(compileReport, map, beanCollectionDataSource);
+            JRXlsExporter exporter = new JRXlsExporter();
+            exporter.setExporterInput(new SimpleExporterInput(report));
+            // File exportReportFile = new File("profils" + ".docx");
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(baos));
+            exporter.exportReport();
+            byte[] data = baos.toByteArray() ;
+            HttpHeaders headers= new HttpHeaders();
+            // headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Rapport"+myScole.getEcoleclibelle()+".docx");
+            headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Rapport Pouls-Scolaire-cio.xls");
+            return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.MULTIPART_FORM_DATA).body(data);
+
+        }else{
+            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Spider_Book_Cio.jrxml");
+            spiderCIODto detailsBull= new spiderCIODto() ;
+            List<RecapResultatsElevesAffeEtNonAffDto>  dspsDto = new ArrayList<>() ;
+            dspsDto= resultatsServices.RecapCalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre) ;
+
+            List<MoenneParDisciplineDto>  moyenParDiscipline = new ArrayList<>() ;
+            moyenParDiscipline= moyenneParDisciplineService.getMoyenneParDiscipline (idEcole ,libelleAnnee,libelleTrimetre) ;
+
+            detailsBull.setDspsDto(dspsDto);
+            detailsBull.setMoyenneParDisc(moyenParDiscipline);
+
+            System.out.println("detailsBull "+ detailsBull);
+
+            JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(Collections.singleton(detailsBull)) ;
+            JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
+            //   JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");
+            Map<String, Object> map = new HashMap<>();
+            // map.put("title", type);
+
+            JasperPrint report = JasperFillManager.fillReport(compileReport, map, beanCollectionDataSource);
+            JRXlsExporter exporter = new JRXlsExporter();
+            exporter.setExporterInput(new SimpleExporterInput(report));
+            // File exportReportFile = new File("profils" + ".docx");
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(baos));
+            exporter.exportReport();
+            byte[] data = baos.toByteArray() ;
+            HttpHeaders headers= new HttpHeaders();
+            // headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Rapport"+myScole.getEcoleclibelle()+".docx");
+            headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Rapport Pouls-Scolaire-cio.xls");
+            return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.MULTIPART_FORM_DATA).body(data);
+
+
+        }
+
+
+
+
+
+
 
     }
 

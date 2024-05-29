@@ -5,6 +5,8 @@
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ecolevieDB"/>
 	<property name="net.sf.jasperreports.export.docx.flexible.row.height" value="true"/>
 	<property name="net.sf.jasperreports.export.docx.frames.as.nested.tables" value="false"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="278"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="716"/>
 	<style name="Titre" fontName="Caladea" fontSize="8">
 		<box>
 			<pen lineWidth="0.25"/>
@@ -26,71 +28,71 @@
 	<parameter name="annee" class="java.lang.String"/>
 	<parameter name="periode" class="java.lang.String"/>
 	<parameter name="id_ecole" class="java.lang.Long"/>
-	<parameter name="niveau" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT  distinct `ecoleviedbv2`.vs_liste_trois_premiers.niveau, `ecoleviedbv2`.vs_liste_trois_premiers.annee_libelle,
-`ecoleviedbv2`.vs_liste_trois_premiers.libelle_periode,`ecoleviedbv2`.vs_liste_trois_premiers.id_ecole,
-`ecoleviedbv2`.vs_liste_trois_premiers.ordre_niveau ,`ecoleviedbv2`.vs_liste_trois_premiers.classeLibelle 
-FROM `ecoleviedbv2`.vs_liste_trois_premiers 
-where  `ecoleviedbv2`.vs_liste_trois_premiers.id_ecole = $P{id_ecole} 
-and  `ecoleviedbv2`.vs_liste_trois_premiers.libelle_periode =  $P{periode} 
-and  `ecoleviedbv2`.vs_liste_trois_premiers.annee_libelle  =  $P{annee}
-order by  `ecoleviedbv2`.vs_liste_trois_premiers.ordre_niveau ,`ecoleviedbv2`.vs_liste_trois_premiers.classeLibelle]]>
+		<![CDATA[SELECT  distinct `ecoleviedbv2`.liste_premiers_annuels.id_classe ,`ecoleviedbv2`.liste_premiers_annuels.niveau, `ecoleviedbv2`.liste_premiers_annuels.annee_libelle,
+`ecoleviedbv2`.liste_premiers_annuels.libelle_periode,`ecoleviedbv2`.liste_premiers_annuels.id_ecole ,
+`ecoleviedbv2`.liste_premiers_annuels.ordre_niveau ,`ecoleviedbv2`.liste_premiers_annuels.classeLibelle 
+FROM `ecoleviedbv2`.liste_premiers_annuels 
+where  `ecoleviedbv2`.liste_premiers_annuels.id_ecole = $P{id_ecole} 
+and  `ecoleviedbv2`.liste_premiers_annuels.libelle_periode =  $P{periode} 
+and  `ecoleviedbv2`.liste_premiers_annuels.annee_libelle  =  $P{annee}
+ order by  `ecoleviedbv2`.liste_premiers_annuels.ordre_niveau ,`ecoleviedbv2`.liste_premiers_annuels.classeLibelle]]>
 	</queryString>
+	<field name="id_classe" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="id_classe"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_classe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="liste_premiers_annuels"/>
+	</field>
 	<field name="niveau" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="niveau"/>
 		<property name="com.jaspersoft.studio.field.label" value="niveau"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="vs_liste_trois_premiers"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="liste_premiers_annuels"/>
 	</field>
 	<field name="annee_libelle" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="annee_libelle"/>
 		<property name="com.jaspersoft.studio.field.label" value="annee_libelle"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="vs_liste_trois_premiers"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="liste_premiers_annuels"/>
 	</field>
 	<field name="libelle_periode" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="libelle_periode"/>
 		<property name="com.jaspersoft.studio.field.label" value="libelle_periode"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="vs_liste_trois_premiers"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="liste_premiers_annuels"/>
 	</field>
 	<field name="id_ecole" class="java.lang.Long">
 		<property name="com.jaspersoft.studio.field.name" value="id_ecole"/>
 		<property name="com.jaspersoft.studio.field.label" value="id_ecole"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="vs_liste_trois_premiers"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="liste_premiers_annuels"/>
 	</field>
 	<field name="ordre_niveau" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.name" value="ordre_niveau"/>
 		<property name="com.jaspersoft.studio.field.label" value="ordre_niveau"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="vs_liste_trois_premiers"/>
-	</field>
-	<field name="classeLibelle" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="classeLibelle"/>
-		<property name="com.jaspersoft.studio.field.label" value="classeLibelle"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="vs_liste_trois_premiers"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="liste_premiers_annuels"/>
 	</field>
 	<group name="Niveau">
 		<groupExpression><![CDATA[$F{niveau}]]></groupExpression>
 	</group>
+	<group name="Groupe1"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<detail>
-		<band height="434" splitType="Stretch">
+		<band height="263">
 			<subreport>
-				<reportElement x="-10" y="10" width="570" height="424" uuid="e83d9b86-5241-4584-92c9-39b096de9c5b"/>
+				<reportElement x="-10" y="10" width="570" height="240" uuid="8e5aa17e-a335-4f55-92ef-5cda4a828aa8"/>
 				<subreportParameter name="annee">
-					<subreportParameterExpression><![CDATA[$P{annee}]]></subreportParameterExpression>
+					<subreportParameterExpression><![CDATA[$F{annee_libelle}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="periode">
-					<subreportParameterExpression><![CDATA[$P{periode}]]></subreportParameterExpression>
+					<subreportParameterExpression><![CDATA[$F{libelle_periode}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="id_ecole">
-					<subreportParameterExpression><![CDATA[$P{id_ecole}]]></subreportParameterExpression>
+					<subreportParameterExpression><![CDATA[$F{id_ecole}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="niveau">
-					<subreportParameterExpression><![CDATA[$F{niveau}]]></subreportParameterExpression>
+				<subreportParameter name="id_classe">
+					<subreportParameterExpression><![CDATA[$F{id_classe}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA["etats/spider/Liste_Trois_premiersNiveau.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["etats/spider/Liste_Trois_premiersClasseAnnuels.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>
