@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Liste_Trois_premiers" columnCount="3" printOrder="Horizontal" pageWidth="595" pageHeight="842" columnWidth="195" columnSpacing="5" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="4798adcd-b33d-4103-8f41-c1e234463320">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Liste_Trois_premiers" columnCount="3" printOrder="Horizontal" pageWidth="595" pageHeight="842" columnWidth="155" columnSpacing="5" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="4798adcd-b33d-4103-8f41-c1e234463320">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ecolevieDB"/>
 	<property name="net.sf.jasperreports.export.docx.flexible.row.height" value="true"/>
 	<property name="net.sf.jasperreports.export.docx.frames.as.nested.tables" value="false"/>
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="349"/>
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="638"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<style name="Titre" fontName="Caladea" fontSize="8">
 		<box>
 			<pen lineWidth="0.25"/>
@@ -357,7 +366,7 @@ LIMIT 3]]>
 				<textFieldExpression><![CDATA["Liste des trois premiers par classe: "+$F{classeLibelle}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="87" y="50" width="420" height="50" backcolor="#3333FF" uuid="735d9d37-1a06-44bc-a847-d91b24900377">
+				<reportElement mode="Opaque" x="87" y="50" width="420" height="50" forecolor="#FFFFFF" backcolor="#3333FF" uuid="735d9d37-1a06-44bc-a847-d91b24900377">
 					<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 					<property name="com.jaspersoft.layout.grid.y" value="1"/>
 					<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -430,7 +439,7 @@ LIMIT 3]]>
 					<textFieldExpression><![CDATA["P.O :" + String.format("%.2f", $F{moyGeneral} * $F{total_coef}) + " Moy. :" + String.format("%.2f", $F{moyGeneral})]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement mode="Opaque" x="0" y="180" width="70" height="21" backcolor="#0033FF" uuid="77dbeafb-ef4b-4912-848d-57242021eaff">
+					<reportElement mode="Opaque" x="0" y="180" width="70" height="21" forecolor="#FFFFFF" backcolor="#0033FF" uuid="77dbeafb-ef4b-4912-848d-57242021eaff">
 						<property name="com.jaspersoft.layout.grid.x" value="0"/>
 						<property name="com.jaspersoft.layout.grid.y" value="3"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>

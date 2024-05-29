@@ -503,7 +503,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textField isBlankWhenNull="true">
+					<textField textAdjust="ScaleFont" isBlankWhenNull="true">
 						<reportElement x="0" y="0" width="159" height="15" isRemoveLineWhenBlank="true" printWhenGroupChanges="DisciplineLettre" uuid="ec8377f8-e149-4b96-ba09-f9d8c91a7ccd">
 							<property name="com.jaspersoft.layout.grid.x" value="0"/>
 							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
@@ -1608,7 +1608,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textField isBlankWhenNull="true">
+				<textField textAdjust="ScaleFont" isBlankWhenNull="true">
 					<reportElement x="0" y="0" width="159" height="15" isRemoveLineWhenBlank="true" printWhenGroupChanges="DisciplineLettre" uuid="69016f3b-bf6c-4b31-ac53-205ca9f8d77e">
 						<property name="com.jaspersoft.layout.grid.x" value="0"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>

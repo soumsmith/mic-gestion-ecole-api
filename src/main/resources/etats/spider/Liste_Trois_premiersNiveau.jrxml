@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Liste_Trois_premiers" columnCount="3" printOrder="Horizontal" pageWidth="595" pageHeight="842" columnWidth="195" columnSpacing="5" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="4798adcd-b33d-4103-8f41-c1e234463320">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Liste_Trois_premiers" columnCount="3" printOrder="Horizontal" pageWidth="595" pageHeight="842" columnWidth="155" columnSpacing="5" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="4798adcd-b33d-4103-8f41-c1e234463320">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ecolevieDB"/>
 	<property name="net.sf.jasperreports.export.docx.flexible.row.height" value="true"/>
 	<property name="net.sf.jasperreports.export.docx.frames.as.nested.tables" value="false"/>
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="626"/>
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="361"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<style name="Titre" fontName="Caladea" fontSize="8">
 		<box>
 			<pen lineWidth="0.25"/>
@@ -234,15 +243,14 @@ LIMIT 3]]>
 	<parameter name="id_classe" class="java.lang.Long"/>
 	<parameter name="niveau" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT *
+		<![CDATA[SELECT *,RANK() OVER (ORDER BY   `ecoleviedbv2`.vs_liste_trois_premiers.moyGeneral DESC) AS nouveauRang
 FROM `ecoleviedbv2`.vs_liste_trois_premiers 
 where  `ecoleviedbv2`.vs_liste_trois_premiers.id_ecole = $P{id_ecole} 
 and  `ecoleviedbv2`.vs_liste_trois_premiers.libelle_periode =  $P{periode} 
 and  `ecoleviedbv2`.vs_liste_trois_premiers.annee_libelle  =  $P{annee}
 and  `ecoleviedbv2`.vs_liste_trois_premiers.niveau  =  $P{niveau} 
 ORDER BY
-    `ecoleviedbv2`.vs_liste_trois_premiers.moyGeneral
-DESC
+  nouveauRang
 LIMIT 3]]>
 	</queryString>
 	<field name="moyGeneral" class="java.lang.Double">
@@ -331,9 +339,8 @@ LIMIT 3]]>
 		<property name="com.jaspersoft.studio.field.tree.path" value="bulletins"/>
 	</field>
 	<field name="total_coef" class="java.lang.Double"/>
-	<sortField name="ordre_niveau"/>
-	<sortField name="niveau"/>
-	<sortField name="classeLibelle"/>
+	<field name="nouveauRang" class="java.lang.Integer"/>
+	<sortField name="nouveauRang"/>
 	<group name="Niveau">
 		<groupExpression><![CDATA[$F{niveau}]]></groupExpression>
 	</group>
@@ -356,10 +363,10 @@ LIMIT 3]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="14" isBold="true" isUnderline="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Liste des trois premiers par classe: "+$F{classeLibelle}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Liste des trois premiers par niveau "]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="87" y="50" width="420" height="50" backcolor="#3333FF" uuid="735d9d37-1a06-44bc-a847-d91b24900377">
+				<reportElement mode="Opaque" x="87" y="50" width="420" height="50" forecolor="#FFFFFF" backcolor="#3333FF" uuid="735d9d37-1a06-44bc-a847-d91b24900377">
 					<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 					<property name="com.jaspersoft.layout.grid.y" value="1"/>
 					<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -396,7 +403,7 @@ LIMIT 3]]>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
 						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
 						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="2"/>
 						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 					</reportElement>
 					<imageExpression><![CDATA[$F{cheminphoto}]]></imageExpression>
@@ -408,7 +415,7 @@ LIMIT 3]]>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
 						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
 						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="2"/>
 						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 					</reportElement>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -423,7 +430,7 @@ LIMIT 3]]>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
 						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
 						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
-						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="2"/>
 						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 					</reportElement>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -432,7 +439,7 @@ LIMIT 3]]>
 					<textFieldExpression><![CDATA["P.O :" + String.format("%.2f", $F{moyGeneral} * $F{total_coef}) + " Moy. :" + String.format("%.2f", $F{moyGeneral})]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement mode="Opaque" x="0" y="180" width="70" height="21" backcolor="#0033FF" uuid="77dbeafb-ef4b-4912-848d-57242021eaff">
+					<reportElement mode="Opaque" x="0" y="180" width="70" height="21" forecolor="#FFFFFF" backcolor="#0033FF" uuid="77dbeafb-ef4b-4912-848d-57242021eaff">
 						<property name="com.jaspersoft.layout.grid.x" value="0"/>
 						<property name="com.jaspersoft.layout.grid.y" value="3"/>
 						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -444,7 +451,22 @@ LIMIT 3]]>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{rang}.equals("1")?  "Rang :"+$F{rang}+" èr(e)  "  : "Rang :"+$F{rang}+" ème "]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{rang}.equals("1")?  "Rang :"+$F{nouveauRang}+" èr(e)  "  : "Rang :"+$F{nouveauRang}+" ème "]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="ScaleFont">
+					<reportElement mode="Opaque" x="70" y="180" width="70" height="21" forecolor="#0033FF" backcolor="#FFFFFF" uuid="e7fb7b17-a2c4-47ff-884d-670b95157243">
+						<property name="com.jaspersoft.layout.grid.x" value="1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="3"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{classeLibelle}]]></textFieldExpression>
 				</textField>
 			</frame>
 		</band>

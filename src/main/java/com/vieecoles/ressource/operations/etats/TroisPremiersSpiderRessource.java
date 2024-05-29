@@ -63,11 +63,7 @@ public class TroisPremiersSpiderRessource {
          niveau= myBranche.getNiveau().getLibelle() ;
 
         InputStream myInpuStream ;
-         if((libellePeriode.equals("Troisième Trimestre"))||(libellePeriode.equals("Troisième Semestre"))){
-             myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Liste_Trois_premiersNiveauAnnuels.jrxml") ;
-          }else{
-             myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Liste_Trois_premiersNiveau.jrxml") ;
-         }
+         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Liste_Trois_premiersNiveau.jrxml") ;
 
 
         spiderBulletinDto detailsBull= new spiderBulletinDto() ;
@@ -93,18 +89,49 @@ public class TroisPremiersSpiderRessource {
     }
 
     @GET
-    @Path("par-classe/{idEcole}/{libellePeriode}/{libelleAnnee}/{classeId}")
+    @Path("par-niveau-annuelle/{idEcole}/{libellePeriode}/{libelleAnnee}/{branche_id}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    public ResponseEntity<byte[]>  troisPremierParClasse(@PathParam("idEcole") Long idEcole ,@PathParam("libellePeriode") String libellePeriode ,
+    public ResponseEntity<byte[]>  troisPremierParNiveauannulle(@PathParam("idEcole") Long idEcole ,@PathParam("libellePeriode") String libellePeriode ,
+                                                         @PathParam("libelleAnnee") String libelleAnnee , @PathParam("branche_id") Long branche_id) throws Exception, JRException {
+        Branche myBranche = new Branche();
+        myBranche = Branche.findById(branche_id);
+        String niveau= null ;
+        niveau= myBranche.getNiveau().getLibelle() ;
+
+        InputStream myInpuStream ;
+        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Liste_Trois_premiersNiveauAnnuels.jrxml") ;
+
+
+        spiderBulletinDto detailsBull= new spiderBulletinDto() ;
+        List<parametreDto>  dspsDto = new ArrayList<>() ;
+
+
+        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecoleviedbv2", USER, PASS);
+        JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
+        //   JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("id_ecole", idEcole);
+        map.put("annee", libelleAnnee);
+        map.put("periode", libellePeriode);
+        map.put("niveau", niveau);
+        JasperPrint report = JasperFillManager.fillReport(compileReport, map, connection);
+        byte[] data =JasperExportManager.exportReportToPdf(report);
+
+        HttpHeaders headers= new HttpHeaders();
+        // headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Rapport"+myScole.getEcoleclibelle()+".docx");
+        headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Liste trois premiers par niveau"+".pdf");
+        return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.MULTIPART_FORM_DATA).body(data);
+    }
+
+    @GET
+    @Path("par-classe-annuelle/{idEcole}/{libellePeriode}/{libelleAnnee}/{classeId}")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public ResponseEntity<byte[]>  troisPremierParClasseannuelle(@PathParam("idEcole") Long idEcole ,@PathParam("libellePeriode") String libellePeriode ,
                                                  @PathParam("libelleAnnee") String libelleAnnee ,@PathParam("classeId") Long classeId ) throws Exception, JRException {
         InputStream myInpuStream ;
-        if((libellePeriode.equals("Troisième Trimestre"))||(libellePeriode.equals("Troisième Semestre"))){
-            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Liste_Trois_premiersClasseAnnuels.jrxml");
-        }else{
-            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Liste_Trois_premiersClasse.jrxml");
-        }
 
-
+        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Liste_Trois_premiersClasseAnnuels.jrxml");
 
         spiderBulletinDto detailsBull= new spiderBulletinDto() ;
         List<parametreDto>  dspsDto = new ArrayList<>() ;
@@ -128,6 +155,36 @@ public class TroisPremiersSpiderRessource {
         return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.MULTIPART_FORM_DATA).body(data);
     }
 
+    @GET
+    @Path("par-classe/{idEcole}/{libellePeriode}/{libelleAnnee}/{classeId}")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public ResponseEntity<byte[]>  troisPremierParClasse(@PathParam("idEcole") Long idEcole ,@PathParam("libellePeriode") String libellePeriode ,
+                                                         @PathParam("libelleAnnee") String libelleAnnee ,@PathParam("classeId") Long classeId ) throws Exception, JRException {
+        InputStream myInpuStream ;
+
+        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Liste_Trois_premiersClasse.jrxml");
+
+        spiderBulletinDto detailsBull= new spiderBulletinDto() ;
+        List<parametreDto>  dspsDto = new ArrayList<>() ;
+
+
+        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecoleviedbv2", USER, PASS);
+        JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
+        //   JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("id_ecole", idEcole);
+        map.put("annee", libelleAnnee);
+        map.put("periode", libellePeriode);
+        map.put("id_classe", classeId);
+        JasperPrint report = JasperFillManager.fillReport(compileReport, map, connection);
+        byte[] data =JasperExportManager.exportReportToPdf(report);
+
+        HttpHeaders headers= new HttpHeaders();
+        // headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Rapport"+myScole.getEcoleclibelle()+".docx");
+        headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Liste trois premiers par Classe"+".pdf");
+        return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.MULTIPART_FORM_DATA).body(data);
+    }
 
 
 
