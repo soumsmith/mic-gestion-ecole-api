@@ -2623,7 +2623,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							</reportElement>
-							<textElement textAlignment="Center" verticalAlignment="Top">
+							<textElement textAlignment="Center" verticalAlignment="Bottom">
 								<font size="7"/>
 								<paragraph firstLineIndent="0" spacingBefore="8"/>
 							</textElement>

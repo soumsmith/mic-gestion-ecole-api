@@ -383,11 +383,12 @@ LIMIT 3]]>
 		</band>
 	</title>
 	<detail>
-		<band height="228">
-			<property name="com.jaspersoft.studio.layout"/>
+		<band height="243">
+			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
 			<frame>
-				<reportElement mode="Opaque" x="20" y="21" width="140" height="201" forecolor="#FFCC00" uuid="de4e5047-3089-4c1c-a3e3-196c88e08a9e">
-					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+				<reportElement positionType="Float" mode="Opaque" x="61" y="21" width="150" height="210" isPrintInFirstWholeBand="true" printWhenGroupChanges="Niveau" forecolor="#FFCC00" uuid="de4e5047-3089-4c1c-a3e3-196c88e08a9e">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
 				<box>
 					<pen lineWidth="0.25"/>

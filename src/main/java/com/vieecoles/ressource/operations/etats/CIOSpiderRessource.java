@@ -51,17 +51,23 @@ public class CIOSpiderRessource {
         InputStream myInpuStream ;
         /*myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/BulletinBean.jrxml");*/
 
-        if((libelleTrimetre.equals("Troisième Trimestre"))||(libelleTrimetre.equals("Troisième Semestre"))){
+        if((libelleTrimetre.equals("Troisième Trimestre"))||(libelleTrimetre.equals("Deuxième Semestre"))){
             myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Spider_Book_AnnuelsCio.jrxml");
             spiderCIODto detailsBull= new spiderCIODto() ;
             List<RecapResultatsElevesAffeEtNonAffDto>  dspsDto = new ArrayList<>() ;
-            dspsDto= resultatsServicesAnnuels.RecapCalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre) ;
+            try {
+                dspsDto= resultatsServicesAnnuels.RecapCalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre) ;
 
-            List<MoenneParDisciplineDto>  moyenParDiscipline = new ArrayList<>() ;
-            moyenParDiscipline= moyenneParDisciplineServiceAnnuels.getMoyenneParDiscipline (idEcole ,libelleAnnee,libelleTrimetre) ;
+                List<MoenneParDisciplineDto>  moyenParDiscipline = new ArrayList<>() ;
+                moyenParDiscipline= moyenneParDisciplineServiceAnnuels.getMoyenneParDiscipline (idEcole ,libelleAnnee,libelleTrimetre) ;
+                detailsBull.setDspsDto(dspsDto);
+                detailsBull.setMoyenneParDisc(moyenParDiscipline);
 
-            detailsBull.setDspsDto(dspsDto);
-            detailsBull.setMoyenneParDisc(moyenParDiscipline);
+            } catch (RuntimeException e) {
+                e.printStackTrace();
+            }
+
+
 
             System.out.println("detailsBull "+ detailsBull);
 
