@@ -62,7 +62,7 @@ public class AnneeScolaire extends PanacheEntityBase{
 	private Date dateUpdate;
 	
 	public String getCustomLibelle() {
-		return String.format("Année %s - %s", getAnneeDebut(), getAnneeFin());
+		return String.format("Année %s - %s", getAnneeDebut(), getAnneeDebut()+1);
 	}
 	
 //	@Transient

@@ -314,16 +314,16 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			List<Evaluation> _iterateur = new ArrayList<Evaluation>();
 			if (evalList != null)
 				_iterateur.addAll(evalList);
-			long startTime = System.nanoTime();
+//			long startTime = System.nanoTime();
 			_iterateur.stream().forEach(x -> collectNotesPec(noteList, x));
-
-			long endTime = System.nanoTime();
-			long durationInSeconds = (endTime - startTime) / 1000000000;
-			System.out.println("Temps d'exécution NOte _iterateur: " + durationInSeconds + " secondes");
+//
+//			long endTime = System.nanoTime();
+//			long durationInSeconds = (endTime - startTime) / 1000000000;
+//			System.out.println("Temps d'exécution NOte _iterateur: " + durationInSeconds + " secondes");
 //		logger.info("note size " + noteList.size());
 //		logger.info(gson.toJson(noteList));
 			// Regroupement des notes par élève
-			long startTime2 = System.nanoTime();
+//			long startTime2 = System.nanoTime();
 			for (Notes note : noteList) {
 //				System.out.println(note.getEvaluation().getMatiereEcole().getLibelle()+" "+note.getNote());
 //			logger.info("note.getClasseEleve().getInscription().getEleve()");
@@ -341,10 +341,10 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 //					System.out.println(">>>>>> new"+note.getEvaluation().getMatiereEcole().getMatiere().getId());
 				}
 			}
-			long endTime2 = System.nanoTime();
-			long durationInSeconds2 = (endTime2 - startTime2) / 1000000000;
-			System.out.println(
-					"Temps d'exécution Note Regroupement des notes par élève: " + durationInSeconds2 + " secondes");
+//			long endTime2 = System.nanoTime();
+//			long durationInSeconds2 = (endTime2 - startTime2) / 1000000000;
+//			System.out.println(
+//					"Temps d'exécution Note Regroupement des notes par élève: " + durationInSeconds2 + " secondes");
 			classe = classeService.findById(Long.parseLong(classeId));
 //		logger.info(g.toJson(classe));listNotesByEvaluation
 
@@ -361,7 +361,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 						classe.getBranche().getId());
 
 			}
-			long startTime3 = System.nanoTime();
+//			long startTime3 = System.nanoTime();
 			for (Map.Entry<Eleve, List<Notes>> entry : noteGroup.entrySet()) {
 				moyenneEleveDto = new MoyenneEleveDto();
 				moyenneEleveDto.setEleve(entry.getKey());
@@ -441,9 +441,9 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 //			moyenneEleveDto.setNotes(entry.getValue());
 				moyenneList.add(moyenneEleveDto);
 			}
-			long endTime3 = System.nanoTime();
-			long durationInSeconds3 = (endTime3 - startTime3) / 1000000000;
-			System.out.println("Temps d'exécution NOte build moyenneDto: " + durationInSeconds3 + " secondes");
+//			long endTime3 = System.nanoTime();
+//			long durationInSeconds3 = (endTime3 - startTime3) / 1000000000;
+//			System.out.println("Temps d'exécution NOte build moyenneDto: " + durationInSeconds3 + " secondes");
 			// Code pour visualiser les niveaux des matieres utilisées crant souvent des
 			// bugs
 //			System.out.println("Matiere et niveau");
@@ -458,13 +458,13 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 //		calculMoyenneMatiere(moyenneList);
 //		logger.info(moyenneList.toString());
 //		logger.info("-------------------------------------------");
-			startTime = System.nanoTime();
+//			startTime = System.nanoTime();
 			classementEleveParMatiere(calculMoyenneMatiere(moyenneList), classe.getBranche().getId(),
 					classe.getEcole().getId());
 			calculMoyenneGeneralEleve(moyenneList);
-			endTime = System.nanoTime();
-			durationInSeconds = (endTime - startTime) / 1000000000;
-			System.out.println("Temps d'exécution NOte Calculs des moyennes: " + durationInSeconds + " secondes");
+//			endTime = System.nanoTime();
+//			durationInSeconds = (endTime - startTime) / 1000000000;
+//			System.out.println("Temps d'exécution NOte Calculs des moyennes: " + durationInSeconds + " secondes");
 
 			// Vérifie si la période est la denière. si oui calcul des moyennes et rang
 			// annuels

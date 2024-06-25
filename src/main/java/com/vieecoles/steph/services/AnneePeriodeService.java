@@ -227,9 +227,9 @@ public class AnneePeriodeService implements PanacheRepositoryBase<AnneePeriode, 
 					anneePeriodesBuilder.set(index, setDatasFromPojoToPeriodeEcole(ap, apToMaj));
 				}
 			}
-			Gson g = new Gson();
+//			Gson g = new Gson();
 			System.out.println(" ----- ----- -----");
-			System.out.println(g.toJson(anneePeriodesBuilder));
+//			System.out.println(g.toJson(anneePeriodesBuilder));
 
 			for (AnneePeriode apb : anneePeriodesBuilder) {
 				try {
