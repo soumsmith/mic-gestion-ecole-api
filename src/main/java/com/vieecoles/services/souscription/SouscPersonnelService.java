@@ -174,12 +174,23 @@ public class SouscPersonnelService implements PanacheRepositoryBase<sous_attent_
 
     }
 
-    public  List<personnel> findAllPersonneParEcole(Long idEcole ){
-        TypedQuery<personnel> q = (TypedQuery<personnel>) em.createQuery( "SELECT  o from personnel o join o.domaine_formation_domaine_formationid  d join o.niveau_etude n join o.fonction f where o.ecole.ecoleid=:idEcole and f.fonctionlibelle <>:fonctionLibelle ");
-        List<personnel> listSouscriptionAvaliderDto = q.setParameter("idEcole" ,idEcole).
-                                                   setParameter("fonctionLibelle" ,"FONDATEUR").
-                getResultList();
+    public  List<personnel> findAllPersonneParEcole(Long idEcole  ){
+       // int firstResult = (pageNumber - 1) * pageSize;
+        List<personnel> listSouscriptionAvaliderDto = null;
+        try {
+            TypedQuery<personnel> q = (TypedQuery<personnel>) em.createQuery( "SELECT  o from personnel o join o.domaine_formation_domaine_formationid  d join o.niveau_etude n join o.fonction f where o.ecole.ecoleid=:idEcole and f.fonctionlibelle <>:fonctionLibelle ");
+             listSouscriptionAvaliderDto = q.setParameter("idEcole" ,idEcole).
+                    setParameter("fonctionLibelle" ,"FONDATEUR")
+                    //.setFirstResult(firstResult)
+                  // .setMaxResults(pageSize)
+                    .getResultList();
+
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+        }
         return  listSouscriptionAvaliderDto;
+
+
     }
 
     public  sous_attent_personn findPersonnelById(Long idPersonnel ){

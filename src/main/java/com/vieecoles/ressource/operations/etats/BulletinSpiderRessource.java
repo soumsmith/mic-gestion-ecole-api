@@ -164,7 +164,7 @@ public class BulletinSpiderRessource {
 
                 } else if (modelelmd){
                     if(libellePeriode.equals("Deuxième Semestre"))
-                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/callSpiderNobelBTSPointCarreTrois.jrxml");
+                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/callSpiderNobelLMDTrois.jrxml");
                     else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderNobelLMD.jrxml");
                 }
 
@@ -256,7 +256,7 @@ public class BulletinSpiderRessource {
                     }
                  else if (modelelmd){
                     if(libellePeriode.equals("Deuxième Semestre"))
-                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/callSpiderNobelBTSPointCarreTrois.jrxml");
+                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/callSpiderNobelLMDTrois.jrxml");
                     else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderNobelLMD.jrxml");
                 }
                     else {
@@ -412,7 +412,7 @@ if (!compress){
         }
         else if(modelelmd){
             if(libellePeriode.equals("Deuxième Semestre"))
-                myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/BulletinNobelSpiderBTSPointCareeSupTrois.jrxml");
+                myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/BulletinNobelSpiderBTSLMDTrois.jrxml");
             else  {
                 System.out.println("BulletinNobelSpiderLMD >>>>>>");
                 myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinNobelSpiderLMD.jrxml");
@@ -501,7 +501,7 @@ if (!compress){
         }
         else if(modelelmd){
                 if(libellePeriode.equals("Deuxième Semestre"))
-                    myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/BulletinNobelSpiderBTSPointCareeSupTrois.jrxml");
+                    myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/BulletinNobelSpiderBTSLMDTrois.jrxml");
                 else  {
                     System.out.println("BulletinNobelSpiderLMD >>>>>>");
                     myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinNobelSpiderLMD.jrxml");

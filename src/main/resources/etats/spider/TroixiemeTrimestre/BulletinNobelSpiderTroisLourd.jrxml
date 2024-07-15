@@ -595,7 +595,7 @@ where `ecoleviedbv2`.imprimer_les_derniers_bulletins_et_livrets.matricule =  $P{
 						<textElement textAlignment="Center" verticalAlignment="Middle">
 							<font fontName="SansSerif" size="7" isBold="false"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{parent_matiere}.equals("FRANCAIS")&&$F{ordre_niveau}<5?$F{moy_fr_intermediate}:$F{parent_matiere}.equals("")?"":$F{moy_intermediate}]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")&& !$F{parent_matiere}.equals("FRANCAIS")? "NC":$F{is_classed_mat}.equals("N")&& $F{parent_matiere}.equals("FRANCAIS")&&$F{ordre_niveau}>4?"NC":$F{parent_matiere}.equals("FRANCAIS")&&$F{ordre_niveau}<5?$F{moy_fr_intermediate}:$F{parent_matiere}.equals("")?"":$F{moy_intermediate}]]></textFieldExpression>
 					</textField>
 					<textField textAdjust="ScaleFont" isBlankWhenNull="true">
 						<reportElement style="TitreLibelle" x="140" y="0" width="30" height="15" uuid="167f3358-f06f-4874-b4d5-9c15a4680882">
@@ -617,7 +617,7 @@ where `ecoleviedbv2`.imprimer_les_derniers_bulletins_et_livrets.matricule =  $P{
 						<textElement textAlignment="Center" verticalAlignment="Middle">
 							<font fontName="SansSerif" size="7" isBold="false"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{parent_matiere}.equals("FRANCAIS")&&$F{ordre_niveau}<5?"":$F{parent_matiere}.equals("")?"":$F{test_lourd_note}]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")&& !$F{parent_matiere}.equals("FRANCAIS")? "NC":$F{is_classed_mat}.equals("N")&& $F{parent_matiere}.equals("FRANCAIS")&&$F{ordre_niveau}>4?"NC":$F{parent_matiere}.equals("FRANCAIS")&&$F{ordre_niveau}<5?"":$F{parent_matiere}.equals("")?"":$F{test_lourd_note}]]></textFieldExpression>
 					</textField>
 					<textField isBlankWhenNull="true">
 						<reportElement style="champsLibelle" x="170" y="0" width="30" height="15" isRemoveLineWhenBlank="true" uuid="77755e98-e926-48eb-b10f-1c8eafbdbba7">
@@ -636,7 +636,7 @@ where `ecoleviedbv2`.imprimer_les_derniers_bulletins_et_livrets.matricule =  $P{
 						<textElement textAlignment="Center" verticalAlignment="Middle">
 							<font fontName="SansSerif" size="7"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{parent_matiere}.equals("FRANCAIS")&&$F{ordre_niveau}<5?$F{moy_fr}:$F{parent_matiere}.equals("")?"":$F{moyenne}]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")&& !$F{parent_matiere}.equals("FRANCAIS")? "NC":$F{is_classed_mat}.equals("N")&& $F{parent_matiere}.equals("FRANCAIS")&&$F{ordre_niveau}>4?"NC":$F{parent_matiere}.equals("FRANCAIS")&&$F{ordre_niveau}<5?$F{moy_fr}:$F{parent_matiere}.equals("")?"":$F{moyenne}]]></textFieldExpression>
 						<patternExpression><![CDATA[$F{bonus}.equals("1") ? "+#.##": "##.##"]]></patternExpression>
 					</textField>
 					<textField isBlankWhenNull="true">
@@ -655,7 +655,7 @@ where `ecoleviedbv2`.imprimer_les_derniers_bulletins_et_livrets.matricule =  $P{
 						<textElement textAlignment="Center" verticalAlignment="Middle">
 							<font fontName="SansSerif" size="7"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{parent_matiere}.equals("FRANCAIS")&&$F{ordre_niveau}<3?3:$F{parent_matiere}.equals("FRANCAIS")&&$F{ordre_niveau}<5?4:$F{parent_matiere}.equals("")?"":$F{coef}]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")&& !$F{parent_matiere}.equals("FRANCAIS")? "NC":$F{is_classed_mat}.equals("N")&& $F{parent_matiere}.equals("FRANCAIS")&&$F{ordre_niveau}>4?"NC":$F{parent_matiere}.equals("FRANCAIS")&&$F{ordre_niveau}<3?3:$F{parent_matiere}.equals("FRANCAIS")&&$F{ordre_niveau}<5?4:$F{parent_matiere}.equals("")?"":$F{coef}]]></textFieldExpression>
 					</textField>
 					<textField isBlankWhenNull="true">
 						<reportElement style="champsLibelle" x="256" y="0" width="30" height="15" isRemoveLineWhenBlank="true" uuid="5777905c-6a5a-4450-af83-0cb270796a96">
@@ -674,7 +674,7 @@ where `ecoleviedbv2`.imprimer_les_derniers_bulletins_et_livrets.matricule =  $P{
 						<textElement verticalAlignment="Middle">
 							<font fontName="SansSerif" size="7"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":($F{parent_matiere}.equals("FRANCAIS")&&$F{ordre_niveau}<5) ? $F{rang_fr}+"e":$F{rang}==1 ?  $F{rang}+" er" :$F{rang}!=1? $F{rang} +" e": $F{rang} +" e"]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")&& !$F{parent_matiere}.equals("FRANCAIS")? "NC":$F{is_classed_mat}.equals("N")&& $F{parent_matiere}.equals("FRANCAIS")&&$F{ordre_niveau}>4?"NC":($F{parent_matiere}.equals("FRANCAIS")&&$F{ordre_niveau}<5) ? $F{rang_fr}+"e":$F{rang}==1 ?  $F{rang}+" er" :$F{rang}!=1? $F{rang} +" e": $F{rang} +" e"]]></textFieldExpression>
 					</textField>
 					<textField textAdjust="ScaleFont" isBlankWhenNull="true">
 						<reportElement style="champsLibelle" x="286" y="0" width="73" height="15" isRemoveLineWhenBlank="true" uuid="38db39fa-1ab5-4ff7-b6aa-c0b44fdccdcc">
@@ -696,7 +696,7 @@ where `ecoleviedbv2`.imprimer_les_derniers_bulletins_et_livrets.matricule =  $P{
 						<textElement textAlignment="Left" verticalAlignment="Middle">
 							<font fontName="SansSerif" size="7" isItalic="true"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{parent_matiere}.equals("FRANCAIS")&&$F{ordre_niveau}<5?$F{appr_fr}:$F{parent_matiere}.equals("")?"":$F{appreciation}]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")&& !$F{parent_matiere}.equals("FRANCAIS")? "NC":$F{is_classed_mat}.equals("N")&& $F{parent_matiere}.equals("FRANCAIS")&&$F{ordre_niveau}>4?"NC":$F{parent_matiere}.equals("FRANCAIS")&&$F{ordre_niveau}<5?$F{appr_fr}:$F{parent_matiere}.equals("")?"":$F{appreciation}]]></textFieldExpression>
 					</textField>
 					<textField textAdjust="ScaleFont" isBlankWhenNull="true">
 						<reportElement style="champsLibelle" x="359" y="0" width="89" height="15" isRemoveLineWhenBlank="true" uuid="b4200066-a206-4e5c-b3ee-1c1c3d9c5fde">
@@ -714,7 +714,7 @@ where `ecoleviedbv2`.imprimer_les_derniers_bulletins_et_livrets.matricule =  $P{
 						<textElement textAlignment="Left" verticalAlignment="Middle">
 							<font fontName="SansSerif" size="7"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")||$F{parent_matiere}.equals("")? "" :$F{nom_prenom_professeur}.toUpperCase()]]></textFieldExpression>
+						<textFieldExpression><![CDATA[($F{is_classed_mat}.equals("N")&& !$F{parent_matiere}.equals("FRANCAIS"))||$F{parent_matiere}.equals("")? "" :$F{is_classed_mat}.equals("N")&& $F{parent_matiere}.equals("FRANCAIS")&&$F{ordre_niveau}>4?"":$F{nom_prenom_professeur}.toUpperCase()]]></textFieldExpression>
 					</textField>
 					<textField textAdjust="ScaleFont" isBlankWhenNull="true">
 						<reportElement style="TitreLibelle" x="226" y="0" width="30" height="15" uuid="692531c9-2071-4241-bfa9-eb90807b1b63">
@@ -736,7 +736,7 @@ where `ecoleviedbv2`.imprimer_les_derniers_bulletins_et_livrets.matricule =  $P{
 						<textElement textAlignment="Center" verticalAlignment="Middle">
 							<font fontName="SansSerif" size="7" isBold="false"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{parent_matiere}.equals("FRANCAIS")&&$F{ordre_niveau}<5?$F{moy_coef_fr}:$F{parent_matiere}.equals("")?"":$F{bonus}.equals("0")?$F{moyenne}*$F{coef}:$F{moyenne}]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")&& !$F{parent_matiere}.equals("FRANCAIS")? "NC":$F{is_classed_mat}.equals("N")&& $F{parent_matiere}.equals("FRANCAIS")&&$F{ordre_niveau}>4?"NC":$F{parent_matiere}.equals("FRANCAIS")&&$F{ordre_niveau}<5?$F{moy_coef_fr}:$F{parent_matiere}.equals("")?"":$F{bonus}.equals("0")?$F{moyenne}*$F{coef}:$F{moyenne}]]></textFieldExpression>
 						<patternExpression><![CDATA["##.##"]]></patternExpression>
 					</textField>
 				</frame>

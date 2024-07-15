@@ -1048,7 +1048,7 @@ where `ecoleviedbv2`.imprimer_les_derniers_bulletins_et_livrets.matricule =  $P{
 							<textElement textAlignment="Left">
 								<font fontName="SansSerif" size="8"/>
 							</textElement>
-							<textFieldExpression><![CDATA["Année Scolaire : 2023 -2024"]]></textFieldExpression>
+							<textFieldExpression><![CDATA["Année Scolaire : "+$F{annee_libelle}.replace( "Année", "" )]]></textFieldExpression>
 						</textField>
 						<textField>
 							<reportElement x="0" y="0" width="101" height="14" uuid="5cb87f60-dd59-422e-abb3-94bb89f228ad">
@@ -2821,7 +2821,7 @@ where `ecoleviedbv2`.imprimer_les_derniers_bulletins_et_livrets.matricule =  $P{
 							<textElement textAlignment="Center">
 								<font size="8" isBold="true" isItalic="true"/>
 							</textElement>
-							<textFieldExpression><![CDATA[$F{moy_annuelle}<8.5 ?"Exclu(e)":($F{moy_annuelle}>=8.5 &&$F{moy_annuelle}<10 )?"Double":"Admis en classe supérieur"]]></textFieldExpression>
+							<textFieldExpression><![CDATA[$F{moy_annuelle}<8.5 ?"Exclu(e)":($F{moy_annuelle}>=8.5 &&$F{moy_annuelle}<10 )?"Double":"Admis en classe supérieure"]]></textFieldExpression>
 						</textField>
 						<staticText>
 							<reportElement x="0" y="40" width="172" height="40" uuid="1b546945-aa78-462b-a38e-c047d05a5d33">

@@ -3,7 +3,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CertificatDeTravailN" pageWidth="630" pageHeight="842" columnWidth="630" leftMargin="0" rightMargin="0" topMargin="20" bottomMargin="20" uuid="cecdf213-9a9e-43a3-a0f6-256935281386">
 	<property name="net.sf.jasperreports.awt.ignore.missing.font" value="true"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="NO_DATA_ADAPTER"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ecolevieDB"/>
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="431"/>
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="559"/>
 	<style name="champsLibelle" fontName="Serif" fontSize="8">
@@ -39,11 +39,11 @@
 	<parameter name="photo_eleve" class="java.awt.Image" isForPrompting="false"/>
 	<parameter name="amoirie" class="java.awt.Image" isForPrompting="false"/>
 	<parameter name="annee" class="java.lang.String"/>
-	<parameter name="idSouscrip" class="java.lang.Long" isForPrompting="false"/>
+	<parameter name="idSouscrip" class="java.lang.Long"/>
 	<queryString language="SQL">
-		<![CDATA[select * from  `ecoleviedbv2`.certificat_travail
-where `ecoleviedbv2`.certificat_travail.ecoleid = $P{idEcole}
-and  `ecoleviedbv2`.certificat_travail.personnelid = $P{idSouscrip}]]>
+		<![CDATA[select * from   `ecoleviedbv2`.certificat_travail 
+where  `ecoleviedbv2`.certificat_travail.ecoleid = $P{idEcole} 
+and   `ecoleviedbv2`.certificat_travail.personnelid = $P{idSouscrip}]]>
 	</queryString>
 	<field name="personnelid" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.name" value="personnelid"/>
@@ -90,6 +90,11 @@ and  `ecoleviedbv2`.certificat_travail.personnelid = $P{idSouscrip}]]>
 		<property name="com.jaspersoft.studio.field.label" value="sous_attent_personnid"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_travail"/>
 	</field>
+	<field name="sexe" class="java.lang.String"/>
+	<variable name="civilite" class="java.lang.String">
+		<variableExpression><![CDATA[$F{sexe}.equals("MASCULIN")? "Monsieur":"Madame"]]></variableExpression>
+		<initialValueExpression><![CDATA[$F{sexe}.equals("MASCULIN")? "Monsieur":"Madame"]]></initialValueExpression>
+	</variable>
 	<group name="InfosPersonnelEleve"/>
 	<group name="DisciplineLettre"/>
 	<group name="BilanScientifique"/>
@@ -112,7 +117,9 @@ and  `ecoleviedbv2`.certificat_travail.personnelid = $P{idSouscrip}]]>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement verticalAlignment="Middle"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Century Gothic"/>
+					</textElement>
 					<textFieldExpression><![CDATA["Je soussigné "+$P{signataire}.toUpperCase()+", agissant en qualité de "+$P{fonction}]]></textFieldExpression>
 				</textField>
 				<textField>
@@ -124,8 +131,10 @@ and  `ecoleviedbv2`.certificat_travail.personnelid = $P{idSouscrip}]]>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA["Certifie que : "+$F{personnelnom}.toUpperCase()+" "+$F{personnelprenom}.toUpperCase()]]></textFieldExpression>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Century Gothic"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Certifie que : "+$V{civilite}+"  "+$F{personnelnom}.toUpperCase()+" "+$F{personnelprenom}.toUpperCase()]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="20" y="42" width="40" height="20" uuid="2351f277-de33-4e46-9d67-76d5c6a18dcd"/>
@@ -136,7 +145,9 @@ and  `ecoleviedbv2`.certificat_travail.personnelid = $P{idSouscrip}]]>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement verticalAlignment="Middle"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Century Gothic"/>
+					</textElement>
 					<textFieldExpression><![CDATA["Né(e) le "]]></textFieldExpression>
 				</textField>
 				<textField>
@@ -148,8 +159,10 @@ and  `ecoleviedbv2`.certificat_travail.personnelid = $P{idSouscrip}]]>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[",est salarié(e) dans notre établissement en qualité de "]]></textFieldExpression>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Century Gothic"/>
+					</textElement>
+					<textFieldExpression><![CDATA[",est salarié(e) dans notre établissement en qualité de "+$F{fonctionlibelle}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="20" y="84" width="590" height="20" uuid="a6b7554f-5d9c-49e9-80c1-a55c4811cd05"/>
@@ -160,7 +173,9 @@ and  `ecoleviedbv2`.certificat_travail.personnelid = $P{idSouscrip}]]>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement verticalAlignment="Middle"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Century Gothic"/>
+					</textElement>
 					<textFieldExpression><![CDATA["sous contrat à durée determinée ."]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
@@ -172,7 +187,9 @@ and  `ecoleviedbv2`.certificat_travail.personnelid = $P{idSouscrip}]]>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement verticalAlignment="Middle"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Century Gothic"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{personneldatenaissance}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
@@ -184,7 +201,9 @@ and  `ecoleviedbv2`.certificat_travail.personnelid = $P{idSouscrip}]]>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement verticalAlignment="Middle"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Century Gothic"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{personnel_lieunaissance}.toUpperCase()]]></textFieldExpression>
 				</textField>
 				<textField>
@@ -196,7 +215,9 @@ and  `ecoleviedbv2`.certificat_travail.personnelid = $P{idSouscrip}]]>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement verticalAlignment="Middle"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Century Gothic"/>
+					</textElement>
 					<textFieldExpression><![CDATA[" à"]]></textFieldExpression>
 				</textField>
 			</band>
@@ -269,7 +290,7 @@ and  `ecoleviedbv2`.certificat_travail.personnelid = $P{idSouscrip}]]>
 								<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 							</reportElement>
 							<textElement textAlignment="Left">
-								<font fontName="SansSerif" size="8"/>
+								<font fontName="Century Gothic" size="8"/>
 								<paragraph leftIndent="10"/>
 							</textElement>
 							<text><![CDATA[MINISTERE DE L'EDUCATION NATIONALE ET DE L'ALPHABETISATION]]></text>
@@ -287,7 +308,7 @@ and  `ecoleviedbv2`.certificat_travail.personnelid = $P{idSouscrip}]]>
 								<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 							</reportElement>
 							<textElement textAlignment="Left">
-								<font fontName="SansSerif" size="12" isBold="true"/>
+								<font fontName="Century Gothic" size="12" isBold="true"/>
 								<paragraph leftIndent="10"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$P{libelleEcole}]]></textFieldExpression>
@@ -316,7 +337,7 @@ and  `ecoleviedbv2`.certificat_travail.personnelid = $P{idSouscrip}]]>
 									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 								</reportElement>
 								<textElement verticalAlignment="Middle">
-									<font size="6"/>
+									<font fontName="Century Gothic" size="6"/>
 									<paragraph leftIndent="15"/>
 								</textElement>
 								<text><![CDATA[Adresse : ]]></text>
@@ -332,7 +353,7 @@ and  `ecoleviedbv2`.certificat_travail.personnelid = $P{idSouscrip}]]>
 									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 								</reportElement>
 								<textElement verticalAlignment="Middle">
-									<font size="6" isBold="true"/>
+									<font fontName="Century Gothic" size="6" isBold="true"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$P{adresse}==null ? "":$P{adresse}]]></textFieldExpression>
 							</textField>
@@ -349,7 +370,7 @@ and  `ecoleviedbv2`.certificat_travail.personnelid = $P{idSouscrip}]]>
 									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 								</reportElement>
 								<textElement verticalAlignment="Middle">
-									<font size="6"/>
+									<font fontName="Century Gothic" size="6"/>
 									<paragraph leftIndent="15"/>
 								</textElement>
 								<text><![CDATA[Code:]]></text>
@@ -365,7 +386,7 @@ and  `ecoleviedbv2`.certificat_travail.personnelid = $P{idSouscrip}]]>
 									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 								</reportElement>
 								<textElement verticalAlignment="Middle">
-									<font size="6" isBold="true"/>
+									<font fontName="Century Gothic" size="6" isBold="true"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$P{code}]]></textFieldExpression>
 							</textField>
@@ -383,7 +404,7 @@ and  `ecoleviedbv2`.certificat_travail.personnelid = $P{idSouscrip}]]>
 									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 								</reportElement>
 								<textElement verticalAlignment="Middle">
-									<font size="6"/>
+									<font fontName="Century Gothic" size="6"/>
 									<paragraph leftIndent="15"/>
 								</textElement>
 								<text><![CDATA[Téléphone:]]></text>
@@ -416,7 +437,7 @@ and  `ecoleviedbv2`.certificat_travail.personnelid = $P{idSouscrip}]]>
 									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 								</reportElement>
 								<textElement verticalAlignment="Middle">
-									<font size="6"/>
+									<font fontName="Century Gothic" size="6"/>
 									<paragraph leftIndent="15"/>
 								</textElement>
 								<text><![CDATA[Statut:]]></text>
@@ -432,7 +453,7 @@ and  `ecoleviedbv2`.certificat_travail.personnelid = $P{idSouscrip}]]>
 									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 								</reportElement>
 								<textElement verticalAlignment="Middle">
-									<font size="6" isBold="true"/>
+									<font fontName="Century Gothic" size="6" isBold="true"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$P{statut}==null? "" :$P{statut}]]></textFieldExpression>
 							</textField>
@@ -487,7 +508,7 @@ and  `ecoleviedbv2`.certificat_travail.personnelid = $P{idSouscrip}]]>
 								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 							</reportElement>
 							<textElement textAlignment="Left" verticalAlignment="Middle">
-								<font fontName="SansSerif" size="6"/>
+								<font fontName="Century Gothic" size="6"/>
 							</textElement>
 							<text><![CDATA[REPUBLIQUE DE COTE D'IVOIRE]]></text>
 						</staticText>
@@ -547,7 +568,7 @@ and  `ecoleviedbv2`.certificat_travail.personnelid = $P{idSouscrip}]]>
 								<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
 							</reportElement>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font isBold="true"/>
+								<font fontName="Century Gothic" isBold="true"/>
 							</textElement>
 							<textFieldExpression><![CDATA["CERTIFICAT DE TRAVAIL"]]></textFieldExpression>
 						</textField>
@@ -572,6 +593,9 @@ and  `ecoleviedbv2`.certificat_travail.personnelid = $P{idSouscrip}]]>
 						<property name="com.jaspersoft.layout.grid.colspan" value="2"/>
 						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 					</reportElement>
+					<textElement>
+						<font fontName="Century Gothic"/>
+					</textElement>
 					<textFieldExpression><![CDATA["En foi de quoi ,le présent certificat  est etablie pour servir et valoir ce que de droit."]]></textFieldExpression>
 				</textField>
 				<textField>
@@ -584,7 +608,9 @@ and  `ecoleviedbv2`.certificat_travail.personnelid = $P{idSouscrip}]]>
 						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 					</reportElement>
-					<textElement textAlignment="Right"/>
+					<textElement textAlignment="Right">
+						<font fontName="Century Gothic"/>
+					</textElement>
 					<textFieldExpression><![CDATA["Abidjan le "]]></textFieldExpression>
 				</textField>
 				<textField>
@@ -598,7 +624,7 @@ and  `ecoleviedbv2`.certificat_travail.personnelid = $P{idSouscrip}]]>
 						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 					</reportElement>
 					<textElement textAlignment="Right">
-						<font isUnderline="true"/>
+						<font fontName="Century Gothic" isUnderline="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$P{fonction}.toUpperCase()]]></textFieldExpression>
 				</textField>
