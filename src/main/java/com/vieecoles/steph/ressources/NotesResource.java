@@ -8,6 +8,8 @@ import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 import javax.inject.Inject;
+import javax.json.bind.Jsonb;
+import javax.json.bind.JsonbBuilder;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -64,13 +66,13 @@ public class NotesResource {
     public Response getNotesByClasseAndPeriode(@PathParam("classe") String classe,@PathParam("annee") String annee, @PathParam("periode") String periode) {
     	List<MoyenneEleveDto> medtos = new ArrayList<MoyenneEleveDto>();
     	
-    	Gson gson = new Gson();
     	try {
     		medtos = noteService.moyennesAndNotesHandle(classe, annee, periode);
     	}catch(RuntimeException r) {
+    		r.printStackTrace();
     		return Response.serverError().entity(r).build();
     	}
-    	return  Response.ok(gson.toJson(medtos)).build()  ;
+    	return  Response.ok(medtos).build()  ;
     }
     
     @GET
