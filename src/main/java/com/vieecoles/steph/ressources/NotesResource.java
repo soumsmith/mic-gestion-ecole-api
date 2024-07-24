@@ -1,5 +1,6 @@
 package com.vieecoles.steph.ressources;
 
+import com.google.gson.Gson;
 import com.vieecoles.steph.dto.MoyenneEleveDto;
 import com.vieecoles.steph.entities.Notes;
 import com.vieecoles.steph.services.NoteService;
@@ -63,12 +64,13 @@ public class NotesResource {
     public Response getNotesByClasseAndPeriode(@PathParam("classe") String classe,@PathParam("annee") String annee, @PathParam("periode") String periode) {
     	List<MoyenneEleveDto> medtos = new ArrayList<MoyenneEleveDto>();
     	
+    	Gson gson = new Gson();
     	try {
     		medtos = noteService.moyennesAndNotesHandle(classe, annee, periode);
     	}catch(RuntimeException r) {
     		return Response.serverError().entity(r).build();
     	}
-    	return  Response.ok(medtos).build()  ;
+    	return  Response.ok(gson.toJson(medtos)).build()  ;
     }
     
     @GET
