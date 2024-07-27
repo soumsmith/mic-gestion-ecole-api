@@ -28,4 +28,8 @@ public class Branche extends PanacheEntityBase{
 	@ManyToOne
 	@JoinColumn(name = "niveau_enseignement_id")
 	private NiveauEnseignement niveauEnseignement;
+	
+	@ManyToOne
+	@JoinColumn(name = "fk_programme_id")
+	private Programme programme;
 }
