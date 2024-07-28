@@ -32,9 +32,13 @@ public class ProgrammeService implements PanacheRepositoryBase<Programme, String
 		ProgrammeDto dto = new ProgrammeDto();
 		Ecole ecole = Ecole.findById(ecoleId);
 		List<IdCodeLibelleDto> list = new ArrayList<IdCodeLibelleDto>();
+		IdCodeLibelleDto niveauEnseignement = new IdCodeLibelleDto();
 		IdCodeLibelleDto programme;
 		List<ProgrammeEcole> listProgrammeEcole = programmeEcoleService.getByEcole(ecoleId);
 		dto.setEcole(ecole.getLibelle());
+		niveauEnseignement.setId(String.valueOf(ecole.getNiveauEnseignement().getId()));
+		niveauEnseignement.setLibelle(ecole.getNiveauEnseignement().getLibelle());
+		dto.setNiveauEnseignement(niveauEnseignement);
 		if(listProgrammeEcole!=null) {
 			dto.setNbreProgramme(listProgrammeEcole.size());
 			for(ProgrammeEcole pe: listProgrammeEcole) {

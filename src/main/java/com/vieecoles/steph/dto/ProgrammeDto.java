@@ -9,6 +9,7 @@ import lombok.Setter;
 @Setter
 public class ProgrammeDto {
 	private String ecole;
+	private IdCodeLibelleDto niveauEnseignement;
 	private int nbreProgramme = 0;
 	private List<IdCodeLibelleDto> programmes;
 }

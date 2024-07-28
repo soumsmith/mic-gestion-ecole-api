@@ -19,7 +19,7 @@ public class ProgrammeEcoleResource {
 	
 	@GET
 	@Path("list-by-ecole")
-	@Operation(description = "Obtenir la liste des branches", summary = "")
+	@Operation(description = "Obtenir la liste des programmes par école", summary = "")
 	@Tag(name = "Programme")
 	public Response getListByEcole(@QueryParam("ecoleId") Long ecoleId) {		
 		return Response.ok(programmeService.listByEcole(ecoleId)).build();
