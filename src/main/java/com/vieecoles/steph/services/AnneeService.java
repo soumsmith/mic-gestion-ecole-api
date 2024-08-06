@@ -142,7 +142,7 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 			annees = AnneeScolaire
 					.find("ecole.id = ?1 and niveau =?2 and statut <> ?3", ecoleId, Constants.ECOLE, Constants.DIFFUSE)
 					.list();
-			System.out.println(g.toJson(annees));
+//			System.out.println(g.toJson(annees));
 
 			if (annees != null && annees.size() > 0)
 				for (AnneeScolaire ans : annees) {
@@ -280,7 +280,7 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 				.find("niveauEnseignement.id =?1 and periodicite.id =?2 and annee=?3 and ecole is null",
 						niveauEnseignement, periodicite, annee)
 				.count();
-		System.out.println("isUniqueContraintValid " + nbre);
+//		System.out.println("isUniqueContraintValid " + nbre);
 		return nbre == 0;
 	}
 
@@ -290,7 +290,8 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 		// save annee
 		annee.setLibelle(annee.getCustomLibelle());
 		annee.setStatut(Constants.INITIALISE);
-		if (annee.getId() != 0)
+//		System.out.println(String.format("annee getid -> %s", annee.getId()));
+		if (annee.getId()!=null && annee.getId() != 0)
 			update(annee.getId(), annee);
 		else {
 			if (!isUniqueContraintValid(annee.getNiveauEnseignement().getId(), annee.getPeriodicite().getId(),
@@ -427,7 +428,7 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 				anneeTemp.setUser(an.getUser());
 				anneeTemp.setNiveau(Constants.ECOLE);
 				create(anneeTemp);
-				System.out.println(String.format("Init----> %s - %s", anneeTemp.getId(), anneeTemp.getCustomLibelle()));
+//				System.out.println(String.format("Init----> %s - %s", anneeTemp.getId(), anneeTemp.getCustomLibelle()));
 				anneePeriodeService.handleSharingToEcole(an.getId(), anneeTemp);
 			}
 		}
@@ -447,7 +448,7 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 	@Transactional
 	public AnneeScolaire sharing(AnneeScolaire annee) {
 		List<Ecole> ecoles = ecoleService.getByNiveauEnseignement(annee.getNiveauEnseignement().getId());
-		System.out.println("annee ids " + annee.getId());
+//		System.out.println("annee ids " + annee.getId());
 
 		annee.setStatut(Constants.DIFFUSE);
 		update(annee.getId(), annee);
@@ -469,7 +470,7 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 				anneeTemp.setNiveau(Constants.ECOLE);
 				anneeTemp.setDelaiNotes(Constants.DEFAULT_DELAI_SAISIE_NOTES);
 				create(anneeTemp);
-				System.out.println(String.format("----> %s - %s", anneeTemp.getId(), anneeTemp.getLibelle()));
+//				System.out.println(String.format("----> %s - %s", anneeTemp.getId(), anneeTemp.getLibelle()));
 				anneePeriodeService.handleSharingToEcole(annee.getId(), anneeTemp);
 			}
 		else

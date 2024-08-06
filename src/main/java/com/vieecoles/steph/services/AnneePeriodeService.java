@@ -58,12 +58,12 @@ public class AnneePeriodeService implements PanacheRepositoryBase<AnneePeriode, 
 
 // CENTRAL
 	public List<AnneePeriode> listByAnneeAndNiveauEnseignementToCentral(Long anneeId, Long niveauEnseignement) {
-		System.out.println(anneeId);
-		System.out.println(niveauEnseignement);
+//		System.out.println(anneeId);
+//		System.out.println(niveauEnseignement);
 		List<AnneePeriode> anPerList = new ArrayList<AnneePeriode>();
 		try {
 			Gson g = new Gson();
-			System.out.println(g.toJson(findById(1L)));
+//			System.out.println(g.toJson(findById(1L)));
 			anPerList = AnneePeriode
 					.find("anneeScolaire.id=?1 and anneeScolaire.niveauEnseignement.id=?2 and ecole is null", anneeId,
 							niveauEnseignement)
@@ -228,7 +228,7 @@ public class AnneePeriodeService implements PanacheRepositoryBase<AnneePeriode, 
 				}
 			}
 //			Gson g = new Gson();
-			System.out.println(" ----- ----- -----");
+//			System.out.println(" ----- ----- -----");
 //			System.out.println(g.toJson(anneePeriodesBuilder));
 
 			for (AnneePeriode apb : anneePeriodesBuilder) {
