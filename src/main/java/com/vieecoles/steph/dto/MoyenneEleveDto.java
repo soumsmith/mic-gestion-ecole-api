@@ -3,12 +3,14 @@ package com.vieecoles.steph.dto;
 import com.vieecoles.steph.entities.*;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
 @Data
-public class MoyenneEleveDto implements Comparable<MoyenneEleveDto> {
+public class MoyenneEleveDto implements Comparable<MoyenneEleveDto>, Serializable {
 
+	private static final long serialVersionUID = 1L;
 	private Eleve eleve;
 	private Classe classe;
 	private Periode periode;

@@ -122,6 +122,106 @@ public class MatriceAnnuelleRessource {
 
     }
 
+    @GET
+    @Transactional
+    @Path("/imprimer-spider-annuelle-dfa-xls/{idEcole}/{libelleAnnee}/{periode}/{anneeId}/{classe}")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public ResponseEntity<byte[]>  getDtoRappoxlsrtdfa(@PathParam("idEcole") Long idEcole ,@PathParam("libelleAnnee") String libelleAnnee ,
+                                                 @PathParam("periode") String periode , @PathParam("anneeId") Long anneeId ,@PathParam("classe") Long classe) throws Exception, JRException {
+
+
+
+        InputStream myInpuStream ;
+        /*myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/BulletinBean.jrxml");*/
+
+        SpiderMatriceClasseDto detailsBull= new SpiderMatriceClasseDto() ;
+
+        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/MatriceAnnuelleGeneralDFA.jrxml");
+        List<matriceClasseDto> detailsBull1= new ArrayList<>() ;
+        List<matiereMoyenneBilanDto> detailsBull2= new ArrayList<>() ;
+
+
+
+        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecoleviedbv2", USER, PASS);
+        JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
+        Classe myClasse = Classe.findById(classe);
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("idEcole", idEcole);
+        map.put("annee", libelleAnnee);
+        map.put("libellePeriode", periode);
+        map.put("classe", myClasse.getLibelle());
+        // map.put("title", type);
+
+        JasperPrint report = JasperFillManager.fillReport(compileReport, map, connection);
+
+        JRXlsExporter exporter = new JRXlsExporter();
+        exporter.setExporterInput(new SimpleExporterInput(report));
+        // File exportReportFile = new File("profils" + ".docx");
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(baos));
+        exporter.exportReport();
+        byte[] data = baos.toByteArray() ;
+        HttpHeaders headers= new HttpHeaders();
+        // headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Rapport"+myScole.getEcoleclibelle()+".docx");
+        headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Matrice de classe Annuelle-dfa.xls");
+        return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.MULTIPART_FORM_DATA).body(data);
+
+    }
+    @GET
+    @Transactional
+    @Path("/imprimer-spider-annuelle-dfa/{idEcole}/{libelleAnnee}/{periode}/{anneeId}/{classe}")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public ResponseEntity<byte[]>  getDtoRapportmatdfa(@PathParam("idEcole") Long idEcole ,@PathParam("libelleAnnee") String libelleAnnee ,
+                                                    @PathParam("periode") String periode , @PathParam("anneeId") Long anneeId ,@PathParam("classe") Long classe) throws Exception, JRException {
+        InputStream myInpuStream ;
+        /*myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/BulletinBean.jrxml");*/
+        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/MatriceAnnuelleGeneralDFA.jrxml");
+
+        List<matriceAnnuelleDto> detailsBull= new ArrayList<>() ;
+
+
+        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecoleviedbv2", USER, PASS);
+        JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
+        Classe myClasse = Classe.findById(classe);
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("idEcole", idEcole);
+        map.put("annee", libelleAnnee);
+        map.put("libellePeriode", periode);
+        map.put("classe", myClasse.getLibelle());
+        //map.put("classe","6EME A");
+        // map.put("title", type);
+        try {
+            JasperPrint report = JasperFillManager.fillReport(compileReport, map, connection);
+
+        } catch (RuntimeException e){
+            e.printStackTrace ();
+        }
+        JasperPrint report = JasperFillManager.fillReport(compileReport, map, connection);
+
+        //*********************************
+        /*JRDocxExporter exporter = new JRDocxExporter();
+        exporter.setExporterInput(new SimpleExporterInput(report));
+        // File exportReportFile = new File("profils" + ".docx");
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(baos));
+        exporter.exportReport();
+        byte[] data = baos.toByteArray() ;
+        HttpHeaders headers= new HttpHeaders();
+        headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=matrice trimestrielle.docx");*/
+        //*********************************
+
+        byte[] data =JasperExportManager.exportReportToPdf(report);
+        HttpHeaders headers= new HttpHeaders();
+        headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Matrice de classe Annuelle avec dfa.pdf");
+
+
+        return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.MULTIPART_FORM_DATA).body(data);
+
+
+    }
+
 
     @GET
     @Transactional

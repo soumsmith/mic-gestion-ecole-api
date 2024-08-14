@@ -70,7 +70,7 @@ public class SouscriptionRessource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("personnel/{idEcole}")
-    public List<personnel> personnelParEcole(@PathParam("idEcole") Long idEcole) {
+    public List<personnel> personnelParEcole(@PathParam("idEcole") Long idEcole ) {
     return souscPersonnelService.findAllPersonneParEcole(idEcole) ;
     }
     @GET

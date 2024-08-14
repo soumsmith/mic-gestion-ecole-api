@@ -23,12 +23,12 @@
 	<parameter name="setBg" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select *
-from  `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois
-where `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.libelle_classe =  $P{classe} and
-   `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.id_ecole  =  $P{idEcole}  and
-    `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.annee_libelle =  $P{libelleAnnee}
-    and  `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.libelle_periode like  $P{libellePeriode}
-     order by `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.nom , `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.prenoms]]>
+from  `ecoleviedbv2`.imprimer_les_derniers_bulletins_et_livrets
+where `ecoleviedbv2`.imprimer_les_derniers_bulletins_et_livrets.libelle_classe =  $P{classe} and
+   `ecoleviedbv2`.imprimer_les_derniers_bulletins_et_livrets.id_ecole  =  $P{idEcole}  and
+    `ecoleviedbv2`.imprimer_les_derniers_bulletins_et_livrets.annee_libelle =  $P{libelleAnnee}
+    and  `ecoleviedbv2`.imprimer_les_derniers_bulletins_et_livrets.libelle_periode like  $P{libellePeriode}
+     order by `ecoleviedbv2`.imprimer_les_derniers_bulletins_et_livrets.nom , `ecoleviedbv2`.imprimer_les_derniers_bulletins_et_livrets.prenoms]]>
 	</queryString>
 	<field name="id_ecole" class="java.lang.Long">
 		<property name="com.jaspersoft.studio.field.name" value="id_ecole"/>

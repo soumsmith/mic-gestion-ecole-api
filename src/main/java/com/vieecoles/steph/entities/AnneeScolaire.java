@@ -4,6 +4,7 @@ import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -25,12 +26,13 @@ import com.vieecoles.steph.pojos.AnneePeriodePojo;
 @EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name = "annee_scolaire")
-public class AnneeScolaire extends PanacheEntityBase{
+public class AnneeScolaire extends PanacheEntityBase implements Serializable{
 
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "annee_scolaireid")
-	private long id;
+	private Long id;
 //	@Column(name = "annee_scolaire_code")
 //	private String code;
 	@Column(name = "annee")
@@ -62,7 +64,7 @@ public class AnneeScolaire extends PanacheEntityBase{
 	private Date dateUpdate;
 	
 	public String getCustomLibelle() {
-		return String.format("Année %s - %s", getAnneeDebut(), getAnneeFin());
+		return String.format("Année %s - %s", getAnneeDebut(), getAnneeDebut() != null ? (getAnneeDebut() +1) : null);
 	}
 	
 //	@Transient

@@ -33,12 +33,12 @@
 	<parameter name="positionLogo" class="java.lang.String"/>
 	<parameter name="setBg" class="java.lang.String"/>
 	<queryString language="SQL">
-		<![CDATA[select * from  `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois
-where `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.matricule =  $P{matricule} and 
-`ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.id_ecole=  $P{idEcole} and 
-`ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.annee_libelle= $P{annee} and 
-`ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.libelle_periode= $P{libellePeriode}
-   order by `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.nom , `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.prenoms]]>
+		<![CDATA[select * from  `ecoleviedbv2`.imprimer_les_derniers_bulletins_et_livrets
+where `ecoleviedbv2`.imprimer_les_derniers_bulletins_et_livrets.matricule =  $P{matricule} and 
+`ecoleviedbv2`.imprimer_les_derniers_bulletins_et_livrets.id_ecole=  $P{idEcole} and 
+`ecoleviedbv2`.imprimer_les_derniers_bulletins_et_livrets.annee_libelle= $P{annee} and 
+`ecoleviedbv2`.imprimer_les_derniers_bulletins_et_livrets.libelle_periode= $P{libellePeriode}
+   order by `ecoleviedbv2`.imprimer_les_derniers_bulletins_et_livrets.nom , `ecoleviedbv2`.imprimer_les_derniers_bulletins_et_livrets.prenoms]]>
 	</queryString>
 	<field name="id_ecole" class="java.lang.Long">
 		<property name="com.jaspersoft.studio.field.name" value="id_ecole"/>
@@ -539,7 +539,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.matricule =  $P{matr
 						<textElement textAlignment="Center" verticalAlignment="Middle">
 							<font fontName="SansSerif" size="8"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{parent_matiere}.equals("FRANCAIS")&&$F{ordre_niveau}<5?$F{coef_fr}:$F{parent_matiere}.equals("")?"":$F{coef}]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{parent_matiere}.equals("FRANCAIS")&&$F{ordre_niveau}<3?3:$F{parent_matiere}.equals("FRANCAIS")&&$F{ordre_niveau}<5?4:$F{parent_matiere}.equals("")?"":$F{coef}]]></textFieldExpression>
 					</textField>
 					<textField evaluationTime="Band" isBlankWhenNull="true">
 						<reportElement style="champsLibelle" x="218" y="0" width="30" height="18" isRemoveLineWhenBlank="true" uuid="4863f765-b56c-4e96-b748-68ff7b46689c">

@@ -1,5 +1,6 @@
 package com.vieecoles.steph.ressources;
 
+import com.google.gson.Gson;
 import com.vieecoles.steph.dto.MoyenneEleveDto;
 import com.vieecoles.steph.entities.Notes;
 import com.vieecoles.steph.services.NoteService;
@@ -7,6 +8,8 @@ import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 import javax.inject.Inject;
+import javax.json.bind.Jsonb;
+import javax.json.bind.JsonbBuilder;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -66,6 +69,7 @@ public class NotesResource {
     	try {
     		medtos = noteService.moyennesAndNotesHandle(classe, annee, periode);
     	}catch(RuntimeException r) {
+    		r.printStackTrace();
     		return Response.serverError().entity(r).build();
     	}
     	return  Response.ok(medtos).build()  ;

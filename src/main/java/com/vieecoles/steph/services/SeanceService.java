@@ -2,8 +2,10 @@ package com.vieecoles.steph.services;
 
 import com.google.gson.Gson;
 import com.vieecoles.services.operations.ecoleService;
+import com.vieecoles.steph.dto.AnneeDto;
 import com.vieecoles.steph.entities.*;
 import com.vieecoles.steph.projections.GenericProjectionLongId;
+import com.vieecoles.steph.util.CommonUtils;
 import com.vieecoles.steph.util.DateUtils;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 import io.quarkus.scheduler.Scheduled;
@@ -449,13 +451,20 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 		logger.info(String.format("Date de generation des bulletins %s", DateUtils.asDate(tomorrow)));
 
 		for (Ecole ecole : ecoles) {
-			System.out.println(String.format("Ecole %s", ecole.getLibelle()));
-//			handlePersist(tomorrow, jour, ecole);
-			GenericProjectionLongId anneeCentrale = anneeService.findMainAnneeWithProjectionByEcole(ecole);
-			try {
-				generateSeances(DateUtils.asDate(tomorrow), null, ecole.getId(), anneeCentrale.getId());
-			} catch (Exception e) {
-				e.printStackTrace();
+
+//			System.out.println(String.format("Ecole %s", ecole.getLibelle()));
+			AnneeDto annee = anneeService.getOpenAnneeByEcoleDto(ecole.getId());
+			if (annee.getAnneeEcoleList() != null && annee.getAnneeEcoleList().size() > 0) {
+				AnneePeriode ap = AnneePeriode.find("anneeScolaire.id =?1 and ecole.id=?2 order by dateFin desc", annee.getAnneeEcoleList().get(0).getAnneeId(), ecole.getId()).firstResult();
+//				System.out.println(String.format(" tomorrow %s compareTo dateFin %s is before ? %s", tomorrow,ap.getDateFin().toLocalDate(),!tomorrow.isAfter(ap.getDateFin().toLocalDate())));
+				if(!tomorrow.isAfter(ap.getDateFin().toLocalDate()) ) {
+					GenericProjectionLongId anneeCentrale = anneeService.findMainAnneeWithProjectionByEcole(ecole);
+					try {
+						generateSeances(DateUtils.asDate(tomorrow), null, ecole.getId(), anneeCentrale.getId());
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
 			}
 		}
 		logger.info("*** FIN GENERATION ***");
