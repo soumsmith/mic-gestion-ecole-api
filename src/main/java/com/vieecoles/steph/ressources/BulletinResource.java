@@ -1,8 +1,5 @@
 package com.vieecoles.steph.ressources;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -13,12 +10,11 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.vieecoles.steph.dto.BulletinDto;
-import com.vieecoles.steph.entities.Bulletin;
-import com.vieecoles.steph.entities.Classe;
-import com.vieecoles.steph.services.BulletinService;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
+
+import com.vieecoles.steph.dto.BulletinDto;
+import com.vieecoles.steph.services.BulletinService;
 
 @Path("/bulletin")
 public class BulletinResource {
