@@ -84,6 +84,10 @@ public class BulletinSpiderRessource {
                                                  @PathParam("modelelmd") boolean modelelmd,
                                                  @PathParam("testLourd") boolean testLourd
                                                   ) throws Exception, JRException {
+
+
+
+
         InputStream myInpuStream = null;
          Classe classe= new Classe() ;
          classe = Classe.findById(libelleClasse) ;
@@ -343,6 +347,9 @@ public class BulletinSpiderRessource {
                                                  @PathParam("modelelmd") boolean modelelmd,
                                                  @PathParam("testLourd") boolean testLourd
      ) throws Exception, JRException {
+        try {
+
+
         InputStream myInpuStream = null;
 if (!compress){
     if(niveauEnseign ==2) {
@@ -575,6 +582,14 @@ if (!compress){
         // headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Rapport"+myScole.getEcoleclibelle()+".docx");
         headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Bulletin-spider-"+matricule+".pdf");
         return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.MULTIPART_FORM_DATA).body(data);
+
+
+   } catch (Exception e) {
+   e.printStackTrace();
+   return null ;
+   }
+
+
     }
 
 
