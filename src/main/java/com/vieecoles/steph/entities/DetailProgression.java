@@ -29,8 +29,9 @@ public class DetailProgression extends PanacheEntityBase {
 	private Integer niveauTitre;
 	@Column(name = "mois_deb")
 	private Integer moisDeb;
-	@Column(name = "periode_id")
-	private Integer periodeId;
+	@ManyToOne
+	@JoinColumn(name = "periode_id")
+	private Periode periode;
 	@ManyToOne
 	private Progression progression;
 	@Column(name = "volume_horaire")

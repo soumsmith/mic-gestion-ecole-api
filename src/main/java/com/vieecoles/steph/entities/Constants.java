@@ -93,4 +93,13 @@ public class Constants {
 	
 	public static final String CODE_TEST_LOURD = "TSTLRD";
 
+	public static final String ERROR_TYPE = "error";
+	
+	public static final String SUCCESS_TYPE = "success";
+	
+	public static final String RECORD_TITLE = "Enregistrement";
+	
+	public static final String UPDATE_TITLE = "Mise à jour";
+	
+	public static final String DELETE_TITLE = "Suppression";
 }

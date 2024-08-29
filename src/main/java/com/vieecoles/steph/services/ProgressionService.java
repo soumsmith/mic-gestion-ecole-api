@@ -10,8 +10,13 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 
 import com.vieecoles.steph.dto.DetailProgressionDto;
+import com.vieecoles.steph.dto.IdLongCodeLibelleDto;
 import com.vieecoles.steph.dto.ProgressionDto;
+import com.vieecoles.steph.entities.AnneeScolaire;
+import com.vieecoles.steph.entities.Branche;
 import com.vieecoles.steph.entities.DetailProgression;
+import com.vieecoles.steph.entities.Matiere;
+import com.vieecoles.steph.entities.NiveauEnseignement;
 import com.vieecoles.steph.entities.Progression;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
@@ -25,6 +30,25 @@ public class ProgressionService implements PanacheRepositoryBase<Progression, St
 	public ProgressionDto convertToFullDto(Progression entity) {
 		ProgressionDto dto = convertToDto(entity);
 		return addDetailToConvertedDto(dto);
+	}
+	
+	public List<Progression> listByAnnee(Long annee){
+		List<Progression> list;
+		try {
+			list = Progression.find("annee.id = ?1", annee).list();
+		} catch (RuntimeException e) {
+			list = new ArrayList<Progression>(); 
+		}
+		return list;
+	}
+	
+	public List<ProgressionDto> listDtoByAnnee(Long annee){
+		List<Progression> list = listByAnnee(annee);
+		List<ProgressionDto> dtos = new ArrayList<ProgressionDto>();
+		for(Progression p : list) {
+			dtos.add(convertToDto(p));
+		}
+		return dtos;
 	}
 
 	public ProgressionDto addDetailToConvertedDto(ProgressionDto dto) {
@@ -41,20 +65,20 @@ public class ProgressionService implements PanacheRepositoryBase<Progression, St
 	public Progression convertToEntity(ProgressionDto dto) {
 		Progression obj = new Progression();
 		obj.setId(dto.getId());
-		obj.setAnnee(dto.getAnnee());
-		obj.setBranche(dto.getBranche());
-		obj.setMatiere(dto.getMatiere());
-		obj.setNiveauEnseignant(dto.getNiveau());
+		obj.setAnnee(AnneeScolaire.getEntityManager().getReference(AnneeScolaire.class, dto.getAnnee().getId()));
+		obj.setBranche(Branche.getEntityManager().getReference(Branche.class, dto.getBranche().getId()));
+		obj.setMatiere(Matiere.getEntityManager().getReference(Matiere.class, dto.getMatiere().getId()));
+		obj.setNiveauEnseignant(NiveauEnseignement.getEntityManager().getReference(NiveauEnseignement.class, dto.getNiveau().getId()));
 		return obj;
 	}
 
 	public ProgressionDto convertToDto(Progression entity) {
 		ProgressionDto dto = new ProgressionDto();
-		dto.setAnnee(entity.getAnnee());
-		dto.setBranche(entity.getBranche());
+		dto.setAnnee(new IdLongCodeLibelleDto(entity.getAnnee().getId(), null, entity.getAnnee().getCustomLibelle()));
+		dto.setBranche(new IdLongCodeLibelleDto(entity.getBranche().getId(), null, entity.getBranche().getLibelle()));
 		dto.setId(entity.getId());
-		dto.setMatiere(entity.getMatiere());
-		dto.setNiveau(entity.getNiveauEnseignant());
+		dto.setMatiere(new IdLongCodeLibelleDto(entity.getMatiere().getId(), null, entity.getMatiere().getLibelle()));
+		dto.setNiveau(new IdLongCodeLibelleDto(entity.getNiveauEnseignant().getId(), null, entity.getNiveauEnseignant().getLibelle()));
 		return dto;
 	}
 
@@ -66,7 +90,51 @@ public class ProgressionService implements PanacheRepositoryBase<Progression, St
 		entity.setDateUpdate(new Date());
 		entity.persist();
 	}
+	
+	public Boolean progressionValidator(ProgressionDto dto) {
+		Boolean flag = true;
+		if(dto.getAnnee().getId() != null && dto.getAnnee().getId() != 0) {
+			flag = flag && true;
+		}
+		else {
+			return false;
+		}
+		if(dto.getBranche().getId() != 0L) {
+			flag = flag && true;
+		}else {
+			return false;
+		}
+		if(dto.getMatiere().getId() != null && dto.getMatiere().getId() != 0) {
+			flag = flag && true;
+		}else {
+			return false;
+		}
+		if(dto.getNiveau().getId() != 0L) {
+			flag = flag && true;
+		}else {
+			return false;
+		}
+		if(dto.getDatas()!= null && dto.getDatas().size()>0) {
+			flag = flag && true;
+		}else {
+			return false;
+		}
+		//Faire la validation des données de détails
+		
+		return flag;
+	}
 
+	public Boolean ifAlreadyExist(ProgressionDto dto) {
+		//Vérifier si un nouvel enregistrement de la progression existe déjà
+		if(dto.getId() != null) {
+			//getById si valeur retournée
+			return true;
+		}
+		//sinon get by annee, niveau, branche, matiere
+		// si valeur retournée alors return true
+		//sinon
+		return false;
+	}
 	@Transactional
 	public String handleSave(ProgressionDto dto) {
 		try {
@@ -79,9 +147,12 @@ public class ProgressionService implements PanacheRepositoryBase<Progression, St
 			}
 			if (dto.getDatas() != null && dto.getDatas().size() > 0) {
 				heureTotal = dto.getDatas().stream().mapToInt(d -> d.getHeure().intValue()).sum();
+				int ordre = 1;
 				for (DetailProgressionDto detail : dto.getDatas()) {
+					detail.setOrdre(ordre);
 					detail.setProgressionId(obj.getId());
 					detailProgressionService.handleSave(detail);
+					ordre++;
 				}
 				obj.setVolumeHoraire(heureTotal);
 				update(obj);

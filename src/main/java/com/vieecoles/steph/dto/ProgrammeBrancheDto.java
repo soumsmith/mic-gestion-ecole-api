@@ -13,6 +13,6 @@ public class ProgrammeBrancheDto {
 	private String niveauId;
 	private String niveauCodeLibelle;
 	private Integer nbreBranche = 0;
-	private List<IdCodeLibelleDto> branches;
+	private List<IdStringCodeLibelleDto> branches;
 
 }

@@ -2,7 +2,7 @@ package com.vieecoles.steph.services;
 
 import com.vieecoles.entities.Niveau;
 import com.vieecoles.services.niveauService;
-import com.vieecoles.steph.dto.IdCodeLibelleDto;
+import com.vieecoles.steph.dto.IdStringCodeLibelleDto;
 import com.vieecoles.steph.dto.ProgrammeBrancheDto;
 import com.vieecoles.steph.entities.Branche;
 import com.vieecoles.steph.entities.Ecole;
@@ -82,11 +82,11 @@ public class BrancheService implements PanacheRepositoryBase<Branche, Long> {
 		return Branche.count();
 	}
 
-	public List<IdCodeLibelleDto> convertToDto(List<Branche> branches) {
-		IdCodeLibelleDto dto;
-		List<IdCodeLibelleDto> list = new ArrayList<IdCodeLibelleDto>();
+	public List<IdStringCodeLibelleDto> convertToDto(List<Branche> branches) {
+		IdStringCodeLibelleDto dto;
+		List<IdStringCodeLibelleDto> list = new ArrayList<IdStringCodeLibelleDto>();
 		for (Branche br : branches) {
-			dto = new IdCodeLibelleDto();
+			dto = new IdStringCodeLibelleDto();
 			dto.setId(String.valueOf(br.getId()));
 			dto.setLibelle(br.getLibelle());
 			list.add(dto);
