@@ -67,4 +67,21 @@ public class DetailProgressionResource {
 		}
 		return Response.ok(dtos).build();
 	}
+	
+	@Path("/handle-delete")
+	@POST
+	@Produces(MediaType.TEXT_PLAIN)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Operation(description = "Suppression des details", summary = "")
+	@Tag(name = "Detail Progression")
+	public Response handleDelete(List<String> ids) {
+		String message = "";
+		try {
+			message = detailProgressionService.handleDelete(ids);
+		}catch (RuntimeException e) {
+			e.printStackTrace();
+			return Response.serverError().entity(e.getMessage()).build();
+		}
+		return Response.ok(message).build();
+	}
 }

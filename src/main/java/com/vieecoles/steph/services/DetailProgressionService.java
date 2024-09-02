@@ -15,6 +15,7 @@ import com.vieecoles.steph.entities.DetailProgression;
 import com.vieecoles.steph.entities.Message;
 import com.vieecoles.steph.entities.Periode;
 import com.vieecoles.steph.entities.Progression;
+import com.vieecoles.steph.entities.ProgressionSeance;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
@@ -63,6 +64,51 @@ public class DetailProgressionService implements PanacheRepositoryBase<DetailPro
 		System.out.println("Detail progression mis à jour");
 	}
 
+	@Transactional
+	public void delete(String id) {
+		DetailProgression.deleteById(id);
+	}
+
+	@Transactional
+	public String handleDelete(List<String> ids) {
+		if (verifyBeforeDelete(ids)) {
+			DetailProgression.delete("id in ?1", ids);
+		} else {
+			throw new RuntimeException("Erreur: Impossible d'effectuer la suppression");
+		}
+		return "Supression bien effectuée ";
+	}
+
+	/**
+	 * Cette fonction vérifie si des détails de progresion peuvent être supprimés
+	 * 
+	 * @param ids liste des id à supprimer
+	 * @return true si l'ensemble est supprimable et false si au moins un élément
+	 *         dans l'ensemble n'est pas supprimable
+	 */
+	public Boolean verifyBeforeDelete(List<String> ids) {
+		List<DetailProgression> list;
+		Boolean flat = true;
+		try {
+			list = DetailProgression.find("id in ?1", ids).list();
+		} catch (RuntimeException e) {
+			list = new ArrayList<DetailProgression>();
+		}
+		Long psSize = 0L;
+		for (DetailProgression d : list) {
+			try {
+				psSize = ProgressionSeance.find("detailProgression.id = ?1", d.getId()).count();
+			} catch (RuntimeException e) {
+
+			}
+			if (psSize > 0L) {
+				flat = false;
+				break;
+			}
+		}
+		return flat;
+	}
+
 	public Boolean validator(DetailProgressionDto dto) {
 		Boolean flat = true;
 		if (dto.getPeriode() == null) {
@@ -80,9 +126,10 @@ public class DetailProgressionService implements PanacheRepositoryBase<DetailPro
 		}
 		return flat;
 	}
+
 	public Boolean ifAlreadyExist(DetailProgressionDto dto) {
 		Boolean flat = false;
-		if(dto.getId() != null) {
+		if (dto.getId() != null) {
 			flat = true;
 		}
 		return flat;
@@ -115,7 +162,8 @@ public class DetailProgressionService implements PanacheRepositoryBase<DetailPro
 		if (entity == null) {
 			entity = new DetailProgression();
 		}
-		Progression progression = Progression.getEntityManager().getReference(Progression.class, dto.getProgressionId());
+		Progression progression = Progression.getEntityManager().getReference(Progression.class,
+				dto.getProgressionId());
 		entity.setId(dto.getId());
 		entity.setPeriode(Periode.getEntityManager().getReference(Periode.class, dto.getPeriode().getId()));
 		entity.setMoisDeb(dto.getMois());
