@@ -1,5 +1,7 @@
 package com.vieecoles.steph.ressources;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -42,6 +44,23 @@ public class ProgressionResource {
 			e.printStackTrace();
 			return Response.serverError().entity("Erreur ::: " + e.getMessage()).build();
 		}
+	}
+	
+	@Path("/handle-delete/{id}")
+	@GET
+	@Produces(MediaType.TEXT_PLAIN)
+	@Consumes(MediaType.TEXT_PLAIN)
+	@Operation(description = "Suppression de progression", summary = "")
+	@Tag(name = "Progression")
+	public Response handleDelete(@PathParam("id") String id) {
+		String message = "";
+		try {
+			message = progressionService.handleDelete(id);
+		}catch (RuntimeException e) {
+			e.printStackTrace();
+			return Response.serverError().entity(e.getMessage()).build();
+		}
+		return Response.ok(message).build();
 	}
 	
 	@Path("/get-by-annee/{annee}")

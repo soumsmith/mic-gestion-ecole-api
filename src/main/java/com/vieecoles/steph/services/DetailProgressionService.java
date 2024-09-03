@@ -16,6 +16,7 @@ import com.vieecoles.steph.entities.Message;
 import com.vieecoles.steph.entities.Periode;
 import com.vieecoles.steph.entities.Progression;
 import com.vieecoles.steph.entities.ProgressionSeance;
+import com.vieecoles.steph.projections.GenericProjectionStringId;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
@@ -36,6 +37,17 @@ public class DetailProgressionService implements PanacheRepositoryBase<DetailPro
 			list = DetailProgression.find("progression.id = ?1 order by ordre, semaineDeb, numTitre", id).list();
 		} catch (RuntimeException e) {
 			list = new ArrayList<DetailProgression>();
+		}
+		return list;
+	}
+	
+	public List<GenericProjectionStringId> getProjectionIdByProgression(String id) {
+		List<GenericProjectionStringId> list = new ArrayList<GenericProjectionStringId>();
+		try {
+			list = DetailProgression.find("progression.id = ?1 order by ordre, semaineDeb, numTitre", id).project(GenericProjectionStringId.class).list();
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+			list = new ArrayList<GenericProjectionStringId>();
 		}
 		return list;
 	}
@@ -74,8 +86,9 @@ public class DetailProgressionService implements PanacheRepositoryBase<DetailPro
 		if (verifyBeforeDelete(ids)) {
 			DetailProgression.delete("id in ?1", ids);
 		} else {
-			throw new RuntimeException("Erreur: Impossible d'effectuer la suppression");
+			throw new RuntimeException("Erreur: Impossible d'effectuer la suppression dans détail progression");
 		}
+		System.out.println(String.format("Suppression de %s détail(s) progression", ids.size()) );
 		return "Supression bien effectuée ";
 	}
 
