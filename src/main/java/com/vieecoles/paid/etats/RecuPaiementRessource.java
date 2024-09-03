@@ -73,6 +73,34 @@ public class RecuPaiementRessource {
 
     }
 
+    @GET
+    @Path("/liste-classe-arabe/{identifiant_classe}/{identifiant_annee}")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public ResponseEntity<byte[]>  getlisteClsse(@PathParam("identifiant_classe") long identifiant_classe,@PathParam("identifiant_annee") long identifiant_annee ) throws Exception, JRException {
+
+
+
+
+        InputStream myInpuStream ;
+
+        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/Comptabilite/LISTE_DE_CLASSE.jrxml");
+
+
+        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecoleviedbv2", USER, PASS);
+        JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("CLASSE_IDENTIFANT", identifiant_classe);
+        map.put("IDENTIFIANT_ANNEE", identifiant_annee);
+        JasperPrint report = JasperFillManager.fillReport(compileReport, map, connection);
+        byte[] data =JasperExportManager.exportReportToPdf(report);
+
+        HttpHeaders headers= new HttpHeaders();
+        // headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Rapport"+myScole.getEcoleclibelle()+".docx");
+        headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=LISTE DE CLASSE "+".pdf");
+        return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.MULTIPART_FORM_DATA).body(data);
+
+    }
 
 
 
