@@ -5,8 +5,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class IdCodeLibelleDto {
-	private String id;
+public class IdIntCodeLibelleDto {
+	private Integer id;
 	private String code;
 	private String libelle;
 }

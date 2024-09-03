@@ -47,7 +47,6 @@ public class SeancesResource {
 			e.printStackTrace();
 			return Response.serverError().entity(messages).build();
 		}
-//		return Response.ok().entity(messages).build();
 		return Response.ok().entity(messages).build();
 	}
 

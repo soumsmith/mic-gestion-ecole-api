@@ -2,10 +2,11 @@ package com.vieecoles.steph.services;
 
 import com.vieecoles.entities.Niveau;
 import com.vieecoles.services.niveauService;
-import com.vieecoles.steph.dto.IdCodeLibelleDto;
+import com.vieecoles.steph.dto.IdStringCodeLibelleDto;
 import com.vieecoles.steph.dto.ProgrammeBrancheDto;
 import com.vieecoles.steph.entities.Branche;
 import com.vieecoles.steph.entities.Ecole;
+import com.vieecoles.steph.projections.GenericBasicProjectionLongId;
 import com.vieecoles.steph.entities.NiveauEnseignement;
 import com.vieecoles.steph.entities.Programme;
 
@@ -40,6 +41,16 @@ public class BrancheService implements PanacheRepositoryBase<Branche, Long> {
 		return Branche.find("niveauEnseignement.id =?1", id).list();
 	}
 
+	public List<GenericBasicProjectionLongId> findByNiveauEnseignementProjection(Long id) {
+		List<GenericBasicProjectionLongId> branches = new ArrayList<GenericBasicProjectionLongId>();
+		try {
+			branches = Branche.find("niveauEnseignement.id =?1", id).project(GenericBasicProjectionLongId.class).list();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return branches;
+	}
+
 	public Response create(Branche branche) {
 		branche.persist();
 		return Response.created(URI.create("/branche/" + branche.getId())).build();
@@ -71,11 +82,11 @@ public class BrancheService implements PanacheRepositoryBase<Branche, Long> {
 		return Branche.count();
 	}
 
-	public List<IdCodeLibelleDto> convertToDto(List<Branche> branches) {
-		IdCodeLibelleDto dto;
-		List<IdCodeLibelleDto> list = new ArrayList<IdCodeLibelleDto>();
+	public List<IdStringCodeLibelleDto> convertToDto(List<Branche> branches) {
+		IdStringCodeLibelleDto dto;
+		List<IdStringCodeLibelleDto> list = new ArrayList<IdStringCodeLibelleDto>();
 		for (Branche br : branches) {
-			dto = new IdCodeLibelleDto();
+			dto = new IdStringCodeLibelleDto();
 			dto.setId(String.valueOf(br.getId()));
 			dto.setLibelle(br.getLibelle());
 			list.add(dto);

@@ -19,10 +19,9 @@ import javax.ws.rs.core.Response;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 import com.vieecoles.steph.dto.EcoleMatiereDto;
-import com.vieecoles.steph.dto.MatiereDto;
 import com.vieecoles.steph.entities.Ecole;
-import com.vieecoles.steph.entities.Evaluation;
 import com.vieecoles.steph.entities.EcoleHasMatiere;
+import com.vieecoles.steph.entities.Evaluation;
 import com.vieecoles.steph.services.EcoleHasMatiereService;
 
 @Path("/matiere-ecole")
@@ -69,12 +68,10 @@ public class EcoleHasMatiereResources {
 		return Response.ok().entity(matiereEcoleService.findById(id)).build();
 	}
 
-	// Quand le niveau d enseignement sera pris en compte dans les variables d env
-	// alors remplacer le param ecole par niveau enseign
 	@GET
-	@Path("/get-by-niveau-enseignement")
+	@Path("/get-by-ecole-via-niveau-enseignement")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getByNiveau(@QueryParam("id") Long ecoleId) {
+	public Response getByEcoleViaNiveau(@QueryParam("id") Long ecoleId) {
 		Ecole ecole = Ecole.findById(ecoleId);
 
 		return Response.ok()

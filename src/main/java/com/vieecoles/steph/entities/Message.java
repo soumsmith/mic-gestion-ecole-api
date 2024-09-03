@@ -14,7 +14,9 @@ public class Message {
 		this.title = title;
 		this.detail = detail;
 	}
+	private String id;
 	private String type;
 	private String title;
 	private String detail;
+	private String styleClass;
 }

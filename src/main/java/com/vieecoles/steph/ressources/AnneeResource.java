@@ -9,6 +9,7 @@ import com.vieecoles.steph.services.EcoleService;
 
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
+import org.jboss.logging.annotations.Param;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -43,6 +44,23 @@ public class AnneeResource {
 	@Tag(name = "Année scolaire")
 	public Response listCentral() {
 		return Response.ok().entity(anneeService.getListByCentral()).build();
+	}
+	
+	@GET
+	@Path("/list-to-central-niveau-enseignement")
+	@Operation(description = "Obtenir la liste des années en central pour un niveau d'enseignement", summary = "")
+	@Tag(name = "Année scolaire")
+	public Response listCentralNiveau(@QueryParam("niveau") Long niveau) {
+		System.out.println("Coucou ");
+		return Response.ok().entity(anneeService.getListByCentralByNiveauEnseignement(niveau)).build();
+	}
+	
+	@GET
+	@Path("/list-to-central-niveau-enseignement-projection")
+	@Operation(description = "Obtenir la liste (de type projection) des années en central pour un niveau d'enseignement", summary = "")
+	@Tag(name = "Année scolaire")
+	public Response listCentralNiveauProjection(@QueryParam("niveau") Long niveau) {
+		return Response.ok().entity(anneeService.getBasicListInCentralByNiveauEnseignementProjection(niveau)).build();
 	}
 	
 	@GET

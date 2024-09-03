@@ -52,6 +52,14 @@ public class MatiereResource {
 		return Response.ok().entity(matiereService.getByNiveauEnseignement(ecole.getNiveauEnseignement().getId()))
 				.build();
 	}
+	
+	@GET
+	@Path("/get-by-niveau-enseignement-projection")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getByNiveauProjection(@QueryParam("niveau") Long niveau) {
+		return Response.ok().entity(matiereService.getByNiveauEnseignementProjection(niveau))
+				.build();
+	}
 
 	@POST
 	@Path("/update-display")

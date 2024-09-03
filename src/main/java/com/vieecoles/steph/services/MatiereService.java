@@ -7,6 +7,7 @@ import com.vieecoles.steph.entities.Ecole;
 import com.vieecoles.steph.entities.EcoleHasMatiere;
 import com.vieecoles.steph.entities.Matiere;
 import com.vieecoles.steph.entities.NiveauEnseignement;
+import com.vieecoles.steph.projections.GenericBasicProjectionLongId;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
@@ -81,6 +82,16 @@ public class MatiereService implements PanacheRepositoryBase<Matiere, Long> {
 
 	public List<Matiere> getByNiveauEnseignement(Long niveau) {
 		return find("niveauEnseignement.id = ?1", niveau).list();
+	}
+	
+	public List<GenericBasicProjectionLongId> getByNiveauEnseignementProjection(Long niveau) {
+		List<GenericBasicProjectionLongId> list = new ArrayList<>();
+		try {
+			list = find("niveauEnseignement.id = ?1 order by libelle", niveau).project(GenericBasicProjectionLongId.class).list();
+		}catch (RuntimeException e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 
 	public MatiereDto buildEntityToDto(Matiere matiere) {
