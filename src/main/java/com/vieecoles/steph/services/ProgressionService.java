@@ -127,17 +127,31 @@ public class ProgressionService implements PanacheRepositoryBase<Progression, St
 
 		return flag;
 	}
-
+/**
+ * Vérifie si un enregistrement existe 
+ * @param dto
+ * @return true si un enregistrement existe déjà et false sinon
+ */
 	public Boolean ifAlreadyExist(ProgressionDto dto) {
 		// Vérifier si un nouvel enregistrement de la progression existe déjà
 		if (dto.getId() != null) {
 			// getById si valeur retournée
 			return true;
+		} else {
+			Long count = getCountByAnneeAndNiveauAndBrancheAndMatiere(dto.getAnnee().getId(), dto.getNiveau().getId(),
+					dto.getBranche().getId(), dto.getMatiere().getId());
+			System.out.println("count  ::: "+count);
+			if(count > 0) {
+				return true;
+			}
 		}
-		// sinon get by annee, niveau, branche, matiere
-		// si valeur retournée alors return true
-		// sinon
 		return false;
+	}
+
+	public Long getCountByAnneeAndNiveauAndBrancheAndMatiere(Long annee, Long niveau, Long branche, Long matiere) {
+		return Progression
+				.find("annee.id =?1 and niveauEnseignant.id=?2 and branche.id=?3 and matiere.id =?4", annee, niveau, branche, matiere)
+				.count();
 	}
 
 	@Transactional
@@ -165,7 +179,7 @@ public class ProgressionService implements PanacheRepositoryBase<Progression, St
 		} catch (RuntimeException e) {
 			e.printStackTrace();
 		}
-		return "OK";
+		return "Progression enregistrée avec succès";
 
 	}
 

@@ -34,15 +34,16 @@ public class ProgressionResource {
 		System.out.println(dto);
 		try {
 			if(!progressionService.progressionValidator(dto)) {
-				throw new RuntimeException("Veuillez vérifier que les données envoyées sont correctement renseignés");
+				throw new RuntimeException("Veuillez vérifier que les données envoyées sont correctement renseignées");
 			}
 			if(progressionService.ifAlreadyExist(dto)) {
 				throw new RuntimeException("Cette progression existe déjà");
 			}
 			return Response.ok(progressionService.handleSave(dto)).build();
 		} catch (RuntimeException e) {
+			System.out.println(e.toString());
 			e.printStackTrace();
-			return Response.serverError().entity("Erreur ::: " + e.getMessage()).build();
+			return Response.serverError().entity("Erreur ::: " + e.toString()).build();
 		}
 	}
 	
