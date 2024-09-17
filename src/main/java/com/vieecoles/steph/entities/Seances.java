@@ -76,4 +76,6 @@ public class Seances extends PanacheEntityBase {
 	private String isClassEnded;
 	@Transient
 	private int duree;
+	@Transient
+	private int dureeTotale;
 }

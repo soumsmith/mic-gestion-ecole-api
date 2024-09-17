@@ -20,6 +20,7 @@ import com.vieecoles.steph.entities.DetailProgression;
 import com.vieecoles.steph.entities.Matiere;
 import com.vieecoles.steph.entities.NiveauEnseignement;
 import com.vieecoles.steph.entities.Progression;
+import com.vieecoles.steph.entities.Seances;
 import com.vieecoles.steph.projections.GenericProjectionStringId;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
@@ -52,6 +53,20 @@ public class ProgressionService implements PanacheRepositoryBase<Progression, St
 			dtos.add(convertToDto(p));
 		}
 		return dtos;
+	}
+
+	public ProgressionDto getProgressionBySeance(String seanceId) {
+		Seances seance = Seances.findById(seanceId);
+		Progression prog = null;
+		if (seance != null) {
+			prog = getByAnneeAndNiveauAndBrancheAndMatiere(Long.parseLong(seance.getAnnee()),
+					seance.getClasse().getEcole().getNiveauEnseignement().getId(),
+					seance.getClasse().getBranche().getId(), seance.getMatiere().getMatiere().getId());
+			if(prog != null) {
+				return convertToFullDto(prog);
+			}
+		}
+		return null;
 	}
 
 	public ProgressionDto addDetailToConvertedDto(ProgressionDto dto) {
@@ -127,11 +142,13 @@ public class ProgressionService implements PanacheRepositoryBase<Progression, St
 
 		return flag;
 	}
-/**
- * Vérifie si un enregistrement existe 
- * @param dto
- * @return true si un enregistrement existe déjà et false sinon
- */
+
+	/**
+	 * Vérifie si un enregistrement existe
+	 * 
+	 * @param dto
+	 * @return true si un enregistrement existe déjà et false sinon
+	 */
 	public Boolean ifAlreadyExist(ProgressionDto dto) {
 		// Vérifier si un nouvel enregistrement de la progression existe déjà
 		if (dto.getId() != null) {
@@ -140,8 +157,8 @@ public class ProgressionService implements PanacheRepositoryBase<Progression, St
 		} else {
 			Long count = getCountByAnneeAndNiveauAndBrancheAndMatiere(dto.getAnnee().getId(), dto.getNiveau().getId(),
 					dto.getBranche().getId(), dto.getMatiere().getId());
-			System.out.println("count  ::: "+count);
-			if(count > 0) {
+			System.out.println("count  ::: " + count);
+			if (count > 0) {
 				return true;
 			}
 		}
@@ -149,9 +166,19 @@ public class ProgressionService implements PanacheRepositoryBase<Progression, St
 	}
 
 	public Long getCountByAnneeAndNiveauAndBrancheAndMatiere(Long annee, Long niveau, Long branche, Long matiere) {
-		return Progression
-				.find("annee.id =?1 and niveauEnseignant.id=?2 and branche.id=?3 and matiere.id =?4", annee, niveau, branche, matiere)
-				.count();
+		return Progression.find("annee.id =?1 and niveauEnseignant.id=?2 and branche.id=?3 and matiere.id =?4", annee,
+				niveau, branche, matiere).count();
+	}
+
+	public Progression getByAnneeAndNiveauAndBrancheAndMatiere(Long annee, Long niveau, Long branche, Long matiere) {
+		Progression prog = null;
+		try {
+			prog = Progression.find("annee.id =?1 and niveauEnseignant.id=?2 and branche.id=?3 and matiere.id =?4",
+					annee, niveau, branche, matiere).singleResult();
+		} catch (Exception e) {
+			prog = null;
+		}
+		return prog;
 	}
 
 	@Transactional

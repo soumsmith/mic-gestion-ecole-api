@@ -36,6 +36,7 @@ public class DetailProgressionService implements PanacheRepositoryBase<DetailPro
 		try {
 			list = DetailProgression.find("progression.id = ?1 order by ordre, semaineDeb, numTitre", id).list();
 		} catch (RuntimeException e) {
+			e.printStackTrace();
 			list = new ArrayList<DetailProgression>();
 		}
 		return list;
