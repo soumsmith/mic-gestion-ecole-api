@@ -1,6 +1,5 @@
 package com.vieecoles.steph.services;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -28,7 +27,7 @@ public class ProgressionSeanceService implements PanacheRepositoryBase<Progressi
 	@Transactional
 	public String handleSave(ProgressionSeance progressionSeance) {
 		try {
-			String progressionSeanceId = progressionSeance.getId();
+			String progressionSeanceId = "";
 			// Verifier l'existance de l'enregistrement
 			if (!ifExist(progressionSeance)) {
 				// Si enregistrement non existant effectuer la création
@@ -37,6 +36,7 @@ public class ProgressionSeanceService implements PanacheRepositoryBase<Progressi
 				progressionSeance.setDateCreation(new Date());
 				progressionSeance.setDateCessation(new Date());
 				progressionSeance.persist();
+				progressionSeanceId = uuid.toString();
 			} else {
 				// si enregistrememnt existant faire la modification
 				ProgressionSeance p = getBySeanceAndPosition(progressionSeance.getSeance().getId(),
@@ -48,6 +48,7 @@ public class ProgressionSeanceService implements PanacheRepositoryBase<Progressi
 					p.setPosition(progressionSeance.getPosition());
 					p.setDateCessation(new Date());
 					p.setSeance(progressionSeance.getSeance());
+					p.setAttachmentUrl(progressionSeance.getAttachmentUrl());
 					progressionSeanceId = p.getId();
 				} else {
 					throw new RuntimeException("Progression Seance non trouvée pour modification");

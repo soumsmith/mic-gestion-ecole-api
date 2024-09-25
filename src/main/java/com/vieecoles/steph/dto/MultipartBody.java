@@ -12,9 +12,9 @@ public class MultipartBody {
     @PartType(MediaType.APPLICATION_OCTET_STREAM)
     public InputStream file;
     
-    @FormParam("demo")
-    @PartType(MediaType.APPLICATION_OCTET_STREAM)
-    public InputStream content;
+    @FormParam("prefixUri")
+    @PartType(MediaType.TEXT_PLAIN)
+    public String prefixUri;
 
     @FormParam("fileName")
     @PartType(MediaType.TEXT_PLAIN)
