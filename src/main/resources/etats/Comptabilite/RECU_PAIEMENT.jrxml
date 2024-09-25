@@ -30,215 +30,32 @@
 		<![CDATA[select * from poulspaid.VE_RECU_PAIEMENT  where 
 IDENTIFIANT_PAIEMENT = $P{NUMERO_PAIEMENT}]]>
 	</queryString>
-	<field name="IDENTIFIANT" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="IDENTIFIANT"/>
-		<property name="com.jaspersoft.studio.field.label" value="IDENTIFIANT"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ta_frais_ajuste"/>
-		<fieldDescription><![CDATA[Identifiant]]></fieldDescription>
-	</field>
-	<field name="A_PAYER" class="java.lang.Long">
-		<property name="com.jaspersoft.studio.field.name" value="A_PAYER"/>
-		<property name="com.jaspersoft.studio.field.label" value="A_PAYER"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ve_recu_paiement"/>
-		<fieldDescription><![CDATA[Valeur]]></fieldDescription>
-	</field>
-	<field name="A_PAYER_INSCRIPTION" class="java.lang.Long">
-		<property name="com.jaspersoft.studio.field.name" value="A_PAYER_INSCRIPTION"/>
-		<property name="com.jaspersoft.studio.field.label" value="A_PAYER_INSCRIPTION"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ve_recu_paiement"/>
-		<fieldDescription><![CDATA[Valeur à l'inscription]]></fieldDescription>
-	</field>
-	<field name="PAYE" class="java.math.BigDecimal">
-		<property name="com.jaspersoft.studio.field.name" value="PAYE"/>
-		<property name="com.jaspersoft.studio.field.label" value="PAYE"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ve_recu_paiement"/>
-	</field>
-	<field name="PAYE_INSCRIPTION" class="java.math.BigDecimal">
-		<property name="com.jaspersoft.studio.field.name" value="PAYE_INSCRIPTION"/>
-		<property name="com.jaspersoft.studio.field.label" value="PAYE_INSCRIPTION"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ve_recu_paiement"/>
-	</field>
-	<field name="RESTE_A_PAYER" class="java.math.BigDecimal">
-		<property name="com.jaspersoft.studio.field.name" value="RESTE_A_PAYER"/>
-		<property name="com.jaspersoft.studio.field.label" value="RESTE_A_PAYER"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ve_recu_paiement"/>
-	</field>
-	<field name="RESTE_A_PAYER_INSCRIPTION" class="java.math.BigDecimal">
-		<property name="com.jaspersoft.studio.field.name" value="RESTE_A_PAYER_INSCRIPTION"/>
-		<property name="com.jaspersoft.studio.field.label" value="RESTE_A_PAYER_INSCRIPTION"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ve_recu_paiement"/>
-	</field>
-	<field name="RESTE_A_PAYER_INFERIEUR_OU_EGALE_ZERO" class="java.lang.Long">
-		<property name="com.jaspersoft.studio.field.name" value="RESTE_A_PAYER_INFERIEUR_OU_EGALE_ZERO"/>
-		<property name="com.jaspersoft.studio.field.label" value="RESTE_A_PAYER_INFERIEUR_OU_EGALE_ZERO"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ve_recu_paiement"/>
-	</field>
-	<field name="ECHEANCE" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="ECHEANCE"/>
-		<property name="com.jaspersoft.studio.field.label" value="ECHEANCE"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ve_recu_paiement"/>
-		<fieldDescription><![CDATA[Identifiant]]></fieldDescription>
-	</field>
-	<field name="PAIEMENT_ATTENDU" class="java.math.BigDecimal">
-		<property name="com.jaspersoft.studio.field.name" value="PAIEMENT_ATTENDU"/>
-		<property name="com.jaspersoft.studio.field.label" value="PAIEMENT_ATTENDU"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ve_recu_paiement"/>
-	</field>
-	<field name="RETARD_DE_PAIEMENT" class="java.lang.Long">
-		<property name="com.jaspersoft.studio.field.name" value="RETARD_DE_PAIEMENT"/>
-		<property name="com.jaspersoft.studio.field.label" value="RETARD_DE_PAIEMENT"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ve_recu_paiement"/>
-	</field>
-	<field name="SCOLARITE" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="SCOLARITE"/>
-		<property name="com.jaspersoft.studio.field.label" value="SCOLARITE"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ve_recu_paiement"/>
-		<fieldDescription><![CDATA[Identifiant]]></fieldDescription>
-	</field>
-	<field name="RUBRIQUE" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="RUBRIQUE"/>
-		<property name="com.jaspersoft.studio.field.label" value="RUBRIQUE"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ve_recu_paiement"/>
-		<fieldDescription><![CDATA[Identifiant]]></fieldDescription>
-	</field>
-	<field name="LIBELLE_RUBRIQUE" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="LIBELLE_RUBRIQUE"/>
-		<property name="com.jaspersoft.studio.field.label" value="LIBELLE_RUBRIQUE"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ve_recu_paiement"/>
-		<fieldDescription><![CDATA[Libellé]]></fieldDescription>
-	</field>
-	<field name="LIBELLE_ECOLE" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="LIBELLE_ECOLE"/>
-		<property name="com.jaspersoft.studio.field.label" value="LIBELLE_ECOLE"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ve_recu_paiement"/>
-	</field>
-	<field name="LIBELLE_BRANCHE" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="LIBELLE_BRANCHE"/>
-		<property name="com.jaspersoft.studio.field.label" value="LIBELLE_BRANCHE"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ve_recu_paiement"/>
-	</field>
-	<field name="MATRICULE" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="MATRICULE"/>
-		<property name="com.jaspersoft.studio.field.label" value="MATRICULE"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ve_recu_paiement"/>
-		<fieldDescription><![CDATA[Matricule]]></fieldDescription>
-	</field>
-	<field name="NOM_ET_PRENOMS" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="NOM_ET_PRENOMS"/>
-		<property name="com.jaspersoft.studio.field.label" value="NOM_ET_PRENOMS"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ve_recu_paiement"/>
-	</field>
-	<field name="NOM_PRENOMS_ARABE" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="NOM_PRENOMS_ARABE"/>
-		<property name="com.jaspersoft.studio.field.label" value="NOM_PRENOMS_ARABE"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ve_recu_paiement"/>
-	</field>
-	<field name="DATE_NAISSANCE" class="java.sql.Timestamp">
-		<property name="com.jaspersoft.studio.field.name" value="DATE_NAISSANCE"/>
-		<property name="com.jaspersoft.studio.field.label" value="DATE_NAISSANCE"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ve_recu_paiement"/>
-		<fieldDescription><![CDATA[Date de naissance]]></fieldDescription>
-	</field>
-	<field name="LIEU_NAISSANCE" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="LIEU_NAISSANCE"/>
-		<property name="com.jaspersoft.studio.field.label" value="LIEU_NAISSANCE"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ve_recu_paiement"/>
-		<fieldDescription><![CDATA[Lieu de naissance]]></fieldDescription>
-	</field>
-	<field name="SEXE" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="SEXE"/>
-		<property name="com.jaspersoft.studio.field.label" value="SEXE"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ve_recu_paiement"/>
-		<fieldDescription><![CDATA[Libellé]]></fieldDescription>
-	</field>
-	<field name="NUMERO_INSCRIPTION" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="NUMERO_INSCRIPTION"/>
-		<property name="com.jaspersoft.studio.field.label" value="NUMERO_INSCRIPTION"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ve_recu_paiement"/>
-		<fieldDescription><![CDATA[Code]]></fieldDescription>
-	</field>
-	<field name="BRANCHE" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="BRANCHE"/>
-		<property name="com.jaspersoft.studio.field.label" value="BRANCHE"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ve_recu_paiement"/>
-		<fieldDescription><![CDATA[Référence de la branche]]></fieldDescription>
-	</field>
-	<field name="STATUT" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="STATUT"/>
-		<property name="com.jaspersoft.studio.field.label" value="STATUT"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ve_recu_paiement"/>
-		<fieldDescription><![CDATA[Libellé]]></fieldDescription>
-	</field>
-	<field name="ANCIENNETE" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="ANCIENNETE"/>
-		<property name="com.jaspersoft.studio.field.label" value="ANCIENNETE"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ve_recu_paiement"/>
-		<fieldDescription><![CDATA[Libellé]]></fieldDescription>
-	</field>
-	<field name="ECOLE" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="ECOLE"/>
-		<property name="com.jaspersoft.studio.field.label" value="ECOLE"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ve_recu_paiement"/>
-		<fieldDescription><![CDATA[Identifiant de l'école]]></fieldDescription>
-	</field>
-	<field name="INSCRIPTION" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="INSCRIPTION"/>
-		<property name="com.jaspersoft.studio.field.label" value="INSCRIPTION"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ve_recu_paiement"/>
-		<fieldDescription><![CDATA[Identifiant]]></fieldDescription>
-	</field>
-	<field name="IDENTIFIANT_PAIEMENT" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="IDENTIFIANT_PAIEMENT"/>
-		<property name="com.jaspersoft.studio.field.label" value="IDENTIFIANT_PAIEMENT"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ve_recu_paiement"/>
-		<fieldDescription><![CDATA[Identifiant]]></fieldDescription>
-	</field>
-	<field name="NUMERO_PAIEMENT" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="NUMERO_PAIEMENT"/>
-		<property name="com.jaspersoft.studio.field.label" value="NUMERO_PAIEMENT"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ve_recu_paiement"/>
-		<fieldDescription><![CDATA[Code]]></fieldDescription>
-	</field>
-	<field name="ANNEE" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="ANNEE"/>
-		<property name="com.jaspersoft.studio.field.label" value="ANNEE"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ve_recu_paiement"/>
-		<fieldDescription><![CDATA[Référence de la période]]></fieldDescription>
-	</field>
-	<field name="MONTANT_VERSE" class="java.math.BigDecimal">
-		<property name="com.jaspersoft.studio.field.name" value="MONTANT_VERSE"/>
-		<property name="com.jaspersoft.studio.field.label" value="MONTANT_VERSE"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ve_recu_paiement"/>
-		<fieldDescription><![CDATA[Montant]]></fieldDescription>
-	</field>
-	<field name="DATE_VERSEMENT" class="java.sql.Timestamp">
-		<property name="com.jaspersoft.studio.field.name" value="DATE_VERSEMENT"/>
-		<property name="com.jaspersoft.studio.field.label" value="DATE_VERSEMENT"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ve_recu_paiement"/>
-		<fieldDescription><![CDATA[Quand cela a été fait]]></fieldDescription>
-	</field>
-	<field name="NOM_ET_PRENOM_CAISSIER" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="NOM_ET_PRENOM_CAISSIER"/>
-		<property name="com.jaspersoft.studio.field.label" value="NOM_ET_PRENOM_CAISSIER"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ve_recu_paiement"/>
-		<fieldDescription><![CDATA[Qui a fait]]></fieldDescription>
-	</field>
-	<field name="FACULTATIF" class="java.lang.Boolean">
-		<property name="com.jaspersoft.studio.field.name" value="FACULTATIF"/>
-		<property name="com.jaspersoft.studio.field.label" value="FACULTATIF"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ve_recu_paiement"/>
-		<fieldDescription><![CDATA[Facultativité]]></fieldDescription>
-	</field>
-	<field name="AUTRE_BRANCHE" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="AUTRE_BRANCHE"/>
-		<property name="com.jaspersoft.studio.field.label" value="AUTRE_BRANCHE"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ve_recu_paiement"/>
-	</field>
-	<field name="ANNEE_SCOLAIRE" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="ANNEE_SCOLAIRE"/>
-		<property name="com.jaspersoft.studio.field.label" value="ANNEE_SCOLAIRE"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ve_recu_paiement"/>
-	</field>
+	<field name="IDENTIFIANT_PAIEMENT" class="java.lang.String"/>
+	<field name="CODE_PAIEMENT" class="java.lang.String"/>
+	<field name="MONTANT_VERSE" class="java.math.BigDecimal"/>
+	<field name="DATE_VERSEMENT" class="java.lang.String"/>
+	<field name="NOM_ET_PRENOM_CAISSIER" class="java.lang.String"/>
+	<field name="NUMERO_INSCRIPTION" class="java.lang.String"/>
+	<field name="STATUT" class="java.lang.String"/>
+	<field name="ANCIENNETE" class="java.lang.String"/>
+	<field name="MONTANT_TOTAL_SCOLARITE" class="java.math.BigDecimal"/>
+	<field name="MONTANT_TOTAL_VERSE" class="java.math.BigDecimal"/>
+	<field name="MONTANT_TOTAL_RESTANT" class="java.math.BigDecimal"/>
+	<field name="MATRICULE" class="java.lang.String"/>
+	<field name="NOM_ET_PRENOMS" class="java.lang.String"/>
+	<field name="NOM_PRENOMS_ARABE" class="java.lang.String"/>
+	<field name="DATE_NAISSANCE" class="java.lang.String"/>
+	<field name="LIEU_NAISSANCE" class="java.lang.String"/>
+	<field name="SEXE" class="java.lang.String"/>
+	<field name="LIBELLE_ECOLE" class="java.lang.String"/>
+	<field name="LIBELLE_BRANCHE" class="java.lang.String"/>
+	<field name="LIBELLE_PERIODE" class="java.lang.String"/>
+	<field name="LIBELLE_RUBRIQUE" class="java.lang.String"/>
+	<field name="A_PAYER" class="java.math.BigDecimal"/>
+	<field name="PAYE" class="java.math.BigDecimal"/>
+	<field name="RESTE_A_PAYER" class="java.math.BigDecimal"/>
+	<field name="ECHEANCE_EN_COURS" class="java.lang.String"/>
+	<field name="AUTRE_BRANCHE" class="java.lang.String"/>
 	<variable name="MONTANT_TOTAL" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[$F{A_PAYER}]]></variableExpression>
 	</variable>
@@ -248,9 +65,6 @@ IDENTIFIANT_PAIEMENT = $P{NUMERO_PAIEMENT}]]>
 	<variable name="MONTANT_TOTAL_PAYE" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[$F{PAYE}]]></variableExpression>
 	</variable>
-	<group name="gr_rubrique">
-		<groupExpression><![CDATA[$F{RUBRIQUE}]]></groupExpression>
-	</group>
 	<title>
 		<band height="59" splitType="Stretch">
 			<frame>
@@ -301,7 +115,7 @@ IDENTIFIANT_PAIEMENT = $P{NUMERO_PAIEMENT}]]>
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
 					<font size="8" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["QUITTANCE DE VERSEMENT :N° "+$F{NUMERO_PAIEMENT}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["QUITTANCE DE VERSEMENT :N° "+$F{CODE_PAIEMENT}]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="ScaleFont">
 				<reportElement x="17" y="16" width="559" height="15" uuid="2d03202d-d1ed-47b9-a654-622ecacbd6ec">
@@ -310,7 +124,7 @@ IDENTIFIANT_PAIEMENT = $P{NUMERO_PAIEMENT}]]>
 				<textElement textAlignment="Center">
 					<font size="8" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{ANNEE_SCOLAIRE}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{LIBELLE_PERIODE}]]></textFieldExpression>
 			</textField>
 			<frame>
 				<reportElement x="16" y="31" width="560" height="79" uuid="c0588077-e529-40f7-b821-5ca956d1cf2b">
@@ -667,7 +481,7 @@ IDENTIFIANT_PAIEMENT = $P{NUMERO_PAIEMENT}]]>
 					<textElement>
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{MONTANT_VERSE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{MONTANT_TOTAL_SCOLARITE}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Report" isBlankWhenNull="true">
 					<reportElement mode="Opaque" x="130" y="65" width="110" height="13" backcolor="#E0DEDE" uuid="212fb4da-62d0-438e-9173-167ee5607fe9">
@@ -683,7 +497,7 @@ IDENTIFIANT_PAIEMENT = $P{NUMERO_PAIEMENT}]]>
 					<textElement>
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{MONTANT_TOTAL_RESTE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{MONTANT_TOTAL_RESTANT}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="240" y="13" width="119" height="13" uuid="87f8f7ec-5ceb-43bf-bcbd-5628e2a77db4">
@@ -1077,7 +891,7 @@ IDENTIFIANT_PAIEMENT = $P{NUMERO_PAIEMENT}]]>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font fontName="SansSerif" size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{NUMERO_PAIEMENT}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{CODE_PAIEMENT}]]></textFieldExpression>
 					<patternExpression><![CDATA[]]></patternExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
@@ -1150,7 +964,7 @@ IDENTIFIANT_PAIEMENT = $P{NUMERO_PAIEMENT}]]>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="SansSerif" size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{ECHEANCE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{ECHEANCE_EN_COURS}]]></textFieldExpression>
 				</textField>
 			</frame>
 		</band>
@@ -1314,7 +1128,7 @@ IDENTIFIANT_PAIEMENT = $P{NUMERO_PAIEMENT}]]>
 					<textElement>
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{MONTANT_TOTAL_PAYE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{MONTANT_TOTAL_VERSE}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
 					<reportElement x="130" y="52" width="185" height="13" uuid="08bc60ec-3018-41b4-9051-4bdf908c609b">
