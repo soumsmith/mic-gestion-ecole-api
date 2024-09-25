@@ -31,7 +31,7 @@ public class ProgressionSeanceResource {
 	public Response handleSave(ProgressionSeanceDto dto) {
 		try {
 			Gson g = new Gson();
-			System.out.println(g.toJson(dto));
+//			System.out.println(g.toJson(dto));
 			ProgressionSeance ps = progressionSeanceService.convertToEntity(dto);
 			String message = progressionSeanceService.handleSave(ps);
 			return Response.ok(message).build();
@@ -46,7 +46,7 @@ public class ProgressionSeanceResource {
 	@GET
 	@Consumes(MediaType.TEXT_PLAIN)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response handleSave(@QueryParam("seance") String seance, @QueryParam("position") Integer position) {
+	public Response getBySeanceAndPosition(@QueryParam("seance") String seance, @QueryParam("position") Integer position) {
 		try {
 			ProgressionSeanceDto dto = progressionSeanceService.getDtoBySeanceAndPosition(seance, position);
 			return Response.ok(dto).build();
