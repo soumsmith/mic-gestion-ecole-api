@@ -1,19 +1,17 @@
 package com.vieecoles.steph.ressources;
 
-import javax.ws.rs.Produces;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.UUID;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -21,13 +19,14 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
 import com.vieecoles.steph.dto.MultipartBody;
+import com.vieecoles.steph.entities.Constants;
 import com.vieecoles.steph.util.FileUtils;
 
 @Path("/file")
 @Tag(name = "Fichiers")
 public class FileResource {
 	
-	private static final String FILE_DIRECTORY = "/var/pouls_scolaire/upload-folder/";
+	
 
 	@Path("/send")
 	@POST
@@ -47,7 +46,7 @@ public class FileResource {
 			return Response.status(Response.Status.BAD_REQUEST).entity("Le fichier est manquant").build();
 		}
 		String uri = "";
-		String baseRepository = FILE_DIRECTORY;
+		String baseRepository = Constants.FILE_DIRECTORY_BASE;
 		String fileName = file.fileName;
 		try {
 //			System.out.println(String.format("Fichier reçu : %s bytes minimum", file.content.available()));
@@ -63,7 +62,7 @@ public class FileResource {
 			}
 			uri = baseRepository + fileName;
 			FileOutputStream out = new FileOutputStream(uri);
-			System.out.println("uri = " + uri);
+//			System.out.println("uri = " + uri);
 			byte[] buffer = new byte[1024];
 			int bytesRead;
 
@@ -83,8 +82,8 @@ public class FileResource {
 	@Path("/download/{fileName}")
 	public Response downloadFile(@PathParam("fileName") String fileUri) {
 		try {
-			System.out.println("fileName : "+fileUri);
-			File file = new File(FILE_DIRECTORY + fileUri);
+//			System.out.println("fileName : "+fileUri);
+			File file = new File(Constants.FILE_DIRECTORY_BASE + fileUri);
 
 			if (!file.exists()) {
 				return Response.status(Response.Status.NOT_FOUND).entity("Le fichier n'existe pas sur le serveur.")
