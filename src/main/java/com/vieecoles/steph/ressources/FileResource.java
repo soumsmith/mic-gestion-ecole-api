@@ -46,7 +46,7 @@ public class FileResource {
 			return Response.status(Response.Status.BAD_REQUEST).entity("Le fichier est manquant").build();
 		}
 		String uri = "";
-		String baseRepository = Constants.FILE_DIRECTORY_BASE;
+		String baseRepository = Constants.DOCKER_VOLUME_BASE;
 		String fileName = file.fileName;
 		try {
 //			System.out.println(String.format("Fichier reçu : %s bytes minimum", file.content.available()));
@@ -83,7 +83,7 @@ public class FileResource {
 	public Response downloadFile(@PathParam("fileName") String fileUri) {
 		try {
 //			System.out.println("fileName : "+fileUri);
-			File file = new File(Constants.FILE_DIRECTORY_BASE + fileUri);
+			File file = new File(Constants.DOCKER_VOLUME_BASE + fileUri);
 
 			if (!file.exists()) {
 				return Response.status(Response.Status.NOT_FOUND).entity("Le fichier n'existe pas sur le serveur.")

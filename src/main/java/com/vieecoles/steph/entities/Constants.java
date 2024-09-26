@@ -105,4 +105,5 @@ public class Constants {
 	
 	// Repertoire de base de fichiers
 	public static final String FILE_DIRECTORY_BASE = "/var/pouls_scolaire/upload-folder/";
+	public static final String DOCKER_VOLUME_BASE = "/data/pouls_scolaire/upload-folder/";
 }
