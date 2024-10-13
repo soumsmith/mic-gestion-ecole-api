@@ -1,24 +1,26 @@
-package com.vieecoles.services.etats;
+package com.vieecoles.processors;
 
+import com.vieecoles.dto.RecapDesResultatsElevesAffecteDto;
 import com.vieecoles.dto.ResultatsElevesAffecteDto;
 import com.vieecoles.dto.eleveAffecteParClasseDto;
 import com.vieecoles.services.etats.appachePoi.resultatsPoiServices;
+import com.vieecoles.services.etats.resultatsRecapServices;
 import org.apache.poi.xwpf.usermodel.*;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.STMerge;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import java.io.*;
 import java.util.*;
 @ApplicationScoped
-public class WordTemplateProcessor {
+public class WordTempResultaAffProcessor {
     @Inject
     resultatsPoiServices resultatsServices ;
-    public  byte[] generateWordFile(Long idEcole,String libelleAnnee ,String  libelleTrimetre) throws Exception {
-
-
-        //FileInputStream fis = new FileInputStream("src/main/resources/etats/apochePoi/DRENA3/RAPPORT_1ER_TRIMESTRE.docx");
-        FileInputStream fis = new FileInputStream("src/main/resources/etats/apochePoi/DREN YAMOUSSOUKRO/RAPPORT_1ER_TRIMESTRE.docx");
+    @Inject
+    resultatsRecapServices resultatsRecapServices ;
+    @Transactional
+    public  byte[] generateWordFile(Long idEcole,String libelleAnnee ,String  libelleTrimetre, ByteArrayInputStream  fis) throws Exception {
 
 
         XWPFDocument document = new XWPFDocument(fis);
@@ -275,6 +277,7 @@ public class WordTemplateProcessor {
         } catch (RuntimeException e) {
             e.printStackTrace();
         }
+
 
         // Sauvegarder le document modifié dans un tableau de bytes
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
