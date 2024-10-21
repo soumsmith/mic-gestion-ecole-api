@@ -35,11 +35,13 @@ public class AppelNumerique extends PanacheEntityBase{
 	@JoinColumn(name = "ecole_id")
 	@ManyToOne
 	private Ecole ecole;
-	@Column(name = "progression_id")
-	private String progression;
+//	@Column(name = "progression_id")
+//	private String progression;
 	private String commentaire;
 	private Integer position;
 	@Column(name = "duree_seance")
 	private Integer duree;
+	@Column(name = "duree_totale")
+	private Integer dureeTotale;
 
 }
