@@ -1,5 +1,6 @@
 package com.vieecoles.steph.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import lombok.Getter;
@@ -13,5 +14,5 @@ public class ProgressionDto {
 	private IdLongCodeLibelleDto annee;
 	private IdLongCodeLibelleDto branche;
 	private IdLongCodeLibelleDto matiere;
-	private List<DetailProgressionDto> datas;
+	private List<DetailProgressionDto> datas = new ArrayList<DetailProgressionDto>();
 }

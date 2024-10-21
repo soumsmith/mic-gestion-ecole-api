@@ -96,6 +96,21 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 		return Seances.find("dateSeance = ?1", date).list();
 	}
 
+	public List<Integer> dureePerSeance(int dureeTotale, int nbreSeance) {
+		int d = dureeTotale / nbreSeance;
+		int r = dureeTotale % nbreSeance;
+		List<Integer> t = new ArrayList<Integer>();
+		if (d >= 1) {
+			for (int i = 0; i <= nbreSeance; i++) {
+				t.add(d);
+			}
+		}
+		if(r>0) {
+			t.add(r);
+		}
+		return t;
+	}
+
 	List<Seances> destructSeanceByTimeUnit(Seances seances, int minutes) {
 		if (minutes == 0)
 			minutes = Constants.DEFAULT_DUREE_SEANCE_MINUTES;
@@ -107,6 +122,7 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 		System.out.println(String.format("Nombre de de seances pour la séance %s = %s", seances.getId(), nbreSeances));
 		List<Seances> list = new ArrayList<>();
 		if (nbreSeances > 1) {
+//			List<Integer> dureePerSeanceList = dureePerSeance(duree, nbreSeances);
 			for (int i = 0; i < nbreSeances; i++) {
 				Seances seance = new Seances();
 				AppelNumerique ap = new AppelNumerique();
@@ -134,7 +150,8 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 						Constants.DEFAULT_DELAI_APRES_DESACTIVE_APPEL_MINUTES));
 				seance.setIsEnded(verifySeanceEnded(seance.getHeureFin()));
 				seance.setIsClassEnded(verifySeanceEnded(seance.getHeureFin()) ? "surface-300" : "");
-				seance.setDuree(duree);
+				seance.setDuree(DateUtils.calculerDuree(seance.getHeureDeb(), seance.getHeureFin()));
+				seance.setDureeTotale(duree);
 				list.add(seance);
 				dateDebNew = DateUtils.ajouterMinutes(dateDebNew, minutes);
 				System.out.println(
@@ -178,7 +195,8 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 							Constants.DEFAULT_DELAI_APRES_DESACTIVE_APPEL_MINUTES));
 					s.setIsEnded(verifySeanceEnded(s.getHeureFin()));
 					s.setIsClassEnded(verifySeanceEnded(s.getHeureFin()) ? "surface-300" : "");
-					s.setDuree(Constants.DEFAULT_DUREE_SEANCE_MINUTES);
+					s.setDuree(DateUtils.calculerDuree(s.getHeureDeb(), s.getHeureFin()));
+					s.setDureeTotale(DateUtils.calculerDuree(s.getHeureDeb(), s.getHeureFin()));
 					listWithDestructSeances.add(s);
 				}
 
@@ -455,9 +473,10 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 //			System.out.println(String.format("Ecole %s", ecole.getLibelle()));
 			AnneeDto annee = anneeService.getOpenAnneeByEcoleDto(ecole.getId());
 			if (annee.getAnneeEcoleList() != null && annee.getAnneeEcoleList().size() > 0) {
-				AnneePeriode ap = AnneePeriode.find("anneeScolaire.id =?1 and ecole.id=?2 order by dateFin desc", annee.getAnneeEcoleList().get(0).getAnneeId(), ecole.getId()).firstResult();
+				AnneePeriode ap = AnneePeriode.find("anneeScolaire.id =?1 and ecole.id=?2 order by dateFin desc",
+						annee.getAnneeEcoleList().get(0).getAnneeId(), ecole.getId()).firstResult();
 //				System.out.println(String.format(" tomorrow %s compareTo dateFin %s is before ? %s", tomorrow,ap.getDateFin().toLocalDate(),!tomorrow.isAfter(ap.getDateFin().toLocalDate())));
-				if(!tomorrow.isAfter(ap.getDateFin().toLocalDate()) ) {
+				if (!tomorrow.isAfter(ap.getDateFin().toLocalDate())) {
 					GenericProjectionLongId anneeCentrale = anneeService.findMainAnneeWithProjectionByEcole(ecole);
 					try {
 						generateSeances(DateUtils.asDate(tomorrow), null, ecole.getId(), anneeCentrale.getId());

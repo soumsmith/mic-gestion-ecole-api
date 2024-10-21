@@ -34,8 +34,9 @@ public class DetailProgressionService implements PanacheRepositoryBase<DetailPro
 	public List<DetailProgression> getByProgressionId(String id) {
 		List<DetailProgression> list = new ArrayList<DetailProgression>();
 		try {
-			list = DetailProgression.find("progression.id = ?1 order by ordre, semaineDeb, numTitre", id).list();
+			list = DetailProgression.find("progression.id = ?1 order by ordre, dateDeb, numTitre", id).list();
 		} catch (RuntimeException e) {
+			e.printStackTrace();
 			list = new ArrayList<DetailProgression>();
 		}
 		return list;
@@ -44,7 +45,7 @@ public class DetailProgressionService implements PanacheRepositoryBase<DetailPro
 	public List<GenericProjectionStringId> getProjectionIdByProgression(String id) {
 		List<GenericProjectionStringId> list = new ArrayList<GenericProjectionStringId>();
 		try {
-			list = DetailProgression.find("progression.id = ?1 order by ordre, semaineDeb, numTitre", id).project(GenericProjectionStringId.class).list();
+			list = DetailProgression.find("progression.id = ?1 order by ordre, dateDeb, numTitre", id).project(GenericProjectionStringId.class).list();
 		} catch (RuntimeException e) {
 			e.printStackTrace();
 			list = new ArrayList<GenericProjectionStringId>();
@@ -55,6 +56,10 @@ public class DetailProgressionService implements PanacheRepositoryBase<DetailPro
 	@Transactional
 	public void create(DetailProgression detail) {
 		UUID uuid = UUID.randomUUID();
+		//Si l ordre n'est pas saisi on genere l'ordre
+		if(detail.getOrdre() == null && detail.getProgression()!=null  && detail.getProgression().getId()!=null) {
+			detail.setOrdre(getProjectionIdByProgression(detail.getProgression().getId()).size() + 1);
+		}
 		detail.setId(uuid.toString());
 		detail.setDateCreation(new Date());
 		detail.setDateUpdate(new Date());
@@ -65,13 +70,14 @@ public class DetailProgressionService implements PanacheRepositoryBase<DetailPro
 	public void update(DetailProgression obj) {
 		DetailProgression entity = DetailProgression.findById(obj.getId());
 		entity.setHeure(obj.getHeure());
-		entity.setMoisDeb(obj.getMoisDeb());
 		entity.setNiveauTitre(obj.getNiveauTitre());
 		entity.setNumTitre(obj.getNumTitre());
 		entity.setTitre(obj.getTitre());
 		entity.setOrdre(obj.getOrdre());
+		entity.setNbreSeance(obj.getNbreSeance());
 		entity.setPeriode(obj.getPeriode());
-		entity.setSemaineDeb(obj.getSemaineDeb());
+		entity.setDateDeb(obj.getDateDeb());
+		entity.setDateFin(obj.getDateFin());
 		entity.setDateUpdate(new Date());
 		System.out.println("Detail progression mis à jour");
 	}
@@ -126,10 +132,6 @@ public class DetailProgressionService implements PanacheRepositoryBase<DetailPro
 		Boolean flat = true;
 		if (dto.getPeriode() == null) {
 			flat = false;
-		} else if (dto.getMois() == null) {
-			flat = false;
-		} else if (dto.getSemaine() == null) {
-			flat = false;
 		} else if (dto.getNumLecon() == null) {
 			flat = false;
 		} else if (dto.getTitre() == null) {
@@ -179,11 +181,12 @@ public class DetailProgressionService implements PanacheRepositoryBase<DetailPro
 				dto.getProgressionId());
 		entity.setId(dto.getId());
 		entity.setPeriode(Periode.getEntityManager().getReference(Periode.class, dto.getPeriode().getId()));
-		entity.setMoisDeb(dto.getMois());
-		entity.setSemaineDeb(dto.getSemaine());
+		entity.setDateDeb(dto.getDateDeb());
+		entity.setDateFin(dto.getDateFin());
 		entity.setNumTitre(dto.getNumLecon());
 		entity.setTitre(dto.getTitre());
 		entity.setHeure(dto.getHeure());
+		entity.setNbreSeance(dto.getNbreSeance());
 		entity.setOrdre(dto.getOrdre());
 		if (progression != null) {
 			entity.setProgression(progression);
@@ -197,12 +200,13 @@ public class DetailProgressionService implements PanacheRepositoryBase<DetailPro
 		}
 		dto.setId(entity.getId());
 		dto.setPeriode(new IdLongCodeLibelleDto(entity.getPeriode().getId(), null, entity.getPeriode().getLibelle()));
-		dto.setMois(entity.getMoisDeb());
-		dto.setSemaine(entity.getSemaineDeb());
+		dto.setDateDeb(entity.getDateDeb());
+		dto.setDateFin(entity.getDateFin());
 		dto.setNumLecon(entity.getNumTitre());
 		dto.setTitre(entity.getTitre());
 		dto.setHeure(entity.getHeure());
 		dto.setProgressionId(entity.getProgression().getId());
+		dto.setNbreSeance(entity.getNbreSeance());
 		dto.setOrdre(entity.getOrdre());
 		return dto;
 	}

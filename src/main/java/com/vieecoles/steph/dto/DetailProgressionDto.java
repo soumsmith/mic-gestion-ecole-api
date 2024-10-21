@@ -8,11 +8,12 @@ import lombok.Setter;
 public class DetailProgressionDto {
 	private String id;
 	private IdLongCodeLibelleDto periode;
-	private Integer mois;
-	private Integer semaine;
+	private String dateDeb;
+	private String dateFin;
 	private Integer numLecon;
 	private String titre;
 	private Integer heure;
 	private String progressionId;
+	private Integer nbreSeance;
 	private Integer ordre;
 }

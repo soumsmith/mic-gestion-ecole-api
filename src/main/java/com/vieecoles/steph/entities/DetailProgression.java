@@ -23,12 +23,12 @@ public class DetailProgression extends PanacheEntityBase {
 	@Column(name = "numero_titre")
 	private Integer numTitre;
 	private String titre;
-	@Column(name = "semaine_deb")
-	private Integer semaineDeb;
+	@Column(name = "date_deb")
+	private String dateDeb;
+	@Column(name = "date_fin")
+	private String dateFin;
 	@Column(name = "niveau_titre")
 	private Integer niveauTitre;
-	@Column(name = "mois_deb")
-	private Integer moisDeb;
 	@ManyToOne
 	@JoinColumn(name = "periode_id")
 	private Periode periode;
@@ -36,6 +36,8 @@ public class DetailProgression extends PanacheEntityBase {
 	private Progression progression;
 	@Column(name = "volume_horaire")
 	private Integer heure;
+	@Column(name = "nbre_seance")
+	private Integer nbreSeance;
 	@Column(name = "date_creation")
 	private Date dateCreation;
 	@Column(name = "date_update")

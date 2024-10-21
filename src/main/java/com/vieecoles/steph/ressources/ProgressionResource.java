@@ -73,4 +73,14 @@ public class ProgressionResource {
 	public Response getByAnnee(@PathParam("annee") Long annee) {
 		return Response.ok(progressionService.listDtoByAnnee(annee)).build();
 	}
+	
+	@Path("/get-by-seance/{seance}")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.TEXT_PLAIN)
+	@Operation(description = "Obténir la liste des progressions via une seance", summary = "")
+	@Tag(name = "Progression")
+	public Response getBySeance(@PathParam("seance") String seance) {
+		return Response.ok(progressionService.getProgressionBySeance(seance)).build();
+	}
 }
