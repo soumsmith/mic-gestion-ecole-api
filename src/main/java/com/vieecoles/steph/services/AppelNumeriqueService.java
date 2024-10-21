@@ -106,7 +106,6 @@ public class AppelNumeriqueService implements PanacheRepositoryBase<AppelNumeriq
 		if (dto.getPersonnelId() != null)
 			personnel.setId(Long.parseLong(dto.getPersonnelId()));
 		appel.setPersonnel(personnel);
-		appel.setProgression(null);
 		Seances seance = new Seances();
 		seance.setId(dto.getSeanceId());
 		appel.setSeance(seance);
@@ -184,7 +183,6 @@ public class AppelNumeriqueService implements PanacheRepositoryBase<AppelNumeriq
 		appelDb.setHeureDebut(appel.getHeureDebut());
 		appelDb.setHeureFin(appel.getHeureFin());
 		appelDb.setPersonnel(appel.getPersonnel());
-		appelDb.setProgression(appel.getProgression());
 		appelDb.setSeance(appel.getSeance());
 		appelDb.setEcole(appel.getEcole());
 		appelDb.setCommentaire(appel.getCommentaire());
