@@ -11,6 +11,7 @@ import javax.ws.rs.core.Response;
 import com.vieecoles.entities.operations.commune;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -24,10 +25,17 @@ public class communeService implements PanacheRepositoryBase<commune, Long> {
 
     }
     public  List<commune> findByIdville(Long idtyp){
+        System.out.println("Villeid "+idtyp);
+        List<commune> communeList= new ArrayList<>() ;
+try {
 
-        return    em.createQuery("select o from commune o join fetch o.ville h where h.villeid =:typeObj")
-                .setParameter("typeObj",idtyp)
-                .getResultList();
+    communeList=  em.createQuery("select o from commune o join fetch o.ville h where h.villeid =:typeObj")
+            .setParameter("typeObj",idtyp)
+            .getResultList();
+} catch (RuntimeException e) {
+    e.printStackTrace();
+}
+      return  communeList ;
 
     }
 

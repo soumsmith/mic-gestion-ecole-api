@@ -37,6 +37,331 @@ public class ComparatifDto {
     private Double effParClassTA ;
     private Double effParClassTC ;
     private Double effParClassTD ;
+    private Long n1brc6 ;
+    private Long n1brc5 ;
+    private Long n1brc4;
+    private Long n1brc3;
+    private Long n1brc2nA ;
+    private Long n1brc2nC ;
+    private Long n1brc1A ;
+    private Long n1brc1C ;
+    private Long n1brc1D ;
+    private Long n1brcTA ;
+    private Long n1brcTC ;
+    private Long n1brcTD ;
+    private Long e1ff6 ;
+    private Long e1ff5 ;
+    private Long e1ff4 ;
+    private Long e1ff3 ;
+    private Long e1ff2nA ;
+    private Long e1ff2nC ;
+    private Long e1ff1A ;
+    private Long e1ff1C ;
+    private Long e1ff1D ;
+    private Long e1ffTA ;
+    private Long e1ffTC ;
+    private Long e1ffTD ;
+    private Double e1ffParClass6 ;
+    private Double e1ffParClass5 ;
+    private Double e1ffParClass4  ;
+    private Double e1ffParClass3 ;
+    private Double e1ffParClass2nA ;
+    private Double e1ffParClass2nC ;
+    private Double e1ffParClass1A ;
+    private Double e1ffParClass1C ;
+    private Double e1ffParClass1D ;
+    private Double e1ffParClassTA ;
+    private Double e1ffParClassTC ;
+    private Double e1ffParClassTD ;
+
+
+    public Long getN1brc6() {
+        return n1brc6;
+    }
+
+    public void setN1brc6(Long n1brc6) {
+        this.n1brc6 = n1brc6;
+    }
+
+    public Long getN1brc5() {
+        return n1brc5;
+    }
+
+    public void setN1brc5(Long n1brc5) {
+        this.n1brc5 = n1brc5;
+    }
+
+    public Long getN1brc4() {
+        return n1brc4;
+    }
+
+    public void setN1brc4(Long n1brc4) {
+        this.n1brc4 = n1brc4;
+    }
+
+    public Long getN1brc3() {
+        return n1brc3;
+    }
+
+    public void setN1brc3(Long n1brc3) {
+        this.n1brc3 = n1brc3;
+    }
+
+    public Long getN1brc2nA() {
+        return n1brc2nA;
+    }
+
+    public void setN1brc2nA(Long n1brc2nA) {
+        this.n1brc2nA = n1brc2nA;
+    }
+
+    public Long getN1brc2nC() {
+        return n1brc2nC;
+    }
+
+    public void setN1brc2nC(Long n1brc2nC) {
+        this.n1brc2nC = n1brc2nC;
+    }
+
+    public Long getN1brc1A() {
+        return n1brc1A;
+    }
+
+    public void setN1brc1A(Long n1brc1A) {
+        this.n1brc1A = n1brc1A;
+    }
+
+    public Long getN1brc1C() {
+        return n1brc1C;
+    }
+
+    public void setN1brc1C(Long n1brc1C) {
+        this.n1brc1C = n1brc1C;
+    }
+
+    public Long getN1brc1D() {
+        return n1brc1D;
+    }
+
+    public void setN1brc1D(Long n1brc1D) {
+        this.n1brc1D = n1brc1D;
+    }
+
+    public Long getN1brcTA() {
+        return n1brcTA;
+    }
+
+    public void setN1brcTA(Long n1brcTA) {
+        this.n1brcTA = n1brcTA;
+    }
+
+    public Long getN1brcTC() {
+        return n1brcTC;
+    }
+
+    public void setN1brcTC(Long n1brcTC) {
+        this.n1brcTC = n1brcTC;
+    }
+
+    public Long getN1brcTD() {
+        return n1brcTD;
+    }
+
+    public void setN1brcTD(Long n1brcTD) {
+        this.n1brcTD = n1brcTD;
+    }
+
+    public Long getE1ff6() {
+        return e1ff6;
+    }
+
+    public void setE1ff6(Long e1ff6) {
+        this.e1ff6 = e1ff6;
+    }
+
+    public Long getE1ff5() {
+        return e1ff5;
+    }
+
+    public void setE1ff5(Long e1ff5) {
+        this.e1ff5 = e1ff5;
+    }
+
+    public Long getE1ff4() {
+        return e1ff4;
+    }
+
+    public void setE1ff4(Long e1ff4) {
+        this.e1ff4 = e1ff4;
+    }
+
+    public Long getE1ff3() {
+        return e1ff3;
+    }
+
+    public void setE1ff3(Long e1ff3) {
+        this.e1ff3 = e1ff3;
+    }
+
+    public Long getE1ff2nA() {
+        return e1ff2nA;
+    }
+
+    public void setE1ff2nA(Long e1ff2nA) {
+        this.e1ff2nA = e1ff2nA;
+    }
+
+    public Long getE1ff2nC() {
+        return e1ff2nC;
+    }
+
+    public void setE1ff2nC(Long e1ff2nC) {
+        this.e1ff2nC = e1ff2nC;
+    }
+
+    public Long getE1ff1A() {
+        return e1ff1A;
+    }
+
+    public void setE1ff1A(Long e1ff1A) {
+        this.e1ff1A = e1ff1A;
+    }
+
+    public Long getE1ff1C() {
+        return e1ff1C;
+    }
+
+    public void setE1ff1C(Long e1ff1C) {
+        this.e1ff1C = e1ff1C;
+    }
+
+    public Long getE1ff1D() {
+        return e1ff1D;
+    }
+
+    public void setE1ff1D(Long e1ff1D) {
+        this.e1ff1D = e1ff1D;
+    }
+
+    public Long getE1ffTA() {
+        return e1ffTA;
+    }
+
+    public void setE1ffTA(Long e1ffTA) {
+        this.e1ffTA = e1ffTA;
+    }
+
+    public Long getE1ffTC() {
+        return e1ffTC;
+    }
+
+    public void setE1ffTC(Long e1ffTC) {
+        this.e1ffTC = e1ffTC;
+    }
+
+    public Long getE1ffTD() {
+        return e1ffTD;
+    }
+
+    public void setE1ffTD(Long e1ffTD) {
+        this.e1ffTD = e1ffTD;
+    }
+
+    public Double getE1ffParClass6() {
+        return e1ffParClass6;
+    }
+
+    public void setE1ffParClass6(Double e1ffParClass6) {
+        this.e1ffParClass6 = e1ffParClass6;
+    }
+
+    public Double getE1ffParClass5() {
+        return e1ffParClass5;
+    }
+
+    public void setE1ffParClass5(Double e1ffParClass5) {
+        this.e1ffParClass5 = e1ffParClass5;
+    }
+
+    public Double getE1ffParClass4() {
+        return e1ffParClass4;
+    }
+
+    public void setE1ffParClass4(Double e1ffParClass4) {
+        this.e1ffParClass4 = e1ffParClass4;
+    }
+
+    public Double getE1ffParClass3() {
+        return e1ffParClass3;
+    }
+
+    public void setE1ffParClass3(Double e1ffParClass3) {
+        this.e1ffParClass3 = e1ffParClass3;
+    }
+
+    public Double getE1ffParClass2nA() {
+        return e1ffParClass2nA;
+    }
+
+    public void setE1ffParClass2nA(Double e1ffParClass2nA) {
+        this.e1ffParClass2nA = e1ffParClass2nA;
+    }
+
+    public Double getE1ffParClass2nC() {
+        return e1ffParClass2nC;
+    }
+
+    public void setE1ffParClass2nC(Double e1ffParClass2nC) {
+        this.e1ffParClass2nC = e1ffParClass2nC;
+    }
+
+    public Double getE1ffParClass1A() {
+        return e1ffParClass1A;
+    }
+
+    public void setE1ffParClass1A(Double e1ffParClass1A) {
+        this.e1ffParClass1A = e1ffParClass1A;
+    }
+
+    public Double getE1ffParClass1C() {
+        return e1ffParClass1C;
+    }
+
+    public void setE1ffParClass1C(Double e1ffParClass1C) {
+        this.e1ffParClass1C = e1ffParClass1C;
+    }
+
+    public Double getE1ffParClass1D() {
+        return e1ffParClass1D;
+    }
+
+    public void setE1ffParClass1D(Double e1ffParClass1D) {
+        this.e1ffParClass1D = e1ffParClass1D;
+    }
+
+    public Double getE1ffParClassTA() {
+        return e1ffParClassTA;
+    }
+
+    public void setE1ffParClassTA(Double e1ffParClassTA) {
+        this.e1ffParClassTA = e1ffParClassTA;
+    }
+
+    public Double getE1ffParClassTC() {
+        return e1ffParClassTC;
+    }
+
+    public void setE1ffParClassTC(Double e1ffParClassTC) {
+        this.e1ffParClassTC = e1ffParClassTC;
+    }
+
+    public Double getE1ffParClassTD() {
+        return e1ffParClassTD;
+    }
+
+    public void setE1ffParClassTD(Double e1ffParClassTD) {
+        this.e1ffParClassTD = e1ffParClassTD;
+    }
 
     public Long getNbrc6() {
         return nbrc6;
