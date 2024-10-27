@@ -23,10 +23,10 @@ public class InscriptionService implements PanacheRepositoryBase<Inscription, In
 
 	@Inject
 	ClasseEleveService classeEleveService;
-	
+
 	@Inject
 	EntityManager em;
-	
+
 
 	public List<Inscription> getByBrancheAndAnneeAndStatut(long branche, long annee, String statut, Long ecole) {
 
@@ -51,6 +51,25 @@ public class InscriptionService implements PanacheRepositoryBase<Inscription, In
 
 	// Nombre d'eleves dans une ecole en fonction du sexe
 	public Long getNbreEleveByEcoleAndAnneeAndStatutAndSexe(Long ecole, Long annee, String statut, String sexe) {
+
+		Long result = null;
+		/*try {
+			result = (Long) em.createQuery("select count(o.id) from Inscription o ,eleve e where o.eleve.id=e.id and o.ecole.id=:ecole and o.statut = :statut " +
+							"and e.eleve_sexe = :sexe  and o.annee.id = :annee")
+					.setParameter("sexe",sexe)
+					.setParameter("ecole",ecole)
+					.setParameter("statut",statut)
+					.setParameter("annee",annee)
+					.getSingleResult();
+			return result ;
+		} catch (NoResultException e){
+			return 0L ;
+		}*/
+
+
+
+
+
 		return Inscription
 				.find("ecole.id = ?1 and annee.id = ?2 and statut = ?3 and eleve.sexe = ?4", ecole, annee, statut, sexe)
 				.count();
@@ -71,7 +90,7 @@ public class InscriptionService implements PanacheRepositoryBase<Inscription, In
 						ecole, annee, statut, sexe, statutAffecte)
 				.count();
 	}
-	
+
 	// nombre de nouveaux élèves dans l 'ecole
 	public long countNewEleve(Long ecoleId, Long anneeId) {
         Query query = em.createNamedQuery("Inscription.getNewEleveCount");
@@ -100,7 +119,7 @@ public class InscriptionService implements PanacheRepositoryBase<Inscription, In
             return 0;
         }
     }
-	
+
 	public long getNewEleveAffCountBySexe(Long ecoleId, Long anneeId, String sexe, String statut) {
         Query query = em.createNamedQuery("Inscription.getNewEleveCountBySexeAndAffecte");
         query.setParameter("ecoleId", ecoleId);
@@ -116,8 +135,8 @@ public class InscriptionService implements PanacheRepositoryBase<Inscription, In
             return 0;
         }
     }
-	
-	
+
+
 	public BigDecimal getAvgEffectifbyClasse(Long ecoleId, Long anneeId) {
         Query query = em.createNamedQuery("Inscription.getAvgEffectifbyClasse");
         query.setParameter("ecoleId", ecoleId);
@@ -131,7 +150,7 @@ public class InscriptionService implements PanacheRepositoryBase<Inscription, In
             return BigDecimal.ZERO;
         }
     }
-	
+
 	public long getOldEleveAffCountBySexe(Long ecoleId, Long anneeId, String sexe, String statut) {
         Query query = em.createNamedQuery("Inscription.getOldEleveCountBySexeAndAffecte");
         query.setParameter("ecoleId", ecoleId);
@@ -147,8 +166,8 @@ public class InscriptionService implements PanacheRepositoryBase<Inscription, In
             return 0;
         }
     }
-	
-	
+
+
 
 	public List<Inscription> getByBrancheAndAnneeAndStatutNotinClasse(long branche, long annee, String statut,
 			long ecole) {

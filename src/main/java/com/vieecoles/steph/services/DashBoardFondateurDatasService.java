@@ -82,14 +82,15 @@ public class DashBoardFondateurDatasService {
 			dash.setPersonnelEnseignant(personnelService.countByFonction(1, ecoleId));
 			dash.setPersonnelEnseignantFeminin(personnelService.countByGenreAndFonction(ecoleId, 1, Constants.FEMININ));
 			dash.setPersonnelEnseignantMasculin(personnelService.countByGenreAndFonction(ecoleId, 1, Constants.MASCULIN));
-			
+
 			dash.setEnseignantPermanent(personnelService.countByEcoleAndFonctionAndStatut(ecoleId, 1, Constants.PERMANENT));
 			dash.setEnseignantPermanentFeminin(personnelService.countByGenreAndFonctionAndStatut(ecoleId, 1, Constants.FEMININ, Constants.PERMANENT));
 			dash.setEnseignantPermanentMasculin(personnelService.countByGenreAndFonctionAndStatut(ecoleId, 1, Constants.MASCULIN, Constants.PERMANENT));
 			dash.setEnseignantVacataire(personnelService.countByEcoleAndFonctionAndStatut(ecoleId, 1, Constants.VACATAIRE));
 			dash.setEnseignantVacataireFeminin(personnelService.countByGenreAndFonctionAndStatut(ecoleId, 1, Constants.FEMININ, Constants.VACATAIRE));
 			dash.setEnseignantVacataireMasculin(personnelService.countByGenreAndFonctionAndStatut(ecoleId, 1, Constants.MASCULIN, Constants.VACATAIRE));
-			
+
+			System.out.println("setNombreTotalEleveFilles "+dash.getNombreEleveAffFilles());
 		} catch (RuntimeException r) {
 			r.printStackTrace();
 		}

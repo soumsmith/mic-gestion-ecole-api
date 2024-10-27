@@ -3,9 +3,11 @@ package com.vieecoles.services.etats;
 import com.vieecoles.dto.*;
 import com.vieecoles.services.eleves.InscriptionService;
 import com.vieecoles.services.souscription.SousceecoleService;
+import com.vieecoles.steph.entities.AnneeScolaire;
 import com.vieecoles.steph.entities.Branche;
 import com.vieecoles.steph.entities.Classe;
 import com.vieecoles.steph.entities.Ecole;
+import com.vieecoles.steph.services.AnneeService;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -23,6 +25,8 @@ public class ComparatifServices {
     InscriptionService inscriptionService ;
     @Inject
     SousceecoleService sousceecoleService ;
+    @Inject
+    AnneeService anneeService ;
 
     public ComparatifDto getComparatif(Long idEcole ,Long anneeId ){
 
@@ -49,7 +53,12 @@ public class ComparatifServices {
         Double e1ffParClass1A = 0d, e1ffParClass1C = 0d, e1ffParClass1D = 0d, e1ffParClassTA= 0d ;
         Double e1ffParClassTC = 0d, e1ffParClassTD = 0d;
 
-        String anneeCourante = getLibelleAnneScolaire(anneeId,idEcole) ;
+        AnneeScolaire anneeScolaire= new AnneeScolaire() ;
+        Ecole myEcole = new Ecole() ;
+        myEcole=Ecole.findById(idEcole) ;
+        anneeScolaire = anneeService.findMainAnneeByEcole(myEcole);
+
+        String anneeCourante = anneeScolaire.getLibelle() ;
         String anneePrecedente= null ;
 
         if(anneeCourante!=null || !anneeCourante.isEmpty()) {
