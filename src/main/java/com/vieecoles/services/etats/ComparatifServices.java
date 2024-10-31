@@ -60,7 +60,7 @@ public class ComparatifServices {
 
         String anneeCourante = anneeScolaire.getLibelle() ;
         String anneePrecedente= null ;
-
+System.out.println("anneeCourante "+anneeCourante);
         if(anneeCourante!=null || !anneeCourante.isEmpty()) {
             String[] parties = anneeCourante.split(" ");
             int anneeDebut = Integer.parseInt(parties[1]);  // "2022" -> 2022

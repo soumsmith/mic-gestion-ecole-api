@@ -91,6 +91,7 @@ public class RapportRentreeSpiderRessource {
         pyramideEffectDto1 = recapitulatif.getPyramide(idEcole,anneeId,4) ;
         System.out.println("Pyramide 1er cycle ok");
         pyramideEffectDto2 = recapitulatif.getPyramide(idEcole,anneeId,5) ;
+<<<<<<< HEAD
        System.out.println("Pyramide 2nd cycle ok");
         pyramideEffectDtoBilan = recapitulatiBilan.getPyramide(idEcole,anneeId);
        System.out.println("Pyramide Bilan ok");
@@ -101,6 +102,18 @@ public class RapportRentreeSpiderRessource {
         ComparatifDto  n= new ComparatifDto() ;
         n = comparatifServices.getComparatif(idEcole ,anneeId) ;
        System.out.println("Comparatif   ok");
+=======
+        System.out.println("Pyramide 2nd cycle ok");
+        pyramideEffectDtoBilan = recapitulatiBilan.getPyramide(idEcole,anneeId);
+        System.out.println("Pyramide Bilan ok");
+        etatNominatifEnseignatDto= etatNominatifEnseignantServices.infosEtatNominEnseignant(idEcole ,anneeId) ;
+        System.out.println("Etat nominatif  ok");
+        m = effectifParLangueServices.getLangueVivante(idEcole,anneeId);
+        System.out.println("Langue vivante  ok");
+        ComparatifDto  n= new ComparatifDto() ;
+        n = comparatifServices.getComparatif(idEcole ,anneeId) ;
+        System.out.println("Comparatif   ok");
+>>>>>>> apache_poi
         repartitionEleveParAnNaissDto= repartitionElevParAnNaissServices.CalculRepartElevParAnnNaiss(idEcole ,libelleAnnee);
         comparatifDto.add(n);
 
