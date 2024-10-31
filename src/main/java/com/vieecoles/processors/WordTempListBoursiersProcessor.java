@@ -1,6 +1,9 @@
 package com.vieecoles.processors;
 
+import com.vieecoles.dto.BoursierDto;
 import com.vieecoles.dto.MajorParClasseNiveauDto;
+import com.vieecoles.dto.NiveauDto;
+import com.vieecoles.services.etats.BoursiersServices;
 import com.vieecoles.services.etats.appachePoi.EleveAffecteParClassePoiServices;
 import com.vieecoles.services.etats.appachePoi.MajorParClasseNiveauPoiServices;
 import org.apache.poi.xwpf.usermodel.*;
@@ -11,6 +14,7 @@ import org.openxmlformats.schemas.wordprocessingml.x2006.main.STMerge;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,9 +23,7 @@ public class WordTempListBoursiersProcessor {
     @Inject
     EntityManager em;
     @Inject
-    EleveAffecteParClassePoiServices eleveAffecteParClassePoiServices ;
-    @Inject
-    MajorParClasseNiveauPoiServices majorServices ;
+    BoursiersServices boursiersServices ;
     int LongTableau;
 
     private static void ensureCellCount(XWPFTableRow row, int cellCount) {
@@ -30,7 +32,7 @@ public class WordTempListBoursiersProcessor {
             row.addNewTableCell(); // Ajouter une nouvelle cellule si nécessaire
         }
     }
-    public   void getListeMajorClasse(XWPFDocument document ,
+    public   void getListeBoursierClasse(XWPFDocument document ,
                                            Long idEcole ,String libelleAnnee , String libelleTrimestre) {
 
 
@@ -45,16 +47,23 @@ public class WordTempListBoursiersProcessor {
         for (int i = 0; i < paragraphs.size(); i++) {
             String text = paragraphs.get(i).getText();
             // Identifier l'emplacement où insérer le tableau (par exemple après "Liste des élèves affectés par classe")
-            if (text.contains("Liste des majors de classe par niveau")) {
+            if (text.toLowerCase().contains("LISTE DES BOURSIERS ET DEMI BOURSIERS".toLowerCase())) {
                 indexToInsert = i + 1; // Ajouter après ce paragraphe
 
                 break;
             }
         }
 
+        List<NiveauDto> niveauDtoList = new ArrayList<>() ;
+        TypedQuery<NiveauDto> q = em.createQuery( "SELECT new com.vieecoles.dto.NiveauDto(b.niveau) from Bulletin b  where b.ecoleId =:idEcole and b.libellePeriode=:periode and b.anneeLibelle=:annee " +
+                "group by b.niveau ", NiveauDto.class);
+        niveauDtoList = q.setParameter("idEcole", idEcole)
+                .setParameter("annee", libelleAnnee)
+                .setParameter("periode", libelleTrimestre)
+                .getResultList() ;
 
-            List<MajorParClasseNiveauDto>  listeMajors = new ArrayList<>() ;
-            listeMajors= majorServices.MajorParNiveauClasse(idEcole ,libelleAnnee,libelleTrimestre) ;
+        List<BoursierDto> boursierDtoList = new ArrayList<>() ;
+        boursierDtoList = boursiersServices.boursier(idEcole ,libelleAnnee,libelleTrimestre) ;
 
         if (indexToInsert != -1) {
 
@@ -62,47 +71,26 @@ public class WordTempListBoursiersProcessor {
 
             // Créer l'en-tête du tableau (1 ligne, 11 colonnes)
             XWPFTableRow headerRow = table.getRow(0);
-            headerRow.getCell(0).setText("NIVEAU");
-            headerRow.addNewTableCell().setText("CLASSE");
-            headerRow.addNewTableCell().setText("MATRICULE");
-            headerRow.addNewTableCell().setText("NOM ET PRENOMS");
-            headerRow.addNewTableCell().setText("ANNEE NAIS");
-            headerRow.addNewTableCell().setText("SEXE");
-            headerRow.addNewTableCell().setText("NATURE");
-            headerRow.addNewTableCell().setText("R");
-            headerRow.addNewTableCell().setText("MOY");
-            headerRow.addNewTableCell().setText("LV2");
-            String lastNiveau = null;
-            int startRowIndex = -1;
-            int rowIndex = 1;// Exemple de 3 lignes
-            // Ajouter des lignes au tableau
-            for (MajorParClasseNiveauDto eleve : listeMajors) {
+            headerRow.getCell(0).setText("N°");
+            headerRow.addNewTableCell().setText("Matricule");
+            headerRow.addNewTableCell().setText("Nom et Prénoms");
+            headerRow.addNewTableCell().setText("Sexe");
+            headerRow.addNewTableCell().setText("Date de naissance");
+            headerRow.addNewTableCell().setText("Lieu de naissance");
+            for (NiveauDto niveauDto : niveauDtoList) {
+                XWPFTableRow niveau = table.createRow();
+            for (BoursierDto eleve : boursierDtoList) {
 
+                niveau.getCell(0).setText(eleve.getNiveau());
                 XWPFTableRow row = table.createRow();
-                row.getCell(1).setText(eleve.getClasseLibelle());
-                row.getCell(2).setText(eleve.getMatricule());
-                row.getCell(3).setText(eleve.getNom()+" "+eleve.getPrenom());
-                row.getCell(4).setText(eleve.getAnneeNaiss());
-                row.getCell(5).setText(eleve.getSexe());
-                row.getCell(6).setText(eleve.getNature());
-                row.getCell(7).setText(eleve.getRedoublant());
-                row.getCell(8).setText(String.valueOf(eleve.getMoyGeneral()));
-                row.getCell(9).setText(String.valueOf(eleve.getLv2()));
+                row.getCell(0).setText("");
+                row.getCell(1).setText(eleve.getMatricule());
+                row.getCell(2).setText(eleve.getNom()+" "+eleve.getPrenoms());
+                row.getCell(3).setText(eleve.getSexe());
+                row.getCell(4).setText(eleve.getDateNaiss());
+                row.getCell(5).setText(eleve.getLieuNaiss());
 
-                String currentNiveau = eleve.getNiveau();
-
-                if (lastNiveau == null || !lastNiveau.equals(currentNiveau)) {
-                    // Nouveau niveau, on commence un nouveau groupe de fusion
-                    lastNiveau = currentNiveau;
-                    startRowIndex = rowIndex;
-                    row.getCell(0).setText(currentNiveau);  // Afficher le niveau dans la première ligne du groupe
-                } else {
-                    // Même niveau que la ligne précédente, fusionner verticalement
-                    mergeVerticalCells(table, startRowIndex, rowIndex, 0);  // Fusionne la colonne "NIVEAU"
-                    row.getCell(0).setText("");  // Supprimer le texte dans les cellules fusionnées
-                }
-
-                rowIndex++;
+            }
             }
 
         }

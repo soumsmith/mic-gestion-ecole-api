@@ -40,6 +40,8 @@ public class WordTempProcessor {
     WordTempListTransfertProcessor  wordTempListTransfertProcessor ;
     @Inject
     WordTempRepartitionAnneeNaissProcessor WordTempRepartitionAnneeNaissProcessor ;
+    @Inject
+    WordTempListBoursiersProcessor wordTempListBoursiersProcessor ;
 
     public  byte[] generateWordFile(Long idEcole,String libelleAnnee ,String  libelleTrimetre, ByteArrayInputStream  fis) throws Exception {
 
@@ -64,6 +66,7 @@ public class WordTempProcessor {
         wordTempListMajorProcessor.getListeMajorClasse(document,idEcole ,libelleAnnee,libelleTrimetre);
         wordTempListTransfertProcessor.getListTransfert(document,idEcole) ;
         WordTempRepartitionAnneeNaissProcessor.getListRepartitionParAnnee(document,idEcole ,libelleAnnee,libelleTrimetre);
+        wordTempListBoursiersProcessor.getListeBoursierClasse(document,idEcole ,libelleAnnee,libelleTrimetre);
         // Sauvegarder le document modifié dans un tableau de bytes
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         document.write(outputStream);
