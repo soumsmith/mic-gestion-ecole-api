@@ -8,6 +8,8 @@ public class InscriptionRequest {
     private String idAnciennete;
     private String idScolarite;
     private String idClasse;
+    private String idScolarite2;
+    private String idClasse2;
 
     public String getAuditActeur() {
         return auditActeur;
@@ -65,6 +67,22 @@ public class InscriptionRequest {
         this.idClasse = idClasse;
     }
 
+    public String getIdScolarite2() {
+        return idScolarite2;
+    }
+
+    public void setIdScolarite2(String idScolarite2) {
+        this.idScolarite2 = idScolarite2;
+    }
+
+    public String getIdClasse2() {
+        return idClasse2;
+    }
+
+    public void setIdClasse2(String idClasse2) {
+        this.idClasse2 = idClasse2;
+    }
+
     @Override
     public String toString() {
         return "InscriptionRequest{" +
@@ -77,5 +95,6 @@ public class InscriptionRequest {
                 ", idClasse='" + idClasse + '\'' +
                 '}';
     }
+
     // Getters et setters
 }
