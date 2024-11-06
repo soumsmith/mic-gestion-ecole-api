@@ -27,4 +27,12 @@ public class PeriodeResource {
     public Response getByperiodicite(@QueryParam("id") Integer periodiciteId) {
         return Response.ok().entity(periodeService.getListByPeriodicite(periodiciteId)).build();
     }
+	
+	@GET
+    @Path("/list-periodicite-past-and-current")
+    @Tag(name = "Periode")
+    public Response getListFilterByDateByPeriodicite(@QueryParam("id") Integer periodiciteId, @QueryParam("ecoleId") Long ecoleId) {
+        return Response.ok().entity(periodeService.getListFilterByDateByPeriodicite(periodiciteId, ecoleId)).build();
+    }
+	
 }

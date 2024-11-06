@@ -114,7 +114,7 @@ public class connexionRessource {
         motPasse= myConnexionDto.getMotdePasse().trim() ;
         profilId= myConnexionDto.getProfilid() ;
         EcoleId= myConnexionDto.getEcoleid();
-        System.out.println("Info-compte "+login +" "+motPasse+" "+ profilId+" "+ EcoleId);
+//        System.out.println("Info-compte "+login +" "+motPasse+" "+ profilId+" "+ EcoleId);
         return  myconnexionService.seConnecter(login,motPasse,profilId,EcoleId) ;
     }
 
@@ -132,7 +132,7 @@ public class connexionRessource {
         motPasse= myConnexionDto.getMotdePasse().trim() ;
         profilId= myProfil.getProfilid() ;
 
-        System.out.println("Info-compte "+login +" "+motPasse+" "+ profilId);
+//        System.out.println("Info-compte "+login +" "+motPasse+" "+ profilId);
         return  myconnexionService.seConnecterAdmin(login,motPasse,profilId) ;
     }
 
