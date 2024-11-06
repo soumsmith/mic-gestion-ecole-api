@@ -434,7 +434,7 @@ public personnelConnexionDto infosUtilisateurConnecteV2(String email,Long idEcol
                                               dateFin =  myUtiliPers.getUtilisateur_has_person_date_fin() ;
                                             int val = dateFin.compareTo(dateDuJour) ;
                                             int active = myUtiliPers.getUtilisateur_has_person_active() ;
-                                            System.out.print("valDiff "+val);
+//                                            System.out.print("valDiff "+val);
 
                                             if(val<0){
                                                 messageRetour="Ce compte a expiré!";
@@ -476,7 +476,7 @@ public personnelConnexionDto infosUtilisateurConnecteV2(String email,Long idEcol
                                               dateFin =  myUtiliPers.getUtilisateur_has_person_date_fin() ;
                                             int val = dateFin.compareTo(dateDuJour) ;
                                             int active = myUtiliPers.getUtilisateur_has_person_active() ;
-                                            System.out.print("valDiff "+val);
+//                                            System.out.print("valDiff "+val);
 
                                             if(val<0){
                                                 messageRetour="Ce compte a expiré!";
