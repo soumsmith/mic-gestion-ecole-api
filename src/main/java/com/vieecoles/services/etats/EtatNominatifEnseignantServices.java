@@ -45,9 +45,12 @@ public class EtatNominatifEnseignantServices {
             m.setClassesTenuesDto(classesTenuesDto);
             String dateNaissPer = null;
             // Create a DateTimeFormatter object.
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYY-MM-DD");
-            if(listPers.get(k).getDateNaiss()!=null)
-           dateNaissPer = listPers.get(k).getDateNaiss().format(formatter);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            if(listPers.get(k).getDateNaiss()!=null) {
+
+                dateNaissPer = listPers.get(k).getDateNaiss().format(formatter);
+
+            }
             m.setDateNaiss(dateNaissPer);
             listEtatNomina.add(m) ;
         }

@@ -23,6 +23,8 @@ public class communeRessource {
     @GET
     @Path("ville/{ville}")
     public List<commune> list(@PathParam("ville") Long ville) {
+
+        System.out.println("Villeid "+ville);
         return matService.findByIdville(ville);
     }
 
