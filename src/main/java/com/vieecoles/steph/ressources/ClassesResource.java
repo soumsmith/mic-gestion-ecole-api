@@ -58,6 +58,14 @@ public class ClassesResource {
 	    }
 	    
 	    @GET
+	    @Path("/list-classe-by-matricule-annee")
+	    @Tag(name = "Classe")
+	    public Response listClasseByMatricule(@QueryParam("matricule") String matricule, @QueryParam("annee") Long annee) {
+//	    	System.out.println("ClassesResource.listPopulateByEcole()");
+	        return Response.ok().entity(classeService.getListClasseStudentByMatricule(matricule, annee)).build();
+	    }
+	    
+	    @GET
 	    @Path("/list-all-populate-by-ecole")
 	    @Tag(name = "Classe")
 	    public Response listAllPopulateByEcole(@QueryParam("ecole") Long ecole) {

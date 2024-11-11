@@ -253,6 +253,22 @@ public class ClasseEleveService implements PanacheRepositoryBase<ClasseEleve, Lo
 
 		return ce;
 	}
+	
+	public List<ClasseEleve> getListByMatriculeAndAnnee(String matricule, Long anneeId) {
+		System.out.println("mat :" + matricule + " annee :" + anneeId);
+
+		List<ClasseEleve> list = new ArrayList<>();
+		try {
+			list = ClasseEleve.find(
+					"inscription.eleve.matricule = ?1 and inscription.annee.id = ?2 and (statut is null or statut <> 'RETIRE')",
+					matricule, anneeId).list();
+		} catch (Exception e) {
+			e.printStackTrace();
+			list = new ArrayList<>();
+		}
+
+		return list;
+	}
 
 	public long count() {
 		return ClasseEleve.count();

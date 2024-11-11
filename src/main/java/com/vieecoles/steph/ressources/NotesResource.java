@@ -84,6 +84,14 @@ public class NotesResource {
     }
     
     @GET
+    @Path("/list-notes-eleve-by-periode-dto/{matricule}/{classe}/{annee}/{periode}")
+    @Operation(description = "Obtenir les notes d'un eleve d une classe par periode via le dto", summary = "")
+	@Tag(name = "Notes")
+    public Response getNotesDtoByClasseAndPeriode(@PathParam("matricule") String matricule, @PathParam("classe") Long classe,@PathParam("annee") Long annee, @PathParam("periode") Long periode) {
+    	return  Response.ok(noteService.getNotesEleveByPeriode(matricule,classe, annee, periode)).build();
+    }
+    
+    @GET
     @Path("/list-notes-eleve-by-periode/{matricule}/{classe}/{annee}/{periode}/{matiere}")
     @Operation(description = "Obtenir les notes d'un eleve d une classe par periode ", summary = "")
 	@Tag(name = "Notes")

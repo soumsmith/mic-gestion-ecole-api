@@ -8,6 +8,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.Random;
 import java.util.logging.Logger;
@@ -18,7 +19,10 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.NotFoundException;
 import com.google.gson.Gson;
+import com.vieecoles.dto.NoteDto;
+import com.vieecoles.steph.dto.MatiereNotesEleveDto;
 import com.vieecoles.steph.dto.MoyenneEleveDto;
+import com.vieecoles.steph.dto.NotesEleveDto;
 import com.vieecoles.steph.entities.AbsenceEleve;
 import com.vieecoles.steph.entities.AnneeScolaire;
 import com.vieecoles.steph.entities.Bulletin;
@@ -1729,6 +1733,89 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			logger.warning("Erreur ::: " + e.getMessage());
 		}
 		return notesByEleve;
+	}
+
+//	void buildEleveNoteDto(Notes note, NotesEleveDto notesEleveDto) {
+//		try {
+//		System.out.println("buildEleveNoteDto");
+//		if (notesEleveDto.getList().size() > 0) {
+//			ListIterator<MatiereNotesEleveDto> iterator = notesEleveDto.getList().listIterator();
+//			while(iterator.hasNext()) {
+//				System.out.println("iiiii");
+//				if (iterator.next().getMatiereId() == note.getEvaluation().getMatiereEcole().getId()) {
+//					iterator.next().getNotes().add(String.format("%s/%s", note.getNote(), note.getEvaluation().getNoteSur()));
+//				}else {
+//					MatiereNotesEleveDto matiereNotesEleveDto = new MatiereNotesEleveDto();
+//					matiereNotesEleveDto.setMatiereId(note.getEvaluation().getMatiereEcole().getId());
+//					matiereNotesEleveDto.setMatiereLibelle(note.getEvaluation().getMatiereEcole().getLibelle());
+//					matiereNotesEleveDto.getNotes()
+//							.add(String.format("%s/%s", note.getNote(), note.getEvaluation().getNoteSur()));
+//					notesEleveDto.getList().add(matiereNotesEleveDto);
+//				}
+//			}
+//			
+//		} else {
+//			System.out.println("NEW");
+//			MatiereNotesEleveDto matiereNotesEleveDto = new MatiereNotesEleveDto();
+//			matiereNotesEleveDto.setMatiereId(note.getEvaluation().getMatiereEcole().getId());
+//			matiereNotesEleveDto.setMatiereLibelle(note.getEvaluation().getMatiereEcole().getLibelle());
+//			matiereNotesEleveDto.getNotes()
+//					.add(String.format("%s/%s", note.getNote(), note.getEvaluation().getNoteSur()));
+//			notesEleveDto.getList().add(matiereNotesEleveDto);
+//		}
+//		}catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//
+//	}
+	void buildEleveNoteDto(Notes note, NotesEleveDto notesEleveDto) {
+		try {
+//			System.out.println("buildEleveNoteDto");
+			boolean found = false; // Drapeau pour vérifier si la matière existe déjà
+			if (notesEleveDto.getList().size() > 0) {
+				ListIterator<MatiereNotesEleveDto> iterator = notesEleveDto.getList().listIterator();
+				while(iterator.hasNext()) {
+					MatiereNotesEleveDto matiereNotesEleveDto = iterator.next();
+					if (matiereNotesEleveDto.getMatiereId() == note.getEvaluation().getMatiereEcole().getId()) {
+						// Si la matière est trouvée, ajouter la note et passer le drapeau à true
+						matiereNotesEleveDto.getNotes().add(String.format("%s/%s", note.getNote(), note.getEvaluation().getNoteSur()));
+						found = true;
+						break;
+					}
+				}
+			}
+
+			// Si la matière n'a pas été trouvée, on l'ajoute après la boucle
+			if (!found) {
+//				System.out.println("NEW");
+				MatiereNotesEleveDto matiereNotesEleveDto = new MatiereNotesEleveDto();
+				matiereNotesEleveDto.setMatiereId(note.getEvaluation().getMatiereEcole().getId());
+				matiereNotesEleveDto.setMatiereLibelle(note.getEvaluation().getMatiereEcole().getLibelle());
+				matiereNotesEleveDto.getNotes().add(String.format("%s/%s", note.getNote(), note.getEvaluation().getNoteSur()));
+				notesEleveDto.getList().add(matiereNotesEleveDto);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+
+	public void builder(Notes note, NotesEleveDto notesEleveDto, MatiereNotesEleveDto dto) {
+		
+	}
+
+	public NotesEleveDto getNotesEleveByPeriode(String matricule, Long classeId, Long anneeId, Long periodeId) {
+		List<Notes> list = getListNotesByEleveAndClasseAndAnneeAndPeriode(matricule, classeId, anneeId, periodeId);
+//		System.out.println(list.size());
+		NotesEleveDto notesEleve = new NotesEleveDto();
+		if (list != null && list.size() > 0) {
+//			System.out.println(list.size());
+			notesEleve.setMatricule(list.get(0).getClasseEleve().getInscription().getEleve().getMatricule());
+			notesEleve.setNom(list.get(0).getClasseEleve().getInscription().getEleve().getNom());
+			notesEleve.setPrenom(list.get(0).getClasseEleve().getInscription().getEleve().getPrenom());
+			list.stream().forEach(n -> buildEleveNoteDto(n, notesEleve));
+		}
+		return notesEleve;
 	}
 
 	public List<Notes> getNotesByInscriptionHasClasse(Long inscriptionHasClasseId) {
