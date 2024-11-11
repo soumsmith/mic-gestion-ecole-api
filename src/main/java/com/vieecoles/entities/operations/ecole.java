@@ -42,7 +42,7 @@ public class ecole extends PanacheEntityBase {
     private byte[] filigramme ;
     private String nom_signataire ;
      private  String numero_decision_ouver ;
-
+    private String visible;
     public String getNumero_decision_ouver() {
         return numero_decision_ouver;
     }
@@ -173,7 +173,15 @@ public class ecole extends PanacheEntityBase {
         this.ecole_indication = ecole_indication;
     }
 
-    @Override
+  public String getVisible() {
+    return visible;
+  }
+
+  public void setVisible(String visible) {
+    this.visible = visible;
+  }
+
+  @Override
     public String toString() {
         return "ecole{" +
                 "ecoleid=" + ecoleid +

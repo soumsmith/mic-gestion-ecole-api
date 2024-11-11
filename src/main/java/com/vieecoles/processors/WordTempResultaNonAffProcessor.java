@@ -1,28 +1,36 @@
 package com.vieecoles.processors;
 
-import com.vieecoles.dto.RecapDesResultatsElevesAffecteDto;
 import com.vieecoles.dto.ResultatsElevesAffecteDto;
-import com.vieecoles.dto.eleveAffecteParClasseDto;
+import com.vieecoles.dto.ResultatsElevesNonAffecteDto;
+import com.vieecoles.services.etats.appachePoi.resultatsNonAffectePoiServices;
 import com.vieecoles.services.etats.appachePoi.resultatsPoiServices;
+import com.vieecoles.services.etats.resultatsNonAffecteServices;
 import com.vieecoles.services.etats.resultatsRecapServices;
-import org.apache.poi.xwpf.usermodel.*;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.STMerge;
-
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.transaction.Transactional;
-import java.io.*;
-import java.util.*;
-@ApplicationScoped
-public class WordTempResultaAffProcessor {
-    @Inject
-    resultatsPoiServices resultatsServices ;
-    @Inject
-    resultatsRecapServices resultatsRecapServices ;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFRun;
+import org.apache.poi.xwpf.usermodel.XWPFTable;
+import org.apache.poi.xwpf.usermodel.XWPFTableCell;
+import org.apache.poi.xwpf.usermodel.XWPFTableRow;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.STMerge;
 
-      public   void getResultatAffProcessor(XWPFDocument document ,
+@ApplicationScoped
+public class WordTempResultaNonAffProcessor {
+  @Inject
+  com.vieecoles.services.etats.resultatsNonAffecteServices resultatsNonAffecteServices ;
+    @Inject
+    resultatsNonAffectePoiServices resultatsServices ;
+
+
+      public   void getResultatNonAffProcessor(XWPFDocument document ,
           Long idEcole ,String libelleAnnee , String libelleTrimetre) {
-        List<ResultatsElevesAffecteDto> detailsBull6 = new ArrayList<>();
+        List<ResultatsElevesNonAffecteDto> detailsBull6 = new ArrayList<>();
         System.out.println("classeNiveauDtoList entree");
         try {
           detailsBull6= resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,1)  ;
@@ -32,7 +40,7 @@ public class WordTempResultaAffProcessor {
         }
         // Cinquième
 
-        List<ResultatsElevesAffecteDto> detailsBull5 = new ArrayList<>();
+        List<ResultatsElevesNonAffecteDto> detailsBull5 = new ArrayList<>();
         try {
           detailsBull5= resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,2)  ;
 
@@ -42,7 +50,7 @@ public class WordTempResultaAffProcessor {
 
         // Quatrieme
 
-        List<ResultatsElevesAffecteDto> detailsBull4 = new ArrayList<>();
+        List<ResultatsElevesNonAffecteDto> detailsBull4 = new ArrayList<>();
         try {
           detailsBull4= resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,3)  ;
 
@@ -53,7 +61,7 @@ public class WordTempResultaAffProcessor {
 
         // Troixième
 
-        List<ResultatsElevesAffecteDto> detailsBull3 = new ArrayList<>();
+        List<ResultatsElevesNonAffecteDto> detailsBull3 = new ArrayList<>();
         try {
           detailsBull3= resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,4)  ;
 
@@ -61,7 +69,7 @@ public class WordTempResultaAffProcessor {
           e.printStackTrace();
         }
         // Seconde A
-        List<ResultatsElevesAffecteDto> detailsBull2NDA = new ArrayList<>();
+        List<ResultatsElevesNonAffecteDto> detailsBull2NDA = new ArrayList<>();
         try {
           detailsBull2NDA= resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,5)  ;
 
@@ -70,7 +78,7 @@ public class WordTempResultaAffProcessor {
         }
 
         // Seconde C
-        List<ResultatsElevesAffecteDto> detailsBull2NDC = new ArrayList<>();
+        List<ResultatsElevesNonAffecteDto> detailsBull2NDC = new ArrayList<>();
         try {
           detailsBull2NDC= resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,6)  ;
 
@@ -79,7 +87,7 @@ public class WordTempResultaAffProcessor {
         }
 
         // Premiere A
-        List<ResultatsElevesAffecteDto> detailsBull1EREA = new ArrayList<>();
+        List<ResultatsElevesNonAffecteDto> detailsBull1EREA = new ArrayList<>();
         try {
           detailsBull1EREA= resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,7)  ;
 
@@ -88,7 +96,7 @@ public class WordTempResultaAffProcessor {
         }
 
         // Premiere C
-        List<ResultatsElevesAffecteDto> detailsBull1EREC = new ArrayList<>();
+        List<ResultatsElevesNonAffecteDto> detailsBull1EREC = new ArrayList<>();
         try {
           detailsBull1EREC = resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,8)  ;
 
@@ -97,7 +105,7 @@ public class WordTempResultaAffProcessor {
         }
 
         // Premiere D
-        List<ResultatsElevesAffecteDto> detailsBull1ERED = new ArrayList<>();
+        List<ResultatsElevesNonAffecteDto> detailsBull1ERED = new ArrayList<>();
         try {
           detailsBull1ERED = resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,9)  ;
 
@@ -106,7 +114,7 @@ public class WordTempResultaAffProcessor {
         }
 
         // Terminale A
-        List<ResultatsElevesAffecteDto> detailsBullTLEA = new ArrayList<>();
+        List<ResultatsElevesNonAffecteDto> detailsBullTLEA = new ArrayList<>();
         try {
           detailsBullTLEA = resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,10)  ;
 
@@ -115,7 +123,7 @@ public class WordTempResultaAffProcessor {
         }
 
         // Terminale A1
-        List<ResultatsElevesAffecteDto> detailsBullTLEA1 = new ArrayList<>();
+        List<ResultatsElevesNonAffecteDto> detailsBullTLEA1 = new ArrayList<>();
         try {
           detailsBullTLEA1 = resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,11)  ;
 
@@ -124,7 +132,7 @@ public class WordTempResultaAffProcessor {
         }
 
         // Terminale A2
-        List<ResultatsElevesAffecteDto> detailsBullTLEA2 = new ArrayList<>();
+        List<ResultatsElevesNonAffecteDto> detailsBullTLEA2 = new ArrayList<>();
         try {
           detailsBullTLEA2 = resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,12)  ;
 
@@ -133,7 +141,7 @@ public class WordTempResultaAffProcessor {
         }
 
         // Terminale C
-        List<ResultatsElevesAffecteDto> detailsBullTLEC = new ArrayList<>();
+        List<ResultatsElevesNonAffecteDto> detailsBullTLEC = new ArrayList<>();
         try {
           detailsBullTLEC = resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,13)  ;
 
@@ -142,7 +150,7 @@ public class WordTempResultaAffProcessor {
         }
 
         // Terminale D
-        List<ResultatsElevesAffecteDto> detailsBullTLED = new ArrayList<>();
+        List<ResultatsElevesNonAffecteDto> detailsBullTLED = new ArrayList<>();
         try {
           detailsBullTLED = resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,14)  ;
 
@@ -152,14 +160,14 @@ public class WordTempResultaAffProcessor {
 
         // 3. Gestion des tableaux dynamiques
         // Sixième
-        XWPFTable table = document.getTableArray(6);
+        XWPFTable table = document.getTableArray(21);
         try {
           ajoutTableauDynamique(detailsBull6,table);
         } catch (RuntimeException e) {
           e.printStackTrace();
         }
         // Cinquième
-        XWPFTable tableCinquieme = document.getTableArray(7);
+        XWPFTable tableCinquieme = document.getTableArray(22);
         try {
           ajoutTableauDynamique(detailsBull5,tableCinquieme);
         } catch (RuntimeException e) {
@@ -167,7 +175,7 @@ public class WordTempResultaAffProcessor {
         }
 
         // Quatrieme
-        XWPFTable tableQuatrieme = document.getTableArray(8);
+        XWPFTable tableQuatrieme = document.getTableArray(23);
         try {
           ajoutTableauDynamique(detailsBull4,tableQuatrieme);
         } catch (RuntimeException e) {
@@ -175,7 +183,7 @@ public class WordTempResultaAffProcessor {
         }
 
         // Troixième
-        XWPFTable tableTroixieme = document.getTableArray(9);
+        XWPFTable tableTroixieme = document.getTableArray(24);
         try {
           ajoutTableauDynamique(detailsBull3,tableTroixieme);
         } catch (RuntimeException e) {
@@ -183,7 +191,7 @@ public class WordTempResultaAffProcessor {
         }
 
         // SecondeA
-        XWPFTable table2NDA = document.getTableArray(10);
+        XWPFTable table2NDA = document.getTableArray(25);
         try {
           ajoutTableauDynamique(detailsBull2NDA,table2NDA);
         } catch (RuntimeException e) {
@@ -191,7 +199,7 @@ public class WordTempResultaAffProcessor {
         }
 
         // SecondeC
-        XWPFTable table2NDC = document.getTableArray(11);
+        XWPFTable table2NDC = document.getTableArray(26);
         try {
           ajoutTableauDynamique(detailsBull2NDC,table2NDC);
         } catch (RuntimeException e) {
@@ -199,7 +207,7 @@ public class WordTempResultaAffProcessor {
         }
 
         // PremiereA
-        XWPFTable table1EREA = document.getTableArray(12);
+        XWPFTable table1EREA = document.getTableArray(27);
         try {
           ajoutTableauDynamique(detailsBull1EREA,table1EREA);
         } catch (RuntimeException e) {
@@ -207,7 +215,7 @@ public class WordTempResultaAffProcessor {
         }
 
         // PremiereC
-        XWPFTable table1EREC = document.getTableArray(13);
+        XWPFTable table1EREC = document.getTableArray(28);
         try {
           ajoutTableauDynamique(detailsBull1EREC,table1EREC);
         } catch (RuntimeException e) {
@@ -215,7 +223,7 @@ public class WordTempResultaAffProcessor {
         }
 
         // PremiereD
-        XWPFTable table1ERED = document.getTableArray(14);
+        XWPFTable table1ERED = document.getTableArray(29);
         try {
           ajoutTableauDynamique(detailsBull1ERED,table1ERED);
         } catch (RuntimeException e) {
@@ -224,7 +232,7 @@ public class WordTempResultaAffProcessor {
 
 
         // Terminale A
-        XWPFTable tableTLEA = document.getTableArray(15);
+        XWPFTable tableTLEA = document.getTableArray(30);
         try {
           ajoutTableauDynamique(detailsBullTLEA,tableTLEA);
         } catch (RuntimeException e) {
@@ -232,7 +240,7 @@ public class WordTempResultaAffProcessor {
         }
 
         // Terminale A1
-        XWPFTable tableTLEA1 = document.getTableArray(16);
+        XWPFTable tableTLEA1 = document.getTableArray(31);
         try {
           ajoutTableauDynamique(detailsBullTLEA1,tableTLEA1);
         } catch (RuntimeException e) {
@@ -240,7 +248,7 @@ public class WordTempResultaAffProcessor {
         }
 
         // Terminale A2
-        XWPFTable tableTLEA2 = document.getTableArray(17);
+        XWPFTable tableTLEA2 = document.getTableArray(32);
         try {
           ajoutTableauDynamique(detailsBullTLEA2,tableTLEA2);
         } catch (RuntimeException e) {
@@ -248,7 +256,7 @@ public class WordTempResultaAffProcessor {
         }
 
         // Terminale C
-        XWPFTable tableTLEC = document.getTableArray(18);
+        XWPFTable tableTLEC = document.getTableArray(33);
         try {
           ajoutTableauDynamique(detailsBullTLEC,tableTLEC);
         } catch (RuntimeException e) {
@@ -256,7 +264,7 @@ public class WordTempResultaAffProcessor {
         }
 
         // Terminale D
-        XWPFTable tableTLED = document.getTableArray(19);
+        XWPFTable tableTLED = document.getTableArray(34);
         try {
           ajoutTableauDynamique(detailsBullTLED,tableTLED);
         } catch (RuntimeException e) {
@@ -328,8 +336,8 @@ public class WordTempResultaAffProcessor {
     }
 
 
-    private static void ajoutTableauDynamique(List<ResultatsElevesAffecteDto> detailsBull, XWPFTable table) {
-        for (ResultatsElevesAffecteDto classe : detailsBull) {
+    private static void ajoutTableauDynamique(List<ResultatsElevesNonAffecteDto> detailsBull, XWPFTable table) {
+        for (ResultatsElevesNonAffecteDto classe : detailsBull) {
             long nombMoySup10 =
                     (classe.getNbreMoySup10F() != null ? classe.getNbreMoySup10F() : 0L) +
                             (classe.getNbreMoySup10G() != null ? classe.getNbreMoySup10G() : 0L);

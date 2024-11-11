@@ -1,272 +1,58 @@
 package com.vieecoles.processors;
 
-import com.vieecoles.dto.RecapDesResultatsElevesAffecteDto;
+import com.vieecoles.dto.IdentiteEtatDto;
 import com.vieecoles.dto.ResultatsElevesAffecteDto;
 import com.vieecoles.dto.eleveAffecteParClasseDto;
+import com.vieecoles.services.etats.IdentiteEtatService;
 import com.vieecoles.services.etats.appachePoi.resultatsPoiServices;
 import com.vieecoles.services.etats.resultatsRecapServices;
-import org.apache.poi.xwpf.usermodel.*;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.STMerge;
-
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
-import java.io.*;
-import java.util.*;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFRun;
+import org.apache.poi.xwpf.usermodel.XWPFTable;
+import org.apache.poi.xwpf.usermodel.XWPFTableCell;
+import org.apache.poi.xwpf.usermodel.XWPFTableRow;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.STMerge;
+
 @ApplicationScoped
-public class WordTempResultaAffProcessor {
+public class WordTempIdentiteProcessor {
     @Inject
     resultatsPoiServices resultatsServices ;
     @Inject
-    resultatsRecapServices resultatsRecapServices ;
+    IdentiteEtatService identiteEtatService ;
+    public   void getIdentiteProcessor(XWPFDocument document ,
+                                           Long idEcole ,String libelleAnnee , String libelleTrimestre) {
+        List<IdentiteEtatDto>  identiteEtatDto = new ArrayList<>() ;
+        identiteEtatDto= identiteEtatService.getIdentiteDto(idEcole) ;
+        // Map pour les paragraphes
+        Map<String, String> paragraphDataMap = new HashMap<>();
+        paragraphDataMap.put("{{DENOMINATION}}", identiteEtatDto.get(0).getDenominEtabli());
+        paragraphDataMap.put("{{DECI_OUVERTURE}}", identiteEtatDto.get(0).getNumDecisionOuver());
+        paragraphDataMap.put("{{DECI_RENAI}}","");
+        paragraphDataMap.put("{{CODE_ECOLE}}", identiteEtatDto.get(0).getCodeEtabli());
+        paragraphDataMap.put("{{SITUATION_GEOGRA}}", identiteEtatDto.get(0).getSituationGeogra());
+        paragraphDataMap.put("{{ADRESSE}}", identiteEtatDto.get(0).getAdressieEtablis());
+        paragraphDataMap.put("{{TELEPHONE}}", identiteEtatDto.get(0).getTelephonEtablisse());
+        paragraphDataMap.put("{{FAX}}", identiteEtatDto.get(0).getFaxEtabliss());
+        paragraphDataMap.put("{{EMAIL}}", identiteEtatDto.get(0).getEmailEtablissem());
 
-      public   void getResultatAffProcessor(XWPFDocument document ,
-          Long idEcole ,String libelleAnnee , String libelleTrimetre) {
-        List<ResultatsElevesAffecteDto> detailsBull6 = new ArrayList<>();
-        System.out.println("classeNiveauDtoList entree");
-        try {
-          detailsBull6= resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,1)  ;
-          System.out.println("classeNiveauDtoList Sortie");
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-        // Cinquième
-
-        List<ResultatsElevesAffecteDto> detailsBull5 = new ArrayList<>();
-        try {
-          detailsBull5= resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,2)  ;
-
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-
-        // Quatrieme
-
-        List<ResultatsElevesAffecteDto> detailsBull4 = new ArrayList<>();
-        try {
-          detailsBull4= resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,3)  ;
-
-        } catch (Exception e) {
-          e.printStackTrace();
+        // 1. Remplacer les placeholders dans les paragraphes
+        for (XWPFParagraph paragraph : document.getParagraphs()) {
+            replacePlaceholdersInParagraph(paragraph, paragraphDataMap);
         }
 
+       // replacePlaceholdersInStaticTables(document);
 
-        // Troixième
-
-        List<ResultatsElevesAffecteDto> detailsBull3 = new ArrayList<>();
-        try {
-          detailsBull3= resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,4)  ;
-
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-        // Seconde A
-        List<ResultatsElevesAffecteDto> detailsBull2NDA = new ArrayList<>();
-        try {
-          detailsBull2NDA= resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,5)  ;
-
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-
-        // Seconde C
-        List<ResultatsElevesAffecteDto> detailsBull2NDC = new ArrayList<>();
-        try {
-          detailsBull2NDC= resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,6)  ;
-
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-
-        // Premiere A
-        List<ResultatsElevesAffecteDto> detailsBull1EREA = new ArrayList<>();
-        try {
-          detailsBull1EREA= resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,7)  ;
-
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-
-        // Premiere C
-        List<ResultatsElevesAffecteDto> detailsBull1EREC = new ArrayList<>();
-        try {
-          detailsBull1EREC = resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,8)  ;
-
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-
-        // Premiere D
-        List<ResultatsElevesAffecteDto> detailsBull1ERED = new ArrayList<>();
-        try {
-          detailsBull1ERED = resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,9)  ;
-
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-
-        // Terminale A
-        List<ResultatsElevesAffecteDto> detailsBullTLEA = new ArrayList<>();
-        try {
-          detailsBullTLEA = resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,10)  ;
-
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-
-        // Terminale A1
-        List<ResultatsElevesAffecteDto> detailsBullTLEA1 = new ArrayList<>();
-        try {
-          detailsBullTLEA1 = resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,11)  ;
-
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-
-        // Terminale A2
-        List<ResultatsElevesAffecteDto> detailsBullTLEA2 = new ArrayList<>();
-        try {
-          detailsBullTLEA2 = resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,12)  ;
-
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-
-        // Terminale C
-        List<ResultatsElevesAffecteDto> detailsBullTLEC = new ArrayList<>();
-        try {
-          detailsBullTLEC = resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,13)  ;
-
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-
-        // Terminale D
-        List<ResultatsElevesAffecteDto> detailsBullTLED = new ArrayList<>();
-        try {
-          detailsBullTLED = resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,14)  ;
-
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-
-        // 3. Gestion des tableaux dynamiques
-        // Sixième
-        XWPFTable table = document.getTableArray(6);
-        try {
-          ajoutTableauDynamique(detailsBull6,table);
-        } catch (RuntimeException e) {
-          e.printStackTrace();
-        }
-        // Cinquième
-        XWPFTable tableCinquieme = document.getTableArray(7);
-        try {
-          ajoutTableauDynamique(detailsBull5,tableCinquieme);
-        } catch (RuntimeException e) {
-          e.printStackTrace();
-        }
-
-        // Quatrieme
-        XWPFTable tableQuatrieme = document.getTableArray(8);
-        try {
-          ajoutTableauDynamique(detailsBull4,tableQuatrieme);
-        } catch (RuntimeException e) {
-          e.printStackTrace();
-        }
-
-        // Troixième
-        XWPFTable tableTroixieme = document.getTableArray(9);
-        try {
-          ajoutTableauDynamique(detailsBull3,tableTroixieme);
-        } catch (RuntimeException e) {
-          e.printStackTrace();
-        }
-
-        // SecondeA
-        XWPFTable table2NDA = document.getTableArray(10);
-        try {
-          ajoutTableauDynamique(detailsBull2NDA,table2NDA);
-        } catch (RuntimeException e) {
-          e.printStackTrace();
-        }
-
-        // SecondeC
-        XWPFTable table2NDC = document.getTableArray(11);
-        try {
-          ajoutTableauDynamique(detailsBull2NDC,table2NDC);
-        } catch (RuntimeException e) {
-          e.printStackTrace();
-        }
-
-        // PremiereA
-        XWPFTable table1EREA = document.getTableArray(12);
-        try {
-          ajoutTableauDynamique(detailsBull1EREA,table1EREA);
-        } catch (RuntimeException e) {
-          e.printStackTrace();
-        }
-
-        // PremiereC
-        XWPFTable table1EREC = document.getTableArray(13);
-        try {
-          ajoutTableauDynamique(detailsBull1EREC,table1EREC);
-        } catch (RuntimeException e) {
-          e.printStackTrace();
-        }
-
-        // PremiereD
-        XWPFTable table1ERED = document.getTableArray(14);
-        try {
-          ajoutTableauDynamique(detailsBull1ERED,table1ERED);
-        } catch (RuntimeException e) {
-          e.printStackTrace();
-        }
-
-
-        // Terminale A
-        XWPFTable tableTLEA = document.getTableArray(15);
-        try {
-          ajoutTableauDynamique(detailsBullTLEA,tableTLEA);
-        } catch (RuntimeException e) {
-          e.printStackTrace();
-        }
-
-        // Terminale A1
-        XWPFTable tableTLEA1 = document.getTableArray(16);
-        try {
-          ajoutTableauDynamique(detailsBullTLEA1,tableTLEA1);
-        } catch (RuntimeException e) {
-          e.printStackTrace();
-        }
-
-        // Terminale A2
-        XWPFTable tableTLEA2 = document.getTableArray(17);
-        try {
-          ajoutTableauDynamique(detailsBullTLEA2,tableTLEA2);
-        } catch (RuntimeException e) {
-          e.printStackTrace();
-        }
-
-        // Terminale C
-        XWPFTable tableTLEC = document.getTableArray(18);
-        try {
-          ajoutTableauDynamique(detailsBullTLEC,tableTLEC);
-        } catch (RuntimeException e) {
-          e.printStackTrace();
-        }
-
-        // Terminale D
-        XWPFTable tableTLED = document.getTableArray(19);
-        try {
-          ajoutTableauDynamique(detailsBullTLED,tableTLED);
-        } catch (RuntimeException e) {
-          e.printStackTrace();
-        }
-
-      }
-
-
-
+    }
 
 
     // Méthode pour remplacer les placeholders dans une ligne de tableau
@@ -320,13 +106,64 @@ public class WordTempResultaAffProcessor {
     }
 
 
+    private static void replacePlaceholdersInStaticTables(XWPFDocument document) {
+        // Table statique 1
+        XWPFTable staticTable = document.getTables().get(0); // Premier tableau
+        for (int i = 1; i < staticTable.getRows().size(); i++) { // On saute la première ligne (en-tête)
+            XWPFTableRow row = staticTable.getRow(i);
+            Map<String, String> rowData = new HashMap<>();
+            rowData.put("{{NOM_ECOLE}}", "IRIS 3 YOPOUGON");
+            rowData.put("{{DECISION_OUVERTURE}}", "MM458PPPP");
+            rowData.put("{{DECISION_RECONNAISANCE}}", "487558KLO866");
+            rowData.put("{{SITUATION_ETABLI}}", "Yopougon Agbayaté");
+            rowData.put("{{ADRESSE_ECOLE}}", "03 BP 988 Abidjan 03");
+            rowData.put("{{CONTACT_ECOLE}}", "054896985");
+            replacePlaceholdersInTableRow(row, rowData);
+        }
+
+        // Table statique 2
+        XWPFTable staticTable2 = document.getTables().get(1); // Deuxième tableau
+        for (int i = 1; i < staticTable2.getRows().size(); i++) {
+            XWPFTableRow row = staticTable2.getRow(i);
+            Map<String, String> rowData = new HashMap<>();
+            rowData.put("{{NOM_FONDATEUR}}", "SOUMAHORO SEBASTIEN");
+            rowData.put("{{FONCTION_FONDATEUR}}", "FONDATEUR");
+            rowData.put("{{ADRESSE_FONDATEUR}}", "03 KK ABIDJAN 012");
+            replacePlaceholdersInTableRow(row, rowData);
+        }
+
+        // Table statique 3
+        XWPFTable staticTable3 = document.getTables().get(2); // Troisième tableau
+        for (int i = 1; i < staticTable3.getRows().size(); i++) {
+            XWPFTableRow row = staticTable3.getRow(i);
+            Map<String, String> rowData = new HashMap<>();
+            rowData.put("{{NOM_PRENOM_DIRECT}}", "SOUMAHORO Moustapha");
+            rowData.put("{{ADRESS_DIRECT}}", "0358 pm 455");
+            rowData.put("{{CONTACT_DIRECTEUR}}", "0345897564122");
+            replacePlaceholdersInTableRow(row, rowData);
+        }
+    }
     private static void ensureCellCount(XWPFTableRow row, int cellCount) {
         int currentCellCount = row.getTableCells().size();
         for (int i = currentCellCount; i < cellCount; i++) {
             row.addNewTableCell(); // Ajouter une nouvelle cellule si nécessaire
         }
     }
+    private static void ajoutInform(List<eleveAffecteParClasseDto> detailsBull,XWPFTable table) {
+        for (eleveAffecteParClasseDto eleve : detailsBull) {
+            // Créer une nouvelle ligne dans le tableau
+            XWPFTableRow row = table.createRow();
+            // Assurez-vous que la ligne a suffisamment de cellules
+            ensureCellCount(row, 5); // Par exemple, 5 cellules pour Matricule, Nom, Prénom, Sexe, Classe
 
+            // Remplir les cellules de la nouvelle ligne
+            row.getCell(0).setText(eleve.getMatricule());
+            row.getCell(1).setText(eleve.getNomEleve());
+            row.getCell(2).setText(eleve.getPrenomEleve());
+            row.getCell(3).setText(eleve.getSexe());
+            row.getCell(4).setText(eleve.getClasseLibelle());
+        }
+    }
 
     private static void ajoutTableauDynamique(List<ResultatsElevesAffecteDto> detailsBull, XWPFTable table) {
         for (ResultatsElevesAffecteDto classe : detailsBull) {

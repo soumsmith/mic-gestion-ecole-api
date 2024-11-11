@@ -1,37 +1,31 @@
 package com.vieecoles.processors;
 
-import com.vieecoles.dto.RecapDesResultatsElevesAffecteDto;
-import com.vieecoles.dto.ResultatsElevesAffecteDto;
-import com.vieecoles.dto.eleveAffecteParClasseDto;
-import com.vieecoles.services.etats.appachePoi.resultatsPoiServices;
-import com.vieecoles.services.etats.resultatsRecapServices;
-import org.apache.poi.xwpf.usermodel.*;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.STMerge;
-
+import com.vieecoles.dto.RecapDesResultatsElevesNonAffecteDto;
+import com.vieecoles.dto.RecapResultatsElevesAffeEtNonAffDto;
+import com.vieecoles.services.etats.resultatsRecapAffEtNonAffServices;
+import com.vieecoles.services.etats.resultatsRecapNonAffServices;
+import java.util.ArrayList;
+import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.transaction.Transactional;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFTable;
+import org.apache.poi.xwpf.usermodel.XWPFTableCell;
+import org.apache.poi.xwpf.usermodel.XWPFTableRow;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.STMerge;
 
 @ApplicationScoped
-public class WordTempRecapResultatProcessor {
+public class WordTempRecapAffNonAffResultatProcessor {
+
     @Inject
-    resultatsPoiServices resultatsServices ;
-    @Inject
-    resultatsRecapServices resultatsRecapServices ;
+    resultatsRecapAffEtNonAffServices resultatsRecapServices ;
 
     public   void getRecapResultatAffProcessor(XWPFDocument document ,
                                           Long idEcole ,String libelleAnnee , String libelleTrimetre) {
-        XWPFTable table = document.getTableArray(20);
-        List<RecapDesResultatsElevesAffecteDto> detailsBull= new ArrayList<>();
+        XWPFTable table = document.getTableArray(36);
+        List<RecapResultatsElevesAffeEtNonAffDto> detailsBull= new ArrayList<>();
         detailsBull=   resultatsRecapServices.RecapCalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre);
-        for (RecapDesResultatsElevesAffecteDto classe : detailsBull) {
+        for (RecapResultatsElevesAffeEtNonAffDto classe : detailsBull) {
             long nombMoySup10 =
                 (classe.getNbreMoySup10F() != null ? classe.getNbreMoySup10F() : 0L) +
                     (classe.getNbreMoySup10G() != null ? classe.getNbreMoySup10G() : 0L);

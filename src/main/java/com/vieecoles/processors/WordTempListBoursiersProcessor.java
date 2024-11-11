@@ -66,33 +66,53 @@ public class WordTempListBoursiersProcessor {
         boursierDtoList = boursiersServices.boursier(idEcole ,libelleAnnee,libelleTrimestre) ;
 
         if (indexToInsert != -1) {
-
             XWPFTable table = document.insertNewTbl(paragraphs.get(indexToInsert).getCTP().newCursor());
 
-            // Créer l'en-tête du tableau (1 ligne, 11 colonnes)
-            XWPFTableRow headerRow = table.getRow(0);
+            // Créer la première ligne d'en-tête avec les titres des colonnes
+            XWPFTableRow headerRow = table.getRow(0); // Utilise la première ligne déjà existante sans ajouter de nouvelle cellule
+            if (headerRow == null) {
+                headerRow = table.createRow();
+            }
+
+            // Ajouter explicitement chaque cellule d'en-tête
             headerRow.getCell(0).setText("N°");
             headerRow.addNewTableCell().setText("Matricule");
             headerRow.addNewTableCell().setText("Nom et Prénoms");
             headerRow.addNewTableCell().setText("Sexe");
             headerRow.addNewTableCell().setText("Date de naissance");
             headerRow.addNewTableCell().setText("Lieu de naissance");
-            for (NiveauDto niveauDto : niveauDtoList) {
-                XWPFTableRow niveau = table.createRow();
-            for (BoursierDto eleve : boursierDtoList) {
 
-                niveau.getCell(0).setText(eleve.getNiveau());
+            String currentNiveau = "";
+            int studentIndex = 1;
+
+            for (BoursierDto eleve : boursierDtoList) {
+                // Si le niveau change, ajouter une ligne pour le libellé du niveau
+                if (!eleve.getNiveau().equals(currentNiveau)) {
+                    currentNiveau = eleve.getNiveau();
+
+                    // Ajouter une ligne pour le niveau
+                    XWPFTableRow niveauRow = table.createRow();
+
+                    // Fusionner manuellement les cellules pour le niveau
+                    XWPFTableCell cell = niveauRow.getCell(0);
+                    if (cell == null) {
+                        cell = niveauRow.createCell();
+                    }
+                    cell.setText(currentNiveau.toUpperCase());
+
+                    // Ajouter les autres cellules sans texte pour donner l'apparence de fusion
+
+                }
+
+                // Ajouter une ligne pour chaque élève
                 XWPFTableRow row = table.createRow();
-                row.getCell(0).setText("");
+                row.getCell(0).setText(String.valueOf(studentIndex++));
                 row.getCell(1).setText(eleve.getMatricule());
-                row.getCell(2).setText(eleve.getNom()+" "+eleve.getPrenoms());
+                row.getCell(2).setText(eleve.getNom() + " " + eleve.getPrenoms());
                 row.getCell(3).setText(eleve.getSexe());
                 row.getCell(4).setText(eleve.getDateNaiss());
                 row.getCell(5).setText(eleve.getLieuNaiss());
-
             }
-            }
-
         }
 
     }
