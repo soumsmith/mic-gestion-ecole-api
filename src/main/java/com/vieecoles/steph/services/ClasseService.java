@@ -1,14 +1,12 @@
 package com.vieecoles.steph.services;
 
+import com.vieecoles.steph.dto.ClasseDto;
 import com.vieecoles.steph.entities.Classe;
 import com.vieecoles.steph.entities.ClasseEleve;
 import com.vieecoles.steph.entities.Ecole;
 import com.vieecoles.steph.entities.LangueVivante;
-import com.vieecoles.steph.projections.GenericBasicProjectionLongId;
-
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 import io.quarkus.panache.common.Sort;
-
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -122,13 +120,13 @@ public class ClasseService implements PanacheRepositoryBase<Classe,Integer> {
 		}
 	}
 	
-	void buildClassesList(Classe classe, List<GenericBasicProjectionLongId> classeList){
-		GenericBasicProjectionLongId cl = new GenericBasicProjectionLongId(classe.getId(), classe.getLibelle());
+	void buildClassesList(Classe classe, List<ClasseDto> classeList){
+		ClasseDto cl = new ClasseDto(classe.getEcole().getId(), classe.getId(), classe.getLibelle());
 		classeList.add(cl);
 	}
 	
-	public List<GenericBasicProjectionLongId> getListClasseStudentByMatricule(String matricule, Long annee){
-		List<GenericBasicProjectionLongId> classeList = new ArrayList<>();
+	public List<ClasseDto> getListClasseStudentByMatricule(String matricule, Long annee){
+		List<ClasseDto> classeList = new ArrayList<>();
 		List<ClasseEleve> ceList = classeEleveService.getListByMatriculeAndAnnee(matricule, annee);
 		ceList.stream().forEach(ce -> buildClassesList(ce.getClasse(),classeList));
 		System.out.println("getListClasseStudentByMatricule Size ::: "+ceList.size());
