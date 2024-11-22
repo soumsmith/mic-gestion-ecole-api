@@ -1,5 +1,7 @@
 package com.vieecoles.steph.services;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -11,10 +13,12 @@ import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 
 import com.vieecoles.steph.dto.ProgressionSeanceDto;
+import com.vieecoles.steph.entities.AppelNumerique;
 import com.vieecoles.steph.entities.DetailProgression;
 import com.vieecoles.steph.entities.DetailProgressionSeance;
 import com.vieecoles.steph.entities.ProgressionSeance;
 import com.vieecoles.steph.entities.Seances;
+import com.vieecoles.steph.util.DateUtils;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
@@ -144,5 +148,49 @@ public class ProgressionSeanceService implements PanacheRepositoryBase<Progressi
 		entity.setAttachmentUrl(dto.getAttachmentUrl());
 		entity.setDetails(dto.getDetailProgressions());
 		return entity;
+	}
+	
+	public List<ProgressionSeance> getByEcoleAndAnnee(Long ecoleId, Long anneeId) {
+		List<ProgressionSeance> list = new ArrayList<>();
+		try {
+			list = ProgressionSeance.find("seance.classe.ecole.id = ?1 and seance.annee = ?2", ecoleId, anneeId.toString()).list();
+		}catch(RuntimeException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	public Long countByEcoleAndAnnee(Long ecoleId, Long anneeId) {
+		Long count = 0L;
+		try {
+			count = ProgressionSeance.find("seance.classe.ecole.id = ?1 and seance.annee = ?2", ecoleId, anneeId.toString()).count();
+		}catch (RuntimeException e) {
+			e.printStackTrace();
+		}
+		return count;
+	}
+	
+	public List<ProgressionSeance> getByEcoleAndDate(Long ecoleId, Date date) {
+		List<ProgressionSeance> list = new ArrayList<>();
+		LocalDate dateToLocalDate = DateUtils.asLocalDate(date);
+		date = java.sql.Date.valueOf(dateToLocalDate);
+		try {
+			list = ProgressionSeance.find("seance.classe.ecole.id = ?1 and seance.dateSeance = ?2", ecoleId, date).list();
+		}catch(RuntimeException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	public Long countByEcoleAndDate(Long ecoleId, Date date) {
+		Long count = 0L;
+		LocalDate dateToLocalDate = DateUtils.asLocalDate(date);
+		date = java.sql.Date.valueOf(dateToLocalDate);
+		try {
+			count = ProgressionSeance.find("seance.classe.ecole.id = ?1 and seance.dateSeance = ?2", ecoleId, date).count();
+		}catch (RuntimeException e) {
+			e.printStackTrace();
+		}
+		return count;
 	}
 }

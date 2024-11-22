@@ -22,6 +22,7 @@ public class Evaluation extends PanacheEntityBase {
 	@Column(name = "evaluationcode")
 	private String code;
 	// @JsonbDateFormat(value = "dd/MM/yyyy")
+	private Long numero;
 	@Column(name = "evaluationdate")
 	private Date date;
 	@Transient

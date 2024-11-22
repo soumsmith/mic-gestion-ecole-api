@@ -83,4 +83,14 @@ public class ProgressionResource {
 	public Response getBySeance(@PathParam("seance") String seance) {
 		return Response.ok(progressionService.getProgressionBySeance(seance)).build();
 	}
+	
+	@Path("/get-at-now/{annee}/{niveau}/{branche}/{matiere}")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.TEXT_PLAIN)
+	@Operation(description = "Obténir la liste des progressions à effectuer à la date du jour", summary = "")
+	@Tag(name = "Progression")
+	public Response getAtNow(@PathParam("annee") Long annee, @PathParam("niveau") Long niveau, @PathParam("branche") Long branche, @PathParam("matiere") Long matiere) {
+		return Response.ok(progressionService.getProgressionAtNow(annee, niveau, branche, matiere)).build();
+	}
 }

@@ -1,5 +1,6 @@
 package com.vieecoles.steph.services;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,6 +23,7 @@ import com.vieecoles.steph.entities.NiveauEnseignement;
 import com.vieecoles.steph.entities.Progression;
 import com.vieecoles.steph.entities.Seances;
 import com.vieecoles.steph.projections.GenericProjectionStringId;
+import com.vieecoles.steph.util.DateUtils;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
@@ -62,11 +64,42 @@ public class ProgressionService implements PanacheRepositoryBase<Progression, St
 			prog = getByAnneeAndNiveauAndBrancheAndMatiere(Long.parseLong(seance.getAnnee()),
 					seance.getClasse().getEcole().getNiveauEnseignement().getId(),
 					seance.getClasse().getBranche().getId(), seance.getMatiere().getMatiere().getId());
-			if(prog != null) {
+			if (prog != null) {
 				return convertToFullDto(prog);
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * Cette méthode renvoie la liste des progressions d'une matiere à la date
+	 * actuelle.
+	 *
+	 * @param annee
+	 * @param niveau
+	 * @param branche
+	 * @param matiere
+	 * @return ProgressionDto
+	 */
+	public ProgressionDto getProgressionAtNow(Long annee, Long niveau, Long branche, Long matiere) {
+		LocalDate today = LocalDate.now();
+		Progression prog = getByAnneeAndNiveauAndBrancheAndMatiere(annee, niveau, branche, matiere);
+		ProgressionDto dto = new ProgressionDto();
+		if (prog != null) {
+			dto = convertToFullDto(prog);
+			if (dto.getDatas() != null && dto.getDatas().size() > 0) {
+				try {
+					List<DetailProgressionDto> details = dto.getDatas().stream()
+							.filter(d -> d.getDateFin() != null && DateUtils
+									.getDateWithStringPatternDDMMYYYY(d.getDateDeb().replace("/", "-")).isBefore(today))
+							.collect(Collectors.toList());
+					dto.setDatas(details);
+				} catch (RuntimeException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return dto;
 	}
 
 	public ProgressionDto addDetailToConvertedDto(ProgressionDto dto) {

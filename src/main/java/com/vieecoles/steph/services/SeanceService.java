@@ -3,7 +3,10 @@ package com.vieecoles.steph.services;
 import com.google.gson.Gson;
 import com.vieecoles.services.operations.ecoleService;
 import com.vieecoles.steph.dto.AnneeDto;
+import com.vieecoles.steph.dto.SeanceDto;
+import com.vieecoles.steph.dto.SeancesStatDto;
 import com.vieecoles.steph.entities.*;
+import com.vieecoles.steph.enumerations.SearchLevelSeanceEnum;
 import com.vieecoles.steph.projections.GenericProjectionLongId;
 import com.vieecoles.steph.util.CommonUtils;
 import com.vieecoles.steph.util.DateUtils;
@@ -26,6 +29,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
@@ -53,6 +57,9 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 
 	@Inject
 	AppelNumeriqueService appelNumeriqueService;
+
+	@Inject
+	ProgressionSeanceService progressionSeanceService;
 
 	Logger logger = Logger.getLogger(SeanceService.class.getName());
 
@@ -105,7 +112,7 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 				t.add(d);
 			}
 		}
-		if(r>0) {
+		if (r > 0) {
 			t.add(r);
 		}
 		return t;
@@ -162,6 +169,25 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 		return list;
 	}
 
+	/**
+	 * Permet d'obténir le nombre de seance issues d'une séance de plusieurs heures
+	 * par rapport à l'unité horaire.
+	 *
+	 * @param seances
+	 * @param minutes
+	 * @return le nombre de séances
+	 */
+	Integer countDestructSeanceByTimeUnit(Seances seances, int minutes) {
+		if (minutes == 0)
+			minutes = Constants.DEFAULT_DUREE_SEANCE_MINUTES;
+		int duree = DateUtils.calculerDuree(seances.getHeureDeb(), seances.getHeureFin());
+		int nbreSeances = duree / minutes;
+		if (duree % minutes > 0)
+			nbreSeances++;
+
+		return nbreSeances;
+	}
+
 	public boolean verifySeanceEnded(String heure) {
 		LocalTime heureActuelle = LocalTime.now();
 		LocalTime heureParametre = LocalTime.parse(heure, DateTimeFormatter.ofPattern("HH:mm"));
@@ -171,8 +197,57 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 		return heureParametre.isBefore(heureActuelle);
 	}
 
+	public List<Seances> getListByEcoleAndDate(Long ecoleId, Date date) {
+		List<Seances> list = new ArrayList<>();
+		LocalDate dateToLocalDate = DateUtils.asLocalDate(date);
+		date = java.sql.Date.valueOf(dateToLocalDate);
+		try {
+			list = Seances.find("classe.ecole.id = ?1 and dateSeance = ?2 order by heureDeb", ecoleId, date).list();
+
+		} catch (RuntimeException e) {
+			list = new ArrayList<>();
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	public List<SeanceDto> getListDtoByEcoleAndDate(Long ecoleId, Date date) {
+		List<Seances> list = getListByEcoleAndDate(ecoleId, date);
+		System.out.println("SIZE " + list.size());
+		List<SeanceDto> dtos = new ArrayList<>();
+		try {
+			dtos = list.stream().map(s -> convertToDto(s)).collect(Collectors.toList());
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+		}
+		return dtos;
+	}
+
+	public SeanceDto convertToDto(Seances seance) {
+		SeanceDto dto = new SeanceDto();
+		AppelNumerique an = new AppelNumerique();
+		an = appelNumeriqueService.getBySeance(seance.getId());
+		ProgressionSeance ps = new ProgressionSeance();
+		ps = progressionSeanceService.getBySeanceAndPosition(seance.getId(), 0);
+
+		dto.setId(seance.getId());
+		dto.setAppelId(an.getId() != null ? an.getId() : null);
+		dto.setClasseId(String.valueOf(seance.getClasse().getId()));
+		dto.setClasseLibelle(seance.getClasse().getLibelle());
+		dto.setCtId(ps != null ? ps.getId() : null);
+		dto.setDateDebut(seance.getHeureDeb());
+		dto.setDateFin(seance.getHeureFin());
+		dto.setMatiereId(seance.getMatiere().getId().toString());
+		dto.setMatiereLibelle(seance.getMatiere().getLibelle());
+		dto.setProfId(seance.getProfesseur() != null ? String.valueOf(seance.getProfesseur().getId()) : null);
+		dto.setProfNomPrenom(seance.getProfesseur() != null
+				? String.format("%s %s", seance.getProfesseur().getNom(), seance.getProfesseur().getPrenom())
+				: null);
+		return dto;
+	}
+
 	// La signature doit changer vu que l'année n'est plus utiliser
-	public List<Seances> getListByDateAndProf(long anneeId, Date date, long profId) {
+	public List<Seances> getListByDateAndProf(Long anneeId, Date date, Long profId) {
 		logger.info(String.format("prof %s - date %s", profId, date));
 		List<Seances> list = Seances.find("dateSeance = ?1 and professeur.id= ?2 order by heureDeb", date, profId)
 				.list();
@@ -205,7 +280,7 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 		return listWithDestructSeances;
 	}
 
-	public List<Seances> getListByStatut(String anneeId, String statut, long ecoleId) {
+	public List<Seances> getListByStatut(String anneeId, String statut, Long ecoleId) {
 		// logger.info(String.format("Annee %s - statut %s", anneeId, statut));
 		try {
 			return Seances.find("statut = ?1 and classe.ecole.id=?2 and annee =?3", statut, ecoleId, anneeId).list();
@@ -216,7 +291,7 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 		}
 	}
 
-	public List<Seances> getListByEcoleAndDateAndStatut(Date date, String statut, long ecoleId) {
+	public List<Seances> getListByEcoleAndDateAndStatut(Date date, String statut, Long ecoleId) {
 		// logger.info(String.format("Annee %s - statut %s", anneeId, statut));
 		try {
 			return Seances.find("statut=?1 and classe.ecole.id=?2 and dateSeance =?3", statut, ecoleId, date).list();
@@ -225,6 +300,99 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 			r.printStackTrace();
 			return null;
 		}
+	}
+
+	public List<Seances> getListByEcoleAndDate(Date date, long ecoleId) {
+		// logger.info(String.format("Annee %s - statut %s", anneeId, statut));
+		try {
+			return Seances.find("classe.ecole.id=?1 and dateSeance =?2", ecoleId, date).list();
+
+		} catch (RuntimeException r) {
+			r.printStackTrace();
+			return null;
+		}
+	}
+
+	/**
+	 * Permet d'obténir la liste des séances par ecole et pour une année.
+	 *
+	 * @param annee
+	 * @param ecoleId
+	 * @return
+	 */
+	public List<Seances> getListByEcoleAndAnnee(Long annee, long ecoleId) {
+		// logger.info(String.format("Annee %s - statut %s", anneeId, statut));
+		try {
+			return Seances.find("classe.ecole.id=?1 and annee =?2", ecoleId, annee.toString()).list();
+
+		} catch (RuntimeException r) {
+			r.printStackTrace();
+			return null;
+		}
+	}
+
+	/**
+	 * Retourne le nombre de séance par année et par ecole.
+	 *
+	 * @param annee
+	 * @param ecoleId
+	 * @return
+	 */
+	public Long countListByEcoleAndAnnee(Long annee, Long ecoleId) {
+		// logger.info(String.format("Annee %s - statut %s", anneeId, statut));
+		try {
+			return Seances.find("classe.ecole.id=?1 and annee =?2", ecoleId, annee.toString()).count();
+
+		} catch (RuntimeException r) {
+			r.printStackTrace();
+			return null;
+		}
+	}
+
+	public Long countListByEcoleAndDate(Date date, long ecoleId) {
+		// Obtenir le bon format de date de type Date
+		LocalDate dateToLocalDate = DateUtils.asLocalDate(date);
+		date = java.sql.Date.valueOf(dateToLocalDate);
+		try {
+			return Seances.find("classe.ecole.id=?1 and dateSeance =?2", ecoleId, date).count();
+
+		} catch (RuntimeException r) {
+			r.printStackTrace();
+			return 0L;
+		}
+	}
+
+	public Long countHoraireUnitByEcoleAndDate(Date date, long ecoleId) {
+		// Obtenir le bon format de date de type Date
+		LocalDate dateToLocalDate = DateUtils.asLocalDate(date);
+		date = java.sql.Date.valueOf(dateToLocalDate);
+		List<Seances> seances = getListByEcoleAndDate(date, ecoleId);
+		Long nbreSeances = 0L;
+		if (seances != null) {
+			for (Seances s : seances) {
+				nbreSeances += countDestructSeanceByTimeUnit(s, 0);
+			}
+		}
+		return nbreSeances;
+	}
+
+	/**
+	 * Cette méthode permet d'obténir le nombre de séances par unité horaire par
+	 * année et par ecole.
+	 *
+	 * @param anneeId
+	 * @param ecoleId
+	 * @return
+	 */
+	public Long countHoraireUnitByEcoleAndAnnee(Long anneeId, long ecoleId) {
+		List<Seances> seances = getListByEcoleAndAnnee(anneeId, ecoleId);
+		Long nbreSeances = 0L;
+		if (seances != null) {
+			for (Seances s : seances) {
+				nbreSeances += countDestructSeanceByTimeUnit(s, 0);
+			}
+		}
+		return nbreSeances;
 	}
 
 	public Boolean isPlageHoraireValid(long anneeId, long classeId, int jourId, Date date, String heureDeb,
@@ -587,6 +755,42 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 			seance.delete();
 		}
 
+	}
+
+	/**
+	 * Permet d'obténir les statistiques des séances pour une école
+	 * 
+	 * @param annee
+	 * @param classe
+	 * @param matiere
+	 */
+	public SeancesStatDto getListStatSeanceByAnneeAndEcole(Long anneeId, Long ecoleId) {
+		SeancesStatDto stat = new SeancesStatDto();
+		Ecole ecole = Ecole.findById(ecoleId);
+		// Ecole
+		stat.setEcoleId(ecoleId.toString());
+		stat.setEcoleLibelle(ecole.getLibelle());
+
+		stat.setSearchLevel(SearchLevelSeanceEnum.ECOLE);
+		stat.setTotalGeneral(countListByEcoleAndAnnee(anneeId, ecoleId));
+		stat.setTotalJour(countListByEcoleAndDate(new Date(), ecoleId));
+
+		Long countTodaySeanceByHoraireUnit = countHoraireUnitByEcoleAndDate(new Date(), ecoleId);
+		Long countSeanceByHoraireUnit = countHoraireUnitByEcoleAndAnnee(anneeId, ecoleId);
+
+		stat.setTotalAppelGeneral(countSeanceByHoraireUnit);
+		stat.setTotalAppelJour(countTodaySeanceByHoraireUnit);
+		stat.setTotalCTGeneral(countSeanceByHoraireUnit);
+		stat.setTotalCTJour(countTodaySeanceByHoraireUnit);
+
+		stat.setTotalAppelGeneralEffectue(appelNumeriqueService.countByEcoleAndAnnee(ecoleId, anneeId));
+		stat.setTotalAppelJourEffectue(appelNumeriqueService.countByEcoleAndDate(ecoleId, new Date()));
+
+		stat.setTotalCTGeneralEffectue(progressionSeanceService.countByEcoleAndAnnee(ecoleId, anneeId));
+		stat.setTotalCTJourEffectue(progressionSeanceService.countByEcoleAndDate(ecoleId, new Date()));
+
+		stat.setListSeances(getListDtoByEcoleAndDate(ecoleId, new Date()));
+		return stat;
 	}
 
 }
