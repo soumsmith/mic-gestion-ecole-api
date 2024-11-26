@@ -1,12 +1,16 @@
 package com.vieecoles.steph.services;
 
 import com.google.gson.Gson;
+import com.vieecoles.entities.operations.classe;
+import com.vieecoles.services.operations.classeService;
 import com.vieecoles.steph.dto.DetailsEvaluationProfDto;
 import com.vieecoles.steph.dto.EvaluationsProfStatDto;
 import com.vieecoles.steph.dto.LockedDto;
 import com.vieecoles.steph.entities.AnneePeriode;
 import com.vieecoles.steph.entities.AnneeScolaire;
+import com.vieecoles.steph.entities.Classe;
 import com.vieecoles.steph.entities.Constants;
+import com.vieecoles.steph.entities.Ecole;
 import com.vieecoles.steph.entities.Evaluation;
 import com.vieecoles.steph.entities.LoggerAudit;
 import com.vieecoles.steph.entities.Notes;
@@ -44,6 +48,9 @@ public class EvaluationService implements PanacheRepositoryBase<Evaluation, Long
 	@Inject
 	PersonnelMatiereClasseService pcmService;
 
+	@Inject
+	ClasseService classeService;
+
 	Logger logger = Logger.getLogger(EvaluationService.class.getName());
 
 	public List<Evaluation> getList() {
@@ -52,6 +59,28 @@ public class EvaluationService implements PanacheRepositoryBase<Evaluation, Long
 
 	public Evaluation findById(Long id) {
 		return Evaluation.findById(id);
+	}
+
+	/**
+	 * Cette méthode permet d'obténir le dernier numéro des évaluations par école.
+	 *
+	 * @param ecoleId
+	 * @return
+	 */
+	public Long getMaxNumeroByEcole(Long ecoleId) {
+		Long max = 1L;
+		Ecole ecole = Ecole.findById(ecoleId);
+		if (ecole != null) {
+			System.out.println("Ecole existante");
+			Object maxObj = Evaluation
+					.find("SELECT MAX(e.numero) FROM Evaluation e WHERE e.classe.ecole.id = ?1", ecoleId).firstResult();
+			if (maxObj != null) {
+				max = (Long) maxObj;
+			}
+		} else {
+			System.out.println("Ecole inexistante");
+		}
+		return max;
 	}
 
 	public Evaluation findByCode(String code) {
@@ -71,11 +100,17 @@ public class EvaluationService implements PanacheRepositoryBase<Evaluation, Long
 
 	@Transactional
 	public Evaluation create(Evaluation ev) {
-		Gson gson = new Gson();
-		logger.info(gson.toJson(ev));
+//		Gson gson = new Gson();
+//		logger.info(gson.toJson(ev));
 		try {
 			UUID uuid = UUID.randomUUID();
 			logger.info("Creation de l'evaluation " + uuid.toString());
+			Long numero = 1L;
+			// Obtenir la l ecole via la classe
+			Classe classe = Classe.findById(ev.getClasse().getId());
+			// Obetnir le dernier numéro
+			numero = getMaxNumeroByEcole(classe.getEcole().getId());
+			ev.setNumero(++numero);
 			ev.setCode(uuid.toString());
 			ev.setDateCreation(new Date());
 			ev.setDateUpdate(new Date());
@@ -103,6 +138,7 @@ public class EvaluationService implements PanacheRepositoryBase<Evaluation, Long
 		entity.setPec(ev.getPec());
 		entity.setType(ev.getType());
 		entity.setDateUpdate(new Date());
+		entity.setNumero(ev.getNumero());
 		entity.setUser(ev.getUser());
 		entity.setGroupeEvaluationId(ev.getGroupeEvaluationId());
 		entity.setMatiereEcole(ev.getMatiereEcole());
@@ -293,16 +329,19 @@ public class EvaluationService implements PanacheRepositoryBase<Evaluation, Long
 		}
 		return dto;
 	}
-/**
- * Cette méthode permet d'obtenir les statistiques sur les évaluations d'un professeur.
- * 
- * @param personnelId
- * @param anneeId
- * @param ecoleId
- * @param periodeId
- * 
- * @return statistiques des evaluations exécutées d'un professeur dans une école pour une année et une période définies.
- */
+
+	/**
+	 * Cette méthode permet d'obtenir les statistiques sur les évaluations d'un
+	 * professeur.
+	 * 
+	 * @param personnelId
+	 * @param anneeId
+	 * @param ecoleId
+	 * @param periodeId
+	 * 
+	 * @return statistiques des evaluations exécutées d'un professeur dans une école
+	 *         pour une année et une période définies.
+	 */
 	public EvaluationsProfStatDto getEvaluationStatByProf(Long personnelId, Long anneeId, Long ecoleId,
 			Long periodeId) {
 		List<PersonnelMatiereClasse> matieresProfList = new ArrayList<PersonnelMatiereClasse>();
@@ -313,7 +352,7 @@ public class EvaluationService implements PanacheRepositoryBase<Evaluation, Long
 		}
 		List<AnneeScolaire> anneeOuverte = anneeService.getByEcoleAndStatut(ecoleId, Constants.OUVERT);
 		AnneePeriode ap = new AnneePeriode();
-		if(anneeOuverte.size() > 0) {
+		if (anneeOuverte.size() > 0) {
 			ap = anneePeriodeService.getByAnneeAndEcoleAndPeriode(anneeOuverte.get(0).getId(), ecoleId, periodeId);
 		}
 		EvaluationsProfStatDto dto = new EvaluationsProfStatDto();
@@ -334,10 +373,10 @@ public class EvaluationService implements PanacheRepositoryBase<Evaluation, Long
 			detail.setClasse(pmc.getClasse().getLibelle());
 			detail.setMatiereId(pmc.getMatiere().getId());
 			detail.setMatiere(pmc.getMatiere().getLibelle());
-			System.out.println("MAX ::: "+ap.getNbreEval());
+			System.out.println("MAX ::: " + ap.getNbreEval());
 			List<Evaluation> evaluations = getByClasseAndMatiereAndPeriode(pmc.getClasse().getId(),
 					pmc.getMatiere().getId(), periodeId, anneeId);
-			System.out.println("Nombre d évaluations : "+evaluations.size());
+			System.out.println("Nombre d évaluations : " + evaluations.size());
 			if (evaluations != null) {
 				for (Evaluation ev : evaluations) {
 					int noteSize = noteService.getByEvaluation(ev.getId()).size();
@@ -361,8 +400,8 @@ public class EvaluationService implements PanacheRepositoryBase<Evaluation, Long
 			detail.setNbreDevoirNonExec(devNonExec);
 			detail.setNbreInterroExec(interroExec);
 			detail.setNbreInterroNonExec(interroNonExec);
-			detail.setNbreTotalExec(devExec+interroExec);
-			detail.setNbreTotalNonExec(devNonExec+interroNonExec);
+			detail.setNbreTotalExec(devExec + interroExec);
+			detail.setNbreTotalNonExec(devNonExec + interroNonExec);
 
 			listDetails.add(detail);
 		}

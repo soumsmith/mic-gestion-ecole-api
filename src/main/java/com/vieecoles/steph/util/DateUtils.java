@@ -20,6 +20,17 @@ public class DateUtils {
 		LocalDate dt = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 		return dt;
 	}
+	
+	/**
+	 * Obtenir la date a partir d une chaine de caractères sous le format yyyy-MM-dd
+	 *
+	 * @param date
+	 * @return
+	 */
+	public static LocalDate getDateWithStringPatternDDMMYYYY(String date) {
+		LocalDate dt = LocalDate.parse(date, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+		return dt;
+	}
 
 	public static Date asDate(LocalDate localDate) {
 		return Date.from(localDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());

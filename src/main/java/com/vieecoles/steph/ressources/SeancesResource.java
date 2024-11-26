@@ -105,7 +105,7 @@ public class SeancesResource {
 		LocalDate ld = DateUtils.getDateWithString(date);
 		Date ourDate = DateUtils.asDate(ld);
 
-		return Response.ok().entity(seanceService.getListByDateAndProf(1, ourDate, profId)).build();
+		return Response.ok().entity(seanceService.getListByDateAndProf(1L, ourDate, profId)).build();
 	}
 
 	@GET
@@ -156,6 +156,22 @@ public class SeancesResource {
 		Gson gson = new Gson();
 		System.out.println(gson.toJson(seances));
 		return Response.ok().entity(seances).build();
+	}
+	
+	@GET
+	@Path("/count-seance-by-date-and-ecole")
+	@Tag(name = "Seances")
+	public Response countByUnitTimeByEcoleAndDate(@QueryParam("date") String date, @QueryParam("ecole") Long ecoleId) {
+		LocalDate ld = DateUtils.getDateWithString(date);
+		Date ourDate = DateUtils.asDate(ld);
+		return Response.ok().entity(seanceService.countHoraireUnitByEcoleAndDate(ourDate, ecoleId)).build();
+	}
+	
+	@GET
+	@Path("/stat-seance-by-annee-and-ecole")
+	@Tag(name = "Seances")
+	public Response statByAnneeAndEcole(@QueryParam("annee") Long anneeId, @QueryParam("ecole") Long ecoleId) {
+		return Response.ok().entity(seanceService.getListStatSeanceByAnneeAndEcole(anneeId, ecoleId)).build();
 	}
 
 	@POST

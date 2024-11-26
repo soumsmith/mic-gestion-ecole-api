@@ -1,5 +1,6 @@
 package com.vieecoles.steph.services;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -20,6 +21,7 @@ import com.vieecoles.steph.entities.Constants;
 import com.vieecoles.steph.entities.DetailAppelNumerique;
 import com.vieecoles.steph.entities.Personnel;
 import com.vieecoles.steph.entities.Seances;
+import com.vieecoles.steph.util.DateUtils;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
@@ -141,10 +143,12 @@ public class AppelNumeriqueService implements PanacheRepositoryBase<AppelNumeriq
 		AppelNumerique apNum = new AppelNumerique();
 		try {
 			apNum = AppelNumerique.find("seance.id = ?1 and (position is null or position = 0)", seanceId).singleResult();
-			return apNum;
 		} catch (RuntimeException e) {
-			return apNum;
+			e.printStackTrace();
 		}
+		System.out.println(seanceId);
+		System.out.println(apNum);
+		return apNum;
 	}
 	
 	public List<AppelNumerique> getBySeanceWithDestruct(String seanceId) {
@@ -173,6 +177,50 @@ public class AppelNumeriqueService implements PanacheRepositoryBase<AppelNumeriq
 		} catch (RuntimeException e) {
 			return apNum;
 		}
+	}
+	
+	public List<AppelNumerique> getByEcoleAndAnnee(Long ecoleId, Long anneeId) {
+		List<AppelNumerique> list = new ArrayList<>();
+		try {
+			list = AppelNumerique.find("ecole.id = ?1 and seance.annee = ?2 ", ecoleId, anneeId.toString()).list();
+		}catch (RuntimeException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	public Long countByEcoleAndAnnee(Long ecoleId, Long anneeId) {
+		Long count = 0L;
+		try {
+			count = AppelNumerique.find("ecole.id = ?1 and seance.annee = ?2 ", ecoleId, anneeId.toString()).count();
+		}catch (RuntimeException e) {
+			e.printStackTrace();
+		}
+		return count;
+	}
+	
+	public List<AppelNumerique> getByEcoleAndDate(Long ecoleId, Date date) {
+		List<AppelNumerique> list = new ArrayList<>();
+		LocalDate dateToLocalDate = DateUtils.asLocalDate(date);
+		date = java.sql.Date.valueOf(dateToLocalDate);
+		try {
+			list = AppelNumerique.find("ecole.id = ?1 and date = ?2 ", ecoleId, date).list();
+		}catch (RuntimeException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	public Long countByEcoleAndDate(Long ecoleId, Date date) {
+		LocalDate dateToLocalDate = DateUtils.asLocalDate(date);
+		date = java.sql.Date.valueOf(dateToLocalDate);
+		Long count = 0L;
+		try {
+			count = AppelNumerique.find("ecole.id = ?1 and date = ?2 ", ecoleId, date).count();
+		}catch (RuntimeException e) {
+			e.printStackTrace();
+		}
+		return count;
 	}
 
 	@Transactional
