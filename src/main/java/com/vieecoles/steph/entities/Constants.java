@@ -11,7 +11,7 @@ public class Constants {
 	public static final String CLOTURE = "CLOTURE";
 	public static final String EN_ATTENTE = "EN_ATTENTE";
 	public static final String DELETED = "DELETED";
-	
+
 	public static final String STATUT_ELEVE_RETIRE_CLASSE = "RETIRE";
 
 	public static final String VALIDEE = "VALIDEE";
@@ -56,54 +56,56 @@ public class Constants {
 	public static final int PEC_1 = 1;
 
 	public static final int PEC_0 = 0;
-	
+
 	public static final Long NIVEAU_ENSEIGNEMENT_PRIMAIRE = 1L;
-	
+
 	public static final Long NIVEAU_ENSEIGNEMENT_SECONDAIRE = 2L;
-	
+
 	//Appel numérique
 	public static final String PRESENCE = "P";
-	
+
 	public static final String ABSENCE = "A";
 
 	// Modules
 	public static final String MODULE_EVALUATION = "EVALUATION";
-	
+
 	// Actions
 	public static final String ACTION_DELETE = "DELETING";
-	
+
 	public static final String VALID = "VALID";
-	
+
 	public static final String INVALID = "INVALID";
-	
+
 	public static final String CODE_MATIERE_FRANCAIS_CENTRAL = "01";
-	
+
 	public static final String ID_MATIERE_FRANCAIS_CENTRAL = "1";
-	
+
 	public static final String CODE_NIVEAU_ENS_SECONDAIRE = "2";
-	
+
 	public static final String CATEGORIE_RELIGION = "Religion";
-	
+
 	public static final String CODE_CATEGORIE_RELIGION = "05";
-	
+
 	public static final int DEFAULT_DUREE_SEANCE_MINUTES = 60;
 	public static final int DEFAULT_DELAI_APPEL_MINUTES = 20;
 	public static final int DEFAULT_DELAI_AVANT_DESACTIVE_APPEL_MINUTES = 0;
 	public static final int DEFAULT_DELAI_APRES_DESACTIVE_APPEL_MINUTES = 15;
-	
+
 	public static final String CODE_TEST_LOURD = "TSTLRD";
 
 	public static final String ERROR_TYPE = "error";
-	
+
 	public static final String SUCCESS_TYPE = "success";
-	
+
 	public static final String RECORD_TITLE = "Enregistrement";
-	
+
 	public static final String UPDATE_TITLE = "Mise à jour";
-	
+
 	public static final String DELETE_TITLE = "Suppression";
-	
+
 	// Repertoire de base de fichiers
 	public static final String FILE_DIRECTORY_BASE = "/var/pouls_scolaire/upload-folder/";
 	public static final String DOCKER_VOLUME_BASE = "/data/pouls_scolaire/upload-folder/";
+
+
 }

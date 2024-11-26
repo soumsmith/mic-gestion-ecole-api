@@ -1,8 +1,6 @@
 package com.vieecoles.ressource.operations.etats;
 
-import com.vieecoles.processors.WordTempProcessor;
-import com.vieecoles.processors.WordTempRecapResultatProcessor;
-import com.vieecoles.processors.WordTempResultaAffProcessor;
+import com.vieecoles.processors.dren3.WordTempProcessor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 
@@ -17,10 +15,7 @@ import java.io.FileInputStream;
 
 @Path("/apachePoi")
 public class apachePoiResource {
-    @Inject
-    WordTempResultaAffProcessor wordService;
-    @Inject
-    WordTempRecapResultatProcessor wordRecapResultaService;
+
    @Inject
     WordTempProcessor wordTempProcessor ;
 
@@ -32,17 +27,12 @@ public class apachePoiResource {
                                  @PathParam("libelleTrimetre") String libelleTrimetre) throws Exception {
 
         byte[] wordFile;
-        FileInputStream fis = new FileInputStream("src/main/resources/etats/apochePoi/DREN YAMOUSSOUKRO/RAPPORT_1ER_TRIMESTRE.docx");
+        FileInputStream fis = new FileInputStream("src/main/resources/etats/apochePoi/DRENA3/RAPPORT_TRIMESTRIEL.docx");
 
         try {
             // Lire le fichier dans un tableau de bytes pour pouvoir le réutiliser
             byte[] fileContent = fis.readAllBytes();
-
-            // Créer deux nouveaux flux à partir du tableau de bytes
             ByteArrayInputStream fis1 = new ByteArrayInputStream(fileContent);
-            ByteArrayInputStream fis2 = new ByteArrayInputStream(fileContent);
-
-            // Générer le fichier Word avec les données dynamiques
             wordFile = wordTempProcessor.generateWordFile(idEcole, libelleAnnee, libelleTrimetre, fis1);
 
             // Préparer les en-têtes pour la réponse

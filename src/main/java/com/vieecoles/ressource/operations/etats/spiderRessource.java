@@ -3,9 +3,13 @@ package com.vieecoles.ressource.operations.etats;
 
 import com.vieecoles.dto.*;
 import com.vieecoles.entities.operations.ecole;
-import com.vieecoles.projection.BulletinSelectDto;
+import com.vieecoles.processors.yamoussoukro.WordTempProcessor;
 import com.vieecoles.services.etats.*;
-import com.vieecoles.steph.entities.Ecole;
+import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.ooxml.JRDocxExporter;
@@ -16,7 +20,6 @@ import org.springframework.http.ResponseEntity;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -26,10 +29,6 @@ import javax.ws.rs.core.MediaType;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.InputStream;
-import java.net.URL;
-import java.nio.file.Paths;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -95,6 +94,8 @@ public class spiderRessource {
     resultatsRecapAffEtNonAffServices resultatsRecapAffEtNonAffServices ;
     @Inject
     resultatsRecapAffEtNonAffServicesAnnuels resultatsRecapAffEtNonAffServicesAnnuels ;
+    @Inject
+    WordTempProcessor wordTempProcessor ;
 
 
 
@@ -254,12 +255,14 @@ public class spiderRessource {
 
     @GET
     //@Transactional
-    @Path("/pouls-rapport/{idEcole}/{type}/{libelleAnnee}/{libelleTrimetre}/{anneeId}")
+    @Path("/pouls-rapport/{idEcole}/{type}/{libelleAnnee}/{libelleTrimetre}/{anneeId}/{modelDrena}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public ResponseEntity<byte[]>  getDtoRapport(@PathParam("idEcole") Long idEcole ,@PathParam("type") String type ,
                                                  @PathParam("libelleAnnee") String libelleAnnee,
-                                                 @PathParam("libelleTrimetre") String libelleTrimetre,@PathParam("anneeId") Long anneeId) throws Exception, JRException {
-        InputStream myInpuStream ;
+                                                 @PathParam("libelleTrimetre") String libelleTrimetre,
+                                                 @PathParam("anneeId") Long anneeId ,
+                                                 @PathParam("modelDrena") String modelDrena ) throws Exception, JRException {
+        InputStream myInpuStream = null;
         /*myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/BulletinBean.jrxml");*/
 
 
@@ -296,7 +299,9 @@ public class spiderRessource {
          spiderDto detailsBull= new spiderDto() ;
          spiderAnnuelsDto detailsAnnuels= new spiderAnnuelsDto() ;
          ecole myScole= new ecole() ;
-        myScole= ecole.findById(idEcole) ;
+       // myScole= ecole.findById(idEcole);
+        byte[] wordFile;
+        FileInputStream fis=null ;
 
         if(libelleTrimetre.equals("Troisième Trimestre")||libelleTrimetre.equals("Deuxième Semestre")) {
             myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Drena3/Spider_BookAnnuels.jrxml");
@@ -367,40 +372,10 @@ public class spiderRessource {
             detailsAnnuels.setEffApprocheNiveauGenreDto(effApprocheNiveauGenreDto);
             detailsAnnuels.setEffectifElevLangueVivante2Dto(effectifElevLangueVivante2Dto);
             detailsAnnuels.setEtatNominatifEnseignatDto(etatNominatifEnseignatDto);
-            // System.out.print("soummm"+resultatsElevesAffecteDto.toString());
-            if(type.toUpperCase().equals("PDF")){
-                JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(Collections.singleton(detailsBull)) ;
-                JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
-                //JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");
-                Map<String, Object> map = new HashMap<>();
-                JasperPrint report = JasperFillManager.fillReport(compileReport, map, beanCollectionDataSource);
-                //to pdf ;
-                byte[] data =JasperExportManager.exportReportToPdf(report);
-                HttpHeaders headers= new HttpHeaders();
-                headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=RapportPouls.pdf");
-                return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.APPLICATION_PDF).body(data);
-            } else {
-                JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(Collections.singleton(detailsAnnuels)) ;
-                JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
-                //   JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");
-                Map<String, Object> map = new HashMap<>();
-                // map.put("title", type);
-                JasperPrint report = JasperFillManager.fillReport(compileReport, map, beanCollectionDataSource);
-                JRDocxExporter exporter = new JRDocxExporter();
-                exporter.setExporterInput(new SimpleExporterInput(report));
-                // File exportReportFile = new File("profils" + ".docx");
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(baos));
-                exporter.exportReport();
-                byte[] data = baos.toByteArray() ;
-                HttpHeaders headers= new HttpHeaders();
-                // headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Rapport"+myScole.getEcoleclibelle()+".docx");
-                headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Rapport Pouls-Scolaire.docx");
-                return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.MULTIPART_FORM_DATA).body(data);
-            }
 
 
-        } else {
+
+        } else if (!libelleTrimetre.equals("Troisième Trimestre") && (modelDrena.equals("dren3"))) {
             myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Spider_Book.jrxml");
             identiteEtatDto= identiteEtatService.getIdentiteDto(idEcole) ;
             resultatsElevesAffecteDto= resultatsServices.CalculResultatsEleveAffecte(idEcole,libelleAnnee,libelleTrimetre) ;
@@ -453,40 +428,54 @@ public class spiderRessource {
             detailsBull.setEffApprocheNiveauGenreDto(effApprocheNiveauGenreDto);
             detailsBull.setEffectifElevLangueVivante2Dto(effectifElevLangueVivante2Dto);
             detailsBull.setEtatNominatifEnseignatDto(etatNominatifEnseignatDto);
-            // System.out.print("soummm"+resultatsElevesAffecteDto.toString());
-            if(type.toUpperCase().equals("PDF")){
-                JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(Collections.singleton(detailsBull)) ;
-                JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
-                //JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");
-                Map<String, Object> map = new HashMap<>();
-                JasperPrint report = JasperFillManager.fillReport(compileReport, map, beanCollectionDataSource);
-                //to pdf ;
-                byte[] data =JasperExportManager.exportReportToPdf(report);
-                HttpHeaders headers= new HttpHeaders();
-                headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=RapportPouls.pdf");
-                return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.APPLICATION_PDF).body(data);
-            } else {
-                JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(Collections.singleton(detailsBull)) ;
-                JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
-                //   JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");
-                Map<String, Object> map = new HashMap<>();
-                // map.put("title", type);
-                JasperPrint report = JasperFillManager.fillReport(compileReport, map, beanCollectionDataSource);
-                JRDocxExporter exporter = new JRDocxExporter();
-                exporter.setExporterInput(new SimpleExporterInput(report));
-                // File exportReportFile = new File("profils" + ".docx");
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(baos));
-                exporter.exportReport();
-                byte[] data = baos.toByteArray() ;
-                HttpHeaders headers= new HttpHeaders();
-                // headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Rapport"+myScole.getEcoleclibelle()+".docx");
-                headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Rapport Pouls-Scolaire.docx");
-                return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.MULTIPART_FORM_DATA).body(data);
-            }
+
 
         }
+        else if (!libelleTrimetre.equals("Troisième Trimestre") && (modelDrena.equals("Yamoussoukro"))) {
 
+
+           fis= getFileInputStreamFromResource("etats/apochePoi/DREN YAMOUSSOUKRO/RAPPORT_1ER_TRIMESTRE.docx");
+        }
+
+
+        // System.out.print("soummm"+resultatsElevesAffecteDto.toString());
+        if(modelDrena.equals("dren3")){
+            JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(Collections.singleton(detailsBull)) ;
+            JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
+            //   JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");
+            Map<String, Object> map = new HashMap<>();
+            // map.put("title", type);
+            JasperPrint report = JasperFillManager.fillReport(compileReport, map, beanCollectionDataSource);
+            JRDocxExporter exporter = new JRDocxExporter();
+            exporter.setExporterInput(new SimpleExporterInput(report));
+            // File exportReportFile = new File("profils" + ".docx");
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(baos));
+            exporter.exportReport();
+            byte[] data = baos.toByteArray() ;
+            HttpHeaders headers= new HttpHeaders();
+            // headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Rapport"+myScole.getEcoleclibelle()+".docx");
+            headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Rapport Pouls-Scolaire.docx");
+            return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.MULTIPART_FORM_DATA).body(data);
+        } else {
+            try {
+                // Lire le fichier dans un tableau de bytes pour pouvoir le réutiliser
+                System.out.println("Yamoussoukro2");
+                byte[] fileContent = fis.readAllBytes();
+                ByteArrayInputStream fis1 = new ByteArrayInputStream(fileContent);
+                wordFile = wordTempProcessor.generateWordFile(idEcole, libelleAnnee, libelleTrimetre, fis1);
+
+                // Préparer les en-têtes pour la réponse
+                HttpHeaders headers = new HttpHeaders();
+                headers.set(HttpHeaders.CONTENT_DISPOSITION, "inline;filename=Rapport Pouls-Scolaire.docx");
+
+                // Retourner la réponse avec le fichier Word
+                return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.MULTIPART_FORM_DATA).body(wordFile);
+
+            } finally {
+                fis.close(); // Assurez-vous de fermer le FileInputStream après utilisation
+            }
+        }
 
 
 
@@ -609,6 +598,34 @@ public class spiderRessource {
                 e.printStackTrace();
             }
         }
+
     }
+
+
+    public FileInputStream getFileInputStreamFromResource(String resourcePath) throws IOException {
+        InputStream resourceStream = this.getClass().getClassLoader().getResourceAsStream(resourcePath);
+
+        if (resourceStream == null) {
+            throw new FileNotFoundException("File not found in the specified path: " + resourcePath);
+        }
+
+        // Créer un fichier temporaire
+        File tempFile = File.createTempFile("temp_resource_file", ".tmp");
+        tempFile.deleteOnExit();
+
+        try (FileOutputStream out = new FileOutputStream(tempFile)) {
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = resourceStream.read(buffer)) != -1) {
+                out.write(buffer, 0, bytesRead);
+            }
+        } finally {
+            resourceStream.close();
+        }
+
+        // Retourner un FileInputStream à partir du fichier temporaire
+        return new FileInputStream(tempFile);
+    }
+
 
 }
