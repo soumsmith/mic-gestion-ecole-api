@@ -105,7 +105,7 @@ public class SeancesResource {
 		LocalDate ld = DateUtils.getDateWithString(date);
 		Date ourDate = DateUtils.asDate(ld);
 
-		return Response.ok().entity(seanceService.getListByDateAndProf(1, ourDate, profId)).build();
+		return Response.ok().entity(seanceService.getListByDateAndProf(1L, ourDate, profId)).build();
 	}
 
 	@GET

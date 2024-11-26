@@ -121,6 +121,7 @@ public class ClasseService implements PanacheRepositoryBase<Classe,Integer> {
 	}
 	
 	void buildClassesList(Classe classe, List<ClasseDto> classeList){
+		System.out.println( "ecole id : "+classe.getEcole().getId());
 		ClasseDto cl = new ClasseDto(classe.getEcole().getId(), classe.getId(), classe.getLibelle());
 		classeList.add(cl);
 	}
@@ -129,7 +130,8 @@ public class ClasseService implements PanacheRepositoryBase<Classe,Integer> {
 		List<ClasseDto> classeList = new ArrayList<>();
 		List<ClasseEleve> ceList = classeEleveService.getListByMatriculeAndAnnee(matricule, annee);
 		ceList.stream().forEach(ce -> buildClassesList(ce.getClasse(),classeList));
-		System.out.println("getListClasseStudentByMatricule Size ::: "+ceList.size());
+//		System.out.println("getListClasseStudentByMatricule Size ::: "+ceList.size());
+		System.out.println("getListClasseStudentByMatricule Size ::: "+classeList.size());
 		return classeList;
 	}
 
