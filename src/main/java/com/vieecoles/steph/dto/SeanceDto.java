@@ -7,8 +7,9 @@ import lombok.Setter;
 @Setter
 public class SeanceDto {
 	private String id;
-	private String dateDebut;
-	private String dateFin;
+	private String heureDebut;
+	private String heureFin;
+	private String date;
 	private String matiereId;
 	private String matiereLibelle;
 	private String classeId;

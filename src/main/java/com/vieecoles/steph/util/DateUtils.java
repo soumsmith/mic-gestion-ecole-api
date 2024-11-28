@@ -31,6 +31,19 @@ public class DateUtils {
 		LocalDate dt = LocalDate.parse(date, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
 		return dt;
 	}
+	
+	/**
+	 * Obtenir une chaine de caractères a partir de la date sous le format dd-mm-yyyy
+	 *
+	 * @param date
+	 * @return
+	 */
+	public static String toStringDate(Date date) {
+		LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+		String formattedDate = localDate.format(formatter);
+		return formattedDate;
+	}
 
 	public static Date asDate(LocalDate localDate) {
 		return Date.from(localDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
