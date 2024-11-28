@@ -194,20 +194,28 @@ public class SeancesResource {
 			@QueryParam("classe") Long classe, @QueryParam("dateDebut") String stringDateDebut,
 			@QueryParam("dateFin") String stringDateFin, @QueryParam("rows") Integer rows,
 			@QueryParam("page") Integer page) {
-		LocalDate localDateDebut = DateUtils.getDateWithStringPatternDDMMYYYY(stringDateDebut);
-		Date dateDebut = DateUtils.asDate(localDateDebut);
+		System.out.println("************************** IN");
+		Date dateDebut = null;
+		if (stringDateDebut != null) {
+			LocalDate localDateDebut = DateUtils.getDateWithStringPatternDDMMYYYY(stringDateDebut);
+			dateDebut = DateUtils.asDate(localDateDebut);
+		}
 
-		LocalDate localDateFin = DateUtils.getDateWithStringPatternDDMMYYYY(stringDateFin);
-		Date dateFin = DateUtils.asDate(localDateFin);
+		Date dateFin = null;
+		if (stringDateFin != null) {
+			LocalDate localDateFin = DateUtils.getDateWithStringPatternDDMMYYYY(stringDateFin);
+			dateFin = DateUtils.asDate(localDateFin);
+		}
 		System.out.println(
 				String.format("%s %s %s %s %s %s %s", ecoleId, matiere, classe, dateDebut, dateFin, rows, page));
-		SeanceSearchResponseDto response =  new SeanceSearchResponseDto();
+		SeanceSearchResponseDto response = new SeanceSearchResponseDto();
 		try {
-		response = seanceService.getListDtoByEcoleAndCriteria(ecoleId, matiere, classe, dateDebut, dateFin, page, rows);
-		}catch (RuntimeException e) {
+			response = seanceService.getListDtoByEcoleAndCriteria(ecoleId, matiere, classe, dateDebut, dateFin, page,
+					rows);
+		} catch (RuntimeException e) {
 			e.printStackTrace();
 		}
-		
+
 		return Response.ok().entity(response).build();
 	}
 
