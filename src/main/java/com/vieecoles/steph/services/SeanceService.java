@@ -4,13 +4,17 @@ import com.google.gson.Gson;
 import com.vieecoles.services.operations.ecoleService;
 import com.vieecoles.steph.dto.AnneeDto;
 import com.vieecoles.steph.dto.SeanceDto;
+import com.vieecoles.steph.dto.SeanceSearchResponseDto;
 import com.vieecoles.steph.dto.SeancesStatDto;
 import com.vieecoles.steph.entities.*;
 import com.vieecoles.steph.enumerations.SearchLevelSeanceEnum;
 import com.vieecoles.steph.projections.GenericProjectionLongId;
 import com.vieecoles.steph.util.CommonUtils;
 import com.vieecoles.steph.util.DateUtils;
+
+import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
+import io.quarkus.panache.common.Page;
 import io.quarkus.scheduler.Scheduled;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -25,7 +29,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -197,30 +203,94 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 		return heureParametre.isBefore(heureActuelle);
 	}
 
-	public List<Seances> getListByEcoleAndDate(Long ecoleId, Date date) {
-		List<Seances> list = new ArrayList<>();
+	public PanacheQuery<Seances> getListByEcoleAndDate(Long ecoleId, Date date, Integer page, Integer rows) {
 		LocalDate dateToLocalDate = DateUtils.asLocalDate(date);
 		date = java.sql.Date.valueOf(dateToLocalDate);
-		try {
-			list = Seances.find("classe.ecole.id = ?1 and dateSeance = ?2 order by heureDeb", ecoleId, date).list();
+			PanacheQuery<Seances> query = Seances
+					.find("classe.ecole.id = ?1 and dateSeance = ?2 order by heureDeb, classeLibelle desc", ecoleId,
+							date)
+					.page(Page.of(page != null ? page : 0, rows != null ? rows : 1000));
 
-		} catch (RuntimeException e) {
-			list = new ArrayList<>();
-			e.printStackTrace();
-		}
-		return list;
+			return query;
 	}
 
-	public List<SeanceDto> getListDtoByEcoleAndDate(Long ecoleId, Date date) {
-		List<Seances> list = getListByEcoleAndDate(ecoleId, date);
-		System.out.println("SIZE " + list.size());
+	public PanacheQuery<Seances> getListByEcoleAndCriteria(Long ecoleId, Long matiere, Long classe, Date dateDebut,
+			Date dateFin, Integer page, Integer rows) {
+
+		List<String> criteria = new ArrayList<>();
+		Map<String, Object> params = new HashMap<>();
+		params.put("ecole", ecoleId);
+		StringBuffer textQuery = new StringBuffer();
+		criteria.add("classe.ecole.id = :ecole");
+		if (matiere != null) {
+			criteria.add("matiere.id = :matiere");
+			params.put("matiere", matiere);
+		}
+		if (classe != null) {
+			criteria.add("classe.id = :classe");
+			params.put("classe", classe);
+		}
+		if (dateDebut != null) {
+			LocalDate dateDebutToLocalDate = DateUtils.asLocalDate(dateDebut);
+			dateDebut = java.sql.Date.valueOf(dateDebutToLocalDate);
+			criteria.add("dateSeance >= :dateDebut");
+			params.put("dateDebut", dateDebut);
+		}
+		if (dateFin != null) {
+			LocalDate dateFinToLocalDate = DateUtils.asLocalDate(dateFin);
+			dateFin = java.sql.Date.valueOf(dateFinToLocalDate);
+			criteria.add("dateSeance <= :dateFin");
+			params.put("dateFin", dateFin);
+		}
+
+		for (int i = 0; i > criteria.size(); i++) {
+			if (i > 0) {
+				textQuery.append(" AND ");
+			}
+			textQuery.append(criteria.get(i));
+		}
+		String queryStringified = textQuery.toString() + " order by heureDeb, classeLibelle desc";
+		System.out.println(queryStringified);
+
+		PanacheQuery<Seances> query = Seances.find(queryStringified, params)
+				.page(Page.of(page != null ? page : 0, rows != null ? rows : 1000));
+
+		return query;
+
+	}
+
+	public SeanceSearchResponseDto getListDtoByEcoleAndDate(Long ecoleId, Date date, Integer page, Integer rows) {
+		SeanceSearchResponseDto response = new SeanceSearchResponseDto();
+		PanacheQuery<Seances> query = getListByEcoleAndDate(ecoleId, date, page, rows);
 		List<SeanceDto> dtos = new ArrayList<>();
 		try {
-			dtos = list.stream().map(s -> convertToDto(s)).collect(Collectors.toList());
+			dtos = query.list().stream().map(s -> convertToDto(s)).collect(Collectors.toList());
+			response.setList(dtos);
+			response.setPage(page);
+			response.setRows(rows);
+			response.setTotal(query.count());
 		} catch (RuntimeException e) {
 			e.printStackTrace();
 		}
-		return dtos;
+		return response;
+	}
+
+	public SeanceSearchResponseDto getListDtoByEcoleAndCriteria(Long ecoleId, Long matiere, Long classe, Date dateDebut,
+			Date dateFin, Integer page, Integer rows) {
+		SeanceSearchResponseDto response = new SeanceSearchResponseDto();
+		PanacheQuery<Seances> query = getListByEcoleAndCriteria(ecoleId, matiere, classe, dateDebut, dateFin, page,
+				rows);
+		List<SeanceDto> dtos = new ArrayList<>();
+		try {
+			dtos = query.list().stream().map(s -> convertToDto(s)).collect(Collectors.toList());
+			response.setList(dtos);
+			response.setPage(page);
+			response.setRows(rows);
+			response.setTotal(query.count());
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+		}
+		return response;
 	}
 
 	public SeanceDto convertToDto(Seances seance) {
@@ -235,8 +305,9 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 		dto.setClasseId(String.valueOf(seance.getClasse().getId()));
 		dto.setClasseLibelle(seance.getClasse().getLibelle());
 		dto.setCtId(ps != null ? ps.getId() : null);
-		dto.setDateDebut(seance.getHeureDeb());
-		dto.setDateFin(seance.getHeureFin());
+		dto.setHeureDebut(seance.getHeureDeb());
+		dto.setHeureFin(seance.getHeureFin());
+		dto.setDate(DateUtils.toStringDate(seance.getDateSeance()));
 		dto.setMatiereId(seance.getMatiere().getId().toString());
 		dto.setMatiereLibelle(seance.getMatiere().getLibelle());
 		dto.setProfId(seance.getProfesseur() != null ? String.valueOf(seance.getProfesseur().getId()) : null);
@@ -789,7 +860,7 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 		stat.setTotalCTGeneralEffectue(progressionSeanceService.countByEcoleAndAnnee(ecoleId, anneeId));
 		stat.setTotalCTJourEffectue(progressionSeanceService.countByEcoleAndDate(ecoleId, new Date()));
 
-		stat.setListSeances(getListDtoByEcoleAndDate(ecoleId, new Date()));
+		// stat.setListSeances(getListDtoByEcoleAndDate(ecoleId, new Date()));
 		return stat;
 	}
 

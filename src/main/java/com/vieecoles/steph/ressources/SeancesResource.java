@@ -1,6 +1,8 @@
 package com.vieecoles.steph.ressources;
 
 import com.google.gson.Gson;
+import com.vieecoles.steph.dto.SeanceDto;
+import com.vieecoles.steph.dto.SeanceSearchResponseDto;
 import com.vieecoles.steph.entities.Activite;
 import com.vieecoles.steph.entities.Message;
 import com.vieecoles.steph.entities.Seances;
@@ -157,7 +159,7 @@ public class SeancesResource {
 		System.out.println(gson.toJson(seances));
 		return Response.ok().entity(seances).build();
 	}
-	
+
 	@GET
 	@Path("/count-seance-by-date-and-ecole")
 	@Tag(name = "Seances")
@@ -166,12 +168,47 @@ public class SeancesResource {
 		Date ourDate = DateUtils.asDate(ld);
 		return Response.ok().entity(seanceService.countHoraireUnitByEcoleAndDate(ourDate, ecoleId)).build();
 	}
-	
+
 	@GET
 	@Path("/stat-seance-by-annee-and-ecole")
 	@Tag(name = "Seances")
 	public Response statByAnneeAndEcole(@QueryParam("annee") Long anneeId, @QueryParam("ecole") Long ecoleId) {
 		return Response.ok().entity(seanceService.getListStatSeanceByAnneeAndEcole(anneeId, ecoleId)).build();
+	}
+
+	@GET
+	@Path("/seances-dto-by-ecole-and-date")
+	@Tag(name = "Seances")
+	public Response getListDtoByEcoleAndDate(@QueryParam("ecole") Long ecoleId, @QueryParam("date") String stringDate,
+			@QueryParam("rows") Integer rows, @QueryParam("page") Integer page) {
+		LocalDate localDate = DateUtils.getDateWithStringPatternDDMMYYYY(stringDate);
+		Date date = DateUtils.asDate(localDate);
+
+		return Response.ok().entity(seanceService.getListDtoByEcoleAndDate(ecoleId, date, page, rows)).build();
+	}
+
+	@GET
+	@Path("/seances-dto-by-ecole-and-criteria")
+	@Tag(name = "Seances")
+	public Response getListDtoByEcoleAndCriteria(@QueryParam("ecole") Long ecoleId, @QueryParam("matiere") Long matiere,
+			@QueryParam("classe") Long classe, @QueryParam("dateDebut") String stringDateDebut,
+			@QueryParam("dateFin") String stringDateFin, @QueryParam("rows") Integer rows,
+			@QueryParam("page") Integer page) {
+		LocalDate localDateDebut = DateUtils.getDateWithStringPatternDDMMYYYY(stringDateDebut);
+		Date dateDebut = DateUtils.asDate(localDateDebut);
+
+		LocalDate localDateFin = DateUtils.getDateWithStringPatternDDMMYYYY(stringDateFin);
+		Date dateFin = DateUtils.asDate(localDateFin);
+		System.out.println(
+				String.format("%s %s %s %s %s %s %s", ecoleId, matiere, classe, dateDebut, dateFin, rows, page));
+		SeanceSearchResponseDto response =  new SeanceSearchResponseDto();
+		try {
+		response = seanceService.getListDtoByEcoleAndCriteria(ecoleId, matiere, classe, dateDebut, dateFin, page, rows);
+		}catch (RuntimeException e) {
+			e.printStackTrace();
+		}
+		
+		return Response.ok().entity(response).build();
 	}
 
 	@POST
