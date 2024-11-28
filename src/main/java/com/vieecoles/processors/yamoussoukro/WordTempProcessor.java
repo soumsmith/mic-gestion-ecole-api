@@ -68,19 +68,20 @@ public class WordTempProcessor {
         XWPFTable table = document.getTableArray(20);
 
       //  wordTempRecapResultatProcessor.recapResultatAffecte(recapResulAff,table);
-      //  wordTempIdentiteProcessor.getIdentiteProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
+        wordTempIdentiteProcessor.getIdentiteProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
         System.out.println("Identité ok");
         wordTempResultaAffProcessor.getResultatAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
         System.out.println("ResultaAff ok");
         wordTempRecapResultatProcessor.getRecapResultatAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
-        System.out.println("ResultaAff ok");
+        System.out.println("RecapResultaAff ok");
         wordTempResultaNonAffProcessor.getResultatNonAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
         System.out.println("ResultaNonAff ok");
+        wordTempRecapNonAffResultatProcessor.getRecapResultatANonffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
+        System.out.println("RecapResultaNonAff ok");
+        wordTempRecapAffNonAffResultatProcessor.getRecapResultatAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
         wordTempListMajorProcessor.getListeMajorClasse(document,idEcole ,libelleAnnee,libelleTrimetre);
         System.out.println("ListMajor ok");
-        wordTempRecapNonAffResultatProcessor.getRecapResultatANonffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
-        System.out.println("ListMajor ok");
-        wordTempRecapAffNonAffResultatProcessor.getRecapResultatAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
+
         wordTempListAffectesProcessor.getEleveAffecteParClasse(document,idEcole ,libelleAnnee,libelleTrimetre);
         wordTempListNonAffectesProcessor.getEleveNosAffecteParClasse(document,idEcole ,libelleAnnee,libelleTrimetre);
         wordTempListTransfertProcessor.getListTransfert(document,idEcole) ;

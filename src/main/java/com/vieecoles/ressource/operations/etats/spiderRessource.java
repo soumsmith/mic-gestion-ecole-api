@@ -434,8 +434,10 @@ public class spiderRessource {
         else if (!libelleTrimetre.equals("Troisième Trimestre") && (modelDrena.equals("Yamoussoukro"))) {
 
 
-           fis= getFileInputStreamFromResource("etats/apochePoi/DREN YAMOUSSOUKRO/RAPPORT_1ER_TRIMESTRE.docx");
+           fis= getFileInputStreamFromResource(
+               "etats/apochePoi/DREN YAMOUSSOUKRO/RAPPORT_TRIMESTRIEL.docx");
         }
+
 
 
         // System.out.print("soummm"+resultatsElevesAffecteDto.toString());

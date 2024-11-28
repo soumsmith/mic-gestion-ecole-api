@@ -21,6 +21,7 @@ public class WordTempRecapNonResultatProcessor {
     public   void getRecapResultatANonffProcessor(XWPFDocument document ,
                                           Long idEcole ,String libelleAnnee , String libelleTrimetre) {
         XWPFTable table = document.getTableArray(35);
+
         List<RecapDesResultatsElevesNonAffecteDto> detailsBull= new ArrayList<>();
         long nombMoySup10Etabli =0l ; long nombMoyInf10Etabli =0l ;long nombMoyInf8_5Etabli =0l;
         long effectifClasseEtabli=0l ;  long effectifEtabli=0l; long effNonClassEtabli=0l; Double

@@ -18,7 +18,8 @@ public class apachePoiResource {
 
    @Inject
     WordTempProcessor wordTempProcessor ;
-
+  @Inject
+  com.vieecoles.processors.yamoussoukro.WordTempProcessor wordTempYakroProcessor ;
     @GET
     @Path("/download/{idEcole}/{libelleAnnee}/{libelleTrimetre}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
@@ -27,13 +28,18 @@ public class apachePoiResource {
                                  @PathParam("libelleTrimetre") String libelleTrimetre) throws Exception {
 
         byte[] wordFile;
-        FileInputStream fis = new FileInputStream("src/main/resources/etats/apochePoi/DRENA3/RAPPORT_TRIMESTRIEL.docx");
+       // FileInputStream fis = new FileInputStream("src/main/resources/etats/apochePoi/DRENA3/RAPPORT_TRIMESTRIEL.docx");
 
-        try {
+      FileInputStream fis = new FileInputStream("src/main/resources/etats/apochePoi/DREN YAMOUSSOUKRO/RAPPORT_TRIMESTRIEL.docx");
+
+
+
+      try {
             // Lire le fichier dans un tableau de bytes pour pouvoir le réutiliser
             byte[] fileContent = fis.readAllBytes();
             ByteArrayInputStream fis1 = new ByteArrayInputStream(fileContent);
-            wordFile = wordTempProcessor.generateWordFile(idEcole, libelleAnnee, libelleTrimetre, fis1);
+           // wordFile = wordTempProcessor.generateWordFile(idEcole, libelleAnnee, libelleTrimetre, fis1);
+          wordFile = wordTempYakroProcessor.generateWordFile(idEcole, libelleAnnee, libelleTrimetre, fis1);
 
             // Préparer les en-têtes pour la réponse
             HttpHeaders headers = new HttpHeaders();

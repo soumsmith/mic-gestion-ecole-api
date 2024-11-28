@@ -42,7 +42,7 @@ public class WordTempEffectifApprocheNiveauGenre {
         for (int i = 0; i < paragraphs.size(); i++) {
             String text = paragraphs.get(i).getText();
             // Identifier l'emplacement où insérer le tableau (par exemple après "Liste des élèves affectés par classe")
-            if (text.toLowerCase().contains("effectif avec l'approche par niveau et par genre".toLowerCase())) {
+            if (text.toLowerCase().contains("EFFECTIF AVEC L’APPROCHE PAR NIVEAU ET PAR GENRE".toLowerCase())) {
                 indexToInsert = i + 1; // Ajouter après ce paragraphe
 
                 break;
