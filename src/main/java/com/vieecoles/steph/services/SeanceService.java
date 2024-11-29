@@ -206,12 +206,12 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 	public PanacheQuery<Seances> getListByEcoleAndDate(Long ecoleId, Date date, Integer page, Integer rows) {
 		LocalDate dateToLocalDate = DateUtils.asLocalDate(date);
 		date = java.sql.Date.valueOf(dateToLocalDate);
-			PanacheQuery<Seances> query = Seances
-					.find("classe.ecole.id = ?1 and dateSeance = ?2 order by dateSeance, heureDeb, classeLibelle desc", ecoleId,
-							date)
-					.page(Page.of(page != null ? page : 0, rows != null ? rows : 1000));
+		PanacheQuery<Seances> query = Seances
+				.find("classe.ecole.id = ?1 and dateSeance = ?2 order by dateSeance, heureDeb, classeLibelle desc",
+						ecoleId, date)
+				.page(Page.of(page != null ? page : 0, rows != null ? rows : 1000));
 
-			return query;
+		return query;
 	}
 
 	public PanacheQuery<Seances> getListByEcoleAndCriteria(Long ecoleId, Long matiere, Long classe, Date dateDebut,
@@ -223,40 +223,33 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 		StringBuffer textQuery = new StringBuffer();
 		criteria.add("classe.ecole.id = :ecole");
 		if (matiere != null) {
-			System.out.println("matiere");
 			criteria.add("matiere.id = :matiere");
 			params.put("matiere", matiere);
 		}
 		if (classe != null) {
-			System.out.println("classe");
 			criteria.add("classe.id = :classe");
 			params.put("classe", classe);
 		}
 		if (dateDebut != null) {
-			System.out.println("date debut");
 			LocalDate dateDebutToLocalDate = DateUtils.asLocalDate(dateDebut);
 			dateDebut = java.sql.Date.valueOf(dateDebutToLocalDate);
 			criteria.add("dateSeance >= :dateDebut");
 			params.put("dateDebut", dateDebut);
 		}
 		if (dateFin != null) {
-			System.out.println("date fin");
 			LocalDate dateFinToLocalDate = DateUtils.asLocalDate(dateFin);
 			dateFin = java.sql.Date.valueOf(dateFinToLocalDate);
 			criteria.add("dateSeance <= :dateFin");
 			params.put("dateFin", dateFin);
 		}
-System.out.println("size criteria "+criteria.size());
+		System.out.println("size criteria " + criteria.size());
 		for (int i = 0; i < criteria.size(); i++) {
-			System.out.println(i);
 			if (i > 0) {
-				System.out.println();
 				textQuery.append(" AND ");
 			}
 			textQuery.append(criteria.get(i));
 		}
 		String queryStringified = textQuery + " order by dateSeance, heureDeb, classeLibelle desc";
-		System.out.println(queryStringified);
 
 		PanacheQuery<Seances> query = Seances.find(queryStringified, params)
 				.page(Page.of(page != null ? page : 0, rows != null ? rows : 1000));
