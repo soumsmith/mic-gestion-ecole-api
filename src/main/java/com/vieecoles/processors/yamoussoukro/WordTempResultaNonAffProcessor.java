@@ -1,5 +1,7 @@
 package com.vieecoles.processors.yamoussoukro;
 
+import static com.vieecoles.processors.yamoussoukro.WordTempResultaAffProcessor.afficherValeurParNiveau;
+
 import com.vieecoles.dto.ResultatsElevesAffecteDto;
 import com.vieecoles.dto.ResultatsElevesNonAffecteDto;
 import com.vieecoles.services.etats.appachePoi.resultatsNonAffectePoiServices;
@@ -353,7 +355,7 @@ public class WordTempResultaNonAffProcessor {
       Long effectifCycle1 = 0L; Long effectifCycle1G = 0L; Long effectifCycle1F = 0L;
       Long effectifNonClasseCycle1 = 0L; Long effectifNonClasseCycle1G = 0L; Long effectifNonClasseCycle1F = 0L;
 
-
+      String libelleNiveau="";
       for (ResultatsElevesNonAffecteDto classe : detailsBull) {
           /*  long nombMoySup10 =
                     (classe.getNbreMoySup10F() != null ? classe.getNbreMoySup10F() : 0L) +
@@ -551,7 +553,7 @@ public class WordTempResultaNonAffProcessor {
             // Créer une ligne principale pour la classe (6ème 1, 6ème 2, etc.)
             //XWPFTableRow classRow = table.createRow();
            // ensureCellCount(classRow, 14); // 14 colonnes comme dans le modèle
-
+        libelleNiveau=afficherValeurParNiveau(classe.getNiveau());
 // Remplir la ligne pour les filles (F)
             XWPFTableRow fillesRow = table.createRow();
             ensureCellCount(fillesRow, 12);
@@ -602,7 +604,7 @@ public class WordTempResultaNonAffProcessor {
         }
       XWPFTableRow generalfillesRow = table.createRow();
       ensureCellCount(generalfillesRow, 12);
-      generalfillesRow.getCell(0).setText("Total Etablissement");
+      generalfillesRow.getCell(0).setText("Total "+libelleNiveau);
       generalfillesRow.getCell(1).setText(" F");
       generalfillesRow.getCell(2).setText(String.valueOf(effectifCycle1F));
       generalfillesRow.getCell(3).setText(String.valueOf(effectifClasseCycle1F));

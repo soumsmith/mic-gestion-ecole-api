@@ -53,8 +53,16 @@ public class WordTempRepartitionAnneeNaissProcessor {
             // Insérer le tableau juste après le paragraphe
             XWPFTable table = document.insertNewTbl(paragraphs.get(indexToInsert+1).getCTP().newCursor());
 
-            // Créer l'en-tête du tableau (1 ligne, 11 colonnes)
-            // Créer l'en-tête du tableau (1 ligne, 11 colonnes)
+            XWPFTableRow groupingRow = table.getRow(0);
+            groupingRow.getCell(0).setText(""); // Cellule vide pour ANNEE°
+            groupingRow.addNewTableCell().setText(""); // Cellule vide pour SEXE
+            mergeCellsHorizontally(table, 0, 2, 6); // Regrouper "6è" à "ST1" en "PREMIER CYCLE"
+            groupingRow.getCell(2).setText("PREMIER CYCLE");
+            mergeCellsHorizontally(table, 0, 7, 16); // Regrouper "2A" à "ST2" en "SECOND CYCLE"
+            groupingRow.getCell(7).setText("SECOND CYCLE");
+            groupingRow.addNewTableCell().setText("TOTAL GENERAL");
+
+
             XWPFTableRow headerRow = table.getRow(0);
             headerRow.getCell(0).setText("ANNEE°");
             headerRow.addNewTableCell().setText("SEXE");
@@ -73,6 +81,7 @@ public class WordTempRepartitionAnneeNaissProcessor {
             headerRow.addNewTableCell().setText("TC");
             headerRow.addNewTableCell().setText("TD");
             headerRow.addNewTableCell().setText("ST2");
+            headerRow.addNewTableCell().setText("TOTAL GENERAL");
 
             // Ajouter des lignes au tableau
             for (RepartitionEleveParAnNaissDto eleve : repartitionEleveParAnNaissDto) {  // Exemple de 3 lignes
@@ -180,6 +189,18 @@ public class WordTempRepartitionAnneeNaissProcessor {
                 cell.getCTTc().addNewTcPr().addNewVMerge().setVal(STMerge.RESTART);
             } else {
                 cell.getCTTc().addNewTcPr().addNewVMerge().setVal(STMerge.CONTINUE);
+            }
+        }
+    }
+
+    private static void mergeCellsHorizontally(XWPFTable table, int row, int fromCol, int toCol) {
+        XWPFTableRow tableRow = table.getRow(row);
+        for (int colIndex = fromCol; colIndex <= toCol; colIndex++) {
+            XWPFTableCell cell = tableRow.getCell(colIndex);
+            if (colIndex == fromCol) {
+                cell.getCTTc().addNewTcPr().addNewHMerge().setVal(STMerge.RESTART);
+            } else {
+                cell.getCTTc().addNewTcPr().addNewHMerge().setVal(STMerge.CONTINUE);
             }
         }
     }

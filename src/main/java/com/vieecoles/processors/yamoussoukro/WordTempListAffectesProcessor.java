@@ -75,7 +75,8 @@ public class WordTempListAffectesProcessor {
 
             // Créer l'en-tête du tableau (1 ligne, 11 colonnes)
             XWPFTableRow headerRow = table.getRow(0);
-            headerRow.getCell(0).setText("Matricule");
+            headerRow.getCell(0).setText("N°");
+            headerRow.addNewTableCell().setText("Matricule");
             headerRow.addNewTableCell().setText("Nom et prénoms");
             headerRow.addNewTableCell().setText("Sexe");
             headerRow.addNewTableCell().setText("AN");
@@ -88,19 +89,22 @@ public class WordTempListAffectesProcessor {
             headerRow.addNewTableCell().setText("OBSERVATION");
 
             // Ajouter des lignes au tableau
+            int numerotation=1;
             for (eleveAffecteParClasseDto eleve : elevAffectes) {  // Exemple de 3 lignes
                 XWPFTableRow row = table.createRow();
-                row.getCell(0).setText(eleve.getMatricule());
-                row.getCell(1).setText(eleve.getNomEleve()+" "+eleve.getPrenomEleve());
-                row.getCell(2).setText(eleve.getSexe());
-                row.getCell(3).setText("");
-                row.getCell(4).setText(eleve.getNationnalite());
-                row.getCell(5).setText(eleve.getRedoublan());
-                row.getCell(6).setText(eleve.getAffecte());
-                row.getCell(7).setText(eleve.getNumDecisionAffecte());
-                row.getCell(8).setText(String.valueOf(eleve.getMoyeGeneral()));
-                row.getCell(9).setText(String.valueOf(eleve.getRang()));
-                row.getCell(10).setText(eleve.getObservat());
+                row.getCell(0).setText(numerotation+"");
+                row.getCell(1).setText(eleve.getMatricule());
+                row.getCell(2).setText(eleve.getNomEleve()+" "+eleve.getPrenomEleve());
+                row.getCell(3).setText(eleve.getSexe());
+                row.getCell(4).setText("");
+                row.getCell(5).setText(eleve.getNationnalite());
+                row.getCell(6).setText(eleve.getRedoublan());
+                row.getCell(7).setText(eleve.getAffecte());
+                row.getCell(8).setText(eleve.getNumDecisionAffecte());
+                row.getCell(9).setText(String.valueOf(eleve.getMoyeGeneral()));
+                row.getCell(10).setText(String.valueOf(eleve.getRang()));
+                row.getCell(11).setText(eleve.getObservat());
+                numerotation++;
             }
         //}
         }

@@ -446,10 +446,7 @@ public class WordTempResultaAffProcessor {
           nombMoyInf10Cycle1F=nombMoyInf10Cycle1F+nombMoyInf10F;
 
 
-          libelleNiveau=classe.getNiveau() ;
-
-
-
+          libelleNiveau=afficherValeurParNiveau(classe.getNiveau());
 
 
           long nombMoyInf8_5 =
@@ -646,124 +643,6 @@ public class WordTempResultaAffProcessor {
     }
 
 
-    private static void resultatsElevesAffectes6E(ResultatsElevesAffecteDto resultatsBull,XWPFTable table){
-        if(resultatsBull!=null){
-            System.out.println("Objet Trouvé "+resultatsBull.toString());
-
-        for (int i = 1; i < table.getRows().size(); i++) {
-            XWPFTableRow row = table.getRow(i);
-            Map<String, String> rowData = new HashMap<>();
-
-            long nombMoySup10 =
-                    (resultatsBull.getNbreMoySup10F() != null ? resultatsBull.getNbreMoySup10F() : 0L) +
-                            (resultatsBull.getNbreMoySup10G() != null ? resultatsBull.getNbreMoySup10G() : 0L);
-
-            long nombMoyInf10 =
-                    (resultatsBull.getNbreMoyInf999F() != null ? resultatsBull.getNbreMoyInf999F() : 0L) +
-                            (resultatsBull.getNbreMoyInf999G() != null ? resultatsBull.getNbreMoyInf999G() : 0L);
-
-            long nombMoyInf8_5 =
-                    (resultatsBull.getNbreMoyInf85F() != null ? resultatsBull.getNbreMoyInf85F() : 0L) +
-                            (resultatsBull.getNbreMoyInf85G() != null ? resultatsBull.getNbreMoyInf85G() : 0L);
-
-            long effectifClasse =
-                    (resultatsBull.getClassF() != null ? resultatsBull.getClassF() : 0L) +
-                            (resultatsBull.getClassG() != null ? resultatsBull.getClassG() : 0L);
-
-// Éviter une division par zéro pour effectifClasse
-            double pourSup10,pourInf10,pourInf8_5;
-            if (effectifClasse > 0) {
-                 pourSup10 = nombMoySup10 / (Double.valueOf(effectifClasse)) * 100d;
-                 pourInf10 = nombMoyInf10 / (Double.valueOf(effectifClasse)) * 100d;
-                pourInf8_5 = nombMoyInf8_5 / (Double.valueOf(effectifClasse)) * 100d;
-
-                // Calculer d'autres statistiques ou utiliser ces valeurs
-            } else {
-                // Gérer le cas où effectifClasse est 0 pour éviter une division par zéro
-                 pourSup10 = 0d;
-                 pourInf10 = 0d;
-                 pourInf8_5 = 0d;
-                // Logique alternative ou gestion d'erreur
-            }
-
-            long effectif =
-                    (resultatsBull.getEffeF() != null ? resultatsBull.getEffeF() : 0L) +
-                            (resultatsBull.getEffeG() != null ? resultatsBull.getEffeG() : 0L);
-
-            long effNonClass =
-                    (resultatsBull.getNonclassF() != null ? resultatsBull.getNonclassF() : 0L) +
-                            (resultatsBull.getNonclassG() != null ? resultatsBull.getNonclassG() : 0L);
-
-
-            rowData.put("{{NOMBRE_MOY_SUP_10_6E}}", String.valueOf(nombMoySup10));
-            rowData.put("{{NOMBRE_MOY_INF_10_6E}}", String.valueOf(nombMoyInf10));
-            rowData.put("{{NOMBRE_MOY_INF_08_5_6E}}", String.valueOf(nombMoyInf8_5));
-            rowData.put("{{POURC_MOY_SUP_10_6E}}", String.valueOf(pourSup10));
-            rowData.put("{{POURC_MOY_INF_10_6E}}", String.valueOf(pourInf10));
-            rowData.put("{{POURC_MOY_INF_08_5_6E}}", String.valueOf(pourInf8_5));
-            rowData.put("{{NOMBRE_ELEV_6E}}", String.valueOf(effectif));
-            rowData.put("{{NOMBRE_ELEV_CLASSES_6E}}", String.valueOf(effectifClasse));
-            rowData.put("{{NOMBRE_ELEV_NON_CLASSES_6E}}", String.valueOf(effNonClass));
-            replacePlaceholdersInTableRow(row, rowData);
-
-    }
-        }
-
-    }
-
-    private static void resultatsElevesAffectes(List<ResultatsElevesAffecteDto> resultatsBull,XWPFTable table){
-        for (int i = 1; i < table.getRows().size(); i++) {
-            XWPFTableRow row = table.getRow(i);
-            Map<String, String> rowData = new HashMap<>();
-
-            rowData.put("{{NOMBRE_MOY_SUP_10_6E}}", "SOUMAHORO Moustapha");
-            rowData.put("{{NOMBRE_MOY_INF_10_6E}}", "0358 pm 455");
-            rowData.put("{{NOMBRE_MOY_INF_08_5_6E}}", "0345897564122");
-            rowData.put("{{POURC_MOY_SUP_10_6E}}", "0345897564122");
-            rowData.put("{{POURC_MOY_INF_10_6E}}", "0345897564122");
-            rowData.put("{{POURC_MOY_INF_08_5_6E}}", "0345897564122");
-            rowData.put("{{NOMBRE_ELEV_6E}}", "0345897564122");
-            rowData.put("{{NOMBRE_ELEV_CLASSES_6E}}", "0345897564122");
-            rowData.put("{{NOMBRE_ELEV_NON_CLASSES_6E}}", "0345897564122");
-            //
-            rowData.put("{{NOMBRE_MOY_SUP_10_5E}}", "0345897564122");
-            rowData.put("{{NOMBRE_MOY_INF_10_5E}}", "0345897564122");
-            rowData.put("{{NOMBRE_MOY_INF_08_5_5E}}", "0345897564122");
-            rowData.put("{{POURC_MOY_SUP_10_5E}}", "0345897564122");
-            rowData.put("{{NOMBRE_ELEV_5E}}", "0345897564122");
-            rowData.put("{{NOMBRE_ELEV_CLASSES_5E}}", "0345897564122");
-            rowData.put("{{NOMBRE_ELEV_NON_CLASSES_5E}}", "0345897564122");
-            rowData.put("{{NOMBRE_MOY_SUP_10_4E}}", "0345897564122");
-            rowData.put("{{NOMBRE_MOY_INF_10_4E}}", "0345897564122");
-            rowData.put("{{NOMBRE_MOY_INF_08_5_4E}}", "0345897564122");
-            rowData.put("{{POURC_MOY_SUP_10_4E}}", "0345897564122");
-            rowData.put("{{POURC_MOY_INF_10_4E}}", "0345897564122");
-            rowData.put("{{POURC_MOY_INF_08_5_4E}}", "0345897564122");
-            rowData.put("{{NOMBRE_ELEV_4E}}", "0345897564122");
-            rowData.put("{{NOMBRE_ELEV_CLASSES_4E}}", "0345897564122");
-            rowData.put("{{NOMBRE_ELEV_NON_CLASSES_4E}}", "0345897564122");
-            rowData.put("{{NOMBRE_MOY_SUP_10_3E}}", "0345897564122");
-            rowData.put("{{NOMBRE_MOY_INF_10_3E}}", "0345897564122");
-            rowData.put("{{NOMBRE_MOY_INF_08_5_3E}}", "0345897564122");
-            rowData.put("{{POURC_MOY_SUP_10_3E}}", "0345897564122");
-            rowData.put("{{POURC_MOY_INF_10_3E}}", "0345897564122");
-            rowData.put("{{POURC_MOY_INF_08_5_3E}}", "0345897564122");
-            rowData.put("{{NOMBRE_ELEV_3E}}", "0345897564122");
-            rowData.put("{{NOMBRE_ELEV_CLASSES_3E}}", "0345897564122");
-            rowData.put("{{NOMBRE_MOY_SUP_10_CLASSE}}", "0345897564122");
-            rowData.put("{{NOMBRE_MOY_INF_10_CLASSE}}", "0345897564122");
-            rowData.put("{{NOMBRE_MOY_INF_08_5_CLASSE}}", "0345897564122");
-            rowData.put("{{POURC_MOY_SUP_10_CLASSE}}", "0345897564122");
-            rowData.put("{{POURC_MOY_INF_10_CLASSE}}", "0345897564122");
-            rowData.put("{{POURC_MOY_INF_08_5_CLASSE}}", "0345897564122");
-            rowData.put("{{NOMBRE_ELEV_CLASSE}}", "0345897564122");
-            rowData.put("{{NOMBRE_ELEV_CLASSES_CLASSE}}", "0345897564122");
-            rowData.put("{{NOMBRE_ELEV_NON_CLASSES_CLASSE}}", "0345897564122");
-            replacePlaceholdersInTableRow(row, rowData);
-        }
-
-
-    }
 
     private static void mergeCellsVertically(XWPFTable table, int col, int fromRow, int toRow) {
         for (int rowIndex = fromRow; rowIndex <= toRow; rowIndex++) {
@@ -789,5 +668,40 @@ public class WordTempResultaAffProcessor {
         .setParameter("niveau", niveau)
         . getResultList() ;
     return classeNiveauDtoList.size() ;
+  }
+  public static String afficherValeurParNiveau(String niveau) {
+    // Mapping des niveaux avec leurs correspondants
+    switch (niveau) {
+      case "Sixième":
+        return "6ème";
+      case "Cinquième":
+        return "5ème";
+      case "Quatrième":
+        return "4ème";
+      case "Troisième":
+        return "3ème";
+      case "Seconde C":
+        return "2nde C";
+      case "Seconde A":
+        return "2nde A";
+      case "Première A":
+        return "1ère A";
+      case "Première C":
+        return "1ère C";
+      case "Première D":
+        return "1ère D";
+      case "Terminale A":
+        return "Tle A";
+      case "Terminale A1":
+        return "Tle A1";
+      case "Terminale A2":
+        return "Tle A2";
+      case "Terminale C":
+        return "Tle C";
+      case "Terminale D":
+        return "Tle D";
+      default:
+        return "Niveau inconnu";
+    }
   }
 }
