@@ -194,7 +194,6 @@ public class SeancesResource {
 			@QueryParam("classe") Long classe, @QueryParam("dateDebut") String stringDateDebut,
 			@QueryParam("dateFin") String stringDateFin, @QueryParam("rows") Integer rows,
 			@QueryParam("page") Integer page) {
-		System.out.println("************************** IN");
 		Date dateDebut = null;
 		if (stringDateDebut != null) {
 			LocalDate localDateDebut = DateUtils.getDateWithStringPatternDDMMYYYY(stringDateDebut);
