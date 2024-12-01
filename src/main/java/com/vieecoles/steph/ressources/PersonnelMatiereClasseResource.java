@@ -19,6 +19,7 @@ import javax.ws.rs.core.Response;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
+import com.vieecoles.steph.dto.PersonnelMatiereClasseDto;
 import com.vieecoles.steph.dto.ProfEducDto;
 import com.vieecoles.steph.entities.Constants;
 import com.vieecoles.steph.entities.PersonnelMatiereClasse;
@@ -100,6 +101,16 @@ public class PersonnelMatiereClasseResource {
     public List<PersonnelMatiereClasse> findByProfesseurAndClasseWhereCoeficientDefine(@QueryParam("prof") long profId, @QueryParam("classe") long classe, @QueryParam("annee") long anneeId) {
     	List<PersonnelMatiereClasse> personnels = persMatClasService.findByProfesseurAndClasseWhereCoefDefine(profId,classe, anneeId);
     	return personnels;
+    }
+    
+    @GET
+    @Path("/get-dto-by-prof-classe-where-coef-is")
+    @Operation(description = "Obtenir les dto des matières enseignées par un prof dans une classe dont les coefficient ont été définis", summary = "")
+	@Tag(name = "PersonnelMatiereClasse")
+    public Response findDtoByProfesseurAndClasseWhereCoeficientDefine(@QueryParam("prof") long profId, @QueryParam("classe") long classe, @QueryParam("annee") long anneeId) {
+    	List<PersonnelMatiereClasse> personnels = persMatClasService.findByProfesseurAndClasseWhereCoefDefine(profId,classe, anneeId);
+    	List<PersonnelMatiereClasseDto> personnelDtos = persMatClasService.findDtoByProfesseurAndClasseWhereCoefDefine(personnels);
+    	return Response.ok(personnelDtos).build() ;
     }
     
     @GET

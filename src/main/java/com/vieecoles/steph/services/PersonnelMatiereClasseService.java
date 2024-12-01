@@ -16,6 +16,8 @@ import org.hibernate.internal.build.AllowSysOut;
 import com.vieecoles.steph.entities.PersonnelMatiereClasse;
 import com.vieecoles.steph.projections.GenericPersonelProjectionLongIdFonctionEcole;
 import com.vieecoles.steph.projections.GenericProjectionLongId;
+import com.vieecoles.steph.dto.IdLongCodeLibelleDto;
+import com.vieecoles.steph.dto.PersonnelMatiereClasseDto;
 import com.vieecoles.steph.dto.ProfEducDto;
 import com.vieecoles.steph.entities.ClasseMatiere;
 import com.vieecoles.steph.entities.Constants;
@@ -180,6 +182,8 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 			logger.warning("Erreur [List<PersonnelMatiereClasse> findByProfesseurAndClasseWhereCoefDefine] ::: "+e.getMessage());
 		}
 		if(personnelMatiereClasseList != null) {
+			System.out.println("PersonnelMatiereClasseService.findByProfesseurAndClasseWhereCoefDefine()");
+			System.out.println(personnelMatiereClasseList.size());
 			List<ClasseMatiere> matiereCoefDefineList = cmService.getByBrancheViaClasse(classe);
 			if(matiereCoefDefineList != null && matiereCoefDefineList.size()>0)
 				pmcListTmp = new ArrayList<PersonnelMatiereClasse>();
@@ -193,6 +197,26 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 		}
 		return pmcListTmp;
 	}
+	
+	public List<PersonnelMatiereClasseDto> findDtoByProfesseurAndClasseWhereCoefDefine(List<PersonnelMatiereClasse> list){
+		List<PersonnelMatiereClasseDto> dtos = new ArrayList<PersonnelMatiereClasseDto>();
+		for(PersonnelMatiereClasse  pmc : list) {
+			dtos.add(buildToDto(pmc));
+		}
+		return dtos;
+	}
+	
+	PersonnelMatiereClasseDto buildToDto(PersonnelMatiereClasse pmc) {
+		PersonnelMatiereClasseDto pmcDto = new PersonnelMatiereClasseDto();
+		pmcDto.setAnnee(new IdLongCodeLibelleDto(pmc.getAnnee().getId(), null, pmc.getAnnee().getLibelle()));
+		pmcDto.setClasse(new IdLongCodeLibelleDto(pmc.getClasse().getId(), null, pmc.getClasse().getLibelle()));
+		pmcDto.setId(pmc.getId());
+		pmcDto.setMatiere(new IdLongCodeLibelleDto(pmc.getMatiere().getId(), null, pmc.getMatiere().getLibelle()));
+		pmcDto.setPersonel(new IdLongCodeLibelleDto(pmc.getPersonnel().getId(), null, null));
+		return pmcDto;
+	}
+	
+	
 
 	public List<PersonnelMatiereClasse> findListByClasse(long annee, long classe) {
 		List<PersonnelMatiereClasse> list = new ArrayList<PersonnelMatiereClasse>();
