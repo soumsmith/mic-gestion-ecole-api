@@ -1,6 +1,7 @@
 package com.vieecoles.services.etats;
 
 import com.vieecoles.dto.NiveauDto;
+import com.vieecoles.dto.NiveauOrderDto;
 import com.vieecoles.dto.RecapResultatsElevesAffeEtNonAffDto;
 import com.vieecoles.dto.ResultatsElevesAffecteDto;
 
@@ -19,9 +20,9 @@ public class resultatsRecapAffEtNonAffServices {
 
     public List<RecapResultatsElevesAffeEtNonAffDto> RecapCalculResultatsEleveAffecte(Long idEcole ,String libelleAnnee , String libelleTrimestre){
 
-        List<NiveauDto> classeNiveauDtoList = new ArrayList<>() ;
-        TypedQuery<NiveauDto> q = em.createQuery( "SELECT new com.vieecoles.dto.NiveauDto(b.niveau) from Bulletin b  where b.ecoleId =:idEcole and b.libellePeriode=:periode and b.anneeLibelle=:annee " +
-                "group by b.niveau ,b.ordreNiveau order by b.ordreNiveau", NiveauDto.class);
+        List<NiveauOrderDto> classeNiveauDtoList = new ArrayList<>() ;
+        TypedQuery<NiveauOrderDto> q = em.createQuery( "SELECT new com.vieecoles.dto.NiveauOrderDto(b.niveau,b.ordreNiveau) from Bulletin b  where b.ecoleId =:idEcole and b.libellePeriode=:periode and b.anneeLibelle=:annee " +
+                "group by b.ordreNiveau, b.niveau  order by b.ordreNiveau , b.niveau", NiveauOrderDto.class);
         classeNiveauDtoList = q.setParameter("idEcole", idEcole)
                                 .setParameter("annee", libelleAnnee)
                                 .setParameter("periode", libelleTrimestre)

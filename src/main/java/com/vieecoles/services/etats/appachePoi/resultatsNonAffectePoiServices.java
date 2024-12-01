@@ -19,7 +19,7 @@ public class resultatsNonAffectePoiServices {
 
         List<ClasseNiveauDto> classeNiveauDtoList = new ArrayList<>() ;
         TypedQuery<ClasseNiveauDto> q = em.createQuery( "SELECT new com.vieecoles.dto.ClasseNiveauDto(b.libelleClasse ,b.niveau) from Bulletin b  where b.ecoleId =:idEcole and b.affecte=:affecte and b.libellePeriode=:periode and b.anneeLibelle=:annee and b.ordreNiveau=:order " +
-                "group by b.libelleClasse ,b.niveau ", ClasseNiveauDto.class);
+                "group by b.libelleClasse ,b.niveau  order by b.libelleClasse,b.niveau", ClasseNiveauDto.class);
         classeNiveauDtoList = q.setParameter("idEcole", idEcole)
                           .setParameter("affecte", "NON_AFFECTE")
                             .setParameter("annee", libelleAnnee)

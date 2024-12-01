@@ -143,7 +143,7 @@ public class WordTempRecapAffNonAffResultatProcessor {
             totalRow.getCell(9).setText(String.valueOf(nombMoyInf8_5));
             totalRow.getCell(10).setText(String.valueOf(arrondie(pourInf8_5)));
             totalRow.getCell(11).setText(String.valueOf(arrondie(classe.getMoyClasse())));
-            mergeCellsVertically(table, 0, table.getNumberOfRows() - 2, table.getNumberOfRows() -1);
+            mergeCellsVertically(table, 0, table.getNumberOfRows() - 3, table.getNumberOfRows() -1);
         }
         //Total Etablissement
         XWPFTableRow etabliRow = table.createRow();

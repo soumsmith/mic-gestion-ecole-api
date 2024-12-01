@@ -242,10 +242,14 @@ public class WordTempEffectifApprocheNiveauGenre {
         createRowForLevel(table, "TLE C", listEffectifNiveau.getnTleC(), listEffectifNiveau.getnTleCRF(), listEffectifNiveau.getnTleCNRF(),
             listEffectifNiveau.getnTleCRG(), listEffectifNiveau.getnTlCNRG());
 
-        createTotalRow(table, "Total Tle", totalTle, totalTleRF, totalTleNRF,totalRedNredFTle, totalTleRG,
+        createTotalRow(table, "TOTAL TERMINALES", totalTle, totalTleRF, totalTleNRF,totalRedNredFTle, totalTleRG,
             totalTleNRG,totalRedNredGTle,totalRedTle,totalNredTle,totalRedNredTle);
 
-        createTotalRow(table, "Total Etablissement", totalGeneral, totalGeneralRF, totalGeneralNRF,totalRedNredFGeneral,
+        createTotalRow(table, "TOTAL 2nd CYCLE", totalTle +total1ere+total2nd, totalTleRF+total1ereRF+total2ndRF, totalTleNRF+total1ereNRF+total2ndNRF,
+            totalRedNredFTle+totalRedNredF1ere+totalRedNredF2nde, totalTleRG+total1ereRG+total2ndRG, totalTleNRG+total1ereNRG+total2ndNRG,
+            totalRedNredGTle+totalRedNredG1ere+totalRedNredG2nde,totalRedTle+totalRed1ere+totalRed2nde,totalNredTle+totalNred1ere+totalNred2nde,totalRedNredTle+totalRedNred1ere+totalRedNred2nde);
+
+        createTotalRow(table, "TOTAL ETABLISSEMENT", totalGeneral, totalGeneralRF, totalGeneralNRF,totalRedNredFGeneral,
             totalGeneralRG, totalGeneralNRG,totalRedNredGGeneral,totalRedGeneral,totalNredGeneral,totalRedNredGeneral);
 
     }

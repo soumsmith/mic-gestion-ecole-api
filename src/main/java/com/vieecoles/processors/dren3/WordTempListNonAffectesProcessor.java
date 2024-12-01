@@ -1,6 +1,10 @@
 package com.vieecoles.processors.dren3;
 
+import static com.vieecoles.processors.dren3.WordTempListAffectesProcessor.setCellTextAndFontSize;
+import static com.vieecoles.processors.dren3.WordTempListAffectesProcessor.setHeaderCell;
+
 import com.vieecoles.dto.NiveauOrderDto;
+import com.vieecoles.dto.eleveAffecteParClasseDto;
 import com.vieecoles.dto.eleveNonAffecteParClasseDto;
 import com.vieecoles.services.etats.appachePoi.EleveNonAffecteParClassePoiServices;
 import java.util.ArrayList;
@@ -46,7 +50,7 @@ public class WordTempListNonAffectesProcessor {
         for (int i = 0; i < paragraphs.size(); i++) {
             String text = paragraphs.get(i).getText();
             // Identifier l'emplacement où insérer le tableau (par exemple après "Liste des élèves affectés par classe")
-            if (text.contains("Liste des élèves non affectés par classe")) {
+            if (text.contains("ELEVES NON AFFECTES")) {
                 indexToInsert = i + 1; // Ajouter après ce paragraphe
 
                 break;
@@ -60,7 +64,6 @@ public class WordTempListNonAffectesProcessor {
         if (indexToInsert != -1) {
            // for (int z=0; z< classeList.size();z++) {
 
-            // Créer un nouveau paragraphe avant d'insérer le tableau
             XWPFParagraph newParagraph = document.insertNewParagraph(paragraphs.get(indexToInsert).getCTP().newCursor());
             XWPFRun run = newParagraph.createRun();
             run.setText(classeList.get(k).getNiveau()+" \t\tProfesseur Principal:\t\tEducateur:");
@@ -72,37 +75,58 @@ public class WordTempListNonAffectesProcessor {
 
             // Créer l'en-tête du tableau (1 ligne, 11 colonnes)
             XWPFTableRow headerRow = table.getRow(0);
-            headerRow.getCell(0).setText("Matricule");
-            headerRow.addNewTableCell().setText("Nom et prénoms");
-            headerRow.addNewTableCell().setText("Sexe");
-            headerRow.addNewTableCell().setText("AN");
-            headerRow.addNewTableCell().setText("Nat");
-            headerRow.addNewTableCell().setText("R");
-            headerRow.addNewTableCell().setText("Statut");
-            headerRow.addNewTableCell().setText("N°DEC AFF");
-            headerRow.addNewTableCell().setText("MOY");
-            headerRow.addNewTableCell().setText("RANG");
-            headerRow.addNewTableCell().setText("OBSERVATION");
+            setHeaderCell(headerRow.getCell(0), "N°", "D9D9D9");
+            setHeaderCell(headerRow.addNewTableCell(), "ETABLISSEMENTS", "D9D9D9");
+            setHeaderCell(headerRow.addNewTableCell(), "N°", "D9D9D9");
+            setHeaderCell(headerRow.addNewTableCell(), "MATRICULE", "D9D9D9");
+            setHeaderCell(headerRow.addNewTableCell(), "NOM ET PRENOMS", "D9D9D9");
+            setHeaderCell(headerRow.addNewTableCell(), "AGE (NE(E)LE)", "D9D9D9");
+            setHeaderCell(headerRow.addNewTableCell(), "GENRE", "D9D9D9");
+            setHeaderCell(headerRow.addNewTableCell(), "NAT.", "D9D9D9");
+            setHeaderCell(headerRow.addNewTableCell(), "RED", "D9D9D9");
+            setHeaderCell(headerRow.addNewTableCell(), "STATUT AFF /NON AFF", "D9D9D9");
+            setHeaderCell(headerRow.addNewTableCell(), "N° DECISION D’AFF", "D9D9D9");
+            setHeaderCell(headerRow.addNewTableCell(), "LV2", "D9D9D9");
+            setHeaderCell(headerRow.addNewTableCell(), "M/20", "D9D9D9");
+            setHeaderCell(headerRow.addNewTableCell(), "RANG", "D9D9D9");
+            setHeaderCell(headerRow.addNewTableCell(), "CLASSE", "D9D9D9");
+            setHeaderCell(headerRow.addNewTableCell(), "OBSERVATIONS", "D9D9D9");
 
             // Ajouter des lignes au tableau
+            int numerotation = 1;
             for (eleveNonAffecteParClasseDto eleve : elevAffectes) {  // Exemple de 3 lignes
                 XWPFTableRow row = table.createRow();
-                row.getCell(0).setText(eleve.getMatricule());
-                row.getCell(1).setText(eleve.getNomEleve()+" "+eleve.getPrenomEleve());
-                row.getCell(2).setText(eleve.getSexe());
-                row.getCell(3).setText("");
-                row.getCell(4).setText(eleve.getNationnalite());
-                row.getCell(5).setText(eleve.getRedoublan());
-                row.getCell(6).setText(eleve.getAffecte());
-                row.getCell(7).setText(eleve.getNumDecisionAffecte());
-                row.getCell(8).setText(String.valueOf(eleve.getMoyeGeneral()));
-                row.getCell(9).setText(String.valueOf(eleve.getRang()));
-                row.getCell(10).setText(eleve.getObservat());
+                ensureCellCount(row, 16);  // Assurez-vous que chaque ligne a 16 cellules
+
+                // Définir le texte et la taille des cellules de la ligne
+                setCellTextAndFontSize(row.getCell(0), String.valueOf(numerotation), 10);
+                setCellTextAndFontSize(row.getCell(1), "", 10);
+                setCellTextAndFontSize(row.getCell(2), String.valueOf(numerotation), 10);
+                setCellTextAndFontSize(row.getCell(3), eleve.getMatricule(), 10);
+                setCellTextAndFontSize(row.getCell(4), eleve.getNomEleve() + " " + eleve.getPrenomEleve(), 10);
+                setCellTextAndFontSize(row.getCell(5), eleve.getAnneeNaissance(), 10);
+                setCellTextAndFontSize(row.getCell(6), eleve.getSexe(), 10);
+                setCellTextAndFontSize(row.getCell(7), eleve.getNationnalite(), 10);
+                setCellTextAndFontSize(row.getCell(8), eleve.getRedoublan(), 10);
+                setCellTextAndFontSize(row.getCell(9), eleve.getAffecte(), 10);
+                setCellTextAndFontSize(row.getCell(10), eleve.getNumDecisionAffecte(), 10);
+                setCellTextAndFontSize(row.getCell(11), "", 10);
+                setCellTextAndFontSize(row.getCell(12), String.valueOf(eleve.getMoyeGeneral()), 10);
+                setCellTextAndFontSize(row.getCell(13), String.valueOf(eleve.getRang()), 10);
+                setCellTextAndFontSize(row.getCell(14), String.valueOf(eleve.getClasseLibelle()), 10);
+                setCellTextAndFontSize(row.getCell(15), eleve.getObservat(), 10);
+
+                numerotation++;
             }
-        //}
         }
     }
     }
 
+    private static void ensureCellCount(XWPFTableRow row, int cellCount) {
+        int currentCellCount = row.getTableCells().size();
+        for (int i = currentCellCount; i < cellCount; i++) {
+            row.addNewTableCell(); // Ajouter une nouvelle cellule si nécessaire
+        }
+    }
 
 }

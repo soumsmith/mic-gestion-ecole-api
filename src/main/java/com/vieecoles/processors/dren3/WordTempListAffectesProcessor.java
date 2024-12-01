@@ -129,7 +129,7 @@ public class WordTempListAffectesProcessor {
         }
     }
     }
-    private static void setHeaderCell(XWPFTableCell cell, String text, String bgColor) {
+    public static void setHeaderCell(XWPFTableCell cell, String text, String bgColor) {
         // Définir le texte de la cellule
         XWPFParagraph paragraph = cell.getParagraphs().get(0);
         XWPFRun run = paragraph.createRun();
@@ -162,7 +162,7 @@ public class WordTempListAffectesProcessor {
     }
 
 
-    private static void setCellTextAndFontSize(XWPFTableCell cell, String text, int fontSize) {
+    public static void setCellTextAndFontSize(XWPFTableCell cell, String text, int fontSize) {
         // Obtenir ou créer un paragraphe dans la cellule
         XWPFParagraph paragraph = cell.getParagraphs().get(0);
 
