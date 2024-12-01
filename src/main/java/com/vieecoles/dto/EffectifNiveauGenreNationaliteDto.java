@@ -3,49 +3,198 @@ package com.vieecoles.dto;
 public class EffectifNiveauGenreNationaliteDto {
     private String niveau ;
     private Long nombreClasse;
+    private Long nombreCycleClasse;
 
     private Long nbreRedouIvoireG;
     private Long nbreRedouIvoireF;
     private  Long nbrnbreRedouIvoireTotal;
 
+    private Long nbreRedouIvoireCycleG;
+    private Long nbreRedouIvoireCycleF;
+    private  Long nbrnbreRedouIvoireCycleTotal;
+
     private Long nbreRedouEtrangerG;
     private Long nbreRedouEtrangerF;
     private  Long nbrnbreRedouEtrangerTotal;
+
+    private Long nbreRedouEtrangerCycleG;
+    private Long nbreRedouEtrangerCycleF;
+    private  Long nbrnbreRedouEtrangerCycleTotal;
 
     private Long nbreNonRedouIvoireG;
     private Long nbreNonRedouIvoireF;
     private  Long nbreNonRedouIvoireTotal;
 
+    private Long nbreNonRedouIvoireCycleG;
+    private Long nbreNonRedouIvoireCycleF;
+    private  Long nbreNonRedouIvoireCycleTotal;
+
     private Long nbreNonRedouEtrangerG;
     private Long nbreNonRedouEtrangerF;
     private  Long nbreNonbreRedouEtrangerTotal;
 
-    private Long totalGeneralG;
-    private Long totalGeneralF;
-    private  Long totalGeneralTotal;
+    private Long nbreNonRedouEtrangerCycleG;
+    private Long nbreNonRedouEtrangerCycleF;
+    private  Long nbreNonRedouEtrangerCycleTotal;
 
-    public Long getTotalGeneralG() {
-        return totalGeneralG;
+    private Long totalNiveauG;
+    private Long totalNiveauF;
+    private  Long totaNiveauTotal;
+
+    private Long totalCycleG;
+    private Long totalCycleF;
+    private  Long totalCycleTotal;
+
+    public Long getNombreCycleClasse() {
+        return nombreCycleClasse;
     }
 
-    public void setTotalGeneralG(Long totalGeneralG) {
-        this.totalGeneralG = totalGeneralG;
+    public void setNombreCycleClasse(Long nombreCycleClasse) {
+        this.nombreCycleClasse = nombreCycleClasse;
     }
 
-    public Long getTotalGeneralF() {
-        return totalGeneralF;
+    public Long getNbreRedouIvoireCycleG() {
+        return nbreRedouIvoireCycleG;
     }
 
-    public void setTotalGeneralF(Long totalGeneralF) {
-        this.totalGeneralF = totalGeneralF;
+    public void setNbreRedouIvoireCycleG(Long nbreRedouIvoireCycleG) {
+        this.nbreRedouIvoireCycleG = nbreRedouIvoireCycleG;
     }
 
-    public Long getTotalGeneralTotal() {
-        return totalGeneralTotal;
+    public Long getNbreRedouIvoireCycleF() {
+        return nbreRedouIvoireCycleF;
     }
 
-    public void setTotalGeneralTotal(Long totalGeneralTotal) {
-        this.totalGeneralTotal = totalGeneralTotal;
+    public void setNbreRedouIvoireCycleF(Long nbreRedouIvoireCycleF) {
+        this.nbreRedouIvoireCycleF = nbreRedouIvoireCycleF;
+    }
+
+    public Long getNbrnbreRedouIvoireCycleTotal() {
+        return nbrnbreRedouIvoireCycleTotal;
+    }
+
+    public void setNbrnbreRedouIvoireCycleTotal(Long nbrnbreRedouIvoireCycleTotal) {
+        this.nbrnbreRedouIvoireCycleTotal = nbrnbreRedouIvoireCycleTotal;
+    }
+
+    public Long getNbreRedouEtrangerCycleG() {
+        return nbreRedouEtrangerCycleG;
+    }
+
+    public void setNbreRedouEtrangerCycleG(Long nbreRedouEtrangerCycleG) {
+        this.nbreRedouEtrangerCycleG = nbreRedouEtrangerCycleG;
+    }
+
+    public Long getNbreRedouEtrangerCycleF() {
+        return nbreRedouEtrangerCycleF;
+    }
+
+    public void setNbreRedouEtrangerCycleF(Long nbreRedouEtrangerCycleF) {
+        this.nbreRedouEtrangerCycleF = nbreRedouEtrangerCycleF;
+    }
+
+    public Long getNbrnbreRedouEtrangerCycleTotal() {
+        return nbrnbreRedouEtrangerCycleTotal;
+    }
+
+    public void setNbrnbreRedouEtrangerCycleTotal(Long nbrnbreRedouEtrangerCycleTotal) {
+        this.nbrnbreRedouEtrangerCycleTotal = nbrnbreRedouEtrangerCycleTotal;
+    }
+
+    public Long getNbreNonRedouIvoireCycleG() {
+        return nbreNonRedouIvoireCycleG;
+    }
+
+    public void setNbreNonRedouIvoireCycleG(Long nbreNonRedouIvoireCycleG) {
+        this.nbreNonRedouIvoireCycleG = nbreNonRedouIvoireCycleG;
+    }
+
+    public Long getNbreNonRedouIvoireCycleF() {
+        return nbreNonRedouIvoireCycleF;
+    }
+
+    public void setNbreNonRedouIvoireCycleF(Long nbreNonRedouIvoireCycleF) {
+        this.nbreNonRedouIvoireCycleF = nbreNonRedouIvoireCycleF;
+    }
+
+    public Long getNbreNonRedouIvoireCycleTotal() {
+        return nbreNonRedouIvoireCycleTotal;
+    }
+
+    public void setNbreNonRedouIvoireCycleTotal(Long nbreNonRedouIvoireCycleTotal) {
+        this.nbreNonRedouIvoireCycleTotal = nbreNonRedouIvoireCycleTotal;
+    }
+
+    public Long getNbreNonRedouEtrangerCycleG() {
+        return nbreNonRedouEtrangerCycleG;
+    }
+
+    public void setNbreNonRedouEtrangerCycleG(Long nbreNonRedouEtrangerCycleG) {
+        this.nbreNonRedouEtrangerCycleG = nbreNonRedouEtrangerCycleG;
+    }
+
+    public Long getNbreNonRedouEtrangerCycleF() {
+        return nbreNonRedouEtrangerCycleF;
+    }
+
+    public void setNbreNonRedouEtrangerCycleF(Long nbreNonRedouEtrangerCycleF) {
+        this.nbreNonRedouEtrangerCycleF = nbreNonRedouEtrangerCycleF;
+    }
+
+    public Long getNbreNonRedouEtrangerCycleTotal() {
+        return nbreNonRedouEtrangerCycleTotal;
+    }
+
+    public void setNbreNonRedouEtrangerCycleTotal(Long nbreNonRedouEtrangerCycleTotal) {
+        this.nbreNonRedouEtrangerCycleTotal = nbreNonRedouEtrangerCycleTotal;
+    }
+
+    public Long getTotalCycleG() {
+        return totalCycleG;
+    }
+
+    public void setTotalCycleG(Long totalCycleG) {
+        this.totalCycleG = totalCycleG;
+    }
+
+    public Long getTotalCycleF() {
+        return totalCycleF;
+    }
+
+    public void setTotalCycleF(Long totalCycleF) {
+        this.totalCycleF = totalCycleF;
+    }
+
+    public Long getTotalCycleTotal() {
+        return totalCycleTotal;
+    }
+
+    public void setTotalCycleTotal(Long totalCycleTotal) {
+        this.totalCycleTotal = totalCycleTotal;
+    }
+
+    public Long getTotalNiveauG() {
+        return totalNiveauG;
+    }
+
+    public void setTotalNiveauG(Long totalNiveauG) {
+        this.totalNiveauG = totalNiveauG;
+    }
+
+    public Long getTotalNiveauF() {
+        return totalNiveauF;
+    }
+
+    public void setTotalNiveauF(Long totalNiveauF) {
+        this.totalNiveauF = totalNiveauF;
+    }
+
+    public Long getTotaNiveauTotal() {
+        return totaNiveauTotal;
+    }
+
+    public void setTotaNiveauTotal(Long totaNiveauTotal) {
+        this.totaNiveauTotal = totaNiveauTotal;
     }
 
     public String getNiveau() {
