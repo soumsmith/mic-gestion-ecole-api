@@ -3,8 +3,6 @@ package com.vieecoles.processors.dren3.services;
 import com.vieecoles.dto.AffecteClasseDto;
 import com.vieecoles.dto.EffectifNiveauGenreNationaliteDto;
 import com.vieecoles.dto.NiveauClasseDto;
-import com.vieecoles.dto.NiveauDto;
-import com.vieecoles.dto.PyramideEffectDto;
 import com.vieecoles.dto.RedoublantAffClasseDto;
 import com.vieecoles.dto.effectifClasseDto;
 import com.vieecoles.services.eleves.InscriptionService;
@@ -21,7 +19,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
 @ApplicationScoped
-public class RecapitulatifStatistiqueServices {
+public class RecapitulatifStatistiqueServices1 {
     @Inject
     EntityManager em;
     @Inject
@@ -29,17 +27,17 @@ public class RecapitulatifStatistiqueServices {
     @Inject
     SousceecoleService sousceecoleService ;
 
-    public List<EffectifNiveauGenreNationaliteDto> getEffectifNiveauGenre(Long idEcole ,Long anneeId ,Integer lim){
+    public List<EffectifNiveauGenreNationaliteDto> getEffectifNiveauGenre(Long idEcole ,Long anneeId ){
 
 
 
       List<NiveauClasseDto> niveauDtoList = new ArrayList<>() ;
 
-      if(lim ==4) {
-        niveauDtoList= getListClasse(idEcole,anneeId,lim);
-      } else {
-        niveauDtoList= getListClasseSecon(idEcole,anneeId,lim);
-      }
+        niveauDtoList= getListClasse(idEcole,anneeId);
+
+
+
+      int LongTableau =niveauDtoList.size() ;
 
 
        int sizeClass ;
@@ -168,22 +166,16 @@ public class RecapitulatifStatistiqueServices {
 
 
 
-    List<NiveauClasseDto> getListClasse(Long idEcole , Long idAnneId, Integer lim) {
+    List<NiveauClasseDto> getListClasse(Long idEcole , Long idAnneId) {
         List<NiveauClasseDto> classeNiveauDtoList = new ArrayList<>() ;
-        TypedQuery<NiveauClasseDto> q = em.createQuery( "SELECT DISTINCT new com.vieecoles.dto.NiveauClasseDto(o.branche.libelle,o.branche.id) FROM Classe o  where o.ecole.id =:idEcole   and o.branche.niveau.id <=:lim  order by o.branche.id "
+        TypedQuery<NiveauClasseDto> q = em.createQuery( "SELECT DISTINCT new com.vieecoles.dto.NiveauClasseDto(o.branche.libelle,o.branche.id) FROM Classe o ,Bulletin b where o.id=b.classeId and  o.ecole.id =:idEcole and b.anneeId=:annee  and b.ordreNiveau<5 order by o.branche.id "
                 , NiveauClasseDto.class);
         return      classeNiveauDtoList = q.setParameter("idEcole" ,idEcole)
-                                           .setParameter("lim" ,lim).getResultList() ;
+                                          . setParameter("annee" ,idAnneId)
+                                      .getResultList() ;
 
     }
-  List<NiveauClasseDto> getListClasseSecon(Long idEcole , Long idAnneId, Integer lim) {
-    List<NiveauClasseDto> classeNiveauDtoList = new ArrayList<>() ;
-    TypedQuery<NiveauClasseDto> q = em.createQuery( "SELECT DISTINCT new com.vieecoles.dto.NiveauClasseDto(o.branche.libelle,o.branche.id) FROM Classe o  where o.ecole.id =:idEcole   and o.branche.niveau.id >=:lim  order by o.branche.id "
-        , NiveauClasseDto.class);
-    return      classeNiveauDtoList = q.setParameter("idEcole" ,idEcole)
-        .setParameter("lim" ,lim).getResultList() ;
 
-  }
 
 
 

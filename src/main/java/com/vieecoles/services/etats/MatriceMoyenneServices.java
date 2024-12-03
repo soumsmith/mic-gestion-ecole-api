@@ -576,8 +576,6 @@ System.out.println("Chercher lv2>>>>>>");
             return null ;
         }
 
-
-
     }
 
     public  String getIsClassePeriode(String matricule,String periode ,String libelleAnnee){
