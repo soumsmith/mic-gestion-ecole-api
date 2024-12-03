@@ -29,6 +29,7 @@
 	<parameter name="ecolecode" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="ecole_statut" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="ecoleclibelle" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="classe" class="java.lang.String" isForPrompting="false"/>
 	<queryString language="SQL">
 		<![CDATA[]]>
 	</queryString>
@@ -374,7 +375,7 @@
 					<textElement textAlignment="Center">
 						<font size="13" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA["PROCES VERBAL DU CONSEIL DE LA CLASSE DE "+$F{classe}]]></textFieldExpression>
+					<textFieldExpression><![CDATA["PROCES VERBAL DU CONSEIL DE LA CLASSE DE "+$P{classe}]]></textFieldExpression>
 				</textField>
 			</frame>
 			<textField>

@@ -1121,7 +1121,7 @@
 					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement>
+				<textElement textAlignment="Center">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nbreAvertissementTravail}]]></textFieldExpression>
@@ -1136,7 +1136,7 @@
 					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement>
+				<textElement textAlignment="Center">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nbreBlameTravail}]]></textFieldExpression>
