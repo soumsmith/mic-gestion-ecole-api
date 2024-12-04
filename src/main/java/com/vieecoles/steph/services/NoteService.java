@@ -1092,40 +1092,60 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 		Double diviser;
 		Double somme;
 
-		Gson g = new Gson();
+//		Gson g = new Gson();
 
 		for (MoyenneEleveDto me : moyEleve) {
 			for (Map.Entry<EcoleHasMatiere, List<Notes>> entry : me.getNotesMatiereMap().entrySet()) {
 				moyenne = 0.0;
 				noteList = new ArrayList<Double>();
-//				System.out.println(entry.getKey().getLibelle());
+				List<Double> noteTestLourdList = new ArrayList<Double>();
+				Double diviserTestLourd = 0.0;
+				// System.out.println(entry.getKey().getLibelle());
 //				System.out.println("Taille notes "+entry.getValue().size());
 				diviser = 0.0;
 				somme = 0.0;
 				for (Notes note : entry.getValue()) {
 // On vérifie que l'evaluation et la note sont prises en compte dans le calcul de moyenne
-					if (note.getEvaluation().getPec() == 1 && note.getPec() != null && note.getPec() == 1) {
-						noteList.add(note.getNote());
+					if (note.getEvaluation().getPec() == Constants.PEC_1 && note.getPec() != null
+							&& note.getPec() == Constants.PEC_1) {
+						if (note.getEvaluation().getType() != null && note.getEvaluation().getType().getCode() != null
+								&& note.getEvaluation().getType().getCode().equals(Constants.CODE_TEST_LOURD)) {
+							noteTestLourdList.add(note.getNote());
+							diviserTestLourd = diviserTestLourd + (Double.parseDouble(note.getEvaluation().getNoteSur())
+									/ Double.parseDouble(Constants.DEFAULT_NOTE_SUR));
+							entry.getKey().setTestLourdNoteSur(Integer.parseInt(note.getEvaluation().getNoteSur()));
+//						System.out.println("TEST LOURD DETECTE note :: "+note.getNote());
+						} else {
+//					if (note.getEvaluation().getPec() == 1 && note.getPec() != null && note.getPec() == 1) {
+							noteList.add(note.getNote());
 //						System.out.println(String.format("PEC value >>> %s", note.getEvaluation().getPec()));
-						diviser = diviser
-								+ (Double.parseDouble(note.getEvaluation().getNoteSur()) / Double.parseDouble("20"));
+							diviser = diviser + (Double.parseDouble(note.getEvaluation().getNoteSur())
+									/ Double.parseDouble(Constants.DEFAULT_NOTE_SUR));
+						}
 					}
 				}
 
-//				entry.getValue().clear();
-//				entry.getValue().
-
 				for (Double note : noteList) {
-//					System.out.println(note);
 					somme += note;
 				}
 
 				moyenne = somme / (diviser.equals(Double.parseDouble("0")) ? Double.parseDouble("1") : diviser);
 				logger.info("Moyenne = " + somme + " / " + diviser + " = " + CommonUtils.roundDouble(moyenne, 2));
+				
+				if (noteTestLourdList.size() > 0) {
+					Double moyenneTstLourd = 0.0;
+					Double sommeTstLourd = 0.0;
+					for (Double noteTestLrd : noteTestLourdList) {
+						sommeTstLourd = sommeTstLourd + noteTestLrd;
+					}
+					moyenneTstLourd = sommeTstLourd / diviserTestLourd;
+					entry.getKey().setTestLourdNote(sommeTstLourd);
+					moyenne = (moyenne + moyenneTstLourd * 2) / 3;
+				}
+				
 				entry.getKey().setMoyenne(CommonUtils.roundDouble(moyenne, 2));
 				entry.getKey().setAppreciation(CommonUtils.appreciation(moyenne));
 
-//				logger.info("++++> "+g.toJson(me.getNotesMatiereMap()));
 			}
 
 //			me.setMoyenne(calculMoyenneGeneralWithCoef(moyenneList));
@@ -1774,11 +1794,12 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			boolean found = false; // Drapeau pour vérifier si la matière existe déjà
 			if (notesEleveDto.getList().size() > 0) {
 				ListIterator<MatiereNotesEleveDto> iterator = notesEleveDto.getList().listIterator();
-				while(iterator.hasNext()) {
+				while (iterator.hasNext()) {
 					MatiereNotesEleveDto matiereNotesEleveDto = iterator.next();
 					if (matiereNotesEleveDto.getMatiereId() == note.getEvaluation().getMatiereEcole().getId()) {
 						// Si la matière est trouvée, ajouter la note et passer le drapeau à true
-						matiereNotesEleveDto.getNotes().add(String.format("%s/%s", note.getNote(), note.getEvaluation().getNoteSur()));
+						matiereNotesEleveDto.getNotes()
+								.add(String.format("%s/%s", note.getNote(), note.getEvaluation().getNoteSur()));
 						found = true;
 						break;
 					}
@@ -1791,7 +1812,8 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				MatiereNotesEleveDto matiereNotesEleveDto = new MatiereNotesEleveDto();
 				matiereNotesEleveDto.setMatiereId(note.getEvaluation().getMatiereEcole().getId());
 				matiereNotesEleveDto.setMatiereLibelle(note.getEvaluation().getMatiereEcole().getLibelle());
-				matiereNotesEleveDto.getNotes().add(String.format("%s/%s", note.getNote(), note.getEvaluation().getNoteSur()));
+				matiereNotesEleveDto.getNotes()
+						.add(String.format("%s/%s", note.getNote(), note.getEvaluation().getNoteSur()));
 				notesEleveDto.getList().add(matiereNotesEleveDto);
 			}
 		} catch (Exception e) {
@@ -1799,9 +1821,8 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 		}
 	}
 
-
 	public void builder(Notes note, NotesEleveDto notesEleveDto, MatiereNotesEleveDto dto) {
-		
+
 	}
 
 	public NotesEleveDto getNotesEleveByPeriode(String matricule, Long classeId, Long anneeId, Long periodeId) {
