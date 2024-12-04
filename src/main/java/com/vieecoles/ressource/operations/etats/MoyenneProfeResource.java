@@ -1,38 +1,43 @@
 package com.vieecoles.ressource.operations.etats;
 
-import com.vieecoles.dto.EtatNominatifEnseignatDto;
-import com.vieecoles.dto.MoyenParProfDto;
-import com.vieecoles.entities.operations.ecole;
-import com.vieecoles.entities.parametre;
-import com.vieecoles.services.etats.MoyenneParProfServices;
-import com.vieecoles.steph.dto.MoyenneEleveDto;
-import com.vieecoles.steph.entities.*;
-import com.vieecoles.steph.services.NoteService;
-import com.vieecoles.steph.services.PersonnelMatiereClasseService;
-import net.sf.jasperreports.engine.*;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import net.sf.jasperreports.engine.export.ooxml.JRDocxExporter;
-import net.sf.jasperreports.export.SimpleExporterInput;
-import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
-import org.eclipse.microprofile.openapi.annotations.Operation;
-import org.eclipse.microprofile.openapi.annotations.tags.Tag;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
-
-import javax.imageio.ImageIO;
-import javax.inject.Inject;
-import javax.transaction.Transactional;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.imageio.ImageIO;
+import javax.inject.Inject;
+import javax.transaction.Transactional;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
+
+import com.vieecoles.dto.MoyenParProfDto;
+import com.vieecoles.entities.parametre;
+import com.vieecoles.entities.operations.ecole;
+import com.vieecoles.services.etats.MoyenneParProfServices;
+import com.vieecoles.steph.entities.Classe;
+import com.vieecoles.steph.entities.Ecole;
+import com.vieecoles.steph.entities.EcoleHasMatiere;
+import com.vieecoles.steph.entities.PersonnelMatiereClasse;
+import com.vieecoles.steph.services.PersonnelMatiereClasseService;
+
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 
 @Path("/moyenneProf")
