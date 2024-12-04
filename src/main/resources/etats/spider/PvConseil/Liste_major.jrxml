@@ -385,7 +385,7 @@
 					<textElement textAlignment="Center">
 						<font size="13" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA["PROCES VERBAL DU CONSEIL DE LA CLASSE DE "+$P{classe}]]></textFieldExpression>
+					<textFieldExpression><![CDATA["PROCES VERBAL DU CONSEIL DE LA CLASSE DE "+$F{classe}]]></textFieldExpression>
 				</textField>
 			</frame>
 			<textField>

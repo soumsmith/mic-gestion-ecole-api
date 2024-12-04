@@ -60,29 +60,23 @@ public class StatistiqueClassePvServices {
 
             if(classF !=0)
                 pourMoyInf85F= (double) ((nbreMoyInf85F*100d)/classF);
-            System.out.println("pourMoyInf85F "+pourMoyInf85G);
 
             if(classG !=0||classF !=0)
                 pourMoyInf85 = (double)((nbreMoyInf85F+nbreMoyInf85G)*100d/(classG+classF)) ;
-
             if(classG !=0)
                 pourMoyInf999G=(double) ((nbreMoyInf999G*100d)/classG);
-
             if(classF !=0)
                 pourMoyInf999F=(double) ((nbreMoyInf999F*100d)/classF);
 
             if(classG !=0||classF !=0)
                 pourMoyInf999 = (double)((nbreMoyInf999G + nbreMoyInf999F)*100d/(classG+classF)) ;
-
             if(classF !=0)
                 pourMoySup10F = (double) ((nbreMoySup10F*100d)/classF);
-
             if(classG !=0)
                 pourMoySup10G = (double) ((nbreMoySup10G*100d)/classG);
 
             if(classG !=0||classF !=0)
                 pourMoySup10 = (double)((nbreMoySup10G+nbreMoySup10F)*100d/(classG+classF)) ;
-
 
             resultatsListEleves.setClasse(classe);
 
@@ -307,7 +301,7 @@ public class StatistiqueClassePvServices {
     }
     public  Long getnbreMoySup10F(Long idEcole , String classe ,String libelleAnnee , String libelleTrimestre){
         try {
-            Long   nbreMoySup10F = (Long) em.createQuery("select count(o.id) from Bulletin o where o.isClassed=:isClass and  o.sexe=:sexe and o.ecoleId=:idEcole  and o.moyAn>=:moy and o.isClassed=:isClass and o.libellePeriode=:periode and o.anneeLibelle=:annee and o.libelleClasse=:classe")
+            Long   nbreMoySup10F = (Long) em.createQuery("select count(o.id) from Bulletin o where o.isClassed=:isClass and  o.sexe=:sexe and o.ecoleId=:idEcole  and o.moyGeneral>=:moy and o.isClassed=:isClass and o.libellePeriode=:periode and o.anneeLibelle=:annee and o.libelleClasse=:classe")
                 .setParameter("sexe","FEMININ")
                 .setParameter("idEcole",idEcole)
                 .setParameter("isClass","O")
@@ -324,7 +318,7 @@ public class StatistiqueClassePvServices {
     }
     public Long getnbreMoySup10G(Long idEcole , String classe ,String libelleAnnee , String libelleTrimestre){
         try {
-            Long    nbreMoySup10G = (Long) em.createQuery("select count(o.id) from Bulletin o where o.isClassed=:isClass and o.sexe=:sexe and o.ecoleId=:idEcole  and o.moyAn>=:moy and o.libellePeriode=:periode and o.anneeLibelle=:annee  and o.libelleClasse=:classe")
+            Long    nbreMoySup10G = (Long) em.createQuery("select count(o.id) from Bulletin o where o.isClassed=:isClass and o.sexe=:sexe and o.ecoleId=:idEcole  and o.moyGeneral>=:moy and o.libellePeriode=:periode and o.anneeLibelle=:annee  and o.libelleClasse=:classe")
                 .setParameter("sexe","MASCULIN")
                 .setParameter("idEcole",idEcole)
                 .setParameter("isClass","O")

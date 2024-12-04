@@ -367,7 +367,7 @@
 		</band>
 	</title>
 	<pageHeader>
-		<band height="94">
+		<band height="123">
 			<frame>
 				<reportElement x="20" y="10" width="565" height="20" uuid="7d324466-a3ff-4f97-a905-ab8cc90ecc58">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
@@ -385,7 +385,7 @@
 					<textElement textAlignment="Center">
 						<font size="13" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA["PROCES VERBAL DU CONSEIL DE LA CLASSE DE "+$P{classe}]]></textFieldExpression>
+					<textFieldExpression><![CDATA["PROCES VERBAL DU CONSEIL DE LA CLASSE DE "+$F{classe}]]></textFieldExpression>
 				</textField>
 			</frame>
 			<frame>
@@ -837,6 +837,13 @@
 					</textField>
 				</frame>
 			</frame>
+			<textField>
+				<reportElement x="19" y="100" width="150" height="20" uuid="bde9e0e5-599e-4deb-803b-f06d2712108b"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Liste de classe"]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>

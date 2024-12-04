@@ -11,6 +11,24 @@ public class ProcesVerbalStatistiqueDisciplineDto {
   Double pourMoyenSup10;
   Double pourMoyenInf10;
   Double pourMoyenInf8_5;
+  String nomProfesseur;
+  String sexeProfesseur;
+
+  public String getSexeProfesseur() {
+    return sexeProfesseur;
+  }
+
+  public void setSexeProfesseur(String sexeProfesseur) {
+    this.sexeProfesseur = sexeProfesseur;
+  }
+
+  public String getNomProfesseur() {
+    return nomProfesseur;
+  }
+
+  public void setNomProfesseur(String nomProfesseur) {
+    this.nomProfesseur = nomProfesseur;
+  }
 
   public String getClasse() {
     return classe;

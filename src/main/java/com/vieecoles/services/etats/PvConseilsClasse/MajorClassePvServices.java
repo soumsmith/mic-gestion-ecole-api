@@ -43,6 +43,7 @@ public class MajorClassePvServices {
                     procesVerbalListeClasseDto.setDateNaissance(resultatsListEleves.getAnneeNaiss());
                     procesVerbalListeClasseDto.setNom(resultatsListEleves.getNom());
                     procesVerbalListeClasseDto.setPrenoms(resultatsListEleves.getPrenom());
+                    procesVerbalListeClasseDto.setClasse(classe);
                     procesVerbalListeClasseDto.setRang(1);
                     resultatsListElevesDto.add(procesVerbalListeClasseDto) ;
                 }
@@ -53,6 +54,7 @@ public class MajorClassePvServices {
                 procesVerbalListeClasseDto.setDateNaissance(resultatsListEleves.getAnneeNaiss());
                 procesVerbalListeClasseDto.setNom(resultatsListEleves.getNom());
                 procesVerbalListeClasseDto.setPrenoms(resultatsListEleves.getPrenom());
+                procesVerbalListeClasseDto.setClasse(classe);
                 procesVerbalListeClasseDto.setRang(1);
                 resultatsListElevesDto.add(procesVerbalListeClasseDto) ;
             }

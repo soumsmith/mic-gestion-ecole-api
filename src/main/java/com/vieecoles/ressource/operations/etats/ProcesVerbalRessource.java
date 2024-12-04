@@ -169,8 +169,10 @@ public class ProcesVerbalRessource {
         mpara = parametre.findById(1L) ;
 
         ecole myEcole2= new ecole() ;
-        myEcole2 =sousceecoleService.getInffosEcoleByID(idEcole);
+      myEcole2 =ecole.findById(idEcole) ;
 
+        if(myEcole2.getEcolecode()!=null)
+        System.out.println("Libelle Ecole "+myEcole2.getEcoleclibelle());
         byte[] imagebytes = new byte[0],imagebytes2 = new byte[0],imagebytes3 = new byte[0] ,imagebytes4 = new byte[0] ;
 
          if(myEcole2.getLogoBlob()!=null)
@@ -217,7 +219,7 @@ public class ProcesVerbalRessource {
         procesVerbalStatistiqueClasseDto.add(procesVerbalStatistiqueClasseDto1);
         System.out.println("Statistique classe ok");
         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/PvConseil/Spider_PV_Conseil_classe.jrxml");
-
+        System.out.println("Rapport chargé ok");
         procesVerbalMatiereSpecifiqueDto.add(procesVerbalMatiereSpecifiqueDto1);
         detailsBull.setProcesVerbalListeClasseDto(procesVerbalListeClasseDto);
         detailsBull.setListeMajors(listMajors);
@@ -229,14 +231,26 @@ public class ProcesVerbalRessource {
 
         Map<String, Object> map = new HashMap<>();
         map.put("ecoleclibelle",myEcole2.getEcoleclibelle());
-        map.put("ecolecode",codeEcole);
-        map.put("statut",statut);
+       map.put("ecolecode",codeEcole);
+        map.put("ecole_statut",statut);
         map.put("logo",logo);
-        map.put("ecole_adresse",amoirie);
+        map.put("ecole_adresse",myEcole2.getEcole_adresse());
         map.put("amoirie",amoirie);
         map.put("classe",libelleClasse);
-        map.put("bg",bg);
+
+         /*map.put("ecoleclibelle","");
+        map.put("ecolecode","codeEcole");
+        map.put("ecole_statut","statut");
+        map.put("logo",null);
+        map.put("ecole_adresse","amoirie");
+        map.put("amoirie",null);
+        map.put("classe",libelleClasse);*/
+
+        System.out.println("Rapport chargé ok2");
+
+
         JasperPrint report = JasperFillManager.fillReport(compileReport, map, beanCollectionDataSource);
+        System.out.println("Rapport chargé ok3");
 
         //to pdf ;
         byte[] data =JasperExportManager.exportReportToPdf(report);

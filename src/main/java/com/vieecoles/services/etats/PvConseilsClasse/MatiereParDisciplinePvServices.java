@@ -3,7 +3,10 @@ package com.vieecoles.services.etats.PvConseilsClasse;
 import com.vieecoles.dto.ConseilClasseDto;
 import com.vieecoles.dto.NiveauDto2;
 import com.vieecoles.dto.ProcesVerbalStatistiqueDisciplineDto;
+import com.vieecoles.steph.entities.EcoleHasMatiere;
 import com.vieecoles.steph.entities.Matiere;
+import com.vieecoles.steph.entities.PersonnelMatiereClasse;
+import com.vieecoles.steph.services.PersonnelMatiereClasseService;
 import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
@@ -16,6 +19,8 @@ import javax.persistence.TypedQuery;
 public class MatiereParDisciplinePvServices {
     @Inject
     EntityManager em;
+    @Inject
+    PersonnelMatiereClasseService persMatClasService;
 
     public List<ProcesVerbalStatistiqueDisciplineDto> getDiscpline(Long idEcole , String libelleAnnee , String libelleTrimestre , String classe){
 
@@ -103,6 +108,16 @@ public class MatiereParDisciplinePvServices {
             resultatsListEleves.setPourMoyenInf8_5(pourMoyInf85);
             resultatsListEleves.setMoyenMatiere(moyClasse);
             resultatsListEleves.setMatiere(libelleMatiere);
+            resultatsListEleves.setClasse(classe);
+            String nomProfesseur="";
+            nomProfesseur= getNomProfesseur(idEcole,id,libelleAnnee , libelleTrimestre,classe);
+            resultatsListEleves.setNomProfesseur(nomProfesseur);
+            Long idMatiereReal= getidMatiereReal(idEcole,id,libelleAnnee , libelleTrimestre,classe);
+            Long idAnnee= getIdAnneeScolaire(idEcole,libelleAnnee,libelleTrimestre);
+            Long classeId= getIdClasse(idEcole,libelleAnnee,libelleTrimestre,classe);
+            PersonnelMatiereClasse personnel = persMatClasService.findProfesseurByMatiereAndClasse(Long.valueOf(idAnnee),Long.valueOf(classeId) ,Long.valueOf(idMatiereReal) );
+            if(personnel!=null)
+                resultatsListEleves.setSexeProfesseur(personnel.getPersonnel().getSexe());
             resultatsListElevesDto.add(resultatsListEleves) ;
 
 
@@ -137,13 +152,27 @@ public class MatiereParDisciplinePvServices {
                     .setParameter("periode", libelleTrimestre)
                     .setParameter("classe", classe)
                     .getSingleResult() ;
-
-
         } catch (NoResultException e){
             return null ;
         }
+        return  effecArray ;
+    }
 
-
+    public  Long getidMatiereReal(Long idEcole , String matiere ,String libelleAnnee , String libelleTrimestre ,String classe){
+        Long effectifClasse;
+        Long effecArray ;
+        Integer sum = 0;
+        try {
+            effecArray = (Long) em.createQuery("select distinct d.matiereRealId from DetailBulletin d,Bulletin o    where d.bulletin.id=  o.id and  o.ecoleId=:idEcole  and o.libellePeriode=:periode and o.anneeLibelle=:annee and o.libelleClasse=:classe and d.matiereCode=:matiere ")
+                .setParameter("idEcole",idEcole)
+                .setParameter("matiere",matiere)
+                .setParameter("annee", libelleAnnee)
+                .setParameter("periode", libelleTrimestre)
+                .setParameter("classe", classe)
+                .getSingleResult() ;
+        } catch (NoResultException e){
+            return null ;
+        }
         return  effecArray ;
     }
   public  Integer getEffectifParClasse(Long idEcole , String matiere ,String libelleAnnee , String libelleTrimestre ,String classe){
@@ -457,6 +486,35 @@ public class MatiereParDisciplinePvServices {
             return  moyClasseG ;
         } catch (NoResultException e){
             return 0D ;
+        }
+
+    }
+
+    public  Long  getIdAnneeScolaire(Long idEcole ,String libelleAnnee , String libelleTrimestre){
+        try {
+            Long  moyClasseG = (Long) em.createQuery("select distinct o.anneeId from Bulletin o where   o.ecoleId=:idEcole   and o.libellePeriode=:periode and o.anneeLibelle=:annee")
+                .setParameter("idEcole",idEcole)
+                .setParameter("annee", libelleAnnee)
+                .setParameter("periode", libelleTrimestre)
+                .getSingleResult();
+            return  moyClasseG ;
+        } catch (NoResultException e){
+            return 0L ;
+        }
+
+    }
+
+    public  Long  getIdClasse(Long idEcole ,String libelleAnnee , String libelleTrimestre, String classe){
+        try {
+            Long  moyClasseG = (Long) em.createQuery("select distinct o.classeId from Bulletin o where   o.ecoleId=:idEcole   and o.libellePeriode=:periode and o.anneeLibelle=:annee and o.libelleClasse=:classe")
+                .setParameter("idEcole",idEcole)
+                .setParameter("annee", libelleAnnee)
+                .setParameter("periode", libelleTrimestre)
+                .setParameter("classe", classe)
+                .getSingleResult();
+            return  moyClasseG ;
+        } catch (NoResultException e){
+            return 0L ;
         }
 
     }

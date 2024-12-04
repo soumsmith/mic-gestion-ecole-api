@@ -3,6 +3,7 @@ package com.vieecoles.services.etats.PvConseilsClasse;
 import com.vieecoles.dto.NiveauDto;
 import com.vieecoles.dto.ProcesVerbalListeClasseDto;
 import com.vieecoles.dto.eleveAffecteParClasseDto;
+import com.vieecoles.steph.entities.Classe;
 import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
@@ -27,6 +28,7 @@ public class ListeClassePvServices {
 
         List<eleveAffecteParClasseDto> resultatsListEleves= new ArrayList<>();
 
+
         resultatsListEleves = getListEleveNonAffectParClassDto(idEcole,classe,libelleAnnee , libelleTrimestre);
         int LongTableau=0 ;
         Long nbreFille;Long nbreGarcon;Long nbreTotal; Long nbreRedFille;Long nbreRedGarcon;Long nbreRedTotal;
@@ -36,7 +38,7 @@ public class ListeClassePvServices {
         List<ProcesVerbalListeClasseDto> listm=new ArrayList<>(LongTableau);
         for (int i=0; i< LongTableau;i++) {
             ProcesVerbalListeClasseDto m=new ProcesVerbalListeClasseDto();
-          m.setClasse(resultatsListEleves.get(i).getAffecte());
+          m.setClasse(classe);
           m.setProfesseurPrincipal(resultatsListEleves.get(i).getProfesseurPrincipal());
           m.setNom(resultatsListEleves.get(i).getNomEleve());
           m.setPrenoms(resultatsListEleves.get(i).getPrenomEleve());

@@ -43,6 +43,8 @@
 	<field name="pourMoyenSup10" class="java.lang.Double"/>
 	<field name="pourMoyenInf10" class="java.lang.Double"/>
 	<field name="pourMoyenInf8_5" class="java.lang.Double"/>
+	<field name="nomProfesseur" class="java.lang.String"/>
+	<field name="sexeProfesseur" class="java.lang.String"/>
 	<variable name="Compteur" class="java.lang.Integer" calculation="DistinctCount">
 		<variableExpression><![CDATA[$V{Compteur}+1]]></variableExpression>
 		<initialValueExpression><![CDATA[0]]></initialValueExpression>
@@ -375,7 +377,7 @@
 					<textElement textAlignment="Center">
 						<font size="13" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA["PROCES VERBAL DU CONSEIL DE LA CLASSE DE "+$P{classe}]]></textFieldExpression>
+					<textFieldExpression><![CDATA["PROCES VERBAL DU CONSEIL DE LA CLASSE DE "+$F{classe}]]></textFieldExpression>
 				</textField>
 			</frame>
 			<textField>
@@ -390,7 +392,7 @@
 	<columnHeader>
 		<band height="51">
 			<textField>
-				<reportElement mode="Opaque" x="19" y="21" width="91" height="30" forecolor="#FFFFFF" backcolor="#009966" uuid="1bae9b50-1a74-480a-a462-05d0a73bef8d"/>
+				<reportElement mode="Opaque" x="19" y="21" width="51" height="30" forecolor="#FFFFFF" backcolor="#009966" uuid="1bae9b50-1a74-480a-a462-05d0a73bef8d"/>
 				<box>
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -404,7 +406,7 @@
 				<textFieldExpression><![CDATA["Matière"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="155" y="21" width="85" height="15" forecolor="#FFFFFF" backcolor="#009966" uuid="64486864-5f2d-4e5b-9907-b42759e3c8a1">
+				<reportElement mode="Opaque" x="110" y="21" width="70" height="15" forecolor="#FFFFFF" backcolor="#009966" uuid="64486864-5f2d-4e5b-9907-b42759e3c8a1">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<box>
@@ -420,7 +422,7 @@
 				<textFieldExpression><![CDATA["Moy >=10"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="240" y="21" width="80" height="15" forecolor="#FFFFFF" backcolor="#009966" uuid="a082704a-469e-4954-9dd0-29fa6bb0fdf1">
+				<reportElement mode="Opaque" x="180" y="21" width="70" height="15" forecolor="#FFFFFF" backcolor="#009966" uuid="a082704a-469e-4954-9dd0-29fa6bb0fdf1">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<box>
@@ -436,7 +438,7 @@
 				<textFieldExpression><![CDATA["10 >Moy >=8,5"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="320" y="21" width="93" height="15" forecolor="#FFFFFF" backcolor="#009966" uuid="cc2804af-97e1-4342-9a08-f7ab32c76119">
+				<reportElement mode="Opaque" x="250" y="21" width="80" height="15" forecolor="#FFFFFF" backcolor="#009966" uuid="cc2804af-97e1-4342-9a08-f7ab32c76119">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<box>
@@ -452,7 +454,7 @@
 				<textFieldExpression><![CDATA["Moy < 8,5"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="448" y="21" width="132" height="30" forecolor="#FFFFFF" backcolor="#009966" uuid="8142e54d-243a-489f-b1d6-f6d33109e71c"/>
+				<reportElement mode="Opaque" x="365" y="21" width="215" height="30" forecolor="#FFFFFF" backcolor="#009966" uuid="8142e54d-243a-489f-b1d6-f6d33109e71c"/>
 				<box>
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -465,8 +467,8 @@
 				</textElement>
 				<textFieldExpression><![CDATA["Enseignant/Emargement"]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement mode="Opaque" x="155" y="36" width="45" height="15" forecolor="#FFFFFF" backcolor="#009966" uuid="937dc810-247f-4d41-949a-9cf22b56a707">
+			<textField textAdjust="ScaleFont">
+				<reportElement mode="Opaque" x="110" y="36" width="40" height="15" forecolor="#FFFFFF" backcolor="#009966" uuid="937dc810-247f-4d41-949a-9cf22b56a707">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<box>
@@ -482,7 +484,7 @@
 				<textFieldExpression><![CDATA["Nombre"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="200" y="36" width="40" height="15" forecolor="#FFFFFF" backcolor="#009966" uuid="15653a39-dba9-44ce-ba12-74c7aa6c78a5">
+				<reportElement mode="Opaque" x="150" y="36" width="30" height="15" forecolor="#FFFFFF" backcolor="#009966" uuid="15653a39-dba9-44ce-ba12-74c7aa6c78a5">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<box>
@@ -498,7 +500,7 @@
 				<textFieldExpression><![CDATA["%"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="240" y="36" width="41" height="15" forecolor="#FFFFFF" backcolor="#009966" uuid="dc05b753-8d3d-4acb-96de-863cb34ac269">
+				<reportElement mode="Opaque" x="180" y="36" width="41" height="15" forecolor="#FFFFFF" backcolor="#009966" uuid="dc05b753-8d3d-4acb-96de-863cb34ac269">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<box>
@@ -514,7 +516,7 @@
 				<textFieldExpression><![CDATA["Nombre"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="281" y="36" width="39" height="15" forecolor="#FFFFFF" backcolor="#009966" uuid="4694a41b-5f06-4ed7-9b77-6018cdc8311e">
+				<reportElement mode="Opaque" x="221" y="36" width="29" height="15" forecolor="#FFFFFF" backcolor="#009966" uuid="4694a41b-5f06-4ed7-9b77-6018cdc8311e">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<box>
@@ -530,7 +532,7 @@
 				<textFieldExpression><![CDATA["%"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="320" y="36" width="50" height="15" forecolor="#FFFFFF" backcolor="#009966" uuid="d598b073-1707-476b-9192-c543c25ae391">
+				<reportElement mode="Opaque" x="250" y="36" width="50" height="15" forecolor="#FFFFFF" backcolor="#009966" uuid="d598b073-1707-476b-9192-c543c25ae391">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<box>
@@ -546,7 +548,7 @@
 				<textFieldExpression><![CDATA["Nombre"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="370" y="36" width="43" height="15" forecolor="#FFFFFF" backcolor="#009966" uuid="7a4b8c9b-96b0-47f4-a66d-8067658964f5">
+				<reportElement mode="Opaque" x="300" y="36" width="30" height="15" forecolor="#FFFFFF" backcolor="#009966" uuid="7a4b8c9b-96b0-47f4-a66d-8067658964f5">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<box>
@@ -562,7 +564,7 @@
 				<textFieldExpression><![CDATA["%"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="413" y="21" width="35" height="30" forecolor="#FFFFFF" backcolor="#009966" uuid="8b74c435-0576-4dcc-aa94-7e52d5ce1a7f"/>
+				<reportElement mode="Opaque" x="330" y="21" width="35" height="30" forecolor="#FFFFFF" backcolor="#009966" uuid="8b74c435-0576-4dcc-aa94-7e52d5ce1a7f"/>
 				<box>
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -576,7 +578,7 @@
 				<textFieldExpression><![CDATA["Moy"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="110" y="21" width="45" height="30" forecolor="#FFFFFF" backcolor="#009966" uuid="c4244555-739e-4e2f-bdf2-12eab56ff5f2"/>
+				<reportElement mode="Opaque" x="70" y="21" width="40" height="30" forecolor="#FFFFFF" backcolor="#009966" uuid="c4244555-739e-4e2f-bdf2-12eab56ff5f2"/>
 				<box>
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
@@ -594,7 +596,7 @@
 	<detail>
 		<band height="15">
 			<textField>
-				<reportElement x="413" y="0" width="35" height="15" uuid="007e4b95-d096-4211-b5b4-e634a527231c">
+				<reportElement x="330" y="0" width="35" height="15" uuid="007e4b95-d096-4211-b5b4-e634a527231c">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<box>
@@ -610,8 +612,8 @@
 				<textFieldExpression><![CDATA[$F{moyenMatiere}]]></textFieldExpression>
 				<patternExpression><![CDATA["#.##"]]></patternExpression>
 			</textField>
-			<textField>
-				<reportElement x="19" y="0" width="91" height="15" uuid="41b88ea7-8880-4cb8-9b68-5c78c8b3dbc7">
+			<textField textAdjust="ScaleFont">
+				<reportElement x="19" y="0" width="51" height="15" uuid="41b88ea7-8880-4cb8-9b68-5c78c8b3dbc7">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<box>
@@ -627,7 +629,7 @@
 				<textFieldExpression><![CDATA[$F{matiere}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="110" y="0" width="45" height="15" uuid="bfecdeb5-f74d-40de-8abb-41f187d77537">
+				<reportElement x="70" y="0" width="40" height="15" uuid="bfecdeb5-f74d-40de-8abb-41f187d77537">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<box>
@@ -643,7 +645,7 @@
 				<textFieldExpression><![CDATA[$F{effectif}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="281" y="0" width="39" height="15" uuid="ca28d718-7def-40a0-96cd-2f4153a73ae6">
+				<reportElement x="221" y="0" width="29" height="15" uuid="ca28d718-7def-40a0-96cd-2f4153a73ae6">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<box>
@@ -660,7 +662,7 @@
 				<patternExpression><![CDATA["#.##"]]></patternExpression>
 			</textField>
 			<textField>
-				<reportElement x="200" y="0" width="40" height="15" uuid="97225298-2616-4a13-942b-7b0b31392dbd">
+				<reportElement x="150" y="0" width="30" height="15" uuid="97225298-2616-4a13-942b-7b0b31392dbd">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<box>
@@ -676,8 +678,8 @@
 				<textFieldExpression><![CDATA[$F{pourMoyenSup10}]]></textFieldExpression>
 				<patternExpression><![CDATA["#.##"]]></patternExpression>
 			</textField>
-			<textField>
-				<reportElement x="155" y="0" width="45" height="15" uuid="cc403a7b-12b0-439d-a819-83919274478f">
+			<textField textAdjust="ScaleFont">
+				<reportElement x="111" y="0" width="39" height="15" uuid="cc403a7b-12b0-439d-a819-83919274478f">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<box>
@@ -693,7 +695,7 @@
 				<textFieldExpression><![CDATA[$F{nbreMoyenSup10}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="370" y="0" width="43" height="15" uuid="03d1b9f7-8cae-42c0-bad1-8dfe5c811bf5">
+				<reportElement x="300" y="0" width="30" height="15" uuid="03d1b9f7-8cae-42c0-bad1-8dfe5c811bf5">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<box>
@@ -710,7 +712,7 @@
 				<patternExpression><![CDATA["#.##"]]></patternExpression>
 			</textField>
 			<textField>
-				<reportElement x="240" y="0" width="41" height="15" uuid="e45413f4-04d6-43f2-9bdd-115904152325">
+				<reportElement x="180" y="0" width="41" height="15" uuid="e45413f4-04d6-43f2-9bdd-115904152325">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<box>
@@ -726,7 +728,7 @@
 				<textFieldExpression><![CDATA[$F{nbreMoyenInf10}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="320" y="0" width="50" height="15" uuid="f24a1706-7133-4c82-ad20-6c0d86e9b125">
+				<reportElement x="250" y="0" width="50" height="15" uuid="f24a1706-7133-4c82-ad20-6c0d86e9b125">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<box>
@@ -741,8 +743,8 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nbreMoyenInf8_5}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="448" y="0" width="132" height="15" uuid="c5afb24a-f023-4049-8a05-854f145b73a1">
+			<textField textAdjust="ScaleFont">
+				<reportElement x="365" y="0" width="215" height="15" uuid="c5afb24a-f023-4049-8a05-854f145b73a1">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<box>
@@ -752,10 +754,10 @@
 					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{sexeProfesseur}.equals( "MASCULIN" )?"M.  "+$F{nomProfesseur}:"Mme.  "+$F{nomProfesseur}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

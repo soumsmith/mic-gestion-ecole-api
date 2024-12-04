@@ -9,6 +9,14 @@
 	<property name="net.sf.jasperreports.default.font.name" value="Sans Serif"/>
 	<parameter name="codeEcole" class="java.lang.String"/>
 	<parameter name="SUB_REPORT_DIR" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="logo" class="java.awt.Image" isForPrompting="false"/>
+	<parameter name="amoirie" class="java.awt.Image" isForPrompting="false"/>
+	<parameter name="ecole_adresse" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="ecole_telephone" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="ecolecode" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="ecole_statut" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="ecoleclibelle" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="classe" class="java.lang.String"/>
 	<queryString language="SQL">
 		<![CDATA[SELECT NOW() as DATE]]>
 	</queryString>
@@ -28,6 +36,32 @@
 				<subreportParameter name="REPORT_DATA_SOURCE">
 					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{procesVerbalListeClasseDto})]]></subreportParameterExpression>
 				</subreportParameter>
+
+				<subreportParameter name="logo">
+					<subreportParameterExpression><![CDATA[$P{logo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="amoirie">
+					<subreportParameterExpression><![CDATA[$P{amoirie}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ecole_adresse">
+					<subreportParameterExpression><![CDATA[$P{ecole_adresse}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ecole_telephone">
+					<subreportParameterExpression><![CDATA[$P{ecole_telephone}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ecolecode">
+					<subreportParameterExpression><![CDATA[$P{ecolecode}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ecole_statut">
+					<subreportParameterExpression><![CDATA[$P{ecole_statut}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ecoleclibelle">
+					<subreportParameterExpression><![CDATA[$P{ecoleclibelle}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="classe">
+					<subreportParameterExpression><![CDATA[$P{classe}]]></subreportParameterExpression>
+				</subreportParameter>
+
 				<subreportExpression><![CDATA["etats/spider/PvConseil/Liste_eleve_par_classe.jasper"]]></subreportExpression>
 			</p:subreportPart>
 		</part>
@@ -39,6 +73,30 @@
 
 				<subreportParameter name="REPORT_DATA_SOURCE">
 					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{procesVerbalStatistiqueClasseDto})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="logo">
+					<subreportParameterExpression><![CDATA[$P{logo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="amoirie">
+					<subreportParameterExpression><![CDATA[$P{amoirie}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ecole_adresse">
+					<subreportParameterExpression><![CDATA[$P{ecole_adresse}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ecole_telephone">
+					<subreportParameterExpression><![CDATA[$P{ecole_telephone}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ecolecode">
+					<subreportParameterExpression><![CDATA[$P{ecolecode}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ecole_statut">
+					<subreportParameterExpression><![CDATA[$P{ecole_statut}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ecoleclibelle">
+					<subreportParameterExpression><![CDATA[$P{ecoleclibelle}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="classe">
+					<subreportParameterExpression><![CDATA[$P{classe}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportExpression><![CDATA["etats/spider/PvConseil/StatitistiqueClasse.jasper"]]></subreportExpression>
 			</p:subreportPart>
@@ -52,6 +110,30 @@
 				<subreportParameter name="REPORT_DATA_SOURCE">
 					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{procesVerbalStatistiqueDisciplineDto})]]></subreportParameterExpression>
 				</subreportParameter>
+				<subreportParameter name="logo">
+					<subreportParameterExpression><![CDATA[$P{logo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="amoirie">
+					<subreportParameterExpression><![CDATA[$P{amoirie}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ecole_adresse">
+					<subreportParameterExpression><![CDATA[$P{ecole_adresse}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ecole_telephone">
+					<subreportParameterExpression><![CDATA[$P{ecole_telephone}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ecolecode">
+					<subreportParameterExpression><![CDATA[$P{ecolecode}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ecole_statut">
+					<subreportParameterExpression><![CDATA[$P{ecole_statut}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ecoleclibelle">
+					<subreportParameterExpression><![CDATA[$P{ecoleclibelle}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="classe">
+					<subreportParameterExpression><![CDATA[$P{classe}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportExpression><![CDATA["etats/spider/PvConseil/StatitistiqueDiscipline.jasper"]]></subreportExpression>
 			</p:subreportPart>
 		</part>
@@ -63,6 +145,30 @@
 
 				<subreportParameter name="REPORT_DATA_SOURCE">
 					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{listeMajors})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="logo">
+					<subreportParameterExpression><![CDATA[$P{logo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="amoirie">
+					<subreportParameterExpression><![CDATA[$P{amoirie}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ecole_adresse">
+					<subreportParameterExpression><![CDATA[$P{ecole_adresse}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ecole_telephone">
+					<subreportParameterExpression><![CDATA[$P{ecole_telephone}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ecolecode">
+					<subreportParameterExpression><![CDATA[$P{ecolecode}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ecole_statut">
+					<subreportParameterExpression><![CDATA[$P{ecole_statut}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ecoleclibelle">
+					<subreportParameterExpression><![CDATA[$P{ecoleclibelle}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="classe">
+					<subreportParameterExpression><![CDATA[$P{classe}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportExpression><![CDATA["etats/spider/PvConseil/Liste_major.jasper"]]></subreportExpression>
 			</p:subreportPart>
@@ -77,10 +183,32 @@
 				<subreportParameter name="REPORT_DATA_SOURCE">
 					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{procesVerbalMatiereSpecifiqueDto})]]></subreportParameterExpression>
 				</subreportParameter>
+				<subreportParameter name="logo">
+					<subreportParameterExpression><![CDATA[$P{logo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="amoirie">
+					<subreportParameterExpression><![CDATA[$P{amoirie}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ecole_adresse">
+					<subreportParameterExpression><![CDATA[$P{ecole_adresse}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ecole_telephone">
+					<subreportParameterExpression><![CDATA[$P{ecole_telephone}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ecolecode">
+					<subreportParameterExpression><![CDATA[$P{ecolecode}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ecole_statut">
+					<subreportParameterExpression><![CDATA[$P{ecole_statut}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ecoleclibelle">
+					<subreportParameterExpression><![CDATA[$P{ecoleclibelle}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="classe">
+					<subreportParameterExpression><![CDATA[$P{classe}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportExpression><![CDATA["etats/spider/PvConseil/MatiereSpecifique.jasper"]]></subreportExpression>
 			</p:subreportPart>
 		</part>
-
-
 	</detail>
 </jasperReport>
