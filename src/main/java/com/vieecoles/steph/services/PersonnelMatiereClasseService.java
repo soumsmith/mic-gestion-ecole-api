@@ -182,6 +182,8 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 			logger.warning("Erreur [List<PersonnelMatiereClasse> findByProfesseurAndClasseWhereCoefDefine] ::: "+e.getMessage());
 		}
 		if(personnelMatiereClasseList != null) {
+			System.out.println("PersonnelMatiereClasseService.findByProfesseurAndClasseWhereCoefDefine()");
+			System.out.println(personnelMatiereClasseList.size());
 			List<ClasseMatiere> matiereCoefDefineList = cmService.getByBrancheViaClasse(classe);
 			if(matiereCoefDefineList != null && matiereCoefDefineList.size()>0)
 				pmcListTmp = new ArrayList<PersonnelMatiereClasse>();
