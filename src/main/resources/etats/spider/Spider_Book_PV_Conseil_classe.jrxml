@@ -26,7 +26,8 @@
 				<subreportParameter name="REPORT_DATA_SOURCE">
 					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{matriceClasseDto})]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportExpression><![CDATA["etats/spider/matriceClassePv.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["etats/spider/matriceClassePvNew.jasper"]]></subreportExpression>
+<!--				<subreportExpression><![CDATA["etats/spider/matriceClassePv.jasper"]]></subreportExpression>-->
 			</p:subreportPart>
 		</part>
 		<part uuid="968947e9-d627-441c-a302-1bd9eaebff99">

@@ -5,6 +5,8 @@ import com.vieecoles.dto.eleveAffecteParClasseDto;
 import com.vieecoles.services.etats.EleveAffecteParClasseServices;
 import com.vieecoles.services.etats.appachePoi.resultatsPoiServices;
 import com.vieecoles.services.etats.resultatsRecapServices;
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import org.apache.poi.xwpf.usermodel.*;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -16,6 +18,8 @@ import java.util.List;
 
 @ApplicationScoped
 public class WordTempProcessor {
+    @Inject
+    EntityManager em;
     @Inject
     resultatsPoiServices resultatsServices ;
     @Inject
@@ -29,7 +33,7 @@ public class WordTempProcessor {
     @Inject
     EleveAffecteParClasseServices eleveAffecteParClasseServices ;
     @Inject
-    WordTempListMajorProcessor  wordTempListMajorProcessor ;
+    WordTempListMajorNewProcessor  wordTempListMajorProcessor ;
     @Inject
     WordTempListTransfertProcessor  wordTempListTransfertProcessor ;
     @Inject
@@ -52,10 +56,22 @@ public class WordTempProcessor {
     WordTempStatistiqueResultatProcessor wordTempStatistiqueResultatProcessor ;
     @Inject
     WordTempStatistiqueAdmiRedoublantProcessor wordTempStatistiqueAdmiRedoublantProcessor;
+    @Inject
+    WordTempStatistiqueNationaliteProcessor wordTempStatistiqueNationaliteProcessor;
+    @Inject
+  WordTempStatistiqueTransfertProcessor wordTempStatistiqueTransfertProcessor;
+    @Inject
+  WordTempStatistiqueAgeProcessor wordTempStatistiqueAgeProcessor;
+    @Inject
+  WordTempStatistiqueBoursierProcessor wordTempStatistiqueBoursierProcessor;
+    @Inject
+  WordTempStatistiqueGenreProcessor wordTempStatistiqueGenreProcessor;
+    @Inject
+  WordTempListAffecteNonAffectesProcessor wordTempListAffecteNonAffectesProcessor;
 
     public  byte[] generateWordFile(Long idEcole,String libelleAnnee ,String  libelleTrimetre, ByteArrayInputStream  fis) throws Exception {
 
-
+ Long anneeId=getIdAnnee(idEcole,libelleAnnee,libelleTrimetre);
         List<eleveAffecteParClasseDto>  elevAffectes = new ArrayList<>() ;
         System.out.println("classeNiveauDtoList entree");
         elevAffectes= eleveAffecteParClasseServices.eleveAffecteParClasse(idEcole ,libelleAnnee,libelleTrimetre) ;
@@ -70,28 +86,36 @@ public class WordTempProcessor {
 
         XWPFDocument document = new XWPFDocument(fis);
         XWPFTable table = document.getTableArray(20);
-/*
-        System.out.println("Identité ok");
-        wordTempResultaAffProcessor.getResultatAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
-        System.out.println("ResultaAff ok");
-        wordTempRecapResultatProcessor.getRecapResultatAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
-        System.out.println("ResultaAff ok");
-        wordTempResultaNonAffProcessor.getResultatNonAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
-        System.out.println("ResultaNonAff ok");
-        wordTempListMajorProcessor.getListeMajorClasse(document,idEcole ,libelleAnnee,libelleTrimetre);
-        System.out.println("ListMajor ok");
-        wordTempRecapNonAffResultatProcessor.getRecapResultatANonffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
-        System.out.println("ListMajor ok");*/
-        wordTempIdentiteProcessor.getIdentiteProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
-        //wordTempRecapAffNonAffResultatProcessor.getRecapResultatAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
-       // wordTempStatistiqueResultatProcessor.getResultatAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
-       // wordTempStatistiqueAdmiRedoublantProcessor.getStatistiqueAdminRedoublantProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
-         wordTempListAffectesProcessor.getEleveAffecteParClasse(document,idEcole ,libelleAnnee,libelleTrimetre);
-        /* wordTempListNonAffectesProcessor.getEleveNosAffecteParClasse(document,idEcole ,libelleAnnee,libelleTrimetre);
-        wordTempListTransfertProcessor.getListTransfert(document,idEcole) ;
-        WordTempRepartitionAnneeNaissProcessor.getListRepartitionParAnnee(document,idEcole ,libelleAnnee,libelleTrimetre);
-        wordTempListBoursiersProcessor.getListeBoursierClasse(document,idEcole ,libelleAnnee,libelleTrimetre);
-        wordTempEffectifApprocheNiveauGenre.getListeApprocheParNiveau(document,idEcole ,libelleAnnee,libelleTrimetre);*/
+
+
+      wordTempRecapAffNonAffResultatProcessor.getRecapResultatAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
+        System.out.println("Statistique Ok");
+        wordTempStatistiqueResultatProcessor.getResultatAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
+      System.out.println("Details Statistique Ok");
+        wordTempStatistiqueAdmiRedoublantProcessor.getStatistiqueAdminRedoublantProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
+      System.out.println("Redoublant Ok");
+        wordTempListAffectesProcessor.getEleveAffecteParClasse(document,idEcole ,libelleAnnee,libelleTrimetre);
+      System.out.println("Liste affecte Ok");
+        wordTempListNonAffectesProcessor.getEleveNosAffecteParClasse(document,idEcole ,libelleAnnee,libelleTrimetre);
+      System.out.println("Liste Non affecte Ok");
+      wordTempListAffecteNonAffectesProcessor.getEleveNosAffecteParClasse(document,idEcole ,libelleAnnee,libelleTrimetre);
+      System.out.println("Liste affecte et non affecté Ok");
+      wordTempListMajorProcessor.getMajorParNiveau(document,idEcole ,libelleAnnee,libelleTrimetre);
+      System.out.println("Liste Major Ok");
+      wordTempListTransfertProcessor.getListTransfert(document,idEcole) ;
+      System.out.println("Liste Transfert1 Ok");
+      wordTempStatistiqueTransfertProcessor.getResultatAffProcessor(document,idEcole,libelleAnnee,libelleTrimetre,anneeId);
+      System.out.println("Liste Transfert2 Ok");
+       wordTempStatistiqueNationaliteProcessor.getResultatAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre,anneeId);
+      System.out.println("Statistique  Nationalité Ok");
+      wordTempStatistiqueAgeProcessor.getResultatAffProcessor(document,idEcole,libelleAnnee,libelleTrimetre,anneeId);
+      System.out.println("Statistique Age Ok");
+      wordTempStatistiqueBoursierProcessor.getResultatAffProcessor(document,idEcole,libelleAnnee,libelleTrimetre,anneeId);
+      System.out.println("Statistique Boursier Ok");
+
+      wordTempStatistiqueGenreProcessor.getResultatAffProcessor(document,idEcole,libelleAnnee,libelleTrimetre,anneeId);
+
+      System.out.println("Statistique Genre Ok");
         // Sauvegarder le document modifié dans un tableau de bytes
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         document.write(outputStream);
@@ -99,6 +123,21 @@ public class WordTempProcessor {
         fis.close();
 
         return outputStream.toByteArray();
+    }
+
+    public  Long getIdAnnee(Long idEcole ,String libelleAnnee,String periode){
+        try {
+            Long   anneeID = (Long) em.createQuery("select distinct b.anneeId  from Bulletin b  where   b.anneeLibelle=:libelleAnnee " +
+                    " and b.libellePeriode=:periode and b.ecoleId=:idEcole ")
+                .setParameter("periode",periode)
+                .setParameter("libelleAnnee", libelleAnnee)
+                .setParameter("idEcole", idEcole)
+                .getSingleResult();
+            return  anneeID ;
+        } catch (NoResultException e){
+            return null ;
+        }
+
     }
 
 }

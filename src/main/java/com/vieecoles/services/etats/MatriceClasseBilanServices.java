@@ -30,10 +30,10 @@ public class MatriceClasseBilanServices {
 
         classe1= Classe.findById(classe);
 
-        br= getLibelleMBranche(classe1.getLibelle(),idEcole) ;
+      /*br= getLibelleMBranche(classe1.getLibelle(),idEcole) ;
         String myBranch = null ;
         myBranch = String.valueOf(Classe.find("select distinct m.branche.libelle from Classe m where m.libelle = ?1 and m.ecole.id = ?2",classe1.getLibelle() ,idEcole).firstResult());
-
+*/
         List<NiveauDto> matriculeList = new ArrayList<>() ;
         TypedQuery<NiveauDto> q = em.createQuery( "SELECT new com.vieecoles.dto.NiveauDto(b.matricule) from Bulletin b " +
                 " where b.ecoleId =:idEcole and b.libellePeriode=:periode and b.anneeLibelle=:annee and b.classeId =:classe " , NiveauDto.class);

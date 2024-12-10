@@ -964,7 +964,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 							<textElement textAlignment="Left">
 								<font fontName="SansSerif" size="8"/>
 							</textElement>
-							<textFieldExpression><![CDATA["Année Scolaire : 2023 -2024"]]></textFieldExpression>
+							<textFieldExpression><![CDATA["Année Scolaire : " + $F{annee_libelle}.replace("Année ", "")]]></textFieldExpression>
 						</textField>
 						<textField>
 							<reportElement x="0" y="0" width="110" height="14" uuid="3db65ae0-deba-4e05-839a-d2c6bde46325">

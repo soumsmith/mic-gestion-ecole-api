@@ -5,6 +5,8 @@ import com.vieecoles.dto.eleveAffecteParClasseDto;
 import com.vieecoles.services.etats.EleveAffecteParClasseServices;
 import com.vieecoles.services.etats.appachePoi.resultatsPoiServices;
 import com.vieecoles.services.etats.resultatsRecapServices;
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import org.apache.poi.xwpf.usermodel.*;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -16,6 +18,8 @@ import java.util.List;
 
 @ApplicationScoped
 public class WordTempProcessor {
+  @Inject
+  EntityManager em;
     @Inject
     resultatsPoiServices resultatsServices ;
     @Inject
@@ -49,9 +53,11 @@ public class WordTempProcessor {
     WordTempRecapAffNonAffResultatProcessor wordTempRecapAffNonAffResultatProcessor ;
     @Inject
     WordTempListNonAffectesProcessor wordTempListNonAffectesProcessor;
+    @Inject
+  WordTempStatistiqueLangueVivanteProcessor wordTempStatistiqueLangueVivanteProcessor ;
 
     public  byte[] generateWordFile(Long idEcole,String libelleAnnee ,String  libelleTrimetre, ByteArrayInputStream  fis) throws Exception {
-
+      Long anneeId=getIdAnnee(idEcole,libelleAnnee,libelleTrimetre);
 
         List<eleveAffecteParClasseDto>  elevAffectes = new ArrayList<>() ;
         System.out.println("classeNiveauDtoList entree");
@@ -68,10 +74,8 @@ public class WordTempProcessor {
         XWPFDocument document = new XWPFDocument(fis);
         XWPFTable table = document.getTableArray(20);
 
-      //  wordTempRecapResultatProcessor.recapResultatAffecte(recapResulAff,table);
-     // wordTempIdentiteProcessor.getIdentiteProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
-      //  System.out.println("Identité ok");
-        wordTempResultaAffProcessor.getResultatAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
+
+       wordTempResultaAffProcessor.getResultatAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
         System.out.println("ResultaAff ok");
        wordTempRecapResultatProcessor.getRecapResultatAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
         System.out.println("RecapResultaAff ok");
@@ -95,6 +99,7 @@ public class WordTempProcessor {
         System.out.println("List Boursier  ok");
         wordTempEffectifApprocheNiveauGenre.getListeApprocheParNiveau(document,idEcole ,libelleAnnee,libelleTrimetre);
         System.out.println("List Approche Niveau Genre ok");
+      wordTempStatistiqueLangueVivanteProcessor.getResultatAffProcessor(document,idEcole,libelleAnnee,libelleTrimetre,anneeId);
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         document.write(outputStream);
         document.close();
@@ -102,5 +107,19 @@ public class WordTempProcessor {
 
         return outputStream.toByteArray();
     }
+  public  Long getIdAnnee(Long idEcole ,String libelleAnnee,String periode){
+    try {
+      Long   anneeID = (Long) em.createQuery("select distinct b.anneeId  from Bulletin b  where   b.anneeLibelle=:libelleAnnee " +
+              " and b.libellePeriode=:periode and b.ecoleId=:idEcole ")
+          .setParameter("periode",periode)
+          .setParameter("libelleAnnee", libelleAnnee)
+          .setParameter("idEcole", idEcole)
+          .getSingleResult();
+      return  anneeID ;
+    } catch (NoResultException e){
+      return null ;
+    }
+
+  }
 
 }

@@ -376,7 +376,7 @@ public class spiderRessource {
 
 
         } else if (!libelleTrimetre.equals("Troisième Trimestre") && (modelDrena.equals("dren3"))) {
-            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Spider_Book.jrxml");
+         /*   myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Spider_Book.jrxml");
             identiteEtatDto= identiteEtatService.getIdentiteDto(idEcole) ;
             resultatsElevesAffecteDto= resultatsServices.CalculResultatsEleveAffecte(idEcole,libelleAnnee,libelleTrimetre) ;
             System.out.println("FIN ResultatsEleveAffecte ");
@@ -427,8 +427,9 @@ public class spiderRessource {
             detailsBull.setBoursierDto(boursierDto);
             detailsBull.setEffApprocheNiveauGenreDto(effApprocheNiveauGenreDto);
             detailsBull.setEffectifElevLangueVivante2Dto(effectifElevLangueVivante2Dto);
-            detailsBull.setEtatNominatifEnseignatDto(etatNominatifEnseignatDto);
-
+            detailsBull.setEtatNominatifEnseignatDto(etatNominatifEnseignatDto);*/
+            fis= getFileInputStreamFromResource(
+                "etats/apochePoi/DRENA3/RAPPORT_TRIMESTRIEL.docx");
 
         }
         else if (!libelleTrimetre.equals("Troisième Trimestre") && (modelDrena.equals("Yamoussoukro"))) {

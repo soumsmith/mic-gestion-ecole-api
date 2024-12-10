@@ -51,7 +51,7 @@ public class TransfertsPoiServices {
             TypedQuery<TransfertsDto> q= em.createQuery("select new com.vieecoles.dto.TransfertsDto(o.nom,o.prenoms,o.libelleClasse,o.redoublant,o.dateNaissance,o.redoublant,o.numDecisionAffecte,o.ecoleOrigine,o.niveau,o.matricule) from Bulletin o where  o.ecoleId =:idEcole and  o.niveau=:niveau and o.transfert=:transfert ", TransfertsDto.class);
             classeNiveauDtoList = q.setParameter("idEcole",idEcole)
                                   .setParameter("niveau",niveau)
-                                   .setParameter("transfert","O")
+                                   .setParameter("transfert",true)
                                   .getResultList() ;
             return classeNiveauDtoList ;
         } catch (NoResultException e){

@@ -90,7 +90,7 @@ public class Inscription extends PanacheEntityBase {
 	@Column(name = "inscriptions_ecole_origine")
 	private String ecoleOrigine;
 	@Column(name = "transfert")
-	private String transfert;
+	private Boolean transfert;
 
 	@Column(name = "reaffecte")
 	private Boolean reaffecte;
@@ -107,7 +107,7 @@ public class Inscription extends PanacheEntityBase {
 
 	@Column(name = "etranger_non_africain")
 	private Boolean etranger_non_africain;
-	
+
 	@Column(name = "cheminphoto")
 	private String urlPhoto;
 

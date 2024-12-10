@@ -7,11 +7,12 @@ public class spiderPvDto {
     private List<matriceClasseDto> matriceClasseDto ;
     private List<matiereMoyenneBilanDto> matiereMoyenneBilanDto ;
 
-    public List<com.vieecoles.dto.matriceClasseDto> getMatriceClasseDto() {
+    public List<matriceClasseDto> getMatriceClasseDto() {
         return matriceClasseDto;
     }
 
-    public void setMatriceClasseDto(List<com.vieecoles.dto.matriceClasseDto> matriceClasseDto) {
+    public void setMatriceClasseDto(
+        List<matriceClasseDto> matriceClasseDto) {
         this.matriceClasseDto = matriceClasseDto;
     }
 

@@ -5,6 +5,15 @@ public class matiereMoyenneDto {
     private Double moyMatiere ;
     private String matricule ;
     private Integer numOrdre ;
+    private String isClass;
+
+    public String getIsClass() {
+        return isClass;
+    }
+
+    public void setIsClass(String isClass) {
+        this.isClass = isClass;
+    }
 
     public Integer getNumOrdre() {
         return numOrdre;

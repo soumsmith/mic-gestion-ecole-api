@@ -22,7 +22,6 @@ public class MajorParClasseNiveauAnnuelleServices {
         TypedQuery<ClasseNiveauDto> q = em.createQuery( "SELECT new com.vieecoles.dto.ClasseNiveauDto(b.libelleClasse ,b.niveau) from Bulletin b  where b.ecoleId =:idEcole and b.affecte=:affecte and b.libellePeriode=:periode and b.anneeLibelle=:annee " +
                 "group by b.libelleClasse ,b.niveau ", ClasseNiveauDto.class);
         classeNiveauDtoList = q.setParameter("idEcole", idEcole)
-                          .setParameter("affecte", "AFFECTE")
                             .setParameter("annee", libelleAnnee)
                             .setParameter("periode", libelleTrimestre)
                            . getResultList() ;

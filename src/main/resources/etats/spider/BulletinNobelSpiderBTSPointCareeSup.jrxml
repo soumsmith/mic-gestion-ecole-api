@@ -878,7 +878,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<textElement textAlignment="Center">
 									<font isBold="true"/>
 								</textElement>
-								<textFieldExpression><![CDATA["BULLETIN DE NOTES DU "+$F{libelle_periode}.toUpperCase() +"\n"+" ANNEE ACADEMIQUE 2023 2024 "]]></textFieldExpression>
+								<textFieldExpression><![CDATA["BULLETIN DE NOTES DU "+$F{libelle_periode}.toUpperCase() +"\n"+" ANNEE ACADEMIQUE " + $F{annee_libelle}.replace("Année ", "")]]></textFieldExpression>
 							</textField>
 						</frame>
 					</frame>

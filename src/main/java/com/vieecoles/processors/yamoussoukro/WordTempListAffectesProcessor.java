@@ -66,7 +66,8 @@ public class WordTempListAffectesProcessor {
             // Créer un nouveau paragraphe avant d'insérer le tableau
             XWPFParagraph newParagraph = document.insertNewParagraph(paragraphs.get(indexToInsert).getCTP().newCursor());
             XWPFRun run = newParagraph.createRun();
-            run.setText(classeList.get(k).getNiveau()+" \t\tProfesseur Principal:\t\tEducateur:");
+            if(!elevAffectes.isEmpty())
+            run.setText(classeList.get(k).getNiveau()+" Professeur Principal: "+elevAffectes.get(0).getProfesseurPrincipal() +" Educateur: "+elevAffectes.get(0).getNomEducateur());
             run.setBold(true);  // Mettre le texte en gras
             newParagraph.setAlignment(ParagraphAlignment.LEFT);
 
@@ -96,7 +97,7 @@ public class WordTempListAffectesProcessor {
                 row.getCell(1).setText(eleve.getMatricule());
                 row.getCell(2).setText(eleve.getNomEleve()+" "+eleve.getPrenomEleve());
                 row.getCell(3).setText(eleve.getSexe());
-                row.getCell(4).setText("");
+                row.getCell(4).setText(eleve.getAnneeNaissance());
                 row.getCell(5).setText(eleve.getNationnalite());
                 row.getCell(6).setText(eleve.getRedoublan());
                 row.getCell(7).setText(eleve.getAffecte());

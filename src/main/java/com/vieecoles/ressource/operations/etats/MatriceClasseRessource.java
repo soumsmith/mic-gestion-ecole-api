@@ -7,12 +7,22 @@ import com.vieecoles.services.etats.MatriceClasseServices;
 import com.vieecoles.steph.entities.Classe;
 import com.vieecoles.steph.entities.ClasseMatiere;
 import com.vieecoles.steph.entities.Matiere;
+import java.io.IOException;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRXlsExporter;
 import net.sf.jasperreports.engine.export.ooxml.JRDocxExporter;
 import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.DataFormat;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -219,102 +229,25 @@ public class MatriceClasseRessource {
         Double pourSupegal10F = 0d, pourInf8_5F = 0d, pourSup8_5F = 0d, pourSupegal10G = 0d , pourInf8_5G = 0d, pourSup8_5G = 0d ;
         Long clasFille =0L ,clasgarcon =0L ;
 
-
-        InputStream myInpuStream ;
-        /*myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/BulletinBean.jrxml");*/
-
-        SpiderMatriceClasseDto detailsBull= new SpiderMatriceClasseDto() ;
-
-        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/matriceClasse.jrxml");
         List<matriceClasseDto> detailsBull1= new ArrayList<>() ;
-        List<matiereMoyenneBilanDto> detailsBull2= new ArrayList<>() ;
-        try {
+        detailsBull1=   matriceClasseServices.getInfosMatriceClasse(idEcole ,libelleAnnee ,periode ,anneeId, classe) ;
 
-/*
-            detailsBull2=  matriceBilanClasseServices.getInfosBilanMatriceClasse(idEcole ,libelleAnnee ,periode ,anneeId, classe) ;
+        ByteArrayOutputStream excelOutputStream = new ByteArrayOutputStream();
 
-            detailsBull1=   matriceClasseServices.getInfosMatriceClasse(idEcole ,libelleAnnee ,periode ,anneeId, classe) ;*/
+        createExcelDocument(excelOutputStream,detailsBull1);
 
-            clasFille = getclassF(idEcole ,classe,libelleAnnee,periode) ;
-            clasgarcon = getclassG(idEcole ,classe,libelleAnnee,periode) ;
-            nombreSupegal10F = getnbreMoySupEgal10F(idEcole,classe,libelleAnnee,periode);
-            nombreSupegal10G = getnbreMoySupEgal10G(idEcole,classe,libelleAnnee,periode) ;
-            nombreInf8_5F = getnbreMoyInf8_5F(idEcole,classe,libelleAnnee,periode) ;
-            nombreInf8_5G =getnbreMoyInf8_5G(idEcole,classe,libelleAnnee,periode) ;
+        // Convertir le contenu en tableau d'octets
+        byte[] excelFile = excelOutputStream.toByteArray();
 
-            nombreSup8_5F =getnbreMoyInf999F(idEcole,classe,libelleAnnee,periode) ;
-            nombreSup8_5G =getnbreMoyInf999G(idEcole,classe,libelleAnnee,periode) ;
+        // Préparer les en-têtes pour la réponse
+        HttpHeaders headers = new HttpHeaders();
+        headers.set(HttpHeaders.CONTENT_DISPOSITION, "inline;filename=MATRICE DE CLASSE.xlsx");
 
-            if(clasFille !=0)
-                pourSupegal10F = (double) ((nombreSupegal10F*100d)/clasFille);
-            if(clasgarcon !=0)
-                pourSupegal10G = (double) ((nombreSupegal10G*100d)/clasgarcon);
-
-            if(clasgarcon !=0)
-                pourInf8_5G = (double) ((nombreInf8_5G*100d)/clasgarcon);
-
-            if(clasFille !=0)
-                pourInf8_5F = (double) ((nombreInf8_5F*100d)/clasFille);
-
-            if(clasgarcon !=0)
-                pourSup8_5G = (double) ((nombreSup8_5G*100d)/clasgarcon);
-
-            if(clasFille !=0)
-                pourSup8_5F = (double) ((nombreSup8_5F*100d)/clasFille);
-
-
-        } catch (RuntimeException e){
-            e.printStackTrace ();
-        }
-
-
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecoleviedbv2", USER, PASS);
-        JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
-        Classe myClasse = Classe.findById(classe);
-        Map<String, Object> map = new HashMap<>();
-         map.put("nombreSupegal10F", nombreSupegal10F);
-        map.put("nombreSupegal10G", nombreSupegal10G);
-        map.put("nombreInf8_5F", nombreInf8_5F);
-        map.put("nombreInf8_5G", nombreInf8_5G);
-        map.put("nombreInf8_5F", nombreInf8_5F);
-        map.put("nombreInf8_5G", nombreInf8_5G);
-        map.put("pourSupegal10F", pourSupegal10F);
-        map.put("pourSupegal10G", pourSupegal10G);
-        map.put("pourInf8_5G", pourInf8_5G);
-        map.put("pourInf8_5F", pourInf8_5F);
-        map.put("pourSup8_5G", pourSup8_5G);
-        map.put("pourSup8_5F", pourSup8_5F);
-        map.put("idEcole", idEcole);
-        map.put("annee", libelleAnnee);
-        map.put("periode", periode);
-        map.put("classe", myClasse.getLibelle());
-        // map.put("title", type);
-        try {
-            JasperPrint report = JasperFillManager.fillReport(compileReport, map, connection);
-
-        } catch (RuntimeException e){
-            e.printStackTrace ();
-        }
-        JasperPrint report = JasperFillManager.fillReport(compileReport, map, connection);
-
-        //*********************************
-        /*JRDocxExporter exporter = new JRDocxExporter();
-        exporter.setExporterInput(new SimpleExporterInput(report));
-        // File exportReportFile = new File("profils" + ".docx");
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(baos));
-        exporter.exportReport();
-        byte[] data = baos.toByteArray() ;
-        HttpHeaders headers= new HttpHeaders();
-        headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=matrice trimestrielle.docx");*/
-        //*********************************
-
-        byte[] data =JasperExportManager.exportReportToPdf(report);
-        HttpHeaders headers= new HttpHeaders();
-        headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=matrice trimestrielle.pdf");
-
-
-        return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.MULTIPART_FORM_DATA).body(data);
+        // Retourner la réponse avec le fichier Excel
+        return ResponseEntity.ok()
+            .headers(headers)
+            .contentType(org.springframework.http.MediaType.APPLICATION_OCTET_STREAM)
+            .body(excelFile);
     }
 
 
@@ -499,6 +432,133 @@ public class MatriceClasseRessource {
         } catch (NoResultException e){
             return 0L ;
         }
+
+    }
+    private void createExcelDocument(ByteArrayOutputStream outputStream,List<matriceClasseDto> detailsBull1) throws
+        IOException {
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("Moyennes des élèves");
+
+// Style des cellules pour l'en-tête (facultatif)
+        CellStyle headerStyle = workbook.createCellStyle();
+        Font font = workbook.createFont();
+        font.setBold(true);
+        headerStyle.setFont(font);
+
+// Récupération unique des libellés des matières
+        Set<String> libellesMatieres = new LinkedHashSet<>();
+        for (matriceClasseDto eleve : detailsBull1) {
+            for (matiereMoyenneDto matiereMoyenne : eleve.getMatiereMoyenneDto()) {
+                libellesMatieres.add(matiereMoyenne.getLibelleMatiere());
+            }
+        }
+
+// Création de l'en-tête
+        Row headerRow = sheet.createRow(0);
+        headerRow.createCell(0).setCellValue("Nom");
+        headerRow.createCell(1).setCellValue("Prénoms");
+        headerRow.createCell(2).setCellValue("Matricule");
+
+        int columnIndex = 3;
+        for (String libelleMatiere : libellesMatieres) {
+            Cell cell = headerRow.createCell(columnIndex);
+            cell.setCellValue(libelleMatiere);
+            cell.setCellStyle(headerStyle);
+            columnIndex++;
+        }
+
+        headerRow.createCell(columnIndex).setCellValue("Bilan");
+        headerRow.createCell(columnIndex + 1).setCellValue("Rang");
+        headerRow.createCell(columnIndex + 2).setCellValue("Appréciation");
+        headerRow.createCell(columnIndex + 3).setCellValue("Signature");
+
+// Ajout des données des élèves
+        Map<String, Double> totauxMatieres = new HashMap<>();
+        Map<String, Integer> comptesMatieres = new HashMap<>();
+        int rowIndex = 1;
+        for (matriceClasseDto eleve : detailsBull1) {
+            Row row = sheet.createRow(rowIndex);
+
+            // Ajout des informations générales de l'élève
+            row.createCell(0).setCellValue(eleve.getNom());
+            row.createCell(1).setCellValue(eleve.getPrenoms());
+            row.createCell(2).setCellValue(eleve.getMatricule());
+
+            // Ajout des moyennes pour chaque matière
+            Map<String, Double> moyennesParMatiere = new HashMap<>();
+            for (matiereMoyenneDto matiereMoyenne : eleve.getMatiereMoyenneDto()) {
+                moyennesParMatiere.put(matiereMoyenne.getLibelleMatiere(), matiereMoyenne.getMoyMatiere());
+            }
+
+            columnIndex = 3;
+            for (String libelleMatiere : libellesMatieres) {
+                Double moyenne = moyennesParMatiere.get(libelleMatiere);
+                if (moyenne >=0) {
+                    row.createCell(columnIndex).setCellValue(moyenne);
+                    // Ajouter au total et incrémenter le compteur
+                    totauxMatieres.put(libelleMatiere, totauxMatieres.getOrDefault(libelleMatiere, 0.0) + moyenne);
+                    comptesMatieres.put(libelleMatiere, comptesMatieres.getOrDefault(libelleMatiere, 0) + 1);
+                } else if(moyenne==-1){
+                    row.createCell(columnIndex).setCellValue("NC");
+                }
+                else {
+                    row.createCell(columnIndex).setCellValue(""); // Cellule vide si aucune moyenne
+                }
+                columnIndex++;
+            }
+
+
+
+
+
+            // Moyenne générale, rang, et appréciation
+            row.createCell(columnIndex).setCellValue(eleve.getMoyenTrimes());
+            row.createCell(columnIndex + 1).setCellValue(eleve.getRang());
+            row.createCell(columnIndex + 2).setCellValue(eleve.getAppreciation());
+            row.createCell(columnIndex + 3).setCellValue("");
+
+            rowIndex++;
+        }
+
+        // Création du style pour les cellules avec deux chiffres après la virgule
+        CellStyle numericStyle = workbook.createCellStyle();
+        DataFormat dataFormat = workbook.createDataFormat();
+        numericStyle.setDataFormat(dataFormat.getFormat("0.00"));
+
+        // Ajout de la ligne Moyenne Générale
+        Row moyenneRow = sheet.createRow(rowIndex);
+        Cell moyenneCell = moyenneRow.createCell(0);
+        moyenneCell.setCellValue("Moyenne Générale");
+        moyenneCell.setCellStyle(headerStyle);
+
+// Fusion des cellules pour l'étiquette
+        sheet.addMergedRegion(new CellRangeAddress(rowIndex, rowIndex, 0, 2));
+
+        columnIndex = 3;
+        for (String libelleMatiere : libellesMatieres) {
+            Double total = totauxMatieres.getOrDefault(libelleMatiere, 0.0);
+            Integer count = comptesMatieres.getOrDefault(libelleMatiere, 0);
+            Cell cell = moyenneRow.createCell(columnIndex);
+
+            if (count > 0) {
+                double moyenne = total / count;
+                cell.setCellValue(moyenne);
+                cell.setCellStyle(numericStyle);
+            } else {
+                cell.setCellValue("NC");
+            }
+            columnIndex++;
+        }
+
+// Auto-ajustement des colonnes
+        for (int i = 0; i <= columnIndex + 2; i++) {
+            sheet.autoSizeColumn(i);
+        }
+
+// Écriture dans le flux de sortie
+        workbook.write(outputStream);
+        workbook.close();
+
 
     }
 }

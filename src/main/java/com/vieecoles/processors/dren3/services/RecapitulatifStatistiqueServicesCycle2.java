@@ -3,6 +3,7 @@ package com.vieecoles.processors.dren3.services;
 import com.vieecoles.dto.AffecteClasseDto;
 import com.vieecoles.dto.EffectifNiveauGenreNationaliteDto;
 import com.vieecoles.dto.NiveauClasseDto;
+import com.vieecoles.dto.NiveauClasseIdDto;
 import com.vieecoles.dto.RedoublantAffClasseDto;
 import com.vieecoles.dto.effectifClasseDto;
 import com.vieecoles.services.eleves.InscriptionService;
@@ -31,7 +32,7 @@ public class RecapitulatifStatistiqueServicesCycle2 {
 
 
 
-      List<NiveauClasseDto> niveauDtoList = new ArrayList<>() ;
+      List<NiveauClasseIdDto> niveauDtoList = new ArrayList<>() ;
 
         niveauDtoList= getListClasse(idEcole,anneeId);
 
@@ -66,6 +67,7 @@ public class RecapitulatifStatistiqueServicesCycle2 {
 
             nombreClasse = findNombreClasseBranche(niveauDtoList.get(i).getId(),idEcole) ;
             m.setNombreClasse(nombreClasse);
+          m.setNiveau(niveauDtoList.get(i).getNiveau());
           nombreCycleClasse = findNombreClasseBrancheCycle(idEcole) ;
           m.setNombreCycleClasse(nombreCycleClasse);
 
@@ -147,13 +149,6 @@ public class RecapitulatifStatistiqueServicesCycle2 {
 
 
 
-
-
-
-
-
-
-
           resultatsListElevesDto.add(m) ;
 
         }
@@ -166,48 +161,46 @@ public class RecapitulatifStatistiqueServicesCycle2 {
 
 
 
-    List<NiveauClasseDto> getListClasse(Long idEcole , Long idAnneId) {
-        List<NiveauClasseDto> classeNiveauDtoList = new ArrayList<>() ;
-        TypedQuery<NiveauClasseDto> q = em.createQuery( "SELECT DISTINCT new com.vieecoles.dto.NiveauClasseDto(o.branche.libelle,o.branche.id) FROM Classe o ,Bulletin b where o.id=b.classeId and  o.ecole.id =:idEcole and b.anneeId=:annee  and b.ordreNiveau<5 order by o.branche.id "
-                , NiveauClasseDto.class);
-        return      classeNiveauDtoList = q.setParameter("idEcole" ,idEcole)
-                                          . setParameter("annee" ,idAnneId)
-                                      .getResultList() ;
+  List<NiveauClasseIdDto> getListClasse(Long idEcole , Long idAnneId) {
+    List<NiveauClasseIdDto> classeNiveauDtoList = new ArrayList<>() ;
+    TypedQuery<NiveauClasseIdDto> q = em.createQuery( "SELECT DISTINCT new com.vieecoles.dto.NiveauClasseIdDto(b.niveau,b.ordreNiveau) FROM Bulletin b where  b.ecoleId =:idEcole and b.anneeId=:annee and b.ordreNiveau>=5  order by b.ordreNiveau "
+        , NiveauClasseIdDto.class);
+    return      classeNiveauDtoList = q.setParameter("idEcole" ,idEcole)
+        . setParameter("annee" ,idAnneId)
+        .getResultList() ;
 
+  }
+
+
+
+
+
+
+  Long getEffectRedoubAfflanClasse(Long idAnneId ,Integer idBranche ,String sexe ,String redoubl ,boolean ivoir , Long idEcole) {
+    //  Inscriptions.statusEleve aff = Inscriptions.statusEleve.valueOf(aff1);
+    try {
+      TypedQuery<Long> q = (TypedQuery<Long>) em.createQuery( "select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole and o.anneeId=:idAnneId and o.redoublant=:redoubl" +
+          " and o.ivoirien=:ivoir   group by  o.ordreNiveau having  o.ordreNiveau=:idBranche");
+
+      Long size = q.setParameter("idBranche" ,idBranche).
+          setParameter("idAnn" ,idAnneId).
+          setParameter("sexe" ,sexe).
+          setParameter("redoubl" ,redoubl).
+          setParameter("ivoir" ,ivoir).
+          setParameter("idEcole" ,idEcole).
+          getSingleResult() ;
+
+      return size;
+    } catch (NoResultException e) {
+      return 0L ;
     }
-
-
-
-
-
-
-    Long getEffectRedoubAfflanClasse(Long idAnneId ,Long idBranche ,String sexe ,String redoubl ,boolean ivoir , Long idEcole) {
-      //  Inscriptions.statusEleve aff = Inscriptions.statusEleve.valueOf(aff1);
-        try {
-            TypedQuery<Long> q = (TypedQuery<Long>) em.createQuery( "SELECT count(ic.id) FROM ClasseEleve ic , Inscription i  ,Eleve e ,Classe  c" +
-                    " where ic.classe.id = c.id and ic.inscription.id = i.id and i.eleve.id= e.id and i.ecole.id =: idEcole and c.branche.id =:idBranche " +
-                    "and i.annee.id =:idAnn and e.sexe=:sexe and i.redoublant=:redoubl and i.ivoirien=:ivoir");
-
-            Long size = q.setParameter("idBranche" ,idBranche).
-                    setParameter("idAnn" ,idAnneId).
-                    setParameter("sexe" ,sexe).
-                    setParameter("redoubl" ,redoubl).
-                    setParameter("ivoir" ,ivoir).
-                    setParameter("idEcole" ,idEcole).
-                    getSingleResult() ;
-
-            return size;
-        } catch (NoResultException e) {
-            return 0L ;
-        }
-    }
+  }
 
   Long getEffectRedoubAfflanClasseCycle(Long idAnneId ,String sexe ,String redoubl ,boolean ivoir , Long idEcole) {
     //  Inscriptions.statusEleve aff = Inscriptions.statusEleve.valueOf(aff1);
     try {
-      TypedQuery<Long> q = (TypedQuery<Long>) em.createQuery( "SELECT count(ic.id) FROM ClasseEleve ic , Inscription i  ,Eleve e ,Classe  c" +
-          " where ic.classe.id = c.id and ic.inscription.id = i.id and i.eleve.id= e.id and i.ecole.id =: idEcole  " +
-          "and i.annee.id =:idAnn and e.sexe=:sexe and i.redoublant=:redoubl and i.ivoirien=:ivoir");
+      TypedQuery<Long> q = (TypedQuery<Long>) em.createQuery( "select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole and o.anneeId=:idAnneId and o.redoublant=:redoubl " +
+          " and o.ivoirien=:ivoir ");
 
       Long size = q.setParameter("idAnn" ,idAnneId).
           setParameter("sexe" ,sexe).
@@ -222,12 +215,11 @@ public class RecapitulatifStatistiqueServicesCycle2 {
     }
   }
 
-  Long getEffectTotalRedoubAfflanClasse(Long idAnneId ,Long idBranche ,String sexe  , Long idEcole) {
+  Long getEffectTotalRedoubAfflanClasse(Long idAnneId ,Integer idBranche ,String sexe  , Long idEcole) {
 
     try {
-      TypedQuery<Long> q = (TypedQuery<Long>) em.createQuery( "SELECT count(ic.id) FROM ClasseEleve ic , Inscription i  ,Eleve e ,Classe  c" +
-          " where ic.classe.id = c.id and ic.inscription.id = i.id and i.eleve.id= e.id and i.ecole.id =: idEcole  " +
-          "and i.annee.id =:idAnn and e.sexe=:sexe  and c.branche.id =:idBranche");
+      TypedQuery<Long> q = (TypedQuery<Long>) em.createQuery( "select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole and o.anneeId=:idAnneId " +
+          "   group by  o.ordreNiveau having  o.ordreNiveau=:idBranche");
 
       Long size = q.setParameter("idAnn" ,idAnneId).
           setParameter("sexe" ,sexe).
@@ -244,9 +236,8 @@ public class RecapitulatifStatistiqueServicesCycle2 {
   Long getEffectTotalRedoubAfflanClasseCycle(Long idAnneId  ,String sexe , Long idEcole) {
 
     try {
-      TypedQuery<Long> q = (TypedQuery<Long>) em.createQuery( "SELECT count(ic.id) FROM ClasseEleve ic , Inscription i  ,Eleve e ,Classe  c" +
-          " where ic.classe.id = c.id and ic.inscription.id = i.id and i.eleve.id= e.id and i.ecole.id =: idEcole  " +
-          "and i.annee.id =:idAnn and e.sexe=:sexe ");
+      TypedQuery<Long> q = (TypedQuery<Long>) em.createQuery( " select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole and o.anneeId=:idAnneId "
+      );
 
       Long size = q.setParameter("idAnn" ,idAnneId).
           setParameter("sexe" ,sexe).
@@ -258,7 +249,6 @@ public class RecapitulatifStatistiqueServicesCycle2 {
       return 0L ;
     }
   }
-
 
 
     public  List<Branche> findByNiveauEnseignementViaEcole(Long id){

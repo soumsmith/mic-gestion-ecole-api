@@ -108,7 +108,6 @@ public class Bulletin extends PanacheEntityBase{
 	private String ecoleOrigine;
 	@Column(name = "nom_signataire")
 	private String nomSignataire;
-	private String transfert;
 
 	@Lob
 	@Basic(fetch = FetchType.LAZY)
@@ -120,7 +119,7 @@ public class Bulletin extends PanacheEntityBase{
 
 	@Column(name = "effectif_non_classe")
 	private String effectifNonClasse;
-	
+
 	@Column(name = "type_evaluation")
 	private Long typeEvaluation;
 	@Column(name = "type_evaluation_libelle")
@@ -135,7 +134,7 @@ public class Bulletin extends PanacheEntityBase{
 	private Double moyEvaluationInterne;
 	@Column(name = "moy_eval_passage")
 	private Double moyEvaluationPassage;
-	
+
 	// Pour besoin spécifique lors de la génération des états de bulletin
 	@Column(name = "moy_fr")
 	private Double moyFr;
@@ -163,5 +162,7 @@ public class Bulletin extends PanacheEntityBase{
 	private String urlPhoto;
 	@Column(name = "niveau_enseignement_id")
 	private Long niveauEnseignementId;
+	private  Boolean transfert ;
+	private  Boolean ivoirien ;
 
 }

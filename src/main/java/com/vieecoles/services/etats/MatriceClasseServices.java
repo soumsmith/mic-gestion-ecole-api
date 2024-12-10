@@ -2,6 +2,7 @@ package com.vieecoles.services.etats;
 
 import com.vieecoles.dto.*;
 import com.vieecoles.entities.operations.Inscriptions;
+import com.vieecoles.entities.operations.ecole;
 import com.vieecoles.services.eleves.InscriptionService;
 import com.vieecoles.services.souscription.SousceecoleService;
 import com.vieecoles.steph.entities.*;
@@ -28,7 +29,7 @@ public class MatriceClasseServices {
 
         Branche br = new Branche() ;
         Classe classe1= new Classe() ;
-        classe1 = Classe.findById(classe);
+      //  classe1 = Classe.findById(classe);
 
         br= getLibelleMBranche(classe1.getLibelle(),idEcole) ;
 
@@ -36,8 +37,7 @@ public class MatriceClasseServices {
         System.out.println("myBranch >>>> "+myBranch);
         myBranch = String.valueOf(Classe.find("select distinct m.branche.libelle from Classe m where m.libelle = ?1 and m.ecole.id = ?2",classe1.getLibelle() ,idEcole).firstResult());
 
-        System.out.println("myBranch "+myBranch);
-        myBranch="4EME E" ;
+
         List<NiveauDto> matriculeList = new ArrayList<>() ;
         TypedQuery<NiveauDto> q = em.createQuery( "SELECT new com.vieecoles.dto.NiveauDto(b.matricule) from Bulletin b " +
                 " where b.ecoleId =:idEcole and b.libellePeriode=:periode and b.anneeLibelle=:annee and b.classeId =:classe order by b.nom ,b.prenoms " , NiveauDto.class);
@@ -76,6 +76,7 @@ public class MatriceClasseServices {
         List<matriceClasseDto> resultatsListElevesDto = new ArrayList<>() ;
         List<RapportMatriceClasseDto> rapportMatriceClasseDtoList = new ArrayList<>() ;
         List<matiereMoyenneBilanDto> matiereMoyenneBilanDtoList = new ArrayList<>() ;
+        String isClass;
 
         //Mise à jour du titre
         List<MatiereTitreDto> titreList = new ArrayList<>() ;
@@ -89,7 +90,7 @@ public class MatriceClasseServices {
 
             myMatiere = Matiere.findById(idMatiere) ;
 
-            libelleMatiere = getCodeLIbelleById(idMatiere,idEcole);
+            libelleMatiere = getCodeLIbelleById(idMatiere);
             matiereTitreDto.setLibelleMatiere(libelleMatiere);
             matiereTitreDto.setNumOrdre(getNumORDREMatiere(idMatiere,idEcole));
             matiereTitreDto.setEcoleId("1");
@@ -104,12 +105,15 @@ public class MatriceClasseServices {
             matriceClasseDto m =new matriceClasseDto();
             Inscriptions myIns= new Inscriptions() ;
             myIns = inscriptionService.checkInscrit(idEcole,matriculeList.get(i).getNiveau(),anneeId);
+            InfosEleveDto infosEleveDto=new InfosEleveDto();
+
+                     infosEleveDto=getInfosEleve(matriculeList.get(i).getNiveau(),periode,libelleAnnee,idEcole);
 
 
-            if(myIns != null){
-                idEleve =  myIns.getEleve().getEleveid() ;
-                nom = myIns.getEleve().getElevenom() ;
-                prenoms = myIns.getEleve().getEleveprenom() ;
+            if(infosEleveDto != null){
+               // idEleve =  myIns.getEleve().getEleveid() ;
+                nom = infosEleveDto.getNom();
+                prenoms = infosEleveDto.getPrenom();
 
             }
             rang =  getRang(matriculeList.get(i).getNiveau() ,periode ,libelleAnnee,idEcole);
@@ -130,25 +134,39 @@ public class MatriceClasseServices {
 
                 myMatiere = Matiere.findById(idMatiere) ;
 
-                libelleMatiere = getCodeLIbelleById(idMatiere,idMatiere);
+                libelleMatiere = getCodeLIbelleById(idMatiere);
 
                 Double moyFr = calculMoycoefFran(matriculeList.get(i).getNiveau(),libelleAnnee ,periode,idEcole ) ;
                 Double coef = calculcoefFran(matriculeList.get(i).getNiveau(),libelleAnnee ,periode,idEcole) ;
-                Double moyMat=  getMoyMatiere(matriculeList.get(i).getNiveau() , id,periode ,libelleAnnee,idEcole);
+                Double moyMat1=  getMoyMatiere(matriculeList.get(i).getNiveau() , id,periode ,libelleAnnee,idEcole);
                 Integer    numOrdreClasse  = getNiveauOrdreClasse(matriculeList.get(i).getNiveau(),periode,libelleAnnee,idEcole) ;
+                isClass= getIsClasseMatiere(matriculeList.get(i).getNiveau() , id,periode ,libelleAnnee,idEcole);
+                Double moyMat=0d;
+
+                if(isClass!=null &&isClass.equals("O")){
+                  moyMat=moyMat1;
+                } else {
+                  moyMat=-1.0;
+                }
 
                 if(libelleMatiere.equals("FR") && numOrdreClasse<5){
                     my.setLibelleMatiere(libelleMatiere);
                     my.setMatricule(matriculeList.get(i).getNiveau());
+                     my.setIsClass(isClass);
                     DecimalFormat decimalFormat = new DecimalFormat("#.##");
-                    if(moyFr !=null)
+                    if(moyFr !=null&&isClass.equals("O"))
                     {
                         moyMat= moyFr/coef;
                         my.setMoyMatiere(moyMat);
+                        my.setIsClass(isClass);
+                    } else {
+                      my.setMoyMatiere(-1.0);
+                      my.setIsClass(isClass);
                     }
 
                     my.setNumOrdre(getNumORDREMatiere(idMatiere,idEcole));
                 } else {
+                  my.setIsClass(isClass);
                     my.setLibelleMatiere(libelleMatiere);
                     my.setMatricule(matriculeList.get(i).getNiveau());
 
@@ -165,11 +183,11 @@ public class MatriceClasseServices {
             m.setRang(rang);
             m.setNom(nom);
             m.setPrenoms(prenoms);
-            m.setIdEleve(idEleve);
+           // m.setIdEleve(idEleve);
             m.setMatricule(matricule);
             m.setMatiereMoyenneDto(matiMoy);
             m.setMatiereTitreDto(titreList);
-            m.setClasse(classe1.getLibelle());
+           // m.setClasse(classe1.getLibelle());
             m.setPeriode (periode);
 
             resultatsListElevesDto.add(m) ;
@@ -241,94 +259,90 @@ public class MatriceClasseServices {
         return  libelle ;
     }
 
-    public String getCodeLIbelleById(Long idMatier ,Long idEcole){
+public InfosEleveDto getInfosEleve(String matricule,String periode,String annee,Long idEcole){
+  InfosEleveDto classeNiveauDtoList = new InfosEleveDto() ;
+  TypedQuery<InfosEleveDto> q = em.createQuery( "SELECT new com.vieecoles.dto.InfosEleveDto(b.nom,b.prenoms,b.matricule) from Bulletin b  " +
+      "where b.ecoleId =:idEcole and b.matricule=:matricule and b.libellePeriode=:periode and b.anneeLibelle=:annee " , InfosEleveDto.class);
+  classeNiveauDtoList = q.setParameter("matricule", matricule)
+                        .setParameter("periode", periode)
+                        .setParameter("annee", annee)
+                        .setParameter("idEcole", idEcole)
+      .getSingleResult();
+  return classeNiveauDtoList;
+}
+
+ public String getCodeLIbelleById(Long idMatier ){
         String libelle= null;
-        Matiere matiere = new Matiere();
-        matiere = Matiere.findById(idMatier);
-        libelle = matiere.getLibelle() ;
 
-
-        return  libelle ;
-    }
-
-    /*public String getCodeLIbelleById(Long idMatier ,Long idEcole){
-        String libelle= null;
-        Ecole ecole = new Ecole() ;
-        ecole = Ecole.findById(idEcole) ;
-
-        Long niveEnsei ;
-       //niveEnsei = ecole.getNiveauEnseignement().getId();
-        //System.out.println("niveEnsei "+niveEnsei);
-        niveEnsei=6L ;
-        if(idMatier==1L && niveEnsei==2L ) {
+        if(idMatier==1L ) {
             libelle="FR";
-        } else if (idMatier==2L && niveEnsei==2L ) {
+        } else if (idMatier==2L ) {
             libelle="CF";
-        }else if (idMatier==3L && niveEnsei==2L) {
+        }else if (idMatier==3L ) {
             libelle="Ex O";
-        } else if (idMatier==4L && niveEnsei==2L) {
+        } else if (idMatier==4L ) {
             libelle="OG";
-        } else if (idMatier==5L && niveEnsei==2L) {
+        } else if (idMatier==5L ) {
             libelle="ANG";
-        } else if (idMatier==6L && niveEnsei==2L) {
+        } else if (idMatier==6L) {
             libelle="HG";
-        } else if (idMatier==7L && niveEnsei==2L) {
+        } else if (idMatier==7L ) {
             libelle="Mathes";
-        } else if (idMatier==8L && niveEnsei==2L) {
+        } else if (idMatier==8L) {
             libelle="PHYS";
-        }else if (idMatier==9L && niveEnsei==2L) {
+        }else if (idMatier==9L ) {
             libelle="SVT";
-        } else if (idMatier==10L && niveEnsei==2L) {
+        } else if (idMatier==10L ) {
             libelle="EPS";
         }
-        else if (idMatier==11L && niveEnsei==2L) {
+        else if (idMatier==11L ) {
             libelle="EDHC";
         }
 
-        else if (idMatier==12L && niveEnsei==2L) {
+        else if (idMatier==12L ) {
             libelle="COND";
         }
 
-        else if (idMatier==13L && niveEnsei==2L) {
+        else if (idMatier==13L ) {
             libelle="INFO";
         }
-        else if (idMatier==14L && niveEnsei==2L) {
+        else if (idMatier==14L) {
             libelle="ENTREP";
         }
-        else if (idMatier==19L && niveEnsei==2L) {
+        else if (idMatier==19L ) {
             libelle="ART-PLA";
         }
-        else if (idMatier==21L && niveEnsei==2L) {
+        else if (idMatier==21L ) {
             libelle="ESP";
         }
-        else if (idMatier==25L && niveEnsei==2L) {
+        else if (idMatier==25L ) {
             libelle="ALL";
         }
-        else if (idMatier==26L && niveEnsei==2L) {
+        else if (idMatier==26L ) {
             libelle="PHILO";
         }
-        else if (idMatier==27L && niveEnsei==2L) {
+        else if (idMatier==27L ) {
             libelle="TICE";
         }
-        else if (idMatier==36L && niveEnsei==2L) {
+        else if (idMatier==36L ) {
             libelle="ART-VIS";
         }
-        else if (idMatier==73L && niveEnsei==2L) {
+        else if (idMatier==73L ) {
             libelle="ARAB";
         }
-        else if (idMatier==29L && niveEnsei==2L) {
+        else if (idMatier==29L ) {
             libelle="MEMO";
         }
-        else if (idMatier==35L && niveEnsei==2L) {
+        else if (idMatier==35L ) {
             libelle="SIRAH";
         }
-        else if (idMatier==30L && niveEnsei==2L) {
+        else if (idMatier==30L ) {
             libelle="FIQ";
         }
-        else if (idMatier==38L && niveEnsei==2L) {
+        else if (idMatier==38L ) {
             libelle="AKLQ";
         }
-        else if (idMatier==37L && niveEnsei==2L) {
+        else if (idMatier==37L) {
             libelle="AQD";
         }
         else {
@@ -339,7 +353,7 @@ public class MatriceClasseServices {
 
 
         return  libelle ;
-    }*/
+    }
 
 
 
@@ -359,6 +373,23 @@ public class MatriceClasseServices {
         }
 
     }
+
+  public  String getIsClasseMatiere(String matricule,String libelleMatiere,String periode ,String libelleAnnee, Long idEcole){
+    try {
+      String   moyClasseF = (String) em.createQuery("select d.isRanked  from DetailBulletin  d join d.bulletin b  where b.matricule=:matricule and d.matiereCode=:libelleMatiere  and b.anneeLibelle=:libelleAnnee " +
+              " and b.libellePeriode=:periode and b.ecoleId=:idEcole ")
+          .setParameter("matricule",matricule)
+          .setParameter("libelleMatiere",libelleMatiere)
+          .setParameter("periode",periode)
+          .setParameter("libelleAnnee", libelleAnnee)
+          .setParameter("idEcole", idEcole)
+          .getSingleResult();
+      return  moyClasseF ;
+    } catch (NoResultException e){
+      return null ;
+    }
+
+  }
 
     public  Double calculcoefFran(String matricule, String annee,String periode,Long idEcole){
         try {
