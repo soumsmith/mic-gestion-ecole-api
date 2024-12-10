@@ -1,4 +1,4 @@
-package com.vieecoles.steph.dto.moyennes;
+package com.vieecoles.steph.projections;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,12 +8,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
-public class PersonneDto {
+public class PersonProjection {
 	private Long id;
 	private String matricule;
 	private String nom;
 	private String prenom;
 	private String sexe;
-	private String urlPhoto;
 }

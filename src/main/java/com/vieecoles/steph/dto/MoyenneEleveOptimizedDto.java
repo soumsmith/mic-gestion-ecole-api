@@ -1,31 +1,33 @@
 package com.vieecoles.steph.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.vieecoles.steph.dto.NoteDto;
+import com.vieecoles.steph.dto.moyennes.EcoleMatiereDto;
+import com.vieecoles.steph.dto.moyennes.PersonneDto;
 import com.vieecoles.steph.entities.*;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-@Getter
-@Setter
-public class MoyenneEleveDto implements Comparable<MoyenneEleveDto>, Serializable {
+@Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class MoyenneEleveOptimizedDto implements Comparable<MoyenneEleveOptimizedDto>, Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private Eleve eleve;
-	private Classe classe;
-	private Periode periode;
+	private PersonneDto eleve;
+	private ClasseDto classe;
+	private IdLongCodeLibelleDto periode;
 	private Double moyenne;
 	private Double moyenneMatiereToSort;
 	private String rang;
 	private String isClassed;
 	private String classeMatierePeriodeId;
 	private String appreciation;
-	private List<Notes> notes;
-	private Map<EcoleHasMatiere, List<Notes>> notesMatiereMap;
-	private AnneeScolaire annee;
+	private List<NoteDto> notes;
+	private Map<EcoleMatiereDto, List<NoteDto>> notesMatiereMap;
+	private IdLongCodeLibelleDto annee;
 	
 	private Double moyenneAnnuelle;
 	private Double moyenneInterne;
@@ -57,7 +59,7 @@ public class MoyenneEleveDto implements Comparable<MoyenneEleveDto>, Serializabl
 	private String appreciationReli;
 
 	@Override
-	public int compareTo(MoyenneEleveDto o) {
+	public int compareTo(MoyenneEleveOptimizedDto o) {
 		return o.moyenne.compareTo(this.moyenne);
 	}
 

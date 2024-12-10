@@ -84,8 +84,9 @@ public class MoyenneAdjustmentService implements PanacheRepositoryBase<MoyenneAd
 							ma.getMatricule(), ma.getMatiere());
 					if (moyenneAdjustment.getId() != null) {
 						System.out.println("Update");
-						ma.setId(moyenneAdjustment.getId());
-						update(ma);
+						moyenneAdjustment.setMoyenne(ma.getMoyenne());
+						moyenneAdjustment.setStatut(ma.getStatut());
+						moyenneAdjustment.setDateUpdate(new Date());
 					} else {
 						System.out.println("save");
 						save(ma);

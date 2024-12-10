@@ -22,6 +22,7 @@ public class MoyenneAdjustment extends PanacheEntityBase{
 	private String matricule;
 	private Long periode;
 	private Long matiere;
+	private Long classe;
 	private Double moyenne;
 	@Column(name = "date_creation")
 	private Date dateCreation;

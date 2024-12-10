@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
@@ -18,11 +19,18 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.NotFoundException;
+
 import com.google.gson.Gson;
-import com.vieecoles.dto.NoteDto;
+import com.vieecoles.steph.dto.ClasseDto;
+import com.vieecoles.steph.dto.EvaluationDto;
+import com.vieecoles.steph.dto.IdLongCodeLibelleDto;
 import com.vieecoles.steph.dto.MatiereNotesEleveDto;
 import com.vieecoles.steph.dto.MoyenneEleveDto;
+import com.vieecoles.steph.dto.MoyenneEleveOptimizedDto;
+import com.vieecoles.steph.dto.NoteDto;
 import com.vieecoles.steph.dto.NotesEleveDto;
+import com.vieecoles.steph.dto.moyennes.EcoleMatiereDto;
+import com.vieecoles.steph.dto.moyennes.PersonneDto;
 import com.vieecoles.steph.entities.AbsenceEleve;
 import com.vieecoles.steph.entities.AnneeScolaire;
 import com.vieecoles.steph.entities.Bulletin;
@@ -88,6 +96,9 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 
 	@Inject
 	ClasseMatiereService classeMatiereService;
+
+	@Inject
+	EleveService eleveService;
 
 	Logger logger = Logger.getLogger(NoteService.class.getName());
 
@@ -494,6 +505,134 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			r.printStackTrace();
 			throw r;
 		}
+	}
+
+	public List<MoyenneEleveOptimizedDto> buildListMoyenneEleve(List<MoyenneEleveDto> list) {
+		System.out.println("*********** DATA OPTIMIZING ***********");
+		List<MoyenneEleveOptimizedDto> dtos = new ArrayList<>();
+		list.stream().parallel().forEachOrdered(m -> {
+			synchronized (dtos) {
+				buildList(dtos, m);
+			}
+		});
+		return dtos;
+	}
+
+	void buildList(List<MoyenneEleveOptimizedDto> listDto, MoyenneEleveDto dto) {
+		listDto.add(convertOptimized(dto));
+	}
+
+	MoyenneEleveOptimizedDto convertOptimized(MoyenneEleveDto dto) {
+		MoyenneEleveOptimizedDto optimized = new MoyenneEleveOptimizedDto();
+		try {
+			optimized.setAbsJust(dto.getAbsJust());
+			optimized.setAbsNonJust(dto.getAbsNonJust());
+			optimized.setAnnee(new IdLongCodeLibelleDto(dto.getAnnee().getId(), null, dto.getAnnee().getLibelle()));
+			optimized.setApprAnnuelle(dto.getApprAnnuelle());
+			optimized.setAppreciation(dto.getAppreciation());
+			optimized.setAppreciationAnFr(dto.getAppreciationAnFr());
+			optimized.setAppreciationFr(dto.getAppreciationFr());
+			optimized.setAppreciationReli(dto.getAppreciationReli());
+			optimized.setClasse(new ClasseDto(dto.getClasse().getEcole().getId(), dto.getClasse().getId(),
+					dto.getClasse().getLibelle()));
+			optimized.setClasseMatierePeriodeId(dto.getClasseMatierePeriodeId());
+			optimized.setCoefFr(dto.getCoefFr());
+			optimized.setEleve(new PersonneDto(dto.getEleve().getId(), dto.getEleve().getMatricule(),
+					dto.getEleve().getNom(), dto.getEleve().getPrenom(), dto.getEleve().getSexe(),dto.getEleve().getUrlPhoto()));
+			optimized.setIsClassed(dto.getIsClassed());
+			optimized.setMoyAnFr(dto.getMoyAnFr());
+			optimized.setMoyCoefFr(dto.getMoyCoefFr());
+			optimized.setMoyenne(dto.getMoyenne());
+			optimized.setMoyenneAnnuelle(dto.getMoyenneAnnuelle());
+			optimized.setMoyenneIEPP(dto.getMoyenneIEPP());
+			optimized.setMoyenneInterne(dto.getMoyenneInterne());
+			optimized.setMoyenneMatiereToSort(dto.getMoyenneMatiereToSort());
+			optimized.setMoyennePassage(dto.getMoyennePassage());
+			optimized.setMoyFr(dto.getMoyFr());
+			optimized.setMoyFrIntermediaire(dto.getMoyFrIntermediaire());
+			optimized.setMoyReli(dto.getMoyReli());
+			optimized.setNotes(builtNotesList(dto.getNotes()));
+			optimized.setNotesMatiereMap(buildMapDto(dto.getNotesMatiereMap()));
+			optimized.setNumeroEvaluation(dto.getNumeroEvaluation());
+			optimized.setNumeroIEPP(dto.getNumeroIEPP());
+			optimized.setPeriode(
+					new IdLongCodeLibelleDto(dto.getPeriode().getId(), null, dto.getPeriode().getLibelle()));
+			optimized.setRang(dto.getRang());
+			optimized.setRangAnFr(dto.getRangAnFr());
+			optimized.setRangAnnuel(dto.getRangAnnuel());
+			optimized.setRangFr(dto.getRangFr());
+			optimized.setTypeEvaluation(dto.getTypeEvaluation());
+			optimized.setTypeEvationLibelle(dto.getTypeEvationLibelle());
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+		}
+
+		return optimized;
+	}
+
+	List<NoteDto> builtNotesList(List<Notes> notes) {
+		List<NoteDto> list = new ArrayList<>();
+		if (notes != null) {
+			notes.stream().forEach(n -> list.add(convertToNoteDto(n)));
+		}
+		return list;
+	}
+
+	NoteDto convertToNoteDto(Notes note) {
+		NoteDto dto = new NoteDto();
+		dto.setId(note.getId());
+		dto.setPec(note.getPec());
+		dto.setAppreciation(note.getAppreciation());
+		dto.setNote(note.getNote());
+		dto.setStatut(note.getStatut());
+		EvaluationDto evaluationDto = new EvaluationDto(note.getEvaluation().getId(), note.getEvaluation().getCode(),
+				note.getEvaluation().getDuree(), note.getEvaluation().getNoteSur(), note.getEvaluation().getPec());
+		evaluationDto.setAnnee(new IdLongCodeLibelleDto(note.getEvaluation().getAnnee().getId(), null,
+				note.getEvaluation().getAnnee().getLibelle()));
+		evaluationDto.setClasse(new IdLongCodeLibelleDto(note.getEvaluation().getClasse().getId(), null,
+				note.getEvaluation().getClasse().getLibelle()));
+		evaluationDto.setMatiereEcole(new IdLongCodeLibelleDto(note.getEvaluation().getMatiereEcole().getId(), null,
+				note.getEvaluation().getMatiereEcole().getLibelle()));
+		evaluationDto.setDateLimite(note.getEvaluation().getDateLimite());
+		dto.setEvaluation(evaluationDto);
+		if (note.getPersonnel() != null) {
+			dto.setPersonnel(new PersonneDto(note.getPersonnel().getId(), note.getPersonnel().getCode(),
+					note.getPersonnel().getNom(), note.getPersonnel().getPrenom(), note.getPersonnel().getSexe(),null));
+		}
+		dto.setClasseEleve(new IdLongCodeLibelleDto(note.getClasseEleve().getId(), null, null));
+
+		return dto;
+	}
+
+	Map<EcoleMatiereDto, List<NoteDto>> buildMapDto(Map<EcoleHasMatiere, List<Notes>> map) {
+		Map<EcoleMatiereDto, List<NoteDto>> mapDto = new LinkedHashMap<>();
+		if (map != null) {
+			for (Map.Entry<EcoleHasMatiere, List<Notes>> entry : map.entrySet()) {
+				mapDto.put(convertToMatiereDto(entry.getKey()), builtNotesList(entry.getValue()));
+			}
+		}
+		return mapDto;
+	}
+
+	EcoleMatiereDto convertToMatiereDto(EcoleHasMatiere ecoleMatiere) {
+		EcoleMatiereDto dto = new EcoleMatiereDto();
+		dto.setId(ecoleMatiere.getId());
+		dto.setCode(ecoleMatiere.getCode());
+		dto.setLibelle(ecoleMatiere.getLibelle());
+		dto.setMoyenne(ecoleMatiere.getMoyenne());
+		dto.setCoef(ecoleMatiere.getCoef());
+		dto.setRang(ecoleMatiere.getRang());
+		dto.setPec(ecoleMatiere.getPec());
+		if (ecoleMatiere.getMatiereParent() != null) {
+			dto.setMatiereParent(new IdLongCodeLibelleDto(ecoleMatiere.getMatiereParent().getId(),
+					ecoleMatiere.getMatiereParent().getCode(), ecoleMatiere.getMatiereParent().getLibelle()));
+		}
+		dto.setAppreciation(ecoleMatiere.getAppreciation());
+		dto.setCategorie(new IdLongCodeLibelleDto());
+		dto.setBonus(ecoleMatiere.getBonus());
+		dto.setNumOrdre(ecoleMatiere.getNumOrdre());
+
+		return dto;
 	}
 
 	public synchronized void collectNotesPec(List<Notes> noteList, Evaluation ev) {
@@ -1131,7 +1270,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 
 				moyenne = somme / (diviser.equals(Double.parseDouble("0")) ? Double.parseDouble("1") : diviser);
 				logger.info("Moyenne = " + somme + " / " + diviser + " = " + CommonUtils.roundDouble(moyenne, 2));
-				
+
 				if (noteTestLourdList.size() > 0) {
 					Double moyenneTstLourd = 0.0;
 					Double sommeTstLourd = 0.0;
@@ -1142,7 +1281,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 					entry.getKey().setTestLourdNote(sommeTstLourd);
 					moyenne = (moyenne + moyenneTstLourd * 2) / 3;
 				}
-				
+
 				entry.getKey().setMoyenne(CommonUtils.roundDouble(moyenne, 2));
 				entry.getKey().setAppreciation(CommonUtils.appreciation(moyenne));
 
@@ -1169,7 +1308,11 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 		return moyGenPond;
 	}
 
-	// Calcul de moyenne generale de l eleve et calcul de rang
+	/**
+	 * Calcul de moyenne generale de l eleve et calcul de rang
+	 * 
+	 * @param moyEleve
+	 */
 	void calculMoyenneGeneralEleve(List<MoyenneEleveDto> moyEleve) {
 		logger.info("---> Calcul de moyenne generale de l eleve et calcul de rang");
 		try {
@@ -1834,7 +1977,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			notesEleve.setMatricule(list.get(0).getClasseEleve().getInscription().getEleve().getMatricule());
 			notesEleve.setNom(list.get(0).getClasseEleve().getInscription().getEleve().getNom());
 			notesEleve.setPrenom(list.get(0).getClasseEleve().getInscription().getEleve().getPrenom());
-			list.stream().forEach(n -> buildEleveNoteDto(n, notesEleve));
+			list.stream().forEachOrdered(n -> buildEleveNoteDto(n, notesEleve));
 		}
 		return notesEleve;
 	}

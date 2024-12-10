@@ -1,13 +1,18 @@
 package com.vieecoles.steph.services;
 
+import com.vieecoles.steph.dto.moyennes.PersonneDto;
 import com.vieecoles.steph.entities.Eleve;
+import com.vieecoles.steph.projections.PersonProjection;
+
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Response;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
+
 @RequestScoped
 public class EleveService implements PanacheRepositoryBase<Eleve, Long> {
 
@@ -18,7 +23,7 @@ public class EleveService implements PanacheRepositoryBase<Eleve, Long> {
 	public Eleve findById(Long id) {
 		return Eleve.findById(id);
 	}
-	
+
 	public Eleve findByMatricule(String matricule) {
 		return Eleve.find("matricule =?1", matricule).singleResult();
 	}
@@ -54,5 +59,30 @@ public class EleveService implements PanacheRepositoryBase<Eleve, Long> {
 
 	public long count() {
 		return Eleve.count();
+	}
+
+	public List<PersonProjection> findEleveProjection() {
+		List<PersonProjection> projectList = new ArrayList<>();
+		try {
+			projectList = getEntityManager().createQuery("SELECT "
+					+ " new com.vieecoles.steph.projections.PersonProjection(e.id, e.matricule, e.nom, e.prenom, e.sexe) "
+					+ " FROM Eleve e").getResultList();
+		} catch (Exception e) {
+			projectList = new ArrayList<>();
+		}
+		return projectList;
+	}
+	
+	public PersonProjection findEleveByIdProjection(Long id) {
+		PersonProjection project = null;
+		try {
+			project = (PersonProjection) getEntityManager().createQuery("SELECT "
+					+ " new com.vieecoles.steph.projections.PersonProjection(e.id, e.matricule, e.nom, e.prenom, e.sexe) "
+					+ " FROM Eleve e "
+					+ " WHERE e.id =:id").setParameter("id", id).getSingleResult();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return project;
 	}
 }
