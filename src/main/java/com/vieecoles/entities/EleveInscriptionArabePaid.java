@@ -16,7 +16,8 @@ public class EleveInscriptionArabePaid extends PanacheEntityBase {
     private String anciennete;
     private String scolarite_arabe;
     private String classe_arabe;
-
+    private String scolarite_francais;
+    private String classe_francais;
     public String getELEVE() {
         return ELEVE;
     }
@@ -57,5 +58,21 @@ public class EleveInscriptionArabePaid extends PanacheEntityBase {
         this.classe_arabe = classe_arabe;
     }
 
-    // Getters et setters
+    public String getScolarite_francais() {
+        return scolarite_francais;
+    }
+
+    public void setScolarite_francais(String scolarite_francais) {
+        this.scolarite_francais = scolarite_francais;
+    }
+
+    public String getClasse_francais() {
+        return classe_francais;
+    }
+
+    public void setClasse_francais(String classe_francais) {
+        this.classe_francais = classe_francais;
+    }
+
+// Getters et setters
 }

@@ -209,6 +209,9 @@ public class InscriptionService implements PanacheRepositoryBase<Inscriptions, L
             inscr.setNom_prenoms_mere(inscriptionDto.getNom_prenoms_mere());
             inscr.setDecision_ant(inscriptionDto.getDecision_ant());
             inscr.setBranche(myBranche);
+            inscr.setIvoirien(inscriptionDto.getIvoirien());
+            inscr.setEtranger_africain(inscriptionDto.getEtranger_africain());
+            inscr.setEtranger_non_africain(inscriptionDto.getEtranger_non_africain());
 
         } else {
             inscr.setInscriptions_type(inscriptionDto.getInscriptions_type());
@@ -227,6 +230,9 @@ public class InscriptionService implements PanacheRepositoryBase<Inscriptions, L
             inscr.setNom_prenoms_mere(inscriptionDto.getNom_prenoms_mere());
             inscr.setDecision_ant(inscriptionDto.getDecision_ant());
             inscr.setBranche(myBranche);
+            inscr.setIvoirien(inscriptionDto.getIvoirien());
+            inscr.setEtranger_africain(inscriptionDto.getEtranger_africain());
+            inscr.setEtranger_non_africain(inscriptionDto.getEtranger_non_africain());
 
         }
 
@@ -293,6 +299,9 @@ public class InscriptionService implements PanacheRepositoryBase<Inscriptions, L
             inscr.setNom_prenoms_tuteur(inscriptionDto.getNom_prenoms_tuteur());
             inscr.setNom_prenoms_mere(inscriptionDto.getNom_prenoms_mere());
             inscr.setDecision_ant(inscriptionDto.getDecision_ant());
+            inscr.setIvoirien(inscriptionDto.getIvoirien());
+            inscr.setEtranger_africain(inscriptionDto.getEtranger_africain());
+            inscr.setEtranger_non_africain(inscriptionDto.getEtranger_non_africain());
             inscr.persist();
 
         } else {
@@ -318,6 +327,13 @@ public class InscriptionService implements PanacheRepositoryBase<Inscriptions, L
             inscr.setDecision_ant(inscriptionDto.getDecision_ant());
             inscr.setAnnee_scolaire(annee_scolaire);
             inscr.setBranche(myBranche);
+            inscr.setNom_prenoms_pere(inscriptionDto.getNom_prenoms_pere());
+            inscr.setNom_prenoms_tuteur(inscriptionDto.getNom_prenoms_tuteur());
+            inscr.setNom_prenoms_mere(inscriptionDto.getNom_prenoms_mere());
+            inscr.setDecision_ant(inscriptionDto.getDecision_ant());
+            inscr.setIvoirien(inscriptionDto.getIvoirien());
+            inscr.setEtranger_africain(inscriptionDto.getEtranger_africain());
+            inscr.setEtranger_non_africain(inscriptionDto.getEtranger_non_africain());
             inscr.persist();
         }
 

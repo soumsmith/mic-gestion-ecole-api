@@ -78,7 +78,8 @@ public class CertificatScolariteRessource {
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public ResponseEntity<byte[]>  getDtoRapport(@PathParam("idEcole") Long idEcole , @PathParam("matricule") String matricule ,@PathParam("AnneeId") Long AnneeId
             , @PathParam("signataire") String signataire , @PathParam("fonction") String fonction
-            , @PathParam("periode") String periode) throws Exception, JRException {
+            , @PathParam("periode") String periode
+    ) throws Exception, JRException {
 
         Inscriptions myIns= new Inscriptions() ;
         myIns = inscriptionService.checkInscrit(idEcole,matricule,AnneeId);
@@ -119,6 +120,7 @@ public class CertificatScolariteRessource {
         }
         InputStream myInpuStream ;
         /*myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/BulletinBean.jrxml");*/
+
         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/CertificatScolarite.jrxml");
         certificatScolariteDto emp= new certificatScolariteDto() ;
 
@@ -175,10 +177,11 @@ try {
     }
 
     @GET
-    @Path("/certificat-de-frequentation/{matricule}/{ecoleId}/{annee}/{signataire}/{fonction}")
+    @Path("/certificat-de-frequentation/{matricule}/{ecoleId}/{annee}/{signataire}/{fonction}/{autre}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public ResponseEntity<byte[]>  getDtoRapport7(@PathParam("matricule") String matricule ,@PathParam("ecoleId") Long ecoleId ,@PathParam("annee") String annee
-            ,@PathParam("signataire") String signataire ,@PathParam("fonction") String fonction) throws Exception, JRException {
+            ,@PathParam("signataire") String signataire ,@PathParam("fonction") String fonction
+            ,@PathParam("autre") boolean autre    ) throws Exception, JRException {
 
 
         parametre mpara = new parametre();
@@ -211,8 +214,15 @@ try {
         }
 
         InputStream myInpuStream ;
+        if(!autre){
+            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/CertificatFrequentation.jrxml");
 
-        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/CertificatFrequentation.jrxml");
+        } else
+        {
+            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/CertificatFrequentationIGON.jrxml");
+
+        }
+
 
 
         Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecoleviedbv2", USER, PASS);

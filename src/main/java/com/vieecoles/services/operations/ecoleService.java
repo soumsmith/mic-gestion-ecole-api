@@ -39,16 +39,19 @@ public class ecoleService implements PanacheRepositoryBase<ecole, Long> {
 
     public  List<ecoleDto2> findAllecoleDto2(){
 
-        TypedQuery<ecoleDto2> q = em.createQuery( "SELECT new com.vieecoles.dto.ecoleDto2(o.ecoleid,o.ecolecode,o.ecoleclibelle) from ecole o ",
+ TypedQuery<ecoleDto2> q = em.createQuery( "SELECT new com.vieecoles.dto.ecoleDto2(o.ecoleid,o.ecolecode,o.ecoleclibelle) from ecole o where o.visible='1'",
                 ecoleDto2.class);
 
+ /*TypedQuery<ecoleDto2> q = em.createQuery( "SELECT new com.vieecoles.dto.ecoleDto2(o.ecoleid,o.ecolecode,o.ecoleclibelle) from ecole o ",
+          ecoleDto2.class);
+*/
         List<ecoleDto2> listEcoleDto = q.getResultList();
 
         return  listEcoleDto;
     }
 
 
-/* 
+/*
     public  List<ecole> findAllecoleAndCycle(){
         return  em.createQuery("select o from ecole o join fetch o.quartier join fetch o.zone join fetch o.groupe_ecole join fetch o.cycles ").getResultList() ;
     }

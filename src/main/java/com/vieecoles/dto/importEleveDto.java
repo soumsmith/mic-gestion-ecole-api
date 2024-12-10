@@ -28,6 +28,9 @@ public class importEleveDto {
     private  String extrait_lieu;
     private  String decision_aff;
     private  String date_inscrip;
+    private String ivoirien;
+    private String etranger_africain;
+    private String etranger_non_africain;
 
     public String getExtrait_numero() {
         return extrait_numero;
@@ -38,6 +41,38 @@ public class importEleveDto {
 
 
     public importEleveDto() {
+    }
+
+    public String getDate_inscrip() {
+        return date_inscrip;
+    }
+
+    public void setDate_inscrip(String date_inscrip) {
+        this.date_inscrip = date_inscrip;
+    }
+
+    public String getIvoirien() {
+        return ivoirien;
+    }
+
+    public void setIvoirien(String ivoirien) {
+        this.ivoirien = ivoirien;
+    }
+
+    public String getEtranger_africain() {
+        return etranger_africain;
+    }
+
+    public void setEtranger_africain(String etranger_africain) {
+        this.etranger_africain = etranger_africain;
+    }
+
+    public String getEtranger_non_africain() {
+        return etranger_non_africain;
+    }
+
+    public void setEtranger_non_africain(String etranger_non_africain) {
+        this.etranger_non_africain = etranger_non_africain;
     }
 
     public String getId_eleve() {

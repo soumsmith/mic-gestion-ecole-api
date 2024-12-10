@@ -31,6 +31,8 @@ public class InscriptionService {
                 request.setIdAnciennete(eleve.getAnciennete());
                 request.setIdScolarite(eleve.getScolarite_arabe());
                 request.setIdClasse(eleve.getClasse_arabe());
+                request.setIdClasse2(eleve.getClasse_francais());
+                request.setIdScolarite2(eleve.getScolarite_francais());
                 System.out.println("Requête envoyée : " + request);
 
                 inscriptionApiClient.creerInscription(request); // Appel de l'API d'inscription

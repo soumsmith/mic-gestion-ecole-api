@@ -1,0 +1,877 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CertificatFrequentationIGON" pageWidth="630" pageHeight="842" columnWidth="630" leftMargin="0" rightMargin="0" topMargin="20" bottomMargin="20" uuid="cecdf213-9a9e-43a3-a0f6-256935281386">
+	<property name="net.sf.jasperreports.awt.ignore.missing.font" value="true"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ecolevieDB"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="431"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="559"/>
+	<style name="champsLibelle" fontName="Serif" fontSize="8">
+		<box leftPadding="5"/>
+	</style>
+	<style name="TitreLibelle" fontName="Serif" fontSize="10">
+		<box leftPadding="5"/>
+	</style>
+	<style name="TotalCateg" hTextAlign="Center" fontName="Serif" fontSize="10"/>
+	<subDataset name="DatasetParcours" uuid="e720d79a-55bc-48ab-9f2d-112623c7b358">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="anneeScol" class="java.lang.String"/>
+		<field name="etabliLibe" class="java.lang.String"/>
+		<field name="classeLibell" class="java.lang.String"/>
+		<field name="moyGenAnnuelle" class="java.lang.Double"/>
+		<field name="rangAn" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="logo" class="java.awt.Image" isForPrompting="false"/>
+	<parameter name="bg" class="java.awt.Image" isForPrompting="false"/>
+	<parameter name="libelleEcole" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="adresse" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="telephone" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="code" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="statut" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="ecoleId" class="java.lang.Long"/>
+	<parameter name="matricule" class="java.lang.String"/>
+	<parameter name="AnneeId" class="java.lang.Long" isForPrompting="false"/>
+	<parameter name="signataire" class="java.lang.String"/>
+	<parameter name="fonction" class="java.lang.String"/>
+	<parameter name="photo_eleve" class="java.awt.Image" isForPrompting="false"/>
+	<parameter name="amoirie" class="java.awt.Image" isForPrompting="false"/>
+	<parameter name="annee" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[select * from  `ecoleviedbv2`.certificat_frequentation
+where `ecoleviedbv2`.certificat_frequentation.eleve_matricule = $P{matricule} and
+`ecoleviedbv2`.certificat_frequentation.annee_scolaire_libelle= $P{annee} and
+`ecoleviedbv2`.certificat_frequentation.ecoleid =  $P{ecoleId}]]>
+	</queryString>
+	<field name="ecoleclibelle" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ecoleclibelle"/>
+		<property name="com.jaspersoft.studio.field.label" value="ecoleclibelle"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
+	</field>
+	<field name="ecole_adresse" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ecole_adresse"/>
+		<property name="com.jaspersoft.studio.field.label" value="ecole_adresse"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
+	</field>
+	<field name="ecoleid" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="ecoleid"/>
+		<property name="com.jaspersoft.studio.field.label" value="ecoleid"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
+	</field>
+	<field name="ecolecode" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ecolecode"/>
+		<property name="com.jaspersoft.studio.field.label" value="ecolecode"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
+	</field>
+	<field name="ecole_statut" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ecole_statut"/>
+		<property name="com.jaspersoft.studio.field.label" value="ecole_statut"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
+	</field>
+	<field name="ecole_telephone" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ecole_telephone"/>
+		<property name="com.jaspersoft.studio.field.label" value="ecole_telephone"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
+	</field>
+	<field name="logo" class="byte[]">
+		<property name="com.jaspersoft.studio.field.name" value="logo"/>
+		<property name="com.jaspersoft.studio.field.label" value="logo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
+	</field>
+	<field name="filigramme" class="byte[]">
+		<property name="com.jaspersoft.studio.field.name" value="filigramme"/>
+		<property name="com.jaspersoft.studio.field.label" value="filigramme"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
+	</field>
+	<field name="inscriptionscode" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="inscriptionscode"/>
+		<property name="com.jaspersoft.studio.field.label" value="inscriptionscode"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
+	</field>
+	<field name="libelle" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="libelle"/>
+		<property name="com.jaspersoft.studio.field.label" value="libelle"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
+	</field>
+	<field name="eleve_matricule" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="eleve_matricule"/>
+		<property name="com.jaspersoft.studio.field.label" value="eleve_matricule"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
+	</field>
+	<field name="elevenom" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="elevenom"/>
+		<property name="com.jaspersoft.studio.field.label" value="elevenom"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
+	</field>
+	<field name="eleveprenom" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="eleveprenom"/>
+		<property name="com.jaspersoft.studio.field.label" value="eleveprenom"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
+	</field>
+	<field name="eleve_sexe" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="eleve_sexe"/>
+		<property name="com.jaspersoft.studio.field.label" value="eleve_sexe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
+	</field>
+	<field name="eleve_nationalite" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="eleve_nationalite"/>
+		<property name="com.jaspersoft.studio.field.label" value="eleve_nationalite"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
+	</field>
+	<field name="inscriptions_langue_vivante" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="inscriptions_langue_vivante"/>
+		<property name="com.jaspersoft.studio.field.label" value="inscriptions_langue_vivante"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
+	</field>
+	<field name="elevedate_naissance" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="elevedate_naissance"/>
+		<property name="com.jaspersoft.studio.field.label" value="elevedate_naissance"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
+	</field>
+	<field name="elevelieu_naissance" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="elevelieu_naissance"/>
+		<property name="com.jaspersoft.studio.field.label" value="elevelieu_naissance"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
+	</field>
+	<field name="eleveadresse" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="eleveadresse"/>
+		<property name="com.jaspersoft.studio.field.label" value="eleveadresse"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
+	</field>
+	<field name="elevecellulaire" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="elevecellulaire"/>
+		<property name="com.jaspersoft.studio.field.label" value="elevecellulaire"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
+	</field>
+	<field name="nom_prenoms_pere" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nom_prenoms_pere"/>
+		<property name="com.jaspersoft.studio.field.label" value="nom_prenoms_pere"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
+	</field>
+	<field name="nom_prenoms_mere" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nom_prenoms_mere"/>
+		<property name="com.jaspersoft.studio.field.label" value="nom_prenoms_mere"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
+	</field>
+	<field name="nom_prenoms_tuteur" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nom_prenoms_tuteur"/>
+		<property name="com.jaspersoft.studio.field.label" value="nom_prenoms_tuteur"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
+	</field>
+	<field name="commune" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="commune"/>
+		<property name="com.jaspersoft.studio.field.label" value="commune"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
+	</field>
+	<field name="inscriptions_status" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="inscriptions_status"/>
+		<property name="com.jaspersoft.studio.field.label" value="inscriptions_status"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
+		<fieldDescription><![CDATA[VALIDEEN  ATTENTE]]></fieldDescription>
+	</field>
+	<field name="inscriptions_redoublant" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="inscriptions_redoublant"/>
+		<property name="com.jaspersoft.studio.field.label" value="inscriptions_redoublant"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
+	</field>
+	<field name="inscriptions_boursier" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="inscriptions_boursier"/>
+		<property name="com.jaspersoft.studio.field.label" value="inscriptions_boursier"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
+	</field>
+	<field name="eleve_numero_extrait_naiss" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="eleve_numero_extrait_naiss"/>
+		<property name="com.jaspersoft.studio.field.label" value="eleve_numero_extrait_naiss"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
+	</field>
+	<field name="elevedate_etabli_extrait_naiss" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="elevedate_etabli_extrait_naiss"/>
+		<property name="com.jaspersoft.studio.field.label" value="elevedate_etabli_extrait_naiss"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
+	</field>
+	<field name="inscriptions_derniereclasse_religieuse" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="inscriptions_derniereclasse_religieuse"/>
+		<property name="com.jaspersoft.studio.field.label" value="inscriptions_derniereclasse_religieuse"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
+	</field>
+	<field name="inscriptions_ecole_origine" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="inscriptions_ecole_origine"/>
+		<property name="com.jaspersoft.studio.field.label" value="inscriptions_ecole_origine"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
+	</field>
+	<field name="inscriptions_classe_precedente" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="inscriptions_classe_precedente"/>
+		<property name="com.jaspersoft.studio.field.label" value="inscriptions_classe_precedente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
+	</field>
+	<field name="num_decision_affecte" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="num_decision_affecte"/>
+		<property name="com.jaspersoft.studio.field.label" value="num_decision_affecte"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
+	</field>
+	<field name="classelibelle" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="classelibelle"/>
+		<property name="com.jaspersoft.studio.field.label" value="classelibelle"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
+	</field>
+	<field name="amoirie" class="byte[]">
+		<property name="com.jaspersoft.studio.field.name" value="amoirie"/>
+		<property name="com.jaspersoft.studio.field.label" value="amoirie"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
+	</field>
+	<field name="annee_scolaire_libelle" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="annee_scolaire_libelle"/>
+		<property name="com.jaspersoft.studio.field.label" value="annee_scolaire_libelle"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
+	</field>
+	<field name="photo_eleve" class="byte[]">
+		<property name="com.jaspersoft.studio.field.name" value="photo_eleve"/>
+		<property name="com.jaspersoft.studio.field.label" value="photo_eleve"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
+	</field>
+	<field name="inscriptions_statut_eleve" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="inscriptions_statut_eleve"/>
+		<property name="com.jaspersoft.studio.field.label" value="inscriptions_statut_eleve"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="certificat_frequentation"/>
+	</field>
+	<group name="InfosPersonnelEleve"/>
+	<group name="DisciplineLettre"/>
+	<group name="BilanScientifique"/>
+	<group name="infosGenerale"/>
+	<group name="categorie">
+		<groupHeader>
+			<band/>
+		</groupHeader>
+	</group>
+	<group name="GoupeMatiere">
+		<groupHeader>
+			<band height="229">
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<textField>
+					<reportElement x="20" y="0" width="590" height="20" uuid="e450d49c-535c-4b3a-b5a5-8fd91f5c8504"/>
+					<box>
+						<pen lineWidth="0.5" lineStyle="Dashed"/>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Je soussigné "+$P{signataire}.toUpperCase()+","+$P{fonction}+"  du"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="20" y="20" width="590" height="20" uuid="b34ce046-cebe-46d0-b5a0-341a9f69acd4"/>
+					<box>
+						<pen lineWidth="0.5" lineStyle="Dashed"/>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{ecoleclibelle}.toUpperCase()+",  "+"certifie que :"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="20" y="40" width="590" height="20" uuid="eb00e4ed-5966-44c6-9cb4-2e11562ffe61"/>
+					<box>
+						<pen lineWidth="0.5" lineStyle="Dashed"/>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA["L'élève :"+$F{elevenom}.toUpperCase()+" "+$F{eleveprenom}.toUpperCase()]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="20" y="60" width="590" height="20" uuid="2351f277-de33-4e46-9d67-76d5c6a18dcd"/>
+					<box>
+						<pen lineWidth="0.5" lineStyle="Dashed"/>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Né(e) le "+$F{elevedate_naissance}+"  à"+$F{elevelieu_naissance}.toUpperCase()]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="20" y="80" width="590" height="20" uuid="5d10998f-f72d-48ce-848f-f0ee40c384d2"/>
+					<box>
+						<pen lineWidth="0.5" lineStyle="Dashed"/>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Nationalité :"+$F{eleve_nationalite}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="ScaleFont">
+					<reportElement x="20" y="100" width="590" height="20" uuid="a6b7554f-5d9c-49e9-80c1-a55c4811cd05"/>
+					<box>
+						<pen lineWidth="0.5" lineStyle="Dashed"/>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Est inscrit(e) sur le registre de l'établissement pour l'année scolaire : " +$P{annee}+" ,"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="20" y="120" width="590" height="20" uuid="1328adf1-d0f9-4144-9c99-f9b6d341b942"/>
+					<box>
+						<pen lineWidth="0.5" lineStyle="Dashed"/>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA["et fréquente régulièrement la classe de "+$F{libelle}+" ."]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="20" y="140" width="590" height="20" uuid="74207711-ef2b-471d-818e-a7bef89270ec"/>
+					<box>
+						<pen lineWidth="0.5" lineStyle="Dashed"/>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle" markup="html">
+						<font fontName="Arial" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA["<html><b>Matricule</b> : " + $F{eleve_matricule} + "</html>"]]></textFieldExpression>
+				</textField>
+				<frame>
+					<reportElement x="410" y="167" width="150" height="20" uuid="6be0dff2-2fe5-4d87-8f46-07aeb95abe17">
+						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+					</reportElement>
+					<textField>
+						<reportElement x="0" y="0" width="90" height="20" uuid="bea0cfd6-2648-4845-94e6-5bfca50f7cbc">
+							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						</reportElement>
+						<textElement>
+							<font fontName="Arial" size="14"/>
+						</textElement>
+						<textFieldExpression><![CDATA["Affecté(e) :"]]></textFieldExpression>
+					</textField>
+					<textField>
+						<reportElement x="90" y="0" width="60" height="20" uuid="663de382-8770-4d91-9891-dfa61707438f">
+							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						</reportElement>
+						<textElement>
+							<font fontName="Arial" size="14"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{inscriptions_statut_eleve}==null?"NON" : $F{inscriptions_statut_eleve}.equals("AFFECTE")? "OUI":$F{inscriptions_statut_eleve}.equals("NON_AFFECTE")? " NON": "NON"]]></textFieldExpression>
+					</textField>
+				</frame>
+				<frame>
+					<reportElement x="410" y="187" width="150" height="20" uuid="f18e90e1-a3b4-457c-bf70-50858f6e80d9">
+						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+					</reportElement>
+					<textField>
+						<reportElement x="0" y="0" width="90" height="20" uuid="65a98fd9-35ae-42bd-9c83-3c83d8b46e4c">
+							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						</reportElement>
+						<textElement>
+							<font fontName="Arial" size="14"/>
+						</textElement>
+						<textFieldExpression><![CDATA["Boursier(e) :"]]></textFieldExpression>
+					</textField>
+					<textField>
+						<reportElement x="90" y="0" width="60" height="20" uuid="05a7fd18-f091-4229-9b0b-c235da98d7b4">
+							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						</reportElement>
+						<textElement>
+							<font fontName="Arial" size="14"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{inscriptions_boursier}==null?"NON" : $F{inscriptions_boursier}.equals("B") ? " OUI" : $F{inscriptions_boursier}.equals("1/2B") ?  "OUI" :"NON"]]></textFieldExpression>
+					</textField>
+				</frame>
+			</band>
+			<band/>
+		</groupHeader>
+	</group>
+	<background>
+		<band height="800" splitType="Immediate">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<image scaleImage="FillFrame" onErrorType="Blank">
+				<reportElement x="13" y="10" width="605" height="790" uuid="dddb9690-6a72-4f76-9930-508577e876fa"/>
+				<imageExpression><![CDATA[$F{filigramme}]]></imageExpression>
+			</image>
+		</band>
+	</background>
+	<title>
+		<band height="67" splitType="Stretch">
+			<frame>
+				<reportElement style="TotalCateg" x="19" y="-12" width="591" height="79" uuid="0d92ee3e-bb2e-44be-b923-70b2be5e0171">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+				</reportElement>
+				<frame>
+					<reportElement x="0" y="0" width="455" height="70" uuid="ffda8dc2-a7ee-4bb7-916c-174cb20aae68">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<frame>
+						<reportElement x="0" y="0" width="455" height="70" uuid="e68f22aa-c70a-49fa-89e7-c47c1b05e6d5">
+							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						</reportElement>
+						<image scaleImage="FillFrame" onErrorType="Blank">
+							<reportElement x="0" y="0" width="89" height="70" uuid="7fe39447-d640-43b0-a566-d8158f299e49">
+								<property name="com.jaspersoft.layout.grid.x" value="0"/>
+								<property name="com.jaspersoft.layout.grid.y" value="0"/>
+								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.rowspan" value="3"/>
+								<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+								<property name="com.jaspersoft.studio.unit.width" value="px"/>
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							</reportElement>
+							<imageExpression><![CDATA[$P{logo}]]></imageExpression>
+						</image>
+						<staticText>
+							<reportElement style="TitreLibelle" x="89" y="0" width="361" height="14" uuid="36634628-804a-4af6-93a2-3bc587ad220e">
+								<property name="com.jaspersoft.layout.grid.x" value="1"/>
+								<property name="com.jaspersoft.layout.grid.y" value="0"/>
+								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.colspan" value="2"/>
+								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+							</reportElement>
+							<textElement textAlignment="Left">
+								<font fontName="SansSerif" size="8"/>
+								<paragraph leftIndent="10"/>
+							</textElement>
+							<text><![CDATA[MINISTERE DE L'EDUCATION NATIONALE ET DE L'ALPHABETISATION]]></text>
+						</staticText>
+						<textField textAdjust="ScaleFont" isBlankWhenNull="true">
+							<reportElement style="TitreLibelle" x="89" y="14" width="361" height="16" isPrintInFirstWholeBand="true" uuid="d2c6fec4-ff6d-4c67-90d2-9c0a5f3a972a">
+								<property name="com.jaspersoft.layout.grid.x" value="1"/>
+								<property name="com.jaspersoft.layout.grid.y" value="1"/>
+								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.colspan" value="2"/>
+								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+							</reportElement>
+							<textElement textAlignment="Left">
+								<font fontName="SansSerif" size="12" isBold="true"/>
+								<paragraph leftIndent="10"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{ecoleclibelle}]]></textFieldExpression>
+						</textField>
+						<frame>
+							<reportElement x="89" y="30" width="351" height="40" uuid="aab6c102-ff03-489c-b8bf-db27b8fa6d9d">
+								<property name="com.jaspersoft.layout.grid.x" value="1"/>
+								<property name="com.jaspersoft.layout.grid.y" value="2"/>
+								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.colspan" value="3"/>
+								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+								<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+							</reportElement>
+							<staticText>
+								<reportElement x="0" y="0" width="40" height="10" uuid="a3d10371-489c-43f9-ad3b-a6326f72b353">
+									<property name="com.jaspersoft.layout.grid.x" value="0"/>
+									<property name="com.jaspersoft.layout.grid.y" value="0"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+									<property name="com.jaspersoft.studio.unit.height" value="px"/>
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement verticalAlignment="Middle">
+									<font size="6"/>
+									<paragraph leftIndent="15"/>
+								</textElement>
+								<text><![CDATA[Adresse : ]]></text>
+							</staticText>
+							<textField>
+								<reportElement x="48" y="0" width="275" height="10" uuid="9778d97f-71f7-4bf4-97da-2cb328aaad71">
+									<property name="com.jaspersoft.layout.grid.x" value="1"/>
+									<property name="com.jaspersoft.layout.grid.y" value="0"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+								</reportElement>
+								<textElement verticalAlignment="Middle">
+									<font size="6" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{ecole_adresse}==null ? "":$F{ecole_adresse}]]></textFieldExpression>
+							</textField>
+							<staticText>
+								<reportElement x="0" y="20" width="40" height="10" uuid="7777e46b-4953-4210-95d9-2f571a33168a">
+									<property name="com.jaspersoft.layout.grid.x" value="0"/>
+									<property name="com.jaspersoft.layout.grid.y" value="2"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+									<property name="com.jaspersoft.studio.unit.height" value="px"/>
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement verticalAlignment="Middle">
+									<font size="6"/>
+									<paragraph leftIndent="15"/>
+								</textElement>
+								<text><![CDATA[Code:]]></text>
+							</staticText>
+							<textField>
+								<reportElement x="48" y="20" width="275" height="10" uuid="5ae926aa-4ce8-4c0b-92c7-96a3ea865f26">
+									<property name="com.jaspersoft.layout.grid.x" value="1"/>
+									<property name="com.jaspersoft.layout.grid.y" value="2"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+								</reportElement>
+								<textElement verticalAlignment="Middle">
+									<font size="6" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{ecolecode}]]></textFieldExpression>
+							</textField>
+							<staticText>
+								<reportElement x="0" y="10" width="48" height="10" uuid="56865844-b57d-4273-aed9-ccde4ccc4eb2">
+									<property name="com.jaspersoft.layout.grid.x" value="0"/>
+									<property name="com.jaspersoft.layout.grid.y" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+									<property name="com.jaspersoft.studio.unit.height" value="px"/>
+									<property name="com.jaspersoft.studio.unit.width" value="px"/>
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement verticalAlignment="Middle">
+									<font size="6"/>
+									<paragraph leftIndent="15"/>
+								</textElement>
+								<text><![CDATA[Téléphone:]]></text>
+							</staticText>
+							<textField>
+								<reportElement x="48" y="10" width="275" height="10" uuid="af5d9d45-f717-454f-a84f-0197784f968c">
+									<property name="com.jaspersoft.layout.grid.x" value="1"/>
+									<property name="com.jaspersoft.layout.grid.y" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+								</reportElement>
+								<textElement verticalAlignment="Middle">
+									<font size="6" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{ecole_telephone}==null ? "":$F{ecole_telephone}]]></textFieldExpression>
+							</textField>
+							<staticText>
+								<reportElement x="0" y="30" width="40" height="10" uuid="5c1da4c4-186b-4195-a3e9-eb57cfd133bc">
+									<property name="com.jaspersoft.layout.grid.x" value="0"/>
+									<property name="com.jaspersoft.layout.grid.y" value="3"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+									<property name="com.jaspersoft.studio.unit.height" value="px"/>
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement verticalAlignment="Middle">
+									<font size="6"/>
+									<paragraph leftIndent="15"/>
+								</textElement>
+								<text><![CDATA[Statut:]]></text>
+							</staticText>
+							<textField>
+								<reportElement x="48" y="30" width="275" height="10" uuid="b66b3e16-956b-4211-8fd9-e31bd4f66625">
+									<property name="com.jaspersoft.layout.grid.x" value="1"/>
+									<property name="com.jaspersoft.layout.grid.y" value="3"/>
+									<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+									<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+								</reportElement>
+								<textElement verticalAlignment="Middle">
+									<font size="6" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{ecole_statut}==null? "" :$F{ecole_statut}]]></textFieldExpression>
+							</textField>
+						</frame>
+					</frame>
+				</frame>
+				<frame>
+					<reportElement x="455" y="0" width="120" height="78" uuid="4a21b0ca-32b6-452c-8329-d23e62436788">
+						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+					</reportElement>
+					<frame>
+						<reportElement x="0" y="0" width="120" height="78" uuid="b6df39d0-e059-4af5-a0f9-936aaed1814a">
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+							<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.rowspan" value="5"/>
+							<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+						</reportElement>
+						<image scaleImage="FillFrame" hAlign="Center" onErrorType="Blank">
+							<reportElement x="0" y="14" width="84" height="64" uuid="4986db79-2f2f-4b0f-b870-d4af978eeb73">
+								<property name="com.jaspersoft.layout.grid.x" value="1"/>
+								<property name="com.jaspersoft.layout.grid.y" value="1"/>
+								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.rowspan" value="2"/>
+								<property name="com.jaspersoft.layout.grid.colspan" value="2"/>
+								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+								<property name="com.jaspersoft.studio.unit.width" value="px"/>
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							</reportElement>
+							<box leftPadding="0"/>
+							<imageExpression><![CDATA[$F{amoirie}]]></imageExpression>
+						</image>
+						<staticText>
+							<reportElement x="0" y="0" width="120" height="14" uuid="09d078b0-7011-40fd-ae75-0ee010c0a540">
+								<property name="com.jaspersoft.layout.grid.x" value="0"/>
+								<property name="com.jaspersoft.layout.grid.y" value="0"/>
+								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.colspan" value="3"/>
+								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+							</reportElement>
+							<textElement textAlignment="Left" verticalAlignment="Middle">
+								<font fontName="SansSerif" size="6"/>
+							</textElement>
+							<text><![CDATA[REPUBLIQUE DE COTE D'IVOIRE]]></text>
+						</staticText>
+					</frame>
+				</frame>
+				<line>
+					<reportElement x="0" y="78" width="584" height="1" uuid="ffb0aef9-2adf-4b29-8211-8848e89a5ca5">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="2"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+					</reportElement>
+				</line>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="100">
+			<frame>
+				<reportElement x="19" y="0" width="591" height="100" uuid="00f1937a-aa28-469b-9eb6-c2c1a8c5fa5d">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+				</reportElement>
+				<frame>
+					<reportElement x="0" y="30" width="591" height="65" uuid="8ffb767a-e06d-4678-a946-1344308fc520">
+						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+						<property name="com.jaspersoft.layout.grid.x" value="3"/>
+						<property name="com.jaspersoft.layout.grid.y" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+					</reportElement>
+					<image scaleImage="FillFrame" onErrorType="Blank">
+						<reportElement x="508" y="0" width="83" height="65" uuid="ead8d2cf-965c-4bfa-a420-f2630105d2a3">
+							<property name="com.jaspersoft.layout.grid.x" value="4"/>
+							<property name="com.jaspersoft.layout.grid.y" value="0"/>
+							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						</reportElement>
+						<imageExpression><![CDATA[$F{photo_eleve}]]></imageExpression>
+					</image>
+					<frame>
+						<reportElement x="0" y="0" width="504" height="60" uuid="bd519287-9e26-4a07-973c-2d404677ee8f">
+							<property name="com.jaspersoft.layout.grid.x" value="0"/>
+							<property name="com.jaspersoft.layout.grid.y" value="0"/>
+							<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+							<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						</reportElement>
+						<textField>
+							<reportElement x="0" y="0" width="504" height="60" uuid="9d314154-26f0-4953-9ec5-a8f0bb2408fc">
+								<property name="com.jaspersoft.layout.grid.x" value="0"/>
+								<property name="com.jaspersoft.layout.grid.y" value="0"/>
+								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+								<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+								<property name="com.jaspersoft.layout.grid.colspan" value="5"/>
+								<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+							</reportElement>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="Arial" size="20" isBold="true" isUnderline="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA["CERTIFICAT DE FREQUENTATION"]]></textFieldExpression>
+						</textField>
+					</frame>
+					<frame>
+						<reportElement x="504" y="0" width="4" height="65" uuid="b7943d1f-27c1-4a40-9b55-6bc4cc60d185"/>
+					</frame>
+				</frame>
+				<textField>
+					<reportElement x="0" y="0" width="591" height="30" uuid="e28591b3-6925-4a78-87f0-0e2347ad50f8">
+						<property name="com.jaspersoft.layout.grid.x" value="0"/>
+						<property name="com.jaspersoft.layout.grid.y" value="0"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="5"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+					</reportElement>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Calibri" size="11" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Année Scolaire : " + $P{annee}.replace("Année ", "")]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageHeader>
+	<summary>
+		<band height="99">
+			<frame>
+				<reportElement x="20" y="3" width="582" height="86" uuid="f058a4d0-9cfc-479d-94fd-ab703f7d0b9e">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+				</reportElement>
+				<textField>
+					<reportElement x="0" y="0" width="574" height="20" uuid="57bf4cd2-84d8-4fb3-b6c4-7b11132b4f70">
+						<property name="com.jaspersoft.layout.grid.x" value="0"/>
+						<property name="com.jaspersoft.layout.grid.y" value="0"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="3"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+					</reportElement>
+					<textElement>
+						<font fontName="Arial" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA["En foi de quoi ,le présent certificat est établie pour servir et valoir ce que de droit ."]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="8" y="20" width="462" height="20" uuid="ed861cbd-d247-4772-8328-86d7e83386c6">
+						<property name="com.jaspersoft.layout.grid.x" value="1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+					</reportElement>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Abidjan le "]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="8" y="40" width="566" height="20" uuid="c9d6ce23-ac81-4b05-9d29-5bad683f07c3">
+						<property name="com.jaspersoft.layout.grid.x" value="1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="2"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="2"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+					</reportElement>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="14" isUnderline="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{fonction}.toUpperCase()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</summary>
+</jasperReport>
