@@ -108,7 +108,6 @@ public class Bulletin extends PanacheEntityBase{
 	private String ecoleOrigine;
 	@Column(name = "nom_signataire")
 	private String nomSignataire;
-
 	@Lob
 	@Basic(fetch = FetchType.LAZY)
 	@Column(length=100000)

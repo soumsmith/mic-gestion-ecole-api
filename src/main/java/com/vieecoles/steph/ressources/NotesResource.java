@@ -72,7 +72,8 @@ public class NotesResource {
     		r.printStackTrace();
     		return Response.serverError().entity(r).build();
     	}
-    	return  Response.ok(medtos).build()  ;
+//    	return  Response.ok(medtos).build();
+    	return  Response.ok(noteService.buildListMoyenneEleve(medtos)).build()  ;
     }
     
     @GET

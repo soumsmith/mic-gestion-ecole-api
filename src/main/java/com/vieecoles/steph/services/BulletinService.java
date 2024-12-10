@@ -228,6 +228,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 				adj.setMatricule(bulletinDto.getMatricule());
 				adj.setPeriode(bulletinDto.getPeriodeId());
 				adj.setMoyenne(dtb.getAdjustMoyenne());
+				adj.setClasse(bulletinDto.getClasseId());
 				adj.setStatut(dtb.getStatut());
 				adj.setMatiere(dtb.getMatiereId());
 				list.add(adj);
@@ -298,6 +299,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 		b.setEcoleOrigine(bulletin.getEcoleOrigine());
 		b.setNomSignataire(bulletin.getNomSignataire());
 		b.setTransfert(bulletin.getTransfert());
+		b.setIvoirien(bulletin.getIvoirien());
 		b.setRang(bulletin.getRang());
 		b.setHeuresAbsJustifiees(bulletin.getHeuresAbsJustifiees());
 		b.setHeuresAbsNonJustifiees(bulletin.getHeuresAbsNonJustifiees());
@@ -479,7 +481,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 					bulletin.setEcoleOrigine(infosInscriptionsEleve.getEcoleOrigine());
 					bulletin.setTransfert(infosInscriptionsEleve.getTransfert());
 					bulletin.setUrlPhoto(infosInscriptionsEleve.getUrlPhoto());
-				}
+					bulletin.setIvoirien(infosInscriptionsEleve.getIvoirien());		}
 
 				logger.info("Création bulletin ...");
 				save(bulletin);

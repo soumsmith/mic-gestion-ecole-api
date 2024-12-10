@@ -91,7 +91,6 @@ public class Inscription extends PanacheEntityBase {
 	private String ecoleOrigine;
 	@Column(name = "transfert")
 	private Boolean transfert;
-
 	@Column(name = "reaffecte")
 	private Boolean reaffecte;
 	@Column(name = "internes")
