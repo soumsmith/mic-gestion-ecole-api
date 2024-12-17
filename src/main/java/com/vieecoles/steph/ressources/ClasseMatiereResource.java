@@ -106,7 +106,7 @@ public class ClasseMatiereResource {
 	}
 	
 	@POST
-	@Path("/apply-coefficients/{ecoleId}")
+	@Path("/apply/coefficients/{ecoleId}")
 	@Tag(name = "ClasseMatiere")
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response handleCoef(@PathParam("ecoleId") Long ecoleId) {
