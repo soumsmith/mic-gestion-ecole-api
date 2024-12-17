@@ -104,4 +104,19 @@ public class ClasseMatiereResource {
 			return Response.serverError().entity(e.getMessage()).build();
 		}
 	}
+	
+	@POST
+	@Path("/apply-coefficients/{ecoleId}")
+	@Tag(name = "ClasseMatiere")
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response handleCoef(@PathParam("ecoleId") Long ecoleId) {
+
+		try {
+			classeMatiereService.generateDefaultBrancheMatiereByEcole(ecoleId);
+			return Response.ok("Coeficient mis à jour").build();
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+			return Response.serverError().entity(e.getMessage()).build();
+		}
+	}
 }

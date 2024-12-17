@@ -2,6 +2,7 @@ package com.vieecoles.steph.services;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -62,16 +63,16 @@ public class ClasseMatiereService implements PanacheRepositoryBase<ClasseMatiere
 		Ecole ecole = new Ecole();
 		branche = brancheService.findById(brancheId);
 		ecole = ecoleService.findById(ecoleId);
-		//liste des matiere à coef non defini
-		for(EcoleHasMatiere ehm : ehmList) {
-			for(ClasseMatiere cm : cmList) {
+		// liste des matiere à coef non defini
+		for (EcoleHasMatiere ehm : ehmList) {
+			for (ClasseMatiere cm : cmList) {
 //				System.out.println(String.format("%s %s  --- %s %s", ehm.getLibelle(),ehm.getId(),cm.getMatiere().getId(),cm.getMatiere().getLibelle()));
-				if(ehm.getId() == cm.getMatiere().getId()) {
+				if (ehm.getId() == cm.getMatiere().getId()) {
 					isDefined = true;
 					break;
 				}
 			}
-			if(!isDefined) {
+			if (!isDefined) {
 				ClasseMatiere cmat = new ClasseMatiere();
 
 				cmat.setBranche(branche);
@@ -82,7 +83,7 @@ public class ClasseMatiereService implements PanacheRepositoryBase<ClasseMatiere
 			}
 			isDefined = false;
 		}
-		//Ajout des matiere à coef defini
+		// Ajout des matiere à coef defini
 		cmToReturn.addAll(cmList);
 		System.out.println(cmToReturn.size());
 		List<ClasseMatiere> cmTmpWithCoef = sortedClasseMatiereList(cmToReturn);
@@ -94,8 +95,8 @@ public class ClasseMatiereService implements PanacheRepositoryBase<ClasseMatiere
 		List<ClasseMatiere> cmTmp = new ArrayList<ClasseMatiere>();
 		List<ClasseMatiere> cmTmpWithCoef = new ArrayList<ClasseMatiere>();
 
-		for(ClasseMatiere cm: cmToReturn) {
-			if(cm.getCoef()!=null)
+		for (ClasseMatiere cm : cmToReturn) {
+			if (cm.getCoef() != null)
 				cmTmpWithCoef.add(cm);
 			else
 				cmTmp.add(cm);
@@ -106,7 +107,9 @@ public class ClasseMatiereService implements PanacheRepositoryBase<ClasseMatiere
 
 	public List<ClasseMatiere> getByEcole(long ecoleId) {
 		System.out.println("Ecole ::: " + ecoleId);
-		return ClasseMatiere.find("select distinct m.matiere.libelle from ClasseMatiere m where m.matiere.ecole.id = ?1", ecoleId).list();
+		return ClasseMatiere
+				.find("select distinct m.matiere.libelle from ClasseMatiere m where m.matiere.ecole.id = ?1", ecoleId)
+				.list();
 	}
 
 	public List<ClasseMatiere> getByBranche(long brancheId, long ecoleId) {
@@ -135,6 +138,8 @@ public class ClasseMatiereService implements PanacheRepositoryBase<ClasseMatiere
 
 	@Transactional
 	public void create(ClasseMatiere classeMatiere) {
+		classeMatiere.setDateCreation(new Date());
+		classeMatiere.setDateUpdate(new Date());
 		classeMatiere.persist();
 	}
 
@@ -219,5 +224,51 @@ public class ClasseMatiereService implements PanacheRepositoryBase<ClasseMatiere
 			}
 		}
 
+	}
+
+	public List<ClasseMatiere> getByMatiereEcole(Long matiereEcole) {
+		List<ClasseMatiere> cmList = new ArrayList<>();
+
+		try {
+			cmList = ClasseMatiere.find("matiere.id =?1 ", matiereEcole).list();
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+		}
+		return cmList;
+	}
+
+	/**
+	 * Cette méthode est utilisée pour mettre à jour les coeficients des matières d'une école
+	 * 
+	 * @param ecoleId
+	 */
+	@Transactional
+	public void generateDefaultBrancheMatiereByEcole(Long ecoleId) {
+		List<EcoleHasMatiere> matieresEcole = ecoleHasMatiereService.getListByEcole(ecoleId);
+		List<Branche> branches = brancheService.findByNiveauEnseignementViaEcole(ecoleId);
+		Integer exist = 0;
+		Integer notExist = 0;
+		if (matieresEcole != null) {
+			for (EcoleHasMatiere m : matieresEcole) {
+				List<ClasseMatiere> cmList = getByMatiereEcole(m.getId());
+				for (Branche b : branches) {
+					Long cms = cmList.stream().filter(c -> c.getBranche().getId() == b.getId()).count();
+					if (cms == 0L) {
+						ClasseMatiere cm = new ClasseMatiere();
+						cm.setEcole(m.getEcole());
+						cm.setMatiere(m);
+						cm.setCoef("1");
+						cm.setBranche(b);
+						create(cm);
+						notExist++;
+					} else {
+						exist++;
+					}
+				}
+			}
+		}
+		System.out.println(String.format("%S coef existant(s)", exist));
+		System.out.println(String.format("%S coef crée(s)", notExist));
+		System.out.println(String.format("pour l ecole id %S ", ecoleId));
 	}
 }
