@@ -11,6 +11,7 @@ import com.vieecoles.processors.dren3.services.resultatsRecapAffEtNonAffCycleSer
 import com.vieecoles.services.etats.resultatsRecapServices;
 import com.vieecoles.steph.entities.Ecole;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,10 @@ import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.apache.poi.xwpf.usermodel.XWPFTableCell;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTBorder;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTcBorders;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTcPr;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.STBorder;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.STMerge;
 
 @ApplicationScoped
@@ -271,13 +276,30 @@ public class WordTempStatistiqueAgeProcessor {
         totalRow.getCell(22).setText(String.valueOf(safeValue(total2020)));
         totalRow.getCell(23).setText(String.valueOf(safeValue(total2021)));
         totalRow.getCell(24).setText(String.valueOf(safeValue(TotalGeneral)));
+        for (XWPFTableRow row : table.getRows()) {
+          for (XWPFTableCell cell : row.getTableCells()) {
+            // Obtenez les propriétés de la cellule
+            CTTcPr cellProperties = cell.getCTTc().addNewTcPr();
+            CTTcBorders borders = cellProperties.addNewTcBorders();
+
+            // Définir les bordures pour chaque côté
+            setBorder(borders.addNewTop(), "000000", 8);
+            setBorder(borders.addNewBottom(), "000000", 8);
+            setBorder(borders.addNewLeft(), "000000", 8);
+            setBorder(borders.addNewRight(), "000000", 8);
+          }
+        }
 
       }
 
      // mergeCellsVertically(table, 0, 1, table.getNumberOfRows()-1 );
     }
 
-
+  private static void setBorder(CTBorder border, String color, int size) {
+    border.setVal(STBorder.SINGLE);
+    border.setSz(BigInteger.valueOf(size));
+    border.setColor(color);
+  }
 
   private static void mergeCellsVertically(XWPFTable table, int col, int fromRow, int toRow) {
     for (int rowIndex = fromRow; rowIndex <= toRow; rowIndex++) {

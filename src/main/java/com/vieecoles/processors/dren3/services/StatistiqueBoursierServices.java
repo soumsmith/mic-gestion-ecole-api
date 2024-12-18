@@ -133,7 +133,7 @@ public class StatistiqueBoursierServices {
   public  Long geteffeBoursierF(Long idEcole , int  niveau ,String libelleAnnee , String libelleTrimestre){
     Long effeF ;
     try {
-      return  effeF = (Long) em.createQuery("select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole  and o.libellePeriode=:periode and o.anneeLibelle=:annee and (o.boursier=:boursier1 or  o.boursier=:boursier2 )  group by  o.ordreNiveau having  o.ordreNiveau=:niveau order by o.ordreNiveau desc ")
+      return  effeF = (Long) em.createQuery("select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole  and o.libellePeriode=:periode and o.anneeLibelle=:annee and o.boursier=:boursier1 or  o.boursier=:boursier2   group by  o.ordreNiveau having  o.ordreNiveau=:niveau order by o.ordreNiveau desc ")
           .setParameter("sexe","FEMININ")
           .setParameter("idEcole",idEcole)
           .setParameter("niveau",niveau)
@@ -149,7 +149,7 @@ public class StatistiqueBoursierServices {
   public  Long geteffeBoursierEtabliF(Long idEcole  ,String libelleAnnee , String libelleTrimestre){
     Long effeF ;
     try {
-      return  effeF = (Long) em.createQuery("select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole  and o.libellePeriode=:periode and o.anneeLibelle=:annee and (o.boursier=:boursier1 or  o.boursier=:boursier2 )")
+      return  effeF = (Long) em.createQuery("select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole  and o.libellePeriode=:periode and o.anneeLibelle=:annee and o.boursier=:boursier1 or  o.boursier=:boursier2 ")
           .setParameter("sexe","FEMININ")
           .setParameter("idEcole",idEcole)
           .setParameter("annee", libelleAnnee)
@@ -167,7 +167,7 @@ public class StatistiqueBoursierServices {
 
     Long  effeG ;
     try {
-      effeG= (Long) em.createQuery("select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole   and o.libellePeriode=:periode and o.anneeLibelle=:annee and (o.boursier=:boursier1 or  o.boursier=:boursier2 )  group by o.ordreNiveau having  o.ordreNiveau=:niveau")
+      effeG= (Long) em.createQuery("select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole   and o.libellePeriode=:periode and o.anneeLibelle=:annee and o.boursier=:boursier1 or  o.boursier=:boursier2   group by o.ordreNiveau having  o.ordreNiveau=:niveau")
           .setParameter("sexe","MASCULIN")
           .setParameter("idEcole",idEcole)
           .setParameter("niveau",niveau)
@@ -186,7 +186,7 @@ public class StatistiqueBoursierServices {
 
     Long  effeG ;
     try {
-      effeG= (Long) em.createQuery("select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole   and o.libellePeriode=:periode and o.anneeLibelle=:annee and (o.boursier=:boursier1 or  o.boursier=:boursier2 )")
+      effeG= (Long) em.createQuery("select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole   and o.libellePeriode=:periode and o.anneeLibelle=:annee and o.boursier=:boursier1 or  o.boursier=:boursier2 ")
           .setParameter("sexe","MASCULIN")
           .setParameter("idEcole",idEcole)
           .setParameter("annee", libelleAnnee)

@@ -31,13 +31,19 @@ public class ApprocheParGenreServices {
 
       int LongTableau =dateNiveauDtoList.size() ;
 
-      Long nbreClasse6; Long nbreClasse5; Long nbreClasse4;Long nbreClasse3; Long nbreClasse2A; Long nbreClasse2C; Long nbreClasse1A; Long nbreClasse1C;
-      Long nbreClasse1D;Long nbreClasseTleA; Long nbreClasseTleC;Long nbreClasseTleD; Long nbreClasseTotalEt;Long effectifParClasse6G;Long effectifParClasse5G;
-      Long effectifParClasse4G; Long effectifParClasse3G;Long effectifParClasse2AG;Long effectifParClasse2CG;Long effectifParClasse1AG;Long effectifParClasse1CG;
-      Long effectifParClasse1DG; Long effectifParClasseTleAG;Long effectifParClasseTleCG; Long effectifParClasseTleDG;Long effectifParClasseTotalEtG;
-      Long effectifParClasse6F; Long effectifParClasse5F;Long effectifParClasse4F;Long effectifParClasse3F; Long effectifParClasse2AF;Long effectifParClasse2CF;
-      Long effectifParClasse1AF;Long effectifParClasse1CF;Long effectifParClasse1DF; Long effectifParClasseTleAF;Long effectifParClasseTleCF;
-      Long effectifParClasseTleDF;Long effectifParClasseTotalEtF;
+      Long nbreClasse6=0L; Long nbreClasse5=0L; Long nbreClasse4=0L;Long nbreClasse3=0L; Long nbreClasse2A=0L;
+      Long nbreClasse2C=0L; Long nbreClasse1A=0L; Long nbreClasse1C=0L;
+      Long nbreClasse1D=0L;Long nbreClasseTleA=0L; Long nbreClasseTleC=0L;Long nbreClasseTleD=0L;
+      Long nbreClasseTotalEt=0L;Long effectifParClasse6G=0L;Long effectifParClasse5G=0L;
+      Long effectifParClasse4G=0L; Long effectifParClasse3G=0L;Long effectifParClasse2AG=0L;
+      Long effectifParClasse2CG=0L;Long effectifParClasse1AG=0L;Long effectifParClasse1CG=0L;
+      Long effectifParClasse1DG=0L; Long effectifParClasseTleAG=0L;Long effectifParClasseTleCG=0L;
+      Long effectifParClasseTleDG=0L;Long effectifParClasseTotalEtG=0L;
+      Long effectifParClasse6F=0L; Long effectifParClasse5F=0L;Long effectifParClasse4F=0L;Long effectifParClasse3F=0L;
+      Long effectifParClasse2AF=0L;Long effectifParClasse2CF=0L;
+      Long effectifParClasse1AF=0L;Long effectifParClasse1CF=0L;Long effectifParClasse1DF=0L;
+      Long effectifParClasseTleAF=0L;Long effectifParClasseTleCF=0L;
+      Long effectifParClasseTleDF=0L;Long effectifParClasseTotalEtF=0L;
 
        Integer effectifClasse ;
       ApprocheGenreDto m = new ApprocheGenreDto();
@@ -205,7 +211,7 @@ public class ApprocheParGenreServices {
   public  Long getNombreClasse(Long idEcole , int  niveau ,String libelleAnnee , String libelleTrimestre){
     Long effeF ;
     try {
-      return  effeF = (Long) em.createQuery("select distinct count(o.classeId) from Bulletin o where  o.ecoleId=:idEcole  and o.libellePeriode=:periode and o.anneeLibelle=:annee  group by  o.ordreNiveau having  o.ordreNiveau=:niveau")
+      return  effeF = (Long) em.createQuery("select count(distinct o.classeId) from Bulletin o where  o.ecoleId=:idEcole  and o.libellePeriode=:periode and o.anneeLibelle=:annee  group by  o.ordreNiveau having  o.ordreNiveau=:niveau")
 
           .setParameter("idEcole",idEcole)
           .setParameter("niveau",niveau)
@@ -220,7 +226,7 @@ public class ApprocheParGenreServices {
   public  Long getNombreClasseEtabliss(Long idEcole  ,String libelleAnnee , String libelleTrimestre){
     Long effeF ;
     try {
-      return  effeF = (Long) em.createQuery("select distinct count(o.classeId) from Bulletin o where  o.ecoleId=:idEcole  and o.libellePeriode=:periode and o.anneeLibelle=:annee  group by  o.niveau")
+      return  effeF = (Long) em.createQuery("select count(distinct o.classeId) from Bulletin o where  o.ecoleId=:idEcole  and o.libellePeriode=:periode and o.anneeLibelle=:annee  ")
 
           .setParameter("idEcole",idEcole)
           .setParameter("annee", libelleAnnee)

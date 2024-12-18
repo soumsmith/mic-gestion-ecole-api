@@ -53,10 +53,10 @@ public class WordTempStatistiqueNationaliteProcessor {
 
         try {
 
-          elevesPremierCycle= resultatsServices1.getEffectifNiveauGenre(idEcole ,idAnnee);
+          elevesPremierCycle= resultatsServices1.getEffectifNiveauGenre(idEcole ,idAnnee,libelleAnnee,libelleTrimetre);
 
-         elevesSecondCycle= resultatsServices2.getEffectifNiveauGenre(idEcole ,idAnnee);
-          elevesGeneral=resultatsServices3.getEffectifNiveauGenre(idEcole ,idAnnee);
+         elevesSecondCycle= resultatsServices2.getEffectifNiveauGenre(idEcole ,idAnnee,libelleAnnee,libelleTrimetre);
+          elevesGeneral=resultatsServices3.getEffectifNiveauGenre(idEcole ,idAnnee,libelleAnnee,libelleTrimetre);
          // System.out.println("elevesSecondycle "+elevesSecondCycle.size());
         } catch (Exception e) {
           e.printStackTrace();
@@ -222,7 +222,7 @@ public class WordTempStatistiqueNationaliteProcessor {
           XWPFTableRow premierCycleRow = table.createRow();
           ensureCellCount(premierCycleRow, 18);
           premierCycleRow.getCell(0).setText(currentValue);
-          premierCycleRow.getCell(1).setText(eleve.getNiveau());
+          premierCycleRow.getCell(1).setText(afficherValeurParNiveau(eleve.getNiveau()));
           premierCycleRow.getCell(2).setText(String.valueOf(eleve.getNombreClasse()));
           premierCycleRow.getCell(3).setText(String.valueOf(eleve.getNbreNonRedouIvoireG()));
           premierCycleRow.getCell(4).setText(String.valueOf(eleve.getNbreNonRedouIvoireF()));
@@ -285,7 +285,7 @@ public class WordTempStatistiqueNationaliteProcessor {
         XWPFTableRow secondCycleRow = table.createRow();
         ensureCellCount(secondCycleRow, 18);
         secondCycleRow.getCell(0).setText(currentValue);
-        secondCycleRow.getCell(1).setText(eleve.getNiveau());
+        secondCycleRow.getCell(1).setText(afficherValeurParNiveau(eleve.getNiveau()));
         secondCycleRow.getCell(2).setText(String.valueOf(eleve.getNombreClasse()));
         secondCycleRow.getCell(3).setText(String.valueOf(eleve.getNbreNonRedouIvoireG()));
         secondCycleRow.getCell(4).setText(String.valueOf(eleve.getNbreNonRedouIvoireF()));
@@ -331,7 +331,7 @@ public class WordTempStatistiqueNationaliteProcessor {
       ensureCellCount(totalGeneralRow, 18);
       totalGeneralRow.getCell(0).setText(currentValue);
       totalGeneralRow.getCell(1).setText("Total Etabliss");
-      totalGeneralRow.getCell(2).setText(String.valueOf(nombreClasseCycle2+nombreClasseCycle2));
+      totalGeneralRow.getCell(2).setText(String.valueOf(nombreClasseCycle1+nombreClasseCycle2));
       totalGeneralRow.getCell(3).setText(String.valueOf(nbreNonRedouIvoirienCycle2G+nbreNonRedouIvoirienCycle1G));
       totalGeneralRow.getCell(4).setText(String.valueOf(nbreNonRedouIvoirienCycle2F+nbreNonRedouIvoirienCycle1F));
       totalGeneralRow.getCell(5).setText(String.valueOf(nbreNonRedouIvoirienCycle2G+nbreNonRedouIvoirienCycle2F +nbreNonRedouIvoirienCycle1G+nbreNonRedouIvoirienCycle1F));
@@ -363,7 +363,41 @@ public class WordTempStatistiqueNationaliteProcessor {
     }
   }
 
-
+  public static String afficherValeurParNiveau(String niveau) {
+    // Mapping des niveaux avec leurs correspondants
+    switch (niveau) {
+      case "Sixième":
+        return "6ème";
+      case "Cinquième":
+        return "5ème";
+      case "Quatrième":
+        return "4ème";
+      case "Troisième":
+        return "3ème";
+      case "Seconde C":
+        return "2nde C";
+      case "Seconde A":
+        return "2nde A";
+      case "Première A":
+        return "1ère A";
+      case "Première C":
+        return "1ère C";
+      case "Première D":
+        return "1ère D";
+      case "Terminale A":
+        return "Tle A";
+      case "Terminale A1":
+        return "Tle A1";
+      case "Terminale A2":
+        return "Tle A2";
+      case "Terminale C":
+        return "Tle C";
+      case "Terminale D":
+        return "Tle D";
+      default:
+        return "Niveau inconnu";
+    }
+  }
     public static double arrondie(double d) {
       BigDecimal bd = new BigDecimal(Double.toString(d));
       bd = bd.setScale(2, RoundingMode.HALF_UP); // Arrondi à deux chiffres après la virgule

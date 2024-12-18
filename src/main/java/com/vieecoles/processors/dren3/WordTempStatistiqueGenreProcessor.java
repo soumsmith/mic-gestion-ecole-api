@@ -7,6 +7,7 @@ import com.vieecoles.processors.dren3.services.ApprocheParGenreServices;
 import com.vieecoles.processors.dren3.services.RepartitionElevParAnNaissServices;
 import com.vieecoles.steph.entities.Ecole;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,10 @@ import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.apache.poi.xwpf.usermodel.XWPFTableCell;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTBorder;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTcBorders;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTcPr;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.STBorder;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.STMerge;
 
 @ApplicationScoped
@@ -133,7 +138,7 @@ public class WordTempStatistiqueGenreProcessor {
 
         XWPFTableRow effeParClasseRow = table.createRow();
         ensureCellCount(effeParClasseRow, 19);
-        effeParClasseRow.getCell(0).setText(currentValue);
+        //effeParClasseRow.getCell(0).setText(currentValue);
         effeParClasseRow.getCell(1).setText("Effectifs Par classe");
         effeParClasseRow.getCell(2).setText("");
         effeParClasseRow.getCell(3).setText(String.valueOf(elevesPremierCycle.getEffectifParClasse6G()+elevesPremierCycle.getEffectifParClasse6F()));
@@ -165,7 +170,7 @@ public class WordTempStatistiqueGenreProcessor {
 
         XWPFTableRow effeParClasseGRow = table.createRow();
         ensureCellCount(effeParClasseGRow, 19);
-        effeParClasseGRow.getCell(0).setText(currentValue);
+        //effeParClasseGRow.getCell(0).setText(currentValue);
         effeParClasseGRow.getCell(1).setText("Effectifs par Niveau et par Genre");
         effeParClasseGRow.getCell(2).setText("G");
         effeParClasseGRow.getCell(3).setText(String.valueOf(elevesPremierCycle.getEffectifParClasse6G()));
@@ -197,8 +202,8 @@ public class WordTempStatistiqueGenreProcessor {
 
         XWPFTableRow effeParClasseFRow = table.createRow();
         ensureCellCount(effeParClasseFRow, 19);
-        effeParClasseFRow.getCell(0).setText(currentValue);
-        effeParClasseFRow.getCell(1).setText("Effectifs par Niveau et par Genre");
+     //   effeParClasseFRow.getCell(0).setText(currentValue);
+        //effeParClasseFRow.getCell(1).setText("Effectifs par Niveau et par Genre");
         effeParClasseFRow.getCell(2).setText("F");
         effeParClasseFRow.getCell(3).setText(String.valueOf(elevesPremierCycle.getEffectifParClasse6F()));
         effeParClasseFRow.getCell(4).setText(String.valueOf(elevesPremierCycle.getEffectifParClasse5F()));
@@ -229,8 +234,8 @@ public class WordTempStatistiqueGenreProcessor {
 
         XWPFTableRow effeParClasseTRow = table.createRow();
         ensureCellCount(effeParClasseTRow, 19);
-        effeParClasseTRow.getCell(0).setText(currentValue);
-        effeParClasseTRow.getCell(1).setText("Effectifs par Niveau et par Genre");
+        //effeParClasseTRow.getCell(0).setText(currentValue);
+       // effeParClasseTRow.getCell(1).setText("Effectifs par Niveau et par Genre");
         effeParClasseTRow.getCell(2).setText("T");
         effeParClasseTRow.getCell(3).setText(String.valueOf(elevesPremierCycle.getEffectifParClasse6G()+elevesPremierCycle.getEffectifParClasse6F()));
         effeParClasseTRow.getCell(4).setText(String.valueOf(elevesPremierCycle.getEffectifParClasse5G()+elevesPremierCycle.getEffectifParClasse5F()));
@@ -259,13 +264,30 @@ public class WordTempStatistiqueGenreProcessor {
         effeParClasseTRow.getCell(17).setText(String.valueOf(elevesPremierCycle.getEffectifParClasseTotalEtG()+elevesPremierCycle.getEffectifParClasseTotalEtF()));
         effeParClasseTRow.getCell(18).setText(String.valueOf(""));
 
+        for (XWPFTableRow row : table.getRows()) {
+          for (XWPFTableCell cell : row.getTableCells()) {
+            // Obtenez les propriétés de la cellule
+            CTTcPr cellProperties = cell.getCTTc().addNewTcPr();
+            CTTcBorders borders = cellProperties.addNewTcBorders();
 
+            // Définir les bordures pour chaque côté
+            setBorder(borders.addNewTop(), "000000", 8);
+            setBorder(borders.addNewBottom(), "000000", 8);
+            setBorder(borders.addNewLeft(), "000000", 8);
+            setBorder(borders.addNewRight(), "000000", 8);
+          }
+        }
+        mergeCellsVertically(table, 1, table.getNumberOfRows() - 3, table.getNumberOfRows() -1);
       }
 
-      mergeCellsVertically(table, 0, 1, table.getNumberOfRows()-1 );
+      mergeCellsVertically(table, 0, 3, table.getNumberOfRows()-1 );
     }
 
-
+  private static void setBorder(CTBorder border, String color, int size) {
+    border.setVal(STBorder.SINGLE);
+    border.setSz(BigInteger.valueOf(size));
+    border.setColor(color);
+  }
 
   private static void mergeCellsVertically(XWPFTable table, int col, int fromRow, int toRow) {
     for (int rowIndex = fromRow; rowIndex <= toRow; rowIndex++) {

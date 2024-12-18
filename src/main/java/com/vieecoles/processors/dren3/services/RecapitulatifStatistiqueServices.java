@@ -28,7 +28,7 @@ public class RecapitulatifStatistiqueServices {
     @Inject
     SousceecoleService sousceecoleService ;
 
-    public List<EffectifNiveauGenreNationaliteDto> getEffectifNiveauGenre(Long idEcole ,Long anneeId ){
+    public List<EffectifNiveauGenreNationaliteDto> getEffectifNiveauGenre(Long idEcole ,Long anneeId ,String annee, String periode){
 
 
 
@@ -67,7 +67,7 @@ public class RecapitulatifStatistiqueServices {
 
             nombreClasse = findNombreClasseBranche(niveauDtoList.get(i).getId(),idEcole) ;
             m.setNombreClasse(nombreClasse);
-          nombreCycleClasse = findNombreClasseBrancheCycle(idEcole) ;
+          nombreCycleClasse = findNombreClasseBrancheCycle(idEcole,annee,periode) ;
           m.setNombreCycleClasse(nombreCycleClasse);
           m.setNiveau(niveauDtoList.get(i).getNiveau());
           nbreRedouIvoireF= getEffectRedoubAfflanClasse(anneeId,niveauDtoList.get(i).getId() ,"FEMININ","OUI",true,idEcole);
@@ -186,10 +186,10 @@ public class RecapitulatifStatistiqueServices {
       //  Inscriptions.statusEleve aff = Inscriptions.statusEleve.valueOf(aff1);
         try {
             TypedQuery<Long> q = (TypedQuery<Long>) em.createQuery( "select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole and o.anneeId=:idAnneId and o.redoublant=:redoubl" +
-                " and o.ivoirien=:ivoir   group by  o.ordreNiveau having  o.ordreNiveau=:idBranche");
+                " and o.ivoirien=:ivoir  and o.ordreNiveau=:idBranche");
 
             Long size = q.setParameter("idBranche" ,idBranche).
-                    setParameter("idAnn" ,idAnneId).
+                    setParameter("idAnneId" ,idAnneId).
                     setParameter("sexe" ,sexe).
                     setParameter("redoubl" ,redoubl).
                     setParameter("ivoir" ,ivoir).
@@ -208,7 +208,7 @@ public class RecapitulatifStatistiqueServices {
       TypedQuery<Long> q = (TypedQuery<Long>) em.createQuery( "select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole and o.anneeId=:idAnneId and o.redoublant=:redoubl " +
           " and o.ivoirien=:ivoir ");
 
-      Long size = q.setParameter("idAnn" ,idAnneId).
+      Long size = q.setParameter("idAnneId" ,idAnneId).
           setParameter("sexe" ,sexe).
           setParameter("redoubl" ,redoubl).
           setParameter("ivoir" ,ivoir).
@@ -225,9 +225,9 @@ public class RecapitulatifStatistiqueServices {
 
     try {
       TypedQuery<Long> q = (TypedQuery<Long>) em.createQuery( "select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole and o.anneeId=:idAnneId " +
-         "   group by  o.ordreNiveau having  o.ordreNiveau=:idBranche");
+         "  and  o.ordreNiveau=:idBranche");
 
-      Long size = q.setParameter("idAnn" ,idAnneId).
+      Long size = q.setParameter("idAnneId" ,idAnneId).
           setParameter("sexe" ,sexe).
           setParameter("idEcole" ,idEcole).
           setParameter("idBranche" ,idBranche).
@@ -245,7 +245,7 @@ public class RecapitulatifStatistiqueServices {
       TypedQuery<Long> q = (TypedQuery<Long>) em.createQuery( " select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole and o.anneeId=:idAnneId "
          );
 
-      Long size = q.setParameter("idAnn" ,idAnneId).
+      Long size = q.setParameter("idAnneId" ,idAnneId).
           setParameter("sexe" ,sexe).
           setParameter("idEcole" ,idEcole).
           getSingleResult() ;
@@ -268,8 +268,17 @@ public class RecapitulatifStatistiqueServices {
         return Classe.find("branche.id = ?1 and ecole.id=?2",id, ecoleId).count() ;
     }
 
-  public Long findNombreClasseBrancheCycle( Long ecoleId) {
+  public Long findNombreClasseBrancheCycle( Long ecoleId,String libelleAnnee , String libelleTrimestre) {
     //logger.info(String.format("find by Branche id :: %s", id));
-    return Classe.find("ecole.id=?1", ecoleId).count() ;
+    Long nbreClasse ;
+    try {
+      return  nbreClasse = (Long) em.createQuery("select count(distinct o.classeId) from Bulletin o where  o.ecoleId=:idEcole  and o.libellePeriode=:libelleTrimestre and o.anneeLibelle=:libelleAnnee  ")
+          .setParameter("idEcole",ecoleId)
+          .setParameter("libelleAnnee", libelleAnnee)
+          .setParameter("libelleTrimestre", libelleTrimestre)
+          .getSingleResult();
+    } catch (NoResultException e){
+      return 0L ;
+    }
   }
 }

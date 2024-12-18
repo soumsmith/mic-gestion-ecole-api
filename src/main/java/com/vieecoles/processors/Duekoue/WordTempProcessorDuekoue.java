@@ -1,23 +1,43 @@
-package com.vieecoles.processors.dren3;
+package com.vieecoles.processors.Duekoue;
 
 import com.vieecoles.dto.RecapDesResultatsElevesAffecteDto;
 import com.vieecoles.dto.eleveAffecteParClasseDto;
+import com.vieecoles.processors.dren3.WordTempEffectifApprocheNiveauGenre;
+import com.vieecoles.processors.dren3.WordTempIdentiteProcessor;
+import com.vieecoles.processors.dren3.WordTempListAffecteNonAffectesProcessor;
+import com.vieecoles.processors.dren3.WordTempListAffectesProcessor;
+import com.vieecoles.processors.dren3.WordTempListBoursiersProcessor;
+import com.vieecoles.processors.dren3.WordTempListMajorNewProcessor;
+import com.vieecoles.processors.dren3.WordTempListNonAffectesProcessor;
+import com.vieecoles.processors.dren3.WordTempListTransfertProcessor;
+import com.vieecoles.processors.dren3.WordTempRecapAffNonAffResultatProcessor;
+import com.vieecoles.processors.dren3.WordTempRecapNonResultatProcessor;
+import com.vieecoles.processors.dren3.WordTempRecapResultatProcessor;
+import com.vieecoles.processors.dren3.WordTempResultaAffProcessor;
+import com.vieecoles.processors.dren3.WordTempResultaNonAffProcessor;
+import com.vieecoles.processors.dren3.WordTempStatistiqueAdmiRedoublantProcessor;
+import com.vieecoles.processors.dren3.WordTempStatistiqueAgeProcessor;
+import com.vieecoles.processors.dren3.WordTempStatistiqueBoursierProcessor;
+import com.vieecoles.processors.dren3.WordTempStatistiqueGenreProcessor;
+import com.vieecoles.processors.dren3.WordTempStatistiqueNationaliteProcessor;
+import com.vieecoles.processors.dren3.WordTempStatistiqueResultatProcessor;
+import com.vieecoles.processors.dren3.WordTempStatistiqueTransfertProcessor;
 import com.vieecoles.services.etats.EleveAffecteParClasseServices;
 import com.vieecoles.services.etats.appachePoi.resultatsPoiServices;
 import com.vieecoles.services.etats.resultatsRecapServices;
-import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
-import org.apache.poi.xwpf.usermodel.*;
-
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFTable;
 
 @ApplicationScoped
-public class WordTempProcessor {
+public class WordTempProcessorDuekoue {
     @Inject
     EntityManager em;
     @Inject
@@ -25,27 +45,28 @@ public class WordTempProcessor {
     @Inject
     resultatsRecapServices resultatsRecapServices ;
     @Inject
-    WordTempRecapResultatProcessor  wordTempRecapResultatProcessor ;
+    WordTempRecapResultatProcessor wordTempRecapResultatProcessor ;
     @Inject
-    WordTempResultaAffProcessor  wordTempResultaAffProcessor ;
+    WordTempResultaAffProcessor wordTempResultaAffProcessor ;
     @Inject
-    WordTempListAffectesProcessor  wordTempListAffectesProcessor ;
+    WordTempListAffectesProcessor wordTempListAffectesProcessor ;
     @Inject
     EleveAffecteParClasseServices eleveAffecteParClasseServices ;
     @Inject
-    WordTempListMajorNewProcessor  wordTempListMajorProcessor ;
+    WordTempListMajorNewProcessor wordTempListMajorProcessor ;
     @Inject
-    WordTempListTransfertProcessor  wordTempListTransfertProcessor ;
+    WordTempListTransfertProcessor wordTempListTransfertProcessor ;
     @Inject
-    WordTempRepartitionAnneeNaissProcessor WordTempRepartitionAnneeNaissProcessor ;
+    com.vieecoles.processors.dren3.WordTempRepartitionAnneeNaissProcessor
+        WordTempRepartitionAnneeNaissProcessor ;
     @Inject
     WordTempListBoursiersProcessor wordTempListBoursiersProcessor ;
     @Inject
-    WordTempEffectifApprocheNiveauGenre  wordTempEffectifApprocheNiveauGenre ;
+    WordTempEffectifApprocheNiveauGenre wordTempEffectifApprocheNiveauGenre ;
     @Inject
     WordTempIdentiteProcessor wordTempIdentiteProcessor;
     @Inject
-    WordTempResultaNonAffProcessor  wordTempResultaNonAffProcessor ;
+    WordTempResultaNonAffProcessor wordTempResultaNonAffProcessor ;
     @Inject
     WordTempRecapNonResultatProcessor wordTempRecapNonAffResultatProcessor ;
     @Inject
@@ -59,15 +80,15 @@ public class WordTempProcessor {
     @Inject
     WordTempStatistiqueNationaliteProcessor wordTempStatistiqueNationaliteProcessor;
     @Inject
-  WordTempStatistiqueTransfertProcessor wordTempStatistiqueTransfertProcessor;
+    WordTempStatistiqueTransfertProcessor wordTempStatistiqueTransfertProcessor;
     @Inject
-  WordTempStatistiqueAgeProcessor wordTempStatistiqueAgeProcessor;
+    WordTempStatistiqueAgeProcessor wordTempStatistiqueAgeProcessor;
     @Inject
-  WordTempStatistiqueBoursierProcessor wordTempStatistiqueBoursierProcessor;
+    WordTempStatistiqueBoursierProcessor wordTempStatistiqueBoursierProcessor;
     @Inject
-  WordTempStatistiqueGenreProcessor wordTempStatistiqueGenreProcessor;
+    WordTempStatistiqueGenreProcessor wordTempStatistiqueGenreProcessor;
     @Inject
-  WordTempListAffecteNonAffectesProcessor wordTempListAffecteNonAffectesProcessor;
+    WordTempListAffecteNonAffectesProcessor wordTempListAffecteNonAffectesProcessor;
 
     public  byte[] generateWordFile(Long idEcole,String libelleAnnee ,String  libelleTrimetre, ByteArrayInputStream  fis) throws Exception {
 

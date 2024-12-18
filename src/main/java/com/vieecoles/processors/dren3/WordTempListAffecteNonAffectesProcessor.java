@@ -66,7 +66,8 @@ public class WordTempListAffecteNonAffectesProcessor {
 
             XWPFParagraph newParagraph = document.insertNewParagraph(paragraphs.get(indexToInsert).getCTP().newCursor());
             XWPFRun run = newParagraph.createRun();
-            run.setText(classeList.get(k).getNiveau()+" \t\tProfesseur Principal:\t\tEducateur:");
+            if(!elevAffectes.isEmpty())
+                run.setText(classeList.get(k).getNiveau()+" Professeur Principal: "+elevAffectes.get(0).getProfesseurPrincipal() +" Educateur: "+elevAffectes.get(0).getNomEducateur());
             run.setBold(true);  // Mettre le texte en gras
             newParagraph.setAlignment(ParagraphAlignment.LEFT);
 

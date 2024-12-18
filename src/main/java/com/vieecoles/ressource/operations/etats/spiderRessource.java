@@ -11,10 +11,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import net.sf.jasperreports.engine.*;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import net.sf.jasperreports.engine.export.ooxml.JRDocxExporter;
-import net.sf.jasperreports.export.SimpleExporterInput;
-import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 
@@ -26,7 +22,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.InputStream;
 import java.util.*;
@@ -34,6 +29,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import com.vieecoles.processors.dren3.WordTempProcessorDren3;
 
 @Path("/imprimer-rapport")
 //@Produces(MediaType.APPLICATION_JSON)
@@ -96,6 +92,8 @@ public class spiderRessource {
     resultatsRecapAffEtNonAffServicesAnnuels resultatsRecapAffEtNonAffServicesAnnuels ;
     @Inject
     WordTempProcessor wordTempProcessor ;
+    @Inject
+    WordTempProcessorDren3 wordTempProcessorDren3;
 
 
 
@@ -300,9 +298,8 @@ public class spiderRessource {
          spiderAnnuelsDto detailsAnnuels= new spiderAnnuelsDto() ;
          ecole myScole= new ecole() ;
        // myScole= ecole.findById(idEcole);
-        byte[] wordFile;
+        byte[] wordFile = new byte[0];
         FileInputStream fis=null ;
-
         if(libelleTrimetre.equals("Troisième Trimestre")||libelleTrimetre.equals("Deuxième Semestre")) {
             myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Drena3/Spider_BookAnnuels.jrxml");
             identiteEtatDto= identiteEtatService.getIdentiteDto(idEcole) ;
@@ -428,57 +425,45 @@ public class spiderRessource {
             detailsBull.setEffApprocheNiveauGenreDto(effApprocheNiveauGenreDto);
             detailsBull.setEffectifElevLangueVivante2Dto(effectifElevLangueVivante2Dto);
             detailsBull.setEtatNominatifEnseignatDto(etatNominatifEnseignatDto);*/
+            System.out.println("etats/apochePoi/DRENA3/RAPPORT_TRIMESTRIEL");
             fis= getFileInputStreamFromResource(
                 "etats/apochePoi/DRENA3/RAPPORT_TRIMESTRIEL.docx");
 
         }
         else if (!libelleTrimetre.equals("Troisième Trimestre") && (modelDrena.equals("Yamoussoukro"))) {
 
-
+            System.out.println("etats/apochePoi/DREN YAMOUSSOUKRO/RAPPORT_TRIMESTRIE");
            fis= getFileInputStreamFromResource(
                "etats/apochePoi/DREN YAMOUSSOUKRO/RAPPORT_TRIMESTRIEL.docx");
         }
 
+        try {
 
 
-        // System.out.print("soummm"+resultatsElevesAffecteDto.toString());
-        if(modelDrena.equals("dren3")){
-            JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(Collections.singleton(detailsBull)) ;
-            JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
-            //   JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");
-            Map<String, Object> map = new HashMap<>();
-            // map.put("title", type);
-            JasperPrint report = JasperFillManager.fillReport(compileReport, map, beanCollectionDataSource);
-            JRDocxExporter exporter = new JRDocxExporter();
-            exporter.setExporterInput(new SimpleExporterInput(report));
-            // File exportReportFile = new File("profils" + ".docx");
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(baos));
-            exporter.exportReport();
-            byte[] data = baos.toByteArray() ;
-            HttpHeaders headers= new HttpHeaders();
-            // headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Rapport"+myScole.getEcoleclibelle()+".docx");
-            headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Rapport Pouls-Scolaire.docx");
-            return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.MULTIPART_FORM_DATA).body(data);
-        } else {
-            try {
-                // Lire le fichier dans un tableau de bytes pour pouvoir le réutiliser
-                System.out.println("Yamoussoukro2");
-                byte[] fileContent = fis.readAllBytes();
-                ByteArrayInputStream fis1 = new ByteArrayInputStream(fileContent);
-                wordFile = wordTempProcessor.generateWordFile(idEcole, libelleAnnee, libelleTrimetre, fis1);
 
-                // Préparer les en-têtes pour la réponse
-                HttpHeaders headers = new HttpHeaders();
-                headers.set(HttpHeaders.CONTENT_DISPOSITION, "inline;filename=Rapport Pouls-Scolaire.docx");
+         if((!libelleTrimetre.equals("Troisième Trimestre") && (modelDrena.equals("dren3")))) {
+             System.out.println("Mise à jour fileContentdren3 ");
+             byte[] fileContentdren3 = fis.readAllBytes();
+             ByteArrayInputStream fis1dren3 = new ByteArrayInputStream(fileContentdren3);
+             wordFile = wordTempProcessorDren3.generateWordFile(idEcole, libelleAnnee, libelleTrimetre, fis1dren3);
+         } else if (!libelleTrimetre.equals("Troisième Trimestre") && (modelDrena.equals("Yamoussoukro"))) {
+             System.out.println("Mise à jour fileContentYakro ");
+             byte[] fileContentyakro = fis.readAllBytes();
+             ByteArrayInputStream fis1yakro = new ByteArrayInputStream(fileContentyakro);
+             wordFile = wordTempProcessor.generateWordFile(idEcole, libelleAnnee, libelleTrimetre, fis1yakro);
+         }
 
-                // Retourner la réponse avec le fichier Word
-                return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.MULTIPART_FORM_DATA).body(wordFile);
 
-            } finally {
-                fis.close(); // Assurez-vous de fermer le FileInputStream après utilisation
-            }
-        }
+        // Préparer les en-têtes pour la réponse
+        HttpHeaders headers = new HttpHeaders();
+        headers.set(HttpHeaders.CONTENT_DISPOSITION, "inline;filename=Rapport Pouls-Scolaire.docx");
+
+        // Retourner la réponse avec le fichier Word
+        return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.MULTIPART_FORM_DATA).body(wordFile);
+
+    } finally {
+        fis.close(); // Assurez-vous de fermer le FileInputStream après utilisation
+    }
 
 
 
