@@ -31,9 +31,14 @@ public class BrancheService implements PanacheRepositoryBase<Branche, Long> {
 
 	public List<Branche> findByNiveauEnseignementViaEcole(Long id) {
 		Ecole ecole = Ecole.findById(id);
-//		System.out.println(ecole);
-		return Branche.find("niveauEnseignement.id =?1 order by libelle desc", ecole.getNiveauEnseignement().getId())
-				.list();
+		List<Branche> branches = new ArrayList<>();
+		try {
+			branches = Branche.find("niveauEnseignement.id =?1 order by libelle desc", ecole.getNiveauEnseignement().getId())
+					.list();
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+		}
+		return branches;
 	}
 
 	public List<Branche> findByNiveauEnseignement(Long id) {
@@ -45,7 +50,7 @@ public class BrancheService implements PanacheRepositoryBase<Branche, Long> {
 		List<GenericBasicProjectionLongId> branches = new ArrayList<GenericBasicProjectionLongId>();
 		try {
 			branches = Branche.find("niveauEnseignement.id =?1", id).project(GenericBasicProjectionLongId.class).list();
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return branches;
@@ -99,13 +104,15 @@ public class BrancheService implements PanacheRepositoryBase<Branche, Long> {
 		NiveauEnseignement niveauEnseignement = NiveauEnseignement.findById(Long.parseLong(niveau));
 		ProgrammeBrancheDto dto = new ProgrammeBrancheDto();
 		List<Branche> branches = new ArrayList<Branche>();
-		if (programme != null && niveauEnseignement!= null) {
+		if (programme != null && niveauEnseignement != null) {
 			dto.setProgrammeId(programme.getId());
 			dto.setProgrammeCodeLibelle(String.format("%s - %s", programme.getCode(), programme.getLibelle()));
 			dto.setNiveauId(String.valueOf(niveauEnseignement.getId()));
-			dto.setNiveauCodeLibelle(String.format("%s - %s",niveauEnseignement.getCode(), niveauEnseignement.getLibelle()));
+			dto.setNiveauCodeLibelle(
+					String.format("%s - %s", niveauEnseignement.getCode(), niveauEnseignement.getLibelle()));
 			try {
-				branches = Branche.find("programme.id = ?1 and niveauEnseignement.id = ?2 order by libelle desc", programme.getId(),niveauEnseignement.getId()).list();
+				branches = Branche.find("programme.id = ?1 and niveauEnseignement.id = ?2 order by libelle desc",
+						programme.getId(), niveauEnseignement.getId()).list();
 			} catch (RuntimeException e) {
 				e.printStackTrace();
 				branches = new ArrayList<>();

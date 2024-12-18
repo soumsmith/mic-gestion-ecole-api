@@ -4,6 +4,8 @@ import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.Date;
+
 import javax.persistence.*;
 
 import org.hibernate.annotations.NotFound;
@@ -39,5 +41,10 @@ public class ClasseMatiere extends PanacheEntityBase{
 	@ManyToOne
 	@JoinColumn(name = "ecole_id")
 	private Ecole ecole;
+	
+	@Column(name = "date_creation")
+	private Date dateCreation;
+	@Column(name = "date_update")
+	private Date dateUpdate;
 
 }
