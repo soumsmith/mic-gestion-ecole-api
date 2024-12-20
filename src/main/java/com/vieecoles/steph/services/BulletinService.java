@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.UUID;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.enterprise.context.RequestScoped;
@@ -16,9 +15,9 @@ import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 
 import com.google.gson.Gson;
+import com.vieecoles.entities.InfosPersoBulletins;
 import com.vieecoles.steph.dto.BulletinDto;
 import com.vieecoles.steph.dto.DetailBulletinDto;
-import com.vieecoles.entities.InfosPersoBulletins;
 import com.vieecoles.steph.dto.MoyenneEleveDto;
 import com.vieecoles.steph.entities.AbsenceEleve;
 import com.vieecoles.steph.entities.AnneeScolaire;
@@ -29,8 +28,6 @@ import com.vieecoles.steph.entities.Constants;
 import com.vieecoles.steph.entities.DetailBulletin;
 import com.vieecoles.steph.entities.EcoleHasMatiere;
 import com.vieecoles.steph.entities.Inscription;
-import com.vieecoles.steph.entities.Matiere;
-import com.vieecoles.steph.entities.Message;
 import com.vieecoles.steph.entities.MoyenneAdjustment;
 import com.vieecoles.steph.entities.NoteBulletin;
 import com.vieecoles.steph.entities.Notes;
@@ -39,12 +36,10 @@ import com.vieecoles.steph.entities.PersonnelMatiereClasse;
 import com.vieecoles.steph.pojos.CalculMoyenneExceptPojo;
 import com.vieecoles.steph.projections.BulletinIdProjection;
 import com.vieecoles.steph.projections.DetailBulletinIdProjection;
-import com.vieecoles.steph.projections.NotesBulletinIdProjection;
 import com.vieecoles.steph.util.CommonUtils;
 
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
-import io.quarkus.panache.common.Parameters;
 
 @RequestScoped
 public class BulletinService implements PanacheRepositoryBase<Bulletin, String> {
@@ -106,7 +101,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 		try {
 			bulletinsToUpdate = Bulletin.find("ecoleId =?1 and anneeId = ?2", ecoleId, anneeId).list();
 			for (Bulletin bul : bulletinsToUpdate) {
-				Bulletin b = Bulletin.findById(bul.getId());
+//				Bulletin b = Bulletin.findById(bul.getId());
 				bul.setStatut(statut);
 			}
 			logger.info(String.format("%s bulletin(s) archivés", bulletinsToUpdate.size()));
@@ -481,7 +476,8 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 					bulletin.setEcoleOrigine(infosInscriptionsEleve.getEcoleOrigine());
 					bulletin.setTransfert(infosInscriptionsEleve.getTransfert());
 					bulletin.setUrlPhoto(infosInscriptionsEleve.getUrlPhoto());
-					bulletin.setIvoirien(infosInscriptionsEleve.getIvoirien());		}
+					bulletin.setIvoirien(infosInscriptionsEleve.getIvoirien());
+				}
 
 				logger.info("Création bulletin ...");
 				save(bulletin);
@@ -530,7 +526,8 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 					flag.setMoyenneIntermediaire(entry.getKey().getMoyenneIntermediaire());
 
 					if (entry.getKey().getMoyenneAnnuelle() != null)
-						flag.setAppreciationAn(CommonUtils.appreciation(Double.valueOf(entry.getKey().getMoyenneAnnuelle())));
+						flag.setAppreciationAn(
+								CommonUtils.appreciation(Double.valueOf(entry.getKey().getMoyenneAnnuelle())));
 
 					flag.setIsAdjustment(entry.getKey().getIsAdjustment());
 					flag.setDateCreation(new Date());
@@ -707,7 +704,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 		// bul.setLibellePeriode(me.getPeriode().getLibelle());
 		bul.setLieuNaissance(me.getEleve().getLieuNaissance());
 		bul.setMatricule(me.getEleve().getMatricule());
-		bul.setRang(me.getRang()!= null ? Integer.parseInt(me.getRang()): null);
+		bul.setRang(me.getRang() != null ? Integer.parseInt(me.getRang()) : null);
 		bul.setMoyAn(me.getMoyenneAnnuelle());
 		bul.setRangAn(me.getRangAnnuel());
 		bul.setApprAn(me.getApprAnnuelle());

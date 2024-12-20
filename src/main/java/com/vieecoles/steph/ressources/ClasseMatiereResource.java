@@ -109,11 +109,11 @@ public class ClasseMatiereResource {
 	@Path("/apply/coefficients/{ecoleId}")
 	@Tag(name = "ClasseMatiere")
 	@Produces(MediaType.TEXT_PLAIN)
-	public Response handleCoef(@PathParam("ecoleId") Long ecoleId) {
+	public Response handleCoef(@PathParam("ecoleId") Long ecoleId, @QueryParam("action") String action) {
 
 		try {
-			classeMatiereService.generateDefaultBrancheMatiereByEcole(ecoleId);
-			return Response.ok("Coeficient mis à jour").build();
+			String response = classeMatiereService.generateDefaultBrancheMatiereByEcole(ecoleId, action);
+			return Response.ok(response).build();
 		} catch (RuntimeException e) {
 			e.printStackTrace();
 			return Response.serverError().entity(e.getMessage()).build();
