@@ -90,7 +90,7 @@ public class BulletinSpiderRessource {
 
         InputStream myInpuStream = null;
          Classe classe= new Classe() ;
-         classe = Classe.findById(libelleClasse) ;
+        classe = Classe.findById(libelleClasse) ;
 
         if(!compress) {
             if(niveauEnseign==2) {
@@ -338,13 +338,13 @@ public class BulletinSpiderRessource {
         ecole myEcole= new ecole() ;
         myEcole=sousceecoleService.getInffosEcoleByID(idEcole);
        map.put("classe", classe.getLibelle());
-        // map.put("classe", 	"CP1");
+        // map.put("classe", 	"TLE D");
         map.put("idEcole", idEcole);
         map.put("libelleAnnee", libelleAnnee);
         map.put("libellePeriode", libellePeriode);
         map.put("infosAmoirie", infos);
         map.put("distinctin", pdistinct);
-       map.put("codeEcole", myEcole.getEcolecode());
+        map.put("codeEcole", myEcole.getEcolecode());
         map.put("positionLogo", plogoPosi);
         map.put("setBg", psetBg);
 
@@ -402,7 +402,12 @@ if (!compress){
 
             }
 
-        else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinNobelSpider.jrxml");
+        else
+            {
+                System.out.println("Je suis au bon endroit");
+                myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinNobelSpider.jrxml");
+            }
+
         }
 
 

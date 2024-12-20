@@ -367,6 +367,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
 	</field>
 	<field name="rang_fr" class="java.lang.Integer"/>
+	<field name="photo_eleve" class="byte[]"/>
 	<sortField name="num_ordre"/>
 	<sortField name="parent_matiere"/>
 	<sortField name="matricule"/>
@@ -1039,7 +1040,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
 						<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 					</reportElement>
-					<image scaleImage="FillFrame" rotation="None" hAlign="Center" isLazy="true" onErrorType="Icon">
+					<image scaleImage="FillFrame" rotation="None" hAlign="Center" onErrorType="Icon">
 						<reportElement positionType="Float" stretchType="ContainerHeight" x="458" y="0" width="71" height="70" uuid="ead8d2cf-965c-4bfa-a420-f2630105d2a3">
 							<property name="com.jaspersoft.layout.grid.x" value="3"/>
 							<property name="com.jaspersoft.layout.grid.y" value="0"/>
@@ -1051,7 +1052,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 							<property name="com.jaspersoft.studio.unit.width" value="px"/>
 							<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						</reportElement>
-						<imageExpression><![CDATA[$F{url_photo}]]></imageExpression>
+						<imageExpression><![CDATA[$F{url_photo}==null?$F{photo_eleve}:$F{url_photo}.equals("")?$F{photo_eleve}:$F{url_photo}]]></imageExpression>
 					</image>
 					<frame>
 						<reportElement x="0" y="0" width="458" height="70" uuid="bd519287-9e26-4a07-973c-2d404677ee8f">
