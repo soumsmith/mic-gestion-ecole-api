@@ -1,6 +1,5 @@
 package com.vieecoles.steph.services;
 
-import com.vieecoles.steph.dto.moyennes.PersonneDto;
 import com.vieecoles.steph.entities.Eleve;
 import com.vieecoles.steph.projections.PersonProjection;
 

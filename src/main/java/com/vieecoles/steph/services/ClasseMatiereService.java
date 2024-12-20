@@ -238,12 +238,13 @@ public class ClasseMatiereService implements PanacheRepositoryBase<ClasseMatiere
 	}
 
 	/**
-	 * Cette méthode est utilisée pour mettre à jour les coeficients des matières d'une école
+	 * Cette méthode est utilisée pour mettre à jour les coeficients des matières
+	 * d'une école
 	 * 
 	 * @param ecoleId
 	 */
 	@Transactional
-	public void generateDefaultBrancheMatiereByEcole(Long ecoleId) {
+	public String generateDefaultBrancheMatiereByEcole(Long ecoleId, String action) {
 		List<EcoleHasMatiere> matieresEcole = ecoleHasMatiereService.getListByEcole(ecoleId);
 		List<Branche> branches = brancheService.findByNiveauEnseignementViaEcole(ecoleId);
 		Integer exist = 0;
@@ -254,12 +255,18 @@ public class ClasseMatiereService implements PanacheRepositoryBase<ClasseMatiere
 				for (Branche b : branches) {
 					Long cms = cmList.stream().filter(c -> c.getBranche().getId() == b.getId()).count();
 					if (cms == 0L) {
-						ClasseMatiere cm = new ClasseMatiere();
-						cm.setEcole(m.getEcole());
-						cm.setMatiere(m);
-						cm.setCoef("1");
-						cm.setBranche(b);
-						create(cm);
+						if (action != null && action.equals("P")) {
+							ClasseMatiere cm = new ClasseMatiere();
+							cm.setEcole(m.getEcole());
+							cm.setMatiere(m);
+							cm.setCoef("1");
+							cm.setBranche(b);
+							try {
+								create(cm);
+							} catch (RuntimeException e) {
+								System.out.println("probleme de persistance "+e.getMessage());
+							}
+						}
 						notExist++;
 					} else {
 						exist++;
@@ -267,8 +274,10 @@ public class ClasseMatiereService implements PanacheRepositoryBase<ClasseMatiere
 				}
 			}
 		}
-		System.out.println(String.format("%S coef existant(s)", exist));
-		System.out.println(String.format("%S coef crée(s)", notExist));
-		System.out.println(String.format("pour l ecole id %S ", ecoleId));
+		
+		return String.format("%s coef existant(s) \n", exist).concat(String.format("%s coef crée(s) \n", notExist)).concat(String.format("pour l ecole id %s ", ecoleId));
+//		System.out.println(String.format("%s coef existant(s)", exist));
+//		System.out.println(String.format("%s coef crée(s)", notExist));
+//		System.out.println(String.format("pour l ecole id %s ", ecoleId));
 	}
 }

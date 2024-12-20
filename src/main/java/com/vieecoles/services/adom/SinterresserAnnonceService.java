@@ -12,6 +12,7 @@ public class SinterresserAnnonceService implements PanacheRepositoryBase<Annonce
 
   public void createInterresser(AnnonceParentDto annonceParentDto) {
     AnnonceParent ann = new AnnonceParent();
+
    /* ann.setCode(annonce.getCode());
     ann.setNumero(annonce.getNumero());
     ann.setTitre(annonce.getTitre());
