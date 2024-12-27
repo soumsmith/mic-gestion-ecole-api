@@ -79,14 +79,14 @@ if(!detailsCycle1.isEmpty()){
 
 
         for (RecapResultatsElevesAffeEtNonAffDto classe : detailsCycle1) {
-            Long effectifNiveau1=classe.getEffeG()+classe.getEffeF();
+        /*    Long effectifNiveau1=classe.getEffeG()+classe.getEffeF();
             Long effectifClasse1 =classe.getClassF()+classe.getClassG();
             Long effectifNonClasse1 =classe.getNonclassF()+classe.getNonclassG();
 
 
             effectifClasseCycle1=effectifClasseCycle1+effectifClasse1;
              effectifCycle1= effectifCycle1+effectifNiveau1;
-            effectifNonClasseCycle1= effectifNonClasseCycle1+effectifNonClasse1;
+            effectifNonClasseCycle1= effectifNonClasseCycle1+effectifNonClasse1;*/
 
             long nombMoySup10 =
                 (classe.getNbreMoySup10F() != null ? classe.getNbreMoySup10F() : 0L) +
@@ -126,14 +126,14 @@ if(!detailsCycle1.isEmpty()){
 
 
         for (RecapResultatsElevesAffeEtNonAffDto classe : detailsCycle2) {
-            Long effectifNiveau2=classe.getEffeG()+classe.getEffeF();
+          /*  Long effectifNiveau2=classe.getEffeG()+classe.getEffeF();
             Long effectifClasse2 =classe.getClassF()+classe.getClassG();
             Long effectifNonClasse2 =classe.getNonclassF()+classe.getNonclassG();
 
 
             effectifClasseCycle2=effectifClasseCycle2+effectifClasse2;
             effectifCycle2= effectifCycle2+effectifNiveau2;
-            effectifNonClasseCycle2= effectifNonClasseCycle2+effectifNonClasse2;
+            effectifNonClasseCycle2= effectifNonClasseCycle2+effectifNonClasse2;*/
 
             long nombMoySup10 =
                 (classe.getNbreMoySup10F() != null ? classe.getNbreMoySup10F() : 0L) +

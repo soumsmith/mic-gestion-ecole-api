@@ -11,6 +11,7 @@ import com.vieecoles.services.etats.resultatsRecapAffEtNonAffServices;
 import com.vieecoles.services.etats.resultatsRecapServices;
 import com.vieecoles.steph.entities.Ecole;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,9 +27,13 @@ import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.apache.poi.xwpf.usermodel.XWPFTableCell;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTblWidth;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTcPr;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTVMerge;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.STMerge;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.STTblWidth;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTblWidth;
+import java.math.BigInteger;
 
 @ApplicationScoped
 public class WordTempStatistiqueResultatProcessor {
@@ -310,7 +315,7 @@ public class WordTempStatistiqueResultatProcessor {
           // Remplir la ligne pour les filles (F)
           XWPFTableRow garconRow = table.createRow();
           ensureCellCount(garconRow, 14);
-          garconRow.getCell(0).setText(currentValue);
+        //  garconRow.getCell(0).setText(currentValue);
           garconRow.getCell(1).setText(eleve.getNiveau());
           garconRow.getCell(2).setText("G");
           garconRow.getCell(3).setText(String.valueOf(nombreClasseParNiveau));
@@ -348,7 +353,7 @@ public class WordTempStatistiqueResultatProcessor {
       }
       XWPFTableRow garconTotalCycleRow = table.createRow();
       ensureCellCount(garconTotalCycleRow, 14);
-      garconTotalCycleRow.getCell(0).setText(currentValue);
+      //garconTotalCycleRow.getCell(0).setText(currentValue);
       garconTotalCycleRow.getCell(1).setText("1er Cycle");
       garconTotalCycleRow.getCell(2).setText("G");
       garconTotalCycleRow.getCell(3).setText(String.valueOf(nombreTotalClasseParNiveau1));
@@ -524,7 +529,7 @@ public class WordTempStatistiqueResultatProcessor {
         // Remplir la ligne pour les filles (F)
         XWPFTableRow garconRow = table.createRow();
         ensureCellCount(garconRow, 14);
-        garconRow.getCell(0).setText(currentValue);
+        //garconRow.getCell(0).setText(currentValue);
         garconRow.getCell(1).setText(eleve.getNiveau());
         garconRow.getCell(2).setText("G");
         garconRow.getCell(3).setText(String.valueOf(nombreClasseParNiveau));
@@ -561,7 +566,7 @@ public class WordTempStatistiqueResultatProcessor {
       }
         XWPFTableRow garconTotalCycle2Row = table.createRow();
         ensureCellCount(garconTotalCycle2Row, 14);
-        garconTotalCycle2Row.getCell(0).setText(currentValue);
+        //garconTotalCycle2Row.getCell(0).setText(currentValue);
         garconTotalCycle2Row.getCell(1).setText("2nd Cycle");
         garconTotalCycle2Row.getCell(2).setText("G");
         garconTotalCycle2Row.getCell(3).setText(String.valueOf(nombreTotalClasseParNiveau2));
@@ -594,6 +599,8 @@ public class WordTempStatistiqueResultatProcessor {
         filleCycle2Row.getCell(13).setText(String.valueOf(arrondie(moyenCycle2F)));
         mergeCellsVertically(table, 1, table.getNumberOfRows() - 2, table.getNumberOfRows() -1);
         mergeCellsVertically(table, 3, table.getNumberOfRows() - 2, table.getNumberOfRows() -1);
+
+
       }
       //Infos General
 
@@ -670,7 +677,7 @@ public class WordTempStatistiqueResultatProcessor {
 
       XWPFTableRow garconGenerelRow = table.createRow();
       ensureCellCount(garconGenerelRow, 14);
-      garconGenerelRow.getCell(0).setText(currentValue);
+    //  garconGenerelRow.getCell(0).setText(currentValue);
       garconGenerelRow.getCell(1).setText("TOTAL GENERAL");
       garconGenerelRow.getCell(2).setText("G");
       garconGenerelRow.getCell(3).setText(String.valueOf(nombreTotalClasseParNiveau2+nombreTotalClasseParNiveau1));
@@ -705,7 +712,25 @@ public class WordTempStatistiqueResultatProcessor {
       mergeCellsVertically(table, 3, table.getNumberOfRows() - 2, table.getNumberOfRows() -1);
 
 
-    mergeCellsVertically(table, 0, 1, table.getNumberOfRows()-1 );
+       mergeCellsVertically(table, 0, 1, table.getNumberOfRows()-1 );
+      table.getRow(2).getCell(0).setText(currentValue);
+      // Ajuster la largeur de toutes les colonnes
+      // Ajuster la largeur de toutes les colonnes
+      /*for (int rowIndex2 = 0; rowIndex2 < table.getRows().size(); rowIndex2++) {
+        XWPFTableRow row = table.getRow(rowIndex2);
+        for (int cellIndex = 0; cellIndex < row.getTableCells().size(); cellIndex++) {
+          XWPFTableCell cell = row.getCell(cellIndex);
+
+          if (cellIndex == 0) {
+            // Créer un BigInteger pour la largeur (par exemple 4000 EMU)
+            BigInteger width = BigInteger.valueOf(4000); // Largeur de la cellule
+            CTTblWidth tblWidth = cell.getCTTc().getTcPr().addNewTcW();
+            tblWidth.setW(width);  // Définir la largeur avec BigInteger
+            tblWidth.setType(STTblWidth.DXA); // Spécifier l'unité de mesure (DXA)
+          }
+        }
+      }*/
+
     }
 
 

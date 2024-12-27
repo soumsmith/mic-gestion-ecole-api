@@ -87,12 +87,13 @@ public class WordTempProcessorDren3 {
         XWPFDocument document = new XWPFDocument(fis);
         XWPFTable table = document.getTableArray(20);
 
-
+     /* wordTempIdentiteProcessor.getIdentiteProcessor(document,idEcole,libelleAnnee,libelleTrimetre);
+      System.out.println("Statistique Identité ok");*/
       wordTempRecapAffNonAffResultatProcessor.getRecapResultatAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
         System.out.println("Statistique Ok");
-        wordTempStatistiqueResultatProcessor.getResultatAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
+        /*wordTempStatistiqueResultatProcessor.getResultatAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
       System.out.println("Details Statistique Ok");
-        wordTempStatistiqueAdmiRedoublantProcessor.getStatistiqueAdminRedoublantProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
+    wordTempStatistiqueAdmiRedoublantProcessor.getStatistiqueAdminRedoublantProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
       System.out.println("Redoublant Ok");
         wordTempListAffectesProcessor.getEleveAffecteParClasse(document,idEcole ,libelleAnnee,libelleTrimetre);
       System.out.println("Liste affecte Ok");
@@ -114,7 +115,7 @@ public class WordTempProcessorDren3 {
       System.out.println("Statistique Boursier Ok");
 
       wordTempStatistiqueGenreProcessor.getResultatAffProcessor(document,idEcole,libelleAnnee,libelleTrimetre,anneeId);
-
+*/
       System.out.println("Statistique Genre Ok");
         // Sauvegarder le document modifié dans un tableau de bytes
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();

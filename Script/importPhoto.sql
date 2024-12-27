@@ -34,4 +34,16 @@ WHERE
 
 
 ;
+select count(ih.id) from
+    inscriptions_has_classe ih
+where i.inscriptionsid= ih.inscriptions_inscriptionsid and
 
+    i.annee_scolaire_annee_scolaireid =226 and
+    i.ecole_ecoleid=103
+  and  ih.id  not in ( select ih2.id from inscriptions i2 ,
+                                          inscriptions_has_classe ih2 ,
+                                          note_eleve n2
+                       where i2.inscriptionsid= ih2.inscriptions_inscriptionsid and
+                           n2.inscription_has_eleve_id=ih2.id  and
+                           i2.annee_scolaire_annee_scolaireid =226 and
+                           i2.ecole_ecoleid=103)

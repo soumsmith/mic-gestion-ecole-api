@@ -16,7 +16,7 @@
 
 
 <<<<<<< HEAD
-  docker build -f src/main/docker/Dockerfile.jvm -t europe-west1-docker.pkg.dev/fair-splice-361010/vie-ecole-docker-repo/vie-ecole-api:202412191946 .
+  docker build -f src/main/docker/Dockerfile.jvm -t europe-west1-docker.pkg.dev/fair-splice-361010/vie-ecole-docker-repo/vie-ecole-api:202412232233 .
 =======
 <<<<<<< HEAD
   docker build -f src/main/docker/Dockerfile.jvm -t europe-west1-docker.pkg.dev/fair-splice-361010/vie-ecole-docker-repo/vie-ecole-api:202409042315 .
@@ -37,3 +37,27 @@
 --- pull from artifact registry
   docker pull europe-west1-docker.pkg.dev/fair-splice-361010/vie-ecole-docker-repo/example:latest
 3
+SELECT
+    COUNT(e.eleve_matricule) AS nombre,
+    i.inscriptionsid,
+    e.eleve_matricule,
+    e.elevenom,
+    e.eleveprenom
+FROM
+    inscriptions i
+JOIN
+    inscriptions_has_classe ih ON i.inscriptionsid = ih.inscriptions_inscriptionsid
+JOIN
+    classe c ON ih.classe_classeid = c.classeid
+JOIN
+    eleve e ON e.eleveid = i.eleve_eleveid
+WHERE
+    i.annee_scolaire_annee_scolaireid = 226
+    AND i.ecole_ecoleid = 103
+GROUP BY
+    e.eleve_matricule,
+    e.elevenom,
+    e.eleveprenom,
+    i.inscriptionsid
+HAVING
+    COUNT(e.eleve_matricule) > 2;
