@@ -1,9 +1,15 @@
 package com.vieecoles.services.etats;
 
+import com.drew.imaging.ImageMetadataReader;
+import com.drew.imaging.ImageProcessingException;
+import com.drew.metadata.Metadata;
+import com.drew.metadata.MetadataException;
+import com.drew.metadata.exif.ExifIFD0Directory;
 import com.vieecoles.dto.*;
 import com.vieecoles.entities.InfosPersoBulletins;
 import com.vieecoles.entities.operations.Inscriptions;
 import com.vieecoles.entities.operations.ecole;
+import com.vieecoles.entities.operations.eleve;
 import com.vieecoles.entities.parametre;
 import com.vieecoles.projection.BulletinSelectDto;
 import com.vieecoles.services.eleves.InscriptionService;
@@ -13,15 +19,27 @@ import com.vieecoles.steph.entities.Bulletin;
 import com.vieecoles.steph.entities.Constants;
 import com.vieecoles.steph.entities.Ecole;
 
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.net.URL;
+import java.sql.Blob;
+import java.sql.SQLException;
 import javax.enterprise.context.ApplicationScoped;
+import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
+import javax.sql.rowset.serial.SerialBlob;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.ws.rs.core.Response;
 
 @ApplicationScoped
 public class BulletinSpiderServices {
@@ -630,5 +648,199 @@ public class BulletinSpiderServices {
         }
         return centralAnnee;
     }
+    @Transactional
+    public  String getAndProcessImage(Long classe ,String annee,String periode,Long idEcole )
+        throws ImageProcessingException, SQLException, IOException, MetadataException {
+    List<CodeLibelleDto> matriculeList ;
+        matriculeList= getMatriculeClasse(classe,annee,periode,idEcole);
 
+        if(!matriculeList.isEmpty()){
+            int LongTableau = 0;
+            byte[] images = new byte[0];
+            LongTableau=matriculeList.size();
+            for (int i=0; i< LongTableau;i++) {
+                String imageUrl , matricule;
+                matricule = matriculeList.get(i).getLibelle();
+                imageUrl= matriculeList.get(i).getCode();
+                System.out.println("matricule "+matricule);
+                System.out.println("imageUrl "+imageUrl);
+
+                if(imageUrl!=null && !imageUrl.isEmpty() ) {
+                    images= processImage(imageUrl);
+
+                eleve  myeleve= new eleve();
+                try {
+                    myeleve= (eleve) em.createQuery("select o from eleve o  where o.eleve_matricule =:matricule " )
+                        .setParameter("matricule", matricule).getSingleResult() ;
+                } catch (NoResultException e) {
+                    myeleve=null ;
+                }
+
+
+
+                Bulletin bulletin = new Bulletin();
+                // Bulletin
+                try {
+                    bulletin= (Bulletin) em.createQuery("select o from Bulletin o  where o.matricule=:matricule and " +
+                            " o.libellePeriode=:periode and o.anneeLibelle=:annee " )
+                        .setParameter("matricule", matricule)
+                        .setParameter("periode", periode)
+                        .setParameter("annee", annee)
+                        .getSingleResult();
+                } catch (NoResultException e) {
+                    e.printStackTrace();
+                    bulletin= null ;
+                }
+
+
+                if(myeleve!=null){
+                    System.out.println("Modification myeleve");
+                    eleve elev= new eleve();
+                    elev=eleve.findById(myeleve.getEleveid());
+                    elev.setCheminphoto(null);
+                   Long idInscription= getMaxInscrit(myeleve.getEleveid());
+                   Inscriptions inscripForUpdate= new Inscriptions();
+                   if(idInscription!=null) {
+                       try {
+                           inscripForUpdate=Inscriptions.findById(idInscription);
+                       } catch (NoResultException e) {
+                           e.printStackTrace();
+                           inscripForUpdate=null ;
+                       }
+
+                   }
+
+                    if(inscripForUpdate!=null){
+                        System.out.println("Modification Inscription");
+                        inscripForUpdate.setCheminphoto(null);
+                        inscripForUpdate.setPhoto_eleve(images);
+                    }
+                    if(bulletin!=null){
+                        System.out.println("Modification Bulletin");
+                        bulletin.setUrlPhoto(null);
+                    }
+
+                }
+            }
+
+            }
+        }
+
+
+    return "Les images traitées avec succès!" ;
+    }
+    public byte[]  processImage(String imageUrl )
+        throws MetadataException, IOException, SQLException, ImageProcessingException {
+
+            // Télécharger l'image depuis l'URL
+            BufferedImage originalImage = ImageIO.read(new URL(imageUrl));
+
+
+            // Lire les métadonnées EXIF pour vérifier l'orientation
+            Metadata metadata = ImageMetadataReader.readMetadata(new URL(imageUrl).openStream());
+            int orientation = 1; // Orientation par défaut (normale)
+
+            // Extraire les informations d'orientation
+            ExifIFD0Directory exifIFD0 = metadata.getFirstDirectoryOfType(ExifIFD0Directory.class);
+            if (exifIFD0 != null && exifIFD0.containsTag(ExifIFD0Directory.TAG_ORIENTATION)) {
+                orientation = exifIFD0.getInt(ExifIFD0Directory.TAG_ORIENTATION);
+            }
+
+            // Corriger l'orientation si nécessaire
+            BufferedImage orientedImage = correctOrientation(originalImage, orientation);
+
+            // Dimensions originales
+            int originalWidth = orientedImage.getWidth();
+            int originalHeight = orientedImage.getHeight();
+
+            // Calculer les nouvelles dimensions
+            int newWidth = originalWidth;
+            int newHeight = originalHeight;
+
+            if (originalWidth > 1000 || originalHeight > 1000) {
+                float aspectRatio = (float) originalWidth / originalHeight;
+                if (aspectRatio > 1) {
+                    newWidth = 1000;
+                    newHeight = (int) (1000 / aspectRatio);
+                } else {
+                    newHeight = 1000;
+                    newWidth = (int) (1000 * aspectRatio);
+                }
+            }
+
+            // Redimensionner l'image
+            BufferedImage resizedImage = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_RGB);
+            Graphics2D g2d = resizedImage.createGraphics();
+            g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+            g2d.drawImage(orientedImage, 0, 0, newWidth, newHeight, null);
+            g2d.dispose();
+
+            // Convertir l'image en tableau de bytes
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageIO.write(resizedImage, "png", baos);
+            byte[] imageBytes = baos.toByteArray();
+
+            // Convertir les bytes en BLOB
+            Blob imageBlob = new SerialBlob(imageBytes);
+
+
+    return imageBytes;
+    }
+    public  List<CodeLibelleDto> getMatriculeClasse(Long classe, String annee,String periode,Long idEcole){
+        List<CodeLibelleDto> classeNiveauDtoList = new ArrayList<>() ;
+        TypedQuery<CodeLibelleDto> q = em.createQuery( "SELECT new com.vieecoles.dto.CodeLibelleDto(b.matricule ,b.urlPhoto) from Bulletin b  where b.ecoleId =:idEcole and b.libellePeriode=:periode and b.anneeLibelle=:annee " +
+            " and b.classeId =:classe ", CodeLibelleDto.class);
+        classeNiveauDtoList = q.setParameter("idEcole", idEcole)
+            .setParameter("annee", annee)
+            .setParameter("periode", periode)
+            .setParameter("classe", classe)
+            .getResultList();
+        return classeNiveauDtoList;
+    }
+
+    public  Long getMaxInscrit(Long idEleve){
+        Long classeNiveauDtoList ;
+        classeNiveauDtoList=   (Long) em.createQuery("select max(o.id) from Inscription o  where o.eleve.id =:idEleve " )
+            .setParameter("idEleve", idEleve).getSingleResult() ;
+        return classeNiveauDtoList;
+    }
+
+    private BufferedImage correctOrientation(BufferedImage image, int orientation) {
+        AffineTransform transform = new AffineTransform();
+        switch (orientation) {
+            case 2: // Flip X
+                transform.scale(-1, 1);
+                transform.translate(-image.getWidth(), 0);
+                break;
+            case 3: // Rotate 180
+                transform.rotate(Math.PI, image.getWidth() / 2.0, image.getHeight() / 2.0);
+                break;
+            case 4: // Flip Y
+                transform.scale(1, -1);
+                transform.translate(0, -image.getHeight());
+                break;
+            case 5: // Rotate 90 CW and Flip X
+                transform.rotate(Math.PI / 2, image.getWidth() / 2.0, image.getWidth() / 2.0);
+                transform.scale(-1, 1);
+                break;
+            case 6: // Rotate 90 CW
+                transform.rotate(Math.PI / 2, image.getWidth() / 2.0, image.getWidth() / 2.0);
+                break;
+            case 7: // Rotate 90 CCW and Flip X
+                transform.rotate(-Math.PI / 2, image.getWidth() / 2.0, image.getWidth() / 2.0);
+                transform.scale(-1, 1);
+                break;
+            case 8: // Rotate 90 CCW
+                transform.rotate(-Math.PI / 2, image.getWidth() / 2.0, image.getWidth() / 2.0);
+                break;
+            default:
+                return image; // Pas besoin de rotation
+        }
+
+        BufferedImage newImage = new BufferedImage(image.getWidth(), image.getHeight(), image.getType());
+        Graphics2D g2d = newImage.createGraphics();
+        g2d.drawImage(image, transform, null);
+        g2d.dispose();
+        return newImage;
+    }
 }

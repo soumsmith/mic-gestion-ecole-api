@@ -7,6 +7,7 @@ import com.vieecoles.dto.NiveauOrderDto;
 import com.vieecoles.dto.eleveAffecteParClasseDto;
 import com.vieecoles.dto.eleveNonAffecteParClasseDto;
 import com.vieecoles.services.etats.appachePoi.EleveNonAffecteParClassePoiServices;
+import com.vieecoles.steph.entities.Ecole;
 import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
@@ -18,7 +19,9 @@ import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
+import org.apache.poi.xwpf.usermodel.XWPFTableCell;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.STMerge;
 
 @ApplicationScoped
 public class WordTempListNonAffectesProcessor {
@@ -95,6 +98,10 @@ public class WordTempListNonAffectesProcessor {
 
             // Ajouter des lignes au tableau
             int numerotation = 1;
+            String currentValue = "";
+            Ecole MyEcole;
+            MyEcole= Ecole.findById(idEcole);
+            currentValue = MyEcole.getLibelle();
             for (eleveNonAffecteParClasseDto eleve : elevAffectes) {  // Exemple de 3 lignes
                 XWPFTableRow row = table.createRow();
                 ensureCellCount(row, 16);  // Assurez-vous que chaque ligne a 16 cellules
@@ -116,9 +123,10 @@ public class WordTempListNonAffectesProcessor {
                 setCellTextAndFontSize(row.getCell(13), String.valueOf(eleve.getRang()), 10);
                 setCellTextAndFontSize(row.getCell(14), String.valueOf(eleve.getClasseLibelle()), 10);
                 setCellTextAndFontSize(row.getCell(15), eleve.getObservat(), 10);
-
+                mergeCellsVertically(table, 1, 1, table.getNumberOfRows()-1 );
                 numerotation++;
             }
+            table.getRow(1).getCell(1).setText(currentValue);
         }
     }
     }
@@ -129,5 +137,14 @@ public class WordTempListNonAffectesProcessor {
             row.addNewTableCell(); // Ajouter une nouvelle cellule si nécessaire
         }
     }
-
+    private static void mergeCellsVertically(XWPFTable table, int col, int fromRow, int toRow) {
+        for (int rowIndex = fromRow; rowIndex <= toRow; rowIndex++) {
+            XWPFTableCell cell = table.getRow(rowIndex).getCell(col);
+            if (rowIndex == fromRow) {
+                cell.getCTTc().addNewTcPr().addNewVMerge().setVal(STMerge.RESTART);
+            } else {
+                cell.getCTTc().addNewTcPr().addNewVMerge().setVal(STMerge.CONTINUE);
+            }
+        }
+    }
 }

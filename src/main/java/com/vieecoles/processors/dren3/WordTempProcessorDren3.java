@@ -68,6 +68,8 @@ public class WordTempProcessorDren3 {
   WordTempStatistiqueGenreProcessor wordTempStatistiqueGenreProcessor;
     @Inject
   WordTempListAffecteNonAffectesProcessor wordTempListAffecteNonAffectesProcessor;
+    @Inject
+  WordTempStatistiqueProfesseurProcessor wordTempStatistiqueProfesseurProcessor;
 
     public  byte[] generateWordFile(Long idEcole,String libelleAnnee ,String  libelleTrimetre, ByteArrayInputStream  fis) throws Exception {
 
@@ -89,21 +91,22 @@ public class WordTempProcessorDren3 {
 
      /* wordTempIdentiteProcessor.getIdentiteProcessor(document,idEcole,libelleAnnee,libelleTrimetre);
       System.out.println("Statistique Identité ok");*/
-      wordTempRecapAffNonAffResultatProcessor.getRecapResultatAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
+     /* wordTempRecapAffNonAffResultatProcessor.getRecapResultatAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
         System.out.println("Statistique Ok");
-        /*wordTempStatistiqueResultatProcessor.getResultatAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
+        wordTempStatistiqueResultatProcessor.getResultatAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
       System.out.println("Details Statistique Ok");
     wordTempStatistiqueAdmiRedoublantProcessor.getStatistiqueAdminRedoublantProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
-      System.out.println("Redoublant Ok");
-        wordTempListAffectesProcessor.getEleveAffecteParClasse(document,idEcole ,libelleAnnee,libelleTrimetre);
+      System.out.println("Redoublant Ok");*/
+       wordTempListAffectesProcessor.getEleveAffecteParClasse(document,idEcole ,libelleAnnee,libelleTrimetre);
       System.out.println("Liste affecte Ok");
-        wordTempListNonAffectesProcessor.getEleveNosAffecteParClasse(document,idEcole ,libelleAnnee,libelleTrimetre);
+       wordTempListNonAffectesProcessor.getEleveNosAffecteParClasse(document,idEcole ,libelleAnnee,libelleTrimetre);
       System.out.println("Liste Non affecte Ok");
       wordTempListAffecteNonAffectesProcessor.getEleveNosAffecteParClasse(document,idEcole ,libelleAnnee,libelleTrimetre);
       System.out.println("Liste affecte et non affecté Ok");
-      wordTempListMajorProcessor.getMajorParNiveau(document,idEcole ,libelleAnnee,libelleTrimetre);
+      wordTempStatistiqueProfesseurProcessor.getNbreProfessProcessor(document,idEcole ,libelleAnnee,libelleTrimetre,anneeId);
+    /*  wordTempListMajorProcessor.getMajorParNiveau(document,idEcole ,libelleAnnee,libelleTrimetre);
       System.out.println("Liste Major Ok");
-      wordTempListTransfertProcessor.getListTransfert(document,idEcole) ;
+        wordTempListTransfertProcessor.getListTransfert(document,idEcole) ;
       System.out.println("Liste Transfert1 Ok");
       wordTempStatistiqueTransfertProcessor.getResultatAffProcessor(document,idEcole,libelleAnnee,libelleTrimetre,anneeId);
       System.out.println("Liste Transfert2 Ok");

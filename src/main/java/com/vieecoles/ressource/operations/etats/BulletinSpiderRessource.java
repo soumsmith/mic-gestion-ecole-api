@@ -1,6 +1,11 @@
 package com.vieecoles.ressource.operations.etats;
 
 
+import com.drew.imaging.ImageMetadataReader;
+import com.drew.imaging.ImageProcessingException;
+import com.drew.metadata.Metadata;
+import com.drew.metadata.MetadataException;
+import com.drew.metadata.exif.ExifIFD0Directory;
 import com.vieecoles.dto.DspsDto;
 import com.vieecoles.dto.parametreDto;
 import com.vieecoles.dto.spiderBulletinDto;
@@ -15,6 +20,19 @@ import com.vieecoles.services.etats.BulletinSpiderServices;
 import com.vieecoles.services.etats.DpspServices;
 import com.vieecoles.services.souscription.SousceecoleService;
 import com.vieecoles.steph.entities.Classe;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.RenderingHints;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.sql.Blob;
+import javax.imageio.ImageIO;
+import javax.sql.rowset.serial.SerialBlob;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Response;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRXlsExporter;
@@ -70,6 +88,98 @@ public class BulletinSpiderRessource {
 
 
     private static String UPLOAD_DIR = "/data/";
+
+    @GET
+    @Path("/process-image")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Response processImage(@QueryParam("url") String imageUrl) {
+
+        try {
+            // Télécharger l'image depuis l'URL
+            BufferedImage originalImage = ImageIO.read(new URL(imageUrl));
+            if (originalImage == null) {
+                return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("Impossible de lire l'image à partir de l'URL fournie.")
+                    .build();
+            }
+
+            // Lire les métadonnées EXIF pour vérifier l'orientation
+            Metadata metadata = ImageMetadataReader.readMetadata(new URL(imageUrl).openStream());
+            int orientation = 1; // Orientation par défaut (normale)
+
+            // Extraire les informations d'orientation
+            ExifIFD0Directory exifIFD0 = metadata.getFirstDirectoryOfType(ExifIFD0Directory.class);
+            if (exifIFD0 != null && exifIFD0.containsTag(ExifIFD0Directory.TAG_ORIENTATION)) {
+                orientation = exifIFD0.getInt(ExifIFD0Directory.TAG_ORIENTATION);
+            }
+
+            // Corriger l'orientation si nécessaire
+            BufferedImage orientedImage = correctOrientation(originalImage, orientation);
+
+            // Dimensions originales
+            int originalWidth = orientedImage.getWidth();
+            int originalHeight = orientedImage.getHeight();
+
+            // Calculer les nouvelles dimensions
+            int newWidth = originalWidth;
+            int newHeight = originalHeight;
+
+            if (originalWidth > 1000 || originalHeight > 1000) {
+                float aspectRatio = (float) originalWidth / originalHeight;
+                if (aspectRatio > 1) {
+                    newWidth = 1000;
+                    newHeight = (int) (1000 / aspectRatio);
+                } else {
+                    newHeight = 1000;
+                    newWidth = (int) (1000 * aspectRatio);
+                }
+            }
+
+            // Redimensionner l'image
+            BufferedImage resizedImage = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_RGB);
+            Graphics2D g2d = resizedImage.createGraphics();
+            g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+            g2d.drawImage(orientedImage, 0, 0, newWidth, newHeight, null);
+            g2d.dispose();
+
+            // Convertir l'image en tableau de bytes
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageIO.write(resizedImage, "png", baos);
+            byte[] imageBytes = baos.toByteArray();
+
+            // Convertir les bytes en BLOB
+            Blob imageBlob = new SerialBlob(imageBytes);
+
+            // Retourner le BLOB
+            return Response.ok(imageBlob.getBinaryStream())
+                .header("Content-Disposition", "attachment; filename=processed_image.png")
+                .build();
+
+        } catch (IOException e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                .entity("Erreur lors du traitement de l'image : " + e.getMessage())
+                .build();
+        } catch (SQLException e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                .entity("Erreur lors de la conversion en BLOB : " + e.getMessage())
+                .build();
+        } catch (ImageProcessingException e) {
+          throw new RuntimeException(e);
+        } catch (MetadataException e) {
+          throw new RuntimeException(e);
+        }
+    }
+
+    @GET
+    @Path("/process-image-classe/{idEcole}/{libellePeriode}/{libelleAnnee}/{idClasse}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String processImageForClasse(@PathParam("idEcole") Long idEcole
+        ,@PathParam("libellePeriode") String libellePeriode
+        ,@PathParam("libelleAnnee") String libelleAnnee, @PathParam("idClasse") Long idClasse)
+        throws ImageProcessingException, SQLException, IOException, MetadataException {
+      return   bulletinSpider.getAndProcessImage(idClasse,libelleAnnee,libellePeriode,idEcole) ;
+
+    }
 
      @GET
     @Path("/spider-bulletin/{idEcole}/{libellePeriode}/{libelleAnnee}/{idClasse}/{compress}/{niveauEnseign}/{positionLogo}/{filigranne}/{infoAmoirie}/{pivoter}/{modelePoincarre}/{distinct}/{modelelmd}/{testLourd}")
@@ -337,14 +447,15 @@ public class BulletinSpiderRessource {
         }
         ecole myEcole= new ecole() ;
         myEcole=sousceecoleService.getInffosEcoleByID(idEcole);
-       map.put("classe", classe.getLibelle());
-        // map.put("classe", 	"TLE D");
+         map.put("classe", classe.getLibelle());
+        // map.put("classe", 	"5EME 1");
         map.put("idEcole", idEcole);
         map.put("libelleAnnee", libelleAnnee);
         map.put("libellePeriode", libellePeriode);
         map.put("infosAmoirie", infos);
         map.put("distinctin", pdistinct);
         map.put("codeEcole", myEcole.getEcolecode());
+        //map.put("codeEcole", "myEcole.getEcolecode()");
         map.put("positionLogo", plogoPosi);
         map.put("setBg", psetBg);
 
@@ -676,6 +787,45 @@ if (!compress){
 
         }
     }
+    private BufferedImage correctOrientation(BufferedImage image, int orientation) {
+        AffineTransform transform = new AffineTransform();
+        switch (orientation) {
+            case 2: // Flip X
+                transform.scale(-1, 1);
+                transform.translate(-image.getWidth(), 0);
+                break;
+            case 3: // Rotate 180
+                transform.rotate(Math.PI, image.getWidth() / 2.0, image.getHeight() / 2.0);
+                break;
+            case 4: // Flip Y
+                transform.scale(1, -1);
+                transform.translate(0, -image.getHeight());
+                break;
+            case 5: // Rotate 90 CW and Flip X
+                transform.rotate(Math.PI / 2, image.getWidth() / 2.0, image.getWidth() / 2.0);
+                transform.scale(-1, 1);
+                break;
+            case 6: // Rotate 90 CW
+                transform.rotate(Math.PI / 2, image.getWidth() / 2.0, image.getWidth() / 2.0);
+                break;
+            case 7: // Rotate 90 CCW and Flip X
+                transform.rotate(-Math.PI / 2, image.getWidth() / 2.0, image.getWidth() / 2.0);
+                transform.scale(-1, 1);
+                break;
+            case 8: // Rotate 90 CCW
+                transform.rotate(-Math.PI / 2, image.getWidth() / 2.0, image.getWidth() / 2.0);
+                break;
+            default:
+                return image; // Pas besoin de rotation
+        }
+
+        BufferedImage newImage = new BufferedImage(image.getWidth(), image.getHeight(), image.getType());
+        Graphics2D g2d = newImage.createGraphics();
+        g2d.drawImage(image, transform, null);
+        g2d.dispose();
+        return newImage;
+    }
+
 
 
 
