@@ -541,11 +541,13 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 					// Ajout de l'enseignant de la matiere
 					PersonnelMatiereClasse pers = personnelMatiereClasseService.findProfesseurByMatiereAndClasse(
 							Long.parseLong(annee), Long.parseLong(classe), entry.getKey().getId());
-					if (pers != null && pers.getPersonnel() != null)
+					if (pers != null && pers.getPersonnel() != null) {
 						flag.setNom_prenom_professeur(
 								pers.getPersonnel().getNom() + " " + pers.getPersonnel().getPrenom());
-					else
+						flag.setSexeProfesseur(pers.getPersonnel().getSexe());
+					} else {
 						flag.setNom_prenom_professeur("N/A");
+					}
 
 					flag.persist();
 //					System.out.println("Detail -> " + flag.getId());
