@@ -316,7 +316,7 @@ public class WordTempStatistiqueResultatProcessor {
           XWPFTableRow garconRow = table.createRow();
           ensureCellCount(garconRow, 14);
         //  garconRow.getCell(0).setText(currentValue);
-          garconRow.getCell(1).setText(eleve.getNiveau());
+          garconRow.getCell(1).setText(afficherValeurParNiveau(eleve.getNiveau()));
           garconRow.getCell(2).setText("G");
           garconRow.getCell(3).setText(String.valueOf(nombreClasseParNiveau));
           garconRow.getCell(4).setText(String.valueOf(eleve.getEffeG()));
@@ -530,7 +530,7 @@ public class WordTempStatistiqueResultatProcessor {
         XWPFTableRow garconRow = table.createRow();
         ensureCellCount(garconRow, 14);
         //garconRow.getCell(0).setText(currentValue);
-        garconRow.getCell(1).setText(eleve.getNiveau());
+        garconRow.getCell(1).setText(afficherValeurParNiveau(eleve.getNiveau()));
         garconRow.getCell(2).setText("G");
         garconRow.getCell(3).setText(String.valueOf(nombreClasseParNiveau));
         garconRow.getCell(4).setText(String.valueOf(eleve.getEffeG()));
@@ -764,5 +764,41 @@ public class WordTempStatistiqueResultatProcessor {
           . getResultList() ;
       return classeNiveauDtoList.size() ;
     }
+
+  public static String afficherValeurParNiveau(String niveau) {
+    // Mapping des niveaux avec leurs correspondants
+    switch (niveau) {
+      case "Sixième":
+        return "6ème";
+      case "Cinquième":
+        return "5ème";
+      case "Quatrième":
+        return "4ème";
+      case "Troisième":
+        return "3ème";
+      case "Seconde C":
+        return "2nde C";
+      case "Seconde A":
+        return "2nde A";
+      case "Première A":
+        return "1ère A";
+      case "Première C":
+        return "1ère C";
+      case "Première D":
+        return "1ère D";
+      case "Terminale A":
+        return "Tle A";
+      case "Terminale A1":
+        return "Tle A1";
+      case "Terminale A2":
+        return "Tle A2";
+      case "Terminale C":
+        return "Tle C";
+      case "Terminale D":
+        return "Tle D";
+      default:
+        return "Niveau inconnu";
+    }
+  }
 
 }

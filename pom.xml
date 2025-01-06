@@ -97,6 +97,12 @@
 			<artifactId>metadata-extractor</artifactId>
 			<version>2.18.0</version>
 		</dependency>
+		<dependency>
+			<groupId>net.sf.saxon</groupId>
+			<artifactId>Saxon-HE</artifactId>
+			<version>12.3</version> <!-- Vérifiez la version la plus récente -->
+		</dependency>
+
 
 		<dependency>
 			<groupId>javax.servlet</groupId>
