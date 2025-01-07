@@ -88,7 +88,7 @@ public class WordTempProcessorDren3 {
 
         XWPFDocument document = new XWPFDocument(fis);
 
-      wordTempIdentiteProcessor.getIdentiteProcessor(document,idEcole,libelleAnnee,libelleTrimetre);
+     wordTempIdentiteProcessor.getIdentiteProcessor(document,idEcole,libelleAnnee,libelleTrimetre);
       System.out.println("Statistique Identité okjj");
       wordTempRecapAffNonAffResultatProcessor.getRecapResultatAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
         System.out.println("Statistique Ok");
@@ -102,7 +102,6 @@ public class WordTempProcessorDren3 {
       System.out.println("Liste Non affecte Ok");
      wordTempListAffecteNonAffectesProcessor.getEleveNosAffecteParClasse(document,idEcole ,libelleAnnee,libelleTrimetre);
       System.out.println("Liste affecte et non affecté Ok");
-
      wordTempListMajorProcessor.getMajorParNiveau(document,idEcole ,libelleAnnee,libelleTrimetre);
       System.out.println("Liste Major Ok");
         wordTempListTransfertProcessor.getListTransfert(document,idEcole) ;
@@ -115,9 +114,7 @@ public class WordTempProcessorDren3 {
       System.out.println("Statistique Age Ok");
       wordTempStatistiqueBoursierProcessor.getResultatAffProcessor(document,idEcole,libelleAnnee,libelleTrimetre,anneeId);
       System.out.println("Statistique Boursier Ok");
-
       wordTempStatistiqueGenreProcessor.getResultatAffProcessor(document,idEcole,libelleAnnee,libelleTrimetre,anneeId);
-
       System.out.println("Statistique Genregg Ok");
       wordTempStatistiqueProfesseurProcessor.getNbreProfessProcessor(document,idEcole ,libelleAnnee,libelleTrimetre,anneeId);
 

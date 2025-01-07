@@ -46,122 +46,122 @@ public class RepartitionElevParAnNaissServices {
 
        Integer effectifClasse ;
         EleveParAnneNaissNombreDto m = new EleveParAnneNaissNombreDto();
-        nbre01F=getRepartiParAnnee(idEcole,"1901","FEMININ" , libelleTrimestre);
-        nbre01G=getRepartiParAnnee(idEcole,"1901","MASCULIN" , libelleTrimestre);
+        nbre01F=getRepartiParAnnee(idEcole,"1901","FEMININ" , libelleTrimestre,libelleAnnee);
+        nbre01G=getRepartiParAnnee(idEcole,"1901","MASCULIN" , libelleTrimestre ,libelleAnnee);
         m.setNbre01F(nbre01F);
         m.setNbre01G(nbre01G);
-        nbre98F=getRepartiParAnnee(idEcole,"1998","FEMININ" , libelleTrimestre);
-        nbre98G=getRepartiParAnnee(idEcole,"1998","MASCULIN" , libelleTrimestre);
+        nbre98F=getRepartiParAnnee(idEcole,"1998","FEMININ" , libelleTrimestre,libelleAnnee);
+        nbre98G=getRepartiParAnnee(idEcole,"1998","MASCULIN" , libelleTrimestre,libelleAnnee);
         m.setNbre98F(nbre98F);
         m.setNbre98G(nbre98G);
-        nbre99F=getRepartiParAnnee(idEcole,"1999","FEMININ" , libelleTrimestre);
-        nbre99G=getRepartiParAnnee(idEcole,"1999","MASCULIN" , libelleTrimestre);
+        nbre99F=getRepartiParAnnee(idEcole,"1999","FEMININ" , libelleTrimestre,libelleAnnee);
+        nbre99G=getRepartiParAnnee(idEcole,"1999","MASCULIN" , libelleTrimestre,libelleAnnee);
         m.setNbre99F(nbre99F);
         m.setNbre99G(nbre99G);
-        nbre2000F=getRepartiParAnnee(idEcole,"2000","FEMININ" , libelleTrimestre);
-        nbre2000G=getRepartiParAnnee(idEcole,"2000","MASCULIN" , libelleTrimestre);
+        nbre2000F=getRepartiParAnnee(idEcole,"2000","FEMININ" , libelleTrimestre,libelleAnnee);
+        nbre2000G=getRepartiParAnnee(idEcole,"2000","MASCULIN" , libelleTrimestre,libelleAnnee);
          m.setNbre2000F(nbre2000F);
          m.setNbre2000G(nbre2000G);
-        nbre2001F=getRepartiParAnnee(idEcole,"2001","FEMININ" , libelleTrimestre);
-        nbre2001G=getRepartiParAnnee(idEcole,"2001","MASCULIN" , libelleTrimestre);
+        nbre2001F=getRepartiParAnnee(idEcole,"2001","FEMININ" , libelleTrimestre,libelleAnnee);
+        nbre2001G=getRepartiParAnnee(idEcole,"2001","MASCULIN" , libelleTrimestre,libelleAnnee);
         m.setNbre2001F(nbre2001F);
         m.setNbre2001G(nbre2001G);
-        nbre2002F=getRepartiParAnnee(idEcole,"2002","FEMININ" , libelleTrimestre);
-        nbre2002G=getRepartiParAnnee(idEcole,"2002","MASCULIN" , libelleTrimestre);
+        nbre2002F=getRepartiParAnnee(idEcole,"2002","FEMININ" , libelleTrimestre,libelleAnnee);
+        nbre2002G=getRepartiParAnnee(idEcole,"2002","MASCULIN" , libelleTrimestre,libelleAnnee);
         m.setNbre2001F(nbre2002F);
         m.setNbre2001G(nbre2002G);
 
-        nbre2003F=getRepartiParAnnee(idEcole,"2003","FEMININ" , libelleTrimestre);
-        nbre2003G=getRepartiParAnnee(idEcole,"2003","MASCULIN" , libelleTrimestre);
+        nbre2003F=getRepartiParAnnee(idEcole,"2003","FEMININ" , libelleTrimestre,libelleAnnee);
+        nbre2003G=getRepartiParAnnee(idEcole,"2003","MASCULIN" , libelleTrimestre,libelleAnnee);
         m.setNbre2003F(nbre2003F);
         m.setNbre2003G(nbre2003G);
 
-        nbre2004F=getRepartiParAnnee(idEcole,"2004","FEMININ" , libelleTrimestre);
-        nbre2004G=getRepartiParAnnee(idEcole,"2004","MASCULIN" , libelleTrimestre);
+        nbre2004F=getRepartiParAnnee(idEcole,"2004","FEMININ" , libelleTrimestre,libelleAnnee);
+        nbre2004G=getRepartiParAnnee(idEcole,"2004","MASCULIN" , libelleTrimestre,libelleAnnee);
         m.setNbre2004F(nbre2004F);
         m.setNbre2004G(nbre2004G);
 
-        nbre2005F=getRepartiParAnnee(idEcole,"2005","FEMININ" , libelleTrimestre);
-        nbre2005G=getRepartiParAnnee(idEcole,"2005","MASCULIN" , libelleTrimestre);
+        nbre2005F=getRepartiParAnnee(idEcole,"2005","FEMININ" , libelleTrimestre,libelleAnnee);
+        nbre2005G=getRepartiParAnnee(idEcole,"2005","MASCULIN" , libelleTrimestre,libelleAnnee);
         m.setNbre2005F(nbre2005F);
         m.setNbre2005G(nbre2005G);
 
-        nbre2006F=getRepartiParAnnee(idEcole,"2006","FEMININ" , libelleTrimestre);
-        nbre2006G=getRepartiParAnnee(idEcole,"2006","MASCULIN" , libelleTrimestre);
+        nbre2006F=getRepartiParAnnee(idEcole,"2006","FEMININ" , libelleTrimestre,libelleAnnee);
+        nbre2006G=getRepartiParAnnee(idEcole,"2006","MASCULIN" , libelleTrimestre,libelleAnnee);
         m.setNbre2006F(nbre2006F);
         m.setNbre2006G(nbre2006G);
-        nbre2007F=getRepartiParAnnee(idEcole,"2007","FEMININ" , libelleTrimestre);
-        nbre2007G=getRepartiParAnnee(idEcole,"2007","MASCULIN" , libelleTrimestre);
+        nbre2007F=getRepartiParAnnee(idEcole,"2007","FEMININ" , libelleTrimestre,libelleAnnee);
+        nbre2007G=getRepartiParAnnee(idEcole,"2007","MASCULIN" , libelleTrimestre,libelleAnnee);
         m.setNbre2007F(nbre2007F);
         m.setNbre2007G(nbre2007G);
-        nbre2008F=getRepartiParAnnee(idEcole,"2008","FEMININ" , libelleTrimestre);
-        nbre2008G=getRepartiParAnnee(idEcole,"2008","MASCULIN" , libelleTrimestre);
+        nbre2008F=getRepartiParAnnee(idEcole,"2008","FEMININ" , libelleTrimestre,libelleAnnee);
+        nbre2008G=getRepartiParAnnee(idEcole,"2008","MASCULIN" , libelleTrimestre,libelleAnnee);
         m.setNbre2008F(nbre2008F);
         m.setNbre2008G(nbre2008G);
-        nbre2009F=getRepartiParAnnee(idEcole,"2009","FEMININ" , libelleTrimestre);
-        nbre2009G=getRepartiParAnnee(idEcole,"2009","MASCULIN" , libelleTrimestre);
+        nbre2009F=getRepartiParAnnee(idEcole,"2009","FEMININ" , libelleTrimestre,libelleAnnee);
+        nbre2009G=getRepartiParAnnee(idEcole,"2009","MASCULIN" , libelleTrimestre,libelleAnnee);
         m.setNbre2009F(nbre2009F);
         m.setNbre2009G(nbre2009G);
 
-        nbre2010F=getRepartiParAnnee(idEcole,"2010","FEMININ" , libelleTrimestre);
-        nbre2010G=getRepartiParAnnee(idEcole,"2010","MASCULIN" , libelleTrimestre);
+        nbre2010F=getRepartiParAnnee(idEcole,"2010","FEMININ" , libelleTrimestre,libelleAnnee);
+        nbre2010G=getRepartiParAnnee(idEcole,"2010","MASCULIN" , libelleTrimestre,libelleAnnee);
         m.setNbre2010F(nbre2010F);
         m.setNbre2010G(nbre2010G);
         System.out.println("Annee Masculin:"+nbre2010G);
       System.out.println("Annee Feminin:"+nbre2010F);
 
-        nbre2011F=getRepartiParAnnee(idEcole,"2011","FEMININ" , libelleTrimestre);
-        nbre2011G=getRepartiParAnnee(idEcole,"2011","MASCULIN" , libelleTrimestre);
+        nbre2011F=getRepartiParAnnee(idEcole,"2011","FEMININ" , libelleTrimestre,libelleAnnee);
+        nbre2011G=getRepartiParAnnee(idEcole,"2011","MASCULIN" , libelleTrimestre,libelleAnnee);
         m.setNbre2011F(nbre2011F);
         m.setNbre2011G(nbre2011G);
 
-        nbre2012F=getRepartiParAnnee(idEcole,"2012","FEMININ" , libelleTrimestre);
-        nbre2012G=getRepartiParAnnee(idEcole,"2012","MASCULIN" , libelleTrimestre);
+        nbre2012F=getRepartiParAnnee(idEcole,"2012","FEMININ" , libelleTrimestre,libelleAnnee);
+        nbre2012G=getRepartiParAnnee(idEcole,"2012","MASCULIN" , libelleTrimestre,libelleAnnee);
         m.setNbre2012F(nbre2012F);
         m.setNbre2012G(nbre2012G);
 
-        nbre2013F=getRepartiParAnnee(idEcole,"2013","FEMININ" , libelleTrimestre);
-        nbre2013G=getRepartiParAnnee(idEcole,"2013","MASCULIN" , libelleTrimestre);
+        nbre2013F=getRepartiParAnnee(idEcole,"2013","FEMININ" , libelleTrimestre,libelleAnnee);
+        nbre2013G=getRepartiParAnnee(idEcole,"2013","MASCULIN" , libelleTrimestre,libelleAnnee);
         m.setNbre2013F(nbre2013F);
         m.setNbre2013G(nbre2013G);
 
-        nbre2014F=getRepartiParAnnee(idEcole,"2014","FEMININ" , libelleTrimestre);
-        nbre2014G=getRepartiParAnnee(idEcole,"2014","MASCULIN" , libelleTrimestre);
+        nbre2014F=getRepartiParAnnee(idEcole,"2014","FEMININ" , libelleTrimestre,libelleAnnee);
+        nbre2014G=getRepartiParAnnee(idEcole,"2014","MASCULIN" , libelleTrimestre,libelleAnnee);
         m.setNbre2014F(nbre2014F);
         m.setNbre2014G(nbre2014G);
 
-        nbre2015F=getRepartiParAnnee(idEcole,"2015","FEMININ" , libelleTrimestre);
-        nbre2015G=getRepartiParAnnee(idEcole,"2015","MASCULIN" , libelleTrimestre);
+        nbre2015F=getRepartiParAnnee(idEcole,"2015","FEMININ" , libelleTrimestre,libelleAnnee);
+        nbre2015G=getRepartiParAnnee(idEcole,"2015","MASCULIN" , libelleTrimestre,libelleAnnee);
         m.setNbre2015F(nbre2015F);
         m.setNbre2015G(nbre2015G);
 
-        nbre2016F=getRepartiParAnnee(idEcole,"2016","FEMININ" , libelleTrimestre);
-        nbre2016G=getRepartiParAnnee(idEcole,"2016","MASCULIN" , libelleTrimestre);
+        nbre2016F=getRepartiParAnnee(idEcole,"2016","FEMININ" , libelleTrimestre,libelleAnnee);
+        nbre2016G=getRepartiParAnnee(idEcole,"2016","MASCULIN" , libelleTrimestre,libelleAnnee);
         m.setNbre2016F(nbre2016F);
         m.setNbre2016G(nbre2016G);
 
-        nbre2017F=getRepartiParAnnee(idEcole,"2017","FEMININ" , libelleTrimestre);
-        nbre2017G=getRepartiParAnnee(idEcole,"2017","MASCULIN" , libelleTrimestre);
+        nbre2017F=getRepartiParAnnee(idEcole,"2017","FEMININ" , libelleTrimestre,libelleAnnee);
+        nbre2017G=getRepartiParAnnee(idEcole,"2017","MASCULIN" , libelleTrimestre,libelleAnnee);
         m.setNbre2017F(nbre2017F);
         m.setNbre2017G(nbre2017G);
 
-        nbre2018F=getRepartiParAnnee(idEcole,"2018","FEMININ" , libelleTrimestre);
-        nbre2018G=getRepartiParAnnee(idEcole,"2018","MASCULIN" , libelleTrimestre);
+        nbre2018F=getRepartiParAnnee(idEcole,"2018","FEMININ" , libelleTrimestre,libelleAnnee);
+        nbre2018G=getRepartiParAnnee(idEcole,"2018","MASCULIN" , libelleTrimestre,libelleAnnee);
         m.setNbre2018F(nbre2018F);
         m.setNbre2018G(nbre2018G);
 
-        nbre2019F=getRepartiParAnnee(idEcole,"2019","FEMININ" , libelleTrimestre);
-        nbre2019G=getRepartiParAnnee(idEcole,"2019","MASCULIN" , libelleTrimestre);
+        nbre2019F=getRepartiParAnnee(idEcole,"2019","FEMININ" , libelleTrimestre,libelleAnnee);
+        nbre2019G=getRepartiParAnnee(idEcole,"2019","MASCULIN" , libelleTrimestre,libelleAnnee);
         m.setNbre2019F(nbre2019F);
         m.setNbre2019G(nbre2019G);
 
-        nbre2020F=getRepartiParAnnee(idEcole,"2020","FEMININ" , libelleTrimestre);
-        nbre2020G=getRepartiParAnnee(idEcole,"2020","MASCULIN" , libelleTrimestre);
+        nbre2020F=getRepartiParAnnee(idEcole,"2020","FEMININ" , libelleTrimestre,libelleAnnee);
+        nbre2020G=getRepartiParAnnee(idEcole,"2020","MASCULIN" , libelleTrimestre,libelleAnnee);
         m.setNbre2020F(nbre2020F);
         m.setNbre2020G(nbre2020G);
 
-        nbre2021F=getRepartiParAnnee(idEcole,"2021","FEMININ" , libelleTrimestre);
-        nbre2021G=getRepartiParAnnee(idEcole,"2021","MASCULIN" , libelleTrimestre);
+        nbre2021F=getRepartiParAnnee(idEcole,"2021","FEMININ" , libelleTrimestre,libelleAnnee);
+        nbre2021G=getRepartiParAnnee(idEcole,"2021","MASCULIN" , libelleTrimestre,libelleAnnee);
         m.setNbre2021F(nbre2021F);
         m.setNbre2021G(nbre2021G);
         totalF=getRepartiParAnneeTotal(idEcole,"FEMININ" , libelleTrimestre);
@@ -193,15 +193,16 @@ public class RepartitionElevParAnNaissServices {
 
   }
 
-    public  Long getRepartiParAnnee(Long idEcole ,String annee, String sexe , String libelleTrimestre){
+    public  Long getRepartiParAnnee(Long idEcole ,String annee, String sexe , String libelleTrimestre,String anneeScolaire){
         Long repartParAnneParNiv ;
         try {
           Long eff ;
-            eff =(Long) em.createQuery( "SELECT count(b.id)  from Bulletin as b  where b.sexe=:sexe and b.ecoleId=:idEcole and b.libellePeriode=:periode  and SUBSTRING(b.dateNaissance,1,4) =:annee group by SUBSTRING(b.dateNaissance,1,4)  "
+            eff =(Long) em.createQuery( "SELECT count(b.id)  from Bulletin  b  where b.sexe=:sexe and b.ecoleId=:idEcole and b.libellePeriode=:periode  and SUBSTRING(b.dateNaissance,1,4) =:annee and b.anneeLibelle=:anneeScolaire "
                 ).setParameter("sexe",sexe)
                 .setParameter("idEcole",idEcole)
                 .setParameter("annee",annee)
                 .setParameter("periode", libelleTrimestre)
+                .setParameter("anneeScolaire", anneeScolaire)
                 .getSingleResult();
             return (long) eff;
         } catch (NoResultException e){

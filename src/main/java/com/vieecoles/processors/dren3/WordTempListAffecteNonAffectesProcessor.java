@@ -104,6 +104,9 @@ public class WordTempListAffecteNonAffectesProcessor {
             currentValue = MyEcole.getLibelle();
             for (eleveNonAffecteParClasseDto eleve : elevAffectes) {  // Exemple de 3 lignes
                 XWPFTableRow row = table.createRow();
+                if (row == null) {
+                    row = table.insertNewTableRow(table.getNumberOfRows());
+                }
                 ensureCellCount(row, 16);  // Assurez-vous que chaque ligne a 16 cellules
 
                 // Définir le texte et la taille des cellules de la ligne
@@ -126,7 +129,11 @@ public class WordTempListAffecteNonAffectesProcessor {
                 mergeCellsVertically(table, 1, 1, table.getNumberOfRows()-1 );
                 numerotation++;
             }
-            table.getRow(1).getCell(1).setText(currentValue);
+            //table.getRow(1).getCell(1).setText(currentValue);
+            XWPFTableRow specificRow = table.getRow(1);
+            if (specificRow != null && specificRow.getCell(1) != null) {
+                specificRow.getCell(1).setText(currentValue);
+            }
         }
     }
     }
