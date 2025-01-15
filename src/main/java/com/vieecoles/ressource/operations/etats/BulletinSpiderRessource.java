@@ -448,14 +448,14 @@ public class BulletinSpiderRessource {
         ecole myEcole= new ecole() ;
         myEcole=sousceecoleService.getInffosEcoleByID(idEcole);
          map.put("classe", classe.getLibelle());
-        // map.put("classe", 	"5EME 1");
+        // map.put("classe", 	"TLE D");
         map.put("idEcole", idEcole);
         map.put("libelleAnnee", libelleAnnee);
         map.put("libellePeriode", libellePeriode);
         map.put("infosAmoirie", infos);
         map.put("distinctin", pdistinct);
         map.put("codeEcole", myEcole.getEcolecode());
-        //map.put("codeEcole", "myEcole.getEcolecode()");
+       // map.put("codeEcole", "myEcole.getEcolecode()");
         map.put("positionLogo", plogoPosi);
         map.put("setBg", psetBg);
 

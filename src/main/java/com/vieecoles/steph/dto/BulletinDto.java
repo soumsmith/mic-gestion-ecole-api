@@ -86,5 +86,6 @@ public class BulletinDto {
 	private Long niveauEnseignementId;
 	private  Boolean transfert ;
 	private  Boolean ivoirien ;
+	private String urlLogo;
 	private List<DetailBulletinDto> details;
 }
