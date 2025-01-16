@@ -33,12 +33,14 @@
 	<parameter name="distinctin" class="java.lang.String"/>
 	<parameter name="positionLogo" class="java.lang.String"/>
 	<parameter name="setBg" class="java.lang.String"/>
+	<parameter name="classe" class="java.lang.String"/>
 	<queryString language="SQL">
 		<![CDATA[select * from  `ecoleviedbv2`.ve_details_infos_bulletins_spider 
 where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule} and 
 `ecoleviedbv2`.ve_details_infos_bulletins_spider.id_ecole=  $P{idEcole} and 
 `ecoleviedbv2`.ve_details_infos_bulletins_spider.annee_libelle= $P{annee} and 
-`ecoleviedbv2`.ve_details_infos_bulletins_spider.libelle_periode= $P{libellePeriode}
+`ecoleviedbv2`.ve_details_infos_bulletins_spider.libelle_periode= $P{libellePeriode} and
+`ecoleviedbv2`.ve_details_infos_bulletins_spider.libelle_classe=  $P{classe} 
    order by `ecoleviedbv2`.ve_details_infos_bulletins_spider.nom , `ecoleviedbv2`.ve_details_infos_bulletins_spider.prenoms]]>
 	</queryString>
 	<field name="id_ecole" class="java.lang.Long">
