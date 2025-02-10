@@ -1,6 +1,7 @@
 package com.vieecoles.ressource.operations.etats;
 
 
+
 import com.drew.imaging.ImageMetadataReader;
 import com.drew.imaging.ImageProcessingException;
 import com.drew.metadata.Metadata;
@@ -182,7 +183,7 @@ public class BulletinSpiderRessource {
     }
 
      @GET
-    @Path("/spider-bulletin/{idEcole}/{libellePeriode}/{libelleAnnee}/{idClasse}/{compress}/{niveauEnseign}/{positionLogo}/{filigranne}/{infoAmoirie}/{pivoter}/{modelePoincarre}/{distinct}/{modelelmd}/{testLourd}")
+    @Path("/spider-bulletin/{idEcole}/{libellePeriode}/{libelleAnnee}/{idClasse}/{compress}/{niveauEnseign}/{positionLogo}/{filigranne}/{infoAmoirie}/{pivoter}/{modelePoincarre}/{distinct}/{modelelmd}/{testLourd}/{bulletinArabe}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public ResponseEntity<byte[]>  getDtoRapport(@PathParam("idEcole") Long idEcole ,@PathParam("libellePeriode") String libellePeriode ,
                                                  @PathParam("libelleAnnee") String libelleAnnee , @PathParam("idClasse") Long libelleClasse ,@PathParam("compress") Boolean compress ,
@@ -192,7 +193,8 @@ public class BulletinSpiderRessource {
                                                  ,
                                                  @PathParam("distinct") boolean distinct ,
                                                  @PathParam("modelelmd") boolean modelelmd,
-                                                 @PathParam("testLourd") boolean testLourd
+                                                 @PathParam("testLourd") boolean testLourd,
+                                                 @PathParam("bulletinArabe") boolean bulletinArabe
                                                   ) throws Exception, JRException {
 
 
@@ -322,6 +324,15 @@ public class BulletinSpiderRessource {
 
                     }
                 }
+                else if (bulletinArabe){
+                    if(libellePeriode.equals("Troisième Trimestre")) {
+                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/callSpiderArabeTrois.jrxml");
+                    }
+                    else {
+                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderArabe.jrxml");
+
+                    }
+                }
                 else  if(!pivoter){
                     if(libellePeriode.equals("Troisième Trimestre")) {
                         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/callSpiderNobelDecompress90Trois.jrxml");
@@ -333,6 +344,8 @@ public class BulletinSpiderRessource {
                 } else {
                     if(libellePeriode.equals("Troisième Trimestre"))
                     myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/callSpiderNobelDecompressTrois.jrxml");
+
+
                 else
                 {myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderNobelDecompress.jrxml");
                 System.out.println("callSpiderNobelDecompress") ;
@@ -470,7 +483,7 @@ public class BulletinSpiderRessource {
     }
 
     @GET
-    @Path("/spider-bulletin-matricule/{idEcole}/{libellePeriode}/{libelleAnnee}/{idClasse}/{matricule}/{compress}/{niveauEnseign}/{positionLogo}/{filigranne}/{infoAmoirie}/{pivoter}/{modelePoincarre}/{distinct}/{modelelmd}/{testLourd}")
+    @Path("/spider-bulletin-matricule/{idEcole}/{libellePeriode}/{libelleAnnee}/{idClasse}/{matricule}/{compress}/{niveauEnseign}/{positionLogo}/{filigranne}/{infoAmoirie}/{pivoter}/{modelePoincarre}/{distinct}/{modelelmd}/{testLourd}/{bulletinArabe}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public ResponseEntity<byte[]>  getDtoRapport(@PathParam("idEcole") Long idEcole ,@PathParam("libellePeriode") String libellePeriode ,
                                                  @PathParam("libelleAnnee") String libelleAnnee , @PathParam("idClasse") Long libelleClasse ,@PathParam("matricule") String matricule,@PathParam("compress") Boolean compress,
@@ -481,12 +494,15 @@ public class BulletinSpiderRessource {
                                                  @PathParam("modelePoincarre") boolean modelePoincarre,
                                                  @PathParam("distinct") boolean distinct ,
                                                  @PathParam("modelelmd") boolean modelelmd,
-                                                 @PathParam("testLourd") boolean testLourd
+                                                 @PathParam("testLourd") boolean testLourd,
+                                                 @PathParam("bulletinArabe") boolean bulletinArabe
      ) throws Exception, JRException {
         try {
 
 
         InputStream myInpuStream = null;
+            Classe classe= new Classe() ;
+            classe = Classe.findById(libelleClasse) ;
 if (!compress){
     if(niveauEnseign ==2) {
         if(testLourd){
@@ -606,6 +622,15 @@ if (!compress){
             }
             else {
                 myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/BulletinNobelSpiderTroisLourd.jrxml");
+
+            }
+        }
+       else if (bulletinArabe){
+            if(libellePeriode.equals("Troisième Trimestre")) {
+                myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/BulletinArabeSpiderEtanTrois.jrxml");
+            }
+            else {
+                myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinArabeSpiderEtan.jrxml");
 
             }
         }
@@ -729,6 +754,7 @@ if (!compress){
         //  map.put("codeEcole", myEcole.getEcolecode());
         map.put("positionLogo", plogoPosi);
         map.put("setBg", psetBg);
+            map.put("classe", classe.getLibelle());
       JasperPrint report = JasperFillManager.fillReport(compileReport, map, connection);
         byte[] data =JasperExportManager.exportReportToPdf(report);
 

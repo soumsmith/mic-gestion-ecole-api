@@ -47,8 +47,8 @@ public class RecapitulatifStatistiqueServices {
         List<RedoublantAffClasseDto> redoublantAffClasseDtosList = new ArrayList<>();
         List<AffecteClasseDto> affecteClasseDtosLis  = new ArrayList<>();
 
-         Long naffnbreG , naffnbreF , nbrenAffTotal ,boursiernbreG ;
-         Long boursiernbreF , boursierffTotal , nonboursiernbreG,nonboursiernbreF ;
+         Long naffnbreG , naffnbreF , nbrenAffTotal ,boursiernbreG = 0L;
+         Long boursiernbreF = 0L , boursierffTotal , nonboursiernbreG,nonboursiernbreF ;
          Long nonboursierffTotal , demiboursiernbreG , demiboursiernbreF , demiboursierffTotal ;
           Long reaffenbreG  , reaffenbreF , reaffeTotal ,tranfertnbreG ,tranfertnbreF , tranfertTotal ;
           Long affectReaffectnbreG , affectReaffectnbreF , affectReaffectTotal , internenbreG , internenbreF ;
@@ -67,8 +67,16 @@ public class RecapitulatifStatistiqueServices {
 
             m.setNiveau(niveauDtoList.get(i).getNiveau());
             System.out.println("mm "+m.getNiveau());
-             boursiernbreG = getEffectEtatBoursierClasse(anneeId,niveauDtoList.get(i).getId() ,"MASCULIN","B",idEcole) ;
-            boursiernbreF = getEffectEtatBoursierClasse(anneeId,niveauDtoList.get(i).getId() ,"FEMININ","B",idEcole) ;
+            try{
+              boursiernbreG = getEffectEtatBoursierClasse(anneeId,niveauDtoList.get(i).getId() ,"MASCULIN","B",idEcole) ;
+              System.out.println("boursiernbreG "+boursiernbreG);
+              boursiernbreF = getEffectEtatBoursierClasse(anneeId,niveauDtoList.get(i).getId() ,"FEMININ","B",idEcole) ;
+              System.out.println("boursiernbreF "+boursiernbreF);
+            } catch (Exception e) {
+              e.printStackTrace();
+            }
+
+
             boursierffTotal = boursiernbreG+boursiernbreF ;
 
             m.setBoursiernbreF(boursiernbreF);
@@ -162,8 +170,8 @@ public class RecapitulatifStatistiqueServices {
 
 
 
-            tranfertnbreG = getEffTransfertClasse(anneeId,niveauDtoList.get(i).getId() ,"MASCULIN","1",idEcole) ;
-             tranfertnbreF =getEffTransfertClasse(anneeId,niveauDtoList.get(i).getId() ,"FEMININ","1",idEcole) ;
+            tranfertnbreG = getEffTransfertClasse(anneeId,niveauDtoList.get(i).getId() ,"MASCULIN",true,idEcole) ;
+             tranfertnbreF =getEffTransfertClasse(anneeId,niveauDtoList.get(i).getId() ,"FEMININ",true,idEcole) ;
              tranfertTotal =  tranfertnbreG+ tranfertnbreF ;
 
              m.setTranfertnbreG(tranfertnbreG);
@@ -420,7 +428,7 @@ public class RecapitulatifStatistiqueServices {
             return 0L ;
         }
     }
-    Long getEffTransfertClasse(Long idAnneId ,Long idBranche ,String sexe ,String transfert ,Long idEcole ) {
+    Long getEffTransfertClasse(Long idAnneId ,Long idBranche ,String sexe ,Boolean transfert ,Long idEcole ) {
         //  Inscriptions.statusEleve aff = Inscriptions.statusEleve.valueOf(aff1);
         try {
             TypedQuery<Long> q = (TypedQuery<Long>) em.createQuery( "SELECT count(ic.id) FROM ClasseEleve ic , Inscription i  ,Eleve e ,Classe  c" +

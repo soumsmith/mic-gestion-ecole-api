@@ -1,5 +1,6 @@
 package com.vieecoles.ressource.operations.etats;
 
+import com.vieecoles.dto.ImportMatieresClasseDto;
 import com.vieecoles.dto.ImportReportDto;
 import com.vieecoles.services.etats.RapportImportService;
 import com.vieecoles.steph.dto.BulletinDto;
@@ -23,7 +24,7 @@ public class ImportRapportResource {
 
     @POST
     @Produces(MediaType.TEXT_PLAIN)
-    public String importData(List<ImportReportDto>  bulletinDtoList) throws Exception {
-  return  rapportImportService.creerDetailsBulletins(bulletinDtoList);
+    public String importData(List<ImportMatieresClasseDto>  bulletinDtoList) throws Exception {
+    return  rapportImportService.importAndSaveNote(bulletinDtoList);
     }
 }

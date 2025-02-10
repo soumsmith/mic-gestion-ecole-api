@@ -6,6 +6,8 @@ UPDATE eleve
 UPDATE inscriptions
     JOIN eleve ON eleve.eleveid = inscriptions.eleve_eleveid
     SET inscriptions.cheminphoto = eleve.cheminphoto;
+SET foreign_key_checks = 0;
+DROP TABLE `eleves`, `medias`;
 
 
 -----------------------------------------------------------

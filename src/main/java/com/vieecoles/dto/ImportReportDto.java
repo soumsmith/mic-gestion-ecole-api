@@ -48,7 +48,7 @@ public class ImportReportDto {
 	private Double moyMin;
 	private Double moyAvg;
 	private Double moyAn;
-	private String rangAn;
+	private Integer rangAn;
 	private String ApprAn;
 	private String appreciation;
 	private Date dateCreation;
@@ -76,13 +76,14 @@ public class ImportReportDto {
 	private Double moyEvaluationPassage;
 	private Boolean ivoirien;
 	private  Long niveauEnseignementId;
+	private Long  brancheId;
 	//CompFr
 	private Double moyenneCompFr;
 	private Integer rangCompFr;
 	private String nom_prenom_professeurCompFr ;
 	private String sexe_professeurCompFr ;
 	private Double moyAnCompFr;
-	private String rangAnCompFr;
+	private Integer rangAnCompFr;
 	private String isRankedCompFr;
 	private String appreciationCompFr;
 	private String appreciationAnCompFr;
@@ -92,7 +93,7 @@ public class ImportReportDto {
 	private String nom_prenom_professeurExpreOral ;
 	private String sexe_professeurExpreOral ;
 	private Double moyAnExpreOral;
-	private String rangAnExpreOral;
+	private Integer rangAnExpreOral;
 	private String isRankedExpreOral;
 	private String appreciationExpreOral;
 	private String appreciationAnExpreOral;
@@ -102,7 +103,7 @@ public class ImportReportDto {
 	private String nom_prenom_professeurphiloso ;
 	private String sexe_professeurphiloso;
 	private Double moyAnphiloso;
-	private String rangAnphiloso;
+	private Integer rangAnphiloso;
 	private String isRankedphiloso;
 	private String appreciationphiloso;
 	private String appreciationAnphiloso;
@@ -112,7 +113,7 @@ public class ImportReportDto {
 	private String nom_prenom_professeurAnglais ;
 	private String sexe_professeurAnglais;
 	private Double moyAnAnglais;
-	private String rangAnAnglais;
+	private Integer rangAnAnglais;
 	private String isRankedAnglais;
 	private String appreciationAnglais;
 	private String appreciationAnAnglais;
@@ -122,7 +123,7 @@ public class ImportReportDto {
 	private String nom_prenom_professeurMath ;
 	private String sexe_professeurMath;
 	private Double moyAnMath;
-	private String rangAnMath;
+	private Integer rangAnMath;
 	private String isRankedMath;
 	private String appreciationMath;
 	private String appreciationAnMath;
@@ -132,7 +133,7 @@ public class ImportReportDto {
 	private String nom_prenom_professeurPhysiq ;
 	private String sexe_professeurPhysiq;
 	private Double moyAnPhysiq;
-	private String rangAnPhysiq;
+	private Integer rangAnPhysiq;
 	private String isRankedPhysiq;
 	private String appreciationPhysiq;
 	private String appreciationAnPhysiq;
@@ -142,7 +143,7 @@ public class ImportReportDto {
 	private String nom_prenom_professeurSVT ;
 	private String sexe_professeurSVT;
 	private Double moyAnSVT;
-	private String rangAnSVT;
+	private Integer rangAnSVT;
 	private String isRankedSVT;
 	private String appreciationSVT;
 	private String appreciationAnSVT;
@@ -152,7 +153,7 @@ public class ImportReportDto {
 	private String nom_prenom_professeurHg ;
 	private String sexe_professeurHg;
 	private Double moyAnHg;
-	private String rangAnHg;
+	private Integer rangAnHg;
 	private String isRankedHg;
 	private String appreciationHg;
 	private String appreciationAnHg;
@@ -162,7 +163,7 @@ public class ImportReportDto {
 	private String nom_prenom_professeurLv2 ;
 	private String sexe_professeurLv2;
 	private Double moyAnLv2;
-	private String rangAnLv2;
+	private Integer rangAnLv2;
 	private String isRankedLv2;
 	private String appreciationLv2;
 	private String appreciationAnLv2;
@@ -172,7 +173,7 @@ public class ImportReportDto {
 	private String nom_prenom_professeurEDHC ;
 	private String sexe_professeurEDHC;
 	private Double moyAnEDHC;
-	private String rangAnEDHC;
+	private Integer rangAnEDHC;
 	private String isRankedEDHC;
 	private String appreciationEDHC;
 	private String appreciationAnEDHC;
@@ -182,7 +183,7 @@ public class ImportReportDto {
 	private String nom_prenom_professeurArplat ;
 	private String sexe_professeurArplat;
 	private Double moyAnArplat;
-	private String rangAnArplat;
+	private Integer rangAnArplat;
 	private String isRankedArplat;
 	private String appreciationArplat;
 	private String appreciationAnArplat;
@@ -192,7 +193,7 @@ public class ImportReportDto {
 	private String nom_prenom_professeurTic ;
 	private String sexe_professeurTic;
 	private Double moyAnTic;
-	private String rangAnTic;
+	private Integer rangAnTic;
 	private String isRankedTic;
 	private String appreciationTic;
 	private String appreciationAnTic;
@@ -213,11 +214,10 @@ public class ImportReportDto {
 	private String nom_prenom_professeurEps ;
 	private String sexe_professeurEps;
 	private Double moyAnEps;
-	private String rangAnEps;
+	private Integer rangAnEps;
 	private String isRankedEps;
 	private String appreciationEps;
 	private String appreciationAnEps;
 
-// Details bulletins
-    List<MatiereReportDto> matiereReportDtoList;
+
 }

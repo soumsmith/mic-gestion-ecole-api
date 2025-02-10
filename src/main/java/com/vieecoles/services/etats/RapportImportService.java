@@ -1,11 +1,17 @@
 package com.vieecoles.services.etats;
 
+import com.vieecoles.dto.ImportMatieresClasseDto;
 import com.vieecoles.dto.ImportReportDto;
+import com.vieecoles.dto.MatiereImportDto;
 import com.vieecoles.steph.dto.BulletinDto;
 import com.vieecoles.steph.dto.DetailBulletinDto;
+import com.vieecoles.steph.dto.ImportEvaluationDto;
 import com.vieecoles.steph.entities.Bulletin;
 import com.vieecoles.steph.entities.DetailBulletin;
+import com.vieecoles.steph.entities.EcoleHasMatiere;
+import com.vieecoles.steph.entities.EvaluationLoader;
 import com.vieecoles.steph.entities.Matiere;
+import com.vieecoles.steph.services.EvaluationLoaderService;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,10 +21,14 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
+import javax.ws.rs.core.Response;
+
 @ApplicationScoped
 public class RapportImportService {
   @Inject
   EntityManager em;
+  @Inject
+  EvaluationLoaderService evaluationLoaderService;
 @Transactional
   public Bulletin creerBulletinseleve(BulletinDto bulletinDto){
     Bulletin bulletin = new Bulletin();
@@ -359,7 +369,7 @@ try {
            bulletin1.setMoyMin(importReportDto.get(i).getMoyMin());
            bulletin1.setMoyAvg(importReportDto.get(i).getMoyAvg());
            bulletin1.setMoyAn(importReportDto.get(i).getMoyAn());
-           bulletin1.setRangAn(importReportDto.get(i).getRangAn());
+           bulletin1.setRangAn(importReportDto.get(i).getRangAn().toString());
            bulletin1.setApprAn(importReportDto.get(i).getApprAn());
            bulletin1.setAppreciation(importReportDto.get(i).getAppreciation());
 
@@ -407,7 +417,7 @@ try {
           compFr.setNomPrenomProfesseur(importReportDto.getNom_prenom_professeurCompFr());
           compFr.setSexeProfesseur(importReportDto.getSexe_professeurCompFr());
           compFr.setMoyAn(importReportDto.getMoyAnCompFr());
-          compFr.setRangAn(importReportDto.getRangAnCompFr());
+          compFr.setRangAn(importReportDto.getRangAnCompFr().toString());
           compFr.setIsRanked(importReportDto.getIsRankedCompFr());
           System.out.println("importReportDto Entree6");
           compFr.setAppreciation(importReportDto.getAppreciationCompFr());
@@ -438,25 +448,28 @@ try {
           dlist.add(compFr);
           ////ExpressOrl
           DetailBulletinDto expressOrl= new DetailBulletinDto();
-          Matiere infoExpreOral = new Matiere();
-          infoExpreOral =Matiere.findById(3L);
+          MatiereImportDto infoExpreOral = new MatiereImportDto();
+          infoExpreOral = getInfoMatiere(importReportDto.getEcoleId(),importReportDto.getBrancheId(),3L);
+         if(infoExpreOral !=null) {
+
+
           expressOrl.setMoyenne(importReportDto.getMoyenneExpreOral());
           expressOrl.setRang(importReportDto.getRangExpreOral());
           expressOrl.setNomPrenomProfesseur(importReportDto.getNom_prenom_professeurExpreOral());
           expressOrl.setSexeProfesseur(importReportDto.getSexe_professeurExpreOral());
           expressOrl.setMoyAn(importReportDto.getMoyAnExpreOral());
-          expressOrl.setRangAn(importReportDto.getRangAnExpreOral());
+          expressOrl.setRangAn(importReportDto.getRangAnExpreOral().toString());
           expressOrl.setIsRanked(importReportDto.getIsRankedExpreOral());
           expressOrl.setAppreciation(importReportDto.getAppreciationExpreOral());
           expressOrl.setAppreciationAn(importReportDto.getAppreciationAnExpreOral());
-          expressOrl.setMatiereRealId(3L);
-          expressOrl.setMatiereId(3L);
+          expressOrl.setMatiereRealId(infoExpreOral.getMatiereId());
+          expressOrl.setMatiereId(infoExpreOral.getMatiereId());
           expressOrl.setMatiereLibelle(infoExpreOral.getLibelle());
-          expressOrl.setCategorieMatiere(infoExpreOral.getCategorie().getLibelle());
+          expressOrl.setCategorieMatiere(infoExpreOral.getCategorie());
          // expressOrl.setCoef(Double.valueOf(infoExpreOral.getCoef()));
 
           try {
-            double coef = 2d;
+            double coef = Double.parseDouble(infoExpreOral.getCoef()) ;
             expressOrl.setCoef(coef);
             double moyCoef = importReportDto.getMoyenneCompFr() * coef;
             expressOrl.setMoyCoef(moyCoef);
@@ -465,12 +478,12 @@ try {
           }
           System.out.println("expressOrl 5");
 
-          expressOrl.setCategorie(infoExpreOral.getCategorie().getLibelle());
+          expressOrl.setCategorie(infoExpreOral.getCategorie());
           expressOrl.setNumOrdre(infoExpreOral.getNumOrdre());
           expressOrl.setPec(infoExpreOral.getPec());
-          expressOrl.setParentMatiere(infoExpreOral.getMatiereParent());
+          expressOrl.setParentMatiere(infoExpreOral.getLibelle());
           dlist.add(expressOrl);
-
+         }
           /*//philoso
           DetailBulletinDto philoso= new DetailBulletinDto();
           Matiere infophiloso = new Matiere();
@@ -783,4 +796,87 @@ try {
         }
         return dlist ;
       }
+
+      private MatiereImportDto getInfoMatiere(Long ecoleId,Long brancheId,Long matiereId ){
+        MatiereImportDto ecoleHasMatiere = new MatiereImportDto();
+        try{
+          ecoleHasMatiere= (MatiereImportDto) em.createQuery("select new com.vieecoles.dto.MatiereImportDto( m.id, m.matiere.libelle , m.matiere.id ,c.coef,m.categorie.libelle,m.numOrdre,m.pec) from ClasseMatiere c ," +
+                  " EcoleHasMatiere  m where c.ecole.id=m.ecole.id and c.matiere.id=m.id and " +
+                  " c.ecole.id=:ecoleId  and c.branche.id=:brancheId and m.matiere.id=:matiereId",MatiereImportDto.class )
+              .setParameter("ecoleId", ecoleId)
+              .setParameter("brancheId", brancheId)
+              .setParameter("matiereId", matiereId)
+              .getSingleResult(); ;
+
+        } catch (NoResultException e) {
+          e.printStackTrace();
+          ecoleHasMatiere=null;
+        }
+        return ecoleHasMatiere;
+      }
+      public String importAndSaveNote(List<ImportMatieresClasseDto> importMatieresClasseDtos){
+        String message = null;
+  //List<ImportMatieresClasseDto> importMatieresClasseDtos= new ArrayList<>();
+        try {
+          if(!importMatieresClasseDtos.isEmpty()) {
+            for (ImportMatieresClasseDto dto : importMatieresClasseDtos) {
+              String uuid = null;
+
+              uuid= importData(dto.getImportEvaluationDtos(),dto.getClasse(),dto.getAnnee());
+              List<EvaluationLoader> evaLoaders=new ArrayList<>();
+              evaLoaders= evaluationLoaderService.findByCode(uuid) ;
+              if(!evaLoaders.isEmpty()){
+                applyData(evaLoaders, dto.getMatiere(), dto.getPeriode(), dto.getAnnee(),
+                    dto.getType(),dto.getNotesur(),  dto.getUser(),dto.getDate());
+              }
+            }
+          }
+          message="Opération reussie";
+        } catch (Exception e){
+          e.printStackTrace();
+          message="Erreur d' application des données";
+        }
+
+
+
+
+
+
+
+
+
+  return message ;
+      }
+      @Transactional
+      public  String importData(List<ImportEvaluationDto> importEvaluationDtos,Long classe,Long annee){
+        String uuid = null;
+        List<EvaluationLoader> evaluationLoaders = new ArrayList<EvaluationLoader>();
+//    		Gson g =new Gson();
+//    		System.out.println(g.toJson(importEvaluationDtos));
+        for (ImportEvaluationDto dto : importEvaluationDtos) {
+          EvaluationLoader load = new EvaluationLoader();
+          load.setMatricule(dto.getMatricule());
+          load.setNotes(dto.getNotes());
+          evaluationLoaders.add(load);
+        }
+
+        uuid= evaluationLoaderService.handleLoading(evaluationLoaders, classe, annee);
+      return uuid ;
+      }
+      @Transactional
+      public String applyData(List<EvaluationLoader> evaLoaders,Long matiere,Long periode,Long annee,
+                              Long type,String notesur,String user,String date){
+  String message=null;
+
+        try {
+          evaluationLoaderService.appliquerChargement(evaLoaders, matiere, periode, annee, notesur, date, type, user);
+          message="Opération reussie";
+        } catch (Exception e) {
+          e.printStackTrace();
+          message="Erreur d' application des données";
+        }
+
+      return message ;
+      }
+
 }
