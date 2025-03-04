@@ -16,12 +16,12 @@
 
 
 <<<<<<< HEAD
-  docker build -f src/main/docker/Dockerfile.jvm -t europe-west1-docker.pkg.dev/fair-splice-361010/vie-ecole-docker-repo/vie-ecole-api:202502120938 .
+  docker build -f src/main/docker/Dockerfile.jvm -t europe-west1-docker.pkg.dev/fair-splice-361010/vie-ecole-docker-repo/vie-ecole-api:202503030610 .
 =======
 <<<<<<< HEAD
   docker build -f src/main/docker/Dockerfile.jvm -t europe-west1-docker.pkg.dev/fair-splice-361010/vie-ecole-docker-repo/vie-ecole-api:202409042315 .
 =======
-  docker build -f src/main/docker/Dockerfile.jvm -t europe-west1-docker.pkg.dev/fair-splice-361010/vie-ecole-docker-repo/vie-ecole-api:202410311117 .
+ :wq docker build -f src/main/docker/Dockerfile.jvm -t europe-west1-docker.pkg.dev/fair-splice-361010/vie-ecole-docker-repo/vie-ecole-api:202502252221 .
 >>>>>>> master
 >>>>>>> apache_poi
 

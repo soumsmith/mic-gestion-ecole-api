@@ -55,7 +55,7 @@ public class Inscriptions extends PanacheEntityBase {
     private  statusEleve   inscriptions_statut_eleve ;
     @Enumerated(EnumType.STRING)
     private  typeOperation   inscriptions_type ;
-   private  int    inscriptions_delete ;
+   private  Boolean     inscriptions_delete ;
     @Enumerated(EnumType.STRING)
    private status inscriptions_status ;
    private LocalDate inscriptionsdate_creation ;
@@ -534,15 +534,15 @@ public class Inscriptions extends PanacheEntityBase {
     public Inscriptions() {
     }
 
-    public int getInscriptions_delete() {
-        return inscriptions_delete;
-    }
+  public Boolean getInscriptions_delete() {
+    return inscriptions_delete;
+  }
 
-    public void setInscriptions_delete(int inscriptions_delete) {
-        this.inscriptions_delete = inscriptions_delete;
-    }
+  public void setInscriptions_delete(Boolean inscriptions_delete) {
+    this.inscriptions_delete = inscriptions_delete;
+  }
 
-    public com.vieecoles.entities.operations.ecole getEcole() {
+  public com.vieecoles.entities.operations.ecole getEcole() {
         return ecole;
     }
 
