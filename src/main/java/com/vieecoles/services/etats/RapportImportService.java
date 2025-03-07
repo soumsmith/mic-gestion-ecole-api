@@ -1348,11 +1348,11 @@ public List<ImportMatieresClasseDto> processing(List<ImportNotesMatieresEcole> i
         if(classe!=null)
           idMatiereEcole = getIdMatiereEcole(classe.getEcole().getId(),3L);
         notesExpresOral.setMatiereExpreOralId(idMatiereEcole);
-        notesExpresOral.setNoteExpreOral1(dto.getNoteTic1());
-        notesExpresOral.setNoteExpreOral2(dto.getNoteTic2());
-        notesExpresOral.setNoteExpreOral3(dto.getNoteTic3());
-        notesExpresOral.setNoteExpreOral4(dto.getNoteTic4());
-        notesExpresOral.setNoteExpreOral5(dto.getNoteTic5());
+        notesExpresOral.setNoteExpreOral1(dto.getNoteExpreOral1());
+        notesExpresOral.setNoteExpreOral2(dto.getNoteExpreOral2());
+        notesExpresOral.setNoteExpreOral3(dto.getNoteExpreOral3());
+        notesExpresOral.setNoteExpreOral4(dto.getNoteExpreOral4());
+        notesExpresOral.setNoteExpreOral5(dto.getNoteExpreOral5());
         notesExpresOral.setMatricule(dto.getMatricule());
         notesExpressOralList.add(notesExpresOral);
 
@@ -1374,11 +1374,11 @@ public List<ImportMatieresClasseDto> processing(List<ImportNotesMatieresEcole> i
         if(classe!=null)
           idMatiereEcole = getIdMatiereEcole(classe.getEcole().getId(),6L);
         notesHg.setMatiereHgId(idMatiereEcole);
-        notesHg.setNoteHg1(dto.getNoteTic1());
-        notesHg.setNoteHg2(dto.getNoteTic2());
-        notesHg.setNoteHg3(dto.getNoteTic3());
-        notesHg.setNoteHg4(dto.getNoteTic4());
-        notesHg.setNoteHg5(dto.getNoteTic5());
+        notesHg.setNoteHg1(dto.getNoteHg1());
+        notesHg.setNoteHg2(dto.getNoteHg2());
+        notesHg.setNoteHg3(dto.getNoteHg3());
+        notesHg.setNoteHg4(dto.getNoteHg4());
+        notesHg.setNoteHg5(dto.getNoteHg5());
         notesHg.setMatricule(dto.getMatricule());
         notesHgList.add(notesHg);
 
@@ -1399,11 +1399,11 @@ public List<ImportMatieresClasseDto> processing(List<ImportNotesMatieresEcole> i
         if(classe!=null)
           idMatiereEcole = getIdMatiereEcole(classe.getEcole().getId(),11L);
         notesEdhc.setMatiereEdhcId(idMatiereEcole);
-        notesEdhc.setNoteEdhc1(dto.getNoteTic1());
-        notesEdhc.setNoteEdhc2(dto.getNoteTic2());
-        notesEdhc.setNoteEdhc3(dto.getNoteTic3());
-        notesEdhc.setNoteEdhc4(dto.getNoteTic4());
-        notesEdhc.setNoteEdhc4(dto.getNoteTic5());
+        notesEdhc.setNoteEdhc1(dto.getNoteEdhc1());
+        notesEdhc.setNoteEdhc2(dto.getNoteEdhc2());
+        notesEdhc.setNoteEdhc3(dto.getNoteEdhc3());
+        notesEdhc.setNoteEdhc4(dto.getNoteEdhc4());
+        notesEdhc.setNoteEdhc5(dto.getNoteEdhc5());
         notesEdhc.setMatricule(dto.getMatricule());
         notesEdhcList.add(notesEdhc);
       }

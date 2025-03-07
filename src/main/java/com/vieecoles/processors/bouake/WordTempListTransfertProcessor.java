@@ -3,18 +3,14 @@ package com.vieecoles.processors.bouake;
 import com.vieecoles.dto.NiveauDto;
 import com.vieecoles.dto.TransfertsDto;
 import com.vieecoles.services.etats.appachePoi.TransfertsPoiServices;
-import java.util.ArrayList;
-import java.util.List;
+import org.apache.poi.xwpf.usermodel.*;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
-import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
-import org.apache.poi.xwpf.usermodel.XWPFDocument;
-import org.apache.poi.xwpf.usermodel.XWPFParagraph;
-import org.apache.poi.xwpf.usermodel.XWPFRun;
-import org.apache.poi.xwpf.usermodel.XWPFTable;
-import org.apache.poi.xwpf.usermodel.XWPFTableRow;
+import java.util.ArrayList;
+import java.util.List;
 
 @ApplicationScoped
 public class WordTempListTransfertProcessor {
@@ -50,7 +46,7 @@ public class WordTempListTransfertProcessor {
         for (int i = 0; i < paragraphs.size(); i++) {
             String text = paragraphs.get(i).getText();
             // Identifier l'emplacement où insérer le tableau (par exemple après "Liste des élèves affectés par classe")
-            if (text.toLowerCase().contains("liste des transferts".toLowerCase())) {
+            if (text.toLowerCase().contains("LISTE DES TRANSFERTS".toLowerCase())) {
                 indexToInsert = i + 1; // Ajouter après ce paragraphe
 
                 break;
@@ -60,7 +56,7 @@ public class WordTempListTransfertProcessor {
         for (int k = classeList.size() - 1; k >= 0; k--) {
             List<TransfertsDto>  elevTransferes = new ArrayList<>() ;
             elevTransferes= transfertsServices.transferts(idEcole,classeList.get(k).getNiveau());
-            System.out.println("Liste des transfert: "+elevTransferes.toString());
+            System.out.println("LISTE DES TRANSFERTS"+elevTransferes.toString());
 
         if (indexToInsert != -1) {
            // for (int z=0; z< classeList.size();z++) {

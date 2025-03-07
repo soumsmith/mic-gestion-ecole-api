@@ -145,10 +145,9 @@ public class connexionRessource {
     {
         String messageRetour=null;
         utilisateur myUtilis = new utilisateur() ;
-        System.out.println("login "+login);
-        System.out.println("motDepasse "+motDepasse);
+
         myUtilis = myconnexionService.checkPassword(login,motDepasse) ;
-        System.out.println("myUtilis "+myUtilis);
+
         if(myUtilis!=null){
             messageRetour= "Mot de passe correct!";
         } else {
@@ -201,7 +200,7 @@ public class connexionRessource {
         Long idUtilisateur ;
         idUtilisateur = myconnexionService.getIdUtilisateur(login) ;
         CandidatConnexionDto myPersonn= new CandidatConnexionDto();
-        System.out.println("idUtilisateurxxx "+ idUtilisateur);
+
 
         if(idUtilisateur!=0L) {
             myPersonn =  myconnexionService.infosCandidatConnecte(login) ;

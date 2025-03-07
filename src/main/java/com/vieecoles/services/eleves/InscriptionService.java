@@ -478,10 +478,7 @@ public class InscriptionService implements PanacheRepositoryBase<Inscriptions, L
         Inscriptions minScription = new Inscriptions() ;
         String messageRetour = null;
         minScription = checkInscrit(idEcole,matricule,idAnnee) ;
-        System.out.println("minScriptionCC** "+ minScription);
-        System.out.println("idEcole CC** "+ idEcole);
-        System.out.println("matricule CC** "+ matricule);
-        System.out.println("idAnnee CC** "+ idAnnee);
+
         Long idInscrip= minScription.getInscriptionsid();
 
         if(minScription==null){

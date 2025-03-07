@@ -395,10 +395,19 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 				logger.info(String.format("%s %s  %s  %s %s", me.getClasse().getEcole().getId(),
 						me.getClasse().getLibelle(), me.getMoyenne(), me.getAppreciation(), me.getEleve().getId()));
 
-				logger.info(String.format(" getByEleveAndEcoleAndAnnee  %s  %s %s", me.getEleve().getId(),
-						me.getClasse().getEcole().getId(), Long.parseLong(annee)));
-				Inscription infosInscriptionsEleve = inscriptionService.getByEleveAndEcoleAndAnnee(
-						me.getEleve().getId(), me.getClasse().getEcole().getId(), Long.parseLong(annee));
+				logger.info(String.format(" getByEleveAndEcoleAndAnnee  %s  %s %s %s", me.getEleve().getId(),
+						me.getClasse().getEcole().getId(), Long.parseLong(annee),me.getClasse().getBranche().getId()));
+				Inscription infosInscriptionsEleve= new Inscription();
+
+				try {
+					 infosInscriptionsEleve = inscriptionService.getByEleveAndEcoleAndAnnee(
+							me.getEleve().getId(), me.getClasse().getEcole().getId(), Long.parseLong(annee),me.getClasse().getBranche().getId());
+					System.out.println("infosInscriptionsEleve>>>> "+infosInscriptionsEleve.toString());
+				} catch (RuntimeException e) {
+					e.printStackTrace();
+				}
+
+
 				// Collecter toutes les moyennes des élèves pour déterminer la moyenne max, min
 				// et avg
 				if (!me.getIsClassed().equals(Constants.NON))

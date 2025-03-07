@@ -1,5 +1,7 @@
 package com.vieecoles.processors.bouake;
 
+import static com.vieecoles.processors.yamoussoukro.WordTempResultaAffProcessor.afficherValeurParNiveau;
+
 import com.vieecoles.dto.RecapResultatsElevesAffeEtNonAffDto;
 import com.vieecoles.services.etats.resultatsRecapAffEtNonAffServices;
 import java.util.ArrayList;
@@ -98,7 +100,7 @@ public class WordTempRecapAffNonAffResultatProcessor {
             // Remplir la ligne pour les filles (F)
             XWPFTableRow fillesRow = table.createRow();
             ensureCellCount(fillesRow, 12);
-            fillesRow.getCell(0).setText(classe.getNiveau());
+            fillesRow.getCell(0).setText(afficherValeurParNiveau(classe.getNiveau()));
             fillesRow.getCell(1).setText(" F");
             fillesRow.getCell(2).setText(String.valueOf(classe.getEffeF()));
             fillesRow.getCell(3).setText(String.valueOf(classe.getClassF()));
@@ -129,6 +131,7 @@ public class WordTempRecapAffNonAffResultatProcessor {
 // Remplir la ligne pour le total (T)
             XWPFTableRow totalRow = table.createRow();
             ensureCellCount(totalRow, 12);
+            totalRow.getCell(0).setText("Total "+afficherValeurParNiveau(classe.getNiveau()));
             totalRow.getCell(1).setText(" T");
             totalRow.getCell(2).setText(String.valueOf(effectif));
             totalRow.getCell(3).setText(String.valueOf(effectifClasse));

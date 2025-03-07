@@ -2,16 +2,22 @@ package com.vieecoles.processors.bouake;
 
 import com.vieecoles.dto.RepartitionEleveParAnNaissDto;
 import com.vieecoles.services.etats.RepartitionElevParAnNaissServices;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import org.apache.poi.xwpf.usermodel.BodyElementType;
+import org.apache.poi.xwpf.usermodel.IBodyElement;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.apache.poi.xwpf.usermodel.XWPFTableCell;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTcBorders;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTcPr;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.STBorder;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.STMerge;
 
 @ApplicationScoped
@@ -35,53 +41,45 @@ public class WordTempRepartitionAnneeNaissProcessor {
 //Get classe
 
         List<XWPFParagraph> paragraphs = document.getParagraphs();
-        int indexToInsert = -1;
 
-        for (int i = 0; i < paragraphs.size(); i++) {
-            String text = paragraphs.get(i).getText();
-            // Identifier l'emplacement où insérer le tableau (par exemple après "Liste des élèves affectés par classe")
-            if (text.toLowerCase().contains("repartition des eleves par annee de naissance".toLowerCase())) {
-                indexToInsert = i + 1; // Ajouter après ce paragraphe
 
-                break;
+        String tableTitle = "CODE_REPART_ANNE_NAISS";
+        XWPFTable targetTable = null;
+        for (int i = 0; i < document.getBodyElements().size(); i++) {
+            IBodyElement element = document.getBodyElements().get(i);
+            if (element.getElementType() == BodyElementType.PARAGRAPH) {
+                XWPFParagraph paragraph = (XWPFParagraph) element;
+                if (paragraph.getText().trim().equalsIgnoreCase(tableTitle)) {
+                    paragraph.removeRun(0);
+                    // Le tableau devrait suivre immédiatement le titre
+                    if (i + 1 < document.getBodyElements().size() &&
+                        document.getBodyElements().get(i + 1).getElementType() == BodyElementType.TABLE) {
+                        targetTable = (XWPFTable) document.getBodyElements().get(i + 1);
+                    }
+                    break;
+                }
             }
         }
+
+
+
+
 
 
             List<RepartitionEleveParAnNaissDto> repartitionEleveParAnNaissDto = new ArrayList<>() ;
             repartitionEleveParAnNaissDto= repartitionElevParAnNaissServices.CalculRepartElevParAnnNaiss(idEcole ,libelleAnnee,libelleTrimestre);
 
-        if (indexToInsert != -1) {
-
-            // Insérer le tableau juste après le paragraphe
-            XWPFTable table = document.insertNewTbl(paragraphs.get(indexToInsert+1).getCTP().newCursor());
-
-            // Créer l'en-tête du tableau (1 ligne, 11 colonnes)
-            // Créer l'en-tête du tableau (1 ligne, 11 colonnes)
-            XWPFTableRow headerRow = table.getRow(0);
-            headerRow.getCell(0).setText("ANNEE°");
-            headerRow.addNewTableCell().setText("SEXE");
-            headerRow.addNewTableCell().setText("6è");
-            headerRow.addNewTableCell().setText("5è");
-            headerRow.addNewTableCell().setText("4è");
-            headerRow.addNewTableCell().setText("3è");
-            headerRow.addNewTableCell().setText("ST1");
-            headerRow.addNewTableCell().setText("2A");
-            headerRow.addNewTableCell().setText("2C");
-            headerRow.addNewTableCell().setText("1A");
-            headerRow.addNewTableCell().setText("1C");
-            headerRow.addNewTableCell().setText("1A");
-            headerRow.addNewTableCell().setText("1D");
-            headerRow.addNewTableCell().setText("TA");
-            headerRow.addNewTableCell().setText("TC");
-            headerRow.addNewTableCell().setText("TD");
-            headerRow.addNewTableCell().setText("ST2");
 
             // Ajouter des lignes au tableau
+
+        if (targetTable != null) {
+
+
+
             for (RepartitionEleveParAnNaissDto eleve : repartitionEleveParAnNaissDto) {  // Exemple de 3 lignes
 
                 // Remplir la ligne pour les filles (F)
-                XWPFTableRow fillesRow = table.createRow();
+                XWPFTableRow fillesRow = targetTable.createRow();
                 ensureCellCount(fillesRow, 17);
                 fillesRow.getCell(0).setText(eleve.getAnnee());
                 fillesRow.getCell(1).setText(" F");
@@ -106,7 +104,7 @@ public class WordTempRepartitionAnneeNaissProcessor {
                 fillesRow.getCell(16).setText(String.valueOf(tf));
 
 // Remplir la ligne pour les garçons (G)
-                XWPFTableRow garconsRow = table.createRow();
+                XWPFTableRow garconsRow = targetTable.createRow();
                 ensureCellCount(garconsRow, 17);
                 garconsRow.getCell(1).setText(" G");
                 garconsRow.getCell(2).setText(String.valueOf(eleve.getAn6G()));
@@ -129,11 +127,12 @@ public class WordTempRepartitionAnneeNaissProcessor {
                 Long tG= st1G+st2G ;
                 garconsRow.getCell(16).setText(String.valueOf(tG));
 
-                table.getRow(table.getRows().size() - 2).getCell(0).getCTTc().addNewTcPr().addNewVMerge().setVal(STMerge.RESTART);  // Début de la fusion
-                table.getRow(table.getRows().size() - 1).getCell(0).getCTTc().addNewTcPr().addNewVMerge().setVal(STMerge.CONTINUE);  // Continuer la fusion
+                targetTable.getRow(targetTable.getRows().size() - 2).getCell(0).getCTTc().addNewTcPr().addNewVMerge().setVal(STMerge.RESTART);  // Début de la fusion
+                targetTable.getRow(targetTable.getRows().size() - 1).getCell(0).getCTTc().addNewTcPr().addNewVMerge().setVal(STMerge.CONTINUE);  // Continuer la fusion
 
             }
-            XWPFTableRow etabliRow = table.createRow();
+        }
+            XWPFTableRow etabliRow = targetTable.createRow();
             ensureCellCount(etabliRow, 17);
             etabliRow.getCell(0).setText("TOTAL");
             Long t6 = 0L,t5 = 0L,t4 = 0L,t3= 0L,t2A= 0L,t2C= 0L,t1A= 0L,t1C= 0L,t1D= 0L,tTA= 0L ,tTC= 0L,tTD= 0L;
@@ -171,19 +170,47 @@ public class WordTempRepartitionAnneeNaissProcessor {
              etabliRow.getCell(15).setText(String.valueOf(totalSt2));
              Long total= totalSt1+totalSt2;
             etabliRow.getCell(16).setText(String.valueOf(total));
-        }
+
+
+
 
 
     }
 
-    private static void mergeCellsVertically(XWPFTable table, int col, int fromRow, int toRow) {
-        for (int rowIndex = fromRow; rowIndex <= toRow; rowIndex++) {
-            XWPFTableCell cell = table.getRow(rowIndex).getCell(col);
-            if (rowIndex == fromRow) {
-                cell.getCTTc().addNewTcPr().addNewVMerge().setVal(STMerge.RESTART);
-            } else {
-                cell.getCTTc().addNewTcPr().addNewVMerge().setVal(STMerge.CONTINUE);
+    public static void removeCellBorders(XWPFTableCell cell) {
+        if (cell != null && cell.getCTTc() != null) {
+            CTTcPr tcPr = cell.getCTTc().isSetTcPr() ? cell.getCTTc().getTcPr() : cell.getCTTc().addNewTcPr();
+            if (tcPr != null) {
+                CTTcBorders borders = tcPr.isSetTcBorders() ? tcPr.getTcBorders() : tcPr.addNewTcBorders();
+                if (borders != null) {
+                    borders.addNewTop().setVal(STBorder.NONE);
+                    borders.addNewBottom().setVal(STBorder.NONE);
+                    borders.addNewLeft().setVal(STBorder.NONE);
+                    borders.addNewRight().setVal(STBorder.NONE);
+                }
             }
         }
     }
+
+    private static void mergeCellsHorizontal(XWPFTable table, int row, int fromCol, int toCol) {
+        XWPFTableRow tableRow = table.getRow(row);
+        for (int colIndex = fromCol; colIndex <= toCol; colIndex++) {
+            XWPFTableCell cell = tableRow.getCell(colIndex);
+            if (cell == null) continue;
+
+            CTTcPr tcPr = cell.getCTTc().addNewTcPr();
+            if (colIndex == fromCol) {
+                tcPr.addNewGridSpan().setVal(BigInteger.valueOf(toCol - fromCol + 1));
+            } else {
+                cell.getCTTc().getDomNode().getParentNode().removeChild(cell.getCTTc().getDomNode());
+                tableRow.getCtRow().getDomNode().getChildNodes().item(colIndex).setNodeValue("");
+            }
+        }
+    }
+    private static void ensureCellExists(XWPFTableRow row, int cellIndex) {
+        while (row.getTableCells().size() <= cellIndex) {
+            row.addNewTableCell();
+        }
+    }
+
 }
