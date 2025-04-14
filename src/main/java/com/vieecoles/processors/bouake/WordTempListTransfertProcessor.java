@@ -41,64 +41,41 @@ public class WordTempListTransfertProcessor {
 
         // Rechercher l'endroit où insérer le tableau
         List<XWPFParagraph> paragraphs = document.getParagraphs();
-        int indexToInsert = -1;
-
-        for (int i = 0; i < paragraphs.size(); i++) {
-            String text = paragraphs.get(i).getText();
-            // Identifier l'emplacement où insérer le tableau (par exemple après "Liste des élèves affectés par classe")
-            if (text.toLowerCase().contains("LISTE DES TRANSFERTS".toLowerCase())) {
-                indexToInsert = i + 1; // Ajouter après ce paragraphe
-
-                break;
+        String tableTitle = "CODE_LISTE_TRANSFERT";
+        XWPFTable targetTable = null;
+        for (int i = 0; i < document.getBodyElements().size(); i++) {
+            IBodyElement element = document.getBodyElements().get(i);
+            if (element.getElementType() == BodyElementType.PARAGRAPH) {
+                XWPFParagraph paragraph = (XWPFParagraph) element;
+                if (paragraph.getText().trim().equalsIgnoreCase(tableTitle)) {
+                    while(paragraph.getRuns().size() > 0) {
+                        paragraph.removeRun(0);
+                    }
+                    // Le tableau devrait suivre immédiatement le titre
+                    if (i + 1 < document.getBodyElements().size() &&
+                        document.getBodyElements().get(i + 1).getElementType() == BodyElementType.TABLE) {
+                        targetTable = (XWPFTable) document.getBodyElements().get(i + 1);
+                    }
+                    break;
+                }
             }
         }
 
         for (int k = classeList.size() - 1; k >= 0; k--) {
             List<TransfertsDto>  elevTransferes = new ArrayList<>() ;
             elevTransferes= transfertsServices.transferts(idEcole,classeList.get(k).getNiveau());
-            System.out.println("LISTE DES TRANSFERTS"+elevTransferes.toString());
-
-        if (indexToInsert != -1) {
-           // for (int z=0; z< classeList.size();z++) {
-
-            // Créer un nouveau paragraphe avant d'insérer le tableau
-            XWPFParagraph newParagraph = document.insertNewParagraph(paragraphs.get(indexToInsert).getCTP().newCursor());
-            XWPFRun run = newParagraph.createRun();
-            run.setText(classeList.get(k).getNiveau());
-            run.setBold(true);  // Mettre le texte en gras
-            newParagraph.setAlignment(ParagraphAlignment.LEFT);
-
-            // Insérer le tableau juste après le paragraphe
-            XWPFTable table = document.insertNewTbl(paragraphs.get(indexToInsert+1).getCTP().newCursor());
-
-            // Créer l'en-tête du tableau (1 ligne, 11 colonnes)
-            XWPFTableRow headerRow = table.getRow(0);
-            headerRow.getCell(0).setText("N°");
-            headerRow.addNewTableCell().setText("NOM ET PRENOMS");
-            headerRow.addNewTableCell().setText("MATRICULE");
-            headerRow.addNewTableCell().setText("CLASSE");
-            headerRow.addNewTableCell().setText("Nat");
-            headerRow.addNewTableCell().setText("R");
-            headerRow.addNewTableCell().setText("DATE NAISS");
-            headerRow.addNewTableCell().setText("N");
-            headerRow.addNewTableCell().setText("DECISION");
-            headerRow.addNewTableCell().setText("ETABLISSEMENT D'ORIGINE");
 
             // Ajouter des lignes au tableau
             for (TransfertsDto eleve : elevTransferes) {  // Exemple de 3 lignes
-                XWPFTableRow row = table.createRow();
+                XWPFTableRow row = targetTable.createRow();
                 row.getCell(0).setText(String.valueOf(k+1));
                 row.getCell(1).setText(eleve.getNom()+" "+eleve.getPrenoms());
-                row.getCell(2).setText(eleve.getMatricule());
+                row.getCell(2).setText(eleve.getEtablissementOrigine());
                 row.getCell(3).setText(eleve.getClasse());
-                row.getCell(4).setText(eleve.getRedoublant());
-                row.getCell(5).setText(eleve.getDateNaissance());
-                row.getCell(6).setText("");
-                row.getCell(7).setText(eleve.getDecision());
-                row.getCell(8).setText(eleve.getEtablissementOrigine());
+                row.getCell(4).setText(eleve.getDecision());
+
             }
-        //}
-        }
+
     }
     }
 

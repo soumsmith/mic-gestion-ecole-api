@@ -375,6 +375,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 	<field name="rang_2eme_trim" class="java.lang.Integer"/>
 	<field name="is_class_3e_trim" class="java.lang.String"/>
 	<field name="rang_3eme_trim" class="java.lang.Integer"/>
+	<field name="pied_de_page" class="byte[]"/>
 	<sortField name="num_ordre"/>
 	<sortField name="parent_matiere"/>
 	<sortField name="matricule"/>
@@ -1724,6 +1725,15 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 			</frame>
 		</band>
 	</detail>
+	<columnFooter>
+		<band height="50">
+			<printWhenExpression><![CDATA[$F{pied_de_page} !=null]]></printWhenExpression>
+			<image scaleImage="FillFrame" onErrorType="Blank">
+				<reportElement x="28" y="0" width="538" height="50" uuid="089635a2-96cf-41b8-916d-f8c9c1aaa180"/>
+				<imageExpression><![CDATA[$F{pied_de_page}]]></imageExpression>
+			</image>
+		</band>
+	</columnFooter>
 	<summary>
 		<band height="210">
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>

@@ -44,6 +44,7 @@ public class WordTempIdentiteProcessor {
         String ecoleName;
         Ecole myEcole= new Ecole();
         myEcole=Ecole.findById(idEcole);
+        String libelleAnneeNew= libelleAnnee.replace("Année ", "") ;
         ecoleName=myEcole.getLibelle().toUpperCase();
         for (XWPFParagraph paragraph : document.getParagraphs()) {
             // Parcourir toutes les "runs" du paragraphe
@@ -51,7 +52,7 @@ public class WordTempIdentiteProcessor {
                 String text = run.getText(0); // Récupérer le texte de la "run"
                 if (text != null && text.contains("Ancien texte")) {
                     // Remplacer le texte
-                    text = text.replace("Ancien texte", "RAPPORT DE FIN \n"+  "\nDU PREMIER TRIMESTRE \n"+ecoleName+"\n 2024-2025");
+                    text = text.replace("Ancien texte", "RAPPORT DE FIN \n\nDU " + libelleTrimestre + " \n" + ecoleName + "\n " + libelleAnneeNew);
                     run.setText(text, 0); // Appliquer le texte modifié
                     paragraph.setAlignment(ParagraphAlignment.CENTER);
                 }

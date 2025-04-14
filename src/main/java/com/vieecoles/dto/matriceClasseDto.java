@@ -13,8 +13,26 @@ public class matriceClasseDto {
     private String periode ;
     private String anneScolaire ;
     private  Double moyenTrimes ;
+    private  Double moyenTrimes1;
+      private  int rangTrimestre1;
 
-    public Double getMoyenTrimes() {
+  public Double getMoyenTrimes1() {
+    return moyenTrimes1;
+  }
+
+  public void setMoyenTrimes1(Double moyenTrimes1) {
+    this.moyenTrimes1 = moyenTrimes1;
+  }
+
+  public int getRangTrimestre1() {
+    return rangTrimestre1;
+  }
+
+  public void setRangTrimestre1(int rangTrimestre1) {
+    this.rangTrimestre1 = rangTrimestre1;
+  }
+
+  public Double getMoyenTrimes() {
         return moyenTrimes;
     }
 

@@ -2,7 +2,7 @@ package com.vieecoles.dto;
 
 import java.util.List;
 
-public class MajorParClasseNiveauDto {
+public class MajorParNiveauDto {
     private String niveau;
     private String classeLibelle;
     private String matricule ;
@@ -17,7 +17,7 @@ public class MajorParClasseNiveauDto {
     private  Integer ordre_niveau ;
     private  String nationalite ;
 
-    public MajorParClasseNiveauDto(List<MajorParClasseNiveauDto> majorParClasseNiveauDtos) {
+    public MajorParNiveauDto(List<MajorParNiveauDto> majorParClasseNiveauDtos) {
     }
 
     public Integer getOrdre_niveau() {
@@ -28,7 +28,7 @@ public class MajorParClasseNiveauDto {
         this.ordre_niveau = ordre_niveau;
     }
 
-    public MajorParClasseNiveauDto() {
+    public MajorParNiveauDto() {
     }
 
     @Override
@@ -48,18 +48,19 @@ public class MajorParClasseNiveauDto {
                 '}';
     }
 
-    public MajorParClasseNiveauDto(String niveau,
-                                   String classeLibelle,
-                                   String matricule,
-                                   String nom,
-                                   String prenom,
-                                   String anneeNaiss,
-                                   String sexe,
-                                   String nature,
-                                   String redoublant,
-                                   Double moyGeneral,
-                                   String lv2,
-                                   Integer ordre_niveau) {
+    public MajorParNiveauDto(String niveau,
+                             String classeLibelle,
+                             String matricule,
+                             String nom,
+                             String prenom,
+                             String anneeNaiss,
+                             String sexe,
+                             String nature,
+                             String redoublant,
+                             Double moyGeneral,
+                             String lv2,
+                             Integer ordre_niveau,
+                             String nationalite) {
         this.niveau = niveau;
         this.classeLibelle = classeLibelle;
         this.matricule = matricule;
@@ -72,6 +73,15 @@ public class MajorParClasseNiveauDto {
         this.moyGeneral = moyGeneral;
         this.lv2 = lv2;
         this.ordre_niveau = ordre_niveau ;
+        this.nationalite = nationalite;
+    }
+
+    public String getNationalite() {
+        return nationalite;
+    }
+
+    public void setNationalite(String nationalite) {
+        this.nationalite = nationalite;
     }
 
     public String getNiveau() {

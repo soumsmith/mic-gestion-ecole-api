@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import org.apache.poi.xwpf.usermodel.BodyElementType;
+import org.apache.poi.xwpf.usermodel.IBodyElement;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
@@ -157,115 +159,155 @@ public class WordTempResultaNonAffProcessor {
           e.printStackTrace();
         }
 
+        XWPFTable targetTable = null;
         // 3. Gestion des tableaux dynamiques
         // Sixième
-        XWPFTable table = document.getTableArray(21);
+        try{
+          String tableTitle = "CODE_RECAP_RESUL_NON_AFFECT_CLASSE";
+
+          for (int i = 0; i < document.getBodyElements().size(); i++) {
+            IBodyElement element = document.getBodyElements().get(i);
+            if (element.getElementType() == BodyElementType.PARAGRAPH) {
+              XWPFParagraph paragraph = (XWPFParagraph) element;
+              if (paragraph.getText().trim().equalsIgnoreCase(tableTitle)) {
+                while(paragraph.getRuns().size() > 0) {
+                  paragraph.removeRun(0);
+                }
+                // Le tableau devrait suivre immédiatement le titre
+                if (i + 1 < document.getBodyElements().size() &&
+                    document.getBodyElements().get(i + 1).getElementType() == BodyElementType.TABLE) {
+                  targetTable = (XWPFTable) document.getBodyElements().get(i + 1);
+                }
+                break;
+              }
+            }
+          }
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
+
+        // 3. Gestion des tableaux dynamiques
+        // Sixième
         try {
-          ajoutTableauDynamique(detailsBull6,table);
+          if(!detailsBull6.isEmpty())
+            ajoutTableauDynamique(detailsBull6,targetTable);
         } catch (RuntimeException e) {
           e.printStackTrace();
         }
         // Cinquième
-        XWPFTable tableCinquieme = document.getTableArray(22);
+        // XWPFTable tableCinquieme = document.getTableArray(6);
         try {
-          ajoutTableauDynamique(detailsBull5,tableCinquieme);
+          if(!detailsBull5.isEmpty())
+            ajoutTableauDynamique(detailsBull5,targetTable);
         } catch (RuntimeException e) {
           e.printStackTrace();
         }
 
         // Quatrieme
-        XWPFTable tableQuatrieme = document.getTableArray(23);
+
         try {
-          ajoutTableauDynamique(detailsBull4,tableQuatrieme);
+          if(!detailsBull4.isEmpty())
+            ajoutTableauDynamique(detailsBull4,targetTable);
         } catch (RuntimeException e) {
           e.printStackTrace();
         }
 
         // Troixième
-        XWPFTable tableTroixieme = document.getTableArray(24);
+
         try {
-          ajoutTableauDynamique(detailsBull3,tableTroixieme);
+          if(!detailsBull3.isEmpty())
+            ajoutTableauDynamique(detailsBull3,targetTable);
         } catch (RuntimeException e) {
           e.printStackTrace();
         }
 
         // SecondeA
-        XWPFTable table2NDA = document.getTableArray(25);
+        // XWPFTable table2NDA = document.getTableArray(10);
         try {
-          ajoutTableauDynamique(detailsBull2NDA,table2NDA);
+          if(!detailsBull2NDA.isEmpty())
+            ajoutTableauDynamique(detailsBull2NDA,targetTable);
         } catch (RuntimeException e) {
           e.printStackTrace();
         }
 
         // SecondeC
-        XWPFTable table2NDC = document.getTableArray(26);
+
         try {
-          ajoutTableauDynamique(detailsBull2NDC,table2NDC);
+          if(!detailsBull2NDC.isEmpty())
+            ajoutTableauDynamique(detailsBull2NDC,targetTable);
         } catch (RuntimeException e) {
           e.printStackTrace();
         }
 
         // PremiereA
-        XWPFTable table1EREA = document.getTableArray(27);
+
         try {
-          ajoutTableauDynamique(detailsBull1EREA,table1EREA);
+          if(!detailsBull1EREA.isEmpty())
+            ajoutTableauDynamique(detailsBull1EREA,targetTable);
         } catch (RuntimeException e) {
           e.printStackTrace();
         }
 
         // PremiereC
-        XWPFTable table1EREC = document.getTableArray(28);
+
         try {
-          ajoutTableauDynamique(detailsBull1EREC,table1EREC);
+          if(!detailsBull1EREC.isEmpty())
+            ajoutTableauDynamique(detailsBull1EREC,targetTable);
         } catch (RuntimeException e) {
           e.printStackTrace();
         }
 
         // PremiereD
-        XWPFTable table1ERED = document.getTableArray(29);
+
         try {
-          ajoutTableauDynamique(detailsBull1ERED,table1ERED);
+          if(!detailsBull1ERED.isEmpty())
+            ajoutTableauDynamique(detailsBull1ERED,targetTable);
         } catch (RuntimeException e) {
           e.printStackTrace();
         }
 
 
         // Terminale A
-        XWPFTable tableTLEA = document.getTableArray(30);
+
         try {
-          ajoutTableauDynamique(detailsBullTLEA,tableTLEA);
+          if(!detailsBullTLEA.isEmpty())
+            ajoutTableauDynamique(detailsBullTLEA,targetTable);
         } catch (RuntimeException e) {
           e.printStackTrace();
         }
 
         // Terminale A1
-        XWPFTable tableTLEA1 = document.getTableArray(31);
+
         try {
-          ajoutTableauDynamique(detailsBullTLEA1,tableTLEA1);
+          if(!detailsBullTLEA1.isEmpty())
+            ajoutTableauDynamique(detailsBullTLEA1,targetTable);
         } catch (RuntimeException e) {
           e.printStackTrace();
         }
 
         // Terminale A2
-        XWPFTable tableTLEA2 = document.getTableArray(32);
+
         try {
-          ajoutTableauDynamique(detailsBullTLEA2,tableTLEA2);
+          if(!detailsBullTLEA2.isEmpty())
+            ajoutTableauDynamique(detailsBullTLEA2,targetTable);
         } catch (RuntimeException e) {
           e.printStackTrace();
         }
 
         // Terminale C
-        XWPFTable tableTLEC = document.getTableArray(33);
+
         try {
-          ajoutTableauDynamique(detailsBullTLEC,tableTLEC);
+          if(!detailsBullTLEC.isEmpty())
+            ajoutTableauDynamique(detailsBullTLEC,targetTable);
         } catch (RuntimeException e) {
           e.printStackTrace();
         }
 
         // Terminale D
-        XWPFTable tableTLED = document.getTableArray(34);
+
         try {
-          ajoutTableauDynamique(detailsBullTLED,tableTLED);
+          if(!detailsBullTLED.isEmpty())
+            ajoutTableauDynamique(detailsBullTLED,targetTable);
         } catch (RuntimeException e) {
           e.printStackTrace();
         }
@@ -357,45 +399,7 @@ public class WordTempResultaNonAffProcessor {
 
       String libelleNiveau="";
       for (ResultatsElevesNonAffecteDto classe : detailsBull) {
-          /*  long nombMoySup10 =
-                    (classe.getNbreMoySup10F() != null ? classe.getNbreMoySup10F() : 0L) +
-                            (classe.getNbreMoySup10G() != null ? classe.getNbreMoySup10G() : 0L);
 
-            long nombMoyInf10 =
-                    (classe.getNbreMoyInf999F() != null ? classe.getNbreMoyInf999F() : 0L) +
-                            (classe.getNbreMoyInf999G() != null ? classe.getNbreMoyInf999G() : 0L);
-
-            long nombMoyInf8_5 =
-                    (classe.getNbreMoyInf85F() != null ? classe.getNbreMoyInf85F() : 0L) +
-                            (classe.getNbreMoyInf85G() != null ? classe.getNbreMoyInf85G() : 0L);
-
-            long effectifClasse =
-                    (classe.getClassF() != null ? classe.getClassF() : 0L) +
-                            (classe.getClassG() != null ? classe.getClassG() : 0L);
-
-// Éviter une division par zéro pour effectifClasse
-            double pourSup10,pourInf10,pourInf8_5;
-            if (effectifClasse > 0) {
-                pourSup10 = nombMoySup10 / (Double.valueOf(effectifClasse)) * 100d;
-                pourInf10 = nombMoyInf10 / (Double.valueOf(effectifClasse)) * 100d;
-                pourInf8_5 = nombMoyInf8_5 / (Double.valueOf(effectifClasse)) * 100d;
-
-                // Calculer d'autres statistiques ou utiliser ces valeurs
-            } else {
-                // Gérer le cas où effectifClasse est 0 pour éviter une division par zéro
-                pourSup10 = 0d;
-                pourInf10 = 0d;
-                pourInf8_5 = 0d;
-                // Logique alternative ou gestion d'erreur
-            }
-
-            long effectif =
-                    (classe.getEffeF() != null ? classe.getEffeF() : 0L) +
-                            (classe.getEffeG() != null ? classe.getEffeG() : 0L);
-
-            long effNonClass =
-                    (classe.getNonclassF() != null ? classe.getNonclassF() : 0L) +
-                            (classe.getNonclassG() != null ? classe.getNonclassG() : 0L);*/
           Long effectifNiveau1=classe.getEffeG()+classe.getEffeF();
           Long effectifNiveau1G=classe.getEffeG();
           Long effectifNiveau1F=classe.getEffeF();
@@ -553,100 +557,40 @@ public class WordTempResultaNonAffProcessor {
             // Créer une ligne principale pour la classe (6ème 1, 6ème 2, etc.)
             //XWPFTableRow classRow = table.createRow();
            // ensureCellCount(classRow, 14); // 14 colonnes comme dans le modèle
-        libelleNiveau=afficherValeurParNiveau(classe.getNiveau());
-// Remplir la ligne pour les filles (F)
-            XWPFTableRow fillesRow = table.createRow();
-            ensureCellCount(fillesRow, 12);
-            fillesRow.getCell(0).setText(classe.getClasse());
-            fillesRow.getCell(1).setText(" F");
-            fillesRow.getCell(2).setText(String.valueOf(classe.getEffeF()));
-            fillesRow.getCell(3).setText(String.valueOf(classe.getClassF()));
-            fillesRow.getCell(4).setText(String.valueOf(classe.getNonclassF()));
-            fillesRow.getCell(5).setText(String.valueOf(classe.getNbreMoySup10F()));
-            fillesRow.getCell(6).setText(String.valueOf(arrondie(classe.getPourMoySup10F())));
-            fillesRow.getCell(7).setText(String.valueOf(classe.getNbreMoyInf999F()));
-            fillesRow.getCell(8).setText(String.valueOf(arrondie(classe.getPourMoyInf999F())));
-            fillesRow.getCell(9).setText(String.valueOf(classe.getNbreMoyInf85F()));
-            fillesRow.getCell(10).setText(String.valueOf(arrondie(classe.getPourMoyInf85F())));
-            fillesRow.getCell(11).setText(String.valueOf(arrondie(classe.getMoyClasseF())));
+        libelleNiveau=classe.getNiveau();
 
-// Remplir la ligne pour les garçons (G)
-            XWPFTableRow garconsRow = table.createRow();
-            ensureCellCount(garconsRow, 12);
-            garconsRow.getCell(1).setText(" G");
-            garconsRow.getCell(2).setText(String.valueOf(classe.getEffeG()));
-            garconsRow.getCell(3).setText(String.valueOf(classe.getClassG()));
-            garconsRow.getCell(4).setText(String.valueOf(classe.getNonclassG()));
-            garconsRow.getCell(5).setText(String.valueOf(classe.getNbreMoySup10G()));
-            garconsRow.getCell(6).setText(String.valueOf(arrondie(classe.getPourMoySup10G())));
-            garconsRow.getCell(7).setText(String.valueOf(classe.getNbreMoyInf999G()));
-            garconsRow.getCell(8).setText(String.valueOf(arrondie(classe.getPourMoyInf999G())));
-            garconsRow.getCell(9).setText(String.valueOf(classe.getNbreMoyInf85G()));
-            garconsRow.getCell(10).setText(String.valueOf(arrondie(classe.getPourMoyInf85G())));
-            garconsRow.getCell(11).setText(String.valueOf(arrondie(classe.getMoyClasseG())));
 
 // Remplir la ligne pour le total (T)
-            XWPFTableRow totalRow = table.createRow();
-            ensureCellCount(totalRow, 12);
-            totalRow.getCell(1).setText(" T");
-            totalRow.getCell(2).setText(String.valueOf(effectif));
-            totalRow.getCell(3).setText(String.valueOf(effectifClasse));
-            totalRow.getCell(4).setText(String.valueOf(effNonClass));
-            totalRow.getCell(5).setText(String.valueOf(nombMoySup10));
-            totalRow.getCell(6).setText(String.valueOf(arrondie(pourSup10)));
-            totalRow.getCell(7).setText(String.valueOf(nombMoyInf10));
-            totalRow.getCell(8).setText(String.valueOf(arrondie(pourInf10)));
-            totalRow.getCell(9).setText(String.valueOf(nombMoyInf8_5));
-            totalRow.getCell(10).setText(String.valueOf(arrondie(pourInf8_5)));
-            totalRow.getCell(11).setText(String.valueOf(arrondie(classe.getMoyClasse())));
-            mergeCellsVertically(table, 0, table.getNumberOfRows() - 3, table.getNumberOfRows() -1);
-
+        XWPFTableRow totalRow = table.createRow();
+        ensureCellCount(totalRow, 9);
+        totalRow.getCell(0).setText(classe.getClasse());
+        totalRow.getCell(1).setText(String.valueOf(effectif));
+        totalRow.getCell(2).setText(String.valueOf(effectifClasse));
+        totalRow.getCell(3).setText(String.valueOf(nombMoySup10));
+        totalRow.getCell(4).setText(String.valueOf(arrondie(pourSup10)));
+        totalRow.getCell(5).setText(String.valueOf(nombMoyInf10));
+        totalRow.getCell(6).setText(String.valueOf(arrondie(pourInf10)));
+        totalRow.getCell(7).setText(String.valueOf(nombMoyInf8_5));
+        totalRow.getCell(8).setText(String.valueOf(arrondie(pourInf8_5)));
         }
-      XWPFTableRow generalfillesRow = table.createRow();
-      ensureCellCount(generalfillesRow, 12);
-      generalfillesRow.getCell(0).setText("Total "+libelleNiveau);
-      generalfillesRow.getCell(1).setText(" F");
-      generalfillesRow.getCell(2).setText(String.valueOf(effectifCycle1F));
-      generalfillesRow.getCell(3).setText(String.valueOf(effectifClasseCycle1F));
-      generalfillesRow.getCell(4).setText(String.valueOf(effNonClassCycle1F));
-      generalfillesRow.getCell(5).setText(String.valueOf(nombMoySup10Cycle1F));
-      generalfillesRow.getCell(6).setText(String.valueOf(arrondie(pourSup10Cycle1F)));
-      generalfillesRow.getCell(7).setText(String.valueOf(nombMoyInf10Cycle1F));
-      generalfillesRow.getCell(8).setText(String.valueOf(arrondie(pourInf10Cycle1F)));
-      generalfillesRow.getCell(9).setText(String.valueOf(nombMoyInf8_5Cycle1F));
-      generalfillesRow.getCell(10).setText(String.valueOf(arrondie(pourInf8_5Cycle1F)));
-      generalfillesRow.getCell(11).setText(String.valueOf(arrondie(moyenCycle1F)));
 
-      XWPFTableRow generalgarconsRow = table.createRow();
-      ensureCellCount(generalgarconsRow, 12);
-      generalgarconsRow.getCell(1).setText(" G");
-      generalgarconsRow.getCell(2).setText(String.valueOf(effectifCycle1G));
-      generalgarconsRow.getCell(3).setText(String.valueOf(effectifClasseCycle1G));
-      generalgarconsRow.getCell(4).setText(String.valueOf(effNonClassCycle1G));
-      generalgarconsRow.getCell(5).setText(String.valueOf(nombMoySup10Cycle1G));
-      generalgarconsRow.getCell(6).setText(String.valueOf(arrondie(pourSup10Cycle1G)));
-      generalgarconsRow.getCell(7).setText(String.valueOf(nombMoyInf10Cycle1G));
-      generalgarconsRow.getCell(8).setText(String.valueOf(arrondie(pourInf10Cycle1G)));
-      generalgarconsRow.getCell(9).setText(String.valueOf(nombMoyInf8_5Cycle1G));
-      generalgarconsRow.getCell(10).setText(String.valueOf(arrondie(pourInf8_5Cycle1G)));
-      generalgarconsRow.getCell(11).setText(String.valueOf(arrondie(moyenCycle1G)));
 
       // Remplir la ligne pour le total (T)
       XWPFTableRow GeneraltotalRow = table.createRow();
-      ensureCellCount(GeneraltotalRow, 12);
-      GeneraltotalRow.getCell(1).setText(" T");
-      GeneraltotalRow.getCell(2).setText(String.valueOf(effectifCycle1));
-      GeneraltotalRow.getCell(3).setText(String.valueOf(effectifClasseCycle1));
-      GeneraltotalRow.getCell(4).setText(String.valueOf(effNonClassCycle1));
-      GeneraltotalRow.getCell(5).setText(String.valueOf(nombMoySup10Cycle1));
-      GeneraltotalRow.getCell(6).setText(String.valueOf(arrondie(pourSup10Cycle1)));
-      GeneraltotalRow.getCell(7).setText(String.valueOf(nombMoyInf10Cycle1));
-      GeneraltotalRow.getCell(8).setText(String.valueOf(arrondie(pourInf10Cycle1)));
-      GeneraltotalRow.getCell(9).setText(String.valueOf(nombMoyInf8_5Cycle1));
-      GeneraltotalRow.getCell(10).setText(String.valueOf(arrondie(pourInf8_5Cycle1)));
-      GeneraltotalRow.getCell(11).setText(String.valueOf(arrondie(moyenCycle1)));
-      mergeCellsVertically(table, 0, table.getNumberOfRows() - 3, table.getNumberOfRows() -1);
+      ensureCellCount(GeneraltotalRow, 9);
+      GeneraltotalRow.getCell(0).setText("EFF. TOTAL des "+afficherValeurParNiveau(libelleNiveau));
+      GeneraltotalRow.getCell(1).setText(String.valueOf(effectifCycle1));
+      GeneraltotalRow.getCell(2).setText(String.valueOf(effectifClasseCycle1));
+      GeneraltotalRow.getCell(3).setText(String.valueOf(nombMoySup10Cycle1));
+      GeneraltotalRow.getCell(4).setText(String.valueOf(arrondie(pourSup10Cycle1)));
+      GeneraltotalRow.getCell(5).setText(String.valueOf(nombMoyInf10Cycle1));
+      GeneraltotalRow.getCell(6).setText(String.valueOf(arrondie(pourInf10Cycle1)));
+      GeneraltotalRow.getCell(7).setText(String.valueOf(nombMoyInf8_5Cycle1));
+      GeneraltotalRow.getCell(8).setText(String.valueOf(arrondie(pourInf8_5Cycle1)));
 
+      for (int i = 0; i <= 8; i++) {
+        GeneraltotalRow.getCell(i).setColor("ADD8E6"); // Bleu clair en Hexadécimal
+      }
     }
 
 

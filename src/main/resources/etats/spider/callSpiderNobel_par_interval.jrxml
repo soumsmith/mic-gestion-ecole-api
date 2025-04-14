@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="callSpiderNobel" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5a2b5033-89f0-4350-bb7d-4afdfdd95def">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ecolevieDB"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="586"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="404"/>
+	<parameter name="classe" class="java.lang.String"/>
+	<parameter name="idEcole" class="java.lang.Long"/>
+	<parameter name="libelleAnnee" class="java.lang.String"/>
+	<parameter name="libellePeriode" class="java.lang.String"/>
+	<parameter name="matricule" class="java.lang.String"/>
+	<parameter name="infosAmoirie" class="java.lang.String"/>
+	<parameter name="distinctin" class="java.lang.String"/>
+	<parameter name="bg" class="java.lang.String"/>
+	<parameter name="positionLogo" class="java.lang.String"/>
+	<parameter name="setBg" class="java.lang.String"/>
+	<parameter name="limitValue" class="java.lang.Integer" evaluationTime="Late">
+		<defaultValueExpression><![CDATA[200]]></defaultValueExpression>
+	</parameter>
+	<parameter name="offsetValue" class="java.lang.Integer" evaluationTime="Late">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select *
+from  `ecoleviedbv2`.SELECT_INFOS_CLASSE_IN_BULLETIN
+where `ecoleviedbv2`.SELECT_INFOS_CLASSE_IN_BULLETIN.libelle_classe =  $P{classe} and
+   `ecoleviedbv2`.SELECT_INFOS_CLASSE_IN_BULLETIN.id_ecole  =  $P{idEcole}  and
+    `ecoleviedbv2`.SELECT_INFOS_CLASSE_IN_BULLETIN.annee_libelle =  $P{libelleAnnee}
+    and  `ecoleviedbv2`.SELECT_INFOS_CLASSE_IN_BULLETIN.libelle_periode like  $P{libellePeriode}
+     order by `ecoleviedbv2`.SELECT_INFOS_CLASSE_IN_BULLETIN.nom , `ecoleviedbv2`.SELECT_INFOS_CLASSE_IN_BULLETIN.prenoms
+     LIMIT $P{limitValue} OFFSET $P{offsetValue} ;]]>
+	</queryString>
+	<field name="id_ecole" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="id_ecole"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_ecole"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bulletins"/>
+	</field>
+	<field name="nom_ecole" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nom_ecole"/>
+		<property name="com.jaspersoft.studio.field.label" value="nom_ecole"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bulletins"/>
+	</field>
+	<field name="statut_ecole" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="statut_ecole"/>
+		<property name="com.jaspersoft.studio.field.label" value="statut_ecole"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bulletins"/>
+	</field>
+	<field name="url_logo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="url_logo"/>
+		<property name="com.jaspersoft.studio.field.label" value="url_logo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bulletins"/>
+	</field>
+	<field name="adresse_ecole" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="adresse_ecole"/>
+		<property name="com.jaspersoft.studio.field.label" value="adresse_ecole"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bulletins"/>
+	</field>
+	<field name="tel_ecole" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="tel_ecole"/>
+		<property name="com.jaspersoft.studio.field.label" value="tel_ecole"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bulletins"/>
+	</field>
+	<field name="annee_libelle" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="annee_libelle"/>
+		<property name="com.jaspersoft.studio.field.label" value="annee_libelle"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bulletins"/>
+	</field>
+	<field name="libelle_periode" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="libelle_periode"/>
+		<property name="com.jaspersoft.studio.field.label" value="libelle_periode"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bulletins"/>
+	</field>
+	<field name="nom" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nom"/>
+		<property name="com.jaspersoft.studio.field.label" value="nom"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bulletins"/>
+	</field>
+	<field name="prenoms" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="prenoms"/>
+		<property name="com.jaspersoft.studio.field.label" value="prenoms"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bulletins"/>
+	</field>
+	<field name="libelle_classe" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="libelle_classe"/>
+		<property name="com.jaspersoft.studio.field.label" value="libelle_classe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bulletins"/>
+	</field>
+	<field name="annee_id" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="annee_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="annee_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bulletins"/>
+	</field>
+	<field name="matricule" class="java.lang.String"/>
+	<group name="groupeMatricule">
+		<groupExpression><![CDATA[$F{matricule}]]></groupExpression>
+		<groupHeader>
+			<band height="723">
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<subreport>
+					<reportElement stretchType="RelativeToTallestObject" x="-16" y="10" width="584" height="200" uuid="4ac0ee79-a3ca-47bd-a7ea-48f4b0a47e5b">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<subreportParameter name="matricule">
+						<subreportParameterExpression><![CDATA[$F{matricule}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="annee">
+						<subreportParameterExpression><![CDATA[$F{annee_libelle}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="idEcole">
+						<subreportParameterExpression><![CDATA[$F{id_ecole}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="libellePeriode">
+						<subreportParameterExpression><![CDATA[$F{libelle_periode}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="infosAmoirie">
+						<subreportParameterExpression><![CDATA[$P{infosAmoirie}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="distinctin">
+						<subreportParameterExpression><![CDATA[$P{distinctin}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="positionLogo">
+						<subreportParameterExpression><![CDATA[$P{positionLogo}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="setBg">
+						<subreportParameterExpression><![CDATA[$P{setBg}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="classe">
+						<subreportParameterExpression><![CDATA[$P{classe}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA["etats/spider/BulletinNobelSpider.jasper"]]></subreportExpression>
+				</subreport>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band height="802" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<image scaleImage="FillFrame" onErrorType="Blank">
+				<reportElement x="-16" y="0" width="584" height="802" uuid="381f9557-868c-45e1-8d15-b28b5d8b2b17"/>
+				<imageExpression><![CDATA[$P{bg}]]></imageExpression>
+			</image>
+		</band>
+	</background>
+</jasperReport>

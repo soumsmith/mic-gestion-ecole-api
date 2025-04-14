@@ -22,7 +22,29 @@ public class WordTempRecapResultatProcessor {
 
     public   void getRecapResultatAffProcessor(XWPFDocument document ,
                                           Long idEcole ,String libelleAnnee , String libelleTrimetre) {
-        XWPFTable table = document.getTableArray(20);
+
+
+        String tableTitle = "CODE_RECAP_NON_AFF";
+        XWPFTable targetTable = null;
+        for (int i = 0; i < document.getBodyElements().size(); i++) {
+            IBodyElement element = document.getBodyElements().get(i);
+            if (element.getElementType() == BodyElementType.PARAGRAPH) {
+                XWPFParagraph paragraph = (XWPFParagraph) element;
+                if (paragraph.getText().trim().equalsIgnoreCase(tableTitle)) {
+                    paragraph.removeRun(0);
+                    // Le tableau devrait suivre immédiatement le titre
+                    if (i + 1 < document.getBodyElements().size() &&
+                        document.getBodyElements().get(i + 1).getElementType() == BodyElementType.TABLE) {
+                        targetTable = (XWPFTable) document.getBodyElements().get(i + 1);
+                    }
+                    break;
+                }
+            }
+        }
+
+
+
+
         List<RecapDesResultatsElevesAffecteDto> detailsBull= new ArrayList<>();
         detailsBull=   resultatsRecapServices.RecapCalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre);
         long nombMoySup10Etabli =0l ; long nombMoyInf10Etabli =0l ;long nombMoyInf8_5Etabli =0l;
@@ -104,100 +126,35 @@ public class WordTempRecapResultatProcessor {
             //XWPFTableRow classRow = table.createRow();
             // ensureCellCount(classRow, 14); // 14 colonnes comme dans le modèle
 
-            // Remplir la ligne pour les filles (F)
-            XWPFTableRow fillesRow = table.createRow();
-            ensureCellCount(fillesRow, 12);
-            fillesRow.getCell(0).setText(afficherValeurParNiveau(classe.getNiveau()));
-            fillesRow.getCell(1).setText(" F");
-            fillesRow.getCell(2).setText(String.valueOf(classe.getEffeF()));
-            fillesRow.getCell(3).setText(String.valueOf(classe.getClassF()));
-            fillesRow.getCell(4).setText(String.valueOf(classe.getNonclassF()));
-            fillesRow.getCell(5).setText(String.valueOf(classe.getNbreMoySup10F()));
-            fillesRow.getCell(6).setText(String.valueOf(arrondie(classe.getPourMoySup10F())));
-            fillesRow.getCell(7).setText(String.valueOf(classe.getNbreMoyInf999F()));
-            fillesRow.getCell(8).setText(String.valueOf(arrondie(classe.getPourMoyInf999F())));
-            fillesRow.getCell(9).setText(String.valueOf(classe.getNbreMoyInf85F()));
-            fillesRow.getCell(10).setText(String.valueOf(arrondie(classe.getPourMoyInf85F())));
-            fillesRow.getCell(11).setText(String.valueOf(arrondie(classe.getMoyClasseF())));
 
-// Remplir la ligne pour les garçons (G)
-            XWPFTableRow garconsRow = table.createRow();
-            ensureCellCount(garconsRow, 12);
-            garconsRow.getCell(1).setText(" G");
-            garconsRow.getCell(2).setText(String.valueOf(classe.getEffeG()));
-            garconsRow.getCell(3).setText(String.valueOf(classe.getClassG()));
-            garconsRow.getCell(4).setText(String.valueOf(classe.getNonclassG()));
-            garconsRow.getCell(5).setText(String.valueOf(classe.getNbreMoySup10G()));
-            garconsRow.getCell(6).setText(String.valueOf(arrondie(classe.getPourMoySup10G())));
-            garconsRow.getCell(7).setText(String.valueOf(classe.getNbreMoyInf999G()));
-            garconsRow.getCell(8).setText(String.valueOf(arrondie(classe.getPourMoyInf999G())));
-            garconsRow.getCell(9).setText(String.valueOf(classe.getNbreMoyInf85G()));
-            garconsRow.getCell(10).setText(String.valueOf(arrondie(classe.getPourMoyInf85G())));
-            garconsRow.getCell(11).setText(String.valueOf(arrondie(classe.getMoyClasseG())));
 
 // Remplir la ligne pour le total (T)
-            XWPFTableRow totalRow = table.createRow();
-            ensureCellCount(totalRow, 12);
-            totalRow.getCell(0).setText("Total "+afficherValeurParNiveau(classe.getNiveau()));
-            totalRow.getCell(1).setText(" T");
-            totalRow.getCell(2).setText(String.valueOf(effectif));
-            totalRow.getCell(3).setText(String.valueOf(effectifClasse));
-            totalRow.getCell(4).setText(String.valueOf(effNonClass));
-            totalRow.getCell(5).setText(String.valueOf(nombMoySup10));
-            totalRow.getCell(6).setText(String.valueOf(arrondie(pourSup10)));
-            totalRow.getCell(7).setText(String.valueOf(nombMoyInf10));
-            totalRow.getCell(8).setText(String.valueOf(arrondie(pourInf10)));
-            totalRow.getCell(9).setText(String.valueOf(nombMoyInf8_5));
-            totalRow.getCell(10).setText(String.valueOf(arrondie(pourInf8_5)));
-            totalRow.getCell(11).setText(String.valueOf(arrondie(classe.getMoyClasse())));
-            mergeCellsVertically(table, 0, table.getNumberOfRows() - 3, table.getNumberOfRows() -1);
+            XWPFTableRow totalRow = targetTable.createRow();
+            ensureCellCount(totalRow, 9);
+            totalRow.getCell(0).setText(afficherValeurParNiveau(classe.getNiveau()));
+            totalRow.getCell(1).setText(String.valueOf(effectif));
+            totalRow.getCell(2).setText(String.valueOf(effectifClasse));
+            totalRow.getCell(3).setText(String.valueOf(nombMoySup10));
+            totalRow.getCell(4).setText(String.valueOf(arrondie(pourSup10)));
+            totalRow.getCell(5).setText(String.valueOf(nombMoyInf10));
+            totalRow.getCell(6).setText(String.valueOf(arrondie(pourInf10)));
+            totalRow.getCell(7).setText(String.valueOf(nombMoyInf8_5));
+            totalRow.getCell(8).setText(String.valueOf(arrondie(pourInf8_5)));
             moyEtablissementEtabli=classe.getMoyClasse_ET() ;
         }
-        /*// Remplir la ligne pour les Total Etablissement
-        XWPFTableRow etabliRowF = table.createRow();
-        ensureCellCount(etabliRowF, 12);
-        etabliRowF.getCell(0).setText("Total Etabli");
-        etabliRowF.getCell(1).setText(" F");
-        etabliRowF.getCell(2).setText(String.valueOf(""));
-        etabliRowF.getCell(3).setText(String.valueOf(""));
-        etabliRowF.getCell(4).setText(String.valueOf(""));
-        etabliRowF.getCell(5).setText(String.valueOf(""));
-        etabliRowF.getCell(6).setText(String.valueOf(arrondie(0d)));
-        etabliRowF.getCell(7).setText(String.valueOf(""));
-        etabliRowF.getCell(8).setText(String.valueOf(arrondie(0d)));
-        etabliRowF.getCell(9).setText(String.valueOf(""));
-        etabliRowF.getCell(10).setText(String.valueOf(arrondie(0d)));
-        etabliRowF.getCell(11).setText(String.valueOf(arrondie(0d)));
-        //Total Etablissement Garçon
-        XWPFTableRow etabliRowG = table.createRow();
-        ensureCellCount(etabliRowG, 12);
-        etabliRowG.getCell(0).setText("Total Etabli");
-        etabliRowG.getCell(1).setText("G");
-        etabliRowG.getCell(2).setText(String.valueOf(""));
-        etabliRowG.getCell(3).setText(String.valueOf(""));
-        etabliRowG.getCell(4).setText(String.valueOf(""));
-        etabliRowG.getCell(5).setText(String.valueOf(""));
-        etabliRowG.getCell(6).setText(String.valueOf(arrondie(0d)));
-        etabliRowG.getCell(7).setText(String.valueOf(""));
-        etabliRowG.getCell(8).setText(String.valueOf(arrondie(0d)));
-        etabliRowG.getCell(9).setText(String.valueOf(""));
-        etabliRowG.getCell(10).setText(String.valueOf(arrondie(0d)));
-        etabliRowG.getCell(11).setText(String.valueOf(arrondie(0d)));
-*/
+
         //Total Etablissement
-        XWPFTableRow etabliRow = table.createRow();
-        ensureCellCount(etabliRow, 12);
-        etabliRow.getCell(0).setText("Total Etabli");
-        etabliRow.getCell(2).setText(String.valueOf(effectifEtabli));
-        etabliRow.getCell(3).setText(String.valueOf(effectifClasseEtabli));
-        etabliRow.getCell(4).setText(String.valueOf(effNonClassEtabli));
-        etabliRow.getCell(5).setText(String.valueOf(nombMoySup10Etabli));
-        etabliRow.getCell(6).setText(String.valueOf(arrondie(pourSup10Etabli)));
-        etabliRow.getCell(7).setText(String.valueOf(nombMoyInf10Etabli));
-        etabliRow.getCell(8).setText(String.valueOf(arrondie(pourInf10Etabli)));
-        etabliRow.getCell(9).setText(String.valueOf(nombMoyInf8_5Etabli));
-        etabliRow.getCell(10).setText(String.valueOf(arrondie(pourInf8_5Etabli)));
-        etabliRow.getCell(11).setText(String.valueOf(arrondie(moyEtablissementEtabli)));
+        XWPFTableRow etabliRow = targetTable.createRow();
+        ensureCellCount(etabliRow, 9);
+        etabliRow.getCell(0).setText("Total");
+        etabliRow.getCell(1).setText(String.valueOf(effectifEtabli));
+        etabliRow.getCell(2).setText(String.valueOf(effectifClasseEtabli));
+        etabliRow.getCell(3).setText(String.valueOf(nombMoySup10Etabli));
+        etabliRow.getCell(4).setText(String.valueOf(arrondie(pourSup10Etabli)));
+        etabliRow.getCell(5).setText(String.valueOf(nombMoyInf10Etabli));
+        etabliRow.getCell(6).setText(String.valueOf(arrondie(pourInf10Etabli)));
+        etabliRow.getCell(7).setText(String.valueOf(nombMoyInf8_5Etabli));
+        etabliRow.getCell(8).setText(String.valueOf(arrondie(pourInf8_5Etabli)));
 
 
     }

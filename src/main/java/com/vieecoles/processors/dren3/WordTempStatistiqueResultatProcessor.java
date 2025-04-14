@@ -414,17 +414,17 @@ public class WordTempStatistiqueResultatProcessor {
 
 
         effectifClasseCycle2=effectifClasseCycle1+effectifClasse2;
-        effectifClasseCycle2G=effectifClasseCycle1G+effectifClasse2G;
-        effectifClasseCycle2F=effectifClasseCycle1F+effectifClasse2F;
+        effectifClasseCycle2G=effectifClasseCycle2G+effectifClasse2G;
+        effectifClasseCycle2F=effectifClasseCycle2F+effectifClasse2F;
 
         effectifCycle2= effectifCycle2+effectifNiveau2;
         effectifCycle2G= effectifCycle2G+effectifNiveau2G;
         effectifCycle2F= effectifCycle2F+effectifNiveau2F;
 
 
-        effectifNonClasseCycle2= effectifNonClasseCycle1+effectifNonClasse2;
-        effectifNonClasseCycle2G= effectifNonClasseCycle1G+effectifNonClasse2G;
-        effectifNonClasseCycle2F= effectifNonClasseCycle1F+effectifNonClasse2F;
+        effectifNonClasseCycle2= effectifNonClasseCycle2+effectifNonClasse2;
+        effectifNonClasseCycle2G= effectifNonClasseCycle2G+effectifNonClasse2G;
+        effectifNonClasseCycle2F= effectifNonClasseCycle2F+effectifNonClasse2F;
 
         long nombMoySup10 =
             (eleve.getNbreMoySup10F() != null ? eleve.getNbreMoySup10F() : 0L) +

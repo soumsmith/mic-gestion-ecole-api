@@ -43,7 +43,7 @@ public class WordTempRepartitionAnneeNaissProcessor {
         List<XWPFParagraph> paragraphs = document.getParagraphs();
 
 
-        String tableTitle = "CODE_REPART_ANNE_NAISS";
+        String tableTitle = "CODE_REPARTI_ANNEE";
         XWPFTable targetTable = null;
         for (int i = 0; i < document.getBodyElements().size(); i++) {
             IBodyElement element = document.getBodyElements().get(i);
@@ -80,25 +80,30 @@ public class WordTempRepartitionAnneeNaissProcessor {
 
                 // Remplir la ligne pour les filles (F)
                 XWPFTableRow fillesRow = targetTable.createRow();
-                ensureCellCount(fillesRow, 17);
-                fillesRow.getCell(0).setText(eleve.getAnnee());
-                fillesRow.getCell(1).setText(" F");
-                fillesRow.getCell(2).setText(String.valueOf(eleve.getAn6F()));
-                fillesRow.getCell(3).setText(String.valueOf(eleve.getAn5F()));
-                fillesRow.getCell(4).setText(String.valueOf(eleve.getAn4F()));
-                fillesRow.getCell(5).setText(String.valueOf(eleve.getAn3F()));
-                Long st1= eleve.getAn6F()+eleve.getAn5F()+eleve.getAn4F()+eleve.getAn3F();
+                ensureCellCount(fillesRow, 19);
+                fillesRow.getCell(0).setText(eleve.getNiveau());
+                fillesRow.getCell(1).setText(" ");
+                fillesRow.getCell(2).setText(String.valueOf(eleve.getAn6F()+eleve.getAn6G()));
+                fillesRow.getCell(3).setText(String.valueOf(eleve.getAn5F() +eleve.getAn5G()));
+                fillesRow.getCell(4).setText(String.valueOf(eleve.getAn4F()+eleve.getAn4G()));
+                fillesRow.getCell(5).setText(String.valueOf(eleve.getAn3F()+eleve.getAn3G()));
+                Long st1= eleve.getAn6F()+eleve.getAn5F()+eleve.getAn4F()+eleve.getAn3F() +
+                    eleve.getAn6G()+eleve.getAn5G()+eleve.getAn4G()+eleve.getAn3G();
+
                 fillesRow.getCell(6).setText(String.valueOf(st1));
-                fillesRow.getCell(7).setText(String.valueOf((eleve.getAn2AF())));
-                fillesRow.getCell(8).setText(String.valueOf(eleve.getAn2CF()));
-                fillesRow.getCell(9).setText(String.valueOf(eleve.getAn1AF()));
-                fillesRow.getCell(10).setText(String.valueOf(eleve.getAn1CF()));
-                fillesRow.getCell(11).setText(String.valueOf(eleve.getAn1DF()));
-                fillesRow.getCell(12).setText(String.valueOf(eleve.getAnTAF()));
-                fillesRow.getCell(13).setText(String.valueOf(eleve.getAnTCF()));
-                fillesRow.getCell(14).setText(String.valueOf(eleve.getAnTDF()));
+                fillesRow.getCell(7).setText(String.valueOf((eleve.getAn2AF())+eleve.getAn2AG()));
+                fillesRow.getCell(8).setText(String.valueOf(eleve.getAn2CF()+eleve.getAn2CG()));
+                fillesRow.getCell(9).setText(String.valueOf(eleve.getAn1AF()+eleve.getAn1AG()));
+                fillesRow.getCell(10).setText(String.valueOf(eleve.getAn1CF()+eleve.getAn1CG()));
+                fillesRow.getCell(11).setText(String.valueOf(eleve.getAn1DF()+eleve.getAn1DG()));
+                fillesRow.getCell(12).setText(String.valueOf(eleve.getAnTAF()+eleve.getAnTAG()));
+                fillesRow.getCell(13).setText(String.valueOf(eleve.getAnTCF()+eleve.getAnTCG()));
+                fillesRow.getCell(14).setText(String.valueOf(eleve.getAnTDF()+eleve.getAnTDG()));
                 Long st2= eleve.getAn2AF()+eleve.getAn2CF()+eleve.getAn1AF()+eleve.getAn1CF()+eleve.getAn1DF()+
-                        eleve.getAnTAF()+eleve.getAnTCF()+eleve.getAnTDF();
+                        eleve.getAnTAF()+eleve.getAnTCF()+eleve.getAnTDF() +
+                    eleve.getAn2AG()+eleve.getAn2CG()+eleve.getAn1AG()+eleve.getAn1CG()+eleve.getAn1DG()+
+                    eleve.getAnTAG()+eleve.getAnTCG()+eleve.getAnTDG() ;
+
                 fillesRow.getCell(15).setText(String.valueOf(st2));
                 Long tf= st1+st2 ;
                 fillesRow.getCell(16).setText(String.valueOf(tf));

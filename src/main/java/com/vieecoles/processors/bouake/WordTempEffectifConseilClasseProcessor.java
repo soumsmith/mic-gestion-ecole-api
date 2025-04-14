@@ -1,8 +1,10 @@
 package com.vieecoles.processors.bouake;
 
+import com.vieecoles.dto.EffectifiConseilClasseDto;
 import com.vieecoles.dto.NiveauDto;
 import com.vieecoles.dto.ResultatsElevesAffecteDto;
-import com.vieecoles.services.etats.appachePoi.resultatsPoiServices;
+import com.vieecoles.services.etats.appachePoi.EffectifConseilClassePoiServices;
+import com.vieecoles.services.etats.appachePoi.resultatsAffetNonAffPoiServices;
 import com.vieecoles.services.etats.resultatsRecapServices;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,17 +24,20 @@ import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.STMerge;
 
 @ApplicationScoped
-public class WordTempResultaAffProcessor {
+public class WordTempEffectifConseilClasseProcessor {
     @Inject
-    resultatsPoiServices resultatsServices ;
+    EffectifConseilClassePoiServices resultatsServices ;
     @Inject
     resultatsRecapServices resultatsRecapServices ;
   @Inject
   EntityManager em;
 
-      public   void getResultatAffProcessor(XWPFDocument document ,
+      public   void getEffectifConseilProcessor(XWPFDocument document ,
           Long idEcole ,String libelleAnnee , String libelleTrimetre) {
-        List<ResultatsElevesAffecteDto> detailsBull6 = new ArrayList<>();
+
+        long effeTotalEtablisseG = 0l;
+        long effeTotalEtablisseF = 0l;
+        List<EffectifiConseilClasseDto> detailsBull6 = new ArrayList<>();
         System.out.println("classeNiveauDtoList entree");
         try {
           detailsBull6= resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,1)  ;
@@ -42,7 +47,7 @@ public class WordTempResultaAffProcessor {
         }
         // Cinquième
 
-        List<ResultatsElevesAffecteDto> detailsBull5 = new ArrayList<>();
+        List<EffectifiConseilClasseDto> detailsBull5 = new ArrayList<>();
         try {
           detailsBull5= resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,2)  ;
 
@@ -52,7 +57,7 @@ public class WordTempResultaAffProcessor {
 
         // Quatrieme
 
-        List<ResultatsElevesAffecteDto> detailsBull4 = new ArrayList<>();
+        List<EffectifiConseilClasseDto> detailsBull4 = new ArrayList<>();
         try {
           detailsBull4= resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,3)  ;
 
@@ -63,7 +68,7 @@ public class WordTempResultaAffProcessor {
 
         // Troixième
 
-        List<ResultatsElevesAffecteDto> detailsBull3 = new ArrayList<>();
+        List<EffectifiConseilClasseDto> detailsBull3 = new ArrayList<>();
         try {
           detailsBull3= resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,4)  ;
 
@@ -71,7 +76,7 @@ public class WordTempResultaAffProcessor {
           e.printStackTrace();
         }
         // Seconde A
-        List<ResultatsElevesAffecteDto> detailsBull2NDA = new ArrayList<>();
+        List<EffectifiConseilClasseDto> detailsBull2NDA = new ArrayList<>();
         try {
          detailsBull2NDA= resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,5)  ;
 
@@ -80,7 +85,7 @@ public class WordTempResultaAffProcessor {
         }
 
         // Seconde C
-        List<ResultatsElevesAffecteDto> detailsBull2NDC = new ArrayList<>();
+        List<EffectifiConseilClasseDto> detailsBull2NDC = new ArrayList<>();
         try {
           detailsBull2NDC= resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,6)  ;
 
@@ -89,7 +94,7 @@ public class WordTempResultaAffProcessor {
         }
 
         // Premiere A
-        List<ResultatsElevesAffecteDto> detailsBull1EREA = new ArrayList<>();
+        List<EffectifiConseilClasseDto> detailsBull1EREA = new ArrayList<>();
         try {
           detailsBull1EREA= resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,7)  ;
 
@@ -98,7 +103,7 @@ public class WordTempResultaAffProcessor {
         }
 
         // Premiere C
-        List<ResultatsElevesAffecteDto> detailsBull1EREC = new ArrayList<>();
+        List<EffectifiConseilClasseDto> detailsBull1EREC = new ArrayList<>();
         try {
         detailsBull1EREC = resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,8)  ;
 
@@ -107,7 +112,7 @@ public class WordTempResultaAffProcessor {
         }
 
         // Premiere D
-        List<ResultatsElevesAffecteDto> detailsBull1ERED = new ArrayList<>();
+        List<EffectifiConseilClasseDto> detailsBull1ERED = new ArrayList<>();
         try {
          detailsBull1ERED = resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,9)  ;
 
@@ -116,7 +121,7 @@ public class WordTempResultaAffProcessor {
         }
 
         // Terminale A
-        List<ResultatsElevesAffecteDto> detailsBullTLEA = new ArrayList<>();
+        List<EffectifiConseilClasseDto> detailsBullTLEA = new ArrayList<>();
         try {
           detailsBullTLEA = resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,10)  ;
 
@@ -125,7 +130,7 @@ public class WordTempResultaAffProcessor {
         }
 
         // Terminale A1
-        List<ResultatsElevesAffecteDto> detailsBullTLEA1 = new ArrayList<>();
+        List<EffectifiConseilClasseDto> detailsBullTLEA1 = new ArrayList<>();
         try {
           detailsBullTLEA1 = resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,11)  ;
 
@@ -134,7 +139,7 @@ public class WordTempResultaAffProcessor {
         }
 
         // Terminale A2
-        List<ResultatsElevesAffecteDto> detailsBullTLEA2 = new ArrayList<>();
+        List<EffectifiConseilClasseDto> detailsBullTLEA2 = new ArrayList<>();
         try {
          detailsBullTLEA2 = resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,12)  ;
 
@@ -143,7 +148,7 @@ public class WordTempResultaAffProcessor {
         }
 
         // Terminale C
-        List<ResultatsElevesAffecteDto> detailsBullTLEC = new ArrayList<>();
+        List<EffectifiConseilClasseDto> detailsBullTLEC = new ArrayList<>();
         try {
         detailsBullTLEC = resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,13)  ;
 
@@ -152,7 +157,7 @@ public class WordTempResultaAffProcessor {
         }
 
         // Terminale D
-        List<ResultatsElevesAffecteDto> detailsBullTLED = new ArrayList<>();
+        List<EffectifiConseilClasseDto> detailsBullTLED = new ArrayList<>();
         try {
         detailsBullTLED = resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,14)  ;
 
@@ -163,7 +168,7 @@ public class WordTempResultaAffProcessor {
         // 3. Gestion des tableaux dynamiques
         // Sixième
         try{
-          String tableTitle = "CODE_RECAP_RESUL_AFFECT_CLASSE";
+          String tableTitle = "CODE_EFFECTIF_CONSEIL";
 
           for (int i = 0; i < document.getBodyElements().size(); i++) {
             IBodyElement element = document.getBodyElements().get(i);
@@ -311,6 +316,17 @@ public class WordTempResultaAffProcessor {
         } catch (RuntimeException e) {
           e.printStackTrace();
         }
+        // effectif Total Etablissement
+      if(!detailsBull6.isEmpty()) {
+        long totalG=detailsBull6.get(0).getEffEtabliG()+detailsBull6.get(0).getEffEtabliF();
+        XWPFTableRow GeneraltotalEtabliRow = targetTable.createRow();
+        ensureCellCount(GeneraltotalEtabliRow, 4);
+        GeneraltotalEtabliRow.getCell(0).setText("TOTAL");
+        GeneraltotalEtabliRow.getCell(1).setText(String.valueOf(detailsBull6.get(0).getEffEtabliG()));
+        GeneraltotalEtabliRow.getCell(2).setText(String.valueOf(detailsBull6.get(0).getEffEtabliF()));
+        GeneraltotalEtabliRow.getCell(3).setText(String.valueOf(totalG));
+
+      }
 
       }
 
@@ -377,215 +393,28 @@ public class WordTempResultaAffProcessor {
     }
 
 
-    private static void ajoutTableauDynamique(List<ResultatsElevesAffecteDto> detailsBull, XWPFTable table) {
-      double pourSup10,pourInf10,pourInf8_5;
-      long nombMoySup10Cycle1 =0l ; long nombMoyInf10Cycle1 =0l ;long nombMoyInf8_5Cycle1 =0l;
-      long effectifClasseCycle1=0l ;  long effNonClassCycle1=0l;
-      long nombMoySup10Cycle1G =0l ; long nombMoyInf10Cycle1G =0l ;long nombMoyInf8_5Cycle1G =0l;
-      long effectifClasseCycle1G=0l ;  long effNonClassCycle1G=0l;
+    private static void ajoutTableauDynamique(List<EffectifiConseilClasseDto> detailsBull, XWPFTable table ) {
 
-      long nombMoySup10Cycle1F =0l ; long nombMoyInf10Cycle1F =0l ;long nombMoyInf8_5Cycle1F =0l;
-      long effectifClasseCycle1F=0l ;  long effNonClassCycle1F=0l;
-
-      double pourSup10Cycle1= 0d,pourInf10Cycle1 = 0d,pourInf8_5Cycle1 = 0d;
-      double pourSup10Cycle1G= 0d,pourInf10Cycle1G = 0d,pourInf8_5Cycle1G = 0d;
-      double pourSup10Cycle1F= 0d,pourInf10Cycle1F = 0d,pourInf8_5Cycle1F = 0d;
-      double moyenCycle1F=0d;
-      double moyenCycle1G=0d;
-      Double moyenCycle1=0d;
-      Long effectifCycle1 = 0L; Long effectifCycle1G = 0L; Long effectifCycle1F = 0L;
-      Long effectifNonClasseCycle1 = 0L; Long effectifNonClasseCycle1G = 0L; Long effectifNonClasseCycle1F = 0L;
       String libelleNiveau="";
+       long effeTotalG = 0l;
+      long effeTotalF = 0l;
 
-        for (ResultatsElevesAffecteDto classe : detailsBull) {
+        for (EffectifiConseilClasseDto classe : detailsBull) {
+          effeTotalG =effeTotalG+classe.getEffeG() ;
+          effeTotalF =effeTotalF+classe.getEffeF() ;
           libelleNiveau= classe.getNiveau();
-
-          Long effectifNiveau1=classe.getEffeG()+classe.getEffeF();
-          Long effectifNiveau1G=classe.getEffeG();
-          Long effectifNiveau1F=classe.getEffeF();
-
-          Long effectifClasse1 =classe.getClassF()+classe.getClassG();
-          Long effectifClasse1G=classe.getClassG();
-          Long effectifClasse1F=classe.getClassF();
-
-          Long effectifNonClasse1 =classe.getNonclassF()+classe.getNonclassG();
-          Long effectifNonClasse1G=classe.getNonclassG();
-          Long effectifNonClasse1F=classe.getNonclassF();
-
-          moyenCycle1F=classe.getMoyClasseF() ;
-          moyenCycle1G=classe.getMoyClasseG() ;
-          moyenCycle1=classe.getMoyClasse() ;
-
-          effectifClasseCycle1=effectifClasseCycle1+effectifClasse1;
-          effectifClasseCycle1G=effectifClasseCycle1G+effectifClasse1G;
-          effectifClasseCycle1F=effectifClasseCycle1F+effectifClasse1F;
-
-          effectifCycle1= effectifCycle1+effectifNiveau1;
-          effectifCycle1G= effectifCycle1G+effectifNiveau1G;
-          effectifCycle1F= effectifCycle1F+effectifNiveau1F;
-
-
-          effectifNonClasseCycle1= effectifNonClasseCycle1+effectifNonClasse1;
-          effectifNonClasseCycle1G= effectifNonClasseCycle1G+effectifNonClasse1G;
-          effectifNonClasseCycle1F= effectifNonClasseCycle1F+effectifNonClasse1F;
-
-          long nombMoySup10 =
-              (classe.getNbreMoySup10F() != null ? classe.getNbreMoySup10F() : 0L) +
-                  (classe.getNbreMoySup10G() != null ? classe.getNbreMoySup10G() : 0L);
-          nombMoySup10Cycle1=nombMoySup10Cycle1+nombMoySup10;
-
-          long nombMoySup10G =
-              (classe.getNbreMoySup10G() != null ? classe.getNbreMoySup10G() : 0L);
-          nombMoySup10Cycle1G=nombMoySup10Cycle1G+nombMoySup10G;
-
-          long nombMoySup10F =
-              (classe.getNbreMoySup10F() != null ? classe.getNbreMoySup10F() : 0L);
-          nombMoySup10Cycle1F=nombMoySup10Cycle1F+nombMoySup10F;
-
-          long nombMoyInf10 =
-              (classe.getNbreMoyInf999F() != null ? classe.getNbreMoyInf999F() : 0L) +
-                  (classe.getNbreMoyInf999G() != null ? classe.getNbreMoyInf999G() : 0L);
-          nombMoyInf10Cycle1=nombMoyInf10Cycle1+nombMoyInf10;
-
-          long nombMoyInf10G =classe.getNbreMoyInf999G() != null ? classe.getNbreMoyInf999G() : 0L;
-          nombMoyInf10Cycle1G=nombMoyInf10Cycle1G+nombMoyInf10G;
-
-          long nombMoyInf10F = (classe.getNbreMoyInf999F() != null ? classe.getNbreMoyInf999F() : 0L) ;
-          nombMoyInf10Cycle1F=nombMoyInf10Cycle1F+nombMoyInf10F;
-
-
-          libelleNiveau=classe.getNiveau();
-
-
-          long nombMoyInf8_5 =
-              (classe.getNbreMoyInf85F() != null ? classe.getNbreMoyInf85F() : 0L) +
-                  (classe.getNbreMoyInf85G() != null ? classe.getNbreMoyInf85G() : 0L);
-          nombMoyInf8_5Cycle1=nombMoyInf8_5Cycle1+nombMoyInf8_5;
-
-          long nombMoyInf8_5G =
-              (classe.getNbreMoyInf85G() != null ? classe.getNbreMoyInf85G() : 0L);
-          nombMoyInf8_5Cycle1G=nombMoyInf8_5Cycle1G+nombMoyInf8_5G;
-
-          long nombMoyInf8_5F =(classe.getNbreMoyInf85F() != null ? classe.getNbreMoyInf85F() : 0L) ;
-          nombMoyInf8_5Cycle1F=nombMoyInf8_5Cycle1F+nombMoyInf8_5F;
-
-
-
-          long effectifClasse =
-              (classe.getClassF() != null ? classe.getClassF() : 0L) +
-                  (classe.getClassG() != null ? classe.getClassG() : 0L);
-
-
-          if (effectifClasse > 0) {
-            pourSup10 = nombMoySup10 / (Double.valueOf(effectifClasse)) * 100d;
-            pourInf10 = nombMoyInf10 / (Double.valueOf(effectifClasse)) * 100d;
-            pourInf8_5 = nombMoyInf8_5 / (Double.valueOf(effectifClasse)) * 100d;
-
-            // Calculer d'autres statistiques ou utiliser ces valeurs
-          } else {
-            // Gérer le cas où effectifClasse est 0 pour éviter une division par zéro
-            pourSup10 = 0d;
-            pourInf10 = 0d;
-            pourInf8_5 = 0d;
-            // Logique alternative ou gestion d'erreur
-          }
-
-
-
-          long effNonClass =
-              (classe.getNonclassF() != null ? classe.getNonclassF() : 0L) +
-                  (classe.getNonclassG() != null ? classe.getNonclassG() : 0L);
-
-
-
-          long effectif =
-              (classe.getEffeF() != null ? classe.getEffeF() : 0L) +
-                  (classe.getEffeG() != null ? classe.getEffeG() : 0L);
-
-
-
-
-
-
-
-          // Pourcentage cycle 1 Garcon
-          if (effectifClasseCycle1G > 0) {
-            pourSup10Cycle1G = nombMoySup10Cycle1G / (Double.valueOf(effectifClasseCycle1G)) * 100d;
-            pourInf10Cycle1G = nombMoyInf10Cycle1G / (Double.valueOf(effectifClasseCycle1G)) * 100d;
-            pourInf8_5Cycle1G = nombMoyInf8_5Cycle1G / (Double.valueOf(effectifClasseCycle1G)) * 100d;
-
-            // Calculer d'autres statistiques ou utiliser ces valeurs
-          } else {
-            // Gérer le cas où effectifClasse est 0 pour éviter une division par zéro
-            pourSup10Cycle1G = 0d;
-            pourInf10Cycle1G = 0d;
-            pourInf8_5Cycle1G = 0d;
-            // Logique alternative ou gestion d'erreur
-          }
-
-          // Pourcentage cycle 1 Fille
-          if (effectifClasseCycle1F > 0) {
-            pourSup10Cycle1F = nombMoySup10Cycle1F / (Double.valueOf(effectifClasseCycle1F)) * 100d;
-            pourInf10Cycle1F = nombMoyInf10Cycle1F / (Double.valueOf(effectifClasseCycle1F)) * 100d;
-            pourInf8_5Cycle1F = nombMoyInf8_5Cycle1F / (Double.valueOf(effectifClasseCycle1F)) * 100d;
-
-            // Calculer d'autres statistiques ou utiliser ces valeurs
-          } else {
-            // Gérer le cas où effectifClasse est 0 pour éviter une division par zéro
-            pourSup10Cycle1F = 0d;
-            pourInf10Cycle1F = 0d;
-            pourInf8_5Cycle1F = 0d;
-            // Logique alternative ou gestion d'erreur
-          }
-
-          if (effectifClasseCycle1 > 0) {
-            pourSup10Cycle1 = nombMoySup10Cycle1 / (Double.valueOf(effectifClasseCycle1)) * 100d;
-            pourInf10Cycle1 = nombMoyInf10Cycle1 / (Double.valueOf(effectifClasseCycle1)) * 100d;
-            pourInf8_5Cycle1 = nombMoyInf8_5Cycle1 / (Double.valueOf(effectifClasseCycle1)) * 100d;
-
-            // Calculer d'autres statistiques ou utiliser ces valeurs
-          } else {
-            // Gérer le cas où effectifClasse est 0 pour éviter une division par zéro
-            pourSup10Cycle1 = 0d;
-            pourInf10Cycle1 = 0d;
-            pourInf8_5Cycle1 = 0d;
-            // Logique alternative ou gestion d'erreur
-          }
-
-
-            XWPFTableRow totalRow = table.createRow();
-            ensureCellCount(totalRow, 9);
-            totalRow.getCell(0).setText(classe.getClasse());
-            totalRow.getCell(1).setText(String.valueOf(effectif));
-            totalRow.getCell(2).setText(String.valueOf(effectifClasse));
-            totalRow.getCell(3).setText(String.valueOf(nombMoySup10));
-            totalRow.getCell(4).setText(String.valueOf(arrondie(pourSup10)));
-            totalRow.getCell(5).setText(String.valueOf(nombMoyInf10));
-            totalRow.getCell(6).setText(String.valueOf(arrondie(pourInf10)));
-            totalRow.getCell(7).setText(String.valueOf(nombMoyInf8_5));
-            totalRow.getCell(8).setText(String.valueOf(arrondie(pourInf8_5)));
-
-           // mergeCellsVertically(table, 0, table.getNumberOfRows() - 3, table.getNumberOfRows() -1);
 
         }
 
 
       // Remplir la ligne pour le total (T)
       XWPFTableRow GeneraltotalRow = table.createRow();
-      ensureCellCount(GeneraltotalRow, 9);
-      GeneraltotalRow.getCell(0).setText("EFF. TOTAL des "+afficherValeurParNiveau(libelleNiveau));
-      GeneraltotalRow.getCell(1).setText(String.valueOf(effectifCycle1));
-      GeneraltotalRow.getCell(2).setText(String.valueOf(effectifClasseCycle1));
-      GeneraltotalRow.getCell(3).setText(String.valueOf(nombMoySup10Cycle1));
-      GeneraltotalRow.getCell(4).setText(String.valueOf(arrondie(pourSup10Cycle1)));
-      GeneraltotalRow.getCell(5).setText(String.valueOf(nombMoyInf10Cycle1));
-      GeneraltotalRow.getCell(6).setText(String.valueOf(arrondie(pourInf10Cycle1)));
-      GeneraltotalRow.getCell(7).setText(String.valueOf(nombMoyInf8_5Cycle1));
-      GeneraltotalRow.getCell(8).setText(String.valueOf(arrondie(pourInf8_5Cycle1)));
+      ensureCellCount(GeneraltotalRow, 4);
+      GeneraltotalRow.getCell(0).setText(afficherValeurParNiveau(libelleNiveau));
+      GeneraltotalRow.getCell(1).setText(String.valueOf(effeTotalG));
+      GeneraltotalRow.getCell(2).setText(String.valueOf(effeTotalF));
+      GeneraltotalRow.getCell(3).setText(String.valueOf(effeTotalG+effeTotalF));
 
-      for (int i = 0; i <= 8; i++) {
-        GeneraltotalRow.getCell(i).setColor("ADD8E6"); // Bleu clair en Hexadécimal
-      }
     }
 
 

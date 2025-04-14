@@ -254,6 +254,17 @@ return  messageRetour ;
         message="Photo chargée avec succès!";
         return  message;
     }
+  public String chargerPiedDepageEcole(byte[] bytes,String codeEcole,Long niveEnseign){
+    String message;
+    sousc_atten_etabliss  sousEtabli= new sousc_atten_etabliss() ;
+    ecole myEcole = new ecole() ;
+    sousEtabli = checkExistEtabliss(codeEcole,niveEnseign) ;
+    myEcole = getEcoleIdBySouscrId(sousEtabli.getIdSOUS_ATTENT_ETABLISSEMENT()) ;
+    sousEtabli.setPied_de_page(bytes);
+    myEcole.setPied_de_page(bytes);
+    message="pied de page chargée avec succès!";
+    return  message;
+  }
     @Transactional
     public String modifierLesEcoles(Long souscripId ,String nom, String prenom, String contact1 ,String contact2 ,String email ,List<sous_attent_ecoleDto> listsouscr ) {
         modifierInfosPersonnel(souscripId,nom,prenom,contact1,contact2,email);

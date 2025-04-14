@@ -43,7 +43,18 @@ public class ecole extends PanacheEntityBase {
     private String nom_signataire ;
      private  String numero_decision_ouver ;
     private String visible;
-    public String getNumero_decision_ouver() {
+  @Column(length=100000)
+  private byte[] pied_de_page ;
+
+  public byte[] getPied_de_page() {
+    return pied_de_page;
+  }
+
+  public void setPied_de_page(byte[] pied_de_page) {
+    this.pied_de_page = pied_de_page;
+  }
+
+  public String getNumero_decision_ouver() {
         return numero_decision_ouver;
     }
 

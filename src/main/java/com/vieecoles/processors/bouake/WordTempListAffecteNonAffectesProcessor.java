@@ -69,7 +69,7 @@ public class WordTempListAffecteNonAffectesProcessor {
             XWPFParagraph newParagraph = document.insertNewParagraph(paragraphs.get(indexToInsert).getCTP().newCursor());
             XWPFRun run = newParagraph.createRun();
             if(!elevAffectes.isEmpty())
-                run.setText(classeList.get(k).getNiveau()+" Professeur Principal: "+elevAffectes.get(0).getProfesseurPrincipal() +" Educateur: "+elevAffectes.get(0).getNomEducateur());
+                run.setText(classeList.get(k).getNiveau());
             run.setBold(true);  // Mettre le texte en gras
             newParagraph.setAlignment(ParagraphAlignment.LEFT);
 
@@ -121,10 +121,10 @@ public class WordTempListAffecteNonAffectesProcessor {
                 numerotation++;
             }
             //table.getRow(1).getCell(1).setText(currentValue);
-            XWPFTableRow specificRow = table.getRow(1);
+            /*XWPFTableRow specificRow = table.getRow(1);
             if (specificRow != null && specificRow.getCell(1) != null) {
                 specificRow.getCell(1).setText(currentValue);
-            }
+            }*/
         }
     }
     }

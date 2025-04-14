@@ -51,7 +51,7 @@ public class WordTempListAffectesProcessor {
         for (int i = 0; i < paragraphs.size(); i++) {
             String text = paragraphs.get(i).getText();
             // Identifier l'emplacement où insérer le tableau (par exemple après "Liste des élèves affectés par classe")
-            if (text.contains("Liste des élèves affectés par classe")) {
+            if (text.contains("Liste des élèves affectés et résultats par niveau")) {
                 indexToInsert = i + 1; // Ajouter après ce paragraphe
 
                 break;
@@ -69,7 +69,7 @@ public class WordTempListAffectesProcessor {
             XWPFParagraph newParagraph = document.insertNewParagraph(paragraphs.get(indexToInsert).getCTP().newCursor());
             XWPFRun run = newParagraph.createRun();
             if(!elevAffectes.isEmpty())
-            run.setText(classeList.get(k).getNiveau()+" Professeur Principal: "+elevAffectes.get(0).getProfesseurPrincipal() +" Educateur: "+elevAffectes.get(0).getNomEducateur());
+            run.setText(classeList.get(k).getNiveau());
             run.setBold(true);  // Mettre le texte en gras
             newParagraph.setAlignment(ParagraphAlignment.LEFT);
 

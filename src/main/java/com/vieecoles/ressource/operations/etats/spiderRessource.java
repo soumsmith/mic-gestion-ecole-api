@@ -3,6 +3,7 @@ package com.vieecoles.ressource.operations.etats;
 
 import com.vieecoles.dto.*;
 import com.vieecoles.entities.operations.ecole;
+import com.vieecoles.processors.bouake.WordTempProcessorBouake;
 import com.vieecoles.processors.yamoussoukro.WordTempProcessor;
 import com.vieecoles.services.etats.*;
 import java.io.ByteArrayInputStream;
@@ -94,6 +95,8 @@ public class spiderRessource {
     WordTempProcessor wordTempProcessor ;
     @Inject
     WordTempProcessorDren3 wordTempProcessorDren3;
+    @Inject
+    WordTempProcessorBouake wordTempBouakeProcessor ;
 
 
 
@@ -437,6 +440,14 @@ public class spiderRessource {
                "etats/apochePoi/DREN YAMOUSSOUKRO/RAPPORT_TRIMESTRIEL.docx");
         }
 
+        else if (!libelleTrimetre.equals("Troisième Trimestre") && (modelDrena.equals("Bouake"))) {
+
+            System.out.println("etats/apochePoi/Bouake/RAPPORT_TRIMESTRIE");
+            fis= getFileInputStreamFromResource(
+                "etats/apochePoi/Bouake/RAPPORT_TRIMESTRIEL.docx");
+        }
+
+
         try {
 
 
@@ -451,6 +462,12 @@ public class spiderRessource {
              byte[] fileContentyakro = fis.readAllBytes();
              ByteArrayInputStream fis1yakro = new ByteArrayInputStream(fileContentyakro);
              wordFile = wordTempProcessor.generateWordFile(idEcole, libelleAnnee, libelleTrimetre, fis1yakro);
+         }
+         else if (!libelleTrimetre.equals("Troisième Trimestre") && (modelDrena.equals("Bouake"))) {
+             System.out.println("Mise à jour fileContentBouake ");
+             byte[] fileContentbouake = fis.readAllBytes();
+             ByteArrayInputStream fis1bouake = new ByteArrayInputStream(fileContentbouake);
+             wordFile = wordTempBouakeProcessor.generateWordFile(idEcole, libelleAnnee, libelleTrimetre, fis1bouake);
          }
 
 

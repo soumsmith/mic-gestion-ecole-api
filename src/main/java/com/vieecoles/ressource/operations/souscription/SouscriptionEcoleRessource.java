@@ -177,7 +177,7 @@ public class SouscriptionEcoleRessource {
     @Path("/charger-filigrane-etablissement/{inscriptionId}/{niveEnseign}")
     @Transactional
     public Response chargerFiligrane(@MultipartForm MultipartFormDataInput input, @PathParam("inscriptionId") String   inscriptionId,
-                                     @PathParam("inscriptionId") Long   niveEnseign) {
+                                     @PathParam("niveEnseign") Long   niveEnseign) {
         Map<String, List<InputPart>> uploadForm = input.getFormDataMap();
         List<String> fileNames = new ArrayList<>();
 
@@ -194,6 +194,37 @@ public class SouscriptionEcoleRessource {
                 InputStream inputStream = inputPart.getBody(InputStream.class, null);
                 byte[] bytes = IOUtils.toByteArray(inputStream);
                 souscPersonnelService.chargerFiligraneEcole(bytes,inscriptionId,niveEnseign) ;
+                //matService.chargerPhoto(bytes,inscriptionId);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return   Response.ok(String.format("Inscription  %s mis à jour",inscriptionId)).build();
+    }
+    @PUT
+    @Produces(MediaType.TEXT_PLAIN)
+    @Consumes({MediaType.APPLICATION_JSON,MediaType.MULTIPART_FORM_DATA})
+    @Path("/charger-pied-de-page-etablissement/{inscriptionId}/{niveEnseign}")
+    @Transactional
+    public Response chargerPiedDepage(@MultipartForm MultipartFormDataInput input, @PathParam("inscriptionId") String   inscriptionId,
+                                     @PathParam("niveEnseign") Long   niveEnseign) {
+        Map<String, List<InputPart>> uploadForm = input.getFormDataMap();
+        List<String> fileNames = new ArrayList<>();
+
+        List<InputPart> inputParts = uploadForm.get("file");
+        System.out.println("inputParts size: " + inputParts.size());
+        String fileName = null;
+        for (InputPart inputPart : inputParts) {
+            try {
+
+                MultivaluedMap<String, String> header = inputPart.getHeaders();
+                fileName = getFileName(header);
+                fileNames.add(fileName);
+                System.out.println("File Name: " + fileName);
+                InputStream inputStream = inputPart.getBody(InputStream.class, null);
+                byte[] bytes = IOUtils.toByteArray(inputStream);
+                souscPersonnelService.chargerPiedDepageEcole(bytes,inscriptionId,niveEnseign) ;
                 //matService.chargerPhoto(bytes,inscriptionId);
             } catch (Exception e) {
                 e.printStackTrace();
