@@ -376,6 +376,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 	<field name="is_class_3e_trim" class="java.lang.String"/>
 	<field name="rang_3eme_trim" class="java.lang.Integer"/>
 	<field name="pied_de_page" class="byte[]"/>
+	<field name="photo_eleve" class="byte[]"/>
 	<sortField name="num_ordre"/>
 	<sortField name="parent_matiere"/>
 	<sortField name="matricule"/>
@@ -1013,7 +1014,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 							<property name="com.jaspersoft.studio.unit.width" value="px"/>
 							<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						</reportElement>
-						<imageExpression><![CDATA[$F{url_photo}]]></imageExpression>
+						<imageExpression><![CDATA[$F{url_photo}==null?$F{photo_eleve}:$F{url_photo}.equals("")?$F{photo_eleve}:$F{url_photo}]]></imageExpression>
 					</image>
 					<frame>
 						<reportElement x="0" y="0" width="430" height="70" uuid="bd519287-9e26-4a07-973c-2d404677ee8f">

@@ -1,6 +1,10 @@
 package com.vieecoles.dto;
 
 public class EnseignantDisciplineDto {
+  Long nbreFARPLMusi1;
+  Long nbreGARPLMusi1;
+  Long nbreFINFO1;
+  Long nbreGINFO1;
   Long nbreFAll1;
   Long nbreGAll1;
   Long nbreFAN1;
@@ -47,8 +51,76 @@ public class EnseignantDisciplineDto {
   Long nbreGPHILO2;
   Long nbreFSVT2;
   Long nbreGSVT2;
+  Long nbreFARPLMusi2;
+  Long nbreGARPLMusi2;
   Long nbreF2;
   Long nbreG2;
+  Long nbreFINFO2;
+  Long nbreGINFO2;
+
+  public Long getNbreFINFO1() {
+    return nbreFINFO1;
+  }
+
+  public void setNbreFINFO1(Long nbreFINFO1) {
+    this.nbreFINFO1 = nbreFINFO1;
+  }
+
+  public Long getNbreGINFO1() {
+    return nbreGINFO1;
+  }
+
+  public void setNbreGINFO1(Long nbreGINFO1) {
+    this.nbreGINFO1 = nbreGINFO1;
+  }
+
+  public Long getNbreFINFO2() {
+    return nbreFINFO2;
+  }
+
+  public void setNbreFINFO2(Long nbreFINFO2) {
+    this.nbreFINFO2 = nbreFINFO2;
+  }
+
+  public Long getNbreGINFO2() {
+    return nbreGINFO2;
+  }
+
+  public void setNbreGINFO2(Long nbreGINFO2) {
+    this.nbreGINFO2 = nbreGINFO2;
+  }
+
+  public Long getNbreFARPLMusi1() {
+    return nbreFARPLMusi1;
+  }
+
+  public void setNbreFARPLMusi1(Long nbreFARPLMusi1) {
+    this.nbreFARPLMusi1 = nbreFARPLMusi1;
+  }
+
+  public Long getNbreGARPLMusi1() {
+    return nbreGARPLMusi1;
+  }
+
+  public void setNbreGARPLMusi1(Long nbreGARPLMusi1) {
+    this.nbreGARPLMusi1 = nbreGARPLMusi1;
+  }
+
+  public Long getNbreFARPLMusi2() {
+    return nbreFARPLMusi2;
+  }
+
+  public void setNbreFARPLMusi2(Long nbreFARPLMusi2) {
+    this.nbreFARPLMusi2 = nbreFARPLMusi2;
+  }
+
+  public Long getNbreGARPLMusi2() {
+    return nbreGARPLMusi2;
+  }
+
+  public void setNbreGARPLMusi2(Long nbreGARPLMusi2) {
+    this.nbreGARPLMusi2 = nbreGARPLMusi2;
+  }
 
   public Long getNbreFAll1() {
     return nbreFAll1;
@@ -432,5 +504,67 @@ public class EnseignantDisciplineDto {
 
   public void setNbreG2(Long nbreG2) {
     this.nbreG2 = nbreG2;
+  }
+
+  @Override
+  public String toString() {
+    return "EnseignantDisciplineDto{" +
+        "nbreFARPLMusi1=" + nbreFARPLMusi1 +
+        ", nbreGARPLMusi1=" + nbreGARPLMusi1 +
+        ", nbreFINFO1=" + nbreFINFO1 +
+        ", nbreGINFO1=" + nbreGINFO1 +
+        ", nbreFAll1=" + nbreFAll1 +
+        ", nbreGAll1=" + nbreGAll1 +
+        ", nbreFAN1=" + nbreFAN1 +
+        ", nbreGAN1=" + nbreGAN1 +
+        ", nbreFEDHC1=" + nbreFEDHC1 +
+        ", nbreGEDHC1=" + nbreGEDHC1 +
+        ", nbreFEPS1=" + nbreFEPS1 +
+        ", nbreGEPS1=" + nbreGEPS1 +
+        ", nbreFESP1=" + nbreFESP1 +
+        ", nbreGESP1=" + nbreGESP1 +
+        ", nbreFFR1=" + nbreFFR1 +
+        ", nbreGFR1=" + nbreGFR1 +
+        ", nbreFHG1=" + nbreFHG1 +
+        ", nbreGHG1=" + nbreGHG1 +
+        ", nbreFMATH1=" + nbreFMATH1 +
+        ", nbreGMATH1=" + nbreGMATH1 +
+        ", nbreFPC1=" + nbreFPC1 +
+        ", nbreGPC1=" + nbreGPC1 +
+        ", nbreFPHILO1=" + nbreFPHILO1 +
+        ", nbreGPHILO1=" + nbreGPHILO1 +
+        ", nbreFSVT1=" + nbreFSVT1 +
+        ", nbreGSVT1=" + nbreGSVT1 +
+        ", nbreF1=" + nbreF1 +
+        ", nbreG1=" + nbreG1 +
+        ", nbreFAll2=" + nbreFAll2 +
+        ", nbreGAll2=" + nbreGAll2 +
+        ", nbreFAN2=" + nbreFAN2 +
+        ", nbreGAN2=" + nbreGAN2 +
+        ", nbreFEDHC2=" + nbreFEDHC2 +
+        ", nbreGEDHC2=" + nbreGEDHC2 +
+        ", nbreFEPS2=" + nbreFEPS2 +
+        ", nbreGEPS2=" + nbreGEPS2 +
+        ", nbreFESP2=" + nbreFESP2 +
+        ", nbreGESP2=" + nbreGESP2 +
+        ", nbreFFR2=" + nbreFFR2 +
+        ", nbreGFR2=" + nbreGFR2 +
+        ", nbreFHG2=" + nbreFHG2 +
+        ", nbreGHG2=" + nbreGHG2 +
+        ", nbreFMATH2=" + nbreFMATH2 +
+        ", nbreGMATH2=" + nbreGMATH2 +
+        ", nbreFPC2=" + nbreFPC2 +
+        ", nbreGPC2=" + nbreGPC2 +
+        ", nbreFPHILO2=" + nbreFPHILO2 +
+        ", nbreGPHILO2=" + nbreGPHILO2 +
+        ", nbreFSVT2=" + nbreFSVT2 +
+        ", nbreGSVT2=" + nbreGSVT2 +
+        ", nbreFARPLMusi2=" + nbreFARPLMusi2 +
+        ", nbreGARPLMusi2=" + nbreGARPLMusi2 +
+        ", nbreF2=" + nbreF2 +
+        ", nbreG2=" + nbreG2 +
+        ", nbreFINFO2=" + nbreFINFO2 +
+        ", nbreGINFO2=" + nbreGINFO2 +
+        '}';
   }
 }

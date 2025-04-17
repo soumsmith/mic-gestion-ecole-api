@@ -34,15 +34,105 @@ public class WordTempIdentiteProcessor {
     public   void getIdentiteProcessor(XWPFDocument document ,
                                            Long idEcole ,String libelleAnnee , String libelleTrimestre) {
         List<IdentiteEtatDto>  identiteEtatDto = new ArrayList<>() ;
-        //identiteEtatDto= identiteEtatService.getIdentiteDto(idEcole) ;
 
 
-        // Map pour les paragraphes
-        Map<String, String> paragraphDataMap = new HashMap<>();
-        paragraphDataMap.put("{{DENOMINATION}}", "SOUM ECOLE");
+        String ecoleName;
+        Ecole myEcole= new Ecole();
+        myEcole=Ecole.findById(idEcole);
+        String libelleAnneeNew= libelleAnnee.replace("Année ", "") ;
+        ecoleName=myEcole.getLibelle().toUpperCase();
+       /* //Ecole
+        replacetext(document,idEcole,"Ecole",ecoleName);
 
-        replacePlaceholdersInShapes(document, paragraphDataMap);
+        //Ecole telephone
+        replacetext(document,idEcole,"Telephone",myEcole.getTel());
 
+        //Ecole statut
+        replacetext(document,idEcole,"email",myEcole.getStatut());
+
+        //Trimestre
+        replacetext(document,idEcole,"Trimestre",libelleTrimestre);
+
+        //Annee scolaire
+        replacetext(document,idEcole,"Annee",libelleAnnee);*/
+
+        for (XWPFParagraph paragraph : document.getParagraphs()) {
+            // Parcourir toutes les "runs" du paragraphe
+            for (XWPFRun run : paragraph.getRuns()) {
+                String text = run.getText(0); // Récupérer le texte de la "run"
+                if (text != null && text.contains("Trimestre_texte")) {
+                    // Remplacer le texte
+                    text = text.replace("Trimestre_texte", libelleTrimestre.toUpperCase());
+                    run.setText(text, 0); // Appliquer le texte modifié
+                    paragraph.setAlignment(ParagraphAlignment.CENTER);
+                }
+
+
+
+                if (text != null && text.contains("Annee_texte")) {
+                    // Remplacer le texte
+                    text = text.replace("Annee_texte", libelleAnneeNew.toUpperCase());
+                    run.setText(text, 0); // Appliquer le texte modifié
+                    paragraph.setAlignment(ParagraphAlignment.CENTER);
+                }
+
+                if (text != null && text.contains("Ecole_Texte")) {
+                    // Remplacer le texte
+                    text = text.replace("Ecole_Texte", ecoleName);
+                    run.setText(text, 0); // Appliquer le texte modifié
+                    paragraph.setAlignment(ParagraphAlignment.LEFT);
+                }
+
+                if (text != null && text.contains("Email_Texte")) {
+                    // Remplacer le texte
+                    text = text.replace("Email_Texte", "");
+                    run.setText(text, 0); // Appliquer le texte modifié
+                    paragraph.setAlignment(ParagraphAlignment.LEFT);
+                }
+
+                if (text != null && text.contains("Telephone_Texte")) {
+                    // Remplacer le texte
+                    text = text.replace("Telephone_Texte", myEcole.getTel());
+                    run.setText(text, 0); // Appliquer le texte modifié
+                    paragraph.setAlignment(ParagraphAlignment.LEFT);
+                }
+
+
+            }
+        }
+
+        for (XWPFParagraph paragraph : document.getParagraphs()) {
+            // Parcourir toutes les "runs" du paragraphe
+            for (XWPFRun run : paragraph.getRuns()) {
+                String text = run.getText(0); // Récupérer le texte de la "run"
+                if (text != null && text.contains("Annee_texte")) {
+                    // Remplacer le texte
+                    text = text.replace("Annee_texte", libelleAnnee);
+                    run.setText(text, 0); // Appliquer le texte modifié
+                    paragraph.setAlignment(ParagraphAlignment.CENTER);
+                }
+            }
+        }
+
+    }
+
+
+    public void replacetext(XWPFDocument document,Long idEcole ,
+                            String AncienText,String nouveauText){
+
+
+        for (XWPFParagraph paragraph : document.getParagraphs()) {
+            // Parcourir toutes les "runs" du paragraphe
+            for (XWPFRun run : paragraph.getRuns()) {
+                String text = run.getText(0); // Récupérer le texte de la "run"
+                if (text != null && text.contains(AncienText)) {
+                    // Remplacer le texte
+                    text = text.replace(AncienText, nouveauText);
+                    run.setText(text, 0); // Appliquer le texte modifié
+                    paragraph.setAlignment(ParagraphAlignment.CENTER);
+                }
+            }
+        }
     }
 
     public static void replacePlaceholdersInShapes(XWPFDocument document, Map<String, String> dataMap) {

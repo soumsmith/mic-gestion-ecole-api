@@ -51,6 +51,9 @@ public class WordTempProcessorBouake {
   WordTempResultaAffEtNonAffProcessor  wordTempResultaAffEtNonAffProcessor ;
     @Inject
     WordTempEffectifConseilClasseProcessor wordTempEffectifConseilClasseProcessor ;
+
+  @Inject
+  WordTempEffectifConseilClasse2Processor wordTempEffectifConseilClasse2Processor ;
   @Inject
   WordTempPyramideProcessor wordTempPyramideProcessor ;
     @Inject
@@ -62,6 +65,8 @@ public class WordTempProcessorBouake {
         @Inject
 
   WordTempStatistiqueLangueVivanteProcessor wordTempStatistiqueLangueVivanteProcessor ;
+        @Inject
+   WordTempStatistiqueProfesseurProcessor wordTempStatistiqueProfesseurProcessor ;
 
     public  byte[] generateWordFile(Long idEcole,String libelleAnnee ,String  libelleTrimetre, ByteArrayInputStream  fis) throws Exception {
       Long anneeId=getIdAnnee(idEcole,libelleAnnee,libelleTrimetre);
@@ -69,10 +74,11 @@ public class WordTempProcessorBouake {
 
 
         XWPFDocument document = new XWPFDocument(fis);
-     /* wordTempListAffecteNonAffectesProcessor.getEleveNosAffecteParClasse(document,idEcole ,libelleAnnee,libelleTrimetre);
+     wordTempIdentiteProcessor.getIdentiteProcessor(document,idEcole,libelleAnnee,libelleTrimetre);
+      wordTempListAffecteNonAffectesProcessor.getEleveNosAffecteParClasse(document,idEcole ,libelleAnnee,libelleTrimetre);
       System.out.println("Liste affecte et non affecté Ok");
 
-      wordTempListAffectesProcessor.getEleveAffecteParClasse(document,idEcole ,libelleAnnee,libelleTrimetre);
+     wordTempListAffectesProcessor.getEleveAffecteParClasse(document,idEcole ,libelleAnnee,libelleTrimetre);
       System.out.println("Liste Eleve Affectes ok");
 
       wordTempRecapResultatProcessor.getResultatAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
@@ -93,38 +99,18 @@ public class WordTempProcessorBouake {
       wordTempEffectifConseilClasseProcessor.getEffectifConseilProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
       System.out.println("Effectifi Conseil ok");
 
+      wordTempEffectifConseilClasse2Processor.getEffectifConseilProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
+      System.out.println("Effectifi Conseil ok");
+
       wordTempPyramideProcessor.getNombreClasseProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
-      System.out.println("Pyramide ok");*/
+      System.out.println("Pyramide ok");
 
       wordTempStatistiqueAgeProcessor.getResultatAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
       System.out.println("Statistique ok");
 
-      /*
-       wordTempRecapNonAffResultatProcessor.getRecapResultatANonffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
 
-
-      System.out.println("RecapResultaAff ok");*/
-
-      /*
-        wordTempResultaAffProcessor.getResultatAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
-        System.out.println("ResultaAff ok");
-
-        wordTempRecapAffNonAffResultatProcessor.getRecapResultatAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
-        System.out.println("RecapResultaAffEtNonAff ok");
-        wordTempListMajorProcessor.getListeMajorClasse(document,idEcole ,libelleAnnee,libelleTrimetre);
-        System.out.println("ListMajor ok");
-
-        wordTempListNonAffectesProcessor.getEleveNosAffecteParClasse(document,idEcole ,libelleAnnee,libelleTrimetre);
-        System.out.println("Liste  Eleve non Affectes ok");
-        wordTempListTransfertProcessor.getListTransfert(document,idEcole) ;
-        System.out.println("ListeTransfert ok");
-        WordTempRepartitionAnneeNaissProcessor.getListRepartitionParAnnee(document,idEcole ,libelleAnnee,libelleTrimetre);
-       System.out.println("ListRepartition Annee Naissance ok");
-        wordTempListBoursiersProcessor.getListeBoursierClasse(document,idEcole ,libelleAnnee,libelleTrimetre);
-        System.out.println("List Boursier  ok");
-        wordTempEffectifApprocheNiveauGenre.getListeApprocheParNiveau(document,idEcole ,libelleAnnee,libelleTrimetre);
-        System.out.println("List Approche Niveau Genre ok");
-      wordTempStatistiqueLangueVivanteProcessor.getResultatAffProcessor(document,idEcole,libelleAnnee,libelleTrimetre,anneeId);*/
+      wordTempStatistiqueProfesseurProcessor.getNbreProfessProcessor(document,idEcole,libelleAnnee,libelleTrimetre,anneeId);
+      System.out.println("Statistique professeur ok");
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         document.write(outputStream);
         document.close();
