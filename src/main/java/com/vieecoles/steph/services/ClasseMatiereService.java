@@ -199,8 +199,8 @@ public class ClasseMatiereService implements PanacheRepositoryBase<ClasseMatiere
 			else if (cl.getCoef().equals(0))
 				throw new RuntimeException("Un coefficient ne peut etre nul");
 			if (cl.getId() != 0) {
-				ClasseMatiere.update("coef = ?1, matiere.id= ?2, branche.id=?3, ecole.id=?4 where id = ?5",
-						cl.getCoef(), cl.getMatiere().getId(), cl.getBranche().getId(), cl.getEcole().getId(),
+				ClasseMatiere.update("coef = ?1, matiere.id= ?2, branche.id=?3, ecole.id=?4, dateUpdate=?5 where id = ?6",
+						cl.getCoef(), cl.getMatiere().getId(), cl.getBranche().getId(), cl.getEcole().getId(), new Date(),
 						cl.getId());
 				logger.info("Mise à jour matiere - branche id [" + cl.getId() + "]");
 			} else {

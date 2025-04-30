@@ -1213,7 +1213,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 
 			for (MoyenneEleveDto m : moyEleve) {
 				if (m.getMoyFr() != null) {
-					m.setRangFr(moyennesFrExcpt.indexOf(m.getMoyFr()));
+					m.setRangFr(moyennesFrExcpt.indexOf(m.getMoyFr()) + 1);
 				} else {
 					m.setRangFr(moyennesFrExcpt.size());
 				}
