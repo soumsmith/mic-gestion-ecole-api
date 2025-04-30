@@ -20,10 +20,9 @@ public class MajorParClasseNiveauPoiServices {
     public List<MajorParClasseNiveauDto> MajorParNiveauClasse(Long idEcole ,String libelleAnnee , String libelleTrimestre){
 
         List<ClasseNiveauOrderDto> classeNiveauDtoList = new ArrayList<>() ;
-        TypedQuery<ClasseNiveauOrderDto> q = em.createQuery( "SELECT new com.vieecoles.dto.ClasseNiveauOrderDto(b.libelleClasse ,b.niveau ,b.ordreNiveau) from Bulletin b  where b.ecoleId =:idEcole and b.affecte=:affecte and b.libellePeriode=:periode and b.anneeLibelle=:annee " +
+        TypedQuery<ClasseNiveauOrderDto> q = em.createQuery( "SELECT new com.vieecoles.dto.ClasseNiveauOrderDto(b.libelleClasse ,b.niveau ,b.ordreNiveau) from Bulletin b  where b.ecoleId =:idEcole  and b.libellePeriode=:periode and b.anneeLibelle=:annee " +
                 "group by b.ordreNiveau, b.niveau,b.libelleClasse order by b.ordreNiveau, b.niveau,b.libelleClasse", ClasseNiveauOrderDto.class);
         classeNiveauDtoList = q.setParameter("idEcole", idEcole)
-                          .setParameter("affecte", "AFFECTE")
                             .setParameter("annee", libelleAnnee)
                             .setParameter("periode", libelleTrimestre)
                            . getResultList() ;

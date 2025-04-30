@@ -53,12 +53,12 @@ public class DetailBulletin extends PanacheEntityBase {
 	private Integer bonus;
 	@Column(name = "parent_matiere")
 	private String parentMatiere;
-	
+
 	@Column(name = "test_lourd_note")
 	private Double testLourdNote;
 	@Column(name = "test_lourd_note_sur")
 	private Integer testLourdNoteSur;
-	
+
 	@Column(name = "moy_intermediate")
 	private Double moyenneIntermediaire;
 
@@ -69,4 +69,6 @@ public class DetailBulletin extends PanacheEntityBase {
 	private Bulletin bulletin;
 	@Column(name = "date_creation")
 	private Date dateCreation;
+	@Column(name = "sexe_professeur")
+	private String sexeProfesseur;
 }

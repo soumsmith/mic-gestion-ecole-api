@@ -395,10 +395,19 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 				logger.info(String.format("%s %s  %s  %s %s", me.getClasse().getEcole().getId(),
 						me.getClasse().getLibelle(), me.getMoyenne(), me.getAppreciation(), me.getEleve().getId()));
 
-				logger.info(String.format(" getByEleveAndEcoleAndAnnee  %s  %s %s", me.getEleve().getId(),
-						me.getClasse().getEcole().getId(), Long.parseLong(annee)));
-				Inscription infosInscriptionsEleve = inscriptionService.getByEleveAndEcoleAndAnnee(
-						me.getEleve().getId(), me.getClasse().getEcole().getId(), Long.parseLong(annee));
+				logger.info(String.format(" getByEleveAndEcoleAndAnnee  %s  %s %s %s", me.getEleve().getId(),
+						me.getClasse().getEcole().getId(), Long.parseLong(annee),me.getClasse().getBranche().getId()));
+				Inscription infosInscriptionsEleve= new Inscription();
+
+				try {
+					 infosInscriptionsEleve = inscriptionService.getByEleveAndEcoleAndAnnee(
+							me.getEleve().getId(), me.getClasse().getEcole().getId(), Long.parseLong(annee),me.getClasse().getBranche().getId());
+					System.out.println("infosInscriptionsEleve>>>> "+infosInscriptionsEleve.toString());
+				} catch (RuntimeException e) {
+					e.printStackTrace();
+				}
+
+
 				// Collecter toutes les moyennes des élèves pour déterminer la moyenne max, min
 				// et avg
 				if (!me.getIsClassed().equals(Constants.NON))
@@ -541,11 +550,13 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 					// Ajout de l'enseignant de la matiere
 					PersonnelMatiereClasse pers = personnelMatiereClasseService.findProfesseurByMatiereAndClasse(
 							Long.parseLong(annee), Long.parseLong(classe), entry.getKey().getId());
-					if (pers != null && pers.getPersonnel() != null)
+					if (pers != null && pers.getPersonnel() != null) {
 						flag.setNom_prenom_professeur(
 								pers.getPersonnel().getNom() + " " + pers.getPersonnel().getPrenom());
-					else
+						flag.setSexeProfesseur(pers.getPersonnel().getSexe());
+					} else {
 						flag.setNom_prenom_professeur("N/A");
+					}
 
 					flag.persist();
 //					System.out.println("Detail -> " + flag.getId());

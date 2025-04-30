@@ -121,7 +121,7 @@ public class PersonnelService implements PanacheRepositoryBase<personnel, Long> 
         } catch (Exception e) {
             mesPaniers=  null;
         }
-        System.out.println("InfosConnexionPersonnel"+ mesPaniers);
+
         return mesPaniers ;
     }
 
@@ -136,7 +136,7 @@ public class PersonnelService implements PanacheRepositoryBase<personnel, Long> 
         } catch (Exception e) {
             mesPaniers=  null;
         }
-        System.out.println("InfosConnexionPersonnel"+ mesPaniers);
+
         return mesPaniers ;
     }
 

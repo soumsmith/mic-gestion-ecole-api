@@ -28,9 +28,10 @@ public class MatiereSpecifiquePvServices {
      Integer niveauOrdre= getNiveauId(classe,libelleAnnee ,libellePeriode,idEcole);
      System.out.println("niveauOrdrew>>> "+niveauOrdre);
      if(niveauOrdre<=4) {
-       Double moyFr = calculMoycoefFran(classe,libelleAnnee ,libellePeriode,idEcole ) ;
+       Double moyFr=0d;
+       moyFr  = calculMoycoefFran(classe,libelleAnnee ,libellePeriode,idEcole ) ;
        Double coef = calculcoefFran(classe,libelleAnnee ,libellePeriode,idEcole) ;
-       moyen_fr=moyFr/coef;
+       moyen_fr= moyFr != null ? (moyFr / coef) : 0d;
      } else {
        moyen_fr=getMoyMatiere(1L,libellePeriode ,libelleAnnee ,idEcole,classe) ;
 

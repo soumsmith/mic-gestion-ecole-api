@@ -158,8 +158,8 @@ public class RecapitulatifStatistiqueBilan2Services {
 
 
 
-            tranfertnbreG = getEffTransfertClasse(anneeId,niveauDtoList.get(i).getId() ,"MASCULIN","1",idEcole) ;
-             tranfertnbreF =getEffTransfertClasse(anneeId,niveauDtoList.get(i).getId() ,"FEMININ","1",idEcole) ;
+            tranfertnbreG = getEffTransfertClasse(anneeId,niveauDtoList.get(i).getId() ,"MASCULIN",true,idEcole) ;
+             tranfertnbreF =getEffTransfertClasse(anneeId,niveauDtoList.get(i).getId() ,"FEMININ",true,idEcole) ;
              tranfertTotal =  tranfertnbreG+ tranfertnbreF ;
 
              m.setTranfertnbreG(tranfertnbreG);
@@ -416,7 +416,7 @@ public class RecapitulatifStatistiqueBilan2Services {
             return 0L ;
         }
     }
-    Long getEffTransfertClasse(Long idAnneId ,Long idBranche ,String sexe ,String transfert ,Long idEcole ) {
+    Long getEffTransfertClasse(Long idAnneId ,Long idBranche ,String sexe ,Boolean transfert ,Long idEcole ) {
         //  Inscriptions.statusEleve aff = Inscriptions.statusEleve.valueOf(aff1);
         try {
             TypedQuery<Long> q = (TypedQuery<Long>) em.createQuery( "SELECT count(ic.id) FROM ClasseEleve ic , Inscription i  ,Eleve e ,Classe  c" +

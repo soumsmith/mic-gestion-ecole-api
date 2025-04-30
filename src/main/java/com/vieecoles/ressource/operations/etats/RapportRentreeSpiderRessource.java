@@ -88,7 +88,12 @@ public class RapportRentreeSpiderRessource {
 
         rapportRentreeDto=   rapportRentree.rapportRentree(idEcole,anneeId);
        System.out.println("Profil Enseignant ok");
-        pyramideEffectDto1 = recapitulatif.getPyramide(idEcole,anneeId,4) ;
+       try {
+         pyramideEffectDto1 = recapitulatif.getPyramide(idEcole,anneeId,4) ;
+       } catch (Exception e) {
+         e.printStackTrace();
+       }
+
         System.out.println("Pyramide 1er cycle ok");
         pyramideEffectDto2 = recapitulatif.getPyramide(idEcole,anneeId,5) ;
         System.out.println("Pyramide 2nd cycle ok");

@@ -230,7 +230,7 @@ public class ProcesVerbalRessource {
         JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
 
         Map<String, Object> map = new HashMap<>();
-        map.put("ecoleclibelle",myEcole2.getEcoleclibelle());
+       map.put("ecoleclibelle",myEcole2.getEcoleclibelle());
        map.put("ecolecode",codeEcole);
         map.put("ecole_statut",statut);
         map.put("logo",logo);
@@ -238,7 +238,7 @@ public class ProcesVerbalRessource {
         map.put("amoirie",amoirie);
         map.put("classe",libelleClasse);
 
-         /*map.put("ecoleclibelle","");
+       /*map.put("ecoleclibelle","");
         map.put("ecolecode","codeEcole");
         map.put("ecole_statut","statut");
         map.put("logo",null);

@@ -1,14 +1,18 @@
 package com.vieecoles.processors.bouake;
 
+import com.vieecoles.dto.NiveauDto;
 import com.vieecoles.dto.ResultatsElevesAffecteDto;
 import com.vieecoles.services.etats.appachePoi.resultatsPoiServices;
 import com.vieecoles.services.etats.resultatsRecapServices;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import org.apache.poi.xwpf.usermodel.BodyElementType;
+import org.apache.poi.xwpf.usermodel.IBodyElement;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
@@ -16,19 +20,31 @@ import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.apache.poi.xwpf.usermodel.XWPFTableCell;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.STMerge;
+
 @ApplicationScoped
 public class WordTempResultaAffProcessor {
     @Inject
     resultatsPoiServices resultatsServices ;
+  @Inject
+  com.vieecoles.services.etats.appachePoi.resultatsPoiIntervalServices resultatsPoiIntervalServices ;
     @Inject
     resultatsRecapServices resultatsRecapServices ;
+  @Inject
+  EntityManager em;
 
       public   void getResultatAffProcessor(XWPFDocument document ,
           Long idEcole ,String libelleAnnee , String libelleTrimetre) {
         List<ResultatsElevesAffecteDto> detailsBull6 = new ArrayList<>();
+        List<ResultatsElevesAffecteDto> totalSeconde = new ArrayList<>();
+        List<ResultatsElevesAffecteDto> totalPremiere = new ArrayList<>();
+        List<ResultatsElevesAffecteDto> totalTerminale = new ArrayList<>();
         System.out.println("classeNiveauDtoList entree");
         try {
           detailsBull6= resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,1)  ;
+          totalSeconde= resultatsPoiIntervalServices.CalculResultatsEleveAffecte(idEcole,libelleAnnee,libelleTrimetre,4,7);
+          totalPremiere= resultatsPoiIntervalServices.CalculResultatsEleveAffecte(idEcole,libelleAnnee,libelleTrimetre,6,10);
+          totalTerminale= resultatsPoiIntervalServices.CalculResultatsEleveAffecte(idEcole,libelleAnnee,libelleTrimetre,9,15);
+
           System.out.println("classeNiveauDtoList Sortie");
         } catch (Exception e) {
           e.printStackTrace();
@@ -66,7 +82,7 @@ public class WordTempResultaAffProcessor {
         // Seconde A
         List<ResultatsElevesAffecteDto> detailsBull2NDA = new ArrayList<>();
         try {
-          detailsBull2NDA= resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,5)  ;
+         detailsBull2NDA= resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,5)  ;
 
         } catch (Exception e) {
           e.printStackTrace();
@@ -93,7 +109,7 @@ public class WordTempResultaAffProcessor {
         // Premiere C
         List<ResultatsElevesAffecteDto> detailsBull1EREC = new ArrayList<>();
         try {
-          detailsBull1EREC = resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,8)  ;
+        detailsBull1EREC = resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,8)  ;
 
         } catch (Exception e) {
           e.printStackTrace();
@@ -102,7 +118,7 @@ public class WordTempResultaAffProcessor {
         // Premiere D
         List<ResultatsElevesAffecteDto> detailsBull1ERED = new ArrayList<>();
         try {
-          detailsBull1ERED = resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,9)  ;
+         detailsBull1ERED = resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,9)  ;
 
         } catch (Exception e) {
           e.printStackTrace();
@@ -129,7 +145,7 @@ public class WordTempResultaAffProcessor {
         // Terminale A2
         List<ResultatsElevesAffecteDto> detailsBullTLEA2 = new ArrayList<>();
         try {
-          detailsBullTLEA2 = resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,12)  ;
+         detailsBullTLEA2 = resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,12)  ;
 
         } catch (Exception e) {
           e.printStackTrace();
@@ -138,7 +154,7 @@ public class WordTempResultaAffProcessor {
         // Terminale C
         List<ResultatsElevesAffecteDto> detailsBullTLEC = new ArrayList<>();
         try {
-          detailsBullTLEC = resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,13)  ;
+        detailsBullTLEC = resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,13)  ;
 
         } catch (Exception e) {
           e.printStackTrace();
@@ -147,121 +163,187 @@ public class WordTempResultaAffProcessor {
         // Terminale D
         List<ResultatsElevesAffecteDto> detailsBullTLED = new ArrayList<>();
         try {
-          detailsBullTLED = resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,14)  ;
+        detailsBullTLED = resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,14)  ;
 
         } catch (Exception e) {
           e.printStackTrace();
         }
-
+        XWPFTable targetTable = null;
         // 3. Gestion des tableaux dynamiques
         // Sixième
-        XWPFTable table = document.getTableArray(6);
+        try{
+          String tableTitle = "CODE_RECAP_RESUL_AFFECT_CLASSE";
+
+          for (int i = 0; i < document.getBodyElements().size(); i++) {
+            IBodyElement element = document.getBodyElements().get(i);
+            if (element.getElementType() == BodyElementType.PARAGRAPH) {
+              XWPFParagraph paragraph = (XWPFParagraph) element;
+              if (paragraph.getText().trim().equalsIgnoreCase(tableTitle)) {
+                while(paragraph.getRuns().size() > 0) {
+                  paragraph.removeRun(0);
+                }
+                // Le tableau devrait suivre immédiatement le titre
+                if (i + 1 < document.getBodyElements().size() &&
+                    document.getBodyElements().get(i + 1).getElementType() == BodyElementType.TABLE) {
+                  targetTable = (XWPFTable) document.getBodyElements().get(i + 1);
+                }
+                break;
+              }
+            }
+          }
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
+
+
+        ///XWPFTable table = document.getTableArray(6);
         try {
-          ajoutTableauDynamique(detailsBull6,table);
+          if(!detailsBull6.isEmpty())
+            ajoutTableauDynamique(detailsBull6,targetTable);
         } catch (RuntimeException e) {
           e.printStackTrace();
         }
         // Cinquième
-        XWPFTable tableCinquieme = document.getTableArray(7);
+       // XWPFTable tableCinquieme = document.getTableArray(6);
         try {
-          ajoutTableauDynamique(detailsBull5,tableCinquieme);
+          if(!detailsBull5.isEmpty())
+             ajoutTableauDynamique(detailsBull5,targetTable);
         } catch (RuntimeException e) {
           e.printStackTrace();
         }
 
         // Quatrieme
-        XWPFTable tableQuatrieme = document.getTableArray(8);
+
         try {
-          ajoutTableauDynamique(detailsBull4,tableQuatrieme);
+          if(!detailsBull4.isEmpty())
+             ajoutTableauDynamique(detailsBull4,targetTable);
         } catch (RuntimeException e) {
           e.printStackTrace();
         }
 
         // Troixième
-        XWPFTable tableTroixieme = document.getTableArray(9);
+
         try {
-          ajoutTableauDynamique(detailsBull3,tableTroixieme);
+          if(!detailsBull3.isEmpty())
+           ajoutTableauDynamique(detailsBull3,targetTable);
         } catch (RuntimeException e) {
           e.printStackTrace();
         }
 
         // SecondeA
-        XWPFTable table2NDA = document.getTableArray(10);
+       // XWPFTable table2NDA = document.getTableArray(10);
         try {
-          ajoutTableauDynamique(detailsBull2NDA,table2NDA);
+          if(!detailsBull2NDA.isEmpty())
+            ajoutCyle2TableauDynamique(detailsBull2NDA,targetTable);
         } catch (RuntimeException e) {
           e.printStackTrace();
         }
 
         // SecondeC
-        XWPFTable table2NDC = document.getTableArray(11);
+
         try {
-          ajoutTableauDynamique(detailsBull2NDC,table2NDC);
+          if(!detailsBull2NDC.isEmpty())
+            ajoutCyle2TableauDynamique(detailsBull2NDC,targetTable);
         } catch (RuntimeException e) {
           e.printStackTrace();
         }
 
-        // PremiereA
-        XWPFTable table1EREA = document.getTableArray(12);
+        //Total seconde
+
         try {
-          ajoutTableauDynamique(detailsBull1EREA,table1EREA);
+          if(!totalSeconde.isEmpty())
+            ajoutTotalSeconcycleTableauDynamique(totalSeconde,targetTable);
+        } catch (RuntimeException e) {
+          e.printStackTrace();
+        }
+
+
+        // PremiereA
+
+        try {
+          if(!detailsBull1EREA.isEmpty())
+            ajoutCyle2TableauDynamique(detailsBull1EREA,targetTable);
         } catch (RuntimeException e) {
           e.printStackTrace();
         }
 
         // PremiereC
-        XWPFTable table1EREC = document.getTableArray(13);
+
         try {
-          ajoutTableauDynamique(detailsBull1EREC,table1EREC);
+          if(!detailsBull1EREC.isEmpty())
+            ajoutCyle2TableauDynamique(detailsBull1EREC,targetTable);
         } catch (RuntimeException e) {
           e.printStackTrace();
         }
 
         // PremiereD
-        XWPFTable table1ERED = document.getTableArray(14);
+
         try {
-          ajoutTableauDynamique(detailsBull1ERED,table1ERED);
+          if(!detailsBull1ERED.isEmpty())
+            ajoutCyle2TableauDynamique(detailsBull1ERED,targetTable);
         } catch (RuntimeException e) {
           e.printStackTrace();
         }
 
+//Total premiere
+
+        try {
+          if(!totalPremiere.isEmpty())
+            ajoutTotalSeconcycleTableauDynamique(totalPremiere,targetTable);
+        } catch (RuntimeException e) {
+          e.printStackTrace();
+        }
 
         // Terminale A
-        XWPFTable tableTLEA = document.getTableArray(15);
+
         try {
-          ajoutTableauDynamique(detailsBullTLEA,tableTLEA);
+          if(!detailsBullTLEA.isEmpty())
+            ajoutCyle2TableauDynamique(detailsBullTLEA,targetTable);
         } catch (RuntimeException e) {
           e.printStackTrace();
         }
 
         // Terminale A1
-        XWPFTable tableTLEA1 = document.getTableArray(16);
+
         try {
-          ajoutTableauDynamique(detailsBullTLEA1,tableTLEA1);
+          if(!detailsBullTLEA1.isEmpty())
+            ajoutCyle2TableauDynamique(detailsBullTLEA1,targetTable);
         } catch (RuntimeException e) {
           e.printStackTrace();
         }
 
         // Terminale A2
-        XWPFTable tableTLEA2 = document.getTableArray(17);
+
         try {
-          ajoutTableauDynamique(detailsBullTLEA2,tableTLEA2);
+          if(!detailsBullTLEA2.isEmpty())
+            ajoutCyle2TableauDynamique(detailsBullTLEA2,targetTable);
         } catch (RuntimeException e) {
           e.printStackTrace();
         }
 
         // Terminale C
-        XWPFTable tableTLEC = document.getTableArray(18);
+
         try {
-          ajoutTableauDynamique(detailsBullTLEC,tableTLEC);
+          if(!detailsBullTLEC.isEmpty())
+            ajoutCyle2TableauDynamique(detailsBullTLEC,targetTable);
         } catch (RuntimeException e) {
           e.printStackTrace();
         }
 
         // Terminale D
-        XWPFTable tableTLED = document.getTableArray(19);
+
         try {
-          ajoutTableauDynamique(detailsBullTLED,tableTLED);
+          if(!detailsBullTLED.isEmpty())
+            ajoutCyle2TableauDynamique(detailsBullTLED,targetTable);
+        } catch (RuntimeException e) {
+          e.printStackTrace();
+        }
+
+        //Total terminale
+
+        try {
+          if(!totalTerminale.isEmpty())
+            ajoutTotalSeconcycleTableauDynamique(totalTerminale,targetTable);
         } catch (RuntimeException e) {
           e.printStackTrace();
         }
@@ -332,222 +414,624 @@ public class WordTempResultaAffProcessor {
 
 
     private static void ajoutTableauDynamique(List<ResultatsElevesAffecteDto> detailsBull, XWPFTable table) {
+      double pourSup10,pourInf10,pourInf8_5;
+      long nombMoySup10Cycle1 =0l ; long nombMoyInf10Cycle1 =0l ;long nombMoyInf8_5Cycle1 =0l;
+      long effectifClasseCycle1=0l ;  long effNonClassCycle1=0l;
+      long nombMoySup10Cycle1G =0l ; long nombMoyInf10Cycle1G =0l ;long nombMoyInf8_5Cycle1G =0l;
+      long effectifClasseCycle1G=0l ;  long effNonClassCycle1G=0l;
+
+      long nombMoySup10Cycle1F =0l ; long nombMoyInf10Cycle1F =0l ;long nombMoyInf8_5Cycle1F =0l;
+      long effectifClasseCycle1F=0l ;  long effNonClassCycle1F=0l;
+
+      double pourSup10Cycle1= 0d,pourInf10Cycle1 = 0d,pourInf8_5Cycle1 = 0d;
+      double pourSup10Cycle1G= 0d,pourInf10Cycle1G = 0d,pourInf8_5Cycle1G = 0d;
+      double pourSup10Cycle1F= 0d,pourInf10Cycle1F = 0d,pourInf8_5Cycle1F = 0d;
+      double moyenCycle1F=0d;
+      double moyenCycle1G=0d;
+      Double moyenCycle1=0d;
+      Long effectifCycle1 = 0L; Long effectifCycle1G = 0L; Long effectifCycle1F = 0L;
+      Long effectifNonClasseCycle1 = 0L; Long effectifNonClasseCycle1G = 0L; Long effectifNonClasseCycle1F = 0L;
+      String libelleNiveau="";
+
         for (ResultatsElevesAffecteDto classe : detailsBull) {
-            long nombMoySup10 =
-                    (classe.getNbreMoySup10F() != null ? classe.getNbreMoySup10F() : 0L) +
-                            (classe.getNbreMoySup10G() != null ? classe.getNbreMoySup10G() : 0L);
+          libelleNiveau= classe.getNiveau();
 
-            long nombMoyInf10 =
-                    (classe.getNbreMoyInf999F() != null ? classe.getNbreMoyInf999F() : 0L) +
-                            (classe.getNbreMoyInf999G() != null ? classe.getNbreMoyInf999G() : 0L);
+          Long effectifNiveau1=classe.getEffeG()+classe.getEffeF();
+          Long effectifNiveau1G=classe.getEffeG();
+          Long effectifNiveau1F=classe.getEffeF();
 
-            long nombMoyInf8_5 =
-                    (classe.getNbreMoyInf85F() != null ? classe.getNbreMoyInf85F() : 0L) +
-                            (classe.getNbreMoyInf85G() != null ? classe.getNbreMoyInf85G() : 0L);
+          Long effectifClasse1 =classe.getClassF()+classe.getClassG();
+          Long effectifClasse1G=classe.getClassG();
+          Long effectifClasse1F=classe.getClassF();
 
-            long effectifClasse =
-                    (classe.getClassF() != null ? classe.getClassF() : 0L) +
-                            (classe.getClassG() != null ? classe.getClassG() : 0L);
+          Long effectifNonClasse1 =classe.getNonclassF()+classe.getNonclassG();
+          Long effectifNonClasse1G=classe.getNonclassG();
+          Long effectifNonClasse1F=classe.getNonclassF();
 
-// Éviter une division par zéro pour effectifClasse
-            double pourSup10,pourInf10,pourInf8_5;
-            if (effectifClasse > 0) {
-                pourSup10 = nombMoySup10 / (Double.valueOf(effectifClasse)) * 100d;
-                pourInf10 = nombMoyInf10 / (Double.valueOf(effectifClasse)) * 100d;
-                pourInf8_5 = nombMoyInf8_5 / (Double.valueOf(effectifClasse)) * 100d;
+          moyenCycle1F=classe.getMoyClasseF() ;
+          moyenCycle1G=classe.getMoyClasseG() ;
+          moyenCycle1=classe.getMoyClasse() ;
 
-                // Calculer d'autres statistiques ou utiliser ces valeurs
-            } else {
-                // Gérer le cas où effectifClasse est 0 pour éviter une division par zéro
-                pourSup10 = 0d;
-                pourInf10 = 0d;
-                pourInf8_5 = 0d;
-                // Logique alternative ou gestion d'erreur
-            }
+          effectifClasseCycle1=effectifClasseCycle1+effectifClasse1;
+          effectifClasseCycle1G=effectifClasseCycle1G+effectifClasse1G;
+          effectifClasseCycle1F=effectifClasseCycle1F+effectifClasse1F;
 
-            long effectif =
-                    (classe.getEffeF() != null ? classe.getEffeF() : 0L) +
-                            (classe.getEffeG() != null ? classe.getEffeG() : 0L);
-
-            long effNonClass =
-                    (classe.getNonclassF() != null ? classe.getNonclassF() : 0L) +
-                            (classe.getNonclassG() != null ? classe.getNonclassG() : 0L);
+          effectifCycle1= effectifCycle1+effectifNiveau1;
+          effectifCycle1G= effectifCycle1G+effectifNiveau1G;
+          effectifCycle1F= effectifCycle1F+effectifNiveau1F;
 
 
+          effectifNonClasseCycle1= effectifNonClasseCycle1+effectifNonClasse1;
+          effectifNonClasseCycle1G= effectifNonClasseCycle1G+effectifNonClasse1G;
+          effectifNonClasseCycle1F= effectifNonClasseCycle1F+effectifNonClasse1F;
 
-            // Créer une ligne principale pour la classe (6ème 1, 6ème 2, etc.)
-            //XWPFTableRow classRow = table.createRow();
-           // ensureCellCount(classRow, 14); // 14 colonnes comme dans le modèle
+          long nombMoySup10 =
+              (classe.getNbreMoySup10F() != null ? classe.getNbreMoySup10F() : 0L) +
+                  (classe.getNbreMoySup10G() != null ? classe.getNbreMoySup10G() : 0L);
+          nombMoySup10Cycle1=nombMoySup10Cycle1+nombMoySup10;
 
-// Remplir la ligne pour les filles (F)
-            XWPFTableRow fillesRow = table.createRow();
-            ensureCellCount(fillesRow, 12);
-            fillesRow.getCell(0).setText(classe.getClasse());
-            fillesRow.getCell(1).setText(" F");
-            fillesRow.getCell(2).setText(String.valueOf(classe.getEffeF()));
-            fillesRow.getCell(3).setText(String.valueOf(classe.getClassF()));
-            fillesRow.getCell(4).setText(String.valueOf(classe.getNonclassF()));
-            fillesRow.getCell(5).setText(String.valueOf(classe.getNbreMoySup10F()));
-            fillesRow.getCell(6).setText(String.valueOf(arrondie(classe.getPourMoySup10F())));
-            fillesRow.getCell(7).setText(String.valueOf(classe.getNbreMoyInf999F()));
-            fillesRow.getCell(8).setText(String.valueOf(arrondie(classe.getPourMoyInf999F())));
-            fillesRow.getCell(9).setText(String.valueOf(classe.getNbreMoyInf85F()));
-            fillesRow.getCell(10).setText(String.valueOf(arrondie(classe.getPourMoyInf85F())));
-            fillesRow.getCell(11).setText(String.valueOf(arrondie(classe.getMoyClasseF())));
+          long nombMoySup10G =
+              (classe.getNbreMoySup10G() != null ? classe.getNbreMoySup10G() : 0L);
+          nombMoySup10Cycle1G=nombMoySup10Cycle1G+nombMoySup10G;
 
-// Remplir la ligne pour les garçons (G)
-            XWPFTableRow garconsRow = table.createRow();
-            ensureCellCount(garconsRow, 12);
-            garconsRow.getCell(1).setText(" G");
-            garconsRow.getCell(2).setText(String.valueOf(classe.getEffeG()));
-            garconsRow.getCell(3).setText(String.valueOf(classe.getClassG()));
-            garconsRow.getCell(4).setText(String.valueOf(classe.getNonclassG()));
-            garconsRow.getCell(5).setText(String.valueOf(classe.getNbreMoySup10G()));
-            garconsRow.getCell(6).setText(String.valueOf(arrondie(classe.getPourMoySup10G())));
-            garconsRow.getCell(7).setText(String.valueOf(classe.getNbreMoyInf999G()));
-            garconsRow.getCell(8).setText(String.valueOf(arrondie(classe.getPourMoyInf999G())));
-            garconsRow.getCell(9).setText(String.valueOf(classe.getNbreMoyInf85G()));
-            garconsRow.getCell(10).setText(String.valueOf(arrondie(classe.getPourMoyInf85G())));
-            garconsRow.getCell(11).setText(String.valueOf(arrondie(classe.getMoyClasseG())));
+          long nombMoySup10F =
+              (classe.getNbreMoySup10F() != null ? classe.getNbreMoySup10F() : 0L);
+          nombMoySup10Cycle1F=nombMoySup10Cycle1F+nombMoySup10F;
 
-// Remplir la ligne pour le total (T)
+          long nombMoyInf10 =
+              (classe.getNbreMoyInf999F() != null ? classe.getNbreMoyInf999F() : 0L) +
+                  (classe.getNbreMoyInf999G() != null ? classe.getNbreMoyInf999G() : 0L);
+          nombMoyInf10Cycle1=nombMoyInf10Cycle1+nombMoyInf10;
+
+          long nombMoyInf10G =classe.getNbreMoyInf999G() != null ? classe.getNbreMoyInf999G() : 0L;
+          nombMoyInf10Cycle1G=nombMoyInf10Cycle1G+nombMoyInf10G;
+
+          long nombMoyInf10F = (classe.getNbreMoyInf999F() != null ? classe.getNbreMoyInf999F() : 0L) ;
+          nombMoyInf10Cycle1F=nombMoyInf10Cycle1F+nombMoyInf10F;
+
+
+          libelleNiveau=classe.getNiveau();
+
+
+          long nombMoyInf8_5 =
+              (classe.getNbreMoyInf85F() != null ? classe.getNbreMoyInf85F() : 0L) +
+                  (classe.getNbreMoyInf85G() != null ? classe.getNbreMoyInf85G() : 0L);
+          nombMoyInf8_5Cycle1=nombMoyInf8_5Cycle1+nombMoyInf8_5;
+
+          long nombMoyInf8_5G =
+              (classe.getNbreMoyInf85G() != null ? classe.getNbreMoyInf85G() : 0L);
+          nombMoyInf8_5Cycle1G=nombMoyInf8_5Cycle1G+nombMoyInf8_5G;
+
+          long nombMoyInf8_5F =(classe.getNbreMoyInf85F() != null ? classe.getNbreMoyInf85F() : 0L) ;
+          nombMoyInf8_5Cycle1F=nombMoyInf8_5Cycle1F+nombMoyInf8_5F;
+
+
+
+          long effectifClasse =
+              (classe.getClassF() != null ? classe.getClassF() : 0L) +
+                  (classe.getClassG() != null ? classe.getClassG() : 0L);
+
+
+          if (effectifClasse > 0) {
+            pourSup10 = nombMoySup10 / (Double.valueOf(effectifClasse)) * 100d;
+            pourInf10 = nombMoyInf10 / (Double.valueOf(effectifClasse)) * 100d;
+            pourInf8_5 = nombMoyInf8_5 / (Double.valueOf(effectifClasse)) * 100d;
+
+            // Calculer d'autres statistiques ou utiliser ces valeurs
+          } else {
+            // Gérer le cas où effectifClasse est 0 pour éviter une division par zéro
+            pourSup10 = 0d;
+            pourInf10 = 0d;
+            pourInf8_5 = 0d;
+            // Logique alternative ou gestion d'erreur
+          }
+
+
+
+          long effNonClass =
+              (classe.getNonclassF() != null ? classe.getNonclassF() : 0L) +
+                  (classe.getNonclassG() != null ? classe.getNonclassG() : 0L);
+
+
+
+          long effectif =
+              (classe.getEffeF() != null ? classe.getEffeF() : 0L) +
+                  (classe.getEffeG() != null ? classe.getEffeG() : 0L);
+
+
+
+
+
+
+
+          // Pourcentage cycle 1 Garcon
+          if (effectifClasseCycle1G > 0) {
+            pourSup10Cycle1G = nombMoySup10Cycle1G / (Double.valueOf(effectifClasseCycle1G)) * 100d;
+            pourInf10Cycle1G = nombMoyInf10Cycle1G / (Double.valueOf(effectifClasseCycle1G)) * 100d;
+            pourInf8_5Cycle1G = nombMoyInf8_5Cycle1G / (Double.valueOf(effectifClasseCycle1G)) * 100d;
+
+            // Calculer d'autres statistiques ou utiliser ces valeurs
+          } else {
+            // Gérer le cas où effectifClasse est 0 pour éviter une division par zéro
+            pourSup10Cycle1G = 0d;
+            pourInf10Cycle1G = 0d;
+            pourInf8_5Cycle1G = 0d;
+            // Logique alternative ou gestion d'erreur
+          }
+
+          // Pourcentage cycle 1 Fille
+          if (effectifClasseCycle1F > 0) {
+            pourSup10Cycle1F = nombMoySup10Cycle1F / (Double.valueOf(effectifClasseCycle1F)) * 100d;
+            pourInf10Cycle1F = nombMoyInf10Cycle1F / (Double.valueOf(effectifClasseCycle1F)) * 100d;
+            pourInf8_5Cycle1F = nombMoyInf8_5Cycle1F / (Double.valueOf(effectifClasseCycle1F)) * 100d;
+
+            // Calculer d'autres statistiques ou utiliser ces valeurs
+          } else {
+            // Gérer le cas où effectifClasse est 0 pour éviter une division par zéro
+            pourSup10Cycle1F = 0d;
+            pourInf10Cycle1F = 0d;
+            pourInf8_5Cycle1F = 0d;
+            // Logique alternative ou gestion d'erreur
+          }
+
+          if (effectifClasseCycle1 > 0) {
+            pourSup10Cycle1 = nombMoySup10Cycle1 / (Double.valueOf(effectifClasseCycle1)) * 100d;
+            pourInf10Cycle1 = nombMoyInf10Cycle1 / (Double.valueOf(effectifClasseCycle1)) * 100d;
+            pourInf8_5Cycle1 = nombMoyInf8_5Cycle1 / (Double.valueOf(effectifClasseCycle1)) * 100d;
+
+            // Calculer d'autres statistiques ou utiliser ces valeurs
+          } else {
+            // Gérer le cas où effectifClasse est 0 pour éviter une division par zéro
+            pourSup10Cycle1 = 0d;
+            pourInf10Cycle1 = 0d;
+            pourInf8_5Cycle1 = 0d;
+            // Logique alternative ou gestion d'erreur
+          }
+
+
             XWPFTableRow totalRow = table.createRow();
-            ensureCellCount(totalRow, 12);
-            totalRow.getCell(1).setText(" T");
-            totalRow.getCell(2).setText(String.valueOf(effectif));
-            totalRow.getCell(3).setText(String.valueOf(effectifClasse));
-            totalRow.getCell(4).setText(String.valueOf(effNonClass));
-            totalRow.getCell(5).setText(String.valueOf(nombMoySup10));
-            totalRow.getCell(6).setText(String.valueOf(arrondie(pourSup10)));
-            totalRow.getCell(7).setText(String.valueOf(nombMoyInf10));
-            totalRow.getCell(8).setText(String.valueOf(arrondie(pourInf10)));
-            totalRow.getCell(9).setText(String.valueOf(nombMoyInf8_5));
-            totalRow.getCell(10).setText(String.valueOf(arrondie(pourInf8_5)));
-            totalRow.getCell(11).setText(String.valueOf(arrondie(classe.getMoyClasse())));
-            mergeCellsVertically(table, 0, table.getNumberOfRows() - 3, table.getNumberOfRows() -1);
+            ensureCellCount(totalRow, 9);
+            totalRow.getCell(0).setText(classe.getClasse());
+            totalRow.getCell(1).setText(String.valueOf(effectif));
+            totalRow.getCell(2).setText(String.valueOf(effectifClasse));
+            totalRow.getCell(3).setText(String.valueOf(nombMoySup10));
+            totalRow.getCell(4).setText(String.valueOf(arrondie(pourSup10)));
+            totalRow.getCell(5).setText(String.valueOf(nombMoyInf10));
+            totalRow.getCell(6).setText(String.valueOf(arrondie(pourInf10)));
+            totalRow.getCell(7).setText(String.valueOf(nombMoyInf8_5));
+            totalRow.getCell(8).setText(String.valueOf(arrondie(pourInf8_5)));
+
+           // mergeCellsVertically(table, 0, table.getNumberOfRows() - 3, table.getNumberOfRows() -1);
 
         }
+
+
+      // Remplir la ligne pour le total (T)
+      XWPFTableRow GeneraltotalRow = table.createRow();
+      ensureCellCount(GeneraltotalRow, 9);
+      GeneraltotalRow.getCell(0).setText("EFF. TOTAL des "+afficherValeurParNiveau(libelleNiveau));
+      GeneraltotalRow.getCell(1).setText(String.valueOf(effectifCycle1));
+      GeneraltotalRow.getCell(2).setText(String.valueOf(effectifClasseCycle1));
+      GeneraltotalRow.getCell(3).setText(String.valueOf(nombMoySup10Cycle1));
+      GeneraltotalRow.getCell(4).setText(String.valueOf(arrondie(pourSup10Cycle1)));
+      GeneraltotalRow.getCell(5).setText(String.valueOf(nombMoyInf10Cycle1));
+      GeneraltotalRow.getCell(6).setText(String.valueOf(arrondie(pourInf10Cycle1)));
+      GeneraltotalRow.getCell(7).setText(String.valueOf(nombMoyInf8_5Cycle1));
+      GeneraltotalRow.getCell(8).setText(String.valueOf(arrondie(pourInf8_5Cycle1)));
+
+      for (int i = 0; i <= 8; i++) {
+        GeneraltotalRow.getCell(i).setColor("ADD8E6"); // Bleu clair en Hexadécimal
+      }
+    }
+
+  private static void ajoutCyle2TableauDynamique(List<ResultatsElevesAffecteDto> detailsBull, XWPFTable table) {
+    double pourSup10,pourInf10,pourInf8_5;
+    long nombMoySup10Cycle1 =0l ; long nombMoyInf10Cycle1 =0l ;long nombMoyInf8_5Cycle1 =0l;
+    long effectifClasseCycle1=0l ;  long effNonClassCycle1=0l;
+    long nombMoySup10Cycle1G =0l ; long nombMoyInf10Cycle1G =0l ;long nombMoyInf8_5Cycle1G =0l;
+    long effectifClasseCycle1G=0l ;  long effNonClassCycle1G=0l;
+
+    long nombMoySup10Cycle1F =0l ; long nombMoyInf10Cycle1F =0l ;long nombMoyInf8_5Cycle1F =0l;
+    long effectifClasseCycle1F=0l ;  long effNonClassCycle1F=0l;
+
+    double pourSup10Cycle1= 0d,pourInf10Cycle1 = 0d,pourInf8_5Cycle1 = 0d;
+    double pourSup10Cycle1G= 0d,pourInf10Cycle1G = 0d,pourInf8_5Cycle1G = 0d;
+    double pourSup10Cycle1F= 0d,pourInf10Cycle1F = 0d,pourInf8_5Cycle1F = 0d;
+    double moyenCycle1F=0d;
+    double moyenCycle1G=0d;
+    Double moyenCycle1=0d;
+    Long effectifCycle1 = 0L; Long effectifCycle1G = 0L; Long effectifCycle1F = 0L;
+    Long effectifNonClasseCycle1 = 0L; Long effectifNonClasseCycle1G = 0L; Long effectifNonClasseCycle1F = 0L;
+    String libelleNiveau="";
+
+    for (ResultatsElevesAffecteDto classe : detailsBull) {
+      libelleNiveau= classe.getNiveau();
+
+      Long effectifNiveau1=classe.getEffeG()+classe.getEffeF();
+      Long effectifNiveau1G=classe.getEffeG();
+      Long effectifNiveau1F=classe.getEffeF();
+
+      Long effectifClasse1 =classe.getClassF()+classe.getClassG();
+      Long effectifClasse1G=classe.getClassG();
+      Long effectifClasse1F=classe.getClassF();
+
+      Long effectifNonClasse1 =classe.getNonclassF()+classe.getNonclassG();
+      Long effectifNonClasse1G=classe.getNonclassG();
+      Long effectifNonClasse1F=classe.getNonclassF();
+
+      moyenCycle1F=classe.getMoyClasseF() ;
+      moyenCycle1G=classe.getMoyClasseG() ;
+      moyenCycle1=classe.getMoyClasse() ;
+
+      effectifClasseCycle1=effectifClasseCycle1+effectifClasse1;
+      effectifClasseCycle1G=effectifClasseCycle1G+effectifClasse1G;
+      effectifClasseCycle1F=effectifClasseCycle1F+effectifClasse1F;
+
+      effectifCycle1= effectifCycle1+effectifNiveau1;
+      effectifCycle1G= effectifCycle1G+effectifNiveau1G;
+      effectifCycle1F= effectifCycle1F+effectifNiveau1F;
+
+
+      effectifNonClasseCycle1= effectifNonClasseCycle1+effectifNonClasse1;
+      effectifNonClasseCycle1G= effectifNonClasseCycle1G+effectifNonClasse1G;
+      effectifNonClasseCycle1F= effectifNonClasseCycle1F+effectifNonClasse1F;
+
+      long nombMoySup10 =
+          (classe.getNbreMoySup10F() != null ? classe.getNbreMoySup10F() : 0L) +
+              (classe.getNbreMoySup10G() != null ? classe.getNbreMoySup10G() : 0L);
+      nombMoySup10Cycle1=nombMoySup10Cycle1+nombMoySup10;
+
+      long nombMoySup10G =
+          (classe.getNbreMoySup10G() != null ? classe.getNbreMoySup10G() : 0L);
+      nombMoySup10Cycle1G=nombMoySup10Cycle1G+nombMoySup10G;
+
+      long nombMoySup10F =
+          (classe.getNbreMoySup10F() != null ? classe.getNbreMoySup10F() : 0L);
+      nombMoySup10Cycle1F=nombMoySup10Cycle1F+nombMoySup10F;
+
+      long nombMoyInf10 =
+          (classe.getNbreMoyInf999F() != null ? classe.getNbreMoyInf999F() : 0L) +
+              (classe.getNbreMoyInf999G() != null ? classe.getNbreMoyInf999G() : 0L);
+      nombMoyInf10Cycle1=nombMoyInf10Cycle1+nombMoyInf10;
+
+      long nombMoyInf10G =classe.getNbreMoyInf999G() != null ? classe.getNbreMoyInf999G() : 0L;
+      nombMoyInf10Cycle1G=nombMoyInf10Cycle1G+nombMoyInf10G;
+
+      long nombMoyInf10F = (classe.getNbreMoyInf999F() != null ? classe.getNbreMoyInf999F() : 0L) ;
+      nombMoyInf10Cycle1F=nombMoyInf10Cycle1F+nombMoyInf10F;
+
+
+      libelleNiveau=classe.getNiveau();
+
+
+      long nombMoyInf8_5 =
+          (classe.getNbreMoyInf85F() != null ? classe.getNbreMoyInf85F() : 0L) +
+              (classe.getNbreMoyInf85G() != null ? classe.getNbreMoyInf85G() : 0L);
+      nombMoyInf8_5Cycle1=nombMoyInf8_5Cycle1+nombMoyInf8_5;
+
+      long nombMoyInf8_5G =
+          (classe.getNbreMoyInf85G() != null ? classe.getNbreMoyInf85G() : 0L);
+      nombMoyInf8_5Cycle1G=nombMoyInf8_5Cycle1G+nombMoyInf8_5G;
+
+      long nombMoyInf8_5F =(classe.getNbreMoyInf85F() != null ? classe.getNbreMoyInf85F() : 0L) ;
+      nombMoyInf8_5Cycle1F=nombMoyInf8_5Cycle1F+nombMoyInf8_5F;
+
+
+
+      long effectifClasse =
+          (classe.getClassF() != null ? classe.getClassF() : 0L) +
+              (classe.getClassG() != null ? classe.getClassG() : 0L);
+
+
+      if (effectifClasse > 0) {
+        pourSup10 = nombMoySup10 / (Double.valueOf(effectifClasse)) * 100d;
+        pourInf10 = nombMoyInf10 / (Double.valueOf(effectifClasse)) * 100d;
+        pourInf8_5 = nombMoyInf8_5 / (Double.valueOf(effectifClasse)) * 100d;
+
+        // Calculer d'autres statistiques ou utiliser ces valeurs
+      } else {
+        // Gérer le cas où effectifClasse est 0 pour éviter une division par zéro
+        pourSup10 = 0d;
+        pourInf10 = 0d;
+        pourInf8_5 = 0d;
+        // Logique alternative ou gestion d'erreur
+      }
+
+
+
+      long effNonClass =
+          (classe.getNonclassF() != null ? classe.getNonclassF() : 0L) +
+              (classe.getNonclassG() != null ? classe.getNonclassG() : 0L);
+
+
+
+      long effectif =
+          (classe.getEffeF() != null ? classe.getEffeF() : 0L) +
+              (classe.getEffeG() != null ? classe.getEffeG() : 0L);
+
+
+
+
+
+
+
+      // Pourcentage cycle 1 Garcon
+      if (effectifClasseCycle1G > 0) {
+        pourSup10Cycle1G = nombMoySup10Cycle1G / (Double.valueOf(effectifClasseCycle1G)) * 100d;
+        pourInf10Cycle1G = nombMoyInf10Cycle1G / (Double.valueOf(effectifClasseCycle1G)) * 100d;
+        pourInf8_5Cycle1G = nombMoyInf8_5Cycle1G / (Double.valueOf(effectifClasseCycle1G)) * 100d;
+
+        // Calculer d'autres statistiques ou utiliser ces valeurs
+      } else {
+        // Gérer le cas où effectifClasse est 0 pour éviter une division par zéro
+        pourSup10Cycle1G = 0d;
+        pourInf10Cycle1G = 0d;
+        pourInf8_5Cycle1G = 0d;
+        // Logique alternative ou gestion d'erreur
+      }
+
+      // Pourcentage cycle 1 Fille
+      if (effectifClasseCycle1F > 0) {
+        pourSup10Cycle1F = nombMoySup10Cycle1F / (Double.valueOf(effectifClasseCycle1F)) * 100d;
+        pourInf10Cycle1F = nombMoyInf10Cycle1F / (Double.valueOf(effectifClasseCycle1F)) * 100d;
+        pourInf8_5Cycle1F = nombMoyInf8_5Cycle1F / (Double.valueOf(effectifClasseCycle1F)) * 100d;
+
+        // Calculer d'autres statistiques ou utiliser ces valeurs
+      } else {
+        // Gérer le cas où effectifClasse est 0 pour éviter une division par zéro
+        pourSup10Cycle1F = 0d;
+        pourInf10Cycle1F = 0d;
+        pourInf8_5Cycle1F = 0d;
+        // Logique alternative ou gestion d'erreur
+      }
+
+      if (effectifClasseCycle1 > 0) {
+        pourSup10Cycle1 = nombMoySup10Cycle1 / (Double.valueOf(effectifClasseCycle1)) * 100d;
+        pourInf10Cycle1 = nombMoyInf10Cycle1 / (Double.valueOf(effectifClasseCycle1)) * 100d;
+        pourInf8_5Cycle1 = nombMoyInf8_5Cycle1 / (Double.valueOf(effectifClasseCycle1)) * 100d;
+
+        // Calculer d'autres statistiques ou utiliser ces valeurs
+      } else {
+        // Gérer le cas où effectifClasse est 0 pour éviter une division par zéro
+        pourSup10Cycle1 = 0d;
+        pourInf10Cycle1 = 0d;
+        pourInf8_5Cycle1 = 0d;
+        // Logique alternative ou gestion d'erreur
+      }
+
+
+      XWPFTableRow totalRow = table.createRow();
+      ensureCellCount(totalRow, 9);
+      totalRow.getCell(0).setText(classe.getClasse());
+      totalRow.getCell(1).setText(String.valueOf(effectif));
+      totalRow.getCell(2).setText(String.valueOf(effectifClasse));
+      totalRow.getCell(3).setText(String.valueOf(nombMoySup10));
+      totalRow.getCell(4).setText(String.valueOf(arrondie(pourSup10)));
+      totalRow.getCell(5).setText(String.valueOf(nombMoyInf10));
+      totalRow.getCell(6).setText(String.valueOf(arrondie(pourInf10)));
+      totalRow.getCell(7).setText(String.valueOf(nombMoyInf8_5));
+      totalRow.getCell(8).setText(String.valueOf(arrondie(pourInf8_5)));
+
+      // mergeCellsVertically(table, 0, table.getNumberOfRows() - 3, table.getNumberOfRows() -1);
+
+    }
+
+/*
+      // Remplir la ligne pour le total (T)
+      XWPFTableRow GeneraltotalRow = table.createRow();
+      ensureCellCount(GeneraltotalRow, 9);
+      GeneraltotalRow.getCell(0).setText("EFF. TOTAL des "+afficherValeurParNiveau(libelleNiveau));
+      GeneraltotalRow.getCell(1).setText(String.valueOf(effectifCycle1));
+      GeneraltotalRow.getCell(2).setText(String.valueOf(effectifClasseCycle1));
+      GeneraltotalRow.getCell(3).setText(String.valueOf(nombMoySup10Cycle1));
+      GeneraltotalRow.getCell(4).setText(String.valueOf(arrondie(pourSup10Cycle1)));
+      GeneraltotalRow.getCell(5).setText(String.valueOf(nombMoyInf10Cycle1));
+      GeneraltotalRow.getCell(6).setText(String.valueOf(arrondie(pourInf10Cycle1)));
+      GeneraltotalRow.getCell(7).setText(String.valueOf(nombMoyInf8_5Cycle1));
+      GeneraltotalRow.getCell(8).setText(String.valueOf(arrondie(pourInf8_5Cycle1)));
+
+      for (int i = 0; i <= 8; i++) {
+        GeneraltotalRow.getCell(i).setColor("ADD8E6"); // Bleu clair en Hexadécimal
+      }*/
+  }
+
+  private static void ajoutTotalSeconcycleTableauDynamique(List<ResultatsElevesAffecteDto> detailsBull, XWPFTable table) {
+    double pourSup10,pourInf10,pourInf8_5;
+    long nombMoySup10Cycle1 =0l ; long nombMoyInf10Cycle1 =0l ;long nombMoyInf8_5Cycle1 =0l;
+    long effectifClasseCycle1=0l ;  long effNonClassCycle1=0l;
+    long nombMoySup10Cycle1G =0l ; long nombMoyInf10Cycle1G =0l ;long nombMoyInf8_5Cycle1G =0l;
+    long effectifClasseCycle1G=0l ;  long effNonClassCycle1G=0l;
+
+    long nombMoySup10Cycle1F =0l ; long nombMoyInf10Cycle1F =0l ;long nombMoyInf8_5Cycle1F =0l;
+    long effectifClasseCycle1F=0l ;  long effNonClassCycle1F=0l;
+
+    double pourSup10Cycle1= 0d,pourInf10Cycle1 = 0d,pourInf8_5Cycle1 = 0d;
+    double pourSup10Cycle1G= 0d,pourInf10Cycle1G = 0d,pourInf8_5Cycle1G = 0d;
+    double pourSup10Cycle1F= 0d,pourInf10Cycle1F = 0d,pourInf8_5Cycle1F = 0d;
+    double moyenCycle1F=0d;
+    double moyenCycle1G=0d;
+    Double moyenCycle1=0d;
+    Long effectifCycle1 = 0L; Long effectifCycle1G = 0L; Long effectifCycle1F = 0L;
+    Long effectifNonClasseCycle1 = 0L; Long effectifNonClasseCycle1G = 0L; Long effectifNonClasseCycle1F = 0L;
+    String libelleNiveau="";
+
+    for (ResultatsElevesAffecteDto classe : detailsBull) {
+      libelleNiveau= classe.getNiveau();
+
+      Long effectifNiveau1=classe.getEffeG()+classe.getEffeF();
+      Long effectifNiveau1G=classe.getEffeG();
+      Long effectifNiveau1F=classe.getEffeF();
+
+      Long effectifClasse1 =classe.getClassF()+classe.getClassG();
+      Long effectifClasse1G=classe.getClassG();
+      Long effectifClasse1F=classe.getClassF();
+
+      Long effectifNonClasse1 =classe.getNonclassF()+classe.getNonclassG();
+      Long effectifNonClasse1G=classe.getNonclassG();
+      Long effectifNonClasse1F=classe.getNonclassF();
+
+      moyenCycle1F=classe.getMoyClasseF() ;
+      moyenCycle1G=classe.getMoyClasseG() ;
+      moyenCycle1=classe.getMoyClasse() ;
+
+      effectifClasseCycle1=effectifClasseCycle1+effectifClasse1;
+      effectifClasseCycle1G=effectifClasseCycle1G+effectifClasse1G;
+      effectifClasseCycle1F=effectifClasseCycle1F+effectifClasse1F;
+
+      effectifCycle1= effectifCycle1+effectifNiveau1;
+      effectifCycle1G= effectifCycle1G+effectifNiveau1G;
+      effectifCycle1F= effectifCycle1F+effectifNiveau1F;
+
+
+      effectifNonClasseCycle1= effectifNonClasseCycle1+effectifNonClasse1;
+      effectifNonClasseCycle1G= effectifNonClasseCycle1G+effectifNonClasse1G;
+      effectifNonClasseCycle1F= effectifNonClasseCycle1F+effectifNonClasse1F;
+
+      long nombMoySup10 =
+          (classe.getNbreMoySup10F() != null ? classe.getNbreMoySup10F() : 0L) +
+              (classe.getNbreMoySup10G() != null ? classe.getNbreMoySup10G() : 0L);
+      nombMoySup10Cycle1=nombMoySup10Cycle1+nombMoySup10;
+
+      long nombMoySup10G =
+          (classe.getNbreMoySup10G() != null ? classe.getNbreMoySup10G() : 0L);
+      nombMoySup10Cycle1G=nombMoySup10Cycle1G+nombMoySup10G;
+
+      long nombMoySup10F =
+          (classe.getNbreMoySup10F() != null ? classe.getNbreMoySup10F() : 0L);
+      nombMoySup10Cycle1F=nombMoySup10Cycle1F+nombMoySup10F;
+
+      long nombMoyInf10 =
+          (classe.getNbreMoyInf999F() != null ? classe.getNbreMoyInf999F() : 0L) +
+              (classe.getNbreMoyInf999G() != null ? classe.getNbreMoyInf999G() : 0L);
+      nombMoyInf10Cycle1=nombMoyInf10Cycle1+nombMoyInf10;
+
+      long nombMoyInf10G =classe.getNbreMoyInf999G() != null ? classe.getNbreMoyInf999G() : 0L;
+      nombMoyInf10Cycle1G=nombMoyInf10Cycle1G+nombMoyInf10G;
+
+      long nombMoyInf10F = (classe.getNbreMoyInf999F() != null ? classe.getNbreMoyInf999F() : 0L) ;
+      nombMoyInf10Cycle1F=nombMoyInf10Cycle1F+nombMoyInf10F;
+
+
+      libelleNiveau=classe.getNiveau();
+
+
+      long nombMoyInf8_5 =
+          (classe.getNbreMoyInf85F() != null ? classe.getNbreMoyInf85F() : 0L) +
+              (classe.getNbreMoyInf85G() != null ? classe.getNbreMoyInf85G() : 0L);
+      nombMoyInf8_5Cycle1=nombMoyInf8_5Cycle1+nombMoyInf8_5;
+
+      long nombMoyInf8_5G =
+          (classe.getNbreMoyInf85G() != null ? classe.getNbreMoyInf85G() : 0L);
+      nombMoyInf8_5Cycle1G=nombMoyInf8_5Cycle1G+nombMoyInf8_5G;
+
+      long nombMoyInf8_5F =(classe.getNbreMoyInf85F() != null ? classe.getNbreMoyInf85F() : 0L) ;
+      nombMoyInf8_5Cycle1F=nombMoyInf8_5Cycle1F+nombMoyInf8_5F;
+
+
+
+      long effectifClasse =
+          (classe.getClassF() != null ? classe.getClassF() : 0L) +
+              (classe.getClassG() != null ? classe.getClassG() : 0L);
+
+
+      if (effectifClasse > 0) {
+        pourSup10 = nombMoySup10 / (Double.valueOf(effectifClasse)) * 100d;
+        pourInf10 = nombMoyInf10 / (Double.valueOf(effectifClasse)) * 100d;
+        pourInf8_5 = nombMoyInf8_5 / (Double.valueOf(effectifClasse)) * 100d;
+
+        // Calculer d'autres statistiques ou utiliser ces valeurs
+      } else {
+        // Gérer le cas où effectifClasse est 0 pour éviter une division par zéro
+        pourSup10 = 0d;
+        pourInf10 = 0d;
+        pourInf8_5 = 0d;
+        // Logique alternative ou gestion d'erreur
+      }
+
+
+
+      long effNonClass =
+          (classe.getNonclassF() != null ? classe.getNonclassF() : 0L) +
+              (classe.getNonclassG() != null ? classe.getNonclassG() : 0L);
+
+
+
+      long effectif =
+          (classe.getEffeF() != null ? classe.getEffeF() : 0L) +
+              (classe.getEffeG() != null ? classe.getEffeG() : 0L);
+
+
+
+
+
+
+
+      // Pourcentage cycle 1 Garcon
+      if (effectifClasseCycle1G > 0) {
+        pourSup10Cycle1G = nombMoySup10Cycle1G / (Double.valueOf(effectifClasseCycle1G)) * 100d;
+        pourInf10Cycle1G = nombMoyInf10Cycle1G / (Double.valueOf(effectifClasseCycle1G)) * 100d;
+        pourInf8_5Cycle1G = nombMoyInf8_5Cycle1G / (Double.valueOf(effectifClasseCycle1G)) * 100d;
+
+        // Calculer d'autres statistiques ou utiliser ces valeurs
+      } else {
+        // Gérer le cas où effectifClasse est 0 pour éviter une division par zéro
+        pourSup10Cycle1G = 0d;
+        pourInf10Cycle1G = 0d;
+        pourInf8_5Cycle1G = 0d;
+        // Logique alternative ou gestion d'erreur
+      }
+
+      // Pourcentage cycle 1 Fille
+      if (effectifClasseCycle1F > 0) {
+        pourSup10Cycle1F = nombMoySup10Cycle1F / (Double.valueOf(effectifClasseCycle1F)) * 100d;
+        pourInf10Cycle1F = nombMoyInf10Cycle1F / (Double.valueOf(effectifClasseCycle1F)) * 100d;
+        pourInf8_5Cycle1F = nombMoyInf8_5Cycle1F / (Double.valueOf(effectifClasseCycle1F)) * 100d;
+
+        // Calculer d'autres statistiques ou utiliser ces valeurs
+      } else {
+        // Gérer le cas où effectifClasse est 0 pour éviter une division par zéro
+        pourSup10Cycle1F = 0d;
+        pourInf10Cycle1F = 0d;
+        pourInf8_5Cycle1F = 0d;
+        // Logique alternative ou gestion d'erreur
+      }
+
+      if (effectifClasseCycle1 > 0) {
+        pourSup10Cycle1 = nombMoySup10Cycle1 / (Double.valueOf(effectifClasseCycle1)) * 100d;
+        pourInf10Cycle1 = nombMoyInf10Cycle1 / (Double.valueOf(effectifClasseCycle1)) * 100d;
+        pourInf8_5Cycle1 = nombMoyInf8_5Cycle1 / (Double.valueOf(effectifClasseCycle1)) * 100d;
+
+        // Calculer d'autres statistiques ou utiliser ces valeurs
+      } else {
+        // Gérer le cas où effectifClasse est 0 pour éviter une division par zéro
+        pourSup10Cycle1 = 0d;
+        pourInf10Cycle1 = 0d;
+        pourInf8_5Cycle1 = 0d;
+        // Logique alternative ou gestion d'erreur
+      }
+
+
     }
 
 
-    private static void resultatsElevesAffectes6E(ResultatsElevesAffecteDto resultatsBull,XWPFTable table){
-        if(resultatsBull!=null){
-            System.out.println("Objet Trouvé "+resultatsBull.toString());
+    // Remplir la ligne pour le total (T)
+    XWPFTableRow GeneraltotalRow = table.createRow();
+    ensureCellCount(GeneraltotalRow, 9);
+    GeneraltotalRow.getCell(0).setText("EFF. TOTAL des "+afficherSecondCycle(libelleNiveau));
+    GeneraltotalRow.getCell(1).setText(String.valueOf(effectifCycle1));
+    GeneraltotalRow.getCell(2).setText(String.valueOf(effectifClasseCycle1));
+    GeneraltotalRow.getCell(3).setText(String.valueOf(nombMoySup10Cycle1));
+    GeneraltotalRow.getCell(4).setText(String.valueOf(arrondie(pourSup10Cycle1)));
+    GeneraltotalRow.getCell(5).setText(String.valueOf(nombMoyInf10Cycle1));
+    GeneraltotalRow.getCell(6).setText(String.valueOf(arrondie(pourInf10Cycle1)));
+    GeneraltotalRow.getCell(7).setText(String.valueOf(nombMoyInf8_5Cycle1));
+    GeneraltotalRow.getCell(8).setText(String.valueOf(arrondie(pourInf8_5Cycle1)));
 
-        for (int i = 1; i < table.getRows().size(); i++) {
-            XWPFTableRow row = table.getRow(i);
-            Map<String, String> rowData = new HashMap<>();
-
-            long nombMoySup10 =
-                    (resultatsBull.getNbreMoySup10F() != null ? resultatsBull.getNbreMoySup10F() : 0L) +
-                            (resultatsBull.getNbreMoySup10G() != null ? resultatsBull.getNbreMoySup10G() : 0L);
-
-            long nombMoyInf10 =
-                    (resultatsBull.getNbreMoyInf999F() != null ? resultatsBull.getNbreMoyInf999F() : 0L) +
-                            (resultatsBull.getNbreMoyInf999G() != null ? resultatsBull.getNbreMoyInf999G() : 0L);
-
-            long nombMoyInf8_5 =
-                    (resultatsBull.getNbreMoyInf85F() != null ? resultatsBull.getNbreMoyInf85F() : 0L) +
-                            (resultatsBull.getNbreMoyInf85G() != null ? resultatsBull.getNbreMoyInf85G() : 0L);
-
-            long effectifClasse =
-                    (resultatsBull.getClassF() != null ? resultatsBull.getClassF() : 0L) +
-                            (resultatsBull.getClassG() != null ? resultatsBull.getClassG() : 0L);
-
-// Éviter une division par zéro pour effectifClasse
-            double pourSup10,pourInf10,pourInf8_5;
-            if (effectifClasse > 0) {
-                 pourSup10 = nombMoySup10 / (Double.valueOf(effectifClasse)) * 100d;
-                 pourInf10 = nombMoyInf10 / (Double.valueOf(effectifClasse)) * 100d;
-                pourInf8_5 = nombMoyInf8_5 / (Double.valueOf(effectifClasse)) * 100d;
-
-                // Calculer d'autres statistiques ou utiliser ces valeurs
-            } else {
-                // Gérer le cas où effectifClasse est 0 pour éviter une division par zéro
-                 pourSup10 = 0d;
-                 pourInf10 = 0d;
-                 pourInf8_5 = 0d;
-                // Logique alternative ou gestion d'erreur
-            }
-
-            long effectif =
-                    (resultatsBull.getEffeF() != null ? resultatsBull.getEffeF() : 0L) +
-                            (resultatsBull.getEffeG() != null ? resultatsBull.getEffeG() : 0L);
-
-            long effNonClass =
-                    (resultatsBull.getNonclassF() != null ? resultatsBull.getNonclassF() : 0L) +
-                            (resultatsBull.getNonclassG() != null ? resultatsBull.getNonclassG() : 0L);
-
-
-            rowData.put("{{NOMBRE_MOY_SUP_10_6E}}", String.valueOf(nombMoySup10));
-            rowData.put("{{NOMBRE_MOY_INF_10_6E}}", String.valueOf(nombMoyInf10));
-            rowData.put("{{NOMBRE_MOY_INF_08_5_6E}}", String.valueOf(nombMoyInf8_5));
-            rowData.put("{{POURC_MOY_SUP_10_6E}}", String.valueOf(pourSup10));
-            rowData.put("{{POURC_MOY_INF_10_6E}}", String.valueOf(pourInf10));
-            rowData.put("{{POURC_MOY_INF_08_5_6E}}", String.valueOf(pourInf8_5));
-            rowData.put("{{NOMBRE_ELEV_6E}}", String.valueOf(effectif));
-            rowData.put("{{NOMBRE_ELEV_CLASSES_6E}}", String.valueOf(effectifClasse));
-            rowData.put("{{NOMBRE_ELEV_NON_CLASSES_6E}}", String.valueOf(effNonClass));
-            replacePlaceholdersInTableRow(row, rowData);
-
+    for (int i = 0; i <= 8; i++) {
+      GeneraltotalRow.getCell(i).setColor("ADD8E6"); // Bleu clair en Hexadécimal
     }
-        }
+  }
 
-    }
-
-    private static void resultatsElevesAffectes(List<ResultatsElevesAffecteDto> resultatsBull,XWPFTable table){
-        for (int i = 1; i < table.getRows().size(); i++) {
-            XWPFTableRow row = table.getRow(i);
-            Map<String, String> rowData = new HashMap<>();
-
-            rowData.put("{{NOMBRE_MOY_SUP_10_6E}}", "SOUMAHORO Moustapha");
-            rowData.put("{{NOMBRE_MOY_INF_10_6E}}", "0358 pm 455");
-            rowData.put("{{NOMBRE_MOY_INF_08_5_6E}}", "0345897564122");
-            rowData.put("{{POURC_MOY_SUP_10_6E}}", "0345897564122");
-            rowData.put("{{POURC_MOY_INF_10_6E}}", "0345897564122");
-            rowData.put("{{POURC_MOY_INF_08_5_6E}}", "0345897564122");
-            rowData.put("{{NOMBRE_ELEV_6E}}", "0345897564122");
-            rowData.put("{{NOMBRE_ELEV_CLASSES_6E}}", "0345897564122");
-            rowData.put("{{NOMBRE_ELEV_NON_CLASSES_6E}}", "0345897564122");
-            //
-            rowData.put("{{NOMBRE_MOY_SUP_10_5E}}", "0345897564122");
-            rowData.put("{{NOMBRE_MOY_INF_10_5E}}", "0345897564122");
-            rowData.put("{{NOMBRE_MOY_INF_08_5_5E}}", "0345897564122");
-            rowData.put("{{POURC_MOY_SUP_10_5E}}", "0345897564122");
-            rowData.put("{{NOMBRE_ELEV_5E}}", "0345897564122");
-            rowData.put("{{NOMBRE_ELEV_CLASSES_5E}}", "0345897564122");
-            rowData.put("{{NOMBRE_ELEV_NON_CLASSES_5E}}", "0345897564122");
-            rowData.put("{{NOMBRE_MOY_SUP_10_4E}}", "0345897564122");
-            rowData.put("{{NOMBRE_MOY_INF_10_4E}}", "0345897564122");
-            rowData.put("{{NOMBRE_MOY_INF_08_5_4E}}", "0345897564122");
-            rowData.put("{{POURC_MOY_SUP_10_4E}}", "0345897564122");
-            rowData.put("{{POURC_MOY_INF_10_4E}}", "0345897564122");
-            rowData.put("{{POURC_MOY_INF_08_5_4E}}", "0345897564122");
-            rowData.put("{{NOMBRE_ELEV_4E}}", "0345897564122");
-            rowData.put("{{NOMBRE_ELEV_CLASSES_4E}}", "0345897564122");
-            rowData.put("{{NOMBRE_ELEV_NON_CLASSES_4E}}", "0345897564122");
-            rowData.put("{{NOMBRE_MOY_SUP_10_3E}}", "0345897564122");
-            rowData.put("{{NOMBRE_MOY_INF_10_3E}}", "0345897564122");
-            rowData.put("{{NOMBRE_MOY_INF_08_5_3E}}", "0345897564122");
-            rowData.put("{{POURC_MOY_SUP_10_3E}}", "0345897564122");
-            rowData.put("{{POURC_MOY_INF_10_3E}}", "0345897564122");
-            rowData.put("{{POURC_MOY_INF_08_5_3E}}", "0345897564122");
-            rowData.put("{{NOMBRE_ELEV_3E}}", "0345897564122");
-            rowData.put("{{NOMBRE_ELEV_CLASSES_3E}}", "0345897564122");
-            rowData.put("{{NOMBRE_MOY_SUP_10_CLASSE}}", "0345897564122");
-            rowData.put("{{NOMBRE_MOY_INF_10_CLASSE}}", "0345897564122");
-            rowData.put("{{NOMBRE_MOY_INF_08_5_CLASSE}}", "0345897564122");
-            rowData.put("{{POURC_MOY_SUP_10_CLASSE}}", "0345897564122");
-            rowData.put("{{POURC_MOY_INF_10_CLASSE}}", "0345897564122");
-            rowData.put("{{POURC_MOY_INF_08_5_CLASSE}}", "0345897564122");
-            rowData.put("{{NOMBRE_ELEV_CLASSE}}", "0345897564122");
-            rowData.put("{{NOMBRE_ELEV_CLASSES_CLASSE}}", "0345897564122");
-            rowData.put("{{NOMBRE_ELEV_NON_CLASSES_CLASSE}}", "0345897564122");
-            replacePlaceholdersInTableRow(row, rowData);
-        }
-
-
-    }
 
     private static void mergeCellsVertically(XWPFTable table, int col, int fromRow, int toRow) {
         for (int rowIndex = fromRow; rowIndex <= toRow; rowIndex++) {
@@ -563,4 +1047,79 @@ public class WordTempResultaAffProcessor {
     public static double arrondie(double d) {
         return Double.parseDouble(String.format("%.2f", d));
     }
+  public int getNombreDeclasseParNiveau(Long idEcole,String libelleAnnee ,String libelleTrimetre,String niveau){
+    List<NiveauDto> classeNiveauDtoList = new ArrayList<>() ;
+    TypedQuery<NiveauDto> q = em.createQuery( "SELECT new com.vieecoles.dto.NiveauDto(b.libelleClasse) from Bulletin b  where b.ecoleId =:idEcole and b.libellePeriode=:periode and b.anneeLibelle=:annee and b.niveau=:niveau " +
+        "group by b.libelleClasse", NiveauDto.class);
+    classeNiveauDtoList = q.setParameter("idEcole", idEcole)
+        .setParameter("annee", libelleAnnee)
+        .setParameter("periode", libelleTrimetre)
+        .setParameter("niveau", niveau)
+        . getResultList() ;
+    return classeNiveauDtoList.size() ;
+  }
+  public static String afficherValeurParNiveau(String niveau) {
+    // Mapping des niveaux avec leurs correspondants
+    switch (niveau) {
+      case "Sixième":
+        return "6ème";
+      case "Cinquième":
+        return "5ème";
+      case "Quatrième":
+        return "4ème";
+      case "Troisième":
+        return "3ème";
+      case "Seconde C":
+        return "2nde C";
+      case "Seconde A":
+        return "2nde A";
+      case "Première A":
+        return "1ère A";
+      case "Première C":
+        return "1ère C";
+      case "Première D":
+        return "1ère D";
+      case "Terminale A":
+        return "Tle A";
+      case "Terminale A1":
+        return "Tle A1";
+      case "Terminale A2":
+        return "Tle A2";
+      case "Terminale C":
+        return "Tle C";
+      case "Terminale D":
+        return "Tle D";
+      default:
+        return niveau;
+    }
+  }
+
+  public static String afficherSecondCycle(String niveau) {
+    // Mapping des niveaux avec leurs correspondants
+    switch (niveau) {
+
+      case "Seconde C":
+        return "2ndes";
+      case "Seconde A":
+        return "2ndes";
+      case "Première A":
+        return "1ères";
+      case "Première C":
+        return "1ères";
+      case "Première D":
+        return "1ères";
+      case "Terminale A":
+        return "Tles";
+      case "Terminale A1":
+        return "Tles";
+      case "Terminale A2":
+        return "Tles";
+      case "Terminale C":
+        return "Tles";
+      case "Terminale D":
+        return "Tles";
+      default:
+        return niveau;
+    }
+  }
 }

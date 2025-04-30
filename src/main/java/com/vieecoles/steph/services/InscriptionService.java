@@ -1,5 +1,6 @@
 package com.vieecoles.steph.services;
 
+import com.vieecoles.entities.operations.Inscriptions;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.MathContext;
@@ -34,14 +35,22 @@ public class InscriptionService implements PanacheRepositoryBase<Inscription, In
 				statut, ecole).list();
 	}
 
-	public Inscription getByEleveAndEcoleAndAnnee(long eleve, long ecole, long annee) {
-		Inscription ins = null;
+	public Inscription getByEleveAndEcoleAndAnnee(long eleve, long ecole, long annee,long branche) {
+
+		Inscription minScription = new Inscription() ;
 		try {
-		ins = Inscription.find("eleve.id = ?1 and ecole.id =?2 and annee.id = ?3", eleve, ecole, annee).singleResult();
-		}catch (Exception e) {
+			   minScription = (Inscription) em.createQuery("select Max(i) from Inscription i  where i.eleve.id=:eleve and i.annee.id=:annee and i.ecole.id=:ecole" +
+							" and i.branche.id=:branche " )
+					.setParameter("ecole", ecole)
+					.setParameter("annee",annee)
+					.setParameter("eleve",eleve)
+					.setParameter("branche",branche)
+					.getSingleResult();
+		} catch (Exception e){
 			e.printStackTrace();
+
 		}
-		return ins;
+		return    minScription ;
 	}
 
 	// Nombre d'eleves dans une ecole

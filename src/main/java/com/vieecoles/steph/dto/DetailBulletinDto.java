@@ -1,5 +1,6 @@
 package com.vieecoles.steph.dto;
 
+import java.util.Date;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,4 +27,15 @@ public class DetailBulletinDto {
 	private String statut;
 	private Double adjustMoyenne;
 	private Boolean isChecked;
+	private String appreciationAn;
+	private Integer pec;
+	private Integer bonus;
+	private Double testLourdNote;
+	private Integer testLourdNoteSur;
+	private Double moyenneIntermediaire;
+	private String sexeProfesseur;
+	private Long matiereRealId;
+	private String isAdjustment;
+	private Date dateCreation;
+
 }

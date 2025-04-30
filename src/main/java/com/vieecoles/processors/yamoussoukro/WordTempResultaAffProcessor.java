@@ -701,7 +701,7 @@ public class WordTempResultaAffProcessor {
       case "Terminale D":
         return "Tle D";
       default:
-        return "Niveau inconnu";
+        return niveau;
     }
   }
 }

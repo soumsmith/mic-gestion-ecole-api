@@ -309,7 +309,7 @@ where  `ecoleviedbv2`.tableau_honneur.libelle_periode= $P{periode}   and
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font fontName="Arial" size="16" isBold="true" isItalic="false"/>
 					</textElement>
-					<textFieldExpression><![CDATA["2023 - 2024."]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{annee_libelle}.replace("Année ", "")]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
 					<reportElement x="367" y="410" width="193" height="20" uuid="96ef1f96-ae84-42c5-9347-904dd3d82412"/>

@@ -53,6 +53,8 @@ public class sousc_atten_etabliss extends PanacheEntityBase {
     @Lob @Basic(fetch = FetchType.LAZY)
     @Column(length=100000)
     private byte[] filigramme ;
+    @Column(length=100000)
+    private byte[] pied_de_page ;
     private String nom_signataire ;
     @Enumerated(EnumType.STRING)
     private Inscriptions.status sousc_atten_etabliss_statut ;
@@ -85,6 +87,14 @@ public class sousc_atten_etabliss extends PanacheEntityBase {
 
     private Long  zone_zoneid ;
     private Long  commune_communeid ;
+
+    public byte[] getPied_de_page() {
+        return pied_de_page;
+    }
+
+    public void setPied_de_page(byte[] pied_de_page) {
+        this.pied_de_page = pied_de_page;
+    }
 
     @Override
     public String toString() {

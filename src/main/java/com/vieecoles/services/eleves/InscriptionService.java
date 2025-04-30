@@ -117,7 +117,7 @@ public class InscriptionService implements PanacheRepositoryBase<Inscriptions, L
        System.out.println("Mon objet7"+annee_scolaire);
 
        System.out.println("Mon objet8"+annee_scolaire);
-      inscr.setInscriptions_delete(0);
+      inscr.setInscriptions_delete(false);
        System.out.println("Mon objet9"+annee_scolaire);
        inscr.setInscriptionsdate_creation(LocalDate.now());
        System.out.println("Mon objet19"+annee_scolaire);
@@ -270,7 +270,7 @@ public class InscriptionService implements PanacheRepositoryBase<Inscriptions, L
         System.out.println("Mon objet7"+annee_scolaire);
 
         System.out.println("Mon objet8"+annee_scolaire);
-        inscr.setInscriptions_delete(0);
+        inscr.setInscriptions_delete(false);
         System.out.println("Mon objet9"+annee_scolaire);
         inscr.setInscriptionsdate_creation(LocalDate.now());
         System.out.println("Mon objet19"+annee_scolaire);
@@ -346,16 +346,33 @@ public class InscriptionService implements PanacheRepositoryBase<Inscriptions, L
                public Inscriptions checkInscrit(Long idEcole , String matricule, Long idAnnee){
                                    Inscriptions minScription = new Inscriptions() ;
                                try {
-                                return    minScription = (Inscriptions) em.createQuery("select o from Inscriptions o join  o.ecole e  join  o.eleve l join o.annee_scolaire " +
-                                                " where o.ecole.ecoleid =:idecole and o.eleve.eleve_matricule =: matricule and o.annee_scolaire.annee_scolaireid =:idAnnee " )
+                                return    minScription = (Inscriptions) em.createQuery("select Max(i) from Inscriptions i , ecole ec , eleve e ,Annee_Scolaire a where i.eleve.eleveid=e.eleveid and i.ecole.ecoleid=ec.ecoleid and" +
+                                        " i.annee_scolaire.annee_scolaireid=a.id and ec.ecoleid=:idecole and a.annee_scolaireid=:idAnnee and e.eleve_matricule=:matricule " )
                                         .setParameter("idecole", idEcole)
                                         .setParameter("matricule",matricule)
                                         .setParameter("idAnnee",idAnnee)
-                                        .getSingleResult();
+                                        // .setParameter("branche",1L)
+                                    .getSingleResult();
                             } catch (Exception e){
+                                   e.printStackTrace();
                                 return  null ;
                             }
               }
+
+    public Inscriptions checkInscritOld(Long idEcole , String matricule, Long idAnnee){
+        Inscriptions minScription = new Inscriptions() ;
+        try {
+            return    minScription = (Inscriptions) em.createQuery("select o from Inscriptions o join  o.ecole e  join  o.eleve l join o.annee_scolaire " +
+                    " where o.ecole.ecoleid =:idecole and o.eleve.eleve_matricule =: matricule and o.annee_scolaire.annee_scolaireid =:idAnnee and o.branche.id=:branche " )
+                .setParameter("idecole", idEcole)
+                .setParameter("matricule",matricule)
+                .setParameter("idAnnee",idAnnee)
+                .setParameter("branche",1L)
+                .getSingleResult();
+        } catch (Exception e){
+            return  null ;
+        }
+    }
 
     @Transactional
     public List<InscriptionAvaliderDto> listTousLesInscription(Long idEcole , Long idAnnee, Inscriptions.typeOperation typeOperation){
@@ -429,7 +446,7 @@ public class InscriptionService implements PanacheRepositoryBase<Inscriptions, L
        Inscriptions minScription = new Inscriptions() ;
        String messageRetour = null;
        minScription = checkInscrit(idEcole,matricule,idAnnee) ;
-       System.out.println("minScription** "+ minScription);
+       System.out.println("minScriptionAAA** "+ minScription);
        if(minScription==null){
            messageRetour =  createinscription(inscriptionDto);
        } else {
@@ -445,7 +462,7 @@ public class InscriptionService implements PanacheRepositoryBase<Inscriptions, L
         Inscriptions minScription = new Inscriptions() ;
         String messageRetour = null;
         minScription = checkInscrit(idEcole,matricule,idAnnee) ;
-        System.out.println("minScription** "+ minScription);
+        System.out.println("minScriptionBB** "+ minScription);
         if(minScription==null){
             messageRetour =  createinscriptionImporter(inscriptionDto);
         } else {
@@ -461,7 +478,6 @@ public class InscriptionService implements PanacheRepositoryBase<Inscriptions, L
         Inscriptions minScription = new Inscriptions() ;
         String messageRetour = null;
         minScription = checkInscrit(idEcole,matricule,idAnnee) ;
-        System.out.println("minScription** "+ minScription);
 
         Long idInscrip= minScription.getInscriptionsid();
 
@@ -539,7 +555,7 @@ public  void updatelibelleHandicap_inscrip (Long InscriptionId , Long oldHandica
         myInsription= (Inscriptions) em.createQuery(" select e from Inscriptions e   where e.inscriptionsid=:inscriptionId ",Inscriptions.class )
                 .setParameter("inscriptionId",inscriptionID)
                 .getSingleResult();
-        myInsription.setInscriptions_delete(0);
+        myInsription.setInscriptions_delete(false);
        // myInsription.setInscriptions_processus(Inscriptions.processus.EN_COURS);
         myInsription.setInscriptions_status(Inscriptions.status.VALIDEE);
     }
@@ -797,7 +813,7 @@ public  void updatelibelleHandicap_inscrip (Long InscriptionId , Long oldHandica
             throw new RuntimeException("Cette ecole n'existe pas ");
 
         ins.setInscriptionsdate_modification(LocalDate.now());
-         ins.setInscriptions_delete(1);
+         ins.setInscriptions_delete(true);
 
     }
 

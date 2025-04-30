@@ -15,6 +15,7 @@ public class MajorParClasseNiveauDto {
     private Double moyGeneral;
     private String lv2 ;
     private  Integer ordre_niveau ;
+    private  String nationalite ;
 
     public MajorParClasseNiveauDto(List<MajorParClasseNiveauDto> majorParClasseNiveauDtos) {
     }

@@ -357,6 +357,8 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 		<property name="com.jaspersoft.studio.field.label" value="logo"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
 	</field>
+	<field name="pied_de_page" class="byte[]"/>
+	<field name="photo_eleve" class="byte[]"/>
 	<sortField name="num_ordre"/>
 	<sortField name="parent_matiere"/>
 	<sortField name="matricule"/>
@@ -995,7 +997,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 							<property name="com.jaspersoft.studio.unit.width" value="px"/>
 							<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						</reportElement>
-						<imageExpression><![CDATA[$F{url_photo}]]></imageExpression>
+						<imageExpression><![CDATA[$F{url_photo}==null?$F{photo_eleve}:$F{url_photo}.equals("")?$F{photo_eleve}:$F{url_photo}]]></imageExpression>
 					</image>
 					<frame>
 						<reportElement x="0" y="0" width="446" height="65" uuid="bd519287-9e26-4a07-973c-2d404677ee8f">
@@ -1701,6 +1703,15 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 			</frame>
 		</band>
 	</detail>
+	<columnFooter>
+		<band height="50">
+			<printWhenExpression><![CDATA[$F{pied_de_page} !=null]]></printWhenExpression>
+			<image scaleImage="FillFrame" onErrorType="Blank">
+				<reportElement x="28" y="0" width="538" height="50" uuid="aaf6e731-8cef-403b-a383-b30f75df6589"/>
+				<imageExpression><![CDATA[$F{pied_de_page}]]></imageExpression>
+			</image>
+		</band>
+	</columnFooter>
 	<summary>
 		<band height="155">
 			<rectangle>

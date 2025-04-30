@@ -31,10 +31,11 @@ public class MajorClassePvServices {
             Double moyMajor = null;
 
             moyMajor = getMajorDto(idEcole,classe,libelleAnnee , libelleTrimestre) ;
-
+           System.out.println("moyMajor++++++++++++++++++ ");
             majorExeco = getListMajorParClasseNiveau(idEcole,classe,moyMajor,libelleAnnee , libelleTrimestre) ;
+            System.out.println("majorExeco++++++++++++++++++ ");
 
-            if(majorExeco.size() >1){
+            if(!majorExeco.isEmpty()&& majorExeco.size() >1){
 
                 for (int k=0 ;k< majorExeco.size(); k++){
                     resultatsListEleves = majorExeco.get(k);
@@ -48,6 +49,7 @@ public class MajorClassePvServices {
                     resultatsListElevesDto.add(procesVerbalListeClasseDto) ;
                 }
             }else {
+                if(!majorExeco.isEmpty())
                 resultatsListEleves = majorExeco.get(0);
                 procesVerbalListeClasseDto.setMoyenne(resultatsListEleves.getMoyGeneral());
                 procesVerbalListeClasseDto.setMatricule(resultatsListEleves.getMatricule());

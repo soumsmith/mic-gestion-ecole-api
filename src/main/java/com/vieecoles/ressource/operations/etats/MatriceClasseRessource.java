@@ -79,7 +79,15 @@ public class MatriceClasseRessource {
 
         SpiderMatriceClasseDto detailsBull= new SpiderMatriceClasseDto() ;
 
-        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/matriceClasse.jrxml");
+        if(periode.equals("Deuxième Trimestre")) {
+            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/DeuxiemeTrimestre/matriceClasse.jrxml");
+
+        } else {
+            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/matriceClasse.jrxml");
+
+        }
+
+
         List<matriceClasseDto> detailsBull1= new ArrayList<>() ;
         List<matiereMoyenneBilanDto> detailsBull2= new ArrayList<>() ;
         try {
@@ -234,8 +242,15 @@ public class MatriceClasseRessource {
         /*myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/BulletinBean.jrxml");*/
 
         SpiderMatriceClasseDto detailsBull= new SpiderMatriceClasseDto() ;
-
         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/matriceClasse.jrxml");
+
+       /* if(periode.equals("Deuxième Trimestre")) {
+            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/DeuxiemeTrimestre/matriceClasse.jrxml");
+
+        } else {
+            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/matriceClasse.jrxml");
+
+        }*/
         List<matriceClasseDto> detailsBull1= new ArrayList<>() ;
         List<matiereMoyenneBilanDto> detailsBull2= new ArrayList<>() ;
         try {

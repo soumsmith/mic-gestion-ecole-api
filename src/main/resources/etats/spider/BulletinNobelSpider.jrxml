@@ -28,12 +28,14 @@
 	<parameter name="codeEcole" class="java.lang.String"/>
 	<parameter name="positionLogo" class="java.lang.String"/>
 	<parameter name="setBg" class="java.lang.String"/>
+	<parameter name="classe" class="java.lang.String"/>
 	<queryString language="SQL">
 		<![CDATA[select * from  `ecoleviedbv2`.ve_details_infos_bulletins_spider 
 where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule} and 
 `ecoleviedbv2`.ve_details_infos_bulletins_spider.id_ecole=  $P{idEcole} and 
 `ecoleviedbv2`.ve_details_infos_bulletins_spider.annee_libelle= $P{annee} and 
-`ecoleviedbv2`.ve_details_infos_bulletins_spider.libelle_periode= $P{libellePeriode}
+`ecoleviedbv2`.ve_details_infos_bulletins_spider.libelle_periode= $P{libellePeriode} and 
+`ecoleviedbv2`.ve_details_infos_bulletins_spider.libelle_classe=  $P{classe} 
    order by `ecoleviedbv2`.ve_details_infos_bulletins_spider.nom , `ecoleviedbv2`.ve_details_infos_bulletins_spider.prenoms]]>
 	</queryString>
 	<field name="id_ecole" class="java.lang.String">
@@ -338,6 +340,8 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 	<field name="ordre_niveau" class="java.lang.Integer"/>
 	<field name="codeEcole" class="java.lang.String"/>
 	<field name="rang_fr" class="java.lang.Integer"/>
+	<field name="photo_eleve" class="byte[]"/>
+	<field name="pied_de_page" class="byte[]"/>
 	<sortField name="num_ordre"/>
 	<sortField name="parent_matiere"/>
 	<sortField name="matricule"/>
@@ -961,7 +965,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 							<textElement textAlignment="Left">
 								<font fontName="SansSerif" size="8"/>
 							</textElement>
-							<textFieldExpression><![CDATA["Année Scolaire : 2023 -2024"]]></textFieldExpression>
+							<textFieldExpression><![CDATA["Année Scolaire : " + $F{annee_libelle}.replace("Année ", "")]]></textFieldExpression>
 						</textField>
 						<textField>
 							<reportElement x="0" y="0" width="101" height="14" uuid="547b6ca8-6030-44c0-ab04-7dd10eccdb6e">
@@ -1023,7 +1027,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 							<property name="com.jaspersoft.studio.unit.width" value="px"/>
 							<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						</reportElement>
-						<imageExpression><![CDATA[$F{url_photo}]]></imageExpression>
+						<imageExpression><![CDATA[$F{url_photo}==null?$F{photo_eleve}:$F{url_photo}.equals("")?$F{photo_eleve}:$F{url_photo}]]></imageExpression>
 					</image>
 					<frame>
 						<reportElement x="0" y="0" width="376" height="65" uuid="bd519287-9e26-4a07-973c-2d404677ee8f">
@@ -1761,6 +1765,16 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 			</frame>
 		</band>
 	</detail>
+	<columnFooter>
+		<band height="50">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<printWhenExpression><![CDATA[$F{pied_de_page} !=null]]></printWhenExpression>
+			<image scaleImage="FillFrame" onErrorType="Blank">
+				<reportElement x="28" y="0" width="538" height="50" uuid="e088a1c3-e4a6-4784-ac29-dcf26000bc17"/>
+				<imageExpression><![CDATA[$F{pied_de_page}]]></imageExpression>
+			</image>
+		</band>
+	</columnFooter>
 	<summary>
 		<band height="155">
 			<rectangle>
