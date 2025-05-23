@@ -31,9 +31,9 @@ public class apachePoiResource {
                                  @PathParam("libelleTrimetre") String libelleTrimetre) throws Exception {
 
         byte[] wordFile;
-       FileInputStream fis = new FileInputStream("src/main/resources/etats/apochePoi/Bouake/RAPPORT_TRIMESTRIEL.docx");
+      // FileInputStream fis = new FileInputStream("src/main/resources/etats/apochePoi/Bouake/RAPPORT_TRIMESTRIEL.docx");
 
-    // FileInputStream fis = new FileInputStream("src/main/resources/etats/apochePoi/DREN YAMOUSSOUKRO/RAPPORT_TRIMESTRIEL.docx");
+    FileInputStream fis = new FileInputStream("src/main/resources/etats/apochePoi/DREN YAMOUSSOUKRO/RAPPORT_TRIMESTRIEL.docx");
 
 
 
@@ -42,8 +42,8 @@ public class apachePoiResource {
             byte[] fileContent = fis.readAllBytes();
             ByteArrayInputStream fis1 = new ByteArrayInputStream(fileContent);
         //wordFile = wordTempProcessor.generateWordFile(idEcole, libelleAnnee, libelleTrimetre, fis1);
-        //  wordFile = wordTempYakroProcessor.generateWordFile(idEcole, libelleAnnee, libelleTrimetre, fis1);
-        wordFile = wordTempBouakeProcessor.generateWordFile(idEcole, libelleAnnee, libelleTrimetre, fis1);
+          wordFile = wordTempYakroProcessor.generateWordFile(idEcole, libelleAnnee, libelleTrimetre, fis1);
+       // wordFile = wordTempBouakeProcessor.generateWordFile(idEcole, libelleAnnee, libelleTrimetre, fis1);
 
             // Préparer les en-têtes pour la réponse
             HttpHeaders headers = new HttpHeaders();

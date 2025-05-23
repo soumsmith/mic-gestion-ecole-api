@@ -297,7 +297,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 
 	/**
 	 * Cette méthode permet de calculer les moyennes des élèves d'une classe.
-	 * 
+	 *
 	 * @param classeId
 	 * @param anneeId
 	 * @param periodeId
@@ -831,7 +831,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 	/**
 	 * Cette méthode renvoie le classement des eleves d'une classe dans une matière
 	 * et pour une période sans ténir compte de la logique des matières EMR.
-	 * 
+	 *
 	 * @param classeId
 	 * @param matiereId
 	 * @param anneeId
@@ -1213,7 +1213,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 
 			for (MoyenneEleveDto m : moyEleve) {
 				if (m.getMoyFr() != null) {
-					m.setRangFr(moyennesFrExcpt.indexOf(m.getMoyFr()));
+					m.setRangFr(moyennesFrExcpt.indexOf(m.getMoyFr())+1);
 				} else {
 					m.setRangFr(moyennesFrExcpt.size());
 				}
@@ -1310,7 +1310,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 
 	/**
 	 * Calcul de moyenne generale de l eleve et calcul de rang
-	 * 
+	 *
 	 * @param moyEleve
 	 */
 	void calculMoyenneGeneralEleve(List<MoyenneEleveDto> moyEleve) {
@@ -1916,7 +1916,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 //					notesEleveDto.getList().add(matiereNotesEleveDto);
 //				}
 //			}
-//			
+//
 //		} else {
 //			System.out.println("NEW");
 //			MatiereNotesEleveDto matiereNotesEleveDto = new MatiereNotesEleveDto();

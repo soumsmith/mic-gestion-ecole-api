@@ -75,7 +75,7 @@ public class WordTempProcessor {
         XWPFTable table = document.getTableArray(20);
 
 
-       wordTempResultaAffProcessor.getResultatAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
+       /*wordTempResultaAffProcessor.getResultatAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
         System.out.println("ResultaAff ok");
        wordTempRecapResultatProcessor.getRecapResultatAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
         System.out.println("RecapResultaAff ok");
@@ -86,10 +86,10 @@ public class WordTempProcessor {
         wordTempRecapAffNonAffResultatProcessor.getRecapResultatAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
         System.out.println("RecapResultaAffEtNonAff ok");
         wordTempListMajorProcessor.getListeMajorClasse(document,idEcole ,libelleAnnee,libelleTrimetre);
-        System.out.println("ListMajor ok");
+        System.out.println("ListMajor ok");*/
         wordTempListAffectesProcessor.getEleveAffecteParClasse(document,idEcole ,libelleAnnee,libelleTrimetre);
         System.out.println("Liste Eleve Affectes ok");
-        wordTempListNonAffectesProcessor.getEleveNosAffecteParClasse(document,idEcole ,libelleAnnee,libelleTrimetre);
+       /* wordTempListNonAffectesProcessor.getEleveNosAffecteParClasse(document,idEcole ,libelleAnnee,libelleTrimetre);
         System.out.println("Liste  Eleve non Affectes ok");
         wordTempListTransfertProcessor.getListTransfert(document,idEcole) ;
         System.out.println("ListeTransfert ok");
@@ -100,6 +100,7 @@ public class WordTempProcessor {
         wordTempEffectifApprocheNiveauGenre.getListeApprocheParNiveau(document,idEcole ,libelleAnnee,libelleTrimetre);
         System.out.println("List Approche Niveau Genre ok");
       wordTempStatistiqueLangueVivanteProcessor.getResultatAffProcessor(document,idEcole,libelleAnnee,libelleTrimetre,anneeId);
+*/
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         document.write(outputStream);
         document.close();

@@ -961,7 +961,7 @@ where `ecoleviedbv2`.imprimer_les_derniers_bulletins_et_livrets.matricule =  $P{
 							<textElement textAlignment="Left">
 								<font fontName="SansSerif" size="9"/>
 							</textElement>
-							<textFieldExpression><![CDATA["ANNEE ACADEMIQUE 2023 2024 "]]></textFieldExpression>
+							<textFieldExpression><![CDATA[ "ANNEE ACADEMIQUE: " + $F{annee_libelle}.replace("Année ", "")]]></textFieldExpression>
 						</textField>
 						<textField>
 							<reportElement x="0" y="0" width="104" height="13" uuid="e5b2f130-c8d9-4b43-a913-3a4c1992497b">

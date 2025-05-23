@@ -828,7 +828,7 @@ if (!compress){
         } else {
             if(libellePeriode.equals("Troisième Trimestre"))
             {
-                myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/BulletinNobelSpiderTrois.jrxml");
+                myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/BulletinNobelSpiderTroisV2.jrxml");
 
             }
 
@@ -947,7 +947,7 @@ if (!compress){
 
         } else {
             if(libellePeriode.equals("Troisième Trimestre")) {
-                myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/BulletinNobelSpiderEtanTrois.jrxml");
+                myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/BulletinNobelSpiderEtanTroisV2.jrxml");
 
             }
 

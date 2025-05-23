@@ -2,6 +2,7 @@ package com.vieecoles.processors.dren3;
 
 import com.vieecoles.dto.NiveauOrderDto;
 import com.vieecoles.dto.eleveAffecteParClasseDto;
+import com.vieecoles.dto.eleveAffecteParClasseDtoAvecTousTrimestres;
 import com.vieecoles.services.etats.appachePoi.EleveAffecteParClassePoiServices;
 import com.vieecoles.steph.entities.Ecole;
 import java.util.ArrayList;
@@ -66,7 +67,7 @@ public class WordTempListAffectesProcessor {
         }
 
         for (int k = classeList.size() - 1; k >= 0; k--) {
-            List<eleveAffecteParClasseDto>  elevAffectes = new ArrayList<>() ;
+            List<eleveAffecteParClasseDtoAvecTousTrimestres>  elevAffectes = new ArrayList<>() ;
             elevAffectes= eleveAffecteParClassePoiServices.eleveAffecteParClasse(idEcole,libelleAnnee,libelleTrimestre,classeList.get(k).getNiveau());
 
         if (indexToInsert != -1) {
@@ -108,7 +109,7 @@ public class WordTempListAffectesProcessor {
             Ecole MyEcole;
             MyEcole= Ecole.findById(idEcole);
             currentValue = MyEcole.getLibelle();
-            for (eleveAffecteParClasseDto eleve : elevAffectes) {  // Exemple de 3 lignes
+            for (eleveAffecteParClasseDtoAvecTousTrimestres eleve : elevAffectes) {  // Exemple de 3 lignes
                 XWPFTableRow row = table.createRow();
                 if (row == null) {
                     row = table.insertNewTableRow(table.getNumberOfRows());
