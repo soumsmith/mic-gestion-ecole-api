@@ -85,7 +85,6 @@ public class EleveAffecteParClassePoiServices {
                 .setParameter("affecte", "AFFECTE")
                 .setParameter("annee", libelleAnnee)
                 .getResultList();
-     System.out.println("Nombre Bulletin "+tousLesBulletins.size());
             // 2. Organiser les données par élève
             Map<String, eleveAffecteParClasseDtoAvecTousTrimestres> elevesMap = new HashMap<>();
 
@@ -95,7 +94,7 @@ public class EleveAffecteParClassePoiServices {
                 Double moyenneGenerale = (Double) bulletinData[14];
                 Integer rang = (Integer) bulletinData[15];
                 String appreciation = (String) bulletinData[16];
-                System.out.println("matricule "+matricule+"trimestre "+trimestre+"moyenneGenerale "+moyenneGenerale);
+                String nomProfesseur= (String) bulletinData[12];
 
                 if (!elevesMap.containsKey(matricule)) {
                     eleveAffecteParClasseDtoAvecTousTrimestres eleve = new eleveAffecteParClasseDtoAvecTousTrimestres();
@@ -113,9 +112,10 @@ public class EleveAffecteParClassePoiServices {
                     eleve.setNomEducateur((String) bulletinData[9]);
                     eleve.setOrdre_niveau((Integer) bulletinData[10]);
                     eleve.setClasseLibelle((String) bulletinData[11]);
-                    eleve.setProfesseurPrincipal((String) bulletinData[12]);
-                    eleve.setRang(rang);
-                    eleve.setObservat(appreciation);
+                    //eleve.setProfesseurPrincipal((String) bulletinData[12]);
+                    //eleve.setRang(rang);
+                    //eleve.setObservat(appreciation);
+                    //eleve.setProfesseurPrincipal(nomProfesseur);
 
                     elevesMap.put(matricule, eleve);
                 }
@@ -131,6 +131,9 @@ public class EleveAffecteParClassePoiServices {
 
                 } else if ("Troisième Trimestre".equals(trimestre)) {
                     eleve.setMoyeGeneralTrim3(moyenneGenerale);
+                    eleve.setRang(rang);
+                    eleve.setProfesseurPrincipal(nomProfesseur);
+                    eleve.setObservat(appreciation);
 
                 }
             }
@@ -140,7 +143,7 @@ public class EleveAffecteParClassePoiServices {
             // 4. Trier la liste finale par nom et prénom
             resultatFinal.sort(Comparator.comparing(eleveAffecteParClasseDtoAvecTousTrimestres::getNomEleve)
                 .thenComparing(eleveAffecteParClasseDtoAvecTousTrimestres::getPrenomEleve));
-           System.out.println("resultatFinal_longueur "+resultatFinal.size());
+
             return resultatFinal;
 
         } catch (NoResultException e){

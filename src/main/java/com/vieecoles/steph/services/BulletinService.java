@@ -402,7 +402,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 				try {
 					 infosInscriptionsEleve = inscriptionService.getByEleveAndEcoleAndAnnee(
 							me.getEleve().getId(), me.getClasse().getEcole().getId(), Long.parseLong(annee),me.getClasse().getBranche().getId());
-					System.out.println("infosInscriptionsEleve>>>> "+infosInscriptionsEleve.toString());
+					System.out.println("infosInscriptionsEleve>>>> "+infosInscriptionsEleve.getId());
 				} catch (RuntimeException e) {
 					e.printStackTrace();
 				}

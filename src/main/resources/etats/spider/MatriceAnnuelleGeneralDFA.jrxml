@@ -971,7 +971,7 @@ where `ecoleviedbv2`.ve_matrice_annuelle_dfa.libelle_classe =  $P{classe}  and
 					</textElement>
 					<text><![CDATA[Statisques:]]></text>
 				</staticText>
-				<textField>
+				<textField textAdjust="ScaleFont">
 					<reportElement x="50" y="0" width="30" height="15" uuid="57f2b59a-4cb2-48f9-8df6-8e8f026305ab">
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
@@ -982,7 +982,7 @@ where `ecoleviedbv2`.ve_matrice_annuelle_dfa.libelle_classe =  $P{classe}  and
 						<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement>
+					<textElement textAlignment="Left">
 						<font size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA["Effectif."]]></textFieldExpression>

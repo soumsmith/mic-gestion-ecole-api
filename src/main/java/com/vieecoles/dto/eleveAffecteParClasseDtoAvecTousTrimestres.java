@@ -20,6 +20,25 @@ public class eleveAffecteParClasseDtoAvecTousTrimestres {
   private  Double moyeGeneralTrim1 ;
   private  Double moyeGeneralTrim2 ;
   private  Double moyeGeneralTrim3;
+  private  Double moyenAnnuel;
+  private  String  rangAn;
+  private  String  lv2;
+
+  public String getLv2() {
+    return lv2;
+  }
+
+  public void setLv2(String lv2) {
+    this.lv2 = lv2;
+  }
+
+  public String getRangAn() {
+    return rangAn;
+  }
+
+  public void setRangAn(String rangAn) {
+    this.rangAn = rangAn;
+  }
 
   public eleveAffecteParClasseDtoAvecTousTrimestres() {
   }
@@ -41,6 +60,14 @@ public class eleveAffecteParClasseDtoAvecTousTrimestres {
     this.observat=eleve.getObservat();
     this.nomEducateur = eleve.getNomEducateur();
     this.ordre_niveau = eleve.getOrdre_niveau();
+  }
+
+  public Double getMoyenAnnuel() {
+    return moyenAnnuel;
+  }
+
+  public void setMoyenAnnuel(Double moyenAnnuel) {
+    this.moyenAnnuel = moyenAnnuel;
   }
 
   public String getClasseLibelle() {

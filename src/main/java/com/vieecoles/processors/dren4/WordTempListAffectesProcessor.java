@@ -1,5 +1,7 @@
 package com.vieecoles.processors.dren4;
 
+import static com.vieecoles.processors.dren3.WordTempListAffectesProcessor.setHeaderCell;
+
 import com.vieecoles.dto.NiveauOrderDto;
 import com.vieecoles.dto.eleveAffecteParClasseDto;
 import com.vieecoles.dto.eleveAffecteParClasseDtoAvecTousTrimestres;
@@ -80,17 +82,24 @@ public class WordTempListAffectesProcessor {
 
             // Créer l'en-tête du tableau (1 ligne, 11 colonnes)
             XWPFTableRow headerRow = table.getRow(0);
-            headerRow.getCell(0).setText("Matricule");
-            headerRow.addNewTableCell().setText("Nom et prénoms");
-            headerRow.addNewTableCell().setText("Sexe");
-            headerRow.addNewTableCell().setText("AN");
-            headerRow.addNewTableCell().setText("Nat");
-            headerRow.addNewTableCell().setText("R");
-            headerRow.addNewTableCell().setText("Statut");
-            headerRow.addNewTableCell().setText("N°DEC AFF");
-            headerRow.addNewTableCell().setText("MOY");
-            headerRow.addNewTableCell().setText("RANG");
-            headerRow.addNewTableCell().setText("OBSERVATION");
+            setHeaderCell(headerRow.getCell(0), "N°", "D9D9D9");
+            setHeaderCell(headerRow.addNewTableCell(), "ETABLISSEMENTS", "D9D9D9");
+            setHeaderCell(headerRow.addNewTableCell(), "N°", "D9D9D9");
+            setHeaderCell(headerRow.addNewTableCell(), "MATRICULE", "D9D9D9");
+            setHeaderCell(headerRow.addNewTableCell(), "NOM ET PRENOMS", "D9D9D9");
+            setHeaderCell(headerRow.addNewTableCell(), "AGE (NE(E)LE)", "D9D9D9");
+            setHeaderCell(headerRow.addNewTableCell(), "GENRE", "D9D9D9");
+            setHeaderCell(headerRow.addNewTableCell(), "NAT.", "D9D9D9");
+            setHeaderCell(headerRow.addNewTableCell(), "RED", "D9D9D9");
+            setHeaderCell(headerRow.addNewTableCell(), "STATUT AFF /NON AFF", "D9D9D9");
+            setHeaderCell(headerRow.addNewTableCell(), "N° DECISION D’AFF", "D9D9D9");
+            setHeaderCell(headerRow.addNewTableCell(), "LV2", "D9D9D9");
+            setHeaderCell(headerRow.addNewTableCell(), "MOY T1", "D9D9D9");
+            setHeaderCell(headerRow.addNewTableCell(), "MOY T2", "D9D9D9");
+            setHeaderCell(headerRow.addNewTableCell(), "MOY T3", "D9D9D9");
+            setHeaderCell(headerRow.addNewTableCell(), "RANG", "D9D9D9");
+            setHeaderCell(headerRow.addNewTableCell(), "CLASSE", "D9D9D9");
+            setHeaderCell(headerRow.addNewTableCell(), "OBSERVATIONS", "D9D9D9");
 
             // Ajouter des lignes au tableau
             for (eleveAffecteParClasseDtoAvecTousTrimestres eleve : elevAffectes) {  // Exemple de 3 lignes
