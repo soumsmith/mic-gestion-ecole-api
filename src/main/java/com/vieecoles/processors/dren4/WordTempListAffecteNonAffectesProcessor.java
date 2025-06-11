@@ -62,7 +62,7 @@ public class WordTempListAffecteNonAffectesProcessor {
 
         for (int k = classeList.size() - 1; k >= 0; k--) {
             List<eleveAffecteParClasseDtoAvecTousTrimestres>  elevAffectes = new ArrayList<>() ;
-            elevAffectes= eleveAffecteParClassePoiServices.getListEleveNonAffectParClassDto(idEcole,libelleAnnee,libelleTrimestre,classeList.get(k).getNiveau());
+            elevAffectes= eleveAffecteParClassePoiServices.eleveAffecteParClasse(idEcole,libelleAnnee,libelleTrimestre,classeList.get(k).getNiveau());
 
         if (indexToInsert != -1) {
            // for (int z=0; z< classeList.size();z++) {
@@ -80,57 +80,57 @@ public class WordTempListAffecteNonAffectesProcessor {
             // Créer l'en-tête du tableau (1 ligne, 11 colonnes)
             XWPFTableRow headerRow = table.getRow(0);
             setHeaderCell(headerRow.getCell(0), "N°", "D9D9D9");
-            setHeaderCell(headerRow.addNewTableCell(), "ETABLISSEMENTS", "D9D9D9");
-            setHeaderCell(headerRow.addNewTableCell(), "N°", "D9D9D9");
+           // setHeaderCell(headerRow.addNewTableCell(), "ETABLISSEMENTS", "D9D9D9");
+           // setHeaderCell(headerRow.addNewTableCell(), "N°", "D9D9D9");
             setHeaderCell(headerRow.addNewTableCell(), "MATRICULE", "D9D9D9");
             setHeaderCell(headerRow.addNewTableCell(), "NOM ET PRENOMS", "D9D9D9");
-            setHeaderCell(headerRow.addNewTableCell(), "AGE (NE(E)LE)", "D9D9D9");
+            setHeaderCell(headerRow.addNewTableCell(), "NE(E)LE", "D9D9D9");
             setHeaderCell(headerRow.addNewTableCell(), "GENRE", "D9D9D9");
             setHeaderCell(headerRow.addNewTableCell(), "NAT.", "D9D9D9");
             setHeaderCell(headerRow.addNewTableCell(), "RED", "D9D9D9");
-            setHeaderCell(headerRow.addNewTableCell(), "STATUT AFF /NON AFF", "D9D9D9");
-            setHeaderCell(headerRow.addNewTableCell(), "N° DECISION D’AFF", "D9D9D9");
+            //setHeaderCell(headerRow.addNewTableCell(), "STATUT AFF /NON AFF", "D9D9D9");
+            //setHeaderCell(headerRow.addNewTableCell(), "N° DECISION D’AFF", "D9D9D9");
             setHeaderCell(headerRow.addNewTableCell(), "LV2", "D9D9D9");
             setHeaderCell(headerRow.addNewTableCell(), "MOY T1", "D9D9D9");
             setHeaderCell(headerRow.addNewTableCell(), "MOY T2", "D9D9D9");
             setHeaderCell(headerRow.addNewTableCell(), "MOY T3", "D9D9D9");
             setHeaderCell(headerRow.addNewTableCell(), "RANG", "D9D9D9");
-            setHeaderCell(headerRow.addNewTableCell(), "CLASSE", "D9D9D9");
-            setHeaderCell(headerRow.addNewTableCell(), "OBSERVATIONS", "D9D9D9");
+            setHeaderCell(headerRow.addNewTableCell(), "M-S", "D9D9D9");
+           // setHeaderCell(headerRow.addNewTableCell(), "OBSERVATIONS", "D9D9D9");
 
             // Ajouter des lignes au tableau
             int numerotation = 1;
             String currentValue = "";
             Ecole MyEcole;
             MyEcole= Ecole.findById(idEcole);
-            currentValue = MyEcole.getLibelle();
+            //currentValue = MyEcole.getLibelle();
             for (eleveAffecteParClasseDtoAvecTousTrimestres eleve : elevAffectes) {  // Exemple de 3 lignes
                 XWPFTableRow row = table.createRow();
                 if (row == null) {
                     row = table.insertNewTableRow(table.getNumberOfRows());
                 }
-                ensureCellCount(row, 18);  // Assurez-vous que chaque ligne a 16 cellules
+                ensureCellCount(row, 13);  // Assurez-vous que chaque ligne a 16 cellules
 
                 // Définir le texte et la taille des cellules de la ligne
                 setCellTextAndFontSize(row.getCell(0), String.valueOf(numerotation), 10);
-                setCellTextAndFontSize(row.getCell(1), "", 10);
-                setCellTextAndFontSize(row.getCell(2), String.valueOf(numerotation), 10);
-                setCellTextAndFontSize(row.getCell(3), eleve.getMatricule(), 10);
-                setCellTextAndFontSize(row.getCell(4), eleve.getNomEleve() + " " + eleve.getPrenomEleve(), 10);
-                setCellTextAndFontSize(row.getCell(5), eleve.getAnneeNaissance(), 10);
-                setCellTextAndFontSize(row.getCell(6), eleve.getSexe(), 10);
-                setCellTextAndFontSize(row.getCell(7), eleve.getNationnalite(), 10);
-                setCellTextAndFontSize(row.getCell(8), eleve.getRedoublan(), 10);
-                setCellTextAndFontSize(row.getCell(9), eleve.getAffecte(), 10);
-                setCellTextAndFontSize(row.getCell(10), eleve.getNumDecisionAffecte(), 10);
-                setCellTextAndFontSize(row.getCell(11), eleve.getLv2(), 10);
-                setCellTextAndFontSize(row.getCell(12), String.valueOf(eleve.getMoyeGeneralTrim1()), 10);
-                setCellTextAndFontSize(row.getCell(13), String.valueOf(eleve.getMoyeGeneralTrim2()), 10);
-                setCellTextAndFontSize(row.getCell(14), String.valueOf(eleve.getMoyeGeneralTrim3()), 10);
-                setCellTextAndFontSize(row.getCell(15), String.valueOf(eleve.getRang()), 10);
-                setCellTextAndFontSize(row.getCell(16), String.valueOf(eleve.getClasseLibelle()), 10);
-                setCellTextAndFontSize(row.getCell(17), eleve.getObservat(), 10);
-                mergeCellsVertically(table, 1, 1, table.getNumberOfRows()-1 );
+                //setCellTextAndFontSize(row.getCell(1), "", 10);
+               // setCellTextAndFontSize(row.getCell(2), String.valueOf(numerotation), 10);
+                setCellTextAndFontSize(row.getCell(1), eleve.getMatricule(), 10);
+                setCellTextAndFontSize(row.getCell(2), eleve.getNomEleve() + " " + eleve.getPrenomEleve(), 10);
+                setCellTextAndFontSize(row.getCell(3), eleve.getAnneeNaissance(), 10);
+                setCellTextAndFontSize(row.getCell(4), eleve.getSexe(), 10);
+                setCellTextAndFontSize(row.getCell(5), eleve.getNationnalite(), 10);
+                setCellTextAndFontSize(row.getCell(6), eleve.getRedoublan(), 10);
+                //setCellTextAndFontSize(row.getCell(9), eleve.getAffecte(), 10);
+                //setCellTextAndFontSize(row.getCell(10), eleve.getNumDecisionAffecte(), 10);
+                setCellTextAndFontSize(row.getCell(7), eleve.getLv2(), 10);
+                setCellTextAndFontSize(row.getCell(8), String.valueOf(eleve.getMoyeGeneralTrim1()), 10);
+                setCellTextAndFontSize(row.getCell(9), String.valueOf(eleve.getMoyeGeneralTrim2()), 10);
+                setCellTextAndFontSize(row.getCell(10), String.valueOf(eleve.getMoyeGeneralTrim3()), 10);
+                setCellTextAndFontSize(row.getCell(11), String.valueOf(eleve.getRang()), 10);
+                setCellTextAndFontSize(row.getCell(12), String.valueOf(eleve.getObservat()), 10);
+                //setCellTextAndFontSize(row.getCell(17), eleve.getObservat(), 10);
+               // mergeCellsVertically(table, 1, 1, table.getNumberOfRows()-1 );
                 numerotation++;
             }
             //table.getRow(1).getCell(1).setText(currentValue);

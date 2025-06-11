@@ -30,15 +30,14 @@ public class resultatsPoiServices {
                              .setParameter("annee", libelleAnnee)
                            . getResultList() ;
 
-  System.out.println("classeNiveauDtoList "+classeNiveauDtoList.toString());
-        System.out.println("Longueur Tableau" +classeNiveauDtoList.size());
+
       int LongTableau =classeNiveauDtoList.size() ;
 
         Long  effeG,effeF,classF,classG,nonclassF,nonclassG,nbreMoySup10F,nbreMoySup10G,nbreMoyInf999F,nbreMoyInf999G,nbreMoyInf85G,nbreMoyInf85F;
         Double  moyClasseGniv=0d,moyClasseFniv=0d, moyClasseniv=0d, pourMoySup10F =0d,pourMoySup10G =0d,pourMoyInf999F =0d,pourMoyInf999G =0d,pourMoyInf85G =0d,pourMoyInf85F =0d,moyClasseF =0d,moyClasseG =0d,moyClasse=0d;
        Integer effectifClasse,orderNiveau ;
         List<ResultatsElevesAffecteDto> resultatsListElevesDto = new ArrayList<>(LongTableau);
-        System.out.println("resultatsListElevesDto Size "+ resultatsListElevesDto.size());
+        //System.out.println("resultatsListElevesDto Size "+ resultatsListElevesDto.size());
         for (int i=0; i< LongTableau;i++) {
             ResultatsElevesAffecteDto resultatsListEleves= new ResultatsElevesAffecteDto();
             orderNiveau= getOrderNiveau(classeNiveauDtoList.get(i).getNiveau() ,libelleAnnee , libelleTrimestre);

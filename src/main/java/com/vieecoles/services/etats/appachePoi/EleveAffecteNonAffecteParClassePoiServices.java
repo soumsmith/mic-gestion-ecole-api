@@ -72,7 +72,7 @@ public class EleveAffecteNonAffecteParClassePoiServices {
             TypedQuery<Object[]> qTousLesBulletins = em.createQuery(
                 "SELECT o.matricule, o.nom, o.prenoms, o.sexe, o.dateNaissance, o.nationalite, " +
                     "o.redoublant, o.affecte, o.numDecisionAffecte, o.nomPrenomEducateur, o.ordreNiveau, " +
-                    "o.libelleClasse, o.nomPrenomProfPrincipal, o.libellePeriode, o.moyGeneral, o.rang, o.appreciation " +
+                    "o.libelleClasse, o.nomPrenomProfPrincipal, o.libellePeriode, o.moyGeneral, o.rang, o.appreciation,o.moyAn,o.rangAn " +
                     "FROM Bulletin o " +
                     "WHERE o.ecoleId = :idEcole AND o.libelleClasse = :classe " +
                     "AND  o.anneeLibelle = :annee " +

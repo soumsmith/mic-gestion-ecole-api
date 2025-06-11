@@ -59,7 +59,7 @@ public class EleveAffecteNonAffecteAnnuelsParClassePoiServices {
             TypedQuery<Object[]> qTousLesBulletins = em.createQuery(
                 "SELECT o.matricule, o.nom, o.prenoms, o.sexe, o.dateNaissance, o.nationalite, " +
                     "o.redoublant, o.affecte, o.numDecisionAffecte, o.nomPrenomEducateur, o.ordreNiveau, " +
-                    "o.libelleClasse, o.nomPrenomProfPrincipal, o.libellePeriode, o.moyGeneral, o.rang, o.appreciation,o.moyAn,o.rangAn,o.lv2 " +
+                    "o.libelleClasse, o.nomPrenomProfPrincipal, o.libellePeriode, o.moyGeneral, o.rang, o.apprAn,o.moyAn,o.rangAn,o.lv2 " +
                     "FROM Bulletin o " +
                     "WHERE o.ecoleId = :idEcole AND o.libelleClasse = :classe " +
                     "AND  o.anneeLibelle = :annee " +
@@ -105,6 +105,7 @@ public class EleveAffecteNonAffecteAnnuelsParClassePoiServices {
                     eleve.setRang(rang);
                     eleve.setObservat(appreciation);
                     eleve.setMoyenAnnuel(moyAnnuels);
+                    eleve.setRangAn(rangAnnuels);
 
 
                     elevesMap.put(matricule, eleve);
@@ -123,6 +124,7 @@ public class EleveAffecteNonAffecteAnnuelsParClassePoiServices {
                     eleve.setMoyeGeneralTrim3(moyenneGenerale);
                     eleve.setMoyenAnnuel(moyAnnuels);
                     eleve.setRangAn(rangAnnuels);
+                    eleve.setObservat(appreciation);
                     eleve.setLv2(lv2);
 
 

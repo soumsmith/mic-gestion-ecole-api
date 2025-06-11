@@ -2,6 +2,7 @@ package com.vieecoles.processors.dren4.Annuels;
 
 import com.vieecoles.dto.StatistiquesNiveauSexeDto;
 import com.vieecoles.processors.dren4.Services.StatistiquesNiveauSexeService;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -52,7 +53,6 @@ public class WordTempListStatistiqueDfaAnnuelsProcessor {
 
             // Récupérer les données par niveau
             List<StatistiquesNiveauSexeDto> listDfa = dfaServices.getStatistiqueDfa(idEcole,libelleAnnee,libelleTrimestre);
-            listDfa.sort(Comparator.comparing(StatistiquesNiveauSexeDto::getOrdreNiveau).reversed());
 
             if (listDfa.size() > 0) {
                 // Créer le tableau principal
@@ -176,9 +176,6 @@ public class WordTempListStatistiqueDfaAnnuelsProcessor {
         if (donneesParCycle.containsKey("1er Cycle")) {
             List<StatistiquesNiveauSexeDto> cycle1 = donneesParCycle.get("1er Cycle");
 
-            // Trier par ordre décroissant (6ème, 5ème, 4ème, 3ème)
-            cycle1.sort((a, b) -> Integer.compare(b.getOrdreNiveau(), a.getOrdreNiveau()));
-
             for (StatistiquesNiveauSexeDto stat : cycle1) {
                 ajouterLigneNiveau(table, currentRow++, stat);
             }
@@ -187,15 +184,51 @@ public class WordTempListStatistiqueDfaAnnuelsProcessor {
             ajouterLigneTotalCycle(table, currentRow++, "Total 1er Cycle", cycle1);
         }
 
-        // Traiter le 2nd cycle
+        // Traiter le 2nd cycle avec sous-totaux pour les 2nde
         if (donneesParCycle.containsKey("2nd Cycle")) {
             List<StatistiquesNiveauSexeDto> cycle2 = donneesParCycle.get("2nd Cycle");
 
-            // Trier par ordre décroissant
-            cycle2.sort((a, b) -> Integer.compare(b.getOrdreNiveau(), a.getOrdreNiveau()));
+            // Séparer les niveaux du 2nd cycle
+            List<StatistiquesNiveauSexeDto> secondes = new ArrayList<>();
+            List<StatistiquesNiveauSexeDto> premieres = new ArrayList<>();
+            List<StatistiquesNiveauSexeDto> terminales = new ArrayList<>();
 
             for (StatistiquesNiveauSexeDto stat : cycle2) {
+                int ordre = stat.getOrdreNiveau();
+                if (ordre == 5 || ordre == 6) { // 2nde A et 2nde C
+                    secondes.add(stat);
+                } else if (ordre >= 7 && ordre <= 9) { // 1ère A, C, D
+                    premieres.add(stat);
+                } else if (ordre >= 10 && ordre <= 14) { // Terminales
+                    terminales.add(stat);
+                }
+            }
+
+            // Traiter les 2nde
+            if (!secondes.isEmpty()) {
+                // Ajouter toutes les 2nde (A et C)
+                for (StatistiquesNiveauSexeDto stat : secondes) {
+                    ajouterLigneNiveau(table, currentRow++, stat);
+                }
+
+                // Total des 2nde (A + C)
+                ajouterLigneTotalCycle(table, currentRow++, "Total 2nde", secondes);
+            }
+
+            // Traiter les 1ère
+            for (StatistiquesNiveauSexeDto stat : premieres) {
                 ajouterLigneNiveau(table, currentRow++, stat);
+            }
+            if (!premieres.isEmpty()) {
+                ajouterLigneTotalCycle(table, currentRow++, "Total 1ère", premieres);
+            }
+
+            // Traiter les Terminales
+            for (StatistiquesNiveauSexeDto stat : terminales) {
+                ajouterLigneNiveau(table, currentRow++, stat);
+            }
+            if (!terminales.isEmpty()) {
+                ajouterLigneTotalCycle(table, currentRow++, "Total Terminale", terminales);
             }
 
             // Ligne total 2nd cycle
@@ -297,6 +330,7 @@ public class WordTempListStatistiqueDfaAnnuelsProcessor {
         ensureCellCount(totalRow, 16);
 
         // Calculer les totaux généraux
+        long totalClasses = listDfa.stream().mapToLong(StatistiquesNiveauSexeDto::getNombreClasses).sum();
         long totalGarcons = listDfa.stream().mapToLong(StatistiquesNiveauSexeDto::getTotalGarcon).sum();
         long totalFilles = listDfa.stream().mapToLong(StatistiquesNiveauSexeDto::getTotalFille).sum();
         long totalEleves = listDfa.stream().mapToLong(StatistiquesNiveauSexeDto::getTotalEleves).sum();
@@ -312,7 +346,7 @@ public class WordTempListStatistiqueDfaAnnuelsProcessor {
 
         // Remplir la ligne de total général
         totalRow.getCell(0).setText("Total Général");
-        totalRow.getCell(1).setText("0"); // NC
+        totalRow.getCell(1).setText(String.valueOf(totalClasses)); // NC
         totalRow.getCell(2).setText(String.valueOf(totalGarcons));
         totalRow.getCell(3).setText(String.valueOf(totalFilles));
         totalRow.getCell(4).setText(String.valueOf(totalEleves));

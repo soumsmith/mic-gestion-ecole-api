@@ -91,23 +91,25 @@ public class WordTempDren4Processor {
 
         XWPFDocument document = new XWPFDocument(fis);
         if (libelleTrimetre.equals("Troisième Trimestre")) {
-            wordTempResultaAffetNonAffProcessor.getResultatAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
-            System.out.println(" Statistique Resultat aff et Non Aff ok");
-            wordTempListAffecteNonAffectesProcessor.getEleveNosAffecteParClasse(document,idEcole ,libelleAnnee,libelleTrimetre);
+
+             wordTempListAffecteNonAffectesProcessor.getEleveNosAffecteParClasse(document,idEcole ,libelleAnnee,libelleTrimetre);
             System.out.println("Liste des élèves aff et Non Aff ok");
             wordTempListMajorProcessor.getListeMajorClasse(document,idEcole ,libelleAnnee,libelleTrimetre);
             System.out.println("Liste des major  ok");
             wordTempListAffecteNonAffectesAnnuelsProcessor.getEleveNosAffecteParClasse(document,idEcole ,libelleAnnee,libelleTrimetre);
             System.out.println("Liste des élèves aff et Non Aff  Annuels ok");
-            wordTempResultaAffetNonAffAnnuelsProcessor.getResultatAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
-            System.out.println(" Statistique Resultat aff et Non Aff  Annuelsok");
+
             wordTempListMajorAnnuelsProcessor.getListeMajorClasse(document,idEcole ,libelleAnnee,libelleTrimetre);
             System.out.println("Liste des major Annuels ok");
             wordTempStatistiqueGenreProcessor.getResultatAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre,anneeId);
             System.out.println("Statistique genre ok");
 
+            wordTempResultaAffetNonAffProcessor.getResultatAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
+            System.out.println(" Statistique Resultat aff et Non Aff ok");
+            wordTempResultaAffetNonAffAnnuelsProcessor.getResultatAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
+            System.out.println(" Statistique Resultat aff et Non Aff  Annuelsok");
             wordTempListStatistiqueDfaAnnuelsProcessor.getListeMajorClasse(document,idEcole ,libelleAnnee,libelleTrimetre);
-            System.out.println("Statistique DFA ok");
+            System.out.println("Statistique DFA ok>>>");
             wordTempTauxPromotionInterneProcessor.creerTableauTauxPromotion(document,idEcole ,libelleAnnee,libelleTrimetre);
             System.out.println("Statistique Promotion interne ok");
         } else {
@@ -117,7 +119,7 @@ public class WordTempDren4Processor {
             System.out.println("Liste des élèves aff et Non Aff ok");
             wordTempListMajorProcessor.getListeMajorClasse(document,idEcole ,libelleAnnee,libelleTrimetre);
             System.out.println("Liste des major  ok");
-           
+
         }
 
         // Sauvegarder le document modifié dans un tableau de bytes

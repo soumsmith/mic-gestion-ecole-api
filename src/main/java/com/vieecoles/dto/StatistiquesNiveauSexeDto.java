@@ -103,6 +103,44 @@ public class StatistiquesNiveauSexeDto {
     this(ordreNiveau, libelleNiveau, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L);
   }
 
+  @Override
+  public String toString() {
+    return "StatistiquesNiveauSexeDto{" +
+        "ordreNiveau=" + ordreNiveau +
+        ", libelleNiveau='" + libelleNiveau + '\'' +
+        ", admisGarcon=" + admisGarcon +
+        ", admisFille=" + admisFille +
+        ", totalAdmis=" + totalAdmis +
+        ", redoublantGarcon=" + redoublantGarcon +
+        ", redoublantFille=" + redoublantFille +
+        ", totalRedoublants=" + totalRedoublants +
+        ", exclusGarcon=" + exclusGarcon +
+        ", exclusFille=" + exclusFille +
+        ", totalExclus=" + totalExclus +
+        ", nonClasseGarcon=" + nonClasseGarcon +
+        ", nonClasseFille=" + nonClasseFille +
+        ", totalNonClasse=" + totalNonClasse +
+        ", totalGarcon=" + totalGarcon +
+        ", totalFille=" + totalFille +
+        ", totalEleves=" + totalEleves +
+        ", pourcentageAdmis=" + pourcentageAdmis +
+        ", pourcentageRedoublants=" + pourcentageRedoublants +
+        ", pourcentageExclus=" + pourcentageExclus +
+        ", pourcentageNonClasse=" + pourcentageNonClasse +
+        ", pourcentageAdmisGarcon=" + pourcentageAdmisGarcon +
+        ", pourcentageAdmisFille=" + pourcentageAdmisFille +
+        ", pourcentageRedoublantGarcon=" + pourcentageRedoublantGarcon +
+        ", pourcentageRedoublantFille=" + pourcentageRedoublantFille +
+        ", pourcentageExclusGarcon=" + pourcentageExclusGarcon +
+        ", pourcentageExclusFille=" + pourcentageExclusFille +
+        ", pourcentageNonClasseGarcon=" + pourcentageNonClasseGarcon +
+        ", pourcentageNonClasseFille=" + pourcentageNonClasseFille +
+        ", pourcentageTotalGarcon=" + pourcentageTotalGarcon +
+        ", pourcentageTotalFille=" + pourcentageTotalFille +
+        ", nombreClasses=" + nombreClasses +
+        '}';
+  }
+
   // Méthode pour calculer les totaux et pourcentages
   public void calculerTotauxEtPourcentages() {
     // Calcul des totaux

@@ -53,11 +53,11 @@ System.out.println("Longueur Tableau "+niveauDtoList.size());
     List<StatistiquesNiveauSexeDto> statistiquesNiveauSexeDtosList = new ArrayList<>() ;
     for (int i=0; i< longTableau;i++) {
       StatistiquesNiveauSexeDto statistiquesNiveauSexeDtos = new StatistiquesNiveauSexeDto();
-      int ordre=niveauDtoList.get(i).getId();
+      Integer ordre=niveauDtoList.get(i).getId();
       System.out.println("ordre: " + ordre);
       System.out.println("idEcole: " + idEcole);
       try {
-        nombreClasse = findNombreClasseBranche(ordre,idEcole) ;
+        nombreClasse = findNombreClasseBranche(ordre,idEcole ,libelleAnnee) ;
         if (nombreClasse==null)
           nombreClasse=0L;
       } catch (RuntimeException re) {
@@ -111,7 +111,7 @@ System.out.println("Longueur Tableau "+niveauDtoList.size());
 
       // Remplissage du DTO
       statistiquesNiveauSexeDtos.setOrdreNiveau(ordre);
-      statistiquesNiveauSexeDtos.setLibelleNiveau(String.valueOf(ordre));
+      statistiquesNiveauSexeDtos.setLibelleNiveau(niveauDtoList.get(i).getNiveau());
       statistiquesNiveauSexeDtos.setAdmisFille(admisFille);
       statistiquesNiveauSexeDtos.setAdmisGarcon(admisGarcon);
       statistiquesNiveauSexeDtos.setTotalAdmis(totalAdmis);
@@ -383,6 +383,7 @@ System.out.println("Longueur Tableau "+niveauDtoList.size());
 
   public Long compterAdmisGarconsNiveau(Long idEcole, String libelleTrimestre, String libelleAnnee, Integer ordreNiveau) {
     StatistiquesNiveauSexeDto stats = obtenirStatistiquesNiveau(idEcole, libelleTrimestre, libelleAnnee, ordreNiveau);
+
     return stats != null ? stats.getAdmisGarcon() : 0L;
   }
 
@@ -492,12 +493,13 @@ System.out.println("Longueur Tableau "+niveauDtoList.size());
     System.out.println("=== FIN DEBUG ===");
   }
   @Transactional
-  public Long findNombreClasseBranche(long id, Long ecoleId) {
-    String jpql = "SELECT COUNT(c.id) FROM Classe c WHERE c.branche.id = :brancheId AND c.ecole.id = :ecoleId";
+  public Long findNombreClasseBranche(Integer id, Long ecoleId, String anneeLibelle) {
+    String jpql = "SELECT COUNT(DISTINCT c.classeId) FROM Bulletin c WHERE c.ordreNiveau= :ordreId AND c.ecoleId = :ecoleId and c.anneeLibelle=:anneeLibelle ";
 
     TypedQuery<Long> query = em.createQuery(jpql, Long.class);
-    query.setParameter("brancheId", id);
+    query.setParameter("ordreId", id);
     query.setParameter("ecoleId", ecoleId);
+    query.setParameter("anneeLibelle", anneeLibelle);
 
     return query.getSingleResult();
   }

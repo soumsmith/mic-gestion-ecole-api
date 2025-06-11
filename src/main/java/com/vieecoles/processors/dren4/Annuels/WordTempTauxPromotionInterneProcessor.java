@@ -50,7 +50,7 @@ public class WordTempTauxPromotionInterneProcessor {
 
       // Récupérer les données par niveau
       List<StatistiquesNiveauSexeDto> listDfa = dfaServices.obtenirStatistiquesParNiveauEtSexe(idEcole, libelleTrimestre, libelleAnnee);
-      listDfa.sort(Comparator.comparing(StatistiquesNiveauSexeDto::getOrdreNiveau).reversed());
+      //listDfa.sort(Comparator.comparing(StatistiquesNiveauSexeDto::getOrdreNiveau).reversed());
       if (listDfa.size() > 0) {
         // Organiser les données par cycles
         Map<String, List<StatistiquesNiveauSexeDto>> donneesParCycle = organiserDonneesParCycle(listDfa);
@@ -100,7 +100,7 @@ public class WordTempTauxPromotionInterneProcessor {
     creerEnteteTableauPromotion(table);
 
     // Trier les données par ordre décroissant
-    donneesCycle.sort((a, b) -> Integer.compare(b.getOrdreNiveau(), a.getOrdreNiveau()));
+   // donneesCycle.sort((a, b) -> Integer.compare(b.getOrdreNiveau(), a.getOrdreNiveau()));
 
     // Remplir le tableau avec les données
     int currentRow = 2; // Commencer après les en-têtes

@@ -330,6 +330,7 @@ where `ecoleviedbv2`.imprimer_les_derniers_bulletins_et_livrets.matricule =  $P{
 	<field name="is_class_1er_trim" class="java.lang.String"/>
 	<field name="is_class_2e_trim" class="java.lang.String"/>
 	<field name="is_class_3e_trim" class="java.lang.String"/>
+	<field name="pied_de_page" class="byte[]"/>
 	<sortField name="num_ordre"/>
 	<sortField name="parent_matiere"/>
 	<sortField name="matricule"/>
@@ -1721,6 +1722,14 @@ where `ecoleviedbv2`.imprimer_les_derniers_bulletins_et_livrets.matricule =  $P{
 			</frame>
 		</band>
 	</detail>
+	<pageFooter>
+		<band height="50">
+			<image scaleImage="FillFrame" onErrorType="Blank">
+				<reportElement x="28" y="0" width="538" height="50" uuid="9f78660c-5835-4ee8-8b0d-842dbe069f96"/>
+				<imageExpression><![CDATA[$F{pied_de_page}]]></imageExpression>
+			</image>
+		</band>
+	</pageFooter>
 	<summary>
 		<band height="155">
 			<rectangle>
