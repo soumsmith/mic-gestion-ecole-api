@@ -269,7 +269,7 @@ public class BulletinSpiderRessource {
             }
 
 
-        }
+            }
             else if (niveauEnseign==5||niveauEnseign==6) {
                 if(!pivoter) {
                     if(libellePeriode.equals("Deuxième Semestre"))
@@ -311,7 +311,7 @@ public class BulletinSpiderRessource {
 
 
             }
-
+// Fin compresser
         } else {
             if(niveauEnseign==2) {
                 System.out.println("Libelle Periode "+libellePeriode);

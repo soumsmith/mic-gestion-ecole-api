@@ -1779,14 +1779,6 @@ where `ecoleviedbv2`.imprimer_les_derniers_bulletins_et_livrets.matricule =  $P{
 			</frame>
 		</band>
 	</detail>
-	<pageFooter>
-		<band height="50">
-			<image scaleImage="FillFrame" onErrorType="Blank">
-				<reportElement x="28" y="0" width="538" height="50" uuid="ac3714bc-70ec-4451-bbe0-2ff6a762378a"/>
-				<imageExpression><![CDATA[$F{pied_de_page}]]></imageExpression>
-			</image>
-		</band>
-	</pageFooter>
 	<summary>
 		<band height="210">
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
