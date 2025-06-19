@@ -231,7 +231,7 @@ public class BulletinSpiderRessource {
                     }
 
                 }
-                else if(!piedPage) {
+                else if(piedPage) {
                     System.out.println("piedPage ");
                     if(libellePeriode.equals("Troisième Trimestre")) {
                         System.out.println("callSpiderNobelPiedPageTrois.jrxml") ;
@@ -551,7 +551,7 @@ public class BulletinSpiderRessource {
 
                 }
 
-                else if(!piedPage) {
+                else if(piedPage) {
                   System.out.println("piedPage ");
                   if(libellePeriode.equals("Troisième Trimestre")) {
                     System.out.println("callSpiderNobelPiedPageTrois.jrxml") ;
@@ -865,7 +865,7 @@ if (!compress){
         else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinNobelSpider90.jrxml");
         }
 
-        else if(!piedPage){
+        else if(piedPage){
             if(libellePeriode.equals("Troisième Trimestre"))
             {
                 myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/BulletinNobelSpiderAvecPiedTroisV2.jrxml");
