@@ -1,6 +1,6 @@
 package com.vieecoles.projection;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 public class personnel_matiereSelect  {
     @Id

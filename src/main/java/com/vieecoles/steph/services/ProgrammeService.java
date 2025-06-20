@@ -3,8 +3,8 @@ package com.vieecoles.steph.services;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 import com.vieecoles.steph.dto.IdStringCodeLibelleDto;
 import com.vieecoles.steph.dto.ProgrammeDto;
@@ -16,10 +16,10 @@ import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 @ApplicationScoped
 public class ProgrammeService implements PanacheRepositoryBase<Programme, String> {
-	
+
 	@Inject
 	ProgrammeEcoleService programmeEcoleService;
-	
+
 	public List<Programme> getList() {
 		return Programme.listAll();
 	}
@@ -27,7 +27,7 @@ public class ProgrammeService implements PanacheRepositoryBase<Programme, String
 	public Programme getById(String id) {
 		return Programme.findById(id);
 	}
-	
+
 	public ProgrammeDto listByEcole(Long ecoleId) {
 		ProgrammeDto dto = new ProgrammeDto();
 		Ecole ecole = Ecole.findById(ecoleId);

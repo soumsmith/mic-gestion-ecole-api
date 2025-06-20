@@ -2,11 +2,12 @@ package com.vieecoles.entities;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "cycle")
 public class cycle extends PanacheEntityBase  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

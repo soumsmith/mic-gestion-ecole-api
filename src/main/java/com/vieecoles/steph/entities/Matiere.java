@@ -6,22 +6,22 @@ import lombok.EqualsAndHashCode;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "matiere")
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class Matiere extends PanacheEntityBase {
-     
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
 	@Column(name = "matiereid")
@@ -30,12 +30,12 @@ public class Matiere extends PanacheEntityBase {
     private  String code;
 	@Column(name = "matierelibelle")
     private  String libelle;
-	
+
 	private Integer pec;
 	private Integer bonus;
 	@ManyToOne
 	@JoinColumn(name = "niveau_enseign_id")
-	private NiveauEnseignement niveauEnseignement; 
+	private NiveauEnseignement niveauEnseignement;
     @Transient
     private Double moyenne;
     @Transient
@@ -59,10 +59,10 @@ public class Matiere extends PanacheEntityBase {
     @ManyToOne
     @JoinColumn(name = "categorie_matiere_categorie_matiereid")
     private CategorieMatiere categorie;
-    
+
     private LocalDateTime dateCreation;
     private LocalDateTime dateUpdate;
-    
+
     @Transient
     private String user;
 

@@ -2,7 +2,7 @@ package com.vieecoles.entities.operations;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 import com.vieecoles.entities.Civilite;
 import com.vieecoles.entities.domaine_formation;
@@ -10,6 +10,7 @@ import com.vieecoles.entities.domaine_formation;
 import java.time.LocalDate;
 
 @Entity
+@Table(name = "panier_personnel")
 public class panier_personnel extends PanacheEntityBase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -5,7 +5,7 @@ import com.vieecoles.entities.Annee_Scolaire;
 import com.vieecoles.entities.Libellehandicap;
 import com.vieecoles.steph.entities.Branche;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;

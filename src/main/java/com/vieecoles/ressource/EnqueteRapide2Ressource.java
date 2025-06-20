@@ -7,10 +7,10 @@ import com.vieecoles.projection.EnqueteSelectDto;
 import com.vieecoles.services.EnqueteRapidService;
 import com.vieecoles.services.EnqueteRapidService2;
 
-import javax.inject.Inject;
-import javax.transaction.Transactional;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
+import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
 import java.util.List;
 
 @Path("/enquete-rapide")

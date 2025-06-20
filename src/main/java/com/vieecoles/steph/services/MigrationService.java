@@ -2,9 +2,9 @@ package com.vieecoles.steph.services;
 
 import java.util.List;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.transaction.Transactional;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 
 import com.vieecoles.steph.entities.Activite;
 import com.vieecoles.steph.entities.ClasseMatiere;
@@ -28,7 +28,7 @@ public class MigrationService {
 	// A tester
 	@Transactional
 	public void doHandleMigrationMatereEcole() {
-		
+
 		System.out.println("****** MIGRATION TO ECOLE MATIERE *******");
 		// recuperer les matieres sources dans la table des matieres
 		List<Matiere> matieres = matiereService.getList();
@@ -104,7 +104,7 @@ public class MigrationService {
 //				// Maj dans Seance
 //				List<Seances> seancesEcole = Seances
 //						.find("classe.ecole.id= ?1 and matiere.id=?2", ecole.getId(), ehm.getMatiere().getId()).list();
-//				
+//
 //				for(Seances sc:seancesEcole) {
 //					sc.setMatiere(ehm);
 //				}

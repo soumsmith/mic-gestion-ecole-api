@@ -5,8 +5,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.transaction.Transactional;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.transaction.Transactional;
 
 import com.vieecoles.steph.dto.DetailProgressionDto;
 import com.vieecoles.steph.dto.IdLongCodeLibelleDto;
@@ -41,7 +41,7 @@ public class DetailProgressionService implements PanacheRepositoryBase<DetailPro
 		}
 		return list;
 	}
-	
+
 	public List<GenericProjectionStringId> getProjectionIdByProgression(String id) {
 		List<GenericProjectionStringId> list = new ArrayList<GenericProjectionStringId>();
 		try {
@@ -100,7 +100,7 @@ public class DetailProgressionService implements PanacheRepositoryBase<DetailPro
 
 	/**
 	 * Cette fonction vérifie si des détails de progresion peuvent être supprimés
-	 * 
+	 *
 	 * @param ids liste des id à supprimer
 	 * @return true si l'ensemble est supprimable et false si au moins un élément
 	 *         dans l'ensemble n'est pas supprimable

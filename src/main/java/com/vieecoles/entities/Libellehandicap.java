@@ -2,7 +2,7 @@ package com.vieecoles.entities;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 import com.vieecoles.entities.operations.Inscriptions;
 
@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "libellehandicap")
 public class Libellehandicap extends PanacheEntityBase {
     @Id @GeneratedValue
   private  Long  libelleHandicapid ;

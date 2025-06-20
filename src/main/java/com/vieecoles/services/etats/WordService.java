@@ -2,8 +2,8 @@ package com.vieecoles.services.etats;
 import com.vieecoles.dto.eleveAffecteParClasseDto;
 import org.apache.poi.xwpf.usermodel.*;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;

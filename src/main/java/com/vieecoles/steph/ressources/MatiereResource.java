@@ -7,10 +7,10 @@ import com.vieecoles.steph.services.MatiereService;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import java.util.ArrayList;
 import java.util.List;
-import javax.inject.Inject;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 @Path("/matiere")
 @Tag(name = "Matiere")
@@ -38,7 +38,7 @@ public class MatiereResource {
 	@Path("/get-by-id")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getById(@QueryParam("id") long id) {
-		
+
 		return Response.ok().entity(matiereService.buildEntityToDto(matiereService.getById(id))).build();
 	}
 
@@ -52,7 +52,7 @@ public class MatiereResource {
 		return Response.ok().entity(matiereService.getByNiveauEnseignement(ecole.getNiveauEnseignement().getId()))
 				.build();
 	}
-	
+
 	@GET
 	@Path("/get-by-niveau-enseignement-projection")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -116,7 +116,7 @@ public class MatiereResource {
 		try {
 			// logger.info("Saving and display ...");
 			Matiere matiere = matiereService.createMatiereInEcole(matiereService.buildDtoToEntity(matiereDto));
-			
+
 			Matiere entity = Matiere.findById(matiere.getId());
 			// Créér la matiere dans chaque ecole
 			return Response.ok().entity(matiereService.buildEntityToDto(entity)).build();

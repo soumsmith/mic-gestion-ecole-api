@@ -11,11 +11,11 @@ import com.vieecoles.steph.projections.GenericBasicProjectionLongId;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.transaction.Transactional;
-import javax.ws.rs.NotFoundException;
-import javax.ws.rs.core.Response;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
+import jakarta.ws.rs.NotFoundException;
+import jakarta.ws.rs.core.Response;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -42,7 +42,7 @@ public class MatiereService implements PanacheRepositoryBase<Matiere, Long> {
 			return new ArrayList<Matiere>();
 		}
 	}
-	
+
 	public Matiere getById(Long id) {
 		try {
 			return Matiere.findById(id);
@@ -83,7 +83,7 @@ public class MatiereService implements PanacheRepositoryBase<Matiere, Long> {
 	public List<Matiere> getByNiveauEnseignement(Long niveau) {
 		return find("niveauEnseignement.id = ?1", niveau).list();
 	}
-	
+
 	public List<GenericBasicProjectionLongId> getByNiveauEnseignementProjection(Long niveau) {
 		List<GenericBasicProjectionLongId> list = new ArrayList<>();
 		try {
@@ -117,7 +117,7 @@ public class MatiereService implements PanacheRepositoryBase<Matiere, Long> {
 	}
 
 	public Matiere buildDtoToEntity(MatiereDto matiereDto) {
-		
+
 		System.out.println(gson.toJson(matiereDto));
 		Matiere matiere = new Matiere();
 

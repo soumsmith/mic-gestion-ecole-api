@@ -1,15 +1,17 @@
 package com.vieecoles.entities;
 
+import jakarta.persistence.Table;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import java.time.LocalDateTime;
 
 @Data
 @Entity
+@Table(name = "Transferts")
 public class Transferts {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

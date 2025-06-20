@@ -1,8 +1,8 @@
 package com.vieecoles.projection;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.FetchType;
-import javax.persistence.Lob;
+import jakarta.persistence.Basic;
+import jakarta.persistence.Column;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Lob;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
 import java.util.Date;

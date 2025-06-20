@@ -3,7 +3,7 @@ package com.vieecoles.steph;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import com.vieecoles.steph.entities.Constants;
 import com.vieecoles.steph.entities.Evaluation;

@@ -1,6 +1,6 @@
 package com.vieecoles.projection;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.LocalDate;
 
 public class personnel_matiere_classeSelect  {

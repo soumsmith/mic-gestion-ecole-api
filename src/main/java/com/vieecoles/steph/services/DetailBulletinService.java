@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import javax.enterprise.context.RequestScoped;
-import javax.persistence.NoResultException;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.persistence.NoResultException;
 
 import com.vieecoles.steph.entities.Bulletin;
 import com.vieecoles.steph.entities.DetailBulletin;

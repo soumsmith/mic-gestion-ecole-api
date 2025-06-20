@@ -1,7 +1,7 @@
 package com.vieecoles.steph.entities;
 
 import java.util.Date;
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Data;

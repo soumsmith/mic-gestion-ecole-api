@@ -5,10 +5,10 @@ import com.vieecoles.steph.services.ClasseService;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
-import javax.inject.Inject;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import java.util.List;
 
 
@@ -26,14 +26,14 @@ public class ClassesResource {
 	    public Response list() {
 	        return Response.ok().entity(classeService.getListClasse()).build();
 	    }
-	    
+
 	    @GET
 	    @Path("/list-by-ecole")
 	    @Tag(name = "Classe")
 	    public Response findByEcole(@QueryParam("ecole") Long ecole) {
 	        return Response.ok().entity(classeService.getListClasseByEcole(ecole)).build();
 	    }
-	    
+
 	    @GET
 	    @Path("/list-by-ecole-sorted")
 	    @Tag(name = "Classe")
@@ -48,7 +48,7 @@ public class ClassesResource {
 //	    	System.out.println("ClassesResource.listPopulate()");
 	        return Response.ok().entity(classeService.getListClasseAllFields()).build();
 	    }
-	    
+
 	    @GET
 	    @Path("/list-populate-by-ecole")
 	    @Tag(name = "Classe")
@@ -56,7 +56,7 @@ public class ClassesResource {
 //	    	System.out.println("ClassesResource.listPopulateByEcole()");
 	        return Response.ok().entity(classeService.getListClasseAllFields(ecole)).build();
 	    }
-	    
+
 	    @GET
 	    @Path("/list-classe-by-matricule-annee")
 	    @Tag(name = "Classe")
@@ -64,7 +64,7 @@ public class ClassesResource {
 //	    	System.out.println("ClassesResource.listPopulateByEcole()");
 	        return Response.ok().entity(classeService.getListClasseStudentByMatricule(matricule, annee)).build();
 	    }
-	    
+
 	    @GET
 	    @Path("/list-all-populate-by-ecole")
 	    @Tag(name = "Classe")
@@ -95,7 +95,7 @@ public class ClassesResource {
 	    	List<Classe> classes = classeService.findByBranche(brancheId, ecole);
 	    	return classes;
 	    }
-	    
+
 
 	    @GET
 	    @Path("/get-visible-by-branche")

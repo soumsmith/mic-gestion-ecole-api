@@ -2,7 +2,7 @@ package com.vieecoles;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 public class InforPersonLivretScolaire extends PanacheEntityBase {

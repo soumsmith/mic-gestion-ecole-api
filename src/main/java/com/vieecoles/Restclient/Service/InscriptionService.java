@@ -1,7 +1,7 @@
 package com.vieecoles.Restclient.Service;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 import com.vieecoles.Restclient.InscriptionApiClient;
 import com.vieecoles.dto.InscriptionRequest;

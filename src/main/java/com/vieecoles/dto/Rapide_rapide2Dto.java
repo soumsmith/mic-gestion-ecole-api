@@ -3,7 +3,7 @@ package com.vieecoles.dto;
 import com.vieecoles.entities.Annee_Scolaire;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 
 

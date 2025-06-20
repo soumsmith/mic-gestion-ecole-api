@@ -2,13 +2,14 @@ package com.vieecoles.entities.operations;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 import com.vieecoles.entities.*;
 
 import java.time.LocalDate;
 
 @Entity
+@Table(name = "personnel")
 public class personnel extends PanacheEntityBase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

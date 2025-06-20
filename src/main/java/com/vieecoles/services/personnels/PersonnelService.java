@@ -10,11 +10,11 @@ import com.vieecoles.projection.InfosConnexionSelect;
 import com.vieecoles.projection.panier_personnelSelect;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
-import javax.ws.rs.NotFoundException;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
+import jakarta.ws.rs.NotFoundException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;

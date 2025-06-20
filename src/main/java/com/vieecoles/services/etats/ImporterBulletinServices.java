@@ -6,9 +6,9 @@ import com.vieecoles.entities.BulletinImport;
 import com.vieecoles.entities.DetailBulletinImport;
 import com.vieecoles.entities.operations.eleve;
 
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
+import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
 import java.util.List;
 
 public class ImporterBulletinServices {

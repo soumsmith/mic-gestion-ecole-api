@@ -9,10 +9,10 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 @Path("/activite")
 @Produces(MediaType.APPLICATION_JSON)
@@ -27,7 +27,7 @@ public class ActiviteRessource {
 	public Response list() {
 		return Response.ok().entity(activiteService.getList()).build();
 	}
-	
+
 	@GET
 	@Path("/list-by-prof-and-day")
 	@Tag(name = "Activite")
@@ -49,7 +49,7 @@ public class ActiviteRessource {
 			@QueryParam("jour") int jourId) {
 		return Response.ok().entity(activiteService.getListByClasseAndJour(classeId, jourId)).build();
 	}
-	
+
 	@GET
 	@Path("/list-by-classe")
 	@Tag(name = "Activite")

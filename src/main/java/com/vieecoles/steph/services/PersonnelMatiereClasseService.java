@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.persistence.NoResultException;
-import javax.transaction.Transactional;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.persistence.NoResultException;
+import jakarta.transaction.Transactional;
 
 import org.hibernate.internal.build.AllowSysOut;
 
@@ -33,7 +33,7 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 
 	@Inject
 	ClasseMatiereService cmService;
-	
+
 	Logger logger = Logger.getLogger(PersonnelMatiereClasseService.class.getName());
 	// A modifer avec le bon parametre de session
 	private Long getAnneeScolaire = Long.parseLong("1");
@@ -56,7 +56,7 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 	// Obtenir le prof princ ou l'éducateur d' une classe
 	public PersonnelMatiereClasse getPersonnelByClasseAndAnneeAndFonction(Long classe, Long annee, int fonction) {
 		PersonnelMatiereClasse pmc = null;
-		
+
 		if(fonction == 1) {
 			pmc = findProfPrinc(annee, classe);
 		}else if (fonction == 2) {
@@ -75,7 +75,7 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 //			e.printStackTrace();
 			if(e.getClass().getName().equals(NoResultException.class.getName()))
 				System.out.println("Aucune donnee trouvee");
-			else 
+			else
 				e.printStackTrace();
 			logger.warning("Erreur de type : " + e.getClass().getName());
 			return null;
@@ -113,7 +113,7 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 		}
 		return pmc;
 	}
-	
+
 	public GenericProjectionLongId findPersonnelProjectionByMatiereAndClasse(long matiereId, long annee, long classeId) {
 		logger.info(
 				String.format("find by Matiere id :: %s and annee :: %s and classe :: %s", matiereId, annee, classeId));
@@ -132,7 +132,7 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 			return null;
 		}
 	}
-	
+
 	public GenericPersonelProjectionLongIdFonctionEcole findPersonnelProjectionIdFonctionEcoleByMatiereAndClasse(long matiereId, long annee, long classeId) {
 		logger.info(
 				String.format("find by Matiere id :: %s and annee :: %s and classe :: %s", matiereId, annee, classeId));
@@ -168,7 +168,7 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 						annee != 0 ? annee : getAnneeScolaire, classe)
 				.list();
 	}
-	
+
 	public List<PersonnelMatiereClasse> findByProfesseurAndClasseWhereCoefDefine(long profId, long classe, long annee) {
 		logger.info(String.format("find by Prof id :: %s and annee :: %s", profId, annee));
 		List<PersonnelMatiereClasse> personnelMatiereClasseList = null;
@@ -197,7 +197,7 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 		}
 		return pmcListTmp;
 	}
-	
+
 	public List<PersonnelMatiereClasseDto> findDtoByProfesseurAndClasseWhereCoefDefine(List<PersonnelMatiereClasse> list){
 		List<PersonnelMatiereClasseDto> dtos = new ArrayList<PersonnelMatiereClasseDto>();
 		for(PersonnelMatiereClasse  pmc : list) {
@@ -205,7 +205,7 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 		}
 		return dtos;
 	}
-	
+
 	PersonnelMatiereClasseDto buildToDto(PersonnelMatiereClasse pmc) {
 		PersonnelMatiereClasseDto pmcDto = new PersonnelMatiereClasseDto();
 		pmcDto.setAnnee(new IdLongCodeLibelleDto(pmc.getAnnee().getId(), null, pmc.getAnnee().getLibelle()));
@@ -215,8 +215,8 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 		pmcDto.setPersonel(new IdLongCodeLibelleDto(pmc.getPersonnel().getId(), null, null));
 		return pmcDto;
 	}
-	
-	
+
+
 
 	public List<PersonnelMatiereClasse> findListByClasse(long annee, long classe) {
 		List<PersonnelMatiereClasse> list = new ArrayList<PersonnelMatiereClasse>();
@@ -228,7 +228,7 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 		}
 		return addCoefficientMatiere(list);
 	}
-	
+
 	List<PersonnelMatiereClasse> addCoefficientMatiere(List<PersonnelMatiereClasse> listPersonnels) {
 		for(PersonnelMatiereClasse ps : listPersonnels) {
 			ClasseMatiere cm = cmService.getByMatiereAndBranche(ps.getMatiere().getId(), ps.getClasse().getBranche().getId(), ps.getClasse().getEcole().getId());
@@ -251,9 +251,9 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 	// professeur
 	public List<PersonnelMatiereClasse> findListByPersonnel(Long annee, long ecole, long classe) {
 		 List<PersonnelMatiereClasse> pmList = new ArrayList<>();
-		
+
 		 try {
-			 
+
 			 pmList = PersonnelMatiereClasse.find("annee.id = ?1 and classe.ecole.id=?2 and classe.id =?3 and matiere is null and (statut is null or statut <> 'DELETED') ",
 					 annee, ecole, classe).list();
 		 }catch (RuntimeException e) {
@@ -261,7 +261,7 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 		}
 		return pmList;
 	}
-	
+
 	public ProfEducDto findListByPersonnel_v2(Long annee, long ecole, long classe) {
 		List<PersonnelMatiereClasse> pmcList = new ArrayList<>();
 		ProfEducDto peDto = new ProfEducDto();
@@ -284,9 +284,9 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 		}
 		return peDto;
 	}
-	
+
 	//Obtenir le prof princ
-	
+
 		public PersonnelMatiereClasse findProfPrinc(Long annee, long classe) {
 			List<PersonnelMatiereClasse> pmcList = new ArrayList<>();
 			PersonnelMatiereClasse pp = new PersonnelMatiereClasse();
@@ -305,9 +305,9 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 			}
 			return pp;
 		}
-		
+
 		//Obtenir educateur
-		
+
 		public PersonnelMatiereClasse findEducateurClasse(Long annee, long classe) {
 			List<PersonnelMatiereClasse> pmcList = new ArrayList<>();
 			PersonnelMatiereClasse educ = new PersonnelMatiereClasse();
@@ -330,7 +330,7 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 	@Transactional
 	public void save(PersonnelMatiereClasse persMatClasse) {
 		logger.info("persist persMatClasse ...");
-		
+
 		persMatClasse.setDateCreation(new Date());
 		if (getIfExist(persMatClasse) != null && getIfExist(persMatClasse).size() != 0)
 			throw new RuntimeException("Enregistrement existant déjà");
@@ -453,7 +453,7 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 		persMatClasse.delete();
 
 	}
-	
+
 	@Transactional
 	public void deleteByStatus(PersonnelMatiereClasse persMatClasse) {
 
@@ -464,7 +464,7 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 		pmc.setUser(persMatClasse.getUser());
 
 	}
-	
+
 	public long countProfByMatiereAndEcole(Long ecoleId, Long matiereId, Long anneeId) {
 		try {
 		 return PersonnelMatiereClasse.find("select distinct p.personnel from PersonnelMatiereClasse p where p.classe.ecole.id = ?1 and p.matiere.id =?2 and p.annee.id= ?3 and (statut is null or statut <> 'DELETED') ",

@@ -3,10 +3,10 @@ package com.vieecoles.ressource.operations.eleves;
 import com.vieecoles.dto.EleveDto;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
+import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
 import java.util.List;
 
 @Tag(name = "Eleve classe", description = "Eleve-Classe-Ressource")

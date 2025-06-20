@@ -1,6 +1,6 @@
 package com.vieecoles.steph.projections;
 
-import javax.persistence.ManyToOne;
+import jakarta.persistence.ManyToOne;
 
 import com.vieecoles.steph.entities.Ecole;
 import com.vieecoles.steph.entities.Fonction;
@@ -15,7 +15,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @RegisterForReflection
 public class GenericPersonelProjectionLongIdFonctionEcole {
-	
+
 	private final Long id;
 	@ManyToOne
 	private final Fonction fonction;

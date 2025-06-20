@@ -7,12 +7,12 @@ import com.vieecoles.steph.services.NoteService;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
-import javax.inject.Inject;
-import javax.json.bind.Jsonb;
-import javax.json.bind.JsonbBuilder;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import jakarta.inject.Inject;
+import jakarta.json.bind.Jsonb;
+import jakarta.json.bind.JsonbBuilder;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +65,7 @@ public class NotesResource {
 	@Tag(name = "Notes")
     public Response getNotesByClasseAndPeriode(@PathParam("classe") String classe,@PathParam("annee") String annee, @PathParam("periode") String periode) {
     	List<MoyenneEleveDto> medtos = new ArrayList<MoyenneEleveDto>();
-    	
+
     	try {
     		medtos = noteService.moyennesAndNotesHandle(classe, annee, periode);
     	}catch(RuntimeException r) {
@@ -75,7 +75,7 @@ public class NotesResource {
 //    	return  Response.ok(medtos).build();
     	return  Response.ok(noteService.buildListMoyenneEleve(medtos)).build()  ;
     }
-    
+
     @GET
     @Path("/list-notes-eleve-by-periode/{matricule}/{classe}/{annee}/{periode}")
     @Operation(description = "Obtenir les notes d'un eleve d une classe par periode ", summary = "")
@@ -83,7 +83,7 @@ public class NotesResource {
     public Response getNotesByClasseAndPeriode(@PathParam("matricule") String matricule, @PathParam("classe") Long classe,@PathParam("annee") Long annee, @PathParam("periode") Long periode) {
     	return  Response.ok(noteService.getListNotesByEleveAndClasseAndAnneeAndPeriode(matricule,classe, annee, periode)).build();
     }
-    
+
     @GET
     @Path("/list-notes-eleve-by-periode-dto/{matricule}/{classe}/{annee}/{periode}")
     @Operation(description = "Obtenir les notes d'un eleve d une classe par periode via le dto", summary = "")
@@ -91,7 +91,7 @@ public class NotesResource {
     public Response getNotesDtoByClasseAndPeriode(@PathParam("matricule") String matricule, @PathParam("classe") Long classe,@PathParam("annee") Long annee, @PathParam("periode") Long periode) {
     	return  Response.ok(noteService.getNotesEleveByPeriode(matricule,classe, annee, periode)).build();
     }
-    
+
     @GET
     @Path("/list-notes-eleve-by-periode/{matricule}/{classe}/{annee}/{periode}/{matiere}")
     @Operation(description = "Obtenir les notes d'un eleve d une classe par periode ", summary = "")
@@ -107,7 +107,7 @@ public class NotesResource {
      * @param periode
      * @return
      */
-    
+
     @GET
     @Path("/list-classe-matiere-notes/{classe}/{matiere}/{annee}/{periode}")
     @Operation(description = "Obtenir les notes des eleves d une classe par periode ", summary = "")
@@ -115,10 +115,10 @@ public class NotesResource {
     public List<MoyenneEleveDto> getNotesByClasseAndMatiereAndPeriode(@PathParam("classe") String classe,@PathParam("matiere") String matiere,@PathParam("annee") String annee, @PathParam("periode") String periode) {
     	return noteService.moyennesAndMatiereAndNotesHandle(classe,matiere, annee, periode);
     }
-    
+
     /**
      * Obtenir les notes et la moyenne d'un eleve pour une matiere.
-     * 
+     *
      * @param matricule
      * @param matiere
      * @param annee
@@ -134,7 +134,7 @@ public class NotesResource {
     	list.add(noteService.moyennesAndMatiereAndNotesByMatriculeHandle(matricule,matiere, annee, periode));
     	return list;
     }
-    
+
     @GET
     @Path("/list-matricule-notes-moyennes/{matricule}/{annee}/{periode}")
     @Operation(description = "Obtenir les notes des eleves d une classe par periode ", summary = "")
@@ -144,7 +144,7 @@ public class NotesResource {
     	list.add(noteService.moyennesAndNotesByMatriculeHandle(matricule, annee, periode));
     	return list;
     }
-        
+
 
     @POST
     @Path("/save")

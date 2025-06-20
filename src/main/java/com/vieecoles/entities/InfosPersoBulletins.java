@@ -2,10 +2,11 @@ package com.vieecoles.entities;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.Arrays;
 
 @Entity
+@Table(name = "InfosPersoBulletins")
 public class InfosPersoBulletins extends PanacheEntityBase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

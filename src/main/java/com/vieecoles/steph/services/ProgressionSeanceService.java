@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.persistence.NoResultException;
-import javax.transaction.Transactional;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.persistence.NoResultException;
+import jakarta.transaction.Transactional;
 
 import com.vieecoles.steph.dto.ProgressionSeanceDto;
 import com.vieecoles.steph.entities.AppelNumerique;
@@ -149,7 +149,7 @@ public class ProgressionSeanceService implements PanacheRepositoryBase<Progressi
 		entity.setDetails(dto.getDetailProgressions());
 		return entity;
 	}
-	
+
 	public List<ProgressionSeance> getByEcoleAndAnnee(Long ecoleId, Long anneeId) {
 		List<ProgressionSeance> list = new ArrayList<>();
 		try {
@@ -159,7 +159,7 @@ public class ProgressionSeanceService implements PanacheRepositoryBase<Progressi
 		}
 		return list;
 	}
-	
+
 	public Long countByEcoleAndAnnee(Long ecoleId, Long anneeId) {
 		Long count = 0L;
 		try {
@@ -169,7 +169,7 @@ public class ProgressionSeanceService implements PanacheRepositoryBase<Progressi
 		}
 		return count;
 	}
-	
+
 	public List<ProgressionSeance> getByEcoleAndDate(Long ecoleId, Date date) {
 		List<ProgressionSeance> list = new ArrayList<>();
 		LocalDate dateToLocalDate = DateUtils.asLocalDate(date);
@@ -181,7 +181,7 @@ public class ProgressionSeanceService implements PanacheRepositoryBase<Progressi
 		}
 		return list;
 	}
-	
+
 	public Long countByEcoleAndDate(Long ecoleId, Date date) {
 		Long count = 0L;
 		LocalDate dateToLocalDate = DateUtils.asLocalDate(date);

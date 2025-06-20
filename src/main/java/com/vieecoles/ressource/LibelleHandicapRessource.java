@@ -3,11 +3,11 @@ package com.vieecoles.ressource;
 import com.vieecoles.entities.Libellehandicap;
 import com.vieecoles.services.LibelleHandicapService;
 
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
+import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
 import java.util.List;
 
 @Path("/LibelleHandicap")

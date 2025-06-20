@@ -1,38 +1,38 @@
 package com.vieecoles.steph;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.BeforeDestroyed;
-import javax.enterprise.context.Destroyed;
-import javax.enterprise.context.Initialized;
-import javax.enterprise.event.Observes;
-import javax.inject.Inject;
-import javax.transaction.Status;
-import javax.transaction.SystemException;
-import javax.transaction.TransactionManager;
-import javax.transaction.TransactionScoped;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.BeforeDestroyed;
+import jakarta.enterprise.context.Destroyed;
+import jakarta.enterprise.context.Initialized;
+import jakarta.enterprise.event.Observes;
+import jakarta.inject.Inject;
+import jakarta.transaction.Status;
+import jakarta.transaction.SystemException;
+import jakarta.transaction.TransactionManager;
+import jakarta.transaction.TransactionScoped;
 
 import com.google.gson.Gson;
 
 //@ApplicationScoped
 public class MyTransactionEventListeningBean {
-	
+
 //	@Inject
 //	TransactionManager tx;
-	
+
 	Gson g = new Gson();
 
 //    void onBeginTransaction(@Observes @Initialized(TransactionScoped.class) Object event) {
 //        // This gets invoked when a transaction begins.
 //    	System.out.println(">>>>>>>>>>>>>>> TRANSACTION DEMARRÉE");
 ////    	System.out.println(g.toJson(event));
-//    	
+//
 //    	try {
 //			System.out.println("STATUT TX :::: "+tx.getTransaction().getStatus());
 //		} catch (SystemException e) {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
-//    	
+//
 //    }
 //
 //    void onBeforeEndTransaction(@Observes @BeforeDestroyed(TransactionScoped.class) Object event) {
@@ -59,7 +59,7 @@ public class MyTransactionEventListeningBean {
 //        // This gets invoked after a transaction ends (commit or rollback).
 //    	System.out.println(">>>>>>>>>>>>>>> TRANSACTION ARRETÉE");
 ////    	System.out.println(g.toJson(event));
-//    	
+//
 //    	try {
 //			System.out.println("STATUT TX :::: "+tx.getTransaction());
 //		} catch (SystemException e) {

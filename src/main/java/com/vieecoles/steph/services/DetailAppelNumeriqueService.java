@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
 
-import javax.enterprise.context.RequestScoped;
-import javax.transaction.Transactional;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.transaction.Transactional;
 
 import com.vieecoles.steph.dto.AppelEleveDto;
 import com.vieecoles.steph.entities.AppelNumerique;
@@ -59,7 +59,7 @@ public class DetailAppelNumeriqueService implements PanacheRepositoryBase<Detail
 		}
 		return detailList;
 	}
-	
+
 	@Transactional
 	void removeExistingDetail(String appelId) {
 		List<DetailAppelNumerique> details = getByAppel(appelId);

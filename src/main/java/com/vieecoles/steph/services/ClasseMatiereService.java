@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.persistence.NoResultException;
-import javax.transaction.Transactional;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.persistence.NoResultException;
+import jakarta.transaction.Transactional;
 
 import com.vieecoles.steph.entities.Branche;
 import com.vieecoles.steph.entities.Classe;
@@ -240,7 +240,7 @@ public class ClasseMatiereService implements PanacheRepositoryBase<ClasseMatiere
 	/**
 	 * Cette méthode est utilisée pour mettre à jour les coeficients des matières
 	 * d'une école
-	 * 
+	 *
 	 * @param ecoleId
 	 */
 	@Transactional
@@ -274,7 +274,7 @@ public class ClasseMatiereService implements PanacheRepositoryBase<ClasseMatiere
 				}
 			}
 		}
-		
+
 		return String.format("%s coef existant(s) \n", exist).concat(String.format("%s coef crée(s) \n", notExist)).concat(String.format("pour l ecole id %s ", ecoleId));
 //		System.out.println(String.format("%s coef existant(s)", exist));
 //		System.out.println(String.format("%s coef crée(s)", notExist));

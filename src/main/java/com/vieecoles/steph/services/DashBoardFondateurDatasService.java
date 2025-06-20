@@ -2,8 +2,8 @@ package com.vieecoles.steph.services;
 
 import java.util.Date;
 
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
 
 import com.vieecoles.steph.dto.DashboardFondateurDatasDTO;
 import com.vieecoles.steph.entities.Constants;

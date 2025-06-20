@@ -5,10 +5,10 @@ import com.vieecoles.projection.EnseignantSelectDto;
 import com.vieecoles.steph.entities.*;
 import com.vieecoles.steph.services.ClasseMatiereService;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;

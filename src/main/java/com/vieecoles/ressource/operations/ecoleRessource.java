@@ -9,12 +9,12 @@ import com.vieecoles.entities.operations.quartier;
 import com.vieecoles.services.operations.ecoleService;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -110,7 +110,7 @@ public class ecoleRessource {
         obj.setEcolecode(ecole_code);
         obj.setRecoiaffecteetat(recoiaffecteetat);
         obj.setEcolearreteecreation(arreteCreation);
-        
+
 
 
         return matService.create(obj);
@@ -140,7 +140,7 @@ public class ecoleRessource {
         obj.setEcolecode(ecole_code);
         obj.setRecoiaffecteetat(recoiaffecteetat);
         obj.setEcolearreteecreation(arreteCreation);
-       
+
     return matService.updateecole(obj);
 
     } */

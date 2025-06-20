@@ -2,7 +2,7 @@ package com.vieecoles.steph.services;
 
 import java.util.List;
 
-import javax.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 
 import com.vieecoles.steph.entities.Ecole;
 
@@ -18,7 +18,7 @@ public class EcoleService implements PanacheRepositoryBase<Ecole, Long>{
 	public Ecole getById(Long id) {
 		return Ecole.findById(id);
 	}
-	
+
 	public List<Ecole> getByNiveauEnseignement(Long id) {
 		return Ecole.find("niveauEnseignement.id = ?1",id).list();
 	}

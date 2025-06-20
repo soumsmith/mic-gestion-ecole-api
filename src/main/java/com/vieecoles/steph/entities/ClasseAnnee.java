@@ -4,7 +4,7 @@ import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.persistence.Id;
+import jakarta.persistence.Id;
 
 @Data
 @EqualsAndHashCode(callSuper = false)

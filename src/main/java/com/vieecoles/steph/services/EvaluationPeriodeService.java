@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
 
-import javax.enterprise.context.RequestScoped;
-import javax.transaction.Transactional;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.transaction.Transactional;
 
 import org.hibernate.internal.build.AllowSysOut;
 
@@ -83,7 +83,7 @@ public class EvaluationPeriodeService implements PanacheRepositoryBase<Evaluatio
 			ev.setDateUpdate(new Date());
 		}
 	}
-	
+
 	public EvaluationPeriode getById(String id) {
 		return EvaluationPeriode.findById(id);
 	}
@@ -104,10 +104,10 @@ public class EvaluationPeriodeService implements PanacheRepositoryBase<Evaluatio
 			System.out.println("Id ::: "+eval.getId());
 			evaluationPeriode = findById(eval.getId());
 		}
-		
+
 		return eval != null ? eval.getId() : evaluationPeriode.getId();
 	}
-	
+
 	@Transactional
 	public void delete(String id) {
 		EvaluationPeriode.deleteById(id);

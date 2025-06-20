@@ -4,7 +4,7 @@ import com.vieecoles.entities.Annee_Scolaire;
 import com.vieecoles.steph.entities.Branche;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 
 

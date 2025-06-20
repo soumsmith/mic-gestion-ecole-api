@@ -5,10 +5,10 @@ import com.vieecoles.steph.entities.Activite;
 import com.vieecoles.steph.entities.Constants;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.transaction.Transactional;
-import javax.ws.rs.core.Response;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
+import jakarta.ws.rs.core.Response;
 import java.net.URI;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -44,7 +44,7 @@ public class ActiviteService implements PanacheRepositoryBase<Activite, Integer>
 
 	/**
 	 * Renvoie la liste des activités en fonction de l année, la classe et le jour
-	 * 
+	 *
 	 * @param classeId
 	 * @param jourId
 	 *
@@ -62,25 +62,25 @@ public class ActiviteService implements PanacheRepositoryBase<Activite, Integer>
 		return list;
 
 	}
-	
+
 	public List<Activite> getListByProfAndJour(Long anneeId, Long profId, int day) {
-		
+
 		//To do
-		
+
 		// Identifier les matieres enseignées dans chaque classe
-		
+
 		// Ramener les activités actives pour chaque classe et matiere precedemment identifiés en fonction du jour
-		
+
 		// Ranger chaque element par jour et par heure de debut
-		
+
 		List<Activite> list = new ArrayList<Activite>();
-		
+
 		return list;
 
 	}
 
 	public List<Activite> getListByClasse(long classeId) {
-		
+
 		List<Activite> list = new ArrayList<Activite>();
 		try {
 			list = Activite.find("classe.id = ?1 and statut = ?2", classeId, Constants.ACTIF).list();
@@ -92,7 +92,7 @@ public class ActiviteService implements PanacheRepositoryBase<Activite, Integer>
 	}
 
 	public List<Activite> getListByJour(int jourId) {
-		
+
 		List<Activite> list = new ArrayList<Activite>();
 		try {
 			list = Activite.find("jour.id = ?1 and statut = ?2", jourId, Constants.ACTIF).list();

@@ -3,8 +3,8 @@ package com.vieecoles.steph.services;
 import com.vieecoles.steph.dto.AnneeInfoDto;
 import com.vieecoles.steph.entities.Periode;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,10 +12,10 @@ import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class PeriodeService {
-	
+
 	@Inject
 	AnneeService anneeService;
-	
+
 	public List<Periode> getList() {
 		try {
 			return Periode.listAll();
@@ -24,7 +24,7 @@ public class PeriodeService {
 			return new ArrayList<Periode>() ;
 		}
 	}
-	
+
 	public List<Periode> getListByPeriodicite(Integer periodiciteId) {
 		try {
 			return Periode.list("periodicite.id=?1 order by niveau", periodiciteId);
@@ -50,7 +50,7 @@ public class PeriodeService {
 			Integer niveau = periodes.stream().filter(p -> p.getId()==anneeInfoDto.getPeriodeId()).findFirst().orElse(periode).getNiveau();
 			periodesFiltered = periodes.stream().filter(p -> p.getNiveau()<=niveau).collect(Collectors.toList());
 		}
-		
+
 		return periodesFiltered;
 	}
 

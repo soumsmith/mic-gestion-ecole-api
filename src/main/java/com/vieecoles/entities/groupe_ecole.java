@@ -2,11 +2,13 @@ package com.vieecoles.entities;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "groupe_ecole")
 public class groupe_ecole extends PanacheEntityBase {
     @Id @GeneratedValue
     private Long  groupe_ecoleid ;

@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
 
-import javax.enterprise.context.RequestScoped;
-import javax.persistence.NoResultException;
-import javax.transaction.Transactional;
-import javax.ws.rs.NotFoundException;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.persistence.NoResultException;
+import jakarta.transaction.Transactional;
+import jakarta.ws.rs.NotFoundException;
 import com.vieecoles.steph.entities.ClasseElevePeriode;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
@@ -42,7 +42,7 @@ public class ClasseElevePeriodeService implements PanacheRepositoryBase<ClasseEl
 
 	@Transactional
 	public void handleMarquageClassement(ClasseElevePeriode classeElevePeriode) {
-		
+
 			ClasseElevePeriode cep = findByClasseAndEleveAndAnneeAndPeriode(classeElevePeriode.getClasse().getId(),
 					classeElevePeriode.getEleve().getId(), classeElevePeriode.getAnnee().getId(),
 					classeElevePeriode.getPeriode().getId());

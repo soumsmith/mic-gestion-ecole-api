@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
 
-import javax.enterprise.context.RequestScoped;
-import javax.persistence.NoResultException;
-import javax.transaction.Transactional;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.persistence.NoResultException;
+import jakarta.transaction.Transactional;
 
 import org.jboss.logmanager.Level;
 

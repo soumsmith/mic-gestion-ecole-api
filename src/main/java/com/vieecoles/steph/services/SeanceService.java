@@ -17,10 +17,10 @@ import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 import io.quarkus.panache.common.Page;
 import io.quarkus.scheduler.Scheduled;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.transaction.Transactional;
-import javax.ws.rs.core.Response;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
+import jakarta.ws.rs.core.Response;
 import java.net.URI;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -728,12 +728,12 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param dateSeance
 	 * @param ecoleId
 	 * @return true si une generation automatique a eu deja lieu pour une ecole
 	 *         sinon false
-	 * 
+	 *
 	 */
 	public Boolean checkIfSeancesGenerate(Date dateSeance, Long ecoleId) {
 		List<Seances> seances = getListByEcoleAndDateAndStatut(dateSeance, Constants.AUTOMATIQUE, ecoleId);
@@ -829,7 +829,7 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 
 	/**
 	 * Permet d'obténir les statistiques des séances pour une école
-	 * 
+	 *
 	 * @param annee
 	 * @param classe
 	 * @param matiere

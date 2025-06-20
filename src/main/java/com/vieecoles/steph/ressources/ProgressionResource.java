@@ -2,15 +2,15 @@ package com.vieecoles.steph.ressources;
 
 import java.util.List;
 
-import javax.inject.Inject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
@@ -46,7 +46,7 @@ public class ProgressionResource {
 			return Response.serverError().entity("Erreur ::: " + e.toString()).build();
 		}
 	}
-	
+
 	@Path("/handle-delete/{id}")
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
@@ -63,7 +63,7 @@ public class ProgressionResource {
 		}
 		return Response.ok(message).build();
 	}
-	
+
 	@Path("/get-by-annee/{annee}")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -73,7 +73,7 @@ public class ProgressionResource {
 	public Response getByAnnee(@PathParam("annee") Long annee) {
 		return Response.ok(progressionService.listDtoByAnnee(annee)).build();
 	}
-	
+
 	@Path("/get-by-seance/{seance}")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -83,7 +83,7 @@ public class ProgressionResource {
 	public Response getBySeance(@PathParam("seance") String seance) {
 		return Response.ok(progressionService.getProgressionBySeance(seance)).build();
 	}
-	
+
 	@Path("/get-at-now/{annee}/{niveau}/{branche}/{matiere}")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
