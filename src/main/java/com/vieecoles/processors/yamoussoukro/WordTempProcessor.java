@@ -5,6 +5,7 @@ import com.vieecoles.dto.eleveAffecteParClasseDto;
 import com.vieecoles.processors.yamoussoukro.Annuels.WordTempListAffectesAnnuelsProcessor;
 import com.vieecoles.processors.yamoussoukro.Annuels.WordTempListMajorAnnuelsProcessor;
 import com.vieecoles.processors.yamoussoukro.Annuels.WordTempListNonAffectesAnnuelsProcessor;
+import com.vieecoles.processors.yamoussoukro.Annuels.WordTempRecapAffNonAffResultatAnnuelsProcessor;
 import com.vieecoles.processors.yamoussoukro.Annuels.WordTempRecapNonResultatAnnuelsProcessor;
 import com.vieecoles.processors.yamoussoukro.Annuels.WordTempRecapResultatAnnuelsProcessor;
 import com.vieecoles.processors.yamoussoukro.Annuels.WordTempResultaAffAnnuelsProcessor;
@@ -76,6 +77,8 @@ public class WordTempProcessor {
     WordTempListMajorAnnuelsProcessor wordTempListMajorAnnuelsProcessor ;
     @Inject
     WordTempListNonAffectesAnnuelsProcessor wordTempListNonAffectesAnnuelsProcessor;
+    @Inject
+    WordTempRecapAffNonAffResultatAnnuelsProcessor wordTempRecapAffNonAffResultatAnnuelsProcessor ;
 
     public  byte[] generateWordFile(Long idEcole,String libelleAnnee ,String  libelleTrimetre, ByteArrayInputStream  fis) throws Exception {
       Long anneeId=getIdAnnee(idEcole,libelleAnnee,libelleTrimetre);
@@ -168,6 +171,9 @@ public class WordTempProcessor {
         System.out.println("Liste Eleve Affectes ok");
         wordTempListNonAffectesProcessor.getEleveNosAffecteParClasse(document,idEcole ,libelleAnnee,libelleTrimetre);
         System.out.println("Liste  Eleve non Affectes ok");
+        // wordTempRecapAffNonAffResultatAnnuelsProcessor
+        wordTempRecapAffNonAffResultatAnnuelsProcessor.getRecapResultatAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
+        System.out.println("RecapResultaAffEtNonAff Annuels ok");
         wordTempListTransfertProcessor.getListTransfert(document,idEcole) ;
         System.out.println("ListeTransfert ok");
         WordTempRepartitionAnneeNaissProcessor.getListRepartitionParAnnee(document,idEcole ,libelleAnnee,libelleTrimetre);
