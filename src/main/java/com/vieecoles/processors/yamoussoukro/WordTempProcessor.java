@@ -144,6 +144,9 @@ public class WordTempProcessor {
       System.out.println("Liste Affectés Annuels ok");
       wordTempListNonAffectesAnnuelsProcessor.getEleveNosAffecteParClasse(document,idEcole ,libelleAnnee,libelleTrimetre);
       System.out.println("Liste NON Affectés Annuels ok");
+        // wordTempRecapAffNonAffResultatAnnuelsProcessor
+        wordTempRecapAffNonAffResultatAnnuelsProcessor.getRecapResultatAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
+        System.out.println("RecapResultaAffEtNonAff Annuels ok");
       wordTempListMajorAnnuelsProcessor.getListeMajorClasse(document,idEcole ,libelleAnnee,libelleTrimetre);
       System.out.println("Liste Major Annuels ok");
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -171,9 +174,7 @@ public class WordTempProcessor {
         System.out.println("Liste Eleve Affectes ok");
         wordTempListNonAffectesProcessor.getEleveNosAffecteParClasse(document,idEcole ,libelleAnnee,libelleTrimetre);
         System.out.println("Liste  Eleve non Affectes ok");
-        // wordTempRecapAffNonAffResultatAnnuelsProcessor
-        wordTempRecapAffNonAffResultatAnnuelsProcessor.getRecapResultatAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
-        System.out.println("RecapResultaAffEtNonAff Annuels ok");
+
         wordTempListTransfertProcessor.getListTransfert(document,idEcole) ;
         System.out.println("ListeTransfert ok");
         WordTempRepartitionAnneeNaissProcessor.getListRepartitionParAnnee(document,idEcole ,libelleAnnee,libelleTrimetre);
