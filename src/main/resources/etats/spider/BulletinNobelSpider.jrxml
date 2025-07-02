@@ -1765,16 +1765,6 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 			</frame>
 		</band>
 	</detail>
-	<columnFooter>
-		<band height="50">
-			<property name="com.jaspersoft.studio.unit.height" value="px"/>
-			<printWhenExpression><![CDATA[$F{pied_de_page} !=null]]></printWhenExpression>
-			<image scaleImage="FillFrame" onErrorType="Blank">
-				<reportElement x="28" y="0" width="538" height="50" uuid="e088a1c3-e4a6-4784-ac29-dcf26000bc17"/>
-				<imageExpression><![CDATA[$F{pied_de_page}]]></imageExpression>
-			</image>
-		</band>
-	</columnFooter>
 	<summary>
 		<band height="155">
 			<rectangle>
