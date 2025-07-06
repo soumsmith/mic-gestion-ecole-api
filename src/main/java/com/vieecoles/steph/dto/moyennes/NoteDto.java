@@ -7,10 +7,17 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class NoteDto {
-	private String id;
-	private Double value;
-	private Integer pec;
+	public NoteDto(long id, double note) {
+		this.id = id;
+		this.note = note;
+	}
+	private long id;
+	private long evaluationId;
+	private long matiereEcoleId;
+	private String matiereEcoleLibelle;
+	private double note;
+	private long classeEleveId ;
 }

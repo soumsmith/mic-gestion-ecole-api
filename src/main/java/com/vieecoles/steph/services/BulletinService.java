@@ -400,9 +400,10 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 				Inscription infosInscriptionsEleve= new Inscription();
 
 				try {
+					System.out.println(String.format("eleve %s ecole %s annee %S branche %s", me.getEleve().getId(),me.getClasse().getEcole().getId(), Long.parseLong(annee), me.getClasse().getBranche().getId()));
 					 infosInscriptionsEleve = inscriptionService.getByEleveAndEcoleAndAnnee(
 							me.getEleve().getId(), me.getClasse().getEcole().getId(), Long.parseLong(annee),me.getClasse().getBranche().getId());
-					System.out.println("infosInscriptionsEleve>>>> "+infosInscriptionsEleve.toString());
+					System.out.println("infosInscriptionsEleve>>>> "+infosInscriptionsEleve);
 				} catch (RuntimeException e) {
 					e.printStackTrace();
 				}

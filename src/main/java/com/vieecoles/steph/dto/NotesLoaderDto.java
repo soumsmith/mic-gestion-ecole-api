@@ -1,12 +1,7 @@
 package com.vieecoles.steph.dto;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
-import javax.persistence.*;
-
-import com.vieecoles.steph.entities.EvaluationLoader;
 
 @Data
 @EqualsAndHashCode(callSuper = false)

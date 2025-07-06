@@ -29,7 +29,10 @@ import com.vieecoles.steph.dto.MoyenneEleveDto;
 import com.vieecoles.steph.dto.MoyenneEleveOptimizedDto;
 import com.vieecoles.steph.dto.NoteDto;
 import com.vieecoles.steph.dto.NotesEleveDto;
+import com.vieecoles.steph.dto.moyennes.ClasseMoyenne;
 import com.vieecoles.steph.dto.moyennes.EcoleMatiereDto;
+import com.vieecoles.steph.dto.moyennes.EleveDto;
+import com.vieecoles.steph.dto.moyennes.MatiereNotes;
 import com.vieecoles.steph.dto.moyennes.PersonneDto;
 import com.vieecoles.steph.entities.AbsenceEleve;
 import com.vieecoles.steph.entities.AnneeScolaire;
@@ -309,12 +312,18 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 		logger.info("---> Processus de Calcul des moyennes des éleves d une classe");
 		try {
 //			System.out.println(String.format("%s %s %s", classeId, anneeId, periodeId));
+			long start = System.nanoTime();
 			Map<Eleve, List<Notes>> noteGroup = new HashMap<Eleve, List<Notes>>();
 			Parameters params = Parameters.with("classeId", Long.parseLong(classeId))
 					.and("anneeId", Long.parseLong(anneeId)).and("periodeId", Long.parseLong(periodeId))
 					.and("pok", Constants.PEC_1);
 			String criteria = "classe.id = :classeId and annee.id = :anneeId and periode.id = :periodeId and pec = :pok";
 			List<Evaluation> evalList = evaluationService.search(criteria, params);
+			
+			long end = System.nanoTime();
+			long duration = (end - start) / 1000000000;
+			System.out.println("Temps d'exécution liste initialisation notes: " + duration + " secondes");
+			
 			List<Notes> noteList = new ArrayList<Notes>();
 			List<Notes> notesTemp;
 			List<MoyenneEleveDto> moyenneList = new ArrayList<MoyenneEleveDto>();
@@ -329,16 +338,16 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			List<Evaluation> _iterateur = new ArrayList<Evaluation>();
 			if (evalList != null)
 				_iterateur.addAll(evalList);
-//			long startTime = System.nanoTime();
+			long startTime = System.nanoTime();
 			_iterateur.stream().forEach(x -> collectNotesPec(noteList, x));
 //
-//			long endTime = System.nanoTime();
-//			long durationInSeconds = (endTime - startTime) / 1000000000;
-//			System.out.println("Temps d'exécution NOte _iterateur: " + durationInSeconds + " secondes");
+			long endTime = System.nanoTime();
+			long durationInSeconds = (endTime - startTime) / 1000000000;
+			System.out.println("Temps d'exécution NOte _iterateur: " + durationInSeconds + " secondes");
 //		logger.info("note size " + noteList.size());
 //		logger.info(gson.toJson(noteList));
 			// Regroupement des notes par élève
-//			long startTime2 = System.nanoTime();
+			long startTime2 = System.nanoTime();
 			for (Notes note : noteList) {
 //				System.out.println(note.getEvaluation().getMatiereEcole().getLibelle()+" "+note.getNote());
 //			logger.info("note.getClasseEleve().getInscription().getEleve()");
@@ -356,10 +365,10 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 //					System.out.println(">>>>>> new"+note.getEvaluation().getMatiereEcole().getMatiere().getId());
 				}
 			}
-//			long endTime2 = System.nanoTime();
-//			long durationInSeconds2 = (endTime2 - startTime2) / 1000000000;
-//			System.out.println(
-//					"Temps d'exécution Note Regroupement des notes par élève: " + durationInSeconds2 + " secondes");
+			long endTime2 = System.nanoTime();
+			long durationInSeconds2 = (endTime2 - startTime2) / 1000000000;
+			System.out.println(
+					"Temps d'exécution Note Regroupement des notes par élève: " + durationInSeconds2 + " secondes");
 			classe = classeService.findById(Long.parseLong(classeId));
 //		logger.info(g.toJson(classe));listNotesByEvaluation
 
@@ -376,7 +385,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 						classe.getBranche().getId());
 
 			}
-//			long startTime3 = System.nanoTime();
+			long startTime3 = System.nanoTime();
 			for (Map.Entry<Eleve, List<Notes>> entry : noteGroup.entrySet()) {
 				moyenneEleveDto = new MoyenneEleveDto();
 				moyenneEleveDto.setEleve(entry.getKey());
@@ -456,10 +465,10 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 //			moyenneEleveDto.setNotes(entry.getValue());
 				moyenneList.add(moyenneEleveDto);
 			}
-//			long endTime3 = System.nanoTime();
-//			long durationInSeconds3 = (endTime3 - startTime3) / 1000000000;
-//			System.out.println("Temps d'exécution NOte build moyenneDto: " + durationInSeconds3 + " secondes");
-			// Code pour visualiser les niveaux des matieres utilisées crant souvent des
+			long endTime3 = System.nanoTime();
+			long durationInSeconds3 = (endTime3 - startTime3) / 1000000000;
+			System.out.println("Temps d'exécution NOte build moyenneDto: " + durationInSeconds3 + " secondes");
+			// Code pour visualiser les niveaux des matieres utilisées créant souvent des
 			// bugs
 //			System.out.println("Matiere et niveau");
 //			for(MoyenneEleveDto m : moyenneList) {
@@ -473,13 +482,13 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 //		calculMoyenneMatiere(moyenneList);
 //		logger.info(moyenneList.toString());
 //		logger.info("-------------------------------------------");
-//			startTime = System.nanoTime();
+			startTime = System.nanoTime();
 			classementEleveParMatiere(calculMoyenneMatiere(moyenneList), classe.getBranche().getId(),
 					classe.getEcole().getId());
 			calculMoyenneGeneralEleve(moyenneList);
-//			endTime = System.nanoTime();
-//			durationInSeconds = (endTime - startTime) / 1000000000;
-//			System.out.println("Temps d'exécution NOte Calculs des moyennes: " + durationInSeconds + " secondes");
+			endTime = System.nanoTime();
+			durationInSeconds = (endTime - startTime) / 1000000000;
+			System.out.println("Temps d'exécution NOte Calculs des moyennes: " + durationInSeconds + " secondes");
 
 			// Vérifie si la période est la denière. si oui calcul des moyennes et rang
 			// annuels
@@ -2001,11 +2010,140 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 		try {
 			logger.info(matricule + " " + classeId + " " + anneeId + " " + periodeId);
 			notesByEleve = Notes.find(
-					"classeEleve.inscription.eleve.matricule = ?1 and classeEleve.classe.id = ?2 and evaluation.annee.id =?3 and evaluation.periode.id = ?4 and evaluation.matiereEcole.id = ?5 and pec = 1",
+					"classeEleve.inscription.eleve.matricule = ?1 and classeEleve.classe.id = ?2 and evaluation.annee.id =?3 and evaluation.periode.id = ?4 "
+					+ " and evaluation.matiereEcole.id = ?5 and pec = 1",
 					matricule, classeId, anneeId, periodeId, matiereId).list();
 		} catch (RuntimeException e) {
 			logger.warning("Erreur ::: " + e.getMessage());
 		}
 		return notesByEleve;
 	}
+	// New calculate average note process
+	
+	final static String QUERY_GET_NOTES_BY_CLASSE = "Select new com.vieecoles.steph.dto.moyennes.NoteDto("
+			+ "		   n.id, "
+			+ "        n.evaluation.id, "
+			+ "		   n.evaluation.matiereEcole.id, "
+			+ "		   n.evaluation.matiereEcole.libelle, "
+			+ "        n.note,"
+			+ "        n.classeEleve.id ) "
+			+ " From Notes n "
+			+ " Where "
+			+ " n.evaluation.classe.id = :classeId and n.evaluation.annee.id = :anneeId and n.evaluation.periode.id = :periodeId and n.pec = 1";
+	
+	final static String QUERY_GET_DATA_ELEVE_AND_CLASSE = "SELECT new com.vieecoles.steph.dto.moyennes.EleveDto(ce.inscription.eleve.id, ce.inscription.eleve.matricule, "
+			+ " ce.inscription.eleve.nom, ce.inscription.eleve.prenom, ce.classe.id, ce.classe.libelle ) "
+			+ " FROM ClasseEleve ce "
+			+ " WHERE ce.id = :classeEleveId ";
+	
+	/**
+	 * Obténir la liste des notes d'un élève pour une année dans une classe et pour une période.
+	 */
+	public List<com.vieecoles.steph.dto.moyennes.NoteDto> getNotesByEleveAndAnneeAndClasseAndPeriode(String classeId, String anneeId, String periodeId) {
+		System.out.println("In method");
+		List<com.vieecoles.steph.dto.moyennes.NoteDto> notes;
+		try {
+		notes = getEntityManager().createQuery(QUERY_GET_NOTES_BY_CLASSE, com.vieecoles.steph.dto.moyennes.NoteDto.class)
+			.setParameter("classeId", Long.valueOf(classeId))
+			.setParameter("anneeId",  Long.valueOf(anneeId))
+			.setParameter("periodeId",  Long.valueOf(periodeId))
+			.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+			notes = new ArrayList<com.vieecoles.steph.dto.moyennes.NoteDto>();
+		}
+		return notes;
+	}
+	
+	/**
+	 * Obténir la liste des eleves d'une classe.
+	 * A déplacer vers le referentiel des eleves.
+	 */
+	public EleveDto getEleve(Long classeEleveId) {
+		System.out.println("In method");
+		EleveDto eleve;
+		try {
+			eleve = getEntityManager().createQuery(QUERY_GET_DATA_ELEVE_AND_CLASSE, EleveDto.class)
+				.setParameter("classeEleveId", classeEleveId)
+				.getSingleResult();
+		} catch (Exception e) {
+			e.printStackTrace();
+			eleve = new EleveDto();
+		}
+		return eleve;
+	}
+	
+	public Map<Long, Map<Long, Map<Long, com.vieecoles.steph.dto.moyennes.NoteDto>>> displayer(String classeId, String anneeId, String periodeId) {
+		return groupNotesByEleveAndMatiere(getNotesByEleveAndAnneeAndClasseAndPeriode(classeId, anneeId, periodeId));
+		
+	}
+	
+	/**
+	 * Grouper les notes par eleve, matiere.
+	 *
+	 * @param notes
+	 * @return
+	 */
+	public Map<Long, Map<Long, Map<Long, com.vieecoles.steph.dto.moyennes.NoteDto>>> groupNotesByEleveAndMatiere(List<com.vieecoles.steph.dto.moyennes.NoteDto> notes) {
+	    return notes.stream()
+	        .collect(Collectors.groupingBy(
+	            note -> note.getClasseEleveId(),
+	            Collectors.groupingBy(
+	                    note -> note.getMatiereEcoleId(),
+	                    Collectors.toMap(
+	                    		note -> note.getId(),
+	                    		note -> note
+	                    		)
+	                    )
+	        ));
+	}
+	
+	
+	public EleveDto populateEleve() {
+		return null;
+	}
+	
+	public EleveDto populateMatiere() {
+		return null;
+	}
+	
+	public EleveDto populateNotes() {
+		return null;
+	}
+	public Map<Long, Map<Long, Map<Long, com.vieecoles.steph.dto.moyennes.NoteDto>>> formatDataByGroupingNotes(List<com.vieecoles.steph.dto.moyennes.NoteDto> notes) {
+		return groupNotesByEleveAndMatiere(notes);
+	}
+	
+	public List<EleveDto> populate(String classeId, String anneeId, String periodeId) {
+		List<EleveDto> eleves = new ArrayList<EleveDto>();
+		
+		List<com.vieecoles.steph.dto.moyennes.NoteDto> notes = getNotesByEleveAndAnneeAndClasseAndPeriode(classeId, anneeId, periodeId);
+		Map<Long, Map<Long, Map<Long, com.vieecoles.steph.dto.moyennes.NoteDto>>> groupingNotes = groupNotesByEleveAndMatiere(notes);
+		for (Map.Entry<Long, Map<Long, Map<Long, com.vieecoles.steph.dto.moyennes.NoteDto>>> eleveEntry : groupingNotes.entrySet()) {
+		    Long eleveId = eleveEntry.getKey();
+		    System.out.println("Élève ID: " + eleveId);
+		    
+		    EleveDto eleve = getEleve(eleveId);
+		    
+		    
+		    List<MatiereNotes> listMatiereNotes = new ArrayList<MatiereNotes>();
+
+		    Map<Long, Map<Long, com.vieecoles.steph.dto.moyennes.NoteDto>> matieres = eleveEntry.getValue();
+		    for (Map.Entry<Long, Map<Long, com.vieecoles.steph.dto.moyennes.NoteDto>> matiereEntry : matieres.entrySet()) {
+		        Long matiereId = matiereEntry.getKey();
+		        System.out.println("  Matière ID: " + matiereId);
+		        
+		        MatiereNotes matiereNotes = new MatiereNotes();
+
+		        Map<Long, com.vieecoles.steph.dto.moyennes.NoteDto> notesParMatiere = matiereEntry.getValue();
+		        for (Map.Entry<Long, com.vieecoles.steph.dto.moyennes.NoteDto> noteEntry : notesParMatiere.entrySet()) {
+		        	com.vieecoles.steph.dto.moyennes.NoteDto note = noteEntry.getValue();
+		            System.out.println("    Note ID: " + note.getId() + ", valeur: " + note.getNote());
+		        }
+		    }
+		}
+		
+		return null;
+	}
+	
 }

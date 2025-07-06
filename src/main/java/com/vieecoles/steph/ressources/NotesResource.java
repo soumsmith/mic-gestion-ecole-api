@@ -34,6 +34,14 @@ public class NotesResource {
         return Response.ok().entity(noteService.getList()).build();
     }
 
+    @GET
+    @Path("/list-note-classe")
+    @Tag(name = "Notes")
+    public Response listByClasse(@QueryParam("classeId") String classeId, @QueryParam("anneeId") String anneeId, @QueryParam("periodeId") String periodeId) {
+    	System.out.println(String.format("%s %s %s", classeId, anneeId, periodeId));
+        return Response.ok().entity(noteService
+        		.displayer(classeId, anneeId, periodeId)).build();
+    }
 
     @GET
     @Path("/{id}")
