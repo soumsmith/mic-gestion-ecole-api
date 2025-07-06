@@ -113,7 +113,7 @@ public class ImportNotesMatieresEcole {
   String noteArplat4 ="";
   String noteArplat5 ="";
 
-  Long matiereTicId =13L;
+  Long matiereTicId =27L;
   String noteTic1 ="";
   String noteTic2 ="";
   String noteTic3 ="";
@@ -133,4 +133,68 @@ public class ImportNotesMatieresEcole {
   String noteEps3 ="" ;
   String noteEps4 ="" ;
   String noteEps5 ="";
+
+  Long matiereArabeId=73L;
+  String noteArabe1="" ;
+  String noteArabe2 ="";
+  String noteArabe3 ="" ;
+  String noteArabe4 ="" ;
+  String noteArabe5 ="";
+
+  Long matiereArtVisuId=36L;
+  String noteArtVisu1="" ;
+  String noteArtVisu2 ="";
+  String noteArtVisu3 ="" ;
+  String noteArtVisu4 ="" ;
+  String noteArtVisu5 ="";
+
+  Long matiereEmrId=31L;
+  String noteEmr1="" ;
+  String noteEmr2 ="";
+  String noteEmr3 ="" ;
+  String noteEmr4 ="" ;
+  String noteEmr5 ="";
+
+  Long matiereMemoId=29L;
+  String noteMemo1="" ;
+  String noteMemo2 ="";
+  String noteMemo3 ="" ;
+  String noteMemo4 ="" ;
+  String noteMemo5 ="";
+
+  Long matiereFiqId=30L;
+  String noteFiq1="" ;
+  String noteFiq2 ="";
+  String noteFiq3 ="" ;
+  String noteFiq4 ="" ;
+  String noteFiq5 ="";
+
+  Long matiereAssirahId=35L;
+  String noteAssirah1="" ;
+  String noteAssirah2 ="";
+  String noteAssirah3 ="" ;
+  String noteAssirah4 ="" ;
+  String noteAssirah5 ="";
+
+  Long matiereAlquidahId=37L;
+  String noteAlquidah1="" ;
+  String noteAlquidah2 ="";
+  String noteAlquidah3 ="" ;
+  String noteAlquidah4 ="" ;
+  String noteAlquidah5 ="";
+
+  Long matiereAlAklaqId=38L;
+  String noteAlAklaq1="" ;
+  String noteAlAklaq2 ="";
+  String noteAlAklaq3 ="" ;
+  String noteAlAklaq4 ="" ;
+  String noteAlAklaq5 ="";
+
+  Long matiereInforId =13L;
+  String noteInfor1 ="";
+  String noteInfor2 ="";
+  String noteInfor3 ="";
+  String noteInfor4 ="" ;
+  String noteInfor5 ="";
+
 }

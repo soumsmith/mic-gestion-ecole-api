@@ -2,6 +2,7 @@ package com.vieecoles.processors.bouake;
 
 import com.vieecoles.dto.NiveauOrderDto;
 import com.vieecoles.dto.eleveAffecteParClasseDto;
+import com.vieecoles.dto.eleveAffecteParClasseDtoAvecTousTrimestres;
 import com.vieecoles.dto.eleveNonAffecteParClasseDto;
 import com.vieecoles.services.etats.appachePoi.EleveNonAffecteParClassePoiServices;
 import java.util.ArrayList;
@@ -55,7 +56,7 @@ public class WordTempListNonAffectesProcessor {
         }
 
         for (int k = classeList.size() - 1; k >= 0; k--) {
-            List<eleveNonAffecteParClasseDto>  elevAffectes = new ArrayList<>() ;
+            List<eleveAffecteParClasseDtoAvecTousTrimestres>  elevAffectes = new ArrayList<>() ;
             elevAffectes= eleveAffecteParClassePoiServices.eleveNonAffecteParClasse(idEcole,libelleAnnee,libelleTrimestre,classeList.get(k).getNiveau());
 
         if (indexToInsert != -1) {
@@ -83,13 +84,15 @@ public class WordTempListNonAffectesProcessor {
             headerRow.addNewTableCell().setText("R");
             headerRow.addNewTableCell().setText("Statut");
             headerRow.addNewTableCell().setText("N°DEC AFF");
-            headerRow.addNewTableCell().setText("MOY");
+            headerRow.addNewTableCell().setText("MOY T1");
+            headerRow.addNewTableCell().setText("MOY T2");
+            headerRow.addNewTableCell().setText("MOY T3");
             headerRow.addNewTableCell().setText("RANG");
             headerRow.addNewTableCell().setText("OBSERVATION");
 
             // Ajouter des lignes au tableau
             int numerotation=1;
-            for (eleveNonAffecteParClasseDto eleve : elevAffectes) {  // Exemple de 3 lignes
+            for (eleveAffecteParClasseDtoAvecTousTrimestres eleve : elevAffectes) {  // Exemple de 3 lignes
                 XWPFTableRow row = table.createRow();
                 row.getCell(0).setText(numerotation+"");
                 row.getCell(1).setText(eleve.getMatricule());
@@ -99,10 +102,11 @@ public class WordTempListNonAffectesProcessor {
                 row.getCell(5).setText(eleve.getNationnalite());
                 row.getCell(6).setText(eleve.getRedoublan());
                 row.getCell(7).setText(eleve.getAffecte());
-                row.getCell(8).setText(eleve.getNumDecisionAffecte());
-                row.getCell(9).setText(String.valueOf(eleve.getMoyeGeneral()));
-                row.getCell(10).setText(String.valueOf(eleve.getRang()));
-                row.getCell(11).setText(eleve.getObservat());
+                row.getCell(8).setText(String.valueOf(eleve.getMoyeGeneralTrim1()));
+                row.getCell(9).setText(String.valueOf(eleve.getMoyeGeneralTrim2()));
+                row.getCell(10).setText(String.valueOf(eleve.getMoyeGeneralTrim3()));
+                row.getCell(11).setText(String.valueOf(eleve.getRang()));
+                row.getCell(12).setText(eleve.getObservat());
                 numerotation++;
             }
 

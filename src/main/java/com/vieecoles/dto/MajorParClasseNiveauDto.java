@@ -16,6 +16,23 @@ public class MajorParClasseNiveauDto {
     private String lv2 ;
     private  Integer ordre_niveau ;
     private  String nationalite ;
+    private  String affecte ;
+
+    public String getNationalite() {
+        return nationalite;
+    }
+
+    public void setNationalite(String nationalite) {
+        this.nationalite = nationalite;
+    }
+
+    public String getAffecte() {
+        return affecte;
+    }
+
+    public void setAffecte(String affecte) {
+        this.affecte = affecte;
+    }
 
     public MajorParClasseNiveauDto(List<MajorParClasseNiveauDto> majorParClasseNiveauDtos) {
     }

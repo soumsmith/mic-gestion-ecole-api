@@ -1,8 +1,13 @@
 package com.vieecoles.steph.entities;
 
+import com.vieecoles.Conduite.entites.Infraction;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
@@ -34,4 +39,6 @@ public class Eleve extends PanacheEntityBase{
 	private String sexe;
 	@Column(name = "cheminphoto")
 	private String urlPhoto;
+	/*@OneToMany(mappedBy = "eleve", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Infraction> infractions = new ArrayList<>();*/
 }

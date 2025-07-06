@@ -5,7 +5,9 @@ import com.vieecoles.dto.*;
 import com.vieecoles.services.etats.BulletinRapportServices;
 import com.vieecoles.services.etats.BulletinSpiderServices;
 import com.vieecoles.services.etats.MatriceAnnuelleServices;
+import com.vieecoles.services.etats.resultatsRecapAffEtNonAffAnnuelleParClasseServices;
 import com.vieecoles.steph.entities.Classe;
+import javax.persistence.NoResultException;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRXlsExporter;
@@ -52,6 +54,8 @@ public class MatriceAnnuelleRessource {
 
     @Inject
     MatriceAnnuelleServices matriceAnnuelleServices ;
+    @Inject
+    resultatsRecapAffEtNonAffAnnuelleParClasseServices recapResultatsNombreEleve;
 
 
     private static String UPLOAD_DIR = "/data/";
@@ -139,18 +143,38 @@ public class MatriceAnnuelleRessource {
         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/MatriceAnnuelleGeneralDFA.jrxml");
         List<matriceClasseDto> detailsBull1= new ArrayList<>() ;
         List<matiereMoyenneBilanDto> detailsBull2= new ArrayList<>() ;
+        List<RecapResultatsElevesAffeEtNonAffDto> recapResultats= new ArrayList<>() ;
 
 
 
         Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecoleviedbv2", USER, PASS);
         JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
         Classe myClasse = Classe.findById(classe);
+        recapResultats = recapResultatsNombreEleve.RecapCalculResultatsEleveAffecte(idEcole,libelleAnnee,periode,myClasse.getId());
         Map<String, Object> map = new HashMap<>();
 
         map.put("idEcole", idEcole);
         map.put("annee", libelleAnnee);
         map.put("libellePeriode", periode);
         map.put("classe", myClasse.getLibelle());
+        if(!recapResultats.isEmpty()) {
+            map.put("effeG", recapResultats.get(0).getEffeG());
+            map.put("effeF", recapResultats.get(0).getEffeF());
+            map.put("classF", recapResultats.get(0).getClassF());
+            map.put("classG", recapResultats.get(0).getClassG());
+            map.put("nbreMoySup10F", recapResultats.get(0).getNbreMoySup10F());
+            map.put("nbreMoySup10G", recapResultats.get(0).getNbreMoySup10G());
+            map.put("nbreMoyInf999F", recapResultats.get(0).getNbreMoyInf999F());
+            map.put("nbreMoyInf999G", recapResultats.get(0).getNbreMoyInf999G());
+            map.put("nbreMoyInf85G", recapResultats.get(0).getNbreMoyInf85G());
+            map.put("nbreMoyInf85F", recapResultats.get(0).getNbreMoyInf85F());
+            map.put("pourMoySup10F", recapResultats.get(0).getPourMoySup10F());
+            map.put("pourMoySup10G", recapResultats.get(0).getPourMoySup10G());
+            map.put("pourMoyInf999F", recapResultats.get(0).getPourMoyInf999F());
+            map.put("pourMoyInf999G", recapResultats.get(0).getPourMoyInf999G());
+            map.put("pourMoyInf85G", recapResultats.get(0).getPourMoyInf85G());
+            map.put("pourMoyInf85F", recapResultats.get(0).getPourMoyInf85F());
+        }
         // map.put("title", type);
 
         JasperPrint report = JasperFillManager.fillReport(compileReport, map, connection);
@@ -179,17 +203,38 @@ public class MatriceAnnuelleRessource {
         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/MatriceAnnuelleGeneralDFA.jrxml");
 
         List<matriceAnnuelleDto> detailsBull= new ArrayList<>() ;
-
-
+        List<RecapResultatsElevesAffeEtNonAffDto> recapResultats= new ArrayList<>() ;
+        Long  effeG,effeF,classF,classG,nonclassF,nonclassG,nbreMoySup10F,nbreMoySup10G,nbreMoyInf999F,nbreMoyInf999G,nbreMoyInf85G,nbreMoyInf85F;
+        Double pourMoySup10F =0d ,pourMoySup10G =0d,pourMoyInf999F =0d,pourMoyInf999G =0d,pourMoyInf85G =0d,pourMoyInf85F =0d ;
         Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecoleviedbv2", USER, PASS);
         JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
         Classe myClasse = Classe.findById(classe);
         Map<String, Object> map = new HashMap<>();
-
-        map.put("idEcole", idEcole);
+        recapResultats = recapResultatsNombreEleve.RecapCalculResultatsEleveAffecte(idEcole,libelleAnnee,periode,myClasse.getId());
+            map.put("idEcole", idEcole);
         map.put("annee", libelleAnnee);
         map.put("libellePeriode", periode);
         map.put("classe", myClasse.getLibelle());
+        if(!recapResultats.isEmpty()) {
+            map.put("effeG", recapResultats.get(0).getEffeG());
+            map.put("effeF", recapResultats.get(0).getEffeF());
+            map.put("classF", recapResultats.get(0).getClassF());
+            map.put("classG", recapResultats.get(0).getClassG());
+            map.put("nbreMoySup10F", recapResultats.get(0).getNbreMoySup10F());
+            map.put("nbreMoySup10G", recapResultats.get(0).getNbreMoySup10G());
+            map.put("nbreMoyInf999F", recapResultats.get(0).getNbreMoyInf999F());
+            map.put("nbreMoyInf999G", recapResultats.get(0).getNbreMoyInf999G());
+            map.put("nbreMoyInf85G", recapResultats.get(0).getNbreMoyInf85G());
+            map.put("nbreMoyInf85F", recapResultats.get(0).getNbreMoyInf85F());
+            map.put("pourMoySup10F", recapResultats.get(0).getPourMoySup10F());
+            map.put("pourMoySup10G", recapResultats.get(0).getPourMoySup10G());
+            map.put("pourMoyInf999F", recapResultats.get(0).getPourMoyInf999F());
+            map.put("pourMoyInf999G", recapResultats.get(0).getPourMoyInf999G());
+            map.put("pourMoyInf85G", recapResultats.get(0).getPourMoyInf85G());
+            map.put("pourMoyInf85F", recapResultats.get(0).getPourMoyInf85F());
+        }
+
+
         //map.put("classe","6EME A");
         // map.put("title", type);
         try {
@@ -390,5 +435,22 @@ public class MatriceAnnuelleRessource {
         return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.MULTIPART_FORM_DATA).body(data);
 
     }
+    //Nombre Moyenne Superieure 10
+    public  Long getnbreMoySup10F(Long idEcole , String niveau ,String libelleAnnee , String libelleTrimestre){
+        try {
+            Long   nbreMoySup10F = (Long) em.createQuery("select count(o.id) from Bulletin o where o.isClassed=:isClass and  o.sexe=:sexe and o.ecoleId=:idEcole  and o.moyGeneral>=:moy and o.isClassed=:isClass and o.libellePeriode=:periode and o.anneeLibelle=:annee group by  o.niveau having o.niveau=:niveau")
+                .setParameter("sexe","FEMININ")
+                .setParameter("idEcole",idEcole)
+                .setParameter("isClass","O")
+                .setParameter("moy",10.0)
+                .setParameter("niveau",niveau)
+                .setParameter("annee", libelleAnnee)
+                .setParameter("periode", libelleTrimestre)
+                .getSingleResult();
+            return  nbreMoySup10F;
+        } catch (NoResultException e){
+            return 0L ;
+        }
 
+    }
 }

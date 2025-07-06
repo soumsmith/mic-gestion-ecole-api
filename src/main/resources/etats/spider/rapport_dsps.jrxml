@@ -1,10 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rapport_dsps" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ff4cdaef-ee80-4528-a7dd-e3f7220179cf">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rapport_dsps" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="0" bottomMargin="0" uuid="ff4cdaef-ee80-4528-a7dd-e3f7220179cf">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ecolevieDB"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="net.sf.jasperreports.export.xls.freeze.row" value="2"/>
+	<property name="net.sf.jasperreports.export.xls.detect.cell.type" value="true"/>
+	<property name="net.sf.jasperreports.export.xls.format.cell.values" value="false"/>
+	<property name="net.sf.jasperreports.export.xls.auto.fit.column" value="false"/>
+	<property name="net.sf.jasperreports.export.xls.cell.type" value="String"/>
+	<property name="net.sf.jasperreports.export.xls.pattern" value="@"/>
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="383"/>
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="606"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<parameter name="periode" class="java.lang.String"/>
 	<parameter name="annee" class="java.lang.String"/>
 	<parameter name="idEcole" class="java.lang.String"/>
@@ -186,7 +201,7 @@ and v.libelle_periode= $P{periode}]]>
 		<property name="com.jaspersoft.studio.field.name" value="moyenTrim"/>
 		<property name="com.jaspersoft.studio.field.label" value="moyenTrim"/>
 	</field>
-	<field name="rang" class="java.lang.Integer">
+	<field name="rang" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="rang"/>
 		<property name="com.jaspersoft.studio.field.label" value="rang"/>
 	</field>
@@ -677,7 +692,7 @@ and v.libelle_periode= $P{periode}]]>
 					<textElement verticalAlignment="Middle">
 						<font fontName="Serif" size="6"/>
 					</textElement>
-					<textFieldExpression><![CDATA["moy_trim1"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["moy_trim"]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="780" y="0" width="29" height="20" uuid="377d3251-f5f0-4b39-a6e0-05dcc8775e56">
@@ -841,7 +856,7 @@ and v.libelle_periode= $P{periode}]]>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Serif" size="7"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{moyen_fr}==null || $F{moyen_fr}.isEmpty() || $F{moyen_fr}.equals("0")? "22":$F{is_class_fr}.equals("O" )?$F{moyen_fr}:$F{is_class_fr}.equals("N" )?"21" :"22"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{moyen_fr}==null || $F{moyen_fr}.isEmpty() || $F{moyen_fr}.equals("0")? "  22,0 ":$F{is_class_fr}.equals("O" )?" "+" "+$F{moyen_fr}+" "+" ":$F{is_class_fr}.equals("N" )?"  21,0 " :"   22,0 "]]></textFieldExpression>
 					<patternExpression><![CDATA["#,##0.00"]]></patternExpression>
 				</textField>
 				<textField>
@@ -863,7 +878,7 @@ and v.libelle_periode= $P{periode}]]>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Serif" size="7"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{moyenCompoFr}==null || $F{moyenCompoFr}.isEmpty() || $F{moyenCompoFr}.equals("0")? "22":$F{is_clasCompoFr}.equals("O" )?$F{moyenCompoFr}:$F{is_clasCompoFr}.equals("N" )?"21" :"22"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{moyenCompoFr}==null || $F{moyenCompoFr}.isEmpty() || $F{moyenCompoFr}.equals("0")? " 22 "+ ",0 ":$F{is_clasCompoFr}.equals("O" )?" "+" "+$F{moyenCompoFr}+" "+" ":$F{is_clasCompoFr}.equals("N" )?" 21 "+ ",0 " :" 22"+ ",0 "]]></textFieldExpression>
 					<patternExpression><![CDATA["#,##0.00"]]></patternExpression>
 				</textField>
 				<textField>
@@ -885,7 +900,7 @@ and v.libelle_periode= $P{periode}]]>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Serif" size="7"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{moyenOrthoGram}==null || $F{moyenOrthoGram}.isEmpty() || $F{moyenOrthoGram}.equals("0")? "22":$F{is_clasOrthoGram}.equals("O" )?$F{moyenOrthoGram}:$F{is_clasOrthoGram}.equals("N" )?"21" : "22"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{moyenOrthoGram}==null || $F{moyenOrthoGram}.isEmpty() || $F{moyenOrthoGram}.equals("0")? " 22"+ ",0 ":$F{is_clasOrthoGram}.equals("O" )?" "+$F{moyenOrthoGram}+" ":$F{is_clasOrthoGram}.equals("N" )?" 21 "+ ",0 " : " 22"+ ",0 "]]></textFieldExpression>
 					<patternExpression><![CDATA["#,##0.00"]]></patternExpression>
 				</textField>
 				<textField>
@@ -907,7 +922,7 @@ and v.libelle_periode= $P{periode}]]>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Serif" size="7"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{moyenExpreOral}==null || $F{moyenExpreOral}.isEmpty() || $F{moyenExpreOral}.equals("0")? "22":$F{is_clasExpreOral}.equals("O" )?$F{moyenExpreOral}:$F{is_clasExpreOral}.equals("N" )?"21" : "22"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{moyenExpreOral}==null || $F{moyenExpreOral}.isEmpty() || $F{moyenExpreOral}.equals("0")? " 22"+ ",0 ":$F{is_clasExpreOral}.equals("O" )?" "+$F{moyenExpreOral}+" ":$F{is_clasExpreOral}.equals("N" )?" 21"+ ",0 " : " 22"+ ",0 "]]></textFieldExpression>
 					<patternExpression><![CDATA["#,##0.00"]]></patternExpression>
 				</textField>
 				<textField>
@@ -929,7 +944,7 @@ and v.libelle_periode= $P{periode}]]>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Serif" size="7"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{moyenphiloso}==null || $F{moyenphiloso}.isEmpty() || $F{moyenphiloso}.equals("0")? "22":$F{is_clasphiloso}.equals("O" )?$F{moyenphiloso}:$F{is_clasphiloso}.equals("N" )?"21" : "22"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{moyenphiloso}==null || $F{moyenphiloso}.isEmpty() || $F{moyenphiloso}.equals("0")? " 22"+ ",0 ":$F{is_clasphiloso}.equals("O" )?" "+$F{moyenphiloso}+" ":$F{is_clasphiloso}.equals("N" )?" 21"+ ",0 " : " 22"+ ",0 "]]></textFieldExpression>
 					<patternExpression><![CDATA["#,##0.00"]]></patternExpression>
 				</textField>
 				<textField>
@@ -951,7 +966,7 @@ and v.libelle_periode= $P{periode}]]>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Serif" size="7"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{moyenAng}==null || $F{moyenAng}.isEmpty() || $F{moyenAng}.equals("0")? "22":$F{is_clasAng}.equals("O" )?$F{moyenAng}:$F{is_clasAng}.equals("N" )?"21" : "22"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{moyenAng}==null || $F{moyenAng}.isEmpty() || $F{moyenAng}.equals("0")? " 22"+ ",0 ":$F{is_clasAng}.equals("O" )?" "+$F{moyenAng}+" ":$F{is_clasAng}.equals("N" )?" 21"+ ",0 " : " 22"+ ",0 "]]></textFieldExpression>
 					<patternExpression><![CDATA["#,##0.00"]]></patternExpression>
 				</textField>
 				<textField>
@@ -973,7 +988,7 @@ and v.libelle_periode= $P{periode}]]>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Serif" size="7"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{moyenMath}==null || $F{moyenMath}.isEmpty() || $F{moyenMath}.equals("0")? "22":$F{is_clasMath}.equals("O" )?$F{moyenMath}:$F{is_clasMath}.equals("N" )?"21" : "22"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{moyenMath}==null || $F{moyenMath}.isEmpty() || $F{moyenMath}.equals("0")? " 22"+ ",0 ":$F{is_clasMath}.equals("O" )?" "+$F{moyenMath}+" ":$F{is_clasMath}.equals("N" )?" 21"+ ",0 " : " 22"+ ",0 "]]></textFieldExpression>
 					<patternExpression><![CDATA["#,##0.00"]]></patternExpression>
 				</textField>
 				<textField>
@@ -995,7 +1010,7 @@ and v.libelle_periode= $P{periode}]]>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Serif" size="7"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{moyenPhysiq}==null || $F{moyenPhysiq}.isEmpty() || $F{moyenPhysiq}.equals("0")? "22":$F{is_clasPhysiq}.equals("O" )?$F{moyenPhysiq}:$F{is_clasPhysiq}.equals("N" )?"21" : "22"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{moyenPhysiq}==null || $F{moyenPhysiq}.isEmpty() || $F{moyenPhysiq}.equals("0")? " 22"+ ",0 ":$F{is_clasPhysiq}.equals("O" )?" "+$F{moyenPhysiq}+" ":$F{is_clasPhysiq}.equals("N" )?" 21"+ ",0 " : " 22"+ ",0 "]]></textFieldExpression>
 					<patternExpression><![CDATA["#,##0.00"]]></patternExpression>
 				</textField>
 				<textField>
@@ -1017,7 +1032,7 @@ and v.libelle_periode= $P{periode}]]>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Serif" size="7"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{moyenSVT}==null || $F{moyenSVT}.isEmpty() || $F{moyenSVT}.equals("0")? "22":$F{is_clasSVT}.equals("O" )?$F{moyenSVT}:$F{is_clasSVT}.equals("N" )?"21" : "22"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{moyenSVT}==null || $F{moyenSVT}.isEmpty() || $F{moyenSVT}.equals("0")? " 22"+ ",0 ":$F{is_clasSVT}.equals("O" )?" "+$F{moyenSVT}+" ":$F{is_clasSVT}.equals("N" )?" 21"+ ",0 " : " 22"+ ",0 "]]></textFieldExpression>
 					<patternExpression><![CDATA["#,##0.00"]]></patternExpression>
 				</textField>
 				<textField>
@@ -1040,7 +1055,7 @@ and v.libelle_periode= $P{periode}]]>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Serif" size="7"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{moyenHg}==null  || $F{moyenHg}.isEmpty() || $F{moyenHg}.equals("0")? "22":$F{is_clasHg}.equals("O" )?$F{moyenHg}:$F{is_clasHg}.equals("N" )?"21" : "22"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{moyenHg}==null  || $F{moyenHg}.isEmpty() || $F{moyenHg}.equals("0")? " 22"+ ",0 ":$F{is_clasHg}.equals("O" )?" "+$F{moyenHg}+" ":$F{is_clasHg}.equals("N" )?" 21"+ ",0 " : " 22"+ ",0 "]]></textFieldExpression>
 					<patternExpression><![CDATA["#,##0.00"]]></patternExpression>
 				</textField>
 				<textField>
@@ -1062,7 +1077,7 @@ and v.libelle_periode= $P{periode}]]>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Serif" size="7"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{moyenLv2}==null  || $F{moyenLv2}.isEmpty() || $F{moyenLv2}.equals("0")? "22":$F{is_clasLv2}.equals("O" )?$F{moyenLv2}:$F{is_clasLv2}.equals("N" )?"21" :"22"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{moyenLv2}==null  || $F{moyenLv2}.isEmpty() || $F{moyenLv2}.equals("0")? " 22"+ ",0 ":$F{is_clasLv2}.equals("O" )?" "+$F{moyenLv2}+" ":$F{is_clasLv2}.equals("N" )?" 21"+ ",0 " :" 22"+ ",0 "]]></textFieldExpression>
 					<patternExpression><![CDATA["#,##0.00"]]></patternExpression>
 				</textField>
 				<textField>
@@ -1084,7 +1099,7 @@ and v.libelle_periode= $P{periode}]]>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Serif" size="7"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{moyenEdhc}==null || $F{moyenEdhc}.isEmpty() || $F{moyenEdhc}.equals("0")? "22":$F{is_clasEdhc}.equals("O" )?$F{moyenEdhc}:$F{is_clasEdhc}.equals("N" )?"21" : "22"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{moyenEdhc}==null || $F{moyenEdhc}.isEmpty() || $F{moyenEdhc}.equals("0")? " 22"+ ",0 ":$F{is_clasEdhc}.equals("O" )?" "+$F{moyenEdhc}+" ":$F{is_clasEdhc}.equals("N" )?" 21"+ ",0 " : " 22"+ ",0 "]]></textFieldExpression>
 					<patternExpression><![CDATA["#,##0.00"]]></patternExpression>
 				</textField>
 				<textField>
@@ -1106,7 +1121,7 @@ and v.libelle_periode= $P{periode}]]>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Serif" size="7"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{moyenArplat}==null  || $F{moyenArplat}.isEmpty() || $F{moyenArplat}.equals("0")? "22":$F{is_clasArplat}.equals("O" )?$F{moyenArplat}:$F{is_clasArplat}.equals("N" )?"21" :"22"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{moyenArplat}==null  || $F{moyenArplat}.isEmpty() || $F{moyenArplat}.equals("0")? " 22"+ ",0 ":$F{is_clasArplat}.equals("O" )?" "+$F{moyenArplat}+" ":$F{is_clasArplat}.equals("N" )?" 21"+ ",0 " :" 22"+ ",0 "]]></textFieldExpression>
 					<patternExpression><![CDATA["#,##0.00"]]></patternExpression>
 				</textField>
 				<textField>
@@ -1128,7 +1143,7 @@ and v.libelle_periode= $P{periode}]]>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Serif" size="7"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{moyenTic}==null || $F{moyenTic}.isEmpty() || $F{moyenTic}.equals("0")? "22":$F{is_clasTic}.equals("O" )?$F{moyenTic}:$F{is_clasTic}.equals("N" )?"21" : "22"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{moyenTic}==null || $F{moyenTic}.isEmpty() || $F{moyenTic}.equals("0")? " 22"+ ",0 ":$F{is_clasTic}.equals("O" )?" "+$F{moyenTic}+" ":$F{is_clasTic}.equals("N" )?" 21"+ ",0 " : " 22"+ ",0 "]]></textFieldExpression>
 					<patternExpression><![CDATA["#,##0.00"]]></patternExpression>
 				</textField>
 				<textField>
@@ -1150,7 +1165,7 @@ and v.libelle_periode= $P{periode}]]>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Serif" size="7"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{moyenConduite}==null || $F{moyenConduite}.isEmpty() || $F{moyenConduite}.equals("0")? "22":$F{is_clasConduite}.equals("O" )?$F{moyenConduite}:$F{is_clasConduite}.equals("N" )?"21" : "22"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{moyenConduite}==null || $F{moyenConduite}.isEmpty() || $F{moyenConduite}.equals("0")? " 22"+ ",0 ":$F{is_clasConduite}.equals("O" )?" "+$F{moyenConduite}+" ":$F{is_clasConduite}.equals("N" )?" 21"+ ",0 " : " 22"+ ",0 "]]></textFieldExpression>
 					<patternExpression><![CDATA["#,##0.00"]]></patternExpression>
 				</textField>
 				<textField>
@@ -1172,7 +1187,7 @@ and v.libelle_periode= $P{periode}]]>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Serif" size="7"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{moyenEps}==null || $F{moyenEps}.isEmpty() || $F{moyenEps}.equals("0")? "22":$F{is_clasEps}.equals("O" )?$F{moyenEps}:$F{is_clasEps}.equals("N" )? "21":"22"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{moyenEps}==null || $F{moyenEps}.isEmpty() || $F{moyenEps}.equals("0")? " 22"+ ",0 ":$F{is_clasEps}.equals("O" )?" "+$F{moyenEps}+" ":$F{is_clasEps}.equals("N" )? " 21"+ ",0 ":" 22"+ ",0 "]]></textFieldExpression>
 					<patternExpression><![CDATA["#,##0.00"]]></patternExpression>
 				</textField>
 				<textField>
@@ -1194,7 +1209,7 @@ and v.libelle_periode= $P{periode}]]>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Serif" size="7"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{is_class_periode}.equals("N")?"21":$F{moyenTrim}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{is_class_periode}.equals("N")?" 21"+ ",0 ":$F{moyenTrim}]]></textFieldExpression>
 					<patternExpression><![CDATA["#,##0.00"]]></patternExpression>
 				</textField>
 				<textField>
@@ -1216,7 +1231,8 @@ and v.libelle_periode= $P{periode}]]>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Serif" size="7"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{is_class_periode}.equals("N")?"21":$F{rang}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{is_class_periode}.equals("N")?"21"+ ",0 ":" "+$F{rang}+ ",0 "]]></textFieldExpression>
+					<patternExpression><![CDATA["##,#"]]></patternExpression>
 				</textField>
 			</frame>
 		</band>

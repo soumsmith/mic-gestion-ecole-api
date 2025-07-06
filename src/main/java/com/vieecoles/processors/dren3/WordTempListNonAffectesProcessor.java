@@ -5,7 +5,9 @@ import static com.vieecoles.processors.dren3.WordTempListAffectesProcessor.setHe
 
 import com.vieecoles.dto.NiveauOrderDto;
 import com.vieecoles.dto.eleveAffecteParClasseDto;
+import com.vieecoles.dto.eleveAffecteParClasseDtoAvecTousTrimestres;
 import com.vieecoles.dto.eleveNonAffecteParClasseDto;
+import com.vieecoles.services.etats.appachePoi.Annuels.EleveNonAffecteAnnuelsParClassePoiServices;
 import com.vieecoles.services.etats.appachePoi.EleveNonAffecteParClassePoiServices;
 import com.vieecoles.steph.entities.Ecole;
 import java.util.ArrayList;
@@ -61,7 +63,7 @@ public class WordTempListNonAffectesProcessor {
         }
 
         for (int k = classeList.size() - 1; k >= 0; k--) {
-            List<eleveNonAffecteParClasseDto>  elevAffectes = new ArrayList<>() ;
+            List<eleveAffecteParClasseDtoAvecTousTrimestres>  elevAffectes = new ArrayList<>() ;
             elevAffectes= eleveAffecteParClassePoiServices.eleveNonAffecteParClasse(idEcole,libelleAnnee,libelleTrimestre,classeList.get(k).getNiveau());
 
         if (indexToInsert != -1) {
@@ -91,7 +93,9 @@ public class WordTempListNonAffectesProcessor {
             setHeaderCell(headerRow.addNewTableCell(), "STATUT AFF /NON AFF", "D9D9D9");
             setHeaderCell(headerRow.addNewTableCell(), "N° DECISION D’AFF", "D9D9D9");
             setHeaderCell(headerRow.addNewTableCell(), "LV2", "D9D9D9");
-            setHeaderCell(headerRow.addNewTableCell(), "M/20", "D9D9D9");
+            setHeaderCell(headerRow.addNewTableCell(), "MOY T1", "D9D9D9");
+            setHeaderCell(headerRow.addNewTableCell(), "MOY T2", "D9D9D9");
+            setHeaderCell(headerRow.addNewTableCell(), "MOY T3", "D9D9D9");
             setHeaderCell(headerRow.addNewTableCell(), "RANG", "D9D9D9");
             setHeaderCell(headerRow.addNewTableCell(), "CLASSE", "D9D9D9");
             setHeaderCell(headerRow.addNewTableCell(), "OBSERVATIONS", "D9D9D9");
@@ -102,12 +106,12 @@ public class WordTempListNonAffectesProcessor {
             Ecole MyEcole;
             MyEcole= Ecole.findById(idEcole);
             currentValue = MyEcole.getLibelle();
-            for (eleveNonAffecteParClasseDto eleve : elevAffectes) {  // Exemple de 3 lignes
+            for (eleveAffecteParClasseDtoAvecTousTrimestres eleve : elevAffectes) {  // Exemple de 3 lignes
                 XWPFTableRow row = table.createRow();
                 if (row == null) {
                     row = table.insertNewTableRow(table.getNumberOfRows());
                 }
-                ensureCellCount(row, 16);  // Assurez-vous que chaque ligne a 16 cellules
+                ensureCellCount(row, 18);  // Assurez-vous que chaque ligne a 16 cellules
 
                 // Définir le texte et la taille des cellules de la ligne
                 setCellTextAndFontSize(row.getCell(0), String.valueOf(numerotation), 10);
@@ -121,11 +125,14 @@ public class WordTempListNonAffectesProcessor {
                 setCellTextAndFontSize(row.getCell(8), eleve.getRedoublan(), 10);
                 setCellTextAndFontSize(row.getCell(9), eleve.getAffecte(), 10);
                 setCellTextAndFontSize(row.getCell(10), eleve.getNumDecisionAffecte(), 10);
-                setCellTextAndFontSize(row.getCell(11), "", 10);
-                setCellTextAndFontSize(row.getCell(12), String.valueOf(eleve.getMoyeGeneral()), 10);
-                setCellTextAndFontSize(row.getCell(13), String.valueOf(eleve.getRang()), 10);
-                setCellTextAndFontSize(row.getCell(14), String.valueOf(eleve.getClasseLibelle()), 10);
-                setCellTextAndFontSize(row.getCell(15), eleve.getObservat(), 10);
+                setCellTextAndFontSize(row.getCell(11), eleve.getLv2(), 10);
+                setCellTextAndFontSize(row.getCell(12), String.valueOf(eleve.getMoyeGeneralTrim1()), 10);
+                setCellTextAndFontSize(row.getCell(13), String.valueOf(eleve.getMoyeGeneralTrim2()), 10);
+                setCellTextAndFontSize(row.getCell(14), String.valueOf(eleve.getMoyeGeneralTrim3()), 10);
+
+                setCellTextAndFontSize(row.getCell(15), String.valueOf(eleve.getRang()), 10);
+                setCellTextAndFontSize(row.getCell(16), String.valueOf(eleve.getClasseLibelle()), 10);
+                setCellTextAndFontSize(row.getCell(17), eleve.getObservat(), 10);
                 mergeCellsVertically(table, 1, 1, table.getNumberOfRows()-1 );
                 numerotation++;
             }
