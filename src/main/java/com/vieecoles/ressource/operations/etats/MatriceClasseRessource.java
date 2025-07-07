@@ -130,7 +130,7 @@ public class MatriceClasseRessource {
         }
 
 
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecoleviedbv2", USER, PASS);
+        Connection connection = DriverManager.getConnection("jdbc:mysql://db:3306/ecoleviedbv2", USER, PASS);
         JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
         Classe myClasse = Classe.findById(classe);
         Map<String, Object> map = new HashMap<>();
@@ -293,7 +293,7 @@ public class MatriceClasseRessource {
         }
 
 
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecoleviedbv2", USER, PASS);
+        Connection connection = DriverManager.getConnection("jdbc:mysql://db:3306/ecoleviedbv2", USER, PASS);
         JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
         Classe myClasse = Classe.findById(classe);
         Map<String, Object> map = new HashMap<>();

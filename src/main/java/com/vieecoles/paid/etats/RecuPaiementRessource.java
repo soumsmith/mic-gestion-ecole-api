@@ -86,7 +86,7 @@ public class RecuPaiementRessource {
         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/Comptabilite/LISTE_DE_CLASSE.jrxml");
 
 
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecoleviedbv2", USER, PASS);
+        Connection connection = DriverManager.getConnection("jdbc:mysql://db:3306/ecoleviedbv2", USER, PASS);
         JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
         Map<String, Object> map = new HashMap<>();
 

@@ -67,7 +67,7 @@ public class FichePersonnelRessource {
          myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Liste du personnel enseignant.jrxml");
 
 
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecoleviedbv2", USER, PASS);
+        Connection connection = DriverManager.getConnection("jdbc:mysql://db:3306/ecoleviedbv2", USER, PASS);
         JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
          Map<String, Object> map = new HashMap<>();
 
@@ -92,7 +92,7 @@ public class FichePersonnelRessource {
         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Liste du personnel enseignant.jrxml");
 
 
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecoleviedbv2", USER, PASS);
+        Connection connection = DriverManager.getConnection("jdbc:mysql://db:3306/ecoleviedbv2", USER, PASS);
         JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
         Map<String, Object> map = new HashMap<>();
 
@@ -122,7 +122,7 @@ public class FichePersonnelRessource {
         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Liste_du_personnel_administratif.jrxml");
 
 
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecoleviedbv2", USER, PASS);
+        Connection connection = DriverManager.getConnection("jdbc:mysql://db:3306/ecoleviedbv2", USER, PASS);
         JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
         //   JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");
         Map<String, Object> map = new HashMap<>();
@@ -145,7 +145,7 @@ public class FichePersonnelRessource {
         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Liste_du_personnel_administratif.jrxml");
 
 
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecoleviedbv2", USER, PASS);
+        Connection connection = DriverManager.getConnection("jdbc:mysql://db:3306/ecoleviedbv2", USER, PASS);
 
 
         JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
@@ -183,7 +183,7 @@ public class FichePersonnelRessource {
         }
 
 
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecoleviedbv2", USER, PASS);
+        Connection connection = DriverManager.getConnection("jdbc:mysql://db:3306/ecoleviedbv2", USER, PASS);
         JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
         //   JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");
         Map<String, Object> map = new HashMap<>();
@@ -221,7 +221,7 @@ public class FichePersonnelRessource {
             myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Liste_eleve_par_classe.jrxml");
         }
 
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecoleviedbv2", USER, PASS);
+        Connection connection = DriverManager.getConnection("jdbc:mysql://db:3306/ecoleviedbv2", USER, PASS);
 
 
         JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
@@ -292,7 +292,7 @@ public class FichePersonnelRessource {
         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/CertificatDeTravailN.jrxml");
 
 
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecoleviedbv2", USER, PASS);
+        Connection connection = DriverManager.getConnection("jdbc:mysql://db:3306/ecoleviedbv2", USER, PASS);
 
 
         JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
@@ -335,7 +335,7 @@ public class FichePersonnelRessource {
 
         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Liste_eleve_des_admis.jrxml");
 
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecoleviedbv2", USER, PASS);
+        Connection connection = DriverManager.getConnection("jdbc:mysql://db:3306/ecoleviedbv2", USER, PASS);
         JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
         //   JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");
         Map<String, Object> map = new HashMap<>();
@@ -370,7 +370,7 @@ public class FichePersonnelRessource {
         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Liste_eleve_des_admis.jrxml");
 
 
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecoleviedbv2", USER, PASS);
+        Connection connection = DriverManager.getConnection("jdbc:mysql://db:3306/ecoleviedbv2", USER, PASS);
 
 
         JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);

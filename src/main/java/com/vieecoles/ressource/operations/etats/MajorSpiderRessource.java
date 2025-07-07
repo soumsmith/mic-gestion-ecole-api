@@ -67,7 +67,7 @@ public class MajorSpiderRessource {
         List<parametreDto>  dspsDto = new ArrayList<>() ;
 
 
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecoleviedbv2", USER, PASS);
+        Connection connection = DriverManager.getConnection("jdbc:mysql://db:3306/ecoleviedbv2", USER, PASS);
         JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
         //   JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");
         Map<String, Object> map = new HashMap<>();

@@ -115,7 +115,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 	@Transactional
 	public void create(Notes notes) {
 		logger.info("--> Création de note pour " + notes.getClasseEleve().getInscription().getEleve().getNom());
-		logger.info(gson.toJson(notes));
+		//logger.info(gson.toJson(notes));
 		// pec dans le calcul de moyenne par defaut
 		notes.setDateCreation(new Date());
 		notes.setDateUpdate(new Date());

@@ -65,8 +65,14 @@ import java.util.*;
 //@Consumes(MediaType.APPLICATION_JSON)
 
 public class BulletinSpiderRessource {
-    static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
-    static final String DB_URL = "jdbc:mysql://127.0.0.1:3306/ecoleviedbv2";
+    //static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
+    //static final String DB_URL = "jdbc:mysql://127.0.0.1:3306/ecoleviedbv2";
+    @Inject
+    @ConfigProperty(name = "JDBC_DRIVER")
+    private String JDBC_DRIVER ;
+    @Inject
+    @ConfigProperty(name = "DB_URL")
+    private String DB_URL ;
     @Inject
     @ConfigProperty(name = "USER")
     private String USER ;
@@ -446,7 +452,7 @@ public class BulletinSpiderRessource {
 
 
 
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecoleviedbv2", USER, PASS);
+        Connection connection = DriverManager.getConnection("jdbc:mysql://db:3306/ecoleviedbv2", USER, PASS);
         JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
         //   JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");
         Map<String, Object> map = new HashMap<>();
@@ -767,7 +773,7 @@ public class BulletinSpiderRessource {
 
 
 
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecoleviedbv2", USER, PASS);
+        Connection connection = DriverManager.getConnection("jdbc:mysql://db:3306/ecoleviedbv2", USER, PASS);
         JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
         //   JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");
         Map<String, Object> map = new HashMap<>();
@@ -1070,7 +1076,7 @@ public class BulletinSpiderRessource {
 
             //bulletinSpiderMatriculeServices.bulletinInfos(idEcole ,libelleAnnee ,libellePeriode ,matricule,positionLogo,filigranne) ;
 
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecoleviedbv2", USER, PASS);
+            Connection connection = DriverManager.getConnection("jdbc:mysql://db:3306/ecoleviedbv2", USER, PASS);
             JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
             String infos= null ;
             String pdistinct= null ;
