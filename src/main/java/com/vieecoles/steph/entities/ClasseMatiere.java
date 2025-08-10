@@ -8,9 +8,6 @@ import java.util.Date;
 
 import javax.persistence.*;
 
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
-
 /**
  * Renommer en BrancheMatiere et y ajouter l 'école au cas où la branche est créee de façon locale (niveau ecole)
  * @author stephane

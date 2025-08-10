@@ -9,21 +9,25 @@ import lombok.Setter;
 @NoArgsConstructor
 public class EleveDto {
 	
-	public EleveDto(String id, String matricule, String nom, String prenom, String classeId, String classeLibelle) {
+	public EleveDto(long id, String matricule, String nom, String prenom,String sexe, String urlPhoto, long classeId, String classeLibelle) {
 		super();
 		this.id = id;
 		this.matricule = matricule;
 		this.nom = nom;
 		this.prenom = prenom;
+		this.sexe = sexe;
+		this.urlPhoto = urlPhoto;
 		this.classeId = classeId;
 		this.classeLibelle = classeLibelle;
 	}
-	private String id;
+	private long id;
 	private String matricule;
 	private String nom;
 	private String prenom;
+	private String sexe;
+	private String urlPhoto;
 	
-	private String classeId;
+	private long classeId;
 	private String classeLibelle;
 	
 	private Double moyenne;

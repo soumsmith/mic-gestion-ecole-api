@@ -119,4 +119,11 @@ public class ClasseMatiereResource {
 			return Response.serverError().entity(e.getMessage()).build();
 		}
 	}
+	
+	@GET
+	@Path("/get-list-coefs-by-classe")
+	@Tag(name = "ClasseMatiere")
+	public Response getCoefsByClasse(@QueryParam("classe") long classeId) {
+		return Response.ok().entity(classeMatiereService.getMapCoefByClasse(classeId)).build();
+	}
 }

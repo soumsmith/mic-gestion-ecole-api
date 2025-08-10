@@ -3,7 +3,9 @@ package com.vieecoles.steph.services;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -128,6 +130,39 @@ public class ClasseMatiereService implements PanacheRepositoryBase<ClasseMatiere
 			return null;
 		}
 		return cm;
+	}
+	
+	public Map<String,String> getMapCoefByClasse(long classeId) {
+		Map<String,String> map = new HashMap<String, String>();
+		try {
+			Classe classe = Classe.findById(classeId);
+			
+			List<ClasseMatiere> list = ClasseMatiere
+					.find("branche.id = ?1 and ecole.id = ?2 ", 
+							classe.getBranche().getId(),
+							classe.getEcole().getId()
+							).list();
+			list.stream().forEach(c -> map.put(c.getMatiere().getId().toString(), c.getCoef()));
+			return map;		
+					
+		} catch (RuntimeException ex) {
+			System.out.println(ex);
+			 return new HashMap<String, String>();
+		}
+					
+	}
+	
+	public String getCoefByMatiereAndBranche(long matiereId, long brancheId, long ecoleId) {
+		String coef = null;
+
+		try {
+			coef = (String) ClasseMatiere
+					.find("select c.coef, from ClasseMatiere c where c.branche.id = ?1 and c.ecole.id = ?2 and c.matiere.id = ?3", brancheId, ecoleId, matiereId)
+					.project(String.class).singleResult();
+		} catch (RuntimeException ex) {
+			return null;
+		}
+		return coef;
 	}
 
 	public List<ClasseMatiere> getByBrancheViaClasse(long classeId) {
