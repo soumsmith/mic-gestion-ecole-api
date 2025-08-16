@@ -10,7 +10,6 @@ import javax.transaction.Transactional;
 
 import org.jboss.logmanager.Level;
 
-import com.google.gson.Gson;
 import com.vieecoles.steph.entities.AbsenceEleve;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;

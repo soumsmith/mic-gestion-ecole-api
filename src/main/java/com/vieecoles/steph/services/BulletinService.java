@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -355,6 +356,66 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 		long durationInSeconds = (endTime - startTime) / 1000000000;
 		System.out.println("Temps d'exécution suppression " + durationInSeconds + " secondes");
 	}
+	
+	@Transactional
+	public void removeAllBulletinsByClasseProcess_V2(String classe, String annee, String periode) {
+		long startTime = System.nanoTime();
+		try {
+			// 1. Récupération des IDs des bulletins à supprimer
+			List<String> bulletinIds = Bulletin
+			    .find("classeId = ?1 and anneeId = ?2 and periodeId = ?3 and statut = ?4",
+			        Long.parseLong(classe),
+			        Long.parseLong(annee),
+			        Long.parseLong(periode),
+			        Constants.MODIFIABLE)
+			    .project(BulletinIdProjection.class)
+			    .list()
+			    .stream()
+			    .map(BulletinIdProjection::getId)
+			    .collect(Collectors.toList());
+
+			if (bulletinIds.isEmpty()) {
+			    logger.info("Aucun bulletin à supprimer");
+			    return;
+			}
+
+			// 2. Récupération des IDs des détails correspondants
+			List<String> detailIds = DetailBulletin
+			    .find("bulletin.id in ?1", bulletinIds)
+			    .project(DetailBulletinIdProjection.class)
+			    .list()
+			    .stream()
+			    .map(DetailBulletinIdProjection::getId)
+			    .collect(Collectors.toList());
+
+			// 3. Suppression en lots
+			int batchSize = 1000;
+			for (int i = 0; i < detailIds.size(); i += batchSize) {
+			    List<String> batch = detailIds.subList(i, Math.min(i + batchSize, detailIds.size()));
+			    NoteBulletin.delete("detailBulletin.id in ?1", batch);
+			}
+
+			for (int i = 0; i < bulletinIds.size(); i += batchSize) {
+			    List<String> batch = bulletinIds.subList(i, Math.min(i + batchSize, bulletinIds.size()));
+
+			    DetailBulletin.delete("bulletin.id in ?1", batch);
+			    InfosPersoBulletins.delete("idBulletin in ?1", batch);
+			    Bulletin.delete("id in ?1", batch);
+			}
+
+			logger.info(detailIds.size() + " details de bulletins supprimés");
+			logger.info(bulletinIds.size() + " bulletins supprimés");
+
+			
+		} catch (RuntimeException e) {
+			logger.warning("IN THE CATCH OF REMOVER");
+			throw new RuntimeException(
+					String.format("Erreur dans le process de suppression des bulletins [%s]", e.getMessage()));
+		}
+		long endTime = System.nanoTime();
+		long durationInSeconds = (endTime - startTime) / 1000000000;
+		System.out.println("Temps d'exécution suppression " + durationInSeconds + " secondes");
+	}
 
 	@Transactional
 	public int handleSave(String classe, String annee, String periode) {
@@ -388,7 +449,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 			// des détails bulletins et des notes bulletins.
 			// Pour éviter que si une matiere n existe plus pour une classe, il ne puisse
 			// pas avoir des enregistrement caduque dans la base de données.
-			removeAllBulletinsByClasseProcess(classe, annee, periode);
+			removeAllBulletinsByClasseProcess_V2(classe, annee, periode);
 			for (MoyenneEleveDto me : moyenneParEleve) {
 				long startTime = System.nanoTime();
 //			 logger.info(g.toJson(me));
