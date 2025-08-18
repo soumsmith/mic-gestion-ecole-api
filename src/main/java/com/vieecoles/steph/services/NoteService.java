@@ -521,7 +521,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 //		logger.info(moyenneList.toString());
 //		logger.info("-------------------------------------------");
 			startTime = System.nanoTime();
-			classementEleveParMatiere(calculMoyenneMatiere(moyenneList), classe.getBranche().getId(),
+			classementEleveParMatiereV2(calculMoyenneMatiere(moyenneList), classe.getBranche().getId(),
 					classe.getEcole().getId());
 			calculMoyenneGeneralEleve(moyenneList);
 			endTime = System.nanoTime();
@@ -902,7 +902,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 //		calculMoyenneMatiere(moyenneList);
 //			logger.info(g.toJson(classe));
 //		logger.info("-------------------------------------------");
-			classementEleveParMatiere(calculMoyenneMatiere(moyenneList), classe.getBranche().getId(),
+			classementEleveParMatiere(calculMoyenneMatierev2(moyenneList), classe.getBranche().getId(),
 					classe.getEcole().getId());
 
 			for (MoyenneEleveDto eleve : moyenneList) {
@@ -2121,4 +2121,779 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 		}
 		return notesByEleve;
 	}
+	
+	/**
+	 * NOUVELLE STRUCTURATION DU CALCUL DES MOYENNES PAR MATIERE
+	 */
+	
+    // Constantes pour améliorer la lisibilité
+    private static final double ZERO_THRESHOLD = 0.0;
+    private static final double DEFAULT_DIVISOR = 1.0;
+    private static final int TEST_LOURD_MULTIPLIER = 2;
+    private static final int MOYENNE_DIVISOR = 3;
+    private static final int PRECISION = 2;
+    
+    /**
+     * Calcule les moyennes par matière pour une liste d'élèves
+     */
+    public List<MoyenneEleveDto> calculMoyenneMatierev2(List<MoyenneEleveDto> moyEleve) {
+        logger.info("---> Calcul des moyennes par matiere");
+        
+        List<Double> moyennesFrExcpt = new ArrayList<>();
+        
+        // Cache global des coefficients par matière (optimisation du code original)
+        Map<Long, String> coefParMatiereMap = new HashMap<>();
+        
+        for (MoyenneEleveDto me : moyEleve) {
+            // Initialisation des variables locales
+            MatiereCalculContext context = new MatiereCalculContext();
+            
+            // Chargement des ajustements et coefficients (une seule fois par élève)
+            Map<Long, MoyenneAdjustment> moyenneAdjustmentMap = loadMoyenneAdjustments(me);
+            coefParMatiereMap = loadCoefficientsIfNeeded(coefParMatiereMap, me);
+            
+            // Traitement de chaque matière
+            for (Map.Entry<EcoleHasMatiere, List<Notes>> entry : me.getNotesMatiereMap().entrySet()) {
+                EcoleHasMatiere matiere = entry.getKey();
+                List<Notes> notes = entry.getValue();
+                
+                // Calcul de la moyenne pour cette matière
+                MoyenneResult moyenneResult = calculerMoyenneMatiere(matiere, notes, moyenneAdjustmentMap);
+                
+                // Application du résultat à la matière
+                appliqueMoyenneAMatiere(matiere, moyenneResult);
+                
+                // Gestion des cas spéciaux (Français, EMR, Religion)
+                handleCasSpeciaux(matiere, moyenneResult, context, coefParMatiereMap, me);
+            }
+            
+            // Finalisation des calculs spéciaux
+            finaliserCalculsSpeciaux(me, context, moyennesFrExcpt);
+        }
+        
+        // Calcul du rang français
+        calculerRangFrancais(moyEleve, moyennesFrExcpt);
+        
+        return moyEleve;
+    }
+    
+    /**
+     * Charge les ajustements de moyenne pour un élève
+     */
+    private Map<Long, MoyenneAdjustment> loadMoyenneAdjustments(MoyenneEleveDto me) {
+        return adjustmentService.getByAnneePeriodeMatriculeAndStatut(
+                me.getAnnee().getId(), 
+                me.getPeriode().getId(), 
+                me.getEleve().getMatricule(),
+                Constants.VALID
+        ).stream().collect(Collectors.toMap(adj -> adj.getMatiere(), adj -> adj));
+    }
+    
+    /**
+     * Charge les coefficients par matière si nécessaire (optimisation du code original)
+     */
+    private Map<Long, String> loadCoefficientsIfNeeded(Map<Long, String> existingMap, MoyenneEleveDto me) {
+        if (existingMap.isEmpty()) {
+            logger.info("---> Chargement des coefficients par matière");
+            return classeMatiereService.getByBranche(me.getClasse().getBranche().getId(), me.getClasse().getEcole().getId())
+                    .stream()
+                    .collect(Collectors.toMap(cm -> cm.getMatiere().getId(), cm -> cm.getCoef()));
+        }
+        return existingMap;
+    }
+    
+    /**
+     * Calcule la moyenne d'une matière
+     */
+    private MoyenneResult calculerMoyenneMatiere(EcoleHasMatiere matiere, List<Notes> notes, 
+                                                Map<Long, MoyenneAdjustment> adjustmentMap) {
+        
+        MoyenneAdjustment adjustment = adjustmentMap.getOrDefault(matiere.getId(), new MoyenneAdjustment());
+        
+        // Si ajustement existe, retourner directement
+        if (adjustment.getId() != null) {
+            logger.info("Moyenne repêchage trouvée = " + CommonUtils.roundDouble(adjustment.getMoyenne(), PRECISION));
+            return new MoyenneResult(adjustment.getMoyenne(), adjustment.getMoyenne(), Constants.OUI);
+        }
+        
+        // Séparation des notes normales et tests lourds
+        NotesClassification classification = classifierNotes(notes);
+        
+        // Calcul moyenne normale
+        double moyenneNormale = calculerMoyenneNormale(classification.getNotesNormales(), classification.getDiviseurNormal());
+        
+        // Ajout de la note sur pour les tests lourds
+        if (!classification.getNotesTestLourd().isEmpty()) {
+            matiere.setTestLourdNoteSur(classification.getTestLourdNoteSur());
+        }
+        
+        // Calcul moyenne finale avec tests lourds
+        double moyenneFinale = calculerMoyenneAvecTestsLourds(
+                moyenneNormale, 
+                classification.getNotesTestLourd(), 
+                classification.getDiviseurTestLourd(),
+                matiere
+        );
+        
+        return new MoyenneResult(moyenneFinale, moyenneNormale, Constants.NON);
+    }
+    
+    /**
+     * Classifie les notes entre normales et tests lourds
+     */
+    private NotesClassification classifierNotes(List<Notes> notes) {
+        List<Double> notesNormales = new ArrayList<>();
+        List<Double> notesTestLourd = new ArrayList<>();
+        double diviseurNormal = ZERO_THRESHOLD;
+        double diviseurTestLourd = ZERO_THRESHOLD;
+        int testLourdNoteSur = 0;
+        
+        for (Notes note : notes) {
+            if (isNotePriseEnCompte(note)) {
+                if (isTestLourd(note)) {
+                    notesTestLourd.add(note.getNote());
+                    diviseurTestLourd += Double.parseDouble(note.getEvaluation().getNoteSur()) 
+                                      / Double.parseDouble(Constants.DEFAULT_NOTE_SUR);
+                    testLourdNoteSur = Integer.parseInt(note.getEvaluation().getNoteSur());
+                } else {
+                    notesNormales.add(note.getNote());
+                    diviseurNormal += Double.parseDouble(note.getEvaluation().getNoteSur()) 
+                                   / Double.parseDouble(Constants.DEFAULT_NOTE_SUR);
+                }
+            }
+        }
+        
+        return new NotesClassification(notesNormales, notesTestLourd, diviseurNormal, diviseurTestLourd, testLourdNoteSur);
+    }
+    
+    /**
+     * Vérifie si une note est prise en compte dans le calcul
+     */
+    private boolean isNotePriseEnCompte(Notes note) {
+        return note.getEvaluation().getPec() == Constants.PEC_1 
+            && note.getPec() != null 
+            && note.getPec() == Constants.PEC_1;
+    }
+    
+    /**
+     * Vérifie si une note est un test lourd
+     */
+    private boolean isTestLourd(Notes note) {
+        return note.getEvaluation().getType() != null
+            && note.getEvaluation().getType().getCode() != null
+            && note.getEvaluation().getType().getCode().equals(Constants.CODE_TEST_LOURD);
+    }
+    
+    /**
+     * Calcule la moyenne normale
+     */
+    private double calculerMoyenneNormale(List<Double> notes, double diviseur) {
+        if (notes.isEmpty()) return ZERO_THRESHOLD;
+        
+        double somme = notes.stream().mapToDouble(Double::doubleValue).sum();
+        return somme / (diviseur == ZERO_THRESHOLD ? DEFAULT_DIVISOR : diviseur);
+    }
+    
+    /**
+     * Calcule la moyenne finale en intégrant les tests lourds
+     */
+    private double calculerMoyenneAvecTestsLourds(double moyenneNormale, List<Double> notesTestLourd, 
+                                                 double diviseurTestLourd, EcoleHasMatiere matiere) {
+        if (notesTestLourd.isEmpty()) {
+            return moyenneNormale;
+        }
+        
+        double sommeTestLourd = notesTestLourd.stream().mapToDouble(Double::doubleValue).sum();
+        double moyenneTestLourd = sommeTestLourd / (diviseurTestLourd == ZERO_THRESHOLD ? DEFAULT_DIVISOR : diviseurTestLourd);
+        
+        matiere.setTestLourdNote(sommeTestLourd);
+        
+        return (moyenneNormale + moyenneTestLourd * TEST_LOURD_MULTIPLIER) / MOYENNE_DIVISOR;
+    }
+    
+    /**
+     * Applique le résultat de moyenne à la matière
+     */
+    private void appliqueMoyenneAMatiere(EcoleHasMatiere matiere, MoyenneResult result) {
+        matiere.setMoyenne(CommonUtils.roundDouble(result.getMoyenneFinale(), PRECISION));
+        matiere.setMoyenneIntermediaire(CommonUtils.roundDouble(result.getMoyenneIntermediaire(), PRECISION));
+        matiere.setAppreciation(CommonUtils.appreciation(result.getMoyenneFinale()));
+        matiere.setIsAdjustment(result.getIsAdjustment());
+    }
+    
+    /**
+     * Gère les cas spéciaux (Français, EMR, Religion)
+     */
+    private void handleCasSpeciaux(EcoleHasMatiere matiere, MoyenneResult moyenneResult, 
+                                  MatiereCalculContext context, Map<Long, String> coefMap, MoyenneEleveDto me) {
+        
+        // Cas matière Français
+        if (isMatiereFrancais(matiere)) {
+            handleMatiereFrancais(matiere, moyenneResult, context, coefMap);
+        }
+        
+        // Cas sous-matières EMR
+        if (isSousMatiereEMR(matiere)) {
+            handleSousMatiereEMR(matiere, moyenneResult, context, me);
+        }
+        
+        // Cas matières religion (hors EMR)
+        if (!context.isCheckEMRCalculFlat() && isMatiereReligion(matiere)) {
+            context.addMoyenneReligion(CommonUtils.roundDouble(moyenneResult.getMoyenneFinale(), PRECISION));
+            context.setCalculExcpReligionFlat(true);
+        }
+    }
+    
+    /**
+     * Vérifie si c'est une matière français
+     */
+    private boolean isMatiereFrancais(EcoleHasMatiere matiere) {
+        return Constants.CODE_NIVEAU_ENS_SECONDAIRE.equals(matiere.getNiveauEnseignement().getCode())
+            && matiere.getMatiereParent() != null
+            && matiere.getMatiereParent().getMatiere() != null
+            && matiere.getMatiereParent().getMatiere().getMatiereParent() != null
+            && matiere.getMatiereParent().getMatiere().getMatiereParent().equals(Constants.ID_MATIERE_FRANCAIS_CENTRAL);
+    }
+    
+    /**
+     * Vérifie si c'est une sous-matière EMR
+     */
+    private boolean isSousMatiereEMR(EcoleHasMatiere matiere) {
+        return matiere.getMatiereParent() != null 
+            && matiere.getMatiereParent().getIsEMR() != null
+            && matiere.getMatiereParent().getIsEMR().equals(Constants.OUI);
+    }
+    
+    /**
+     * Vérifie si c'est une matière religion
+     */
+    private boolean isMatiereReligion(EcoleHasMatiere matiere) {
+        return Constants.CODE_NIVEAU_ENS_SECONDAIRE.equals(matiere.getNiveauEnseignement().getCode())
+            && Constants.CODE_CATEGORIE_RELIGION.equals(matiere.getCategorie().getCode());
+    }
+    
+    /**
+     * Gère le cas spécial des matières français
+     */
+    private void handleMatiereFrancais(EcoleHasMatiere matiere, MoyenneResult moyenneResult, 
+                                      MatiereCalculContext context, Map<Long, String> coefMap) {
+        MoyenneCoefPojo mc = new MoyenneCoefPojo();
+        mc.setCoef(Double.valueOf(coefMap.getOrDefault(matiere.getId(), Constants.DEFAULT_COEFFICIENT)));
+        mc.setMoyenne(CommonUtils.roundDouble(moyenneResult.getMoyenneFinale(), PRECISION));
+        mc.setMoyenneIntermediaire(moyenneResult.getMoyenneIntermediaire());
+        
+        context.addMoyenneSousMatieresFrancais(mc);
+        context.setCalculExcpFrFlat(true);
+    }
+    
+    /**
+     * Gère le cas spécial des sous-matières EMR
+     */
+    private void handleSousMatiereEMR(EcoleHasMatiere matiere, MoyenneResult moyenneResult, 
+                                     MatiereCalculContext context, MoyenneEleveDto me) {
+        context.setCheckEMRCalculFlat(true);
+        
+        if (context.getDiviserEMR() == ZERO_THRESHOLD) {
+            context.setEhmEMR(matiere.getMatiereParent());
+            context.setEMRFlat(true);
+        }
+        
+        context.addSommeEMR(moyenneResult.getMoyenneFinale());
+        context.addSommeEMRIntermediaire(moyenneResult.getMoyenneIntermediaire());
+        context.incrementDiviserEMR();
+        
+        // Création de la note EMR
+        Notes noteEMR = creerNoteEMR(matiere, moyenneResult, me);
+        context.addMoyenneEMRList(noteEMR);
+    }
+    
+    /**
+     * Crée une note EMR
+     */
+    private Notes creerNoteEMR(EcoleHasMatiere matiere, MoyenneResult moyenneResult, MoyenneEleveDto me) {
+        Evaluation evalEMR = new Evaluation();
+        evalEMR.setAnnee(me.getAnnee());
+        evalEMR.setClasse(me.getClasse());
+        evalEMR.setPec(Constants.PEC_1);
+        evalEMR.setCode(me.getNumeroEvaluation() + "_1");
+        evalEMR.setId(new Random().nextLong());
+        evalEMR.setNoteSur(Constants.DEFAULT_NOTE_SUR);
+        evalEMR.setMatiereEcole(matiere.getMatiereParent());
+        evalEMR.setPeriode(me.getPeriode());
+        
+        Notes noteEMR = new Notes();
+        noteEMR.setClasseEleve(me.getNotesMatiereMap().values().iterator().next().get(0).getClasseEleve());
+        noteEMR.setEvaluation(evalEMR);
+        noteEMR.setId(new Random().nextLong());
+        noteEMR.setNote(CommonUtils.roundDouble(moyenneResult.getMoyenneFinale(), PRECISION));
+        noteEMR.setPec(Constants.PEC_1);
+        
+        return noteEMR;
+    }
+    
+    /**
+     * Finalise les calculs spéciaux (Français, Religion, EMR)
+     */
+    private void finaliserCalculsSpeciaux(MoyenneEleveDto me, MatiereCalculContext context, List<Double> moyennesFrExcpt) {
+        // Calcul français global
+        if (context.isCalculExcpFrFlat()) {
+            finaliserCalculFrancais(me, context, moyennesFrExcpt);
+        }
+        
+        // Calcul EMR global
+        if (context.isEMRFlat()) {
+            finaliserCalculEMR(me, context);
+        }
+        
+        // Calcul religion global
+        if (context.isCalculExcpReligionFlat()) {
+            finaliserCalculReligion(me, context);
+        }
+    }
+    
+    /**
+     * Finalise le calcul du français
+     */
+    private void finaliserCalculFrancais(MoyenneEleveDto me, MatiereCalculContext context, List<Double> moyennesFrExcpt) {
+        List<MoyenneCoefPojo> moyennesSousMatieres = context.getMoyennesSousMatieresFrancais();
+        
+        double coefFr = moyennesSousMatieres.stream().mapToDouble(MoyenneCoefPojo::getCoef).sum();
+        double sumMoyFr = moyennesSousMatieres.stream()
+                .mapToDouble(mc -> mc.getMoyenne() * mc.getCoef()).sum();
+        double sumMoyFrIntrmd = moyennesSousMatieres.stream()
+                .mapToDouble(mc -> mc.getMoyenneIntermediaire() * mc.getCoef()).sum();
+        
+        double moyFr = CommonUtils.roundDouble(sumMoyFr / (coefFr != ZERO_THRESHOLD ? coefFr : DEFAULT_DIVISOR), PRECISION);
+        double moyFrIntrmd = CommonUtils.roundDouble(sumMoyFrIntrmd / (coefFr != ZERO_THRESHOLD ? coefFr : DEFAULT_DIVISOR), PRECISION);
+        
+        me.setMoyFr(moyFr);
+        me.setMoyFrIntermediaire(moyFrIntrmd);
+        me.setCoefFr(coefFr);
+        me.setMoyCoefFr(moyFr * coefFr);
+        me.setAppreciationFr(CommonUtils.appreciation(moyFr));
+        
+        moyennesFrExcpt.add(moyFr);
+    }
+    
+    /**
+     * Finalise le calcul EMR
+     */
+    private void finaliserCalculEMR(MoyenneEleveDto me, MatiereCalculContext context) {
+        EcoleHasMatiere hasMatiere = hasMatiereService.getEMRByEcole(me.getClasse().getEcole().getId());
+        
+        // Vérification repêchage EMR
+        Map<Long, MoyenneAdjustment> adjustmentMap = loadMoyenneAdjustments(me);
+        MoyenneAdjustment moyenneAdjustment = adjustmentMap.getOrDefault(hasMatiere.getId(), new MoyenneAdjustment());
+        
+        double moyenneEMR;
+        double moyenneEMRIntermediaire;
+        String isAdjustment = Constants.NON;
+        
+        if (moyenneAdjustment.getId() == null) {
+            moyenneEMR = context.getSommeEMR() / (context.getDiviserEMR() == ZERO_THRESHOLD ? DEFAULT_DIVISOR : context.getDiviserEMR());
+            moyenneEMRIntermediaire = context.getSommeEMRIntermediaire() / (context.getDiviserEMR() == ZERO_THRESHOLD ? DEFAULT_DIVISOR : context.getDiviserEMR());
+        } else {
+            isAdjustment = Constants.OUI;
+            moyenneEMR = moyenneAdjustment.getMoyenne();
+            moyenneEMRIntermediaire = moyenneEMR;
+        }
+        
+        // Ajout aux moyennes religion
+        context.addMoyenneReligion(CommonUtils.roundDouble(moyenneEMR, PRECISION));
+        context.setCalculExcpReligionFlat(true);
+        
+        // Copie defensive de l'objet EMR
+        EcoleHasMatiere ehm_ = cloneEcoleHasMatiere(context.getEhmEMR());
+        ehm_.setMoyenne(CommonUtils.roundDouble(moyenneEMR, PRECISION));
+        ehm_.setAppreciation(CommonUtils.appreciation(moyenneEMR));
+        ehm_.setMoyenneIntermediaire(CommonUtils.roundDouble(moyenneEMRIntermediaire, PRECISION));
+        ehm_.setIsAdjustment(isAdjustment);
+        
+        me.getNotesMatiereMap().put(ehm_, context.getMoyenneEMRList());
+    }
+    
+    /**
+     * Finalise le calcul religion
+     */
+    private void finaliserCalculReligion(MoyenneEleveDto me, MatiereCalculContext context) {
+        double moyReli = CommonUtils.roundDouble(
+                context.getMoyennesMatieresReligion().stream()
+                        .mapToDouble(Double::doubleValue)
+                        .average()
+                        .orElse(ZERO_THRESHOLD), 
+                PRECISION
+        );
+        me.setMoyReli(moyReli);
+        me.setAppreciationReli(CommonUtils.appreciation(moyReli));
+    }
+    
+    /**
+     * Clone un objet EcoleHasMatiere (copie defensive)
+     */
+    private EcoleHasMatiere cloneEcoleHasMatiere(EcoleHasMatiere source) {
+        EcoleHasMatiere clone = new EcoleHasMatiere();
+        clone.setId(source.getId());
+        clone.setPec(source.getPec());
+        clone.setCoef(source.getCoef());
+        clone.setMatiereParent(source.getMatiereParent());
+        clone.setCode(source.getCode());
+        clone.setLibelle(source.getLibelle());
+        clone.setCategorie(source.getCategorie());
+        clone.setBonus(source.getBonus());
+        clone.setEcole(source.getEcole());
+        clone.setParentMatiereLibelle(source.getParentMatiereLibelle());
+        clone.setNumOrdre(source.getNumOrdre());
+        clone.setMatiere(source.getMatiere());
+        return clone;
+    }
+    
+    /**
+     * Calcule le rang pour le français
+     */
+    private void calculerRangFrancais(List<MoyenneEleveDto> moyEleve, List<Double> moyennesFrExcpt) {
+        if (moyennesFrExcpt.isEmpty()) return;
+        
+        List<Double> moyennesSorted = moyennesFrExcpt.stream()
+                .sorted(Comparator.reverseOrder())
+                .collect(Collectors.toList());
+        
+        for (MoyenneEleveDto m : moyEleve) {
+            if (m.getMoyFr() != null) {
+                m.setRangFr(moyennesSorted.indexOf(m.getMoyFr()) + 1);
+            } else {
+                m.setRangFr(moyennesSorted.size());
+            }
+        }
+    }
+    
+    // Classes internes pour encapsuler les données
+    
+    /**
+     * Classe pour encapsuler le résultat d'un calcul de moyenne
+     */
+    private static class MoyenneResult {
+        private final double moyenneFinale;
+        private final double moyenneIntermediaire;
+        private final String isAdjustment;
+        
+        public MoyenneResult(double moyenneFinale, double moyenneIntermediaire, String isAdjustment) {
+            this.moyenneFinale = moyenneFinale;
+            this.moyenneIntermediaire = moyenneIntermediaire;
+            this.isAdjustment = isAdjustment;
+        }
+        
+        // Getters
+        public double getMoyenneFinale() { return moyenneFinale; }
+        public double getMoyenneIntermediaire() { return moyenneIntermediaire; }
+        public String getIsAdjustment() { return isAdjustment; }
+    }
+    
+    /**
+     * Classe pour classifier les notes
+     */
+    private static class NotesClassification {
+        private final List<Double> notesNormales;
+        private final List<Double> notesTestLourd;
+        private final double diviseurNormal;
+        private final double diviseurTestLourd;
+        private final int testLourdNoteSur;
+        
+        public NotesClassification(List<Double> notesNormales, List<Double> notesTestLourd,
+                                 double diviseurNormal, double diviseurTestLourd, int testLourdNoteSur) {
+            this.notesNormales = notesNormales;
+            this.notesTestLourd = notesTestLourd;
+            this.diviseurNormal = diviseurNormal;
+            this.diviseurTestLourd = diviseurTestLourd;
+            this.testLourdNoteSur = testLourdNoteSur;
+        }
+        
+        // Getters
+        public List<Double> getNotesNormales() { return notesNormales; }
+        public List<Double> getNotesTestLourd() { return notesTestLourd; }
+        public double getDiviseurNormal() { return diviseurNormal; }
+        public double getDiviseurTestLourd() { return diviseurTestLourd; }
+        public int getTestLourdNoteSur() { return testLourdNoteSur; }
+    }
+    
+    /**
+     * Classe pour maintenir le contexte des calculs spéciaux
+     */
+    private static class MatiereCalculContext {
+        private double sommeEMR = ZERO_THRESHOLD;
+        private double sommeEMRIntermediaire = ZERO_THRESHOLD;
+        private double diviserEMR = ZERO_THRESHOLD;
+        private List<Notes> moyenneEMRList = new ArrayList<>();
+        private List<MoyenneCoefPojo> moyennesSousMatieresFrancais = new ArrayList<>();
+        private List<Double> moyennesMatieresReligion = new ArrayList<>();
+        private boolean EMRFlat = false;
+        private boolean CheckEMRCalculFlat = false;
+        private boolean calculExcpFrFlat = false;
+        private boolean calculExcpReligionFlat = false;
+        private EcoleHasMatiere ehmEMR;
+        
+        // Getters et Setters
+        public double getSommeEMR() { return sommeEMR; }
+        public void addSommeEMR(double value) { this.sommeEMR += value; }
+        
+        public double getSommeEMRIntermediaire() { return sommeEMRIntermediaire; }
+        public void addSommeEMRIntermediaire(double value) { this.sommeEMRIntermediaire += value; }
+        
+        public double getDiviserEMR() { return diviserEMR; }
+        public void incrementDiviserEMR() { this.diviserEMR++; }
+        
+        public List<Notes> getMoyenneEMRList() { return moyenneEMRList; }
+        public void addMoyenneEMRList(Notes note) { this.moyenneEMRList.add(note); }
+        
+        public List<MoyenneCoefPojo> getMoyennesSousMatieresFrancais() { return moyennesSousMatieresFrancais; }
+        public void addMoyenneSousMatieresFrancais(MoyenneCoefPojo mc) { this.moyennesSousMatieresFrancais.add(mc); }
+        
+        public List<Double> getMoyennesMatieresReligion() { return moyennesMatieresReligion; }
+        public void addMoyenneReligion(double moyenne) { this.moyennesMatieresReligion.add(moyenne); }
+        
+        public boolean isEMRFlat() { return EMRFlat; }
+        public void setEMRFlat(boolean EMRFlat) { this.EMRFlat = EMRFlat; }
+        
+        public boolean isCheckEMRCalculFlat() { return CheckEMRCalculFlat; }
+        public void setCheckEMRCalculFlat(boolean CheckEMRCalculFlat) { this.CheckEMRCalculFlat = CheckEMRCalculFlat; }
+        
+        public boolean isCalculExcpFrFlat() { return calculExcpFrFlat; }
+        public void setCalculExcpFrFlat(boolean calculExcpFrFlat) { this.calculExcpFrFlat = calculExcpFrFlat; }
+        
+        public boolean isCalculExcpReligionFlat() { return calculExcpReligionFlat; }
+        public void setCalculExcpReligionFlat(boolean calculExcpReligionFlat) { this.calculExcpReligionFlat = calculExcpReligionFlat; }
+        
+        public EcoleHasMatiere getEhmEMR() { return ehmEMR; }
+        public void setEhmEMR(EcoleHasMatiere ehmEMR) { this.ehmEMR = ehmEMR; }
+    }
+    
+    /**
+     * TRAITEMENT DES CLASSEMENT PAR MATIERE
+     */
+    
+    private static final int RANG_PAR_DEFAUT = 1;
+    
+    /**
+     * Effectue le classement des élèves par matière de manière optimisée
+     */
+    public void classementEleveParMatiereV2(List<MoyenneEleveDto> moyEleve, Long brancheId, Long ecoleId) {
+        logger.info("---> Classement des eleves par matiere");
+        
+        // Chargement unique des matières de la classe
+        List<ClasseMatiere> classeMatList = ClasseMatiere.find("branche.id = ?1 and ecole.id = ?2", brancheId, ecoleId).list();
+        
+        // Cache des restrictions par élève (chargement unique)
+        Map<Long, List<ClasseEleveMatiere>> restrictionsCache = chargerRestrictionsParEleve(moyEleve);
+        
+        // Traitement parallèle pour chaque matière (si liste importante)
+        for (ClasseMatiere classeMatiere : classeMatList) {
+            traiterClassementPourMatiere(moyEleve, classeMatiere, restrictionsCache);
+        }
+        
+    }
+    
+    /**
+     * Charge toutes les restrictions des élèves en une seule fois (optimisation majeure)
+     */
+    private Map<Long, List<ClasseEleveMatiere>> chargerRestrictionsParEleve(List<MoyenneEleveDto> moyEleve) {
+        Map<Long, List<ClasseEleveMatiere>> restrictionsCache = new HashMap<>();
+        
+        for (MoyenneEleveDto me : moyEleve) {
+            List<ClasseEleveMatiere> restrictions = classeEleveMatiereService.findByClasseAnneeAndPeriode(
+                    me.getClasse().getId(), 
+                    me.getAnnee().getId(), 
+                    me.getPeriode().getId()
+            );
+            restrictionsCache.put(me.getEleve().getId(), restrictions);
+            
+            break;
+        }
+        
+        return restrictionsCache;
+    }
+    
+    /**
+     * Traite le classement pour une matière spécifique
+     */
+    private void traiterClassementPourMatiere(List<MoyenneEleveDto> moyEleve, 
+                                            ClasseMatiere classeMatiere, 
+                                            Map<Long, List<ClasseEleveMatiere>> restrictionsCache) {
+        
+        // Étape 1: Préparation des données de classement
+        List<EleveClassementData> donneesClassement = preparerDonneesClassement(moyEleve, classeMatiere, restrictionsCache);
+        
+        // Étape 2: Tri des élèves par moyenne (avec gestion des non-classés)
+        trierElevesParMoyenne(donneesClassement);
+        
+        // Étape 3: Attribution des rangs avec gestion des ex-aequo
+        attribuerRangs(donneesClassement, classeMatiere);
+        
+        // Étape 4: Application des résultats aux objets originaux
+        appliquerResultats(donneesClassement);
+    }
+    
+    /**
+     * Prépare les données nécessaires au classement pour une matière
+     */
+    private List<EleveClassementData> preparerDonneesClassement(List<MoyenneEleveDto> moyEleve,
+                                                               ClasseMatiere classeMatiere,
+                                                               Map<Long, List<ClasseEleveMatiere>> restrictionsCache) {
+        
+        List<EleveClassementData> donneesClassement = new ArrayList<>();
+        
+        for (MoyenneEleveDto me : moyEleve) {
+            if (me.getNotesMatiereMap() == null) continue;
+            
+            // Recherche de la matière dans les notes de l'élève
+            EcoleHasMatiere matiereEleve = trouverMatiereEleve(me, classeMatiere.getMatiere().getId());
+            if (matiereEleve == null) continue;
+            
+            // Vérification des restrictions pour cet élève et cette matière
+            boolean estClasse = verifierSiEleveEstClasse(me.getEleve().getId(), classeMatiere.getMatiere().getId(), restrictionsCache);
+            
+            // Création des données de classement
+            EleveClassementData donnees = new EleveClassementData(me, matiereEleve, estClasse);
+            donneesClassement.add(donnees);
+        }
+        
+        return donneesClassement;
+    }
+    
+    /**
+     * Trouve la matière spécifique dans les notes d'un élève
+     */
+    private EcoleHasMatiere trouverMatiereEleve(MoyenneEleveDto eleve, Long matiereId) {
+        return eleve.getNotesMatiereMap().keySet().stream()
+                .filter(matiere -> matiere.getId().equals(matiereId))
+                .findFirst()
+                .orElse(null);
+    }
+    
+    /**
+     * Vérifie si un élève est classé pour une matière donnée
+     */
+    private boolean verifierSiEleveEstClasse(Long eleveId, Long matiereId, 
+                                           Map<Long, List<ClasseEleveMatiere>> restrictionsCache) {
+        
+        List<ClasseEleveMatiere> restrictions = restrictionsCache.get(eleveId);
+        if (restrictions == null) return true; // Par défaut, l'élève est classé
+        
+        Optional<ClasseEleveMatiere> restriction = restrictions.stream()
+                .filter(cem -> cem.getMatiere().getId().equals(matiereId))
+                .findFirst();
+        
+        return restriction.map(cem -> Constants.OUI.equals(cem.getIsClassed())).orElse(true);
+    }
+    
+    /**
+     * Trie les élèves par moyenne avec gestion des non-classés
+     */
+    private void trierElevesParMoyenne(List<EleveClassementData> donneesClassement) {
+        donneesClassement.sort(new ClassementComparator());
+    }
+    
+    /**
+     * Attribue les rangs avec gestion des ex-aequo
+     */
+    private void attribuerRangs(List<EleveClassementData> donneesClassement, ClasseMatiere classeMatiere) {
+        int position = 0;
+        int rang = RANG_PAR_DEFAUT;
+        Double moyennePrecedente = null;
+        
+        for (EleveClassementData donnees : donneesClassement) {
+            position++;
+            
+            // Gestion des ex-aequo : même rang si même moyenne
+            if (moyennePrecedente != null && !moyennePrecedente.equals(donnees.getMoyenneEffective())) {
+                rang = position;
+            }
+            
+            // Attribution du rang et du coefficient
+            donnees.setRang(rang);
+            donnees.setCoefficient(classeMatiere.getCoef() != null ? classeMatiere.getCoef() : "1");
+            
+            moyennePrecedente = donnees.getMoyenneEffective();
+        }
+    }
+    
+    /**
+     * Applique les résultats du classement aux objets originaux
+     */
+    private void appliquerResultats(List<EleveClassementData> donneesClassement) {
+        for (EleveClassementData donnees : donneesClassement) {
+            // Mise à jour de l'élève
+            donnees.getEleve().setMoyenneMatiereToSort(donnees.getMoyennePourTri());
+            
+            // Mise à jour de la matière
+            EcoleHasMatiere matiere = donnees.getMatiere();
+            matiere.setRang(String.valueOf(donnees.getRang()));
+            matiere.setCoef(donnees.getCoefficient());
+            matiere.setEleveMatiereIsClassed(donnees.isEstClasse() ? Constants.OUI : Constants.NON);
+        }
+    }
+    
+    /**
+     * Comparateur optimisé pour le tri par moyenne
+     */
+    private static class ClassementComparator implements Comparator<EleveClassementData> {
+        @Override
+        public int compare(EleveClassementData d1, EleveClassementData d2) {
+            Double moyenne1 = d1.getMoyennePourTri();
+            Double moyenne2 = d2.getMoyennePourTri();
+            
+            // Gestion des valeurs nulles
+            if (moyenne1 == null && moyenne2 == null) return 0;
+            if (moyenne1 == null) return 1; // Les non-classés vont à la fin
+            if (moyenne2 == null) return -1;
+            
+            // Tri décroissant (meilleure moyenne en premier)
+            return moyenne2.compareTo(moyenne1);
+        }
+    }
+    
+    /**
+     * Classe pour encapsuler les données de classement d'un élève
+     */
+    private static class EleveClassementData {
+        private final MoyenneEleveDto eleve;
+        private final EcoleHasMatiere matiere;
+        private final boolean estClasse;
+        private int rang;
+        private String coefficient;
+        
+        public EleveClassementData(MoyenneEleveDto eleve, EcoleHasMatiere matiere, boolean estClasse) {
+            this.eleve = eleve;
+            this.matiere = matiere;
+            this.estClasse = estClasse;
+        }
+        
+        /**
+         * Retourne la moyenne effective (réelle si classé, sinon celle de la matière)
+         */
+        public Double getMoyenneEffective() {
+            return matiere.getMoyenne();
+        }
+        
+        /**
+         * Retourne la moyenne à utiliser pour le tri (constante si non classé)
+         */
+        public Double getMoyennePourTri() {
+            return estClasse ? matiere.getMoyenne() : Constants.MOYENNE_ELEVE_NON_CLASSE_MATIERE;
+        }
+        
+        // Getters et Setters
+        public MoyenneEleveDto getEleve() { return eleve; }
+        public EcoleHasMatiere getMatiere() { return matiere; }
+        public boolean isEstClasse() { return estClasse; }
+        public int getRang() { return rang; }
+        public void setRang(int rang) { this.rang = rang; }
+        public String getCoefficient() { return coefficient; }
+        public void setCoefficient(String coefficient) { this.coefficient = coefficient; }
+    }
+    
+    
+    /**
+     * CALCUL MOYENNE ET CLASSEMENT ANNUEL
+     */
+    
+    
 }

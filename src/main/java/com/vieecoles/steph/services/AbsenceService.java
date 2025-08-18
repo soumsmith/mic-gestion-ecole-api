@@ -1,5 +1,6 @@
 package com.vieecoles.steph.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
@@ -35,6 +36,22 @@ public class AbsenceService implements PanacheRepositoryBase<AbsenceEleve, Strin
 				ex.printStackTrace();
 		}
 		return abs;
+	}
+	
+	public List<AbsenceEleve> getListByClasseAndAnneeAndPeriode(Long annee, Long periode) {
+		List<AbsenceEleve> list;
+		try {
+			list = AbsenceEleve.find("annee.id=?1 and periode.id=?2", annee, periode)
+					.list();
+		} catch (RuntimeException ex) {
+			if (ex.getClass().getName().equals(NoResultException.class.getName())) {
+				logger.warning("No Result Exception Found");
+			} else {
+				ex.printStackTrace();
+			}
+			list = new ArrayList<AbsenceEleve>();
+		}
+		return list;
 	}
 
 	@Transactional
