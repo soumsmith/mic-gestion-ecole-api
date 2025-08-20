@@ -38,7 +38,7 @@ public class AbsenceService implements PanacheRepositoryBase<AbsenceEleve, Strin
 		return abs;
 	}
 	
-	public List<AbsenceEleve> getListByClasseAndAnneeAndPeriode(Long annee, Long periode) {
+	public List<AbsenceEleve> getListByAnneeAndPeriode(Long annee, Long periode) {
 		List<AbsenceEleve> list;
 		try {
 			list = AbsenceEleve.find("annee.id=?1 and periode.id=?2", annee, periode)

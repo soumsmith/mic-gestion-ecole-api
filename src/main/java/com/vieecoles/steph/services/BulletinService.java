@@ -860,9 +860,11 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 		return bul;
 	}
 
-	/**
-	 * NOUVEAU PROCESSUS D INSERTION DES BULLETINS
-	 */
+	/*******************************************************************************
+	 *                                                                             *
+	 *             OPTIMISATION DU PROCESSUS D INSERTION DES BULLETINS                     *
+	 *                                                                             *
+	 *******************************************************************************/
 	
 	@Transactional
 	public int handleSave_v2(String classe, String annee, String periode) {
@@ -1002,7 +1004,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 	        
 	        logger.info("Chargement des absences...");
 	        List<AbsenceEleve> absences = absenceService
-	                .getListByClasseAndAnneeAndPeriode(context.anneeId, context.periodeId);
+	                .getListByAnneeAndPeriode(context.anneeId, context.periodeId);
 	        context.absenceMap = absences.stream()
 	                .collect(Collectors.toMap(a -> a.getEleve().getId(), a -> a));
 	        
@@ -1052,8 +1054,9 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 	        try {
 	            // Création du bulletin principal
 	            Bulletin bulletin = createBulletinOptimized(me, context);
-	            bulletinsBatch.add(bulletin);
+	            // Recuperation des ids des bulletins
 	            bulletinIdList.add(bulletin.getId());
+	            bulletinsBatch.add(bulletin);
 	            
 	            // Collecte des moyennes
 	            if (!Constants.NON.equals(me.getIsClassed())) {
@@ -1076,6 +1079,8 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 
 	private Bulletin createBulletinOptimized(MoyenneEleveDto me, BulletinProcessingContext context) {
 	    Bulletin bulletin = convert(me);
+	    UUID uuid = UUID.randomUUID();
+		bulletin.setId(uuid.toString());
 	    bulletin.setAnneeId(context.anneeId);
 	    bulletin.setAnneeLibelle(context.anneeScolaire.getLibelle());
 	    bulletin.setPeriodeId(context.periodeEntity.getId());
@@ -1223,7 +1228,9 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 	            // Traitement séquentiel avec gestion d'erreur par lot
 	            for (Bulletin bulletin : batch) {
 	                try {
-	                    bulletin.persist();
+	                    //bulletin.persist();
+	        			bulletin.setDateCreation(new Date());
+	        			bulletin.persist();
 	                } catch (Exception e) {
 	                    logger.severe("Erreur sauvegarde bulletin " + bulletin.getId() + ": " + e.getMessage());
 	                    throw new RuntimeException("Échec sauvegarde bulletin", e);
