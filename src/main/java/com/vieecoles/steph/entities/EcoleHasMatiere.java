@@ -17,10 +17,12 @@ import javax.persistence.Transient;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Entity
 @Table(name = "ecole_has_matiere")
 @Data
+@ToString(of = {"id"})
 @EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
 public class EcoleHasMatiere extends PanacheEntityBase{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -99,4 +101,5 @@ public class EcoleHasMatiere extends PanacheEntityBase{
     
     @Transient
     private String user;
+    
 }
