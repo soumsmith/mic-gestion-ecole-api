@@ -258,8 +258,11 @@ public class NotesResource {
 			re.printStackTrace();
 			return Response.serverError().entity("Erreur lors de la suppression").build();
 		}
-
-
     }
+    
+    /**
+     * Renvoie la liste des notes par matiere pour un élève dans une classe pour l'année en cours.
+     */
+    
 
 }

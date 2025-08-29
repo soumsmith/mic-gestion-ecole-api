@@ -1300,6 +1300,14 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 	        throw new RuntimeException("Échec critique de la sauvegarde", e);
 	    }
 	}
+	
+	int nombreElementsTraités(int finIntervalle, int tailleTotale) {
+		int jauge = finIntervalle - tailleTotale;
+		if(jauge <= 0) {
+			return tailleTotale;
+		}
+		return finIntervalle;
+	}
 
 	/**
 	 * MISE À JOUR DES STATISTIQUES SÉCURISÉE
