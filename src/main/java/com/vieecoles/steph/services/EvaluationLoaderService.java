@@ -129,7 +129,7 @@ public class EvaluationLoaderService implements PanacheRepositoryBase<Evaluation
 	public void appliquerChargement(List<EvaluationLoader> evals, Long matiere, Long periode, Long annee, String noteSur, String date, Long type, String user) {
 
 		logger.info(String.format("Matiere %s , periode %s, annee %s , noteSur %s, date %s, type %s, user %s", matiere,periode,annee,noteSur,date,type, user));
-		
+
 		TypeActivite typeActivite = new TypeActivite();
 		typeActivite.setId(type);
 //		evaluation.setAnnee(null);
@@ -186,7 +186,7 @@ public class EvaluationLoaderService implements PanacheRepositoryBase<Evaluation
 					if (ev.getApplicable().equals(Constants.OUI)) {
 						Notes notes = new Notes();
 						ClasseEleve classeEleve = classeEleveService.getByMatriculeAndAnnee(ev.getMatricule(),
-								classe.getEcole().getId(), annee);
+								classe.getEcole().getId(), annee,ev.getClasseId());
 						notes.setEvaluation(evaluation);
 						notes.setNote(ev.getNoteloaders().get(i) != null
 								? CommonUtils.roundDouble(ev.getNoteloaders().get(i).getNote(), 2)

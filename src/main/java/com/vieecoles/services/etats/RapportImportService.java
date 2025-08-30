@@ -4,17 +4,27 @@ import com.vieecoles.dto.ImportMatieresClasseDto;
 import com.vieecoles.dto.ImportNotesMatieresEcole;
 import com.vieecoles.dto.ImportReportDto;
 import com.vieecoles.dto.MatiereImportDto;
+import com.vieecoles.dto.NotesAlAklaq;
+import com.vieecoles.dto.NotesAlAquidah;
 import com.vieecoles.dto.NotesAll;
 import com.vieecoles.dto.NotesAnglais;
+import com.vieecoles.dto.NotesArabe;
+import com.vieecoles.dto.NotesArtVisuel;
 import com.vieecoles.dto.NotesArtplas;
+import com.vieecoles.dto.NotesAssirah;
 import com.vieecoles.dto.NotesCompFr;
 import com.vieecoles.dto.NotesConduite;
 import com.vieecoles.dto.NotesEdhc;
+import com.vieecoles.dto.NotesEmr;
 import com.vieecoles.dto.NotesEps;
 import com.vieecoles.dto.NotesEsp;
 import com.vieecoles.dto.NotesExpresOral;
+import com.vieecoles.dto.NotesFiq;
+import com.vieecoles.dto.NotesFr;
 import com.vieecoles.dto.NotesHg;
+import com.vieecoles.dto.NotesInfor;
 import com.vieecoles.dto.NotesMaths;
+import com.vieecoles.dto.NotesMemo;
 import com.vieecoles.dto.NotesOrthGram;
 import com.vieecoles.dto.NotesPhiloso;
 import com.vieecoles.dto.NotesPhysiques;
@@ -1032,10 +1042,234 @@ public List<ImportMatieresClasseDto> processing(List<ImportNotesMatieresEcole> i
       notesMathsList.add(notesMaths);
 
     }
-
     }
     return notesMathsList;
   }
+
+  public List<NotesEmr> buldDtoErm(List<ImportNotesMatieresEcole> importNotes){
+    List<NotesEmr> notesEmrList= new ArrayList<>();
+    for (ImportNotesMatieresEcole dto : importNotes) {
+
+      if(dto.getMatiereEmrId()==31L){
+        NotesEmr notesEmr = new NotesEmr();
+        Classe classe= new Classe();
+        classe= Classe.findById(dto.getClasse());
+        Long idMatiereEcole=0L;
+        if(classe!=null)
+          idMatiereEcole = getIdMatiereEcole(classe.getEcole().getId(),31L);
+        notesEmr.setMatiereEmrId(idMatiereEcole);
+        notesEmr.setNoteEmr1(dto.getNoteEmr1());
+        notesEmr.setNoteEmr2(dto.getNoteEmr2());
+        notesEmr.setNoteEmr3(dto.getNoteEmr3());
+        notesEmr.setNoteEmr4(dto.getNoteEmr4());
+        notesEmr.setNoteEmr5(dto.getNoteEmr5());
+        notesEmr.setMatricule(dto.getMatricule());
+        notesEmrList.add(notesEmr);
+
+      }
+    }
+    return notesEmrList;
+  }
+
+  public List<NotesAlAquidah> buldDtoAlaquidah(List<ImportNotesMatieresEcole> importNotes){
+    List<NotesAlAquidah> notesAlaquidahList= new ArrayList<>();
+    for (ImportNotesMatieresEcole dto : importNotes) {
+
+      if(dto.getMatiereAlquidahId()==37L){
+        NotesAlAquidah notesAlAquidah = new NotesAlAquidah();
+        Classe classe= new Classe();
+        classe= Classe.findById(dto.getClasse());
+        Long idMatiereEcole=0L;
+        if(classe!=null)
+          idMatiereEcole = getIdMatiereEcole(classe.getEcole().getId(),37L);
+        notesAlAquidah.setMatiereAlquidahId(idMatiereEcole);
+        notesAlAquidah.setNoteAlquidah1(dto.getNoteAlquidah1());
+        notesAlAquidah.setNoteAlquidah2(dto.getNoteAlquidah2());
+        notesAlAquidah.setNoteAlquidah3(dto.getNoteAlquidah3());
+        notesAlAquidah.setNoteAlquidah4(dto.getNoteAlquidah4());
+        notesAlAquidah.setNoteAlquidah5(dto.getNoteAlquidah5());
+        notesAlAquidah.setMatricule(dto.getMatricule());
+        notesAlaquidahList.add(notesAlAquidah);
+
+      }
+    }
+    return notesAlaquidahList;
+  }
+
+
+
+  public List<NotesAlAklaq> buldDtoAlAklaq(List<ImportNotesMatieresEcole> importNotes){
+    List<NotesAlAklaq> notesAlAklaqList= new ArrayList<>();
+    for (ImportNotesMatieresEcole dto : importNotes) {
+
+      if(dto.getMatiereAlAklaqId()==38L){
+        NotesAlAklaq notesAlAklaq = new NotesAlAklaq();
+        Classe classe= new Classe();
+        classe= Classe.findById(dto.getClasse());
+        Long idMatiereEcole=0L;
+        if(classe!=null)
+          idMatiereEcole = getIdMatiereEcole(classe.getEcole().getId(),38L);
+        notesAlAklaq.setMatiereAlAklaqId(idMatiereEcole);
+        notesAlAklaq.setNoteAlAklaq1(dto.getNoteAlAklaq1());
+        notesAlAklaq.setNoteAlAklaq2(dto.getNoteAlAklaq2());
+        notesAlAklaq.setNoteAlAklaq3(dto.getNoteAlAklaq3());
+        notesAlAklaq.setNoteAlAklaq4(dto.getNoteAlAklaq4());
+        notesAlAklaq.setNoteAlAklaq5(dto.getNoteAlAklaq5());
+        notesAlAklaq.setMatricule(dto.getMatricule());
+        notesAlAklaqList.add(notesAlAklaq);
+
+      }
+    }
+    return notesAlAklaqList;
+  }
+
+  public List<NotesArabe> buldDtoArabe(List<ImportNotesMatieresEcole> importNotes){
+    List<NotesArabe> notesArabeList= new ArrayList<>();
+    for (ImportNotesMatieresEcole dto : importNotes) {
+
+      if(dto.getMatiereArabeId()==73L){
+        NotesArabe notesArabe = new NotesArabe();
+        Classe classe= new Classe();
+        classe= Classe.findById(dto.getClasse());
+        Long idMatiereEcole=0L;
+        if(classe!=null)
+          idMatiereEcole = getIdMatiereEcole(classe.getEcole().getId(),73L);
+        notesArabe.setMatiereArabeId(idMatiereEcole);
+        notesArabe.setNoteArabe1(dto.getNoteArabe1());
+        notesArabe.setNoteArabe2(dto.getNoteArabe2());
+        notesArabe.setNoteArabe3(dto.getNoteArabe3());
+        notesArabe.setNoteArabe4(dto.getNoteArabe4());
+        notesArabe.setNoteArabe5(dto.getNoteArabe5());
+        notesArabe.setMatricule(dto.getMatricule());
+        notesArabeList.add(notesArabe);
+
+      }
+    }
+    return notesArabeList;
+  }
+  public List<NotesMemo> buldDtoMemo(List<ImportNotesMatieresEcole> importNotes){
+    List<NotesMemo> notesMemoList= new ArrayList<>();
+    for (ImportNotesMatieresEcole dto : importNotes) {
+
+      if(dto.getMatiereMemoId()==29L){
+        NotesMemo notesMemo = new NotesMemo();
+        Classe classe= new Classe();
+        classe= Classe.findById(dto.getClasse());
+        Long idMatiereEcole=0L;
+        if(classe!=null)
+          idMatiereEcole = getIdMatiereEcole(classe.getEcole().getId(),29L);
+        notesMemo.setMatiereMemoId(idMatiereEcole);
+        notesMemo.setNoteMemo1(dto.getNoteMemo1());
+        notesMemo.setNoteMemo2(dto.getNoteMemo2());
+        notesMemo.setNoteMemo3(dto.getNoteMemo3());
+        notesMemo.setNoteMemo4(dto.getNoteMemo4());
+        notesMemo.setNoteMemo5(dto.getNoteMemo5());
+        notesMemo.setMatricule(dto.getMatricule());
+        notesMemoList.add(notesMemo);
+
+      }
+    }
+    return notesMemoList;
+  }
+
+  public List<NotesFiq> buldDtoFiq(List<ImportNotesMatieresEcole> importNotes){
+    List<NotesFiq> notesFiqList= new ArrayList<>();
+    for (ImportNotesMatieresEcole dto : importNotes) {
+
+      if(dto.getMatiereFiqId()==30L){
+        NotesFiq notesFiq = new NotesFiq();
+        Classe classe= new Classe();
+        classe= Classe.findById(dto.getClasse());
+        Long idMatiereEcole=0L;
+        if(classe!=null)
+          idMatiereEcole = getIdMatiereEcole(classe.getEcole().getId(),30L);
+        notesFiq.setMatiereFiqId(idMatiereEcole);
+        notesFiq.setNoteFiq1(dto.getNoteFiq1());
+        notesFiq.setNoteFiq2(dto.getNoteFiq2());
+        notesFiq.setNoteFiq3(dto.getNoteFiq3());
+        notesFiq.setNoteFiq4(dto.getNoteFiq4());
+        notesFiq.setNoteFiq5(dto.getNoteFiq5());
+        notesFiq.setMatricule(dto.getMatricule());
+        notesFiqList.add(notesFiq);
+
+      }
+    }
+    return notesFiqList;
+  }
+  public List<NotesAssirah> buldDtoAssirah(List<ImportNotesMatieresEcole> importNotes){
+    List<NotesAssirah> notesAssirahList= new ArrayList<>();
+    for (ImportNotesMatieresEcole dto : importNotes) {
+
+      if(dto.getMatiereAssirahId()==35L){
+        NotesAssirah notesAssirah = new NotesAssirah();
+        Classe classe= new Classe();
+        classe= Classe.findById(dto.getClasse());
+        Long idMatiereEcole=0L;
+        if(classe!=null)
+          idMatiereEcole = getIdMatiereEcole(classe.getEcole().getId(),35L);
+        notesAssirah.setMatiereAssirahId(idMatiereEcole);
+        notesAssirah.setNoteAssirah1(dto.getNoteAssirah1());
+        notesAssirah.setNoteAssirah2(dto.getNoteAssirah2());
+        notesAssirah.setNoteAssirah3(dto.getNoteAssirah3());
+        notesAssirah.setNoteAssirah4(dto.getNoteAssirah4());
+        notesAssirah.setNoteAssirah5(dto.getNoteAssirah5());
+        notesAssirah.setMatricule(dto.getMatricule());
+        notesAssirahList.add(notesAssirah);
+
+      }
+    }
+    return notesAssirahList;
+  }
+  public List<NotesArtVisuel> buldDtoArtVisuel(List<ImportNotesMatieresEcole> importNotes){
+    List<NotesArtVisuel> notesArabeList= new ArrayList<>();
+    for (ImportNotesMatieresEcole dto : importNotes) {
+
+      if(dto.getMatiereArtVisuId()==36L){
+        NotesArtVisuel notesArtVisuel = new NotesArtVisuel();
+        Classe classe= new Classe();
+        classe= Classe.findById(dto.getClasse());
+        Long idMatiereEcole=0L;
+        if(classe!=null)
+          idMatiereEcole = getIdMatiereEcole(classe.getEcole().getId(),36L);
+        notesArtVisuel.setMatiereArtVisuId(idMatiereEcole);
+        notesArtVisuel.setNoteArtVisu1(dto.getNoteArtVisu1());
+        notesArtVisuel.setNoteArtVisu2(dto.getNoteArtVisu2());
+        notesArtVisuel.setNoteArtVisu3(dto.getNoteArtVisu3());
+        notesArtVisuel.setNoteArtVisu4(dto.getNoteArtVisu4());
+        notesArtVisuel.setNoteArtVisu5(dto.getNoteArtVisu5());
+        notesArtVisuel.setMatricule(dto.getMatricule());
+        notesArabeList.add(notesArtVisuel);
+
+      }
+    }
+    return notesArabeList;
+  }
+
+  public List<NotesFr> buldDtoFr(List<ImportNotesMatieresEcole> importNotes){
+    List<NotesFr> notesFrList= new ArrayList<>();
+    for (ImportNotesMatieresEcole dto : importNotes) {
+
+      if(dto.getMatiereFranId()==1L){
+        NotesFr notesFr = new NotesFr();
+        Classe classe= new Classe();
+        classe= Classe.findById(dto.getClasse());
+        Long idMatiereEcole=0L;
+        if(classe!=null)
+          idMatiereEcole = getIdMatiereEcole(classe.getEcole().getId(),1L);
+        notesFr.setMatiereFranId(idMatiereEcole);
+        notesFr.setNoteFran1(dto.getNoteFran1());
+        notesFr.setNoteFran2(dto.getNoteFran2());
+        notesFr.setNoteFran3(dto.getNoteFran3());
+        notesFr.setNoteFran4(dto.getNoteFran4());
+        notesFr.setNoteFran5(dto.getNoteFran5());
+        notesFr.setMatricule(dto.getMatricule());
+        notesFrList.add(notesFr);
+
+      }
+    }
+    return notesFrList;
+  }
+
   public List<NotesAll> buldDtoAll(List<ImportNotesMatieresEcole> importNotes){
     List<NotesAll> notesAllList= new ArrayList<>();
     for (ImportNotesMatieresEcole dto : importNotes) {
@@ -1315,13 +1549,13 @@ public List<ImportMatieresClasseDto> processing(List<ImportNotesMatieresEcole> i
     List<NotesTic> notesTicList= new ArrayList<>();
     for (ImportNotesMatieresEcole dto : importNotes) {
 
-      if(dto.getMatiereTicId()==13L){
+      if(dto.getMatiereTicId()==27L){
         NotesTic notesTic = new NotesTic();
         Classe classe= new Classe();
         classe= Classe.findById(dto.getClasse());
         Long idMatiereEcole=0L;
         if(classe!=null)
-          idMatiereEcole = getIdMatiereEcole(classe.getEcole().getId(),13L);
+          idMatiereEcole = getIdMatiereEcole(classe.getEcole().getId(),27L);
         notesTic.setMatiereTicId(idMatiereEcole);
         notesTic.setNoteTic1(dto.getNoteTic1());
         notesTic.setNoteTic2(dto.getNoteTic2());
@@ -1330,6 +1564,32 @@ public List<ImportMatieresClasseDto> processing(List<ImportNotesMatieresEcole> i
         notesTic.setNoteTic5(dto.getNoteTic5());
         notesTic.setMatricule(dto.getMatricule());
         notesTicList.add(notesTic);
+
+      }
+
+    }
+    return notesTicList;
+  }
+
+  public List<NotesInfor> buldDtoInfor(List<ImportNotesMatieresEcole> importNotes){
+    List<NotesInfor> notesTicList= new ArrayList<>();
+    for (ImportNotesMatieresEcole dto : importNotes) {
+
+      if(dto.getMatiereInforId()==13L){
+        NotesInfor notesInfor = new NotesInfor();
+        Classe classe= new Classe();
+        classe= Classe.findById(dto.getClasse());
+        Long idMatiereEcole=0L;
+        if(classe!=null)
+          idMatiereEcole = getIdMatiereEcole(classe.getEcole().getId(),13L);
+        notesInfor.setMatiereInforId(idMatiereEcole);
+        notesInfor.setNoteInfor1(dto.getNoteInfor1());
+        notesInfor.setNoteInfor2(dto.getNoteInfor2());
+        notesInfor.setNoteInfor3(dto.getNoteInfor3());
+        notesInfor.setNoteInfor4(dto.getNoteInfor4());
+        notesInfor.setNoteInfor5(dto.getNoteInfor5());
+        notesInfor.setMatricule(dto.getMatricule());
+        notesTicList.add(notesInfor);
 
       }
 
@@ -1432,6 +1692,16 @@ public List<ImportMatieresClasseDto> processing(List<ImportNotesMatieresEcole> i
       ImportMatieresClasseDto ImportEdhc= new ImportMatieresClasseDto();
       ImportMatieresClasseDto ImportExpresOral= new ImportMatieresClasseDto();
       ImportMatieresClasseDto ImportHg= new ImportMatieresClasseDto();
+      ImportMatieresClasseDto ImportFr= new ImportMatieresClasseDto();
+      ImportMatieresClasseDto ImportArabe= new ImportMatieresClasseDto();
+      ImportMatieresClasseDto ImportMemo= new ImportMatieresClasseDto();
+      ImportMatieresClasseDto ImportFiq= new ImportMatieresClasseDto();
+      ImportMatieresClasseDto ImportAssirah= new ImportMatieresClasseDto();
+      ImportMatieresClasseDto ImportArtVisu= new ImportMatieresClasseDto();
+      ImportMatieresClasseDto ImportEmr= new ImportMatieresClasseDto();
+      ImportMatieresClasseDto ImportAlquidah= new ImportMatieresClasseDto();
+      ImportMatieresClasseDto ImportAlAklaq= new ImportMatieresClasseDto();
+      ImportMatieresClasseDto ImportInform= new ImportMatieresClasseDto();
 
 
 
@@ -1451,6 +1721,16 @@ public List<ImportMatieresClasseDto> processing(List<ImportNotesMatieresEcole> i
       ImportEdhc = processEdhc(importNotes);
       ImportHg= processHg(importNotes);
       ImportExpresOral=processExpresOral(importNotes);
+      ImportFr= processFr(importNotes);
+      ImportArabe=processArabe(importNotes);
+      ImportMemo=processMemo(importNotes);
+      ImportFiq=processFiq(importNotes);
+      ImportAssirah=processAssirah(importNotes);
+      ImportArtVisu=processArtVisu(importNotes);
+      ImportEmr=processEmr(importNotes);
+      ImportAlquidah=processAlquidah(importNotes);
+      ImportAlAklaq=processAlAklaq(importNotes);
+      ImportInform= processInfor(importNotes);
 
       importMatieresClasseDtoList.add(importPhysiq);
       importMatieresClasseDtoList.add(importAnglais);
@@ -1468,6 +1748,16 @@ public List<ImportMatieresClasseDto> processing(List<ImportNotesMatieresEcole> i
       importMatieresClasseDtoList.add(ImportEdhc);
       importMatieresClasseDtoList.add(ImportHg);
       importMatieresClasseDtoList.add(ImportExpresOral);
+      importMatieresClasseDtoList.add(ImportFr);
+      importMatieresClasseDtoList.add(ImportArabe);
+      importMatieresClasseDtoList.add(ImportMemo);
+      importMatieresClasseDtoList.add(ImportFiq);
+      importMatieresClasseDtoList.add(ImportAssirah);
+      importMatieresClasseDtoList.add(ImportArtVisu);
+      importMatieresClasseDtoList.add(ImportEmr);
+      importMatieresClasseDtoList.add(ImportAlquidah);
+      importMatieresClasseDtoList.add(ImportAlAklaq);
+      importMatieresClasseDtoList.add(ImportInform);
 
 
     }
@@ -1525,6 +1815,461 @@ public List<ImportMatieresClasseDto> processing(List<ImportNotesMatieresEcole> i
     }
     return importMaths;
   }
+  ImportMatieresClasseDto processArabe(List<ImportNotesMatieresEcole> importNotes){
+    List<NotesArabe> notesArabeList= new ArrayList<>();
+    notesArabeList = buldDtoArabe(importNotes);
+    ImportMatieresClasseDto importArabe = new ImportMatieresClasseDto();
+    if(!notesArabeList.isEmpty()) {
+
+      importArabe.setClasse(importNotes.get(0).getClasse());
+      importArabe.setMatiere(notesArabeList.get(0).getMatiereArabeId());
+      importArabe.setAnnee(importNotes.get(0).getAnnee());
+      importArabe.setPeriode(importNotes.get(0).getPeriode());
+      importArabe.setDate(importNotes.get(0).getDate());
+      importArabe.setType(1L);
+      importArabe.setNotesur("20");
+      List<ImportEvaluationDto> evalArabes = new ArrayList<>();
+      for (NotesArabe dto : notesArabeList) {
+        ImportEvaluationDto evalArabe = new ImportEvaluationDto();
+        evalArabe.setMatricule(dto.getMatricule());
+        List<String> notes=new ArrayList<>();
+        if(isValidNumber(dto.getNoteArabe1()))
+        {
+          notes.add(dto.getNoteArabe1()) ;
+        }
+        if(isValidNumber(dto.getNoteArabe2()))
+        {
+          notes.add(dto.getNoteArabe2()) ;
+        }
+        if(isValidNumber(dto.getNoteArabe3()))
+        {
+          notes.add(dto.getNoteArabe3()) ;
+        }
+        if(isValidNumber(dto.getNoteArabe4()))
+        {
+          notes.add(dto.getNoteArabe4()) ;
+        }
+        if(isValidNumber(dto.getNoteArabe5()))
+        {
+          notes.add(dto.getNoteArabe5()) ;
+        }
+        if(!notes.isEmpty()) {
+          evalArabe.setNotes(notes);
+          evalArabes.add(evalArabe);
+        }
+
+      }
+      importArabe.setImportEvaluationDtos(evalArabes);
+
+
+    }
+    return importArabe;
+  }
+  ImportMatieresClasseDto processMemo(List<ImportNotesMatieresEcole> importNotes){
+    List<NotesMemo> notesMemoList= new ArrayList<>();
+    notesMemoList = buldDtoMemo(importNotes);
+    ImportMatieresClasseDto importMemo = new ImportMatieresClasseDto();
+    if(!notesMemoList.isEmpty()) {
+
+      importMemo.setClasse(importNotes.get(0).getClasse());
+      importMemo.setMatiere(notesMemoList.get(0).getMatiereMemoId());
+      importMemo.setAnnee(importNotes.get(0).getAnnee());
+      importMemo.setPeriode(importNotes.get(0).getPeriode());
+      importMemo.setDate(importNotes.get(0).getDate());
+      importMemo.setType(1L);
+      importMemo.setNotesur("20");
+      List<ImportEvaluationDto> evalMemos = new ArrayList<>();
+      for (NotesMemo dto : notesMemoList) {
+        ImportEvaluationDto evalMemo = new ImportEvaluationDto();
+        evalMemo.setMatricule(dto.getMatricule());
+        List<String> notes=new ArrayList<>();
+        if(isValidNumber(dto.getNoteMemo1()))
+        {
+          notes.add(dto.getNoteMemo1()) ;
+        }
+        if(isValidNumber(dto.getNoteMemo2()))
+        {
+          notes.add(dto.getNoteMemo2()) ;
+        }
+        if(isValidNumber(dto.getNoteMemo3()))
+        {
+          notes.add(dto.getNoteMemo3()) ;
+        }
+        if(isValidNumber(dto.getNoteMemo4()))
+        {
+          notes.add(dto.getNoteMemo4()) ;
+        }
+        if(isValidNumber(dto.getNoteMemo5()))
+        {
+          notes.add(dto.getNoteMemo5()) ;
+        }
+        if(!notes.isEmpty()) {
+          evalMemo.setNotes(notes);
+          evalMemos.add(evalMemo);
+        }
+
+      }
+      importMemo.setImportEvaluationDtos(evalMemos);
+
+
+    }
+    return importMemo;
+  }
+
+  ImportMatieresClasseDto processFiq(List<ImportNotesMatieresEcole> importNotes){
+    List<NotesFiq> notesFiqList= new ArrayList<>();
+    notesFiqList = buldDtoFiq(importNotes);
+    ImportMatieresClasseDto importFiq = new ImportMatieresClasseDto();
+    if(!notesFiqList.isEmpty()) {
+
+      importFiq.setClasse(importNotes.get(0).getClasse());
+      importFiq.setMatiere(notesFiqList.get(0).getMatiereFiqId());
+      importFiq.setAnnee(importNotes.get(0).getAnnee());
+      importFiq.setPeriode(importNotes.get(0).getPeriode());
+      importFiq.setDate(importNotes.get(0).getDate());
+      importFiq.setType(1L);
+      importFiq.setNotesur("20");
+      List<ImportEvaluationDto> evalFiqs = new ArrayList<>();
+      for (NotesFiq dto : notesFiqList) {
+        ImportEvaluationDto evalFiq = new ImportEvaluationDto();
+        evalFiq.setMatricule(dto.getMatricule());
+        List<String> notes=new ArrayList<>();
+        if(isValidNumber(dto.getNoteFiq1()))
+        {
+          notes.add(dto.getNoteFiq1()) ;
+        }
+        if(isValidNumber(dto.getNoteFiq2()))
+        {
+          notes.add(dto.getNoteFiq2()) ;
+        }
+        if(isValidNumber(dto.getNoteFiq3()))
+        {
+          notes.add(dto.getNoteFiq3()) ;
+        }
+        if(isValidNumber(dto.getNoteFiq4()))
+        {
+          notes.add(dto.getNoteFiq4()) ;
+        }
+        if(isValidNumber(dto.getNoteFiq5()))
+        {
+          notes.add(dto.getNoteFiq5()) ;
+        }
+        if(!notes.isEmpty()) {
+          evalFiq.setNotes(notes);
+          evalFiqs.add(evalFiq);
+        }
+
+      }
+      importFiq.setImportEvaluationDtos(evalFiqs);
+
+
+    }
+    return importFiq;
+  }
+  ImportMatieresClasseDto processAssirah(List<ImportNotesMatieresEcole> importNotes){
+    List<NotesAssirah> notesAssirahList= new ArrayList<>();
+    notesAssirahList = buldDtoAssirah(importNotes);
+    ImportMatieresClasseDto importAssirah = new ImportMatieresClasseDto();
+    if(!notesAssirahList.isEmpty()) {
+
+      importAssirah.setClasse(importNotes.get(0).getClasse());
+      importAssirah.setMatiere(notesAssirahList.get(0).getMatiereAssirahId());
+      importAssirah.setAnnee(importNotes.get(0).getAnnee());
+      importAssirah.setPeriode(importNotes.get(0).getPeriode());
+      importAssirah.setDate(importNotes.get(0).getDate());
+      importAssirah.setType(1L);
+      importAssirah.setNotesur("20");
+      List<ImportEvaluationDto> evalFiqs = new ArrayList<>();
+      for (NotesAssirah dto : notesAssirahList) {
+        ImportEvaluationDto evalFiq = new ImportEvaluationDto();
+        evalFiq.setMatricule(dto.getMatricule());
+        List<String> notes=new ArrayList<>();
+        if(isValidNumber(dto.getNoteAssirah1()))
+        {
+          notes.add(dto.getNoteAssirah1()) ;
+        }
+        if(isValidNumber(dto.getNoteAssirah2()))
+        {
+          notes.add(dto.getNoteAssirah2()) ;
+        }
+        if(isValidNumber(dto.getNoteAssirah3()))
+        {
+          notes.add(dto.getNoteAssirah3()) ;
+        }
+        if(isValidNumber(dto.getNoteAssirah4()))
+        {
+          notes.add(dto.getNoteAssirah4()) ;
+        }
+        if(isValidNumber(dto.getNoteAssirah5()))
+        {
+          notes.add(dto.getNoteAssirah5()) ;
+        }
+        if(!notes.isEmpty()) {
+          evalFiq.setNotes(notes);
+          evalFiqs.add(evalFiq);
+        }
+
+      }
+      importAssirah.setImportEvaluationDtos(evalFiqs);
+
+
+    }
+    return importAssirah;
+  }
+  ImportMatieresClasseDto processArtVisu(List<ImportNotesMatieresEcole> importNotes){
+    List<NotesArtVisuel> notesArvisuelList= new ArrayList<>();
+    notesArvisuelList = buldDtoArtVisuel(importNotes);
+    ImportMatieresClasseDto importArtVisuel = new ImportMatieresClasseDto();
+    if(!notesArvisuelList.isEmpty()) {
+
+      importArtVisuel.setClasse(importNotes.get(0).getClasse());
+      importArtVisuel.setMatiere(notesArvisuelList.get(0).getMatiereArtVisuId());
+      importArtVisuel.setAnnee(importNotes.get(0).getAnnee());
+      importArtVisuel.setPeriode(importNotes.get(0).getPeriode());
+      importArtVisuel.setDate(importNotes.get(0).getDate());
+      importArtVisuel.setType(1L);
+      importArtVisuel.setNotesur("20");
+      List<ImportEvaluationDto> evalArtVisuels = new ArrayList<>();
+      for (NotesArtVisuel dto : notesArvisuelList) {
+        ImportEvaluationDto evalArtVisuel = new ImportEvaluationDto();
+        evalArtVisuel.setMatricule(dto.getMatricule());
+        List<String> notes=new ArrayList<>();
+        if(isValidNumber(dto.getNoteArtVisu1()))
+        {
+          notes.add(dto.getNoteArtVisu1()) ;
+        }
+        if(isValidNumber(dto.getNoteArtVisu2()))
+        {
+          notes.add(dto.getNoteArtVisu2()) ;
+        }
+        if(isValidNumber(dto.getNoteArtVisu3()))
+        {
+          notes.add(dto.getNoteArtVisu3()) ;
+        }
+        if(isValidNumber(dto.getNoteArtVisu4()))
+        {
+          notes.add(dto.getNoteArtVisu4()) ;
+        }
+        if(isValidNumber(dto.getNoteArtVisu5()))
+        {
+          notes.add(dto.getNoteArtVisu5()) ;
+        }
+        if(!notes.isEmpty()) {
+          evalArtVisuel.setNotes(notes);
+          evalArtVisuels.add(evalArtVisuel);
+        }
+
+      }
+      importArtVisuel.setImportEvaluationDtos(evalArtVisuels);
+
+
+    }
+    return importArtVisuel;
+  }
+
+  ImportMatieresClasseDto processEmr(List<ImportNotesMatieresEcole> importNotes){
+    List<NotesEmr> notesErmList= new ArrayList<>();
+    notesErmList = buldDtoErm(importNotes);
+    ImportMatieresClasseDto importEmr = new ImportMatieresClasseDto();
+    if(!notesErmList.isEmpty()) {
+
+      importEmr.setClasse(importNotes.get(0).getClasse());
+      importEmr.setMatiere(notesErmList.get(0).getMatiereEmrId());
+      importEmr.setAnnee(importNotes.get(0).getAnnee());
+      importEmr.setPeriode(importNotes.get(0).getPeriode());
+      importEmr.setDate(importNotes.get(0).getDate());
+      importEmr.setType(1L);
+      importEmr.setNotesur("20");
+      List<ImportEvaluationDto> evalEmrs = new ArrayList<>();
+      for (NotesEmr dto : notesErmList) {
+        ImportEvaluationDto evalErm = new ImportEvaluationDto();
+        evalErm.setMatricule(dto.getMatricule());
+        List<String> notes=new ArrayList<>();
+        if(isValidNumber(dto.getNoteEmr1()))
+        {
+          notes.add(dto.getNoteEmr1()) ;
+        }
+        if(isValidNumber(dto.getNoteEmr2()))
+        {
+          notes.add(dto.getNoteEmr2()) ;
+        }
+        if(isValidNumber(dto.getNoteEmr3()))
+        {
+          notes.add(dto.getNoteEmr3()) ;
+        }
+        if(isValidNumber(dto.getNoteEmr4()))
+        {
+          notes.add(dto.getNoteEmr4()) ;
+        }
+        if(isValidNumber(dto.getNoteEmr5()))
+        {
+          notes.add(dto.getNoteEmr5()) ;
+        }
+        if(!notes.isEmpty()) {
+          evalErm.setNotes(notes);
+          evalEmrs.add(evalErm);
+        }
+
+      }
+      importEmr.setImportEvaluationDtos(evalEmrs);
+
+
+    }
+    return importEmr;
+  }
+
+  ImportMatieresClasseDto processAlquidah(List<ImportNotesMatieresEcole> importNotes){
+    List<NotesAlAquidah> notesAlAquidahList= new ArrayList<>();
+    notesAlAquidahList = buldDtoAlaquidah(importNotes);
+    ImportMatieresClasseDto importAlaquidah = new ImportMatieresClasseDto();
+    if(!notesAlAquidahList.isEmpty()) {
+
+      importAlaquidah.setClasse(importNotes.get(0).getClasse());
+      importAlaquidah.setMatiere(notesAlAquidahList.get(0).getMatiereAlquidahId());
+      importAlaquidah.setAnnee(importNotes.get(0).getAnnee());
+      importAlaquidah.setPeriode(importNotes.get(0).getPeriode());
+      importAlaquidah.setDate(importNotes.get(0).getDate());
+      importAlaquidah.setType(1L);
+      importAlaquidah.setNotesur("20");
+      List<ImportEvaluationDto> evalAlaquidahs = new ArrayList<>();
+      for (NotesAlAquidah dto : notesAlAquidahList) {
+        ImportEvaluationDto evalAlaquidah = new ImportEvaluationDto();
+        evalAlaquidah.setMatricule(dto.getMatricule());
+        List<String> notes=new ArrayList<>();
+        if(isValidNumber(dto.getNoteAlquidah1()))
+        {
+          notes.add(dto.getNoteAlquidah1()) ;
+        }
+        if(isValidNumber(dto.getNoteAlquidah2()))
+        {
+          notes.add(dto.getNoteAlquidah2()) ;
+        }
+        if(isValidNumber(dto.getNoteAlquidah3()))
+        {
+          notes.add(dto.getNoteAlquidah3()) ;
+        }
+        if(isValidNumber(dto.getNoteAlquidah4()))
+        {
+          notes.add(dto.getNoteAlquidah4()) ;
+        }
+        if(isValidNumber(dto.getNoteAlquidah5()))
+        {
+          notes.add(dto.getNoteAlquidah5()) ;
+        }
+        if(!notes.isEmpty()) {
+          evalAlaquidah.setNotes(notes);
+          evalAlaquidahs.add(evalAlaquidah);
+        }
+
+      }
+      importAlaquidah.setImportEvaluationDtos(evalAlaquidahs);
+
+
+    }
+    return importAlaquidah;
+  }
+  ImportMatieresClasseDto processAlAklaq(List<ImportNotesMatieresEcole> importNotes){
+    List<NotesAlAklaq> notesAlAlAklaqList= new ArrayList<>();
+    notesAlAlAklaqList = buldDtoAlAklaq(importNotes);
+    ImportMatieresClasseDto importAlAlAklaq = new ImportMatieresClasseDto();
+    if(!notesAlAlAklaqList.isEmpty()) {
+
+      importAlAlAklaq.setClasse(importNotes.get(0).getClasse());
+      importAlAlAklaq.setMatiere(notesAlAlAklaqList.get(0).getMatiereAlAklaqId());
+      importAlAlAklaq.setAnnee(importNotes.get(0).getAnnee());
+      importAlAlAklaq.setPeriode(importNotes.get(0).getPeriode());
+      importAlAlAklaq.setDate(importNotes.get(0).getDate());
+      importAlAlAklaq.setType(1L);
+      importAlAlAklaq.setNotesur("20");
+      List<ImportEvaluationDto> evalAlAlAklaqs = new ArrayList<>();
+      for (NotesAlAklaq dto : notesAlAlAklaqList) {
+        ImportEvaluationDto evalAlAlAklaq = new ImportEvaluationDto();
+        evalAlAlAklaq.setMatricule(dto.getMatricule());
+        List<String> notes=new ArrayList<>();
+        if(isValidNumber(dto.getNoteAlAklaq1()))
+        {
+          notes.add(dto.getNoteAlAklaq1()) ;
+        }
+        if(isValidNumber(dto.getNoteAlAklaq2()))
+        {
+          notes.add(dto.getNoteAlAklaq2()) ;
+        }
+        if(isValidNumber(dto.getNoteAlAklaq3()))
+        {
+          notes.add(dto.getNoteAlAklaq3()) ;
+        }
+        if(isValidNumber(dto.getNoteAlAklaq4()))
+        {
+          notes.add(dto.getNoteAlAklaq4()) ;
+        }
+        if(isValidNumber(dto.getNoteAlAklaq5()))
+        {
+          notes.add(dto.getNoteAlAklaq5()) ;
+        }
+        if(!notes.isEmpty()) {
+          evalAlAlAklaq.setNotes(notes);
+          evalAlAlAklaqs.add(evalAlAlAklaq);
+        }
+
+      }
+      importAlAlAklaq.setImportEvaluationDtos(evalAlAlAklaqs);
+
+
+    }
+    return importAlAlAklaq;
+  }
+
+  ImportMatieresClasseDto processFr(List<ImportNotesMatieresEcole> importNotes){
+    List<NotesFr> notesFrList= new ArrayList<>();
+    notesFrList = buldDtoFr(importNotes);
+    ImportMatieresClasseDto importFr = new ImportMatieresClasseDto();
+    if(!notesFrList.isEmpty()) {
+
+      importFr.setClasse(importNotes.get(0).getClasse());
+      importFr.setMatiere(notesFrList.get(0).getMatiereFranId());
+      importFr.setAnnee(importNotes.get(0).getAnnee());
+      importFr.setPeriode(importNotes.get(0).getPeriode());
+      importFr.setDate(importNotes.get(0).getDate());
+      importFr.setType(1L);
+      importFr.setNotesur("20");
+      List<ImportEvaluationDto> evalFrs = new ArrayList<>();
+      for (NotesFr dto : notesFrList) {
+        ImportEvaluationDto evalFr = new ImportEvaluationDto();
+        evalFr.setMatricule(dto.getMatricule());
+        List<String> notes=new ArrayList<>();
+        if(isValidNumber(dto.getNoteFran1()))
+        {
+          notes.add(dto.getNoteFran1()) ;
+        }
+        if(isValidNumber(dto.getNoteFran2()))
+        {
+          notes.add(dto.getNoteFran2()) ;
+        }
+        if(isValidNumber(dto.getNoteFran3()))
+        {
+          notes.add(dto.getNoteFran3()) ;
+        }
+        if(isValidNumber(dto.getNoteFran4()))
+        {
+          notes.add(dto.getNoteFran4()) ;
+        }
+        if(isValidNumber(dto.getNoteFran5()))
+        {
+          notes.add(dto.getNoteFran5()) ;
+        }
+        if(!notes.isEmpty()) {
+          evalFr.setNotes(notes);
+          evalFrs.add(evalFr);
+        }
+
+      }
+      importFr.setImportEvaluationDtos(evalFrs);
+
+
+    }
+    return importFr;
+  }
+
   ImportMatieresClasseDto processAnglais(List<ImportNotesMatieresEcole> importNotes){
     List<NotesAnglais> notesAnglaisList= new ArrayList<>();
     notesAnglaisList = buldDtoAng(importNotes);
@@ -2016,6 +2761,55 @@ public List<ImportMatieresClasseDto> processing(List<ImportNotesMatieresEcole> i
 
     }
     return importTic;
+  }
+
+  ImportMatieresClasseDto processInfor(List<ImportNotesMatieresEcole> importNotes){
+    List<NotesInfor> notesInforList= new ArrayList<>();
+    notesInforList = buldDtoInfor(importNotes);
+    ImportMatieresClasseDto importInfor = new ImportMatieresClasseDto();
+    if(!notesInforList.isEmpty()) {
+      importInfor.setClasse(importNotes.get(0).getClasse());
+      importInfor.setMatiere(notesInforList.get(0).getMatiereInforId());
+      importInfor.setAnnee(importNotes.get(0).getAnnee());
+      importInfor.setPeriode(importNotes.get(0).getPeriode());
+      importInfor.setDate(importNotes.get(0).getDate());
+      importInfor.setType(1L);
+      importInfor.setNotesur("20");
+      List<ImportEvaluationDto> evalInforlist = new ArrayList<>();
+      for (NotesInfor dto : notesInforList) {
+        ImportEvaluationDto evalInfo = new ImportEvaluationDto();
+        evalInfo.setMatricule(dto.getMatricule());
+        List<String> notes=new ArrayList<>();
+        if(isValidNumber(dto.getNoteInfor1()))
+        {
+          notes.add(dto.getNoteInfor1()) ;
+        }
+        if(isValidNumber(dto.getNoteInfor2()))
+        {
+          notes.add(dto.getNoteInfor2()) ;
+        }
+        if(isValidNumber(dto.getNoteInfor3()))
+        {
+          notes.add(dto.getNoteInfor3()) ;
+        }
+        if(isValidNumber(dto.getNoteInfor4()))
+        {
+          notes.add(dto.getNoteInfor4()) ;
+        }
+        if(isValidNumber(dto.getNoteInfor5()))
+        {
+          notes.add(dto.getNoteInfor5()) ;
+        }
+        if(!notes.isEmpty()) {
+          evalInfo.setNotes(notes);
+          evalInforlist.add(evalInfo);
+        }
+
+      }
+      importInfor.setImportEvaluationDtos(evalInforlist);
+
+    }
+    return importInfor;
   }
   ImportMatieresClasseDto processSvt(List<ImportNotesMatieresEcole> importNotes){
     List<NotesSvt> notesSvtList= new ArrayList<>();

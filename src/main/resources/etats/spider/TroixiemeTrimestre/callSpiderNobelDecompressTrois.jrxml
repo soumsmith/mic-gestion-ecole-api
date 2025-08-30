@@ -391,7 +391,7 @@ where `ecoleviedbv2`.imprimer_les_derniers_bulletins_et_livrets.libelle_classe =
 						<subreportParameterExpression><![CDATA[$P{setBg}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression><![CDATA["etats/spider/TroixiemeTrimestre/BulletinNobelSpiderEtanTrois.jasper"]]></subreportExpression>
+					<subreportExpression><![CDATA["etats/spider/TroixiemeTrimestre/BulletinNobelSpiderEtanTroisV2.jasper"]]></subreportExpression>
 				</subreport>
 			</band>
 		</groupHeader>

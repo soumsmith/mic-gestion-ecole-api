@@ -36,12 +36,35 @@ public class WordTempIdentiteProcessor {
         List<IdentiteEtatDto>  identiteEtatDto = new ArrayList<>() ;
         //identiteEtatDto= identiteEtatService.getIdentiteDto(idEcole) ;
 
-
-        // Map pour les paragraphes
-        Map<String, String> paragraphDataMap = new HashMap<>();
-        paragraphDataMap.put("{{DENOMINATION}}", "SOUM ECOLE");
-
-        replacePlaceholdersInShapes(document, paragraphDataMap);
+        String ecoleName;
+        Ecole myEcole= new Ecole();
+        myEcole=Ecole.findById(idEcole);
+        String libelleAnneeNew= libelleAnnee.replace("Année ", "") ;
+        ecoleName=myEcole.getLibelle().toUpperCase();
+        for (XWPFParagraph paragraph : document.getParagraphs()) {
+            // Parcourir toutes les "runs" du paragraphe
+            for (XWPFRun run : paragraph.getRuns()) {
+                String text = run.getText(0); // Récupérer le texte de la "run"
+                if (text != null && text.contains("DENOMINATION")) {
+                    // Remplacer le texte
+                    text = text.replace("DENOMINATION",  ecoleName );
+                    run.setText(text, 0); // Appliquer le texte modifié
+                    paragraph.setAlignment(ParagraphAlignment.LEFT);
+                }
+            }
+        }
+        for (XWPFParagraph paragraph : document.getParagraphs()) {
+            // Parcourir toutes les "runs" du paragraphe
+            for (XWPFRun run : paragraph.getRuns()) {
+                String text = run.getText(0); // Récupérer le texte de la "run"
+                if (text != null && text.contains("Ancien texte")) {
+                    // Remplacer le texte
+                    text = text.replace("Ancien texte",  libelleAnneeNew);
+                    run.setText(text, 0); // Appliquer le texte modifié
+                    paragraph.setAlignment(ParagraphAlignment.CENTER);
+                }
+            }
+        }
 
     }
 

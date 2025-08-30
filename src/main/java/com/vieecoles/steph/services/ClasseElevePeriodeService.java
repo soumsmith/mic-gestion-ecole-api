@@ -1,5 +1,6 @@
 package com.vieecoles.steph.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
@@ -40,18 +41,36 @@ public class ClasseElevePeriodeService implements PanacheRepositoryBase<ClasseEl
 		return cep;
 	}
 
+	public List<ClasseElevePeriode> listByClasseAndAnneeAndPeriode(long classe, long annee, long periode) {
+		List<ClasseElevePeriode> ceps;
+		try {
+			ceps = ClasseElevePeriode.find("classe.id =?1 and annee.id=?2 and periode.id =?3", classe, annee, periode)
+					.list();
+		} catch (RuntimeException e) {
+			if (e.getClass().getName().equals(NoResultException.class.getName()))
+				logger.info("Aucune donnée sur le marquage de non classement des élèves de la classe [id = " + classe
+						+ "] trouvé");
+			else {
+				e.printStackTrace();
+			}
+			ceps = new ArrayList<ClasseElevePeriode>();
+		}
+
+		return ceps;
+	}
+
 	@Transactional
 	public void handleMarquageClassement(ClasseElevePeriode classeElevePeriode) {
-		
-			ClasseElevePeriode cep = findByClasseAndEleveAndAnneeAndPeriode(classeElevePeriode.getClasse().getId(),
-					classeElevePeriode.getEleve().getId(), classeElevePeriode.getAnnee().getId(),
-					classeElevePeriode.getPeriode().getId());
 
-			if(cep!=null) {
-				cep.setIsClassed(classeElevePeriode.getIsClassed());
-			} else {
-				create(classeElevePeriode);
-			}
+		ClasseElevePeriode cep = findByClasseAndEleveAndAnneeAndPeriode(classeElevePeriode.getClasse().getId(),
+				classeElevePeriode.getEleve().getId(), classeElevePeriode.getAnnee().getId(),
+				classeElevePeriode.getPeriode().getId());
+
+		if (cep != null) {
+			cep.setIsClassed(classeElevePeriode.getIsClassed());
+		} else {
+			create(classeElevePeriode);
+		}
 	}
 
 	@Transactional

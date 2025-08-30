@@ -4,6 +4,7 @@ package com.vieecoles.ressource.operations.etats;
 import com.vieecoles.dto.*;
 import com.vieecoles.entities.operations.ecole;
 import com.vieecoles.processors.bouake.WordTempProcessorBouake;
+import com.vieecoles.processors.dren4.WordTempDren4Processor;
 import com.vieecoles.processors.yamoussoukro.WordTempProcessor;
 import com.vieecoles.services.etats.*;
 import java.io.ByteArrayInputStream;
@@ -97,6 +98,8 @@ public class spiderRessource {
     WordTempProcessorDren3 wordTempProcessorDren3;
     @Inject
     WordTempProcessorBouake wordTempBouakeProcessor ;
+    @Inject
+    WordTempDren4Processor wordTempProcessorDren4;
 
 
 
@@ -303,7 +306,10 @@ public class spiderRessource {
        // myScole= ecole.findById(idEcole);
         byte[] wordFile = new byte[0];
         FileInputStream fis=null ;
-        if(libelleTrimetre.equals("Troisième Trimestre")||libelleTrimetre.equals("Deuxième Semestre")) {
+
+
+
+      /*  if(libelleTrimetre.equals("Troisième Trimestre")||libelleTrimetre.equals("Deuxième Semestre")) {
             myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Drena3/Spider_BookAnnuels.jrxml");
             identiteEtatDto= identiteEtatService.getIdentiteDto(idEcole) ;
             resultatsElevesAffecteDto= resultatsServices.CalculResultatsEleveAffecte(idEcole,libelleAnnee,libelleTrimetre) ;
@@ -375,101 +381,91 @@ public class spiderRessource {
 
 
 
-        } else if (!libelleTrimetre.equals("Troisième Trimestre") && (modelDrena.equals("dren3"))) {
-         /*   myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Spider_Book.jrxml");
-            identiteEtatDto= identiteEtatService.getIdentiteDto(idEcole) ;
-            resultatsElevesAffecteDto= resultatsServices.CalculResultatsEleveAffecte(idEcole,libelleAnnee,libelleTrimetre) ;
-            System.out.println("FIN ResultatsEleveAffecte ");
-            recapDesResultatsElevesAffecteDto= resultatsRecapServices.RecapCalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre);
-            System.out.println("FIN RecapResultatsEleveAffecte ");
-            resultatsElevesNonAffecteDto = resultatsNonAffecteServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre);
-            System.out.println("FIN resultatsNonAffecte ");
-            recapDesResultatsElevesNonAffecteDto= resultatsRecapNonAffServices.RecapCalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre) ;
-            System.out.println("FIN resultatsRecapNonAff ");
-            recapResultatsElevesAffeEtNonAffDto = resultatsRecapAffEtNonAffServices.RecapCalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre) ;
-            System.out.println("FIN resultatsRecapAffEtNonAff ");
-            eleveAffecteParClasseDto= eleveAffecteParClasseServices.eleveAffecteParClasse(idEcole ,libelleAnnee,libelleTrimetre) ;
-            System.out.println("FIN eleveAffecteParClasse ");
-            eleveNonAffecteParClasseDto = eleveNonAffecteParClasseServices.eleveNonAffecteParClasse(idEcole ,libelleAnnee,libelleTrimetre);
-            System.out.println("FIN eleveNonAffecteParClasse ");
-            majorParClasseNiveauDto = majorServices.MajorParNiveauClasse(idEcole ,libelleAnnee,libelleTrimetre) ;
-            System.out.println("FIN major ");
-            transfertsDto= transfertsServices.transferts(idEcole) ;
-            System.out.println(" FIN transfert ");
-            repartitionEleveParAnNaissDto= repartitionElevParAnNaissServices.CalculRepartElevParAnnNaiss(idEcole ,libelleAnnee,libelleTrimetre);
-            System.out.println("FIN repartitionElevParAnNaiss ");
-            boursierDto = boursiersServices.boursier(idEcole ,libelleAnnee , libelleTrimetre);
-            System.out.println("FIN Boursier ");
-            effApprocheNive= approcheParNiveauParGenreServices.EffApprocheNiveauGenre(idEcole ,libelleAnnee , libelleTrimetre) ;
-            System.out.println("FIN approcheParNiveauParGenre ");
-            effApprocheNiveauGenreDto.add(effApprocheNive)   ;
-            m = effectifParLangueServices.getLangueVivante(idEcole,anneeId);
-            etatNominatifEnseignatDto = etatNominatifEnseignantServices.infosEtatNominEnseignant(idEcole ,anneeId) ;
-            effectifElevLangueVivante2Dto.add(m);
-
-
-            // Le reste de votre code après l'exécution parallèle
-            detailsBull.setIdentiteEtatDto(identiteEtatDto);
-            detailsBull.setResultatsElevesAffecteDto(resultatsElevesAffecteDto);
-
-            detailsBull.setIdentiteEtatDto(identiteEtatDto);
-            detailsBull.setResultatsElevesAffecteDto(resultatsElevesAffecteDto);
-            detailsBull.setIntro(introLis);
-            detailsBull.setRecapDesResultatsElevesAffecteDto(recapDesResultatsElevesAffecteDto);
-            detailsBull.setResultatsElevesNonAffecteDto(resultatsElevesNonAffecteDto);
-            detailsBull.setRecapDesResultatsElevesNonAffecteDto(recapDesResultatsElevesNonAffecteDto);
-            detailsBull.setRecapResultatsElevesAffeEtNonAffDto(recapResultatsElevesAffeEtNonAffDto);
-            detailsBull.setEleveAffecteParClasseDto(eleveAffecteParClasseDto);
-            detailsBull.setEleveNonAffecteParClasseDto(eleveNonAffecteParClasseDto);
-            detailsBull.setMajorParClasseNiveauDto(majorParClasseNiveauDto);
-            detailsBull.setTransfertsDto(transfertsDto);
-            detailsBull.setRepartitionEleveParAnNaissDto(repartitionEleveParAnNaissDto);
-            detailsBull.setBoursierDto(boursierDto);
-            detailsBull.setEffApprocheNiveauGenreDto(effApprocheNiveauGenreDto);
-            detailsBull.setEffectifElevLangueVivante2Dto(effectifElevLangueVivante2Dto);
-            detailsBull.setEtatNominatifEnseignatDto(etatNominatifEnseignatDto);*/
-            System.out.println("etats/apochePoi/DRENA3/RAPPORT_TRIMESTRIEL");
-            fis= getFileInputStreamFromResource(
-                "etats/apochePoi/DRENA3/RAPPORT_TRIMESTRIEL.docx");
-
-        }
-        else if (!libelleTrimetre.equals("Troisième Trimestre") && (modelDrena.equals("Yamoussoukro"))) {
-
-            System.out.println("etats/apochePoi/DREN YAMOUSSOUKRO/RAPPORT_TRIMESTRIE");
-           fis= getFileInputStreamFromResource(
-               "etats/apochePoi/DREN YAMOUSSOUKRO/RAPPORT_TRIMESTRIEL.docx");
-        }
-
-        else if (!libelleTrimetre.equals("Troisième Trimestre") && (modelDrena.equals("Bouake"))) {
-
-            System.out.println("etats/apochePoi/Bouake/RAPPORT_TRIMESTRIE");
-            fis= getFileInputStreamFromResource(
-                "etats/apochePoi/Bouake/RAPPORT_TRIMESTRIEL.docx");
-        }
+        } */
 
 
         try {
 
+            if(modelDrena.equals("dren3")){
+
+                if (!libelleTrimetre.equals("Troisième Trimestre") ) {
+
+                    System.out.println("etats/apochePoi/DRENA3/RAPPORT_TRIMESTRIEL");
+                    fis= getFileInputStreamFromResource(
+                        "etats/apochePoi/DRENA3/RAPPORT_TRIMESTRIEL.docx");
+                    byte[] fileContentdren3 = fis.readAllBytes();
+                    ByteArrayInputStream fis1dren3 = new ByteArrayInputStream(fileContentdren3);
+                    wordFile = wordTempProcessorDren3.generateWordFile(idEcole, libelleAnnee, libelleTrimetre, fis1dren3);
+
+                } else {
+                    System.out.println("etats/apochePoi/DRENA3/RAPPORT_TRIMESTRIEL");
+                    fis= getFileInputStreamFromResource(
+                        "etats/apochePoi/DRENA3/RAPPORT_TRIMESTRIEL_ANNUEL.docx");
+                    byte[] fileContentdren3 = fis.readAllBytes();
+                    ByteArrayInputStream fis1dren3 = new ByteArrayInputStream(fileContentdren3);
+                    wordFile = wordTempProcessorDren3.generateWordFile(idEcole, libelleAnnee, libelleTrimetre, fis1dren3);
+                }
+            }
+            if(modelDrena.equals("Yamoussoukro")){
+                if (!libelleTrimetre.equals("Troisième Trimestre") ) {
+
+                    fis= getFileInputStreamFromResource(
+                        "etats/apochePoi/DREN YAMOUSSOUKRO/RAPPORT_TRIMESTRIEL.docx");
+                    System.out.println("Mise à jour fileContentYakro ");
+                    byte[] fileContentyakro = fis.readAllBytes();
+                    ByteArrayInputStream fis1yakro = new ByteArrayInputStream(fileContentyakro);
+                    wordFile = wordTempProcessor.generateWordFile(idEcole, libelleAnnee, libelleTrimetre, fis1yakro);
+                } else {
+                    fis= getFileInputStreamFromResource(
+                        "etats/apochePoi/DREN YAMOUSSOUKRO/RAPPORT_TRIMESTRIEL_ANNUEL.docx");
+                    System.out.println("Mise à jour fileContentYakro ");
+                    byte[] fileContentyakro = fis.readAllBytes();
+                    ByteArrayInputStream fis1yakro = new ByteArrayInputStream(fileContentyakro);
+                    wordFile = wordTempProcessor.generateWordFile(idEcole, libelleAnnee, libelleTrimetre, fis1yakro);
+                }
+            }
+            if(modelDrena.equals("Bouake")){
 
 
-         if((!libelleTrimetre.equals("Troisième Trimestre") && (modelDrena.equals("dren3")))) {
-             System.out.println("Mise à jour fileContentdren3 ");
-             byte[] fileContentdren3 = fis.readAllBytes();
-             ByteArrayInputStream fis1dren3 = new ByteArrayInputStream(fileContentdren3);
-             wordFile = wordTempProcessorDren3.generateWordFile(idEcole, libelleAnnee, libelleTrimetre, fis1dren3);
-         } else if (!libelleTrimetre.equals("Troisième Trimestre") && (modelDrena.equals("Yamoussoukro"))) {
-             System.out.println("Mise à jour fileContentYakro ");
-             byte[] fileContentyakro = fis.readAllBytes();
-             ByteArrayInputStream fis1yakro = new ByteArrayInputStream(fileContentyakro);
-             wordFile = wordTempProcessor.generateWordFile(idEcole, libelleAnnee, libelleTrimetre, fis1yakro);
-         }
-         else if (!libelleTrimetre.equals("Troisième Trimestre") && (modelDrena.equals("Bouake"))) {
-             System.out.println("Mise à jour fileContentBouake ");
-             byte[] fileContentbouake = fis.readAllBytes();
-             ByteArrayInputStream fis1bouake = new ByteArrayInputStream(fileContentbouake);
-             wordFile = wordTempBouakeProcessor.generateWordFile(idEcole, libelleAnnee, libelleTrimetre, fis1bouake);
-         }
+                if (!libelleTrimetre.equals("Troisième Trimestre")) {
+                    fis= getFileInputStreamFromResource(
+                        "etats/apochePoi/Bouake/RAPPORT_TRIMESTRIEL.docx");
+                    System.out.println("Mise à jour fileContentBouake ");
+                    byte[] fileContentbouake = fis.readAllBytes();
+                    ByteArrayInputStream fis1bouake = new ByteArrayInputStream(fileContentbouake);
+                    wordFile = wordTempBouakeProcessor.generateWordFile(idEcole, libelleAnnee, libelleTrimetre, fis1bouake);
+                } else
+                {
+                    fis= getFileInputStreamFromResource(
+                        "etats/apochePoi/Bouake/RAPPORT_TRIMESTRIEL_ANNUEL.docx");
+                    System.out.println("Mise à jour fileContentBouake ");
+                    byte[] fileContentbouake = fis.readAllBytes();
+                    ByteArrayInputStream fis1bouake = new ByteArrayInputStream(fileContentbouake);
+                    wordFile = wordTempBouakeProcessor.generateWordFile(idEcole, libelleAnnee, libelleTrimetre, fis1bouake);
+                }
+            }
 
+
+            if(modelDrena.equals("dren4")){
+
+                if (!libelleTrimetre.equals("Troisième Trimestre") ) {
+
+                    System.out.println("etats/apochePoi/Dren4/RAPPORT_TRIMESTRIEL");
+                    fis= getFileInputStreamFromResource(
+                        "etats/apochePoi/Dren4/RAPPORT_TRIMESTRIEL.docx");
+                    byte[] fileContentdren4 = fis.readAllBytes();
+                    ByteArrayInputStream fis1dren4 = new ByteArrayInputStream(fileContentdren4);
+                    wordFile = wordTempProcessorDren4.generateWordFile(idEcole, libelleAnnee, libelleTrimetre, fis1dren4);
+
+                } else {
+                    System.out.println("etats/apochePoi/Dren4/RAPPORT_TRIMESTRIEL_ANNUEL");
+                    fis= getFileInputStreamFromResource(
+                        "etats/apochePoi/Dren4/RAPPORT_TRIMESTRIEL_ANNUEL.docx");
+                    byte[] fileContentdren4 = fis.readAllBytes();
+                    ByteArrayInputStream fis1dren4 = new ByteArrayInputStream(fileContentdren4);
+                    wordFile = wordTempProcessorDren4.generateWordFile(idEcole, libelleAnnee, libelleTrimetre, fis1dren4);
+                }
+            }
 
         // Préparer les en-têtes pour la réponse
         HttpHeaders headers = new HttpHeaders();

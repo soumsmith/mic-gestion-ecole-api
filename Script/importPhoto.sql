@@ -1,3 +1,25 @@
+USE
+ecoleviedbv2;
+CREATE VIEW photos_adamsy AS SELECT
+                                 `ev`.`eleveid` AS `eleveid`,
+                                 `e`.`matricule` AS `matricule`,
+                                 `e`.`nom` AS `nom`,
+                                 `e`.`prenoms` AS `prenoms`,
+                                 `m`.`chemin` AS `chemin`
+                             FROM
+                                 (
+                                     `eleves` `e`
+                                         JOIN(`eleve` `ev`
+                                         JOIN `medias` `m`)
+                                     )
+                             WHERE
+                                 (
+                                     (`e`.`photo` = `m`.`uid`) AND(
+                                         `e`.`matricule` = `ev`.`eleve_matricule`
+                                         )
+                                     )
+
+
 UPDATE eleve
     JOIN photos_adamsy ON eleve.eleve_matricule = photos_adamsy.matricule
     SET eleve.cheminphoto = photos_adamsy.chemin;

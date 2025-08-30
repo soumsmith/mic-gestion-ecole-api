@@ -1,5 +1,6 @@
 package com.vieecoles.steph.services;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -34,9 +35,22 @@ public class MoyenneAdjustmentService implements PanacheRepositoryBase<MoyenneAd
 			moyAdj = MoyenneAdjustment.find("annee = ?1 and periode = ?2 and matricule = ?3 and matiere = ?4 and statut = ?5", annee, periode, matricule, matiere, statut)
 					.singleResult();
 		} catch (RuntimeException e) {
+//			e.printStackTrace();
 			logger.warning(e.getMessage());
 		}
 		return moyAdj;
+	}
+	
+	public List<MoyenneAdjustment> getByAnneePeriodeMatriculeAndStatut(Long annee, Long periode, String matricule, String statut) {
+		List<MoyenneAdjustment> moyAdjs;
+		try {
+			moyAdjs = MoyenneAdjustment.find("annee = ?1 and periode = ?2 and matricule = ?3 and statut = ?4", annee, periode, matricule, statut)
+					.list();
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+			moyAdjs = new ArrayList<MoyenneAdjustment>();
+		}
+		return moyAdjs;
 	}
 
 	public MoyenneAdjustment getById(String id) {

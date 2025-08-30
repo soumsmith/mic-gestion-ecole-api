@@ -19,8 +19,35 @@ public class eleveAffecteParClasseDto {
    private  String observat ;
    private  String nomEducateur ;
    private   Integer ordre_niveau ;
+   private  Double moyeGeneralTrim1 ;
+   private  Double moyeGeneralTrim2 ;
+   private  Double moyeGeneralTrim3;
 
-    public eleveAffecteParClasseDto(List<eleveAffecteParClasseDto> eleveAffecteParClasseDtos) {
+   public Double getMoyeGeneralTrim1() {
+      return moyeGeneralTrim1;
+   }
+
+   public void setMoyeGeneralTrim1(Double moyeGeneralTrim1) {
+      this.moyeGeneralTrim1 = moyeGeneralTrim1;
+   }
+
+   public Double getMoyeGeneralTrim2() {
+      return moyeGeneralTrim2;
+   }
+
+   public void setMoyeGeneralTrim2(Double moyeGeneralTrim2) {
+      this.moyeGeneralTrim2 = moyeGeneralTrim2;
+   }
+
+   public Double getMoyeGeneralTrim3() {
+      return moyeGeneralTrim3;
+   }
+
+   public void setMoyeGeneralTrim3(Double moyeGeneralTrim3) {
+      this.moyeGeneralTrim3 = moyeGeneralTrim3;
+   }
+
+   public eleveAffecteParClasseDto(List<eleveAffecteParClasseDto> eleveAffecteParClasseDtos) {
     }
 
     public Integer getOrdre_niveau() {
@@ -31,27 +58,18 @@ public class eleveAffecteParClasseDto {
       this.ordre_niveau = ordre_niveau;
    }
 
-   public eleveAffecteParClasseDto(String classeLibelle,
-                                   String professeurPrincipal,
+   public eleveAffecteParClasseDto(String classeLibelle, String professeurPrincipal,
                                    String matricule,
-                                   String nomEleve,
-                                   String prenomEleve,
-                                   String sexe,
-                                   String anneeNaissance,
-                                   String nationnalite,
-                                   String redoublan,
-                                   String affecte,
-                                   String numDecisionAffecte,
-                                   Double moyeGeneral,
-                                   Integer rang,
-                                   String observat,
-                                   String nomEducateur,
+                                   String nomEleve, String prenomEleve, String sexe,
+                                   String anneeNaissance, String nationnalite, String redoublan,
+                                   String affecte, String numDecisionAffecte, Double moyeGeneral,
+                                   Integer rang, String observat, String nomEducateur,
                                    Integer ordre_niveau) {
       this.classeLibelle = classeLibelle;
       this.professeurPrincipal = professeurPrincipal;
       this.matricule = matricule;
       this.nomEleve = nomEleve;
-      this.prenomEleve= prenomEleve;
+      this.prenomEleve = prenomEleve;
       this.sexe = sexe;
       this.anneeNaissance = anneeNaissance;
       this.nationnalite = nationnalite;
@@ -62,7 +80,7 @@ public class eleveAffecteParClasseDto {
       this.rang = rang;
       this.observat = observat;
       this.nomEducateur = nomEducateur;
-      this.ordre_niveau =ordre_niveau ;
+      this.ordre_niveau = ordre_niveau;
    }
 
    public eleveAffecteParClasseDto() {

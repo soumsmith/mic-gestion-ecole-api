@@ -183,7 +183,7 @@ public class BulletinSpiderRessource {
     }
 
      @GET
-    @Path("/spider-bulletin/{idEcole}/{libellePeriode}/{libelleAnnee}/{idClasse}/{compress}/{niveauEnseign}/{positionLogo}/{filigranne}/{infoAmoirie}/{pivoter}/{modelePoincarre}/{distinct}/{modelelmd}/{testLourd}/{bulletinArabe}")
+    @Path("/spider-bulletin/{idEcole}/{libellePeriode}/{libelleAnnee}/{idClasse}/{compress}/{niveauEnseign}/{positionLogo}/{filigranne}/{infoAmoirie}/{pivoter}/{modelePoincarre}/{distinct}/{modelelmd}/{testLourd}/{bulletinArabe}/{piedPage}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public ResponseEntity<byte[]>  getDtoRapport(@PathParam("idEcole") Long idEcole ,@PathParam("libellePeriode") String libellePeriode ,
                                                  @PathParam("libelleAnnee") String libelleAnnee , @PathParam("idClasse") Long libelleClasse ,@PathParam("compress") Boolean compress ,
@@ -194,7 +194,8 @@ public class BulletinSpiderRessource {
                                                  @PathParam("distinct") boolean distinct ,
                                                  @PathParam("modelelmd") boolean modelelmd,
                                                  @PathParam("testLourd") boolean testLourd,
-                                                 @PathParam("bulletinArabe") boolean bulletinArabe
+                                                 @PathParam("bulletinArabe") boolean bulletinArabe,
+                                                 @PathParam("piedPage") boolean piedPage
                                                   ) throws Exception, JRException {
 
 
@@ -229,7 +230,23 @@ public class BulletinSpiderRessource {
 
                     }
 
-                } else {
+                }
+                else if(piedPage) {
+                    System.out.println("piedPage ");
+                    if(libellePeriode.equals("Troisième Trimestre")) {
+                        System.out.println("callSpiderNobelPiedPageTrois.jrxml") ;
+                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/callSpiderNobelPiedPageTrois.jrxml");
+                    }
+                    else  {
+                        System.out.println("callSpiderNobel_par_interval.jrxml") ;
+                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderNobel.jrxml");
+
+                    }
+
+                }
+
+
+                else {
                     if(libellePeriode.equals("Troisième Trimestre")) {
                         System.out.println("callSpiderNobelTrois.jrxmlMouuuuu") ;
                         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/callSpiderNobelTrois.jrxml");
@@ -269,7 +286,7 @@ public class BulletinSpiderRessource {
             }
 
 
-        }
+            }
             else if (niveauEnseign==5||niveauEnseign==6) {
                 if(!pivoter) {
                     if(libellePeriode.equals("Deuxième Semestre"))
@@ -311,7 +328,7 @@ public class BulletinSpiderRessource {
 
 
             }
-
+// Fin compresser
         } else {
             if(niveauEnseign==2) {
                 System.out.println("Libelle Periode "+libellePeriode);
@@ -482,7 +499,7 @@ public class BulletinSpiderRessource {
         return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.MULTIPART_FORM_DATA).body(data);
     }
     @GET
-    @Path("/spider-bulletin/{idEcole}/{libellePeriode}/{libelleAnnee}/{idClasse}/{compress}/{niveauEnseign}/{positionLogo}/{filigranne}/{infoAmoirie}/{pivoter}/{modelePoincarre}/{distinct}/{modelelmd}/{testLourd}/{bulletinArabe}/{debutImpression}/{finImpression}")
+    @Path("/spider-bulletin/{idEcole}/{libellePeriode}/{libelleAnnee}/{idClasse}/{compress}/{niveauEnseign}/{positionLogo}/{filigranne}/{infoAmoirie}/{pivoter}/{modelePoincarre}/{distinct}/{modelelmd}/{testLourd}/{bulletinArabe}/{debutImpression}/{finImpression}/{piedPage}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public ResponseEntity<byte[]>  getDtoRapportparIntervalle(@PathParam("idEcole") Long idEcole ,@PathParam("libellePeriode") String libellePeriode ,
                                                  @PathParam("libelleAnnee") String libelleAnnee , @PathParam("idClasse") Long libelleClasse ,@PathParam("compress") Boolean compress ,
@@ -495,7 +512,9 @@ public class BulletinSpiderRessource {
                                                  @PathParam("testLourd") boolean testLourd,
                                                  @PathParam("bulletinArabe") boolean bulletinArabe,
                                                   @PathParam("debutImpression") Integer debutImpression,
-                                                  @PathParam("finImpression") Integer finImpression
+                                                  @PathParam("finImpression") Integer finImpression,
+                                                              @PathParam("piedPage") boolean piedPage
+
     ) throws Exception, JRException {
 
 
@@ -530,7 +549,23 @@ public class BulletinSpiderRessource {
 
                     }
 
-                } else {
+                }
+
+                else if(piedPage) {
+                  System.out.println("piedPage ");
+                  if(libellePeriode.equals("Troisième Trimestre")) {
+                    System.out.println("callSpiderNobelPiedPageTrois.jrxml") ;
+                    myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/callSpiderNobelPiedPageTrois.jrxml");
+                  }
+                  else  {
+                    System.out.println("callSpiderNobel_par_interval.jrxml") ;
+                    myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderNobel_par_interval.jrxml");
+
+                  }
+
+                }
+
+                else {
                     if(libellePeriode.equals("Troisième Trimestre")) {
                         System.out.println("callSpiderNobelTrois.jrxmlMouuuuu") ;
                         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/callSpiderNobelTrois.jrxml");
@@ -642,7 +677,9 @@ public class BulletinSpiderRessource {
 
                     else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderNobelDecompress90.jrxml");
                     System.out.println("callSpiderNobelDecompress90") ;
-                } else {
+                }
+
+                else {
                     if(libellePeriode.equals("Troisième Trimestre"))
                         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/callSpiderNobelDecompressTrois.jrxml");
 
@@ -786,7 +823,7 @@ public class BulletinSpiderRessource {
     }
 
     @GET
-    @Path("/spider-bulletin-matricule/{idEcole}/{libellePeriode}/{libelleAnnee}/{idClasse}/{matricule}/{compress}/{niveauEnseign}/{positionLogo}/{filigranne}/{infoAmoirie}/{pivoter}/{modelePoincarre}/{distinct}/{modelelmd}/{testLourd}/{bulletinArabe}")
+    @Path("/spider-bulletin-matricule/{idEcole}/{libellePeriode}/{libelleAnnee}/{idClasse}/{matricule}/{compress}/{niveauEnseign}/{positionLogo}/{filigranne}/{infoAmoirie}/{pivoter}/{modelePoincarre}/{distinct}/{modelelmd}/{testLourd}/{bulletinArabe}/{piedPage}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public ResponseEntity<byte[]>  getDtoRapport(@PathParam("idEcole") Long idEcole ,@PathParam("libellePeriode") String libellePeriode ,
                                                  @PathParam("libelleAnnee") String libelleAnnee , @PathParam("idClasse") Long libelleClasse ,@PathParam("matricule") String matricule,@PathParam("compress") Boolean compress,
@@ -798,7 +835,8 @@ public class BulletinSpiderRessource {
                                                  @PathParam("distinct") boolean distinct ,
                                                  @PathParam("modelelmd") boolean modelelmd,
                                                  @PathParam("testLourd") boolean testLourd,
-                                                 @PathParam("bulletinArabe") boolean bulletinArabe
+                                                 @PathParam("bulletinArabe") boolean bulletinArabe,
+                                                 @PathParam("piedPage") boolean piedPage
      ) throws Exception, JRException {
         try {
 
@@ -825,10 +863,23 @@ if (!compress){
             }
 
         else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinNobelSpider90.jrxml");
-        } else {
+        }
+
+        else if(piedPage){
             if(libellePeriode.equals("Troisième Trimestre"))
             {
-                myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/BulletinNobelSpiderTrois.jrxml");
+                myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/BulletinNobelSpiderAvecPiedTroisV2.jrxml");
+
+            }
+
+            else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinNobelSpider.jrxml");
+        }
+
+
+       else {
+            if(libellePeriode.equals("Troisième Trimestre"))
+            {
+                myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/BulletinNobelSpiderTroisV2.jrxml");
 
             }
 
@@ -947,7 +998,7 @@ if (!compress){
 
         } else {
             if(libellePeriode.equals("Troisième Trimestre")) {
-                myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/BulletinNobelSpiderEtanTrois.jrxml");
+                myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/BulletinNobelSpiderEtanTroisV2.jrxml");
 
             }
 

@@ -45,13 +45,14 @@ public class CIOSpiderRessource {
 
     @GET
     @Transactional
-    @Path("/pouls-rapport-cio/{idEcole}/{libelleAnnee}/{libelleTrimetre}")
+    @Path("/pouls-rapport-cio/{idEcole}/{libelleAnnee}/{libelleTrimetre}/{annuel}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    public ResponseEntity<byte[]>  getDtoRapport(@PathParam("idEcole") Long idEcole ,@PathParam("libelleAnnee") String libelleAnnee,@PathParam("libelleTrimetre") String libelleTrimetre) throws Exception, JRException {
+    public ResponseEntity<byte[]>  getDtoRapport(@PathParam("idEcole") Long idEcole ,@PathParam("libelleAnnee")
+    String libelleAnnee,@PathParam("libelleTrimetre") String libelleTrimetre,@PathParam("annuel") boolean annuel) throws Exception, JRException {
         InputStream myInpuStream ;
         /*myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/BulletinBean.jrxml");*/
 
-        if((libelleTrimetre.equals("Troisième Trimestre"))||(libelleTrimetre.equals("Deuxième Semestre"))){
+        if((annuel)&&((libelleTrimetre.equals("Troisième Trimestre"))||(libelleTrimetre.equals("Deuxième Semestre")))){
             myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Spider_Book_AnnuelsCio.jrxml");
             spiderCIODto detailsBull= new spiderCIODto() ;
             List<RecapResultatsElevesAffeEtNonAffDto>  dspsDto = new ArrayList<>() ;

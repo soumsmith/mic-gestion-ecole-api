@@ -1,16 +1,15 @@
 package com.vieecoles.services.etats.appachePoi;
 
-import com.vieecoles.dto.ClasseNiveauDto;
 import com.vieecoles.dto.ClasseNiveauOrderDto;
 import com.vieecoles.dto.MajorParClasseNiveauDto;
-
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import java.util.ArrayList;
-import java.util.List;
 
 @ApplicationScoped
 public class MajorParClasseNiveauPoiServices {
@@ -27,74 +26,87 @@ public class MajorParClasseNiveauPoiServices {
                             .setParameter("periode", libelleTrimestre)
                            . getResultList() ;
 
+
       int LongTableau =classeNiveauDtoList.size() ;
 
         Long  effeG,effeF,classF,classG,nonclassF,nonclassG,nbreMoySup10F,nbreMoySup10G,nbreMoyInf999F,nbreMoyInf999G,nbreMoyInf85G,nbreMoyInf85F;
         Double pourMoySup10F ,pourMoySup10G,pourMoyInf999F,pourMoyInf999G,pourMoyInf85G,pourMoyInf85F,moyClasseF,moyClasseG;
        Integer effectifClasse ;
         List<MajorParClasseNiveauDto> resultatsListElevesDto = new ArrayList<>(LongTableau);
-        List<MajorParClasseNiveauDto> majorExeco = new ArrayList<>();
-        for (int i=0; i< LongTableau;i++) {
-            MajorParClasseNiveauDto resultatsListEleves= new MajorParClasseNiveauDto();
-            Double moyMajor = null;
 
-            moyMajor = getMajorDto(idEcole,classeNiveauDtoList.get(i).getNiveau(),classeNiveauDtoList.get(i).getClasse(),libelleAnnee , libelleTrimestre) ;
-
-            majorExeco = getListMajorParClasseNiveau(idEcole,classeNiveauDtoList.get(i).getNiveau(),classeNiveauDtoList.get(i).getClasse(),moyMajor,libelleAnnee , libelleTrimestre) ;
-
-            if(majorExeco.size() >1){
-
-                for (int k=0 ;k< majorExeco.size(); k++){
-                    resultatsListEleves = majorExeco.get(k);
-                    resultatsListElevesDto.add(resultatsListEleves) ;
-                }
-            }else {
-                resultatsListEleves = majorExeco.get(0);
-                resultatsListElevesDto.add(resultatsListEleves) ;
-            }
-
-
-        }
+      resultatsListElevesDto= getAllMajorsEcole(idEcole,libelleAnnee,libelleTrimestre);
 
         return  resultatsListElevesDto ;
     }
 
 
-    public List<MajorParClasseNiveauDto>  getListMajorParClasseNiveau(Long idEcole , String niveau,String classe,Double moy ,String libelleAnnee , String libelleTrimestre ){
-        List<MajorParClasseNiveauDto> classeNiveauDtoList = new ArrayList<>();
-        try {
-            TypedQuery  q= em.createQuery("select new com.vieecoles.dto.MajorParClasseNiveauDto(o.niveau,o.libelleClasse,o.matricule,o.nom,o.prenoms,SUBSTRING(o.dateNaissance,1,4) ,o.sexe,o.appreciation,o.redoublant,o.moyGeneral,o.lv2,o.ordreNiveau) from Bulletin o where  o.ecoleId =:idEcole and  o.niveau=:niveau and o.libelleClasse=:libelleClasse and o.moyGeneral=:moy and o.libellePeriode=:periode and o.anneeLibelle=:annee ", MajorParClasseNiveauDto.class);
-            classeNiveauDtoList = q.setParameter("idEcole",idEcole)
-                    .setParameter("niveau",niveau)
-                    .setParameter("libelleClasse",classe)
-                    .setParameter("moy",moy)
-                    .setParameter("annee", libelleAnnee)
-                    .setParameter("periode", libelleTrimestre)
-                    .getResultList() ;
-            return classeNiveauDtoList ;
-        } catch (NoResultException e){
-            return null ;
-        }
 
+
+
+  public List<MajorParClasseNiveauDto> getAllMajorsEcole(Long idEcole, String libelleAnnee, String libelleTrimestre) {
+    List<MajorParClasseNiveauDto> tousLesMajors = new ArrayList<>();
+
+    try {
+      // Une seule requête pour récupérer les 3 premiers de chaque niveau
+      Query q = em.createNativeQuery(
+          "SELECT niveau, libelle_classe, matricule, nom, prenoms, " +
+              "date_naissance, sexe, affecte, moy_general, lv2 ,ordre_niveau " +
+              "FROM ( " +
+              "  SELECT *, ROW_NUMBER() OVER (PARTITION BY niveau ORDER BY moy_general DESC) as rn " +
+              "  FROM Bulletins " +
+              "  WHERE id_ecole = ?1 AND libelle_periode = ?2 AND annee_libelle = ?3 " +
+              ") ranked " +
+              "WHERE rn <= 3 " +
+              "ORDER BY niveau, moy_general DESC");
+
+      q.setParameter(1, idEcole);
+      q.setParameter(2, libelleTrimestre);
+      q.setParameter(3, libelleAnnee);
+
+      List<Object[]> results = q.getResultList();
+
+      for (Object[] result : results) {
+        MajorParClasseNiveauDto dto = new MajorParClasseNiveauDto();
+        dto.setNiveau((String) result[0]);
+        dto.setClasseLibelle((String) result[1]);
+        dto.setMatricule((String) result[2]);
+        dto.setNom((String) result[3]);
+        dto.setPrenom((String) result[4]);
+        dto.setAnneeNaiss((String) result[5]);
+        dto.setSexe((String) result[6]);
+        dto.setAffecte((String) result[7]);
+        dto.setMoyGeneral(convertToDouble(result[8]));
+        dto.setLv2((String) result[9]);
+        dto.setOrdre_niveau((Integer) result[10]);
+
+        tousLesMajors.add(dto);
+      }
+
+      return tousLesMajors;
+
+    } catch (Exception e) {
+      System.err.println("Erreur lors de la récupération de tous les majors: " + e.getMessage());
+      e.printStackTrace();
+      return tousLesMajors;
     }
-
-    public Double getMajorDto(Long idEcole , String niveau,String classe ,String libelleAnnee , String libelleTrimestre){
-        Double classeNiveauDtoList ;
-        try {
-            TypedQuery<Double> q= (TypedQuery<Double>) em.createQuery("select MAX(o.moyGeneral) from Bulletin o where  o.ecoleId =:idEcole and  o.niveau=:niveau and o.libelleClasse=:libelleClasse and o.libellePeriode=:periode and o.anneeLibelle=:annee");
-            classeNiveauDtoList = q.setParameter("idEcole",idEcole)
-                    .setParameter("niveau",niveau)
-                    .setParameter("libelleClasse",classe)
-                    .setParameter("annee", libelleAnnee)
-                    .setParameter("periode", libelleTrimestre)
-                    .getSingleResult() ;
-            return classeNiveauDtoList ;
-        } catch (NoResultException e){
-            return 0D ;
-        }
-
+  }
+  private Double convertToDouble(Object value) {
+    if (value == null) {
+      return 0.0;
     }
-
-
+    if (value instanceof BigDecimal) {
+      return ((BigDecimal) value).doubleValue();
+    } else if (value instanceof Double) {
+      return (Double) value;
+    } else if (value instanceof Number) {
+      return ((Number) value).doubleValue();
+    } else {
+      try {
+        return Double.valueOf(value.toString());
+      } catch (NumberFormatException e) {
+        return 0.0;
+      }
+    }
+  }
 
 }

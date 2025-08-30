@@ -152,6 +152,21 @@ public class ClasseEleveService implements PanacheRepositoryBase<ClasseEleve, Lo
 		return ces;
 	}
 
+	public List<Long> getEleveIdByClasseAnnee(Long classeId, Long anneeId) {
+
+		List<Long> ces;
+		try {
+			ces = ClasseEleve.find(
+					"select ce.inscription.eleve.id from ClasseEleve ce where ce.classe.id = ?1 and ce.inscription.annee.id =?2 and (statut is null or statut <> 'RETIRE')",
+					classeId, anneeId).project(Long.class).list();
+		} catch (Exception e) {
+			ces = new ArrayList<>();
+			e.printStackTrace();
+		}
+		System.out.println(String.format("%s élève(s) trouvé(s) dans la classe id %s pour l'année id %s", ces.size(), classeId, anneeId));
+		return ces;
+	}
+
 	public int getCountByClasseAnnee(Long classeId, Long anneeId) {
 		int ce = 0;
 		try {
@@ -223,14 +238,14 @@ public class ClasseEleveService implements PanacheRepositoryBase<ClasseEleve, Lo
 		return ce;
 	}
 
-	public ClasseEleve getByMatriculeAndAnnee(String matricule, Long ecoleId, Long anneeId) {
-		System.out.println("mat :" + matricule + " ecole : " + ecoleId + " annee :" + anneeId);
+	public ClasseEleve getByMatriculeAndAnnee(String matricule, Long ecoleId, Long anneeId, Long classeId) {
+		System.out.println("mat :" + matricule + " ecole : " + ecoleId + " annee :" + anneeId + " classe :" + classeId);
 
 		ClasseEleve ce = new ClasseEleve();
 		try {
 			ce = ClasseEleve.find(
-					"inscription.eleve.matricule = ?1 and classe.ecole.id = ?2 and inscription.annee.id = ?3 and (statut is null or statut <> 'RETIRE')",
-					matricule, ecoleId, anneeId).singleResult();
+					"inscription.eleve.matricule = ?1 and classe.ecole.id = ?2 and inscription.annee.id = ?3 and classe.id = ?4  and (statut is null or statut <> 'RETIRE')",
+					matricule, ecoleId, anneeId, classeId).singleResult();
 		} catch (Exception e) {
 			e.printStackTrace();
 			ce = null;
@@ -253,7 +268,7 @@ public class ClasseEleveService implements PanacheRepositoryBase<ClasseEleve, Lo
 
 		return ce;
 	}
-	
+
 	public List<ClasseEleve> getListByMatriculeAndAnnee(String matricule, Long anneeId) {
 		System.out.println("mat :" + matricule + " annee :" + anneeId);
 
