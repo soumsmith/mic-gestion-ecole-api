@@ -7,9 +7,9 @@ import com.vieecoles.entities.operations.Rapide_rapide2;
 import com.vieecoles.entities.operations.ecole;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
 import java.util.List;
 
 @ApplicationScoped

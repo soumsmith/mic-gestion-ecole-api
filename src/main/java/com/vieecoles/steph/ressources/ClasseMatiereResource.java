@@ -7,15 +7,15 @@ package com.vieecoles.steph.ressources;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
@@ -43,7 +43,7 @@ public class ClasseMatiereResource {
 			@QueryParam("ecole") long ecoleId) {
 		return Response.ok().entity(classeMatiereService.getByBranche(brancheId, ecoleId)).build();
 	}
-	
+
 	@GET
 	@Path("/get-by-ecole")
 	@Tag(name = "ClasseMatiere")
@@ -58,14 +58,14 @@ public class ClasseMatiereResource {
 		System.out.println(classeId+" - "+anneeId);
 		return Response.ok().entity(classeMatiereService.getByBrancheViaClasse(classeId)).build();
 	}
-	
+
 	@GET
 	@Path("/get-all-by-branche-via-classe")
 	@Tag(name = "ClasseMatiere")
 	public Response getAllMatiereByBrancheViaClasse(@QueryParam("branche") long brancheId, @QueryParam("ecole") long ecoleId) {
 		return Response.ok().entity(classeMatiereService.getAllMatieresByBrancheViaClasse(brancheId,ecoleId)).build();
 	}
-	
+
 	@POST
 	@Path("/maj-coefficients")
 	@Tag(name = "ClasseMatiere")
@@ -104,7 +104,7 @@ public class ClasseMatiereResource {
 			return Response.serverError().entity(e.getMessage()).build();
 		}
 	}
-	
+
 	@POST
 	@Path("/apply/coefficients/{ecoleId}")
 	@Tag(name = "ClasseMatiere")

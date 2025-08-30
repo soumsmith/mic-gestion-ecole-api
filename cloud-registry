@@ -19,9 +19,14 @@
  :w
 =======
 <<<<<<< HEAD
-  docker build -f src/main/docker/Dockerfile.jvm -t europe-west1-docker.pkg.dev/fair-splice-361010/vie-ecole-docker-repo/vie-ecole-api:202409042315 .
+  :wq
+
 =======
+<<<<<<< HEAD
  docker build -f src/main/docker/Dockerfile.jvm -t europe-west1-docker.pkg.dev/fair-splice-361010/vie-ecole-docker-repo/vie-ecole-api:202507021649 .
+=======
+ docker build -f src/main/docker/Dockerfile.jvm -t soumsmith/pouls-pro-api:202507051637 .
+>>>>>>> master_New_Server
 >>>>>>> master
 >>>>>>> apache_poi
 

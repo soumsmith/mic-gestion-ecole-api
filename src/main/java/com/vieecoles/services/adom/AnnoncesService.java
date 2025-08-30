@@ -6,9 +6,9 @@ import com.vieecoles.entities.domaine;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 import java.net.URI;
 import java.util.List;
-import javax.enterprise.context.ApplicationScoped;
-import javax.ws.rs.NotFoundException;
-import javax.ws.rs.core.Response;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.ws.rs.NotFoundException;
+import jakarta.ws.rs.core.Response;
 
 @ApplicationScoped
 public class AnnoncesService implements PanacheRepositoryBase<Annonce, Long> {

@@ -4,11 +4,11 @@ import com.vieecoles.steph.services.BrancheService;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
-import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Response;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.Response;
 
 @Path("/branche")
 public class BrancheResource {
@@ -39,7 +39,7 @@ public class BrancheResource {
 	public Response getByNiveauEnseignementOnly(@QueryParam("id") Long id) {
 		return Response.ok().entity(brancheService.findByNiveauEnseignement(id)).build();
 	}
-	
+
 	@GET
 	@Path("/get-by-niveau-enseignement-projection")
 	@Operation(description = "Obtenir la liste des branches", summary = "")
@@ -47,7 +47,7 @@ public class BrancheResource {
 	public Response getByNiveauEnseignementProjection(@QueryParam("niveau") Long niveau) {
 		return Response.ok().entity(brancheService.findByNiveauEnseignementProjection(niveau)).build();
 	}
-	
+
 	@GET
 	@Path("/get-by-programme-niveau")
 	@Operation(description = "Obtenir la liste (dto) des branches par programme et niveau d'enseignement", summary = "")

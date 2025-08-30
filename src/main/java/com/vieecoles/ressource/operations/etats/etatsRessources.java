@@ -17,13 +17,13 @@ import net.sf.jasperreports.engine.export.ooxml.JRDocxExporter;
 import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -43,9 +43,9 @@ import java.util.Map;
 public class etatsRessources {
     @Inject
     EntityManager em;
-   
 
-  
+
+
     @GET
     @Path("/imprimer-list/{type}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
@@ -76,25 +76,25 @@ System.out.print("profilList "+profilList);
         Map<String, Object> map = new HashMap<>();
         map.put("title", type);
         JasperPrint report = JasperFillManager.fillReport(compileReport, map, beanCollectionDataSource);
-        JRDocxExporter exporter = new JRDocxExporter();    
-        exporter.setExporterInput(new SimpleExporterInput(report)); 
-       // File exportReportFile = new File("profils" + ".docx"); 
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();    
-        exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(baos));    
+        JRDocxExporter exporter = new JRDocxExporter();
+        exporter.setExporterInput(new SimpleExporterInput(report));
+       // File exportReportFile = new File("profils" + ".docx");
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(baos));
         exporter.exportReport();
         byte[] data = baos.toByteArray() ;
         HttpHeaders headers= new HttpHeaders();
       headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=profils.docx");
         return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.MULTIPART_FORM_DATA).body(data);
     }
-       
-    
-      
-      
+
+
+
+
     }
 
 
 
-    
+
 
 }

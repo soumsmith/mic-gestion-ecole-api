@@ -2,11 +2,12 @@ package com.vieecoles.entities.operations;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 import com.vieecoles.entities.Niveau;
 
 @Entity
+@Table(name = "salle")
 public class salle extends PanacheEntityBase {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long  salleid ;

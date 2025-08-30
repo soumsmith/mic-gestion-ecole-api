@@ -2,9 +2,10 @@ package com.vieecoles.entities.operations;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name = "ville")
 public class ville extends PanacheEntityBase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,11 +44,11 @@ public class ville extends PanacheEntityBase {
         this.villelibelle = villelibelle;
     }
 
-   
+
     /**
      * @return Long return the Direction_regionale_id
      */
-    
+
 
 
     /**

@@ -5,11 +5,11 @@ import com.vieecoles.steph.projections.GenericBasicProjectionLongId;
 import com.vieecoles.steph.services.NiveauEnseignementService;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
-import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
 import java.util.List;
 
 @Path("/niveau-enseignement")
@@ -25,7 +25,7 @@ public class NiveauEnseignementResource {
 	public List<NiveauEnseignement> getList(){
 		return niveauEnseignementService.getList();
 	}
-	
+
 	@Path("/list-projection")
 	@Produces(MediaType.APPLICATION_JSON)
 	@GET

@@ -2,7 +2,7 @@ package com.vieecoles.entities.operations;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 import com.vieecoles.entities.Parent;
 
@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "eleve")
 public class eleve extends PanacheEntityBase {
  @Id
  @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,7 +50,7 @@ public class eleve extends PanacheEntityBase {
             inverseJoinColumns = @JoinColumn( name = "parent_parentid" ) )
     private List<Parent> parents = new ArrayList<>();
 
- 
+
     public enum sexeEleve{
         MASCULIN, FEMININ
     }

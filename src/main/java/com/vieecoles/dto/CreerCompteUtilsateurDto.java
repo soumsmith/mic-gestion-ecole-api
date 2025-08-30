@@ -1,6 +1,6 @@
 package com.vieecoles.dto;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 
 public class CreerCompteUtilsateurDto {

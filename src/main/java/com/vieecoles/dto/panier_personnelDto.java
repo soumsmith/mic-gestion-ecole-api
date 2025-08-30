@@ -2,8 +2,8 @@ package com.vieecoles.dto;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.persistence.*;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.persistence.*;
 import java.time.LocalDate;
 
 

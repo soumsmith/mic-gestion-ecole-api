@@ -5,9 +5,9 @@ import com.vieecoles.services.etats.appachePoi.Annuels.EleveAffecteAnnuelsParCla
 import com.vieecoles.services.etats.appachePoi.Annuels.MajorAnnuelsParClasseNiveauPoiServices;
 import java.util.Comparator;
 import java.util.List;
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFTable;

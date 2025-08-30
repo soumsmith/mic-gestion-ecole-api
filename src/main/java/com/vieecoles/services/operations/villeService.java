@@ -2,9 +2,9 @@ package com.vieecoles.services.operations;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
 
 import com.vieecoles.entities.operations.ville;
 
@@ -20,13 +20,13 @@ public class villeService implements PanacheRepositoryBase<ville,Long > {
     public  List<ville> findAllVilles(){
         return  em.createQuery("select o from ville o join fetch o.Direction_regionale").getResultList() ;
 
-    } 
+    }
     public  List<ville> findVilleByDirect(Long idtyp){
         return    em.createQuery("select o from ville o join fetch o.myDirection_regionale h where h.id =:idtyp")
                 .setParameter("idtyp",idtyp)
                 .getResultList();
 
-    } 
+    }
 
 
 

@@ -20,10 +20,10 @@ import com.vieecoles.steph.util.DateUtils;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 import io.quarkus.panache.common.Parameters;
 
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
-import javax.transaction.Transactional;
-import javax.ws.rs.NotFoundException;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
+import jakarta.ws.rs.NotFoundException;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -333,12 +333,12 @@ public class EvaluationService implements PanacheRepositoryBase<Evaluation, Long
 	/**
 	 * Cette méthode permet d'obtenir les statistiques sur les évaluations d'un
 	 * professeur.
-	 * 
+	 *
 	 * @param personnelId
 	 * @param anneeId
 	 * @param ecoleId
 	 * @param periodeId
-	 * 
+	 *
 	 * @return statistiques des evaluations exécutées d'un professeur dans une école
 	 *         pour une année et une période définies.
 	 */

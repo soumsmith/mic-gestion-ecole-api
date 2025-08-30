@@ -2,12 +2,13 @@ package com.vieecoles.services;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.persistence.EntityManager;
-import javax.ws.rs.NotFoundException;
-import javax.ws.rs.core.Response;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
+import jakarta.ws.rs.NotFoundException;
+import jakarta.ws.rs.core.Response;
 
-import com.oracle.svm.core.annotate.Inject;
+//import com.oracle.svm.core.annotate.Inject;
 import com.vieecoles.entities.Zone;
 import com.vieecoles.entities.domaine;
 
@@ -54,7 +55,7 @@ public class zoneService implements PanacheRepositoryBase<Zone, Long> {
 
     public  long count(){
         return  Zone.count();
-    } 
+    }
 
   /*   public  List<Zone> findZoneByCommune(Long idtyp){
         return    em.createQuery("select o from Zone o join fetch o.mCommune h where h.communeid =:typeObj")

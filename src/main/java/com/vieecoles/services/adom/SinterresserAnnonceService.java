@@ -5,7 +5,7 @@ import com.vieecoles.dto.Adom.AnnonceParentDto;
 import com.vieecoles.entities.adom.Annonce;
 import com.vieecoles.entities.adom.AnnonceParent;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
-import javax.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 public class SinterresserAnnonceService implements PanacheRepositoryBase<Annonce, Long> {

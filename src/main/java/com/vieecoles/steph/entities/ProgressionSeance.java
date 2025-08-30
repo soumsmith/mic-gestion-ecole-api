@@ -3,13 +3,13 @@ package com.vieecoles.steph.entities;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Getter;
@@ -35,12 +35,12 @@ public class ProgressionSeance extends PanacheEntityBase{
 	private String observations;
 	@Column(name = "attachment_url")
 	private String attachmentUrl;
-	
+
 	@Column(name = "date_creation")
 	private Date dateCreation;
 	@Column(name = "date_update")
 	private Date dateCessation;
-	
+
 	@Transient
 	List<String> details;
 }

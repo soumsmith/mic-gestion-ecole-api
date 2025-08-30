@@ -9,9 +9,9 @@ import org.springframework.core.io.ResourceLoader;
 
 import com.vieecoles.entities.operations.sous_attent_personn;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.xml.bind.DatatypeConverter;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.xml.bind.DatatypeConverter;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.nio.file.Files;

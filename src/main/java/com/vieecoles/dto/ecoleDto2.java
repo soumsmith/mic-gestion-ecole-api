@@ -1,6 +1,6 @@
 package com.vieecoles.dto;
 
-import javax.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 public class ecoleDto2 {

@@ -4,8 +4,8 @@ import com.vieecoles.steph.entities.Ecole;
 import com.vieecoles.steph.entities.TypeActivite;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 import java.util.ArrayList;
 import java.util.List;

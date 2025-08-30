@@ -11,22 +11,22 @@ import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import org.jboss.logging.annotations.Param;
 
-import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Response;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.Response;
 
 @Path("/annee")
 public class AnneeResource {
 	@Inject
 	AnneeService anneeService;
-	
+
 	@Inject
 	AnneePeriodeService anneePeriodeService;
-	
+
 	@Inject
 	EcoleService ecoleService;
 
@@ -37,7 +37,7 @@ public class AnneeResource {
 	public Response list() {
 		return Response.ok().entity(anneeService.getList()).build();
 	}
-	
+
 	@GET
 	@Path("/list-to-central")
 	@Operation(description = "Obtenir la liste des années en central", summary = "")
@@ -45,7 +45,7 @@ public class AnneeResource {
 	public Response listCentral() {
 		return Response.ok().entity(anneeService.getListByCentral()).build();
 	}
-	
+
 	@GET
 	@Path("/list-to-central-niveau-enseignement")
 	@Operation(description = "Obtenir la liste des années en central pour un niveau d'enseignement", summary = "")
@@ -54,7 +54,7 @@ public class AnneeResource {
 		System.out.println("Coucou ");
 		return Response.ok().entity(anneeService.getListByCentralByNiveauEnseignement(niveau)).build();
 	}
-	
+
 	@GET
 	@Path("/list-to-central-niveau-enseignement-projection")
 	@Operation(description = "Obtenir la liste (de type projection) des années en central pour un niveau d'enseignement", summary = "")
@@ -62,7 +62,7 @@ public class AnneeResource {
 	public Response listCentralNiveauProjection(@QueryParam("niveau") Long niveau) {
 		return Response.ok().entity(anneeService.getBasicListInCentralByNiveauEnseignementProjection(niveau)).build();
 	}
-	
+
 	@GET
 	@Path("/list-to-ecole")
 	@Operation(description = "Obtenir la liste des années pour une école", summary = "")
@@ -70,7 +70,7 @@ public class AnneeResource {
 	public Response listCentral(@QueryParam("ecole") Long ecoleId) {
 		return Response.ok().entity(anneeService.getListByEcole(ecoleId)).build();
 	}
-	
+
 	@GET
 	@Path("/list-to-ecole-dto")
 	@Operation(description = "Obtenir la liste des années pour une école dto et l année centrale", summary = "")
@@ -78,7 +78,7 @@ public class AnneeResource {
 	public Response listCentralDto(@QueryParam("ecole") Long ecoleId) {
 		return Response.ok().entity(anneeService.getListByEcoleDto(ecoleId)).build();
 	}
-	
+
 	@GET
 	@Path("/list-ouverte-to-ecole-dto")
 	@Operation(description = "Obtenir l année ouverte pour une école dto et l année centrale", summary = "")
@@ -86,7 +86,7 @@ public class AnneeResource {
 	public Response listCentralOuvertDto(@QueryParam("ecole") Long ecoleId) {
 		return Response.ok().entity(anneeService.getOpenAnneeByEcoleDto(ecoleId)).build();
 	}
-	
+
 	@GET
 	@Path("/list-opened-or-closed-to-ecole")
 	@Operation(description = "Obtenir la liste des années centrales au moins ouvertes pour une école", summary = "")
@@ -102,7 +102,7 @@ public class AnneeResource {
 	public Response getById(@PathParam("id") Long id) {
 		return Response.ok().entity(anneeService.getById(id)).build();
 	}
-	
+
 	@GET
 	@Path("/info-annee/{ecoleId}")
 	@Operation(description = "Informations sur l année et les periode par rapport à la date courante", summary = "")
@@ -124,7 +124,7 @@ public class AnneeResource {
 			return Response.serverError().build();
 		}
 	}
-	
+
 	@GET
 	@Path("/delete-with-periodes/{id}")
 	@Operation(description = "Obtenir une année scolaire via son id", summary = "")
@@ -138,7 +138,7 @@ public class AnneeResource {
 			return Response.serverError().build();
 		}
 	}
-	
+
 	@GET
 	@Path("/get-main-annee-by-ecole/{ecoleId}")
 	@Operation(description = "Obtenir année scolaire à utiliser pour toute action dans le systeme si année ouverte", summary = "")
@@ -180,7 +180,7 @@ public class AnneeResource {
 			return Response.serverError().build();
 		}
 	}
-	
+
 //	@GET
 //	@Path("/test-annee-periode/")
 //	@Operation(description = "Initialiser les années scolaires pour une nouvelle école créee", summary = "")
@@ -193,7 +193,7 @@ public class AnneeResource {
 //			return Response.serverError().build();
 //		}
 //	}
-	
+
 	@POST
 	@Path("/save-update")
 	@Tag(name = "Année scolaire")
@@ -208,7 +208,7 @@ public class AnneeResource {
 			return Response.serverError().entity(e).build();
 		}
 	}
-	
+
 	@POST
 	@Path("/save-update-ecole")
 	@Tag(name = "Année scolaire")
@@ -223,7 +223,7 @@ public class AnneeResource {
 			return Response.serverError().entity(e).build();
 		}
 	}
-	
+
 	@POST
 	@Path("/sharing")
 	@Tag(name = "Année scolaire")
@@ -236,7 +236,7 @@ public class AnneeResource {
 			return Response.serverError().entity(e).build();
 		}
 	}
-	
+
 	@POST
 	@Path("/cloture-process")
 	@Tag(name = "Année scolaire")
@@ -249,7 +249,7 @@ public class AnneeResource {
 			return Response.serverError().entity(e).build();
 		}
 	}
-	
+
 	@POST
 	@Path("/open")
 	@Tag(name = "Année scolaire")

@@ -71,3 +71,7 @@ where i.inscriptionsid= ih.inscriptions_inscriptionsid and
                            n2.inscription_has_eleve_id=ih2.id  and
                            i2.annee_scolaire_annee_scolaireid =226 and
                            i2.ecole_ecoleid=103)
+
+create view ve_list_matrice_classe
+AS
+select distinct `c`.`id_ecole` AS `id_ecole`,`c`.`nom_ecole` AS `nom_ecole`,`c`.`matricule` AS `matricule`,`c`.`nom` AS `nom`,`c`.`prenoms` AS `prenoms`,`c`.`libelle_classe` AS `libelle_classe`,`c`.`ordre_niveau` AS `ordre_niveau`,`c`.`anneScolaire` AS `anneScolaire`,`c`.`periode` AS `periode`,`c`.`moyenTrimes` AS `moyenTrimes`,`c`.`rang` AS `rang`,`c`.`appreciation` AS `appreciation`,`c`.`matiereMoyenneDto` AS `matiereMoyenneDto`,`b`.`matiereMoyenneBilanDto` AS `matiereMoyenneBilanDto` from (`vs_bilan_matrice` `b` join `ve_matrice_classe` `c`) where ((`c`.`id_ecole` = `b`.`id_ecole`) and (`c`.`libelle_classe` = `b`.`libelle_classe`) and (`c`.`anneScolaire` = `b`.`annee_libelle`) and (`c`.`periode` = `b`.`libelle_periode`)) order by `c`.`nom`,`c`.`prenoms`

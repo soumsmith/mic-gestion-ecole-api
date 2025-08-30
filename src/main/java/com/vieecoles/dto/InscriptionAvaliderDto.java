@@ -1,7 +1,7 @@
 package com.vieecoles.dto;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.persistence.*;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.persistence.*;
 
 import com.vieecoles.entities.operations.Inscriptions;
 

@@ -6,7 +6,7 @@ import lombok.EqualsAndHashCode;
 
 import java.util.Date;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 /**
  * Renommer en BrancheMatiere et y ajouter l 'école au cas où la branche est créee de façon locale (niveau ecole)
@@ -34,11 +34,11 @@ public class ClasseMatiere extends PanacheEntityBase{
 	// A supprimer après verification des incidences
 	@ManyToOne
 	private Branche branche;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "ecole_id")
 	private Ecole ecole;
-	
+
 	@Column(name = "date_creation")
 	private Date dateCreation;
 	@Column(name = "date_update")

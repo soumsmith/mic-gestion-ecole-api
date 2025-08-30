@@ -2,9 +2,10 @@ package com.vieecoles.entities;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name = "Eleve_parent")
 public class Eleve_parent extends PanacheEntityBase {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 

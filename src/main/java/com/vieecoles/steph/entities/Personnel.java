@@ -4,7 +4,7 @@ import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @NamedNativeQueries({
 		@NamedNativeQuery(name = "Personnel.countbyEcoleAndGenre", query = "SELECT count(*) FROM personnel p "
@@ -25,7 +25,7 @@ import javax.persistence.*;
 		@NamedNativeQuery(name = "Personnel.getByEcoleAndProfil", query = "SELECT p.* FROM personnel p "
 				+ "LEFT JOIN utilisateur_has_personnel up on "
 				+ "p.personnelid = up.personnel_personnelid "
-				+ "WHERE p.ecole_ecoleid = :ecoleId and up.profil_profilid = :profilId") 
+				+ "WHERE p.ecole_ecoleid = :ecoleId and up.profil_profilid = :profilId")
 		})
 @Entity
 @Table(name = "personnel")
@@ -58,5 +58,5 @@ public class Personnel extends PanacheEntityBase {
 	private String sexe;
 	@Column(name = "niveau_etude_niveau_etudeid")
 	private Integer niveauEtude;
-	
+
 }

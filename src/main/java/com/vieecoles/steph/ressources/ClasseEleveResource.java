@@ -6,10 +6,10 @@ import com.vieecoles.steph.services.ClasseEleveService;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
-import javax.inject.Inject;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,7 +60,7 @@ public class ClasseEleveResource {
 		return Response.ok(classeEleveService.getByBrancheAndAnnee(brancheId, anneeId, ecoleId)).build();
 
 	}
-	
+
 	@GET
 	@Path("/get-count-by-classe/{classeId}/{anneeId}")
 	@Operation(description = "Obtenir le nombre d Eleve par classe et annee", summary = "")

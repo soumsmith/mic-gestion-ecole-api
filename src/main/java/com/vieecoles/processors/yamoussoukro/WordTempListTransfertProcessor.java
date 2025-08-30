@@ -5,10 +5,10 @@ import com.vieecoles.dto.TransfertsDto;
 import com.vieecoles.services.etats.appachePoi.TransfertsPoiServices;
 import org.apache.poi.xwpf.usermodel.*;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.List;
 

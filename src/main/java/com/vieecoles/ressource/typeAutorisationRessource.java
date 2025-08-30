@@ -3,10 +3,10 @@ package com.vieecoles.ressource;
 import com.vieecoles.entities.type_autorisation;
 import com.vieecoles.services.typeAutorisationService;
 
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
+import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
 import java.util.List;
 
 @Path("/typeAutorisation")

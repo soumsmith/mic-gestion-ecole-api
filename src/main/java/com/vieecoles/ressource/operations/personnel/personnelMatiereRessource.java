@@ -6,10 +6,10 @@ import com.vieecoles.services.eleves.EleveService;
 import com.vieecoles.services.personnels.PersonnelMatiereService;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
+import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
 import java.util.List;
 
 @Tag(name = "Mes Operations", description = "mes Operations")

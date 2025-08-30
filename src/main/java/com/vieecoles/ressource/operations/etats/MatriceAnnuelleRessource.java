@@ -7,7 +7,7 @@ import com.vieecoles.services.etats.BulletinSpiderServices;
 import com.vieecoles.services.etats.MatriceAnnuelleServices;
 import com.vieecoles.services.etats.resultatsRecapAffEtNonAffAnnuelleParClasseServices;
 import com.vieecoles.steph.entities.Classe;
-import javax.persistence.NoResultException;
+import jakarta.persistence.NoResultException;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRXlsExporter;
@@ -18,14 +18,14 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
+import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -99,7 +99,7 @@ public class MatriceAnnuelleRessource {
 
 
 
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecoleviedbv2", USER, PASS);
+        Connection connection = DriverManager.getConnection("jdbc:mysql://db:3306/ecoleviedbv2", USER, PASS);
         JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
         Classe myClasse = Classe.findById(classe);
         Map<String, Object> map = new HashMap<>();
@@ -147,7 +147,7 @@ public class MatriceAnnuelleRessource {
 
 
 
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecoleviedbv2", USER, PASS);
+        Connection connection = DriverManager.getConnection("jdbc:mysql://db:3306/ecoleviedbv2", USER, PASS);
         JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
         Classe myClasse = Classe.findById(classe);
         recapResultats = recapResultatsNombreEleve.RecapCalculResultatsEleveAffecte(idEcole,libelleAnnee,periode,myClasse.getId());
@@ -206,7 +206,7 @@ public class MatriceAnnuelleRessource {
         List<RecapResultatsElevesAffeEtNonAffDto> recapResultats= new ArrayList<>() ;
         Long  effeG,effeF,classF,classG,nonclassF,nonclassG,nbreMoySup10F,nbreMoySup10G,nbreMoyInf999F,nbreMoyInf999G,nbreMoyInf85G,nbreMoyInf85F;
         Double pourMoySup10F =0d ,pourMoySup10G =0d,pourMoyInf999F =0d,pourMoyInf999G =0d,pourMoyInf85G =0d,pourMoyInf85F =0d ;
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecoleviedbv2", USER, PASS);
+        Connection connection = DriverManager.getConnection("jdbc:mysql://db:3306/ecoleviedbv2", USER, PASS);
         JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
         Classe myClasse = Classe.findById(classe);
         Map<String, Object> map = new HashMap<>();
@@ -281,7 +281,7 @@ public class MatriceAnnuelleRessource {
         List<matriceAnnuelleDto> detailsBull= new ArrayList<>() ;
 
 
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecoleviedbv2", USER, PASS);
+        Connection connection = DriverManager.getConnection("jdbc:mysql://db:3306/ecoleviedbv2", USER, PASS);
         JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
         Classe myClasse = Classe.findById(classe);
         Map<String, Object> map = new HashMap<>();
@@ -345,7 +345,7 @@ public class MatriceAnnuelleRessource {
 
 
 
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecoleviedbv2", USER, PASS);
+        Connection connection = DriverManager.getConnection("jdbc:mysql://db:3306/ecoleviedbv2", USER, PASS);
         JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
         Classe myClasse = Classe.findById(classe);
         Map<String, Object> map = new HashMap<>();
@@ -409,7 +409,7 @@ public class MatriceAnnuelleRessource {
 
 
 
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecoleviedbv2", USER, PASS);
+        Connection connection = DriverManager.getConnection("jdbc:mysql://db:3306/ecoleviedbv2", USER, PASS);
         JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
         Classe myClasse = Classe.findById(classe);
         Map<String, Object> map = new HashMap<>();
@@ -435,6 +435,57 @@ public class MatriceAnnuelleRessource {
         return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.MULTIPART_FORM_DATA).body(data);
 
     }
+
+    @GET
+    @Transactional
+    @Path("/imprimer-spider-annuelle-dfa-ecole-xls/{idEcole}/{libelleAnnee}/{periode}/{anneeId}")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public ResponseEntity<byte[]>  getDtoRappoxlsrtdfaecole(@PathParam("idEcole") Long idEcole ,@PathParam("libelleAnnee") String libelleAnnee ,
+                                                       @PathParam("periode") String periode , @PathParam("anneeId") Long anneeId ) throws Exception, JRException {
+
+
+
+        InputStream myInpuStream ;
+        /*myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/BulletinBean.jrxml");*/
+
+        SpiderMatriceClasseDto detailsBull= new SpiderMatriceClasseDto() ;
+
+        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/MatriceAnnuelleEcoleDFA.jrxml");
+        List<matriceClasseDto> detailsBull1= new ArrayList<>() ;
+        List<matiereMoyenneBilanDto> detailsBull2= new ArrayList<>() ;
+        List<RecapResultatsElevesAffeEtNonAffDto> recapResultats= new ArrayList<>() ;
+
+
+
+        Connection connection = DriverManager.getConnection("jdbc:mysql://db:3306/ecoleviedbv2", USER, PASS);
+        JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
+
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("idEcole", idEcole);
+        map.put("annee", libelleAnnee);
+        map.put("libellePeriode", periode);
+
+
+        // map.put("title", type);
+
+        JasperPrint report = JasperFillManager.fillReport(compileReport, map, connection);
+
+        JRXlsExporter exporter = new JRXlsExporter();
+        exporter.setExporterInput(new SimpleExporterInput(report));
+        // File exportReportFile = new File("profils" + ".docx");
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(baos));
+        exporter.exportReport();
+        byte[] data = baos.toByteArray() ;
+        HttpHeaders headers= new HttpHeaders();
+        // headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Rapport"+myScole.getEcoleclibelle()+".docx");
+        headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Matrice de classe Annuelle-dfa-ecole.xls");
+        return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.MULTIPART_FORM_DATA).body(data);
+
+    }
+
+
     //Nombre Moyenne Superieure 10
     public  Long getnbreMoySup10F(Long idEcole , String niveau ,String libelleAnnee , String libelleTrimestre){
         try {

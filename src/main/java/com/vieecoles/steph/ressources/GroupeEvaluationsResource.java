@@ -12,13 +12,13 @@ import com.vieecoles.steph.services.GroupeEvaluationService;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
-import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Response;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.Response;
 
 @Path("/groupe-evaluations")
 public class GroupeEvaluationsResource {
@@ -47,7 +47,7 @@ public class GroupeEvaluationsResource {
 	public Response getById(@PathParam("id") String id) {
 		return Response.ok().entity(groupeEvaluationService.getById(id)).build();
 	}
-	
+
 	@GET
 	@Path("/get-by-ecole-annee")
 	@Operation(description = "Obtenir un groupe d evaluations via son id", summary = "")
@@ -70,7 +70,7 @@ public class GroupeEvaluationsResource {
 			return Response.serverError().entity(r).build();
 		}
 	}
-	
+
 	@POST
 	@Path("/save-handle")
 	@Operation(description = "persister un groupe d evaluations via son id", summary = "")

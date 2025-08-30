@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.transaction.Transactional;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 
 import com.google.gson.Gson;
 import com.vieecoles.steph.dto.DetailProgressionDto;
@@ -178,7 +178,7 @@ public class ProgressionService implements PanacheRepositoryBase<Progression, St
 
 	/**
 	 * Vérifie si un enregistrement existe
-	 * 
+	 *
 	 * @param dto
 	 * @return true si un enregistrement existe déjà et false sinon
 	 */

@@ -1,6 +1,6 @@
 package com.vieecoles.entities;
 
-import javax.persistence.Id;
+import jakarta.persistence.Id;
 
 public class PersonnelClasse {
 

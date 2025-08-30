@@ -2,7 +2,7 @@ package com.vieecoles.entities;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "profil")
@@ -47,7 +47,7 @@ public class profil extends PanacheEntityBase {
                 + "]";
     }
 
-  
+
 
 
 }

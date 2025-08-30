@@ -18,10 +18,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
-import javax.transaction.Transactional;
-import javax.ws.rs.NotFoundException;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
+import jakarta.ws.rs.NotFoundException;
 
 import com.google.gson.Gson;
 import com.vieecoles.steph.dto.ClasseDto;
@@ -122,7 +122,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 	@Transactional
 	public void create(Notes notes) {
 		logger.info("--> Création de note pour " + notes.getClasseEleve().getInscription().getEleve().getNom());
-		logger.info(gson.toJson(notes));
+		//logger.info(gson.toJson(notes));
 		// pec dans le calcul de moyenne par defaut
 		notes.setDateCreation(new Date());
 		notes.setDateUpdate(new Date());

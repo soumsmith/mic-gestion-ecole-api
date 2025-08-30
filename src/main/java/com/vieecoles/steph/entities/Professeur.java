@@ -2,9 +2,9 @@ package com.vieecoles.steph.entities;
 
 import lombok.Data;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Transient;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Transient;
 
 @Data
 public class Professeur extends Personnel{

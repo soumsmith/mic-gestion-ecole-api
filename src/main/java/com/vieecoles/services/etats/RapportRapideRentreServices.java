@@ -7,10 +7,10 @@ import com.vieecoles.entities.operations.Rapide_rapide2;
 import com.vieecoles.steph.entities.*;
 import com.vieecoles.steph.services.ClasseMatiereService;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import java.util.ArrayList;
 import java.util.List;
 

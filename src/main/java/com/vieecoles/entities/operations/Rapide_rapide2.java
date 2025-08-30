@@ -4,10 +4,10 @@ import com.vieecoles.entities.Annee_Scolaire;
 import com.vieecoles.steph.entities.Branche;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
-
+@Table(name = "Rapide_rapide2")
 public class Rapide_rapide2 extends PanacheEntityBase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

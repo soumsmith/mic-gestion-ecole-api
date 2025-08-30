@@ -9,9 +9,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
-import javax.transaction.Transactional;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 
 import com.vieecoles.steph.dto.AppelEleveDto;
 import com.vieecoles.steph.entities.AppelNumerique;
@@ -150,7 +150,7 @@ public class AppelNumeriqueService implements PanacheRepositoryBase<AppelNumeriq
 		System.out.println(apNum);
 		return apNum;
 	}
-	
+
 	public List<AppelNumerique> getBySeanceWithDestruct(String seanceId) {
 		List<AppelNumerique> apNum = new ArrayList<>();
 		try {
@@ -160,11 +160,11 @@ public class AppelNumeriqueService implements PanacheRepositoryBase<AppelNumeriq
 			return apNum;
 		}
 	}
-	
+
 	/**
 	 * Cette méthode permet de savoir si une séance a deja fait l'objet d'un appel
 	 * avec la position  étant l occurence n d'une séance ayant été destructurée par rapport à l'unité de temps.
-	 *  
+	 *
 	 * @param seanceId
 	 * @param position
 	 * @return
@@ -178,7 +178,7 @@ public class AppelNumeriqueService implements PanacheRepositoryBase<AppelNumeriq
 			return apNum;
 		}
 	}
-	
+
 	public List<AppelNumerique> getByEcoleAndAnnee(Long ecoleId, Long anneeId) {
 		List<AppelNumerique> list = new ArrayList<>();
 		try {
@@ -188,7 +188,7 @@ public class AppelNumeriqueService implements PanacheRepositoryBase<AppelNumeriq
 		}
 		return list;
 	}
-	
+
 	public Long countByEcoleAndAnnee(Long ecoleId, Long anneeId) {
 		Long count = 0L;
 		try {
@@ -198,7 +198,7 @@ public class AppelNumeriqueService implements PanacheRepositoryBase<AppelNumeriq
 		}
 		return count;
 	}
-	
+
 	public List<AppelNumerique> getByEcoleAndDate(Long ecoleId, Date date) {
 		List<AppelNumerique> list = new ArrayList<>();
 		LocalDate dateToLocalDate = DateUtils.asLocalDate(date);
@@ -210,7 +210,7 @@ public class AppelNumeriqueService implements PanacheRepositoryBase<AppelNumeriq
 		}
 		return list;
 	}
-	
+
 	public Long countByEcoleAndDate(Long ecoleId, Date date) {
 		LocalDate dateToLocalDate = DateUtils.asLocalDate(date);
 		date = java.sql.Date.valueOf(dateToLocalDate);
