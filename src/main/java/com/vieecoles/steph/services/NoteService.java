@@ -18,11 +18,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-import jakarta.enterprise.context.RequestScoped;
-import jakarta.inject.Inject;
-import jakarta.transaction.Transactional;
-import jakarta.ws.rs.NotFoundException;
-
 import com.google.gson.Gson;
 import com.vieecoles.steph.dto.ClasseDto;
 import com.vieecoles.steph.dto.EvaluationDto;
@@ -32,7 +27,6 @@ import com.vieecoles.steph.dto.MoyenneEleveDto;
 import com.vieecoles.steph.dto.MoyenneEleveOptimizedDto;
 import com.vieecoles.steph.dto.NoteDto;
 import com.vieecoles.steph.dto.NotesEleveDto;
-import com.vieecoles.steph.dto.moyennes.ClasseMoyenne;
 import com.vieecoles.steph.dto.moyennes.EcoleMatiereDto;
 import com.vieecoles.steph.dto.moyennes.EleveDto;
 import com.vieecoles.steph.dto.moyennes.EleveMatiereDto;
@@ -62,6 +56,10 @@ import com.vieecoles.steph.util.CommonUtils;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 import io.quarkus.panache.common.Parameters;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
+import jakarta.ws.rs.NotFoundException;
 
 @RequestScoped
 public class NoteService implements PanacheRepositoryBase<Notes, Long> {
@@ -1668,7 +1666,9 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 	}
 
 	void classementAnnuelEleveParMatiere(List<MoyenneEleveDto> moyEleve, Long brancheId, Long ecoleId, Periode periode,
+
 			List<ClasseMatiere> cmList) {
+		System.out.println("periode "+periode);
 		logger.info("---> Classement des eleves par matiere");
 //		Gson g = new Gson();
 //		int i = 0;
@@ -1681,13 +1681,29 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 //---- WARNING mettre un try catch
 		Periode per = new Periode();
 		try {
-			per = Periode.find("periodicite.id=?1 and final = 'O'", periode.getPeriodicite().getId()).singleResult();
-//			System.out.println("PERIODICITE :: "+periode.getPeriodicite().getId()+" "+per.getLibelle());
+			//System.out.println("Periodicité :"+periode.getPeriodicite().getId());7
+			System.out.println("Entree>>> 1");
+			System.out.println("Entree>>> 1+++++ "+periode.getPeriodicite().getId());
+			try {
+				per = Periode.getEntityManager()
+						.createQuery("SELECT p FROM Periode p WHERE p.periodicite.id = :periodiciteId AND p.isfinal = :finalValue", Periode.class)
+						.setParameter("periodiciteId", periode.getPeriodicite().getId())
+						.setParameter("finalValue", "O")
+						.getSingleResult();
+
+			} catch (RuntimeException e) {
+				e.printStackTrace();
+			}
+
+
 		} catch (RuntimeException e) {
+			//System.out.println("Entree>>> 2");
 			logger.warning(e.getMessage());
 		}
+		//System.out.println("Entree>>> 3");
 		List<Periode> periodes = Periode.find("niveau <= ?1 and periodicite.id=?2 order by niveau", per.getNiveau(),
 				periode.getPeriodicite().getId()).list();
+		//System.out.println("Entree>>> 3 "+periodes.size());
 
 		for (MoyenneEleveDto me : moyEleve) {
 			// recup la moyenne de la matiere dans les details bulletins (par classe,
@@ -1715,6 +1731,8 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 						bulletinsElevesList, moyAn, moyAnInterne, moyAnIEPP, moyAnPassage);
 			} else {
 				logger.info("ENS SECONDAIRE ET AUTRES");
+				System.out.println("per.getId()>>>>>"+per.getId());
+				//System.out.println("PERIODE>>>>> "+per);
 				infoCalcul = handleMoyenneAnnuelleEnsSecondaire(periodes,
 						Double.parseDouble(per.getCoef().equals("") ? "1" : finalPeriode.getCoef()), me,
 						bulletinsElevesList, moyAnFr);
@@ -2150,6 +2168,8 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 	final static String QUERY_GET_NOTES_BY_CLASSE = "Select new com.vieecoles.steph.dto.moyennes.NoteDto("
 			+ "		   n.id, "
 			+ "        n.evaluation.id, "
+			+ "		   n.evaluation.numero,"
+			+ "		   n.evaluation.type.libelle,"
 			+ "		   n.evaluation.matiereEcole.id, "
 			+ "		   n.evaluation.matiereEcole.libelle, "
 			+ "        n.note, "
@@ -2170,7 +2190,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 	 * Obténir la liste des notes regroupées par élève, par matiere et par note  en fonction de l'année, la classe et la période.
 	 */
 	public List<com.vieecoles.steph.dto.moyennes.NoteDto> getNotesByEleveAndAnneeAndClasseAndPeriode(String classeId, String anneeId, String periodeId) {
-		System.out.println("In method");
+//		System.out.println("In method");
 		List<com.vieecoles.steph.dto.moyennes.NoteDto> notes;
 		try {
 		notes = getEntityManager().createQuery(QUERY_GET_NOTES_BY_CLASSE, com.vieecoles.steph.dto.moyennes.NoteDto.class)
@@ -2291,7 +2311,8 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 		            System.out.println("    Note ID: " + note.getId() + ", valeur: " + note.getNote());
 		            matiereLibelle = note.getMatiereEcoleLibelle();
 		            String noteSur = Evaluation.find("select e.noteSur from Evaluation e where e.id = ?1 ", note.getEvaluationId()).project(String.class).singleResult();
-		            notesDto.add(new com.vieecoles.steph.dto.moyennes.NoteDto(note.getId(),note.getEvaluationId(),null, null, note.getNote(), noteSur, null, note.getIsTestLourd()));
+		            notesDto.add(new com.vieecoles.steph.dto.moyennes.NoteDto(note.getId(),note.getEvaluationId(),note.getEvaluationNumero(), note.getEvaluationType(), 
+		            		null, null, note.getNote(), noteSur, null, note.getIsTestLourd()));
 		        }
 		        matiereNotes.setMatiereLibelle(matiereLibelle);
 		        matiereNotes.setNotes(notesDto);

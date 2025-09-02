@@ -153,17 +153,17 @@ public class connexionService implements PanacheRepositoryBase<utilisateur_has_p
 
     Long idUtilisateur ,IdPersonnel ;
       personnelConnexionDto  myPersoDto = new personnelConnexionDto() ;
-      System.out.println("ENTREEEEEE ");
+//      System.out.println("ENTREEEEEE ");
 
       idUtilisateur =   getIdUtilisateur(email);
-      System.out.println("idUtilisateur "+idUtilisateur);
+//      System.out.println("idUtilisateur "+idUtilisateur);
 
           IdPersonnel = getIDpersonnel(idUtilisateur,idEcole) ;
 
-          System.out.println("IdPersonnel "+IdPersonnel);
+//          System.out.println("IdPersonnel "+IdPersonnel);
           myPersoDto = getInfoPersonn(IdPersonnel) ;
 
-          System.out.println("myPersoDto "+myPersoDto);
+//          System.out.println("myPersoDto "+myPersoDto);
 
     return myPersoDto;
 
@@ -176,14 +176,14 @@ public personnelConnexionDto infosUtilisateurConnecteV2(String email,Long idEcol
 //      System.out.println("ENTREEEEEE ");
 
       idUtilisateur =   getIdUtilisateur(email);
-      System.out.println("idUtilisateur "+idUtilisateur);
+//      System.out.println("idUtilisateur "+idUtilisateur);
 
           IdPersonnel = getIDpersonnel(idUtilisateur,idEcole) ;
 
-          System.out.println("IdPersonnel "+IdPersonnel);
+//          System.out.println("IdPersonnel "+IdPersonnel);
           myPersoDto = getInfoPersonnel(IdPersonnel,profil) ;
 
-          System.out.println("myPersoDto "+myPersoDto);
+//          System.out.println("myPersoDto "+myPersoDto);
 
     return myPersoDto;
 
@@ -193,13 +193,13 @@ public personnelConnexionDto infosUtilisateurConnecteV2(String email,Long idEcol
     public CandidatConnexionDto infosCandidatConnecte(String login){
         Long idUtilisateur ,IdPersonnel ;
         CandidatConnexionDto  myPersoDto = new CandidatConnexionDto() ;
-        System.out.println("ENTREEEEEE ");
+//        System.out.println("ENTREEEEEE ");
         idUtilisateur =   getIdUtilisateur(login);
-        System.out.println("idUtilisateur "+idUtilisateur);
+//        System.out.println("idUtilisateur "+idUtilisateur);
         IdPersonnel = getIDpersonnelSouscrip(login) ;
-        System.out.println("IdPersonnel "+IdPersonnel);
+//        System.out.println("IdPersonnel "+IdPersonnel);
         myPersoDto = getInfoPersonnCandidat(IdPersonnel) ;
-        System.out.println("myPersoDto "+myPersoDto);
+//        System.out.println("myPersoDto "+myPersoDto);
         return myPersoDto;
     }
 
@@ -335,7 +335,7 @@ public personnelConnexionDto infosUtilisateurConnecteV2(String email,Long idEcol
     public parametreConnexion  getInfoParametreConn(String  email){
         parametreConnexion  myPersoDto = new parametreConnexion() ;
         try {
-        	System.out.println("email :  "+email);
+//        	System.out.println("email :  "+email);
             myPersoDto= (parametreConnexion) em.createQuery("select  new com.vieecoles.dto.parametreConnexion(o.utilisateu_login ,o.utilisateur_mot_de_passe) from utilisateur o where o.utilisateu_email=:email ",parametreConnexion.class)
                     .setParameter("email",email)
                     .getSingleResult();
@@ -371,7 +371,7 @@ public personnelConnexionDto infosUtilisateurConnecteV2(String email,Long idEcol
 
          utilisateur myutilisateur2 = new utilisateur() ;
          myutilisateur2 = verifiEmailUtilisateur(emailUtilisateur) ;
-         System.out.print("UserBy Email "+myutilisateur2.toString());
+//         System.out.print("UserBy Email "+myutilisateur2.toString());
 
          if(myutilisateur2!=null) {
              messageRetour = "Cette adresse email est déjà associée à un compte!";

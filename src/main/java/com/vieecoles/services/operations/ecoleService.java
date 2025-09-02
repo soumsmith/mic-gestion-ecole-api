@@ -4,6 +4,7 @@ import com.vieecoles.dto.ecoleDto;
 import com.vieecoles.dto.ecoleDto2;
 import com.vieecoles.entities.operations.ecole;
 
+import com.vieecoles.steph.entities.Ecole;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import jakarta.enterprise.context.ApplicationScoped;
@@ -96,7 +97,9 @@ public class ecoleService implements PanacheRepositoryBase<ecole, Long> {
         return ecole.find("ecoleid",idpobj).singleResult();
     }
 
-
+  public Ecole findByIDecole2(Long idpobj){
+    return Ecole.findById(idpobj);
+  }
 
 
    public Response create(ecole obj) {

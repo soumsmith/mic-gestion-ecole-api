@@ -6,12 +6,13 @@ import com.vieecoles.steph.entities.Branche;
 import com.vieecoles.steph.entities.LangueVivante;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Data;
-
+import lombok.EqualsAndHashCode;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "classe")
 @Data
+@EqualsAndHashCode(callSuper=false)
 public class classe extends PanacheEntityBase {
  @Id
  @GeneratedValue(strategy = GenerationType.IDENTITY)

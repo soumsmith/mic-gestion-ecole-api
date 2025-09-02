@@ -36,7 +36,7 @@ public class ClasseService implements PanacheRepositoryBase<Classe,Integer> {
 	public List<Classe> getListClasseByEcole(Long ecoleId) {
 		try {
 		//	logger.info("........ in list <<<<>>>>>");
-			return Classe.find("ecole.id =?1 and visible = 1", Sort.by("libelle").descending(), ecoleId).list();
+			return Classe.find("ecole.id =?1 and visible = 1", Sort.by("branche.niveau.ordre").descending(), ecoleId).list();
 		}catch(Exception e) {
 			e.printStackTrace();
 			return null ;
@@ -52,7 +52,7 @@ public class ClasseService implements PanacheRepositoryBase<Classe,Integer> {
 		try {
 		//	logger.info("........ in list <<<<>>>>>");
 			return Classe.find(" ecole.id =?1 and visible = 1 "
-					+ " ORDER BY SUBSTRING(libelle, 1, 1) desc, SUBSTRING(libelle, -1, 1) asc ", ecoleId).list();
+					+ " ORDER BY branche.niveau.ordre, libelle ", ecoleId).list();
 		}catch(Exception e) {
 			e.printStackTrace();
 			return null ;

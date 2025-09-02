@@ -2,12 +2,13 @@ package com.vieecoles.steph.entities;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Data;
-
+import lombok.EqualsAndHashCode;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "niveau")
 @Data
+@EqualsAndHashCode(callSuper=false)
 public class Niveau extends PanacheEntityBase {
     @Id
     @GeneratedValue

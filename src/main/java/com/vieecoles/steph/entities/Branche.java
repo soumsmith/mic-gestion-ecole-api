@@ -2,7 +2,7 @@ package com.vieecoles.steph.entities;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Data;
-
+import lombok.EqualsAndHashCode;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -10,6 +10,7 @@ import jakarta.persistence.ManyToOne;
 
 @Data
 @Entity
+@EqualsAndHashCode(callSuper=false)
 public class Branche extends PanacheEntityBase{
 
 	@Id
