@@ -58,10 +58,11 @@ public class DetailBulletinService {
 			myDetails = DetailBulletin.find(
 					"bulletin.anneeId = ?1 and bulletin.classeId = ?2 and bulletin.matricule=?3 and matiereRealId = ?4",
 					anneeId, ClasseId, matricule, matiereId).list();
-			logger.info(myDetails.size() + " Detail(s) trouvé(s) pour l'élève de matricule : " + matricule);
+//			logger.info(myDetails.size() + " Detail(s) trouvé(s) pour l'élève de matricule : " + matricule);
 		} catch (RuntimeException ex) {
 			if (ex.getClass().getName().equals(NoResultException.class.getName()))
-				logger.info("Aucun Detail bulletin trouvé pour l'élève de matricule : " + matricule);
+//				logger.info("Aucun Detail bulletin trouvé pour l'élève de matricule : " + matricule);
+				System.out.print(" - ");
 			else
 				ex.printStackTrace();
 		}

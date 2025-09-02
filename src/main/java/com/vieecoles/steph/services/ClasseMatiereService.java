@@ -3,7 +3,9 @@ package com.vieecoles.steph.services;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -129,6 +131,39 @@ public class ClasseMatiereService implements PanacheRepositoryBase<ClasseMatiere
 		}
 		return cm;
 	}
+	
+	public Map<String,String> getMapCoefByClasse(long classeId) {
+		Map<String,String> map = new HashMap<String, String>();
+		try {
+			Classe classe = Classe.findById(classeId);
+			
+			List<ClasseMatiere> list = ClasseMatiere
+					.find("branche.id = ?1 and ecole.id = ?2 ", 
+							classe.getBranche().getId(),
+							classe.getEcole().getId()
+							).list();
+			list.stream().forEach(c -> map.put(c.getMatiere().getId().toString(), c.getCoef()));
+			return map;		
+					
+		} catch (RuntimeException ex) {
+			System.out.println(ex);
+			 return new HashMap<String, String>();
+		}
+					
+	}
+	
+	public String getCoefByMatiereAndBranche(long matiereId, long brancheId, long ecoleId) {
+		String coef = null;
+
+		try {
+			coef = (String) ClasseMatiere
+					.find("select c.coef, from ClasseMatiere c where c.branche.id = ?1 and c.ecole.id = ?2 and c.matiere.id = ?3", brancheId, ecoleId, matiereId)
+					.project(String.class).singleResult();
+		} catch (RuntimeException ex) {
+			return null;
+		}
+		return coef;
+	}
 
 	public List<ClasseMatiere> getByBrancheViaClasse(long classeId) {
 		Classe classe = classeService.findById(classeId);
@@ -199,8 +234,8 @@ public class ClasseMatiereService implements PanacheRepositoryBase<ClasseMatiere
 			else if (cl.getCoef().equals(0))
 				throw new RuntimeException("Un coefficient ne peut etre nul");
 			if (cl.getId() != 0) {
-				ClasseMatiere.update("coef = ?1, matiere.id= ?2, branche.id=?3, ecole.id=?4 where id = ?5",
-						cl.getCoef(), cl.getMatiere().getId(), cl.getBranche().getId(), cl.getEcole().getId(),
+				ClasseMatiere.update("coef = ?1, matiere.id= ?2, branche.id=?3, ecole.id=?4, dateUpdate=?5 where id = ?6",
+						cl.getCoef(), cl.getMatiere().getId(), cl.getBranche().getId(), cl.getEcole().getId(), new Date(),
 						cl.getId());
 				logger.info("Mise à jour matiere - branche id [" + cl.getId() + "]");
 			} else {

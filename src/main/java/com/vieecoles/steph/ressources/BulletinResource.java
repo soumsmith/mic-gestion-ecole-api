@@ -33,7 +33,7 @@ public class BulletinResource {
 //		List<Bulletin> list = new ArrayList<>();
 		try {
 			long startTime = System.nanoTime();
-			nbreEleve = bulletinService.handleSave(classe, annee, periode);
+			nbreEleve = bulletinService.handleSave_v2(classe, annee, periode);
 			long endTime = System.nanoTime();
 			long durationInSeconds = (endTime - startTime) / 1000000000;
 			 System.out.println("Temps d'exécution Total: " + durationInSeconds + " secondes");

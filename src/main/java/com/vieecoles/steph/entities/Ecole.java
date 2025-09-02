@@ -9,10 +9,12 @@ import jakarta.persistence.Table;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
 @Entity
 @Table(name = "ecole")
+@EqualsAndHashCode(callSuper=false)
 public class Ecole extends PanacheEntityBase{
 
 	@Id

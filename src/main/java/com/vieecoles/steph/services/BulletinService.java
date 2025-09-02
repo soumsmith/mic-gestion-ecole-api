@@ -3,11 +3,15 @@ package com.vieecoles.steph.services;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -357,6 +361,55 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 	}
 
 	@Transactional
+	public void removeAllBulletinsByClasseProcess_V2(String classe, String annee, String periode) {
+		long startTime = System.nanoTime();
+		try {
+			// 1. Récupération des IDs des bulletins à supprimer
+			List<String> bulletinIds = Bulletin
+					.find("classeId = ?1 and anneeId = ?2 and periodeId = ?3 and statut = ?4", Long.parseLong(classe),
+							Long.parseLong(annee), Long.parseLong(periode), Constants.MODIFIABLE)
+					.project(BulletinIdProjection.class).list().stream().map(BulletinIdProjection::getId)
+					.collect(Collectors.toList());
+
+			if (bulletinIds.isEmpty()) {
+				logger.info("Aucun bulletin à supprimer");
+				return;
+			}
+
+			// 2. Récupération des IDs des détails correspondants
+			List<String> detailIds = DetailBulletin.find("bulletin.id in ?1", bulletinIds)
+					.project(DetailBulletinIdProjection.class).list().stream().map(DetailBulletinIdProjection::getId)
+					.collect(Collectors.toList());
+
+			// 3. Suppression en lots
+			int batchSize = 1000;
+			for (int i = 0; i < detailIds.size(); i += batchSize) {
+				List<String> batch = detailIds.subList(i, Math.min(i + batchSize, detailIds.size()));
+				NoteBulletin.delete("detailBulletin.id in ?1", batch);
+			}
+
+			for (int i = 0; i < bulletinIds.size(); i += batchSize) {
+				List<String> batch = bulletinIds.subList(i, Math.min(i + batchSize, bulletinIds.size()));
+
+				DetailBulletin.delete("bulletin.id in ?1", batch);
+				InfosPersoBulletins.delete("idBulletin in ?1", batch);
+				Bulletin.delete("id in ?1", batch);
+			}
+
+			logger.info(detailIds.size() + " details de bulletins supprimés");
+			logger.info(bulletinIds.size() + " bulletins supprimés");
+
+		} catch (RuntimeException e) {
+			logger.warning("IN THE CATCH OF REMOVER");
+			throw new RuntimeException(
+					String.format("Erreur dans le process de suppression des bulletins [%s]", e.getMessage()));
+		}
+		long endTime = System.nanoTime();
+		long durationInSeconds = (endTime - startTime) / 1000000000;
+		System.out.println("Temps d'exécution suppression " + durationInSeconds + " secondes");
+	}
+
+	@Transactional
 	public int handleSave(String classe, String annee, String periode) {
 		try {
 			logger.info(String.format("classe %s  annee %s  periode  %s", classe, annee, periode));
@@ -388,7 +441,34 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 			// des détails bulletins et des notes bulletins.
 			// Pour éviter que si une matiere n existe plus pour une classe, il ne puisse
 			// pas avoir des enregistrement caduque dans la base de données.
-			removeAllBulletinsByClasseProcess(classe, annee, periode);
+			removeAllBulletinsByClasseProcess_V2(classe, annee, periode);
+
+			Map<Long, Inscription> infosInscriptionsByClasseMap = new HashMap<Long, Inscription>();
+
+			// Obtention du professeur principal
+			PersonnelMatiereClasse pp = personnelMatiereClasseService.findProfPrinc(Long.parseLong(annee),
+					Long.parseLong(classe));
+
+			// Liste des professeurs des matières enseignées dans une classe
+			List<PersonnelMatiereClasse> professeurs = personnelMatiereClasseService
+					.findProfesseursByClasse(Long.parseLong(annee), Long.parseLong(classe));
+
+			// Obtention de l'éducateur
+			PersonnelMatiereClasse educ = personnelMatiereClasseService.findEducateurClasse(Long.parseLong(annee),
+					Long.parseLong(classe));
+
+			// Existence liste d'éleves d'une classe classés ou pas regroupé par id élève
+			Map<Long, ClasseElevePeriode> cepMap = classeElevePeriodeService
+					.listByClasseAndAnneeAndPeriode(Long.parseLong(classe), Long.parseLong(annee),
+							Long.parseLong(periode))
+					.stream().collect(Collectors.toMap(c -> c.getEleve().getId(), c -> c));
+
+//			Map<Long, AbsenceEleve> absenceEleveMap = absenceService.getListByClasseAndAnneeAndPeriode(Long.parseLong(annee),
+//					Long.parseLong(periode)).stream().collect(Collectors.toMap(a -> a.getEleve().getId(), a -> a));
+
+			List<ClasseEleveMatiere> cemList = classeEleveMatiereService.findByClasseAnneeAndPeriode(
+					Long.parseLong(classe), Long.parseLong(annee), Long.parseLong(periode));
+
 			for (MoyenneEleveDto me : moyenneParEleve) {
 				long startTime = System.nanoTime();
 //			 logger.info(g.toJson(me));
@@ -396,24 +476,24 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 						me.getClasse().getLibelle(), me.getMoyenne(), me.getAppreciation(), me.getEleve().getId()));
 
 				logger.info(String.format(" getByEleveAndEcoleAndAnnee  %s  %s %s %s", me.getEleve().getId(),
-						me.getClasse().getEcole().getId(), Long.parseLong(annee),me.getClasse().getBranche().getId()));
-				Inscription infosInscriptionsEleve= new Inscription();
+						me.getClasse().getEcole().getId(), Long.parseLong(annee), me.getClasse().getBranche().getId()));
 
-				try {
-					 infosInscriptionsEleve = inscriptionService.getByEleveAndEcoleAndAnnee(
-							me.getEleve().getId(), me.getClasse().getEcole().getId(), Long.parseLong(annee),me.getClasse().getBranche().getId());
-					System.out.println("infosInscriptionsEleve>>>> "+infosInscriptionsEleve.getId());
-				} catch (RuntimeException e) {
-					e.printStackTrace();
+				// Obtenir et classer les inscriptions par eleve
+				if (infosInscriptionsByClasseMap.size() <= 0) {
+					logger.info("Recupération des inscriptions par eleve et rangement des données en Map");
+					infosInscriptionsByClasseMap = inscriptionService
+							.getByClasseAndEcoleAndAnnee(me.getClasse().getId(), me.getClasse().getEcole().getId(),
+									Long.parseLong(annee), me.getClasse().getBranche().getId())
+							.stream().collect(Collectors.toMap(ins -> ins.getEleve().getId(), ins -> ins));
 				}
-
 
 				// Collecter toutes les moyennes des élèves pour déterminer la moyenne max, min
 				// et avg
-				if (!me.getIsClassed().equals(Constants.NON))
+				if (!me.getIsClassed().equals(Constants.NON)) {
 					moyGenElevesList.add(me.getMoyenne());
-				else
+				} else {
 					countNonClasses++;
+				}
 
 //				System.out.println("Niveau ens ::: " + me.getClasse().getEcole().getNiveauEnseignement().getId());
 
@@ -434,27 +514,20 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 					r.printStackTrace();
 				}
 
-//			System.out.println("rang ->"+me.getRang());
-//			bulletin.setRang(Integer.parseInt(me.getRang()));
-				// Ajout du professeur principal
-				PersonnelMatiereClasse pp = personnelMatiereClasseService.findProfPrinc(Long.parseLong(annee),
-						Long.parseLong(classe));
 				if (!pp.equals(new PersonnelMatiereClasse())) {
 					bulletin.setCodeProfPrincipal(pp.getPersonnel().getCode());
 					bulletin.setNomPrenomProfPrincipal(
 							pp.getPersonnel().getNom() + " " + pp.getPersonnel().getPrenom());
 				}
-				// Ajout de l'éducateur
-				PersonnelMatiereClasse educ = personnelMatiereClasseService.findEducateurClasse(Long.parseLong(annee),
-						Long.parseLong(classe));
 				if (!educ.equals(new PersonnelMatiereClasse())) {
 					bulletin.setCodeEducateur(educ.getPersonnel().getCode());
 					bulletin.setNomPrenomEducateur(
 							educ.getPersonnel().getNom() + " " + educ.getPersonnel().getPrenom());
 				}
 				// marquer que l eleve est classé ou non
-				ClasseElevePeriode cep = classeElevePeriodeService.findByClasseAndEleveAndAnneeAndPeriode(
-						Long.parseLong(classe), me.getEleve().getId(), Long.parseLong(annee), Long.parseLong(periode));
+				ClasseElevePeriode cep = cepMap.getOrDefault(me.getEleve().getId(), null);
+//						classeElevePeriodeService.findByClasseAndEleveAndAnneeAndPeriode(
+//						Long.parseLong(classe), me.getEleve().getId(), Long.parseLong(annee), Long.parseLong(periode));
 				if (cep == null)
 					bulletin.setIsClassed(Constants.OUI);
 				else
@@ -476,7 +549,14 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 					bulletin.setHeuresAbsNonJustifiees("0");
 				}
 
+				Inscription infosInscriptionsEleve = new Inscription();
+				infosInscriptionsEleve = infosInscriptionsByClasseMap.getOrDefault(me.getEleve().getId(), null);
+//							inscriptionService.getByEleveAndEcoleAndAnnee(me.getEleve().getId(),
+//							me.getClasse().getEcole().getId(), Long.parseLong(annee),
+//							me.getClasse().getBranche().getId());
+
 				if (infosInscriptionsEleve != null) {
+					System.out.println("infosInscriptionsEleve>>>> " + infosInscriptionsEleve.getId());
 					bulletin.setAffecte(infosInscriptionsEleve.getAfecte());
 					bulletin.setRedoublant(infosInscriptionsEleve.getRedoublant());
 					bulletin.setBoursier(infosInscriptionsEleve.getBoursier());
@@ -497,11 +577,6 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 					logger.info(
 							String.format("bulletin id %s - matiere %s", bulletin.getId(), entry.getKey().getCode()));
 					DetailBulletin flag = null;
-
-					// marquer que l eleve est classé dans une matiere ou non
-					ClasseEleveMatiere cem = classeEleveMatiereService.findByClasseAndMatiereAndEleveAndAnneeAndPeriode(
-							Long.parseLong(classe), entry.getKey().getId(), me.getEleve().getId(),
-							Long.parseLong(annee), Long.parseLong(periode));
 
 					logger.info("--> Création de detail bulletin ");
 					flag = new DetailBulletin();
@@ -540,20 +615,37 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 
 					flag.setIsAdjustment(entry.getKey().getIsAdjustment());
 					flag.setDateCreation(new Date());
+
+					// marquer que l eleve est classé dans une matiere ou non
+//					ClasseEleveMatiere cem = classeEleveMatiereService.findByClasseAndMatiereAndEleveAndAnneeAndPeriode(
+//							Long.parseLong(classe), entry.getKey().getId(), me.getEleve().getId(),
+//							Long.parseLong(annee), Long.parseLong(periode));
+
+					Optional<ClasseEleveMatiere> cemOption = cemList.stream()
+							.filter(c -> c.getEleve().getId() == me.getEleve().getId()
+									&& c.getMatiere().getId() == entry.getKey().getId())
+							.findFirst();
+
 					// Inscrire si oui ou non l'élève est classé dans la matiere
-					if (cem != null)
-						flag.setIsRanked(cem.getIsClassed());
-					else
+					if (cemOption.isPresent()) {
+						flag.setIsRanked(cemOption.get().getIsClassed());
+					} else {
 						flag.setIsRanked(Constants.OUI);
+					}
 
 					logger.info("--> Categorie" + entry.getKey().getCategorie().getLibelle());
+
+					Optional<PersonnelMatiereClasse> persOpt = professeurs.stream()
+							.filter(p -> p.getMatiere() != null && p.getMatiere().getId() == entry.getKey().getId())
+							.findFirst();
+
 					// Ajout de l'enseignant de la matiere
-					PersonnelMatiereClasse pers = personnelMatiereClasseService.findProfesseurByMatiereAndClasse(
-							Long.parseLong(annee), Long.parseLong(classe), entry.getKey().getId());
-					if (pers != null && pers.getPersonnel() != null) {
+//					PersonnelMatiereClasse pers = personnelMatiereClasseService.findProfesseurByMatiereAndClasse(
+//							Long.parseLong(annee), Long.parseLong(classe), entry.getKey().getId());
+					if (persOpt.isPresent() && persOpt.get().getPersonnel() != null) {
 						flag.setNom_prenom_professeur(
-								pers.getPersonnel().getNom() + " " + pers.getPersonnel().getPrenom());
-						flag.setSexeProfesseur(pers.getPersonnel().getSexe());
+								persOpt.get().getPersonnel().getNom() + " " + persOpt.get().getPersonnel().getPrenom());
+						flag.setSexeProfesseur(persOpt.get().getPersonnel().getSexe());
 					} else {
 						flag.setNom_prenom_professeur("N/A");
 					}
@@ -766,6 +858,519 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 		bul.setAppreciationFrAn(me.getAppreciationAnFr());
 
 		return bul;
+	}
+
+	/*******************************************************************************
+	 *                                                                             *
+	 *             OPTIMISATION DU PROCESSUS D INSERTION DES BULLETINS                     *
+	 *                                                                             *
+	 *******************************************************************************/
+	
+	@Transactional
+	public int handleSave_v2(String classe, String annee, String periode) {
+	    long startTime = System.nanoTime();
+	    
+	    try {
+	        logger.info(String.format("Début traitement - classe %s, annee %s, periode %s", classe, annee, periode));
+	        
+	        // 1. VALIDATION DES PARAMÈTRES
+	        if (!isValidParameters(classe, annee, periode)) {
+	            return 0;
+	        }
+	        
+	        // 2. PRÉ-CHARGEMENT MASSIF DE TOUTES LES DONNÉES
+	        BulletinProcessingContext context = preloadAllData(classe, annee, periode);
+	        if (context.moyenneParEleve.isEmpty()) {
+	            logger.warning("Aucun élève trouvé pour le traitement");
+	            return 0;
+	        }
+	        
+	        logger.info(String.format("Nombre d'élèves à traiter: %s", context.moyenneParEleve.size()));
+	        
+	        // 3. NETTOYAGE PRÉALABLE
+	        removeAllBulletinsByClasseProcess_V2(classe, annee, periode);
+	        
+	        // 4. TRAITEMENT EN BATCH OPTIMISÉ
+	        List<String> bulletinIdList = new ArrayList<>(context.moyenneParEleve.size());
+	        List<Double> moyGenElevesList = new ArrayList<>(context.moyenneParEleve.size());
+	        AtomicInteger countNonClasses = new AtomicInteger(0);
+	        
+	        // Traitement principal avec optimisations
+	        processBulletinsOptimized(context, bulletinIdList, moyGenElevesList, countNonClasses);
+	        
+	        // 5. CALCUL FINAL ET MISE À JOUR EN BATCH
+	        updateBulletinsWithStatistics(bulletinIdList, moyGenElevesList, countNonClasses.get(), 
+	                Long.parseLong(classe), Long.parseLong(annee));
+	        
+	        long endTime = System.nanoTime();
+	        long totalSeconds = (endTime - startTime) / 1_000_000_000;
+	        logger.info(String.format("Traitement terminé en %d secondes pour %d élèves", 
+	                totalSeconds, context.moyenneParEleve.size()));
+	        
+	        return context.moyenneParEleve.size();
+	        
+	    } catch (Exception e) {
+	        logger.severe("Erreur lors du traitement: " + e.getMessage());
+	        e.printStackTrace();
+	        throw new RuntimeException("Échec du traitement des bulletins", e);
+	    }
+	}
+
+	// ===================== CLASSES INTERNES POUR L'OPTIMISATION =====================
+
+	/**
+	 * Contexte contenant toutes les données pré-chargées
+	 */
+	private static class BulletinProcessingContext {
+	    List<MoyenneEleveDto> moyenneParEleve;
+	    Map<Long, Inscription> inscriptionsMap;
+	    Map<Long, ClasseElevePeriode> cepMap;
+	    Map<Long, AbsenceEleve> absenceMap;
+	    List<ClasseEleveMatiere> cemList;
+	    Map<Long, ClasseEleveMatiere> cemByEleveAndMatiere;
+	    List<PersonnelMatiereClasse> professeurs;
+	    Map<Long, PersonnelMatiereClasse> professeursMap;
+	    PersonnelMatiereClasse profPrincipal;
+	    PersonnelMatiereClasse educateur;
+	    AnneeScolaire anneeScolaire;
+	    Periode periodeEntity;
+	    Long classeId;
+	    Long anneeId;
+	    Long periodeId;
+	}
+
+	// ===================== MÉTHODES D'OPTIMISATION =====================
+
+	private boolean isValidParameters(String classe, String annee, String periode) {
+	    try {
+	        Long.parseLong(classe);
+	        Long.parseLong(annee);
+	        Long.parseLong(periode);
+	        return true;
+	    } catch (NumberFormatException e) {
+	        logger.severe("Paramètres invalides: " + e.getMessage());
+	        return false;
+	    }
+	}
+
+	/**
+	 * PRÉ-CHARGEMENT MASSIF ET OPTIMISÉ DE TOUTES LES DONNÉES
+	 */
+	private BulletinProcessingContext preloadAllData(String classe, String annee, String periode) {
+	    BulletinProcessingContext context = new BulletinProcessingContext();
+	    
+	    context.classeId = Long.parseLong(classe);
+	    context.anneeId = Long.parseLong(annee);
+	    context.periodeId = Long.parseLong(periode);
+	    
+	    try {
+	        // Calcul des moyennes (opération la plus coûteuse)
+	        long startMoyennes = System.nanoTime();
+	        context.moyenneParEleve = noteService.moyennesAndNotesHandle(classe, annee, periode);
+	        long endMoyennes = System.nanoTime();
+	        logger.info(String.format("Calcul moyennes: %d secondes", 
+	                (endMoyennes - startMoyennes) / 1_000_000_000));
+	        
+	        if (context.moyenneParEleve.isEmpty()) {
+	            return context;
+	        }
+	        
+	        // PRÉ-CHARGEMENT SÉQUENTIEL SÉCURISÉ DES DONNÉES
+	        // Le parallélisme avec DB peut causer des problèmes de connexions, deadlocks, et transactions
+	        
+	        // 1. Données d'entités simples (peu coûteuses)
+	        logger.info("Chargement des entités de base...");
+	        context.anneeScolaire = AnneeScolaire.findById(context.anneeId);
+	        context.periodeEntity = Periode.findById(context.periodeId);
+	        
+	        // 2. Données de la classe (référence commune)
+	        logger.info("Chargement des données de classe...");
+	        MoyenneEleveDto firstEleve = context.moyenneParEleve.get(0);
+	        
+	        // 3. Données élèves par ordre de priorité/dépendance
+	        logger.info("Chargement des inscriptions...");
+	        List<Inscription> inscriptions = inscriptionService
+	                .getByClasseAndEcoleAndAnnee(firstEleve.getClasse().getId(), 
+	                        firstEleve.getClasse().getEcole().getId(), context.anneeId, 
+	                        firstEleve.getClasse().getBranche().getId());
+	        context.inscriptionsMap = inscriptions.stream()
+	                .collect(Collectors.toMap(ins -> ins.getEleve().getId(), ins -> ins));
+	        
+	        logger.info("Chargement des périodes élèves...");
+	        List<ClasseElevePeriode> cepList = classeElevePeriodeService
+	                .listByClasseAndAnneeAndPeriode(context.classeId, context.anneeId, context.periodeId);
+	        context.cepMap = cepList.stream()
+	                .collect(Collectors.toMap(c -> c.getEleve().getId(), c -> c));
+	        
+	        logger.info("Chargement des absences...");
+	        List<AbsenceEleve> absences = absenceService
+	                .getListByAnneeAndPeriode(context.anneeId, context.periodeId);
+	        context.absenceMap = absences.stream()
+	                .collect(Collectors.toMap(a -> a.getEleve().getId(), a -> a));
+	        
+	        // 4. Données matières et professeurs
+	        logger.info("Chargement des matières élèves...");
+	        context.cemList = classeEleveMatiereService.findByClasseAnneeAndPeriode(
+	                context.classeId, context.anneeId, context.periodeId);
+	        
+	        // Index optimisé : clé composite (eleveId + matiereId)
+	        context.cemByEleveAndMatiere = context.cemList.stream()
+	                .collect(Collectors.toMap(
+	                        cem -> cem.getEleve().getId() * 1000000L + cem.getMatiere().getId(),
+	                        cem -> cem
+	                ));
+	        
+	        logger.info("Chargement des professeurs...");
+	        context.professeurs = personnelMatiereClasseService.findProfesseursByClasse(context.anneeId, context.classeId);
+	        context.professeursMap = context.professeurs.stream()
+	                .filter(p -> p.getMatiere() != null)
+	                .collect(Collectors.toMap(p -> p.getMatiere().getId(), p -> p));
+	        
+	        context.profPrincipal = personnelMatiereClasseService.findProfPrinc(context.anneeId, context.classeId);
+	        context.educateur = personnelMatiereClasseService.findEducateurClasse(context.anneeId, context.classeId);
+	        
+	        logger.info("Pré-chargement terminé avec succès");
+	        
+	    } catch (Exception e) {
+	        logger.severe("Erreur lors du pré-chargement: " + e.getMessage());
+	        throw new RuntimeException("Échec du pré-chargement", e);
+	    }
+	    
+	    return context;
+	}
+
+	/**
+	 * TRAITEMENT OPTIMISÉ DES BULLETINS
+	 */
+	private void processBulletinsOptimized(BulletinProcessingContext context, List<String> bulletinIdList,
+	                                     List<Double> moyGenElevesList, AtomicInteger countNonClasses) {
+	    
+	    // Préparation des batches pour insertion en masse
+	    List<Bulletin> bulletinsBatch = new ArrayList<>(context.moyenneParEleve.size());
+	    List<DetailBulletin> detailsBatch = new ArrayList<>();
+	    List<NoteBulletin> notesBatch = new ArrayList<>();
+	    
+	    for (MoyenneEleveDto me : context.moyenneParEleve) {
+	        try {
+	            // Création du bulletin principal
+	            Bulletin bulletin = createBulletinOptimized(me, context);
+	            // Recuperation des ids des bulletins
+	            bulletinIdList.add(bulletin.getId());
+	            bulletinsBatch.add(bulletin);
+	            
+	            // Collecte des moyennes
+	            if (!Constants.NON.equals(me.getIsClassed())) {
+	                moyGenElevesList.add(me.getMoyenne());
+	            } else {
+	                countNonClasses.incrementAndGet();
+	            }
+	            
+	            // Traitement des matières et création des détails
+	            processMatieresForBulletin(me, bulletin, context, detailsBatch, notesBatch);
+	            
+	        } catch (Exception e) {
+	            logger.warning("Erreur traitement élève " + me.getEleve().getMatricule() + ": " + e.getMessage());
+	        }
+	    }
+	    
+	    // INSERTION EN MASSE
+	    saveBatchData(bulletinsBatch, detailsBatch, notesBatch);
+	}
+
+	private Bulletin createBulletinOptimized(MoyenneEleveDto me, BulletinProcessingContext context) {
+	    Bulletin bulletin = convert(me);
+	    UUID uuid = UUID.randomUUID();
+		bulletin.setId(uuid.toString());
+	    bulletin.setAnneeId(context.anneeId);
+	    bulletin.setAnneeLibelle(context.anneeScolaire.getLibelle());
+	    bulletin.setPeriodeId(context.periodeEntity.getId());
+	    bulletin.setLibellePeriode(context.periodeEntity.getLibelle());
+	    
+	    // Niveau d'enseignement
+	    try {
+	        bulletin.setNiveauEnseignementId(me.getClasse().getEcole().getNiveauEnseignement() != null
+	                ? me.getClasse().getEcole().getNiveauEnseignement().getId() : null);
+	    } catch (Exception e) {
+	        logger.warning("Erreur niveau enseignement: " + e.getMessage());
+	    }
+	    
+	    // Personnel avec cache
+	    if (context.profPrincipal != null && context.profPrincipal.getPersonnel() != null) {
+	        bulletin.setCodeProfPrincipal(context.profPrincipal.getPersonnel().getCode());
+	        bulletin.setNomPrenomProfPrincipal(context.profPrincipal.getPersonnel().getNom() + " " + 
+	                context.profPrincipal.getPersonnel().getPrenom());
+	    }
+	    
+	    if (context.educateur != null && context.educateur.getPersonnel() != null) {
+	        bulletin.setCodeEducateur(context.educateur.getPersonnel().getCode());
+	        bulletin.setNomPrenomEducateur(context.educateur.getPersonnel().getNom() + " " + 
+	                context.educateur.getPersonnel().getPrenom());
+	    }
+	    
+	    // Classification avec cache
+	    ClasseElevePeriode cep = context.cepMap.get(me.getEleve().getId());
+	    bulletin.setIsClassed(cep != null ? cep.getIsClassed() : Constants.OUI);
+	    
+	    // Absences avec cache
+	    AbsenceEleve absence = context.absenceMap.get(me.getEleve().getId());
+	    if (absence != null) {
+	        bulletin.setHeuresAbsJustifiees(absence.getAbsJustifiee() != null ? absence.getAbsJustifiee().toString() : "0");
+	        bulletin.setHeuresAbsNonJustifiees(absence.getAbsNonJustifiee() != null ? absence.getAbsNonJustifiee().toString() : "0");
+	    } else {
+	        bulletin.setHeuresAbsJustifiees("0");
+	        bulletin.setHeuresAbsNonJustifiees("0");
+	    }
+	    
+	    // Inscriptions avec cache
+	    Inscription inscription = context.inscriptionsMap.get(me.getEleve().getId());
+	    if (inscription != null) {
+	        bulletin.setAffecte(inscription.getAfecte());
+	        bulletin.setRedoublant(inscription.getRedoublant());
+	        bulletin.setBoursier(inscription.getBoursier());
+	        bulletin.setLv2(inscription.getLv2());
+	        bulletin.setNumDecisionAffecte(inscription.getNumDecisionAffecte());
+	        bulletin.setEcoleOrigine(inscription.getEcoleOrigine());
+	        bulletin.setTransfert(inscription.getTransfert());
+	        bulletin.setUrlPhoto(inscription.getUrlPhoto());
+	        bulletin.setIvoirien(inscription.getIvoirien());
+	    }
+	    
+	    return bulletin;
+	}
+
+	private void processMatieresForBulletin(MoyenneEleveDto me, Bulletin bulletin, BulletinProcessingContext context,
+	                                      List<DetailBulletin> detailsBatch, List<NoteBulletin> notesBatch) {
+	    
+	    for (Map.Entry<EcoleHasMatiere, List<Notes>> entry : me.getNotesMatiereMap().entrySet()) {
+	        EcoleHasMatiere matiere = entry.getKey();
+	        
+	        // Création du détail bulletin
+	        DetailBulletin detail = new DetailBulletin();
+	        detail.setId(UUID.randomUUID().toString());
+	        
+	        // Données de base
+	        Double moyCoef = matiere.getMoyenne() * Double.parseDouble(matiere.getCoef());
+	        detail.setMatiereCode(matiere.getMatiere().getId().toString());
+	        detail.setMatiereId(matiere.getMatiere().getId());
+	        detail.setMatiereRealId(matiere.getId());
+	        detail.setTestLourdNote(matiere.getTestLourdNote());
+	        detail.setTestLourdNoteSur(matiere.getTestLourdNoteSur());
+	        detail.setMatiereLibelle(matiere.getLibelle());
+	        detail.setMoyenne(CommonUtils.roundDouble(matiere.getMoyenne(), 2));
+	        detail.setMoyCoef(CommonUtils.roundDouble(moyCoef, 2));
+	        detail.setCoef(Double.valueOf(matiere.getCoef()));
+	        detail.setAppreciation(matiere.getAppreciation());
+	        detail.setRang(Integer.valueOf(matiere.getRang()));
+	        detail.setNum_ordre(matiere.getNumOrdre());
+	        detail.setCategorieMatiere(matiere.getCategorie().getLibelle());
+	        detail.setCategorie(matiere.getCategorie().getCode());
+	        detail.setBulletin(bulletin);
+	        detail.setBonus(matiere.getBonus());
+	        detail.setPec(matiere.getPec());
+	        detail.setParentMatiere(matiere.getParentMatiereLibelle());
+	        detail.setMoyAn(matiere.getMoyenneAnnuelle());
+	        detail.setRangAn(matiere.getRangAnnuel());
+	        detail.setMoyenneIntermediaire(matiere.getMoyenneIntermediaire());
+	        detail.setIsAdjustment(matiere.getIsAdjustment());
+	        detail.setDateCreation(new Date());
+	        
+	        if (matiere.getMoyenneAnnuelle() != null) {
+	            detail.setAppreciationAn(CommonUtils.appreciation(Double.valueOf(matiere.getMoyenneAnnuelle())));
+	        }
+	        
+	        // Classification avec index optimisé
+	        Long compositeKey = me.getEleve().getId() * 1000000L + matiere.getId();
+	        ClasseEleveMatiere cem = context.cemByEleveAndMatiere.get(compositeKey);
+	        detail.setIsRanked(cem != null ? cem.getIsClassed() : Constants.OUI);
+	        
+	        // Professeur avec cache
+	        PersonnelMatiereClasse professeur = context.professeursMap.get(matiere.getId());
+	        if (professeur != null && professeur.getPersonnel() != null) {
+	            detail.setNom_prenom_professeur(professeur.getPersonnel().getNom() + " " + 
+	                    professeur.getPersonnel().getPrenom());
+	            detail.setSexeProfesseur(professeur.getPersonnel().getSexe());
+	        } else {
+	            detail.setNom_prenom_professeur("N/A");
+	        }
+	        
+	        detailsBatch.add(detail);
+	        
+	        // Traitement des notes
+	        for (Notes note : entry.getValue()) {
+	            if (note.getEvaluation().getPec() == 1) {
+	                NoteBulletin noteBulletin = new NoteBulletin();
+	                noteBulletin.setId(UUID.randomUUID().toString());
+	                noteBulletin.setNote(note.getNote());
+	                noteBulletin.setNoteSur(note.getEvaluation().getNoteSur());
+	                noteBulletin.setDetailBulletin(detail);
+	                notesBatch.add(noteBulletin);
+	            }
+	        }
+	    }
+	}
+
+	/**
+	 * SAUVEGARDE SÉQUENTIELLE SÉCURISÉE AVEC GESTION TRANSACTIONNELLE
+	 * Évite les problèmes de concurrence et de gestion des connexions DB
+	 */
+	private void saveBatchData(List<Bulletin> bulletins, List<DetailBulletin> details, List<NoteBulletin> notes) {
+	    logger.info("Début de la sauvegarde séquentielle...");
+	    
+	    try {
+	        // Configuration pour optimiser les performances sans parallélisme
+	        int batchSize = 20; // Taille réduite pour éviter la surcharge mémoire/transaction
+	        
+	        // 1. BULLETINS - Sauvegarde par petits lots séquentiels
+	        logger.info("Sauvegarde des bulletins...");
+	        for (int i = 0; i < bulletins.size(); i += batchSize) {
+	            List<Bulletin> batch = bulletins.subList(i, Math.min(i + batchSize, bulletins.size()));
+	            
+	            // Traitement séquentiel avec gestion d'erreur par lot
+	            for (Bulletin bulletin : batch) {
+	                try {
+	                    //bulletin.persist();
+	        			bulletin.setDateCreation(new Date());
+	        			bulletin.persist();
+	                } catch (Exception e) {
+	                    logger.severe("Erreur sauvegarde bulletin " + bulletin.getId() + ": " + e.getMessage());
+	                    throw new RuntimeException("Échec sauvegarde bulletin", e);
+	                }
+	            }
+	            
+	            // Flush périodique pour libérer la mémoire et valider les transactions
+	            if ((i + batchSize) % 100 == 0) {
+	                logger.info(String.format("Bulletins sauvegardés: %d/%d", i + batchSize, bulletins.size()));
+	                // Force la validation et libère les ressources
+	                getEntityManager().flush();
+	                getEntityManager().clear();
+	            }
+	        }
+	        
+	        // 2. DÉTAILS BULLETINS - Après validation complète des bulletins
+	        logger.info("Sauvegarde des détails bulletins...");
+	        for (int i = 0; i < details.size(); i += batchSize) {
+	            List<DetailBulletin> batch = details.subList(i, Math.min(i + batchSize, details.size()));
+	            
+	            for (DetailBulletin detail : batch) {
+	                try {
+	                    detail.persist();
+	                } catch (Exception e) {
+	                    logger.severe("Erreur sauvegarde détail " + detail.getId() + ": " + e.getMessage());
+	                    throw new RuntimeException("Échec sauvegarde détail bulletin", e);
+	                }
+	            }
+	            
+	            if ((i + batchSize) % 100 == 0) {
+	                logger.info(String.format("Détails sauvegardés: %d/%d", i + batchSize, details.size()));
+	                getEntityManager().flush();
+	                getEntityManager().clear();
+	            }
+	        }
+	        
+	        // 3. NOTES BULLETINS - En dernier après validation des détails
+	        logger.info("Sauvegarde des notes bulletins...");
+	        for (int i = 0; i < notes.size(); i += batchSize) {
+	            List<NoteBulletin> batch = notes.subList(i, Math.min(i + batchSize, notes.size()));
+	            
+	            for (NoteBulletin note : batch) {
+	                try {
+	                    note.persist();
+	                } catch (Exception e) {
+	                    logger.severe("Erreur sauvegarde note " + note.getId() + ": " + e.getMessage());
+	                    throw new RuntimeException("Échec sauvegarde note bulletin", e);
+	                }
+	            }
+	            
+	            if ((i + batchSize) % 100 == 0) {
+	                logger.info(String.format("Notes sauvegardées: %d/%d", i + batchSize, notes.size()));
+	                getEntityManager().flush();
+	                getEntityManager().clear();
+	            }
+	        }
+	        
+	        // Validation finale
+	        getEntityManager().flush();
+	        
+	        logger.info(String.format("Sauvegarde complète réussie: %d bulletins, %d détails, %d notes", 
+	                bulletins.size(), details.size(), notes.size()));
+	                
+	    } catch (Exception e) {
+	        logger.severe("Erreur critique lors de la sauvegarde: " + e.getMessage());
+	        // En cas d'erreur, on laisse la transaction se rollback naturellement
+	        throw new RuntimeException("Échec critique de la sauvegarde", e);
+	    }
+	}
+	
+	int nombreElementsTraités(int finIntervalle, int tailleTotale) {
+		int jauge = finIntervalle - tailleTotale;
+		if(jauge <= 0) {
+			return tailleTotale;
+		}
+		return finIntervalle;
+	}
+
+	/**
+	 * MISE À JOUR DES STATISTIQUES SÉCURISÉE
+	 * Traitement par petits lots pour éviter les timeouts et problèmes de mémoire
+	 */
+	private void updateBulletinsWithStatistics(List<String> bulletinIds, List<Double> moyennes, 
+	                                         int countNonClasses, Long classeId, Long anneeId) {
+	    if (moyennes.isEmpty()) {
+	        throw new RuntimeException("Aucune donnée trouvée pour les statistiques");
+	    }
+	    
+	    // Calcul des statistiques
+	    double maxMoy = Collections.max(moyennes);
+	    double minMoy = Collections.min(moyennes);
+	    double sumMoy = moyennes.stream().mapToDouble(Double::doubleValue).sum();
+	    double avgMoy = sumMoy / moyennes.size();
+	    int effectif = classeEleveService.getCountByClasseAnnee(classeId, anneeId);
+	    
+	    logger.info(String.format("Statistiques: Max=%.2f, Min=%.2f, Avg=%.2f, Effectif=%d, Non classés=%d", 
+	            maxMoy, minMoy, avgMoy, effectif, countNonClasses));
+	    
+	    // Mise à jour séquentielle par petits lots
+	    try {
+	        int batchSize = 10; // Taille encore plus petite pour les mises à jour
+	        int processedCount = 0;
+	        
+	        for (int i = 0; i < bulletinIds.size(); i += batchSize) {
+	            List<String> batch = bulletinIds.subList(i, Math.min(i + batchSize, bulletinIds.size()));
+	            
+	            for (String id : batch) {
+	                try {
+	                    Bulletin bulletin = Bulletin.findById(id);
+	                    if (bulletin != null) {
+	                        bulletin.setMoyMax(CommonUtils.roundDouble(maxMoy, 2));
+	                        bulletin.setMoyMin(CommonUtils.roundDouble(minMoy, 2));
+	                        bulletin.setMoyAvg(CommonUtils.roundDouble(avgMoy, 2));
+	                        bulletin.setEffectif(effectif);
+	                        bulletin.setEffectifNonClasse(String.valueOf(countNonClasses));
+	                        processedCount++;
+	                    } else {
+	                        logger.warning("Bulletin non trouvé pour mise à jour: " + id);
+	                    }
+	                } catch (Exception e) {
+	                    logger.severe("Erreur mise à jour bulletin " + id + ": " + e.getMessage());
+	                    throw new RuntimeException("Échec mise à jour bulletin " + id, e);
+	                }
+	            }
+	            
+	            // Flush périodique
+	            if ((i + batchSize) % 50 == 0) {
+	                getEntityManager().flush();
+	                logger.info(String.format("Bulletins mis à jour: %d/%d", processedCount, bulletinIds.size()));
+	            }
+	        }
+	        
+	        // Validation finale
+	        getEntityManager().flush();
+	        logger.info(String.format("Mise à jour des statistiques terminée: %d bulletins traités", processedCount));
+	        
+	    } catch (Exception e) {
+	        logger.severe("Erreur lors de la mise à jour des statistiques: " + e.getMessage());
+	        throw new RuntimeException("Échec de mise à jour des statistiques", e);
+	    }
 	}
 
 }

@@ -333,6 +333,7 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 
 				} else {
 					AppelNumerique ap = new AppelNumerique();
+					System.out.println("SEANCE ID "+s.getId());
 					ap = appelNumeriqueService.getBySeance(s.getId());
 					s.setAppelAlreadyExist(ap.getId() != null);
 					s.setIsVerrou(DateUtils.verifierHeureDansMarge(s.getHeureDeb(),

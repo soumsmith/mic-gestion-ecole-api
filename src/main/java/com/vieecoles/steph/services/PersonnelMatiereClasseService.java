@@ -83,6 +83,31 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 //		System.out.println(pmc == null);
 		return pmc;
 	}
+	
+	/**
+	 * Retourne la liste des professeurs par classe.
+	 * @param annee
+	 * @param classe
+	 * @return
+	 */
+	public List<PersonnelMatiereClasse> findProfesseursByClasse(Long annee, Long classe) {
+		List<PersonnelMatiereClasse> pmc;
+		logger.info(String.format("findProfesseursByClasse Annee: %s  Classe: %s ", annee, classe));
+		try {
+			pmc = PersonnelMatiereClasse
+					.find("classe.id = ?1 and annee.id= ?2 and (statut is null or statut <> 'DELETED') ", classe, annee).list();
+		} catch (RuntimeException e) {
+//			e.printStackTrace();
+			if(e.getClass().getName().equals(NoResultException.class.getName()))
+				System.out.println("Aucune donnee trouvee");
+			else 
+				e.printStackTrace();
+			logger.warning("Erreur de type : " + e.getClass().getName());
+			pmc = new ArrayList<PersonnelMatiereClasse>();
+		}
+//		System.out.println(pmc == null);
+		return pmc;
+	}
 
 	// modifier l annee avec le parametre quand disponible
 	public List<PersonnelMatiereClasse> findByBranche(long brancheId, long annee) {

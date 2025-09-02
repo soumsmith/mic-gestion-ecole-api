@@ -28,16 +28,15 @@ public class InscriptionService implements PanacheRepositoryBase<Inscription, In
 	@Inject
 	EntityManager em;
 
-
 	public List<Inscription> getByBrancheAndAnneeAndStatut(long branche, long annee, String statut, Long ecole) {
 
 		return Inscription.find("branche.id = ?1 and annee.id = ?2 and statut = ?3 and ecole.id=?4", branche, annee,
 				statut, ecole).list();
 	}
 
-	public Inscription getByEleveAndEcoleAndAnnee(long eleve, long ecole, long annee,long branche) {
+	public Inscription getByEleveAndEcoleAndAnnee(long eleve, long ecole, long annee, long branche) {
 
-		Inscription minScription = new Inscription() ;
+		Inscription minScription = new Inscription();
 		try {
 			// D'abord récupérer l'ID maximum
 			Long maxId = em.createQuery(
@@ -62,6 +61,30 @@ public class InscriptionService implements PanacheRepositoryBase<Inscription, In
 		return minScription;
 	}
 
+	/**
+	 * Cette méthode retourne la liste des inscriptions pour une classe.
+	 * 
+	 * @param classe
+	 * @param ecole
+	 * @param annee
+	 * @param branche
+	 * @return
+	 */
+	public List<Inscription> getByClasseAndEcoleAndAnnee(long classe, long ecole, long annee, long branche) {
+
+		List<Long> eleveIds = classeEleveService.getEleveIdByClasseAnnee(classe, annee);
+
+		List<Inscription> list;
+		try {
+			list = Inscription.find("eleve.id in ?1 and annee.id= ?2 and ecole.id=?3" + " and branche.id=?4 ",
+					eleveIds, annee, ecole, branche).list();
+		} catch (Exception e) {
+			list = new ArrayList<Inscription>();
+			e.printStackTrace();
+		}
+		return list;
+	}
+
 	// Nombre d'eleves dans une ecole
 	public Long getNbreEleveByEcoleAndAnneeAndStatut(Long ecole, Long annee, String statut) {
 		return Inscription.find("ecole.id = ?1 and annee.id = ?2 and statut = ?3", ecole, annee, statut).count();
@@ -71,22 +94,15 @@ public class InscriptionService implements PanacheRepositoryBase<Inscription, In
 	public Long getNbreEleveByEcoleAndAnneeAndStatutAndSexe(Long ecole, Long annee, String statut, String sexe) {
 
 		Long result = null;
-		/*try {
-			result = (Long) em.createQuery("select count(o.id) from Inscription o ,eleve e where o.eleve.id=e.id and o.ecole.id=:ecole and o.statut = :statut " +
-							"and e.eleve_sexe = :sexe  and o.annee.id = :annee")
-					.setParameter("sexe",sexe)
-					.setParameter("ecole",ecole)
-					.setParameter("statut",statut)
-					.setParameter("annee",annee)
-					.getSingleResult();
-			return result ;
-		} catch (NoResultException e){
-			return 0L ;
-		}*/
-
-
-
-
+		/*
+		 * try { result = (Long) em.
+		 * createQuery("select count(o.id) from Inscription o ,eleve e where o.eleve.id=e.id and o.ecole.id=:ecole and o.statut = :statut "
+		 * + "and e.eleve_sexe = :sexe  and o.annee.id = :annee")
+		 * .setParameter("sexe",sexe) .setParameter("ecole",ecole)
+		 * .setParameter("statut",statut) .setParameter("annee",annee)
+		 * .getSingleResult(); return result ; } catch (NoResultException e){ return 0L
+		 * ; }
+		 */
 
 		return Inscription
 				.find("ecole.id = ?1 and annee.id = ?2 and statut = ?3 and eleve.sexe = ?4", ecole, annee, statut, sexe)
@@ -103,95 +119,92 @@ public class InscriptionService implements PanacheRepositoryBase<Inscription, In
 	// Nombre d'eleves affecté par l Etat ou non dans une ecole en fonction du sexe
 	public Long getNbreEleveAffecteByEcoleAndAnneeAndStatutAndSexe(Long ecole, Long annee, String statut, String sexe,
 			String statutAffecte) {
-		return Inscription
-				.find("ecole.id = ?1 and annee.id = ?2 and statut = ?3 and eleve.sexe = ?4 and afecte = ?5",
-						ecole, annee, statut, sexe, statutAffecte)
-				.count();
+		return Inscription.find("ecole.id = ?1 and annee.id = ?2 and statut = ?3 and eleve.sexe = ?4 and afecte = ?5",
+				ecole, annee, statut, sexe, statutAffecte).count();
 	}
 
 	// nombre de nouveaux élèves dans l 'ecole
 	public long countNewEleve(Long ecoleId, Long anneeId) {
-        Query query = em.createNamedQuery("Inscription.getNewEleveCount");
-        query.setParameter("ecoleId", ecoleId);
-        query.setParameter("anneeId", anneeId);
-        try{
+		Query query = em.createNamedQuery("Inscription.getNewEleveCount");
+		query.setParameter("ecoleId", ecoleId);
+		query.setParameter("anneeId", anneeId);
+		try {
 //        	System.out.println(query.getSingleResult());
-        	BigInteger count = (BigInteger) query.getSingleResult();
-            return Long.parseLong(count.toString());
-        }catch(NoResultException ex){
-            ex.getMessage();
-            return 0;
-        }
-    }
+			Long count = (Long) query.getSingleResult();
+			return count;
+		} catch (NoResultException ex) {
+			ex.getMessage();
+			return 0;
+		}
+	}
+
 	// Nombre des anciens élèves dans l'ecole
 	public long countOldEleve(Long ecoleId, Long anneeId) {
-        Query query = em.createNamedQuery("Inscription.getOldEleveCount");
-        query.setParameter("ecoleId", ecoleId);
-        query.setParameter("anneeId", anneeId);
-        try{
+		Query query = em.createNamedQuery("Inscription.getOldEleveCount");
+		query.setParameter("ecoleId", ecoleId);
+		query.setParameter("anneeId", anneeId);
+		try {
 //        	System.out.println(query.getSingleResult());
-        	BigInteger count = (BigInteger) query.getSingleResult();
-            return Long.parseLong(count.toString());
-        }catch(NoResultException ex){
-            ex.getMessage();
-            return 0;
-        }
-    }
+			Long count = (Long) query.getSingleResult();
+			return count;
+		} catch (NoResultException ex) {
+			ex.getMessage();
+			return 0;
+		}
+	}
 
 	public long getNewEleveAffCountBySexe(Long ecoleId, Long anneeId, String sexe, String statut) {
-        Query query = em.createNamedQuery("Inscription.getNewEleveCountBySexeAndAffecte");
-        query.setParameter("ecoleId", ecoleId);
-        query.setParameter("sexe", sexe);
-        query.setParameter("statutAffecte", statut);
-        query.setParameter("anneeId", anneeId);
-        try{
+		Query query = em.createNamedQuery("Inscription.getNewEleveCountBySexeAndAffecte");
+		query.setParameter("ecoleId", ecoleId);
+		query.setParameter("sexe", sexe);
+		query.setParameter("statutAffecte", statut);
+		query.setParameter("anneeId", anneeId);
+		try {
 //        	System.out.println(query.getSingleResult());
-        	BigInteger count = (BigInteger) query.getSingleResult();
-            return Long.parseLong(count.toString());
-        }catch(NoResultException ex){
-            ex.getMessage();
-            return 0;
-        }
-    }
-
+			Long count = (Long) query.getSingleResult();
+			return count;
+		} catch (NoResultException ex) {
+			ex.getMessage();
+			return 0;
+		}
+	}
 
 	public BigDecimal getAvgEffectifbyClasse(Long ecoleId, Long anneeId) {
-        Query query = em.createNamedQuery("Inscription.getAvgEffectifbyClasse");
-        query.setParameter("ecoleId", ecoleId);
-        query.setParameter("anneeId", anneeId);
-        try{
-        	BigDecimal count = (BigDecimal) query.getSingleResult();
-        	System.out.println("************  "+count);
-            return count.round(new MathContext(2, RoundingMode.HALF_UP));
-        }catch(NoResultException ex){
-            ex.getMessage();
-            return BigDecimal.ZERO;
-        }
-    }
+		Query query = em.createNamedQuery("Inscription.getAvgEffectifbyClasse");
+		query.setParameter("ecoleId", ecoleId);
+		query.setParameter("anneeId", anneeId);
+		try {
+			BigDecimal count = (BigDecimal) query.getSingleResult();
+			System.out.println("************  " + count);
+			return count.round(new MathContext(2, RoundingMode.HALF_UP));
+		} catch (NoResultException ex) {
+			ex.getMessage();
+			return BigDecimal.ZERO;
+		}
+	}
 
 	public long getOldEleveAffCountBySexe(Long ecoleId, Long anneeId, String sexe, String statut) {
-        Query query = em.createNamedQuery("Inscription.getOldEleveCountBySexeAndAffecte");
-        query.setParameter("ecoleId", ecoleId);
-        query.setParameter("anneeId", anneeId);
-        query.setParameter("sexe", sexe);
-        query.setParameter("statutAffecte", statut);
-        try{
+		Query query = em.createNamedQuery("Inscription.getOldEleveCountBySexeAndAffecte");
+		query.setParameter("ecoleId", ecoleId);
+		query.setParameter("anneeId", anneeId);
+		query.setParameter("sexe", sexe);
+		query.setParameter("statutAffecte", statut);
+		try {
 //        	System.out.println(query.getSingleResult());
-        	BigInteger count = (BigInteger) query.getSingleResult();
-            return Long.parseLong(count.toString());
-        }catch(NoResultException ex){
-            ex.getMessage();
-            return 0;
-        }
-    }
-
-
+			Long count = (Long) query.getSingleResult();
+			return count;
+		} catch (NoResultException ex) {
+			ex.getMessage();
+			return 0;
+		}
+	}
 
 	public List<Inscription> getByBrancheAndAnneeAndStatutNotinClasse(long branche, long annee, String statut,
 			long ecole) {
 
 		List<Inscription> inscriptions = getByBrancheAndAnneeAndStatut(branche, annee, statut, ecole);
-		List<ClasseEleve> classeEleves = classeEleveService.getByBrancheAndAnneeAndStatut(branche, annee, ecole, Constants.STATUT_ELEVE_RETIRE_CLASSE);
+		List<ClasseEleve> classeEleves = classeEleveService.getByBrancheAndAnneeAndStatut(branche, annee, ecole,
+				Constants.STATUT_ELEVE_RETIRE_CLASSE);
 		List<Inscription> _inscriptions = new ArrayList<Inscription>();
 //		System.out.println("liste inscriptions " + (inscriptions != null ? inscriptions.size() : 0));
 //		System.out.println("liste acffecte dans une clase " + (classeEleves != null ? classeEleves.size() : 0));

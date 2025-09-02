@@ -10,8 +10,8 @@ import jakarta.persistence.Id;
 
 @Getter
 @Setter
-@EqualsAndHashCode
 @Entity
+@EqualsAndHashCode(callSuper=false)
 public class Filiere extends PanacheEntityBase {
 	@Id
 	private Integer id;

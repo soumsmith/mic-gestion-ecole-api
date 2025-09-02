@@ -15,12 +15,12 @@
 
 
 
-<<<<<<< HEAD
  :w
-=======
-<<<<<<< HEAD
+
+HEAD
   :wq
 
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
  docker build -f src/main/docker/Dockerfile.jvm -t soumsmith/pouls-pro-api:202509011814 .
@@ -29,6 +29,9 @@
 >>>>>>> 8ea47f7f0940c762207d02a931c4e3a900af2de5
 >>>>>>> master
 >>>>>>> apache_poi
+=======
+ docker build -f src/main/docker/Dockerfile.jvm -t soumsmith/pouls-pro-api:202509011814 .
+>>>>>>> fusion_optimize
 
 
 

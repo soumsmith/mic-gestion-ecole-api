@@ -11,6 +11,7 @@ import java.util.Optional;
 import java.util.UUID;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
+import jakarta.persistence.NoResultException;
 import jakarta.transaction.Transactional;
 
 import com.vieecoles.steph.dto.AppelEleveDto;
@@ -142,9 +143,14 @@ public class AppelNumeriqueService implements PanacheRepositoryBase<AppelNumeriq
 	public AppelNumerique getBySeance(String seanceId) {
 		AppelNumerique apNum = new AppelNumerique();
 		try {
-			apNum = AppelNumerique.find("seance.id = ?1 and (position is null or position = 0)", seanceId).singleResult();
+			apNum = AppelNumerique.find("seance.id = ?1 and (position is null or position = 0)", seanceId)
+					.singleResult();
 		} catch (RuntimeException e) {
-			e.printStackTrace();
+			if (e.getClass().equals(NoResultException.class)) {
+				System.out.println("Aucune séance lié à l'appel numérique trouvée");
+			} else {
+				e.printStackTrace();
+			}
 		}
 		System.out.println(seanceId);
 		System.out.println(apNum);
@@ -163,7 +169,8 @@ public class AppelNumeriqueService implements PanacheRepositoryBase<AppelNumeriq
 
 	/**
 	 * Cette méthode permet de savoir si une séance a deja fait l'objet d'un appel
-	 * avec la position  étant l occurence n d'une séance ayant été destructurée par rapport à l'unité de temps.
+	 * avec la position étant l occurence n d'une séance ayant été destructurée par
+	 * rapport à l'unité de temps.
 	 *
 	 * @param seanceId
 	 * @param position
@@ -183,7 +190,7 @@ public class AppelNumeriqueService implements PanacheRepositoryBase<AppelNumeriq
 		List<AppelNumerique> list = new ArrayList<>();
 		try {
 			list = AppelNumerique.find("ecole.id = ?1 and seance.annee = ?2 ", ecoleId, anneeId.toString()).list();
-		}catch (RuntimeException e) {
+		} catch (RuntimeException e) {
 			e.printStackTrace();
 		}
 		return list;
@@ -193,7 +200,7 @@ public class AppelNumeriqueService implements PanacheRepositoryBase<AppelNumeriq
 		Long count = 0L;
 		try {
 			count = AppelNumerique.find("ecole.id = ?1 and seance.annee = ?2 ", ecoleId, anneeId.toString()).count();
-		}catch (RuntimeException e) {
+		} catch (RuntimeException e) {
 			e.printStackTrace();
 		}
 		return count;
@@ -205,7 +212,7 @@ public class AppelNumeriqueService implements PanacheRepositoryBase<AppelNumeriq
 		date = java.sql.Date.valueOf(dateToLocalDate);
 		try {
 			list = AppelNumerique.find("ecole.id = ?1 and date = ?2 ", ecoleId, date).list();
-		}catch (RuntimeException e) {
+		} catch (RuntimeException e) {
 			e.printStackTrace();
 		}
 		return list;
@@ -217,7 +224,7 @@ public class AppelNumeriqueService implements PanacheRepositoryBase<AppelNumeriq
 		Long count = 0L;
 		try {
 			count = AppelNumerique.find("ecole.id = ?1 and date = ?2 ", ecoleId, date).count();
-		}catch (RuntimeException e) {
+		} catch (RuntimeException e) {
 			e.printStackTrace();
 		}
 		return count;
