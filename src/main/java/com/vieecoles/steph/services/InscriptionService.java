@@ -38,14 +38,25 @@ public class InscriptionService implements PanacheRepositoryBase<Inscription, In
 
 		Inscription minScription = new Inscription();
 		try {
-			minScription = (Inscription) em.createQuery(
-					"select Max(i) from Inscription i  where i.eleve.id=:eleve and i.annee.id=:annee and i.ecole.id=:ecole"
-							+ " and i.branche.id=:branche ")
-					.setParameter("ecole", ecole).setParameter("annee", annee).setParameter("eleve", eleve)
-					.setParameter("branche", branche).getSingleResult();
+			// D'abord récupérer l'ID maximum
+			Long maxId = em.createQuery(
+							"SELECT MAX(i.id) FROM Inscription i " +
+									"WHERE i.eleve.id = :eleve " +
+									"AND i.annee.id = :annee " +
+									"AND i.ecole.id = :ecole " +
+									"AND i.branche.id = :branche", Long.class)
+					.setParameter("ecole", ecole)
+					.setParameter("annee", annee)
+					.setParameter("eleve", eleve)
+					.setParameter("branche", branche)
+					.getSingleResult();
+
+			// Puis récupérer l'inscription correspondante
+			if (maxId != null) {
+				minScription = em.find(Inscription.class, maxId);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
-
 		}
 		return minScription;
 	}
