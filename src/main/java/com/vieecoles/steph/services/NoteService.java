@@ -1532,7 +1532,9 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 	}
 
 	void classementAnnuelEleveParMatiere(List<MoyenneEleveDto> moyEleve, Long brancheId, Long ecoleId, Periode periode,
+
 			List<ClasseMatiere> cmList) {
+		System.out.println("periode "+periode);
 		logger.info("---> Classement des eleves par matiere");
 //		Gson g = new Gson();
 //		int i = 0;
@@ -1545,13 +1547,29 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 //---- WARNING mettre un try catch
 		Periode per = new Periode();
 		try {
-			per = Periode.find("periodicite.id=?1 and final = 'O'", periode.getPeriodicite().getId()).singleResult();
-//			System.out.println("PERIODICITE :: "+periode.getPeriodicite().getId()+" "+per.getLibelle());
+			//System.out.println("Periodicité :"+periode.getPeriodicite().getId());7
+			System.out.println("Entree>>> 1");
+			System.out.println("Entree>>> 1+++++ "+periode.getPeriodicite().getId());
+			try {
+				per = Periode.getEntityManager()
+						.createQuery("SELECT p FROM Periode p WHERE p.periodicite.id = :periodiciteId AND p.isfinal = :finalValue", Periode.class)
+						.setParameter("periodiciteId", periode.getPeriodicite().getId())
+						.setParameter("finalValue", "O")
+						.getSingleResult();
+
+			} catch (RuntimeException e) {
+				e.printStackTrace();
+			}
+
+
 		} catch (RuntimeException e) {
+			//System.out.println("Entree>>> 2");
 			logger.warning(e.getMessage());
 		}
+		//System.out.println("Entree>>> 3");
 		List<Periode> periodes = Periode.find("niveau <= ?1 and periodicite.id=?2 order by niveau", per.getNiveau(),
 				periode.getPeriodicite().getId()).list();
+		//System.out.println("Entree>>> 3 "+periodes.size());
 
 		for (MoyenneEleveDto me : moyEleve) {
 			// recup la moyenne de la matiere dans les details bulletins (par classe,
@@ -1579,6 +1597,8 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 						bulletinsElevesList, moyAn, moyAnInterne, moyAnIEPP, moyAnPassage);
 			} else {
 				logger.info("ENS SECONDAIRE ET AUTRES");
+				System.out.println("per.getId()>>>>>"+per.getId());
+				//System.out.println("PERIODE>>>>> "+per);
 				infoCalcul = handleMoyenneAnnuelleEnsSecondaire(periodes,
 						Double.parseDouble(per.getCoef().equals("") ? "1" : finalPeriode.getCoef()), me,
 						bulletinsElevesList, moyAnFr);

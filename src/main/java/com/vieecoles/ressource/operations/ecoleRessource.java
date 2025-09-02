@@ -7,6 +7,7 @@ import com.vieecoles.entities.groupe_ecole;
 import com.vieecoles.entities.operations.ecole;
 import com.vieecoles.entities.operations.quartier;
 import com.vieecoles.services.operations.ecoleService;
+import com.vieecoles.steph.entities.Ecole;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 import jakarta.inject.Inject;
@@ -74,6 +75,12 @@ public class ecoleRessource {
     @Path("/{id}")
     public ecole get(@PathParam("id") Long id) {
         return matService.findByIDecole(id);
+    }
+
+    @GET
+    @Path("new/{id}")
+    public Ecole get2(@PathParam("id") Long id) {
+        return matService.findByIDecole2(id);
     }
 
     @POST
