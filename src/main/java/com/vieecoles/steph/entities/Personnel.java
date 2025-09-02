@@ -1,9 +1,8 @@
 package com.vieecoles.steph.entities;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-
+import lombok.EqualsAndHashCode;
 import jakarta.persistence.*;
 
 @NamedNativeQueries({
@@ -30,6 +29,7 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "personnel")
 @Data
+@EqualsAndHashCode(callSuper=false)
 public class Personnel extends PanacheEntityBase {
 
 	@Id

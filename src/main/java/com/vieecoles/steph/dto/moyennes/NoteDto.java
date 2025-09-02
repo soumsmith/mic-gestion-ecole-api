@@ -17,11 +17,13 @@ public class NoteDto {
 		this.note = note;
 	}
 	
-	public NoteDto(Long id, Long evaluationId, Long matiereEcoleId, String matiereEcoleLibelle, Double note, String noteSur,
+	public NoteDto(Long id, Long evaluationId, Long evaluationNumero, String evaluationType, Long matiereEcoleId, String matiereEcoleLibelle, Double note, String noteSur,
 			Long classeEleveId, Boolean isTestLourd) {
 		super();
 		this.id = id;
 		this.evaluationId = evaluationId;
+		this.evaluationNumero = evaluationNumero;
+		this.evaluationType = evaluationType;
 		this.matiereEcoleId = matiereEcoleId;
 		this.matiereEcoleLibelle = matiereEcoleLibelle;
 		this.note = note;
@@ -32,6 +34,8 @@ public class NoteDto {
 
 	private Long id;
 	private Long evaluationId;
+	private Long evaluationNumero;
+	private String evaluationType;
 	private Long matiereEcoleId;
 	private String matiereEcoleLibelle;
 	private Double note;

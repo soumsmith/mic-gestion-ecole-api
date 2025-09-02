@@ -18,11 +18,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-import jakarta.enterprise.context.RequestScoped;
-import jakarta.inject.Inject;
-import jakarta.transaction.Transactional;
-import jakarta.ws.rs.NotFoundException;
-
 import com.google.gson.Gson;
 import com.vieecoles.steph.dto.ClasseDto;
 import com.vieecoles.steph.dto.EvaluationDto;
@@ -32,7 +27,6 @@ import com.vieecoles.steph.dto.MoyenneEleveDto;
 import com.vieecoles.steph.dto.MoyenneEleveOptimizedDto;
 import com.vieecoles.steph.dto.NoteDto;
 import com.vieecoles.steph.dto.NotesEleveDto;
-import com.vieecoles.steph.dto.moyennes.ClasseMoyenne;
 import com.vieecoles.steph.dto.moyennes.EcoleMatiereDto;
 import com.vieecoles.steph.dto.moyennes.EleveDto;
 import com.vieecoles.steph.dto.moyennes.EleveMatiereDto;
@@ -62,6 +56,10 @@ import com.vieecoles.steph.util.CommonUtils;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 import io.quarkus.panache.common.Parameters;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
+import jakarta.ws.rs.NotFoundException;
 
 @RequestScoped
 public class NoteService implements PanacheRepositoryBase<Notes, Long> {
@@ -2150,6 +2148,8 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 	final static String QUERY_GET_NOTES_BY_CLASSE = "Select new com.vieecoles.steph.dto.moyennes.NoteDto("
 			+ "		   n.id, "
 			+ "        n.evaluation.id, "
+			+ "		   n.evaluation.numero,"
+			+ "		   n.evaluation.type.libelle,"
 			+ "		   n.evaluation.matiereEcole.id, "
 			+ "		   n.evaluation.matiereEcole.libelle, "
 			+ "        n.note, "
@@ -2170,7 +2170,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 	 * Obténir la liste des notes regroupées par élève, par matiere et par note  en fonction de l'année, la classe et la période.
 	 */
 	public List<com.vieecoles.steph.dto.moyennes.NoteDto> getNotesByEleveAndAnneeAndClasseAndPeriode(String classeId, String anneeId, String periodeId) {
-		System.out.println("In method");
+//		System.out.println("In method");
 		List<com.vieecoles.steph.dto.moyennes.NoteDto> notes;
 		try {
 		notes = getEntityManager().createQuery(QUERY_GET_NOTES_BY_CLASSE, com.vieecoles.steph.dto.moyennes.NoteDto.class)
@@ -2291,7 +2291,8 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 		            System.out.println("    Note ID: " + note.getId() + ", valeur: " + note.getNote());
 		            matiereLibelle = note.getMatiereEcoleLibelle();
 		            String noteSur = Evaluation.find("select e.noteSur from Evaluation e where e.id = ?1 ", note.getEvaluationId()).project(String.class).singleResult();
-		            notesDto.add(new com.vieecoles.steph.dto.moyennes.NoteDto(note.getId(),note.getEvaluationId(),null, null, note.getNote(), noteSur, null, note.getIsTestLourd()));
+		            notesDto.add(new com.vieecoles.steph.dto.moyennes.NoteDto(note.getId(),note.getEvaluationId(),note.getEvaluationNumero(), note.getEvaluationType(), 
+		            		null, null, note.getNote(), noteSur, null, note.getIsTestLourd()));
 		        }
 		        matiereNotes.setMatiereLibelle(matiereLibelle);
 		        matiereNotes.setNotes(notesDto);

@@ -119,8 +119,8 @@ public class InscriptionService implements PanacheRepositoryBase<Inscription, In
 		query.setParameter("anneeId", anneeId);
 		try {
 //        	System.out.println(query.getSingleResult());
-			BigInteger count = (BigInteger) query.getSingleResult();
-			return Long.parseLong(count.toString());
+			Long count = (Long) query.getSingleResult();
+			return count;
 		} catch (NoResultException ex) {
 			ex.getMessage();
 			return 0;
@@ -134,8 +134,8 @@ public class InscriptionService implements PanacheRepositoryBase<Inscription, In
 		query.setParameter("anneeId", anneeId);
 		try {
 //        	System.out.println(query.getSingleResult());
-			BigInteger count = (BigInteger) query.getSingleResult();
-			return Long.parseLong(count.toString());
+			Long count = (Long) query.getSingleResult();
+			return count;
 		} catch (NoResultException ex) {
 			ex.getMessage();
 			return 0;
@@ -150,8 +150,8 @@ public class InscriptionService implements PanacheRepositoryBase<Inscription, In
 		query.setParameter("anneeId", anneeId);
 		try {
 //        	System.out.println(query.getSingleResult());
-			BigInteger count = (BigInteger) query.getSingleResult();
-			return Long.parseLong(count.toString());
+			Long count = (Long) query.getSingleResult();
+			return count;
 		} catch (NoResultException ex) {
 			ex.getMessage();
 			return 0;
@@ -180,8 +180,8 @@ public class InscriptionService implements PanacheRepositoryBase<Inscription, In
 		query.setParameter("statutAffecte", statut);
 		try {
 //        	System.out.println(query.getSingleResult());
-			BigInteger count = (BigInteger) query.getSingleResult();
-			return Long.parseLong(count.toString());
+			Long count = (Long) query.getSingleResult();
+			return count;
 		} catch (NoResultException ex) {
 			ex.getMessage();
 			return 0;

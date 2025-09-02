@@ -121,8 +121,8 @@ public class PersonnelService {
 		query.setParameter("fonctionId", fonction);
 		query.setParameter("sexeId", genre);
 		try {
-			BigInteger count = (BigInteger) query.getSingleResult();
-			return Long.parseLong(count.toString());
+			Long count = (Long) query.getSingleResult();
+			return count;
 		} catch (NoResultException ex) {
 			ex.getMessage();
 			return (long) 0;
@@ -163,8 +163,8 @@ public class PersonnelService {
 		query.setParameter("sexeId", genre);
 		query.setParameter("statut", statut);
 		try {
-			BigInteger count = (BigInteger) query.getSingleResult();
-			return Long.parseLong(count.toString());
+			Long count = (Long) query.getSingleResult();
+			return count;
 		} catch (NoResultException ex) {
 			ex.getMessage();
 			return (long) 0;
