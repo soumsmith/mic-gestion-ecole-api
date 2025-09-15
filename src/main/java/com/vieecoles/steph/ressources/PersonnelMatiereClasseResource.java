@@ -205,6 +205,16 @@ public class PersonnelMatiereClasseResource {
     	
 	}
     
+    @GET
+    @Path("/get-enseignant-matiere-classe")
+    @Operation(description = "Obtenir le professeur enseignant pour chaque matière dans une classe", summary = "")
+	@Tag(name = "PersonnelMatiereClasse")
+	public Response findMatiereAndEnseignant( @QueryParam("annee") Long annee, @QueryParam("classe") Long classe) {
+    	List<PersonnelMatiereClasseDto> matierePersonnel = persMatClasService.getByClasseAndAnnee(classe, annee);
+    	return Response.ok(matierePersonnel).build();
+    	
+	}
+    
     @POST
     @Path("/save")
     @Consumes(MediaType.APPLICATION_JSON)

@@ -1,20 +1,17 @@
 package com.vieecoles.services.souscription;
 
-import com.vieecoles.dto.message_personnelDto;
-import com.vieecoles.entities.operations.acteur_messages;
-import com.vieecoles.entities.operations.ecole;
-import com.vieecoles.entities.operations.message_personnel;
-import com.vieecoles.entities.operations.sous_attent_personn;
-import com.vieecoles.projection.MessageSelect;
-import com.vieecoles.projection.panier_personnelSelect;
-import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
+import java.time.LocalDate;
+import java.util.List;
 
+import com.vieecoles.dto.message_personnelDto;
+import com.vieecoles.entities.operations.message_personnel;
+import com.vieecoles.projection.MessageSelect;
+
+import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
-import java.time.LocalDate;
-import java.util.List;
 
 @ApplicationScoped
 public class MessagePersonnelService implements PanacheRepositoryBase<message_personnel, Long> {
@@ -43,10 +40,10 @@ public long getGlobalIdUser(Long idPanier){
     Long idUser;
     Long idPersonnel;
     idPersonnel=getIdPersonnelByPanier(idPanier);
-    System.out.println("idPersonnel "+idPersonnel);
+//    System.out.println("idPersonnel "+idPersonnel);
 
     idUser= getIdUtilisateurByPersonnel(idPersonnel);
-    System.out.println("idUser "+idUser);
+//    System.out.println("idUser "+idUser);
     return idUser ;
 }
     @Transactional
@@ -101,7 +98,7 @@ public long getGlobalIdUser(Long idPanier){
         } catch (Exception e) {
             mesPaniers=  null;
         }
-        System.out.println("mesPaniersxx"+ mesPaniers);
+//        System.out.println("mesPaniersxx"+ mesPaniers);
         return mesPaniers ;
     }
 

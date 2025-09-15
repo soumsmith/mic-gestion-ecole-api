@@ -69,14 +69,12 @@ public class SouscriptionRessource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
     @Path("personnel/{idEcole}")
     public List<personnel> personnelParEcole(@PathParam("idEcole") Long idEcole ) {
     return souscPersonnelService.findAllPersonneParEcole(idEcole) ;
     }
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
     @Path("personnelById/{idpersonnel}")
     public sous_attent_personn personnelByIdPersonnel(@PathParam("idpersonnel") Long idpersonnel) {
         return souscPersonnelService.findPersonnelById(idpersonnel) ;
@@ -84,7 +82,6 @@ public class SouscriptionRessource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
     @Path("classe-par-prof/{idpersonnel}/{idAnnee}")
     public List<ClassesTenuesDto> personnelByIdPersonnel(@PathParam("idpersonnel") Long idpersonnel,
                                                          @PathParam("idAnnee") Long idAnnee) {
@@ -94,7 +91,6 @@ public class SouscriptionRessource {
 
      @GET
      @Produces(MediaType.APPLICATION_JSON)
-     @Consumes(MediaType.APPLICATION_JSON)
      @Path("attente/{status}")
      public List<sous_attent_personn> getAllSouscriptionAvalider(@PathParam("status") String status) {
          return souscPersonnelService.findAllSouscriptionAvaliderDto(status) ;
@@ -102,7 +98,6 @@ public class SouscriptionRessource {
 
      @GET
      @Produces(MediaType.APPLICATION_JSON)
-     @Consumes(MediaType.APPLICATION_JSON)
      @Path("attente-fondateur/{status}/{fonction}")
      public List<sous_attent_personn> getAllSouscriptionAvaliderFondateur(@PathParam("status") String status,@PathParam("fonction") String fonction) {
          return souscPersonnelService.findAllSouscriptionAvaliderDtoFondateur(status, fonction);

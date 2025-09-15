@@ -1,7 +1,6 @@
 package com.vieecoles.steph.services;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -9,10 +8,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import jakarta.enterprise.context.RequestScoped;
-import jakarta.inject.Inject;
-import jakarta.persistence.NoResultException;
-import jakarta.transaction.Transactional;
 
 import com.vieecoles.steph.dto.AppelEleveDto;
 import com.vieecoles.steph.entities.AppelNumerique;
@@ -25,6 +20,10 @@ import com.vieecoles.steph.entities.Seances;
 import com.vieecoles.steph.util.DateUtils;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
+import jakarta.persistence.NoResultException;
+import jakarta.transaction.Transactional;
 
 @RequestScoped
 public class AppelNumeriqueService implements PanacheRepositoryBase<AppelNumerique, String> {

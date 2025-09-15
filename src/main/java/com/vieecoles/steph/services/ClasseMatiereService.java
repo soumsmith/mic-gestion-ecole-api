@@ -1,28 +1,24 @@
 package com.vieecoles.steph.services;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
-
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import jakarta.persistence.NoResultException;
-import jakarta.transaction.Transactional;
 
 import com.vieecoles.steph.entities.Branche;
 import com.vieecoles.steph.entities.Classe;
 import com.vieecoles.steph.entities.ClasseMatiere;
-import com.vieecoles.steph.entities.Constants;
 import com.vieecoles.steph.entities.Ecole;
 import com.vieecoles.steph.entities.EcoleHasMatiere;
 import com.vieecoles.steph.entities.Matiere;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.persistence.NoResultException;
+import jakarta.transaction.Transactional;
 
 @ApplicationScoped
 public class ClasseMatiereService implements PanacheRepositoryBase<ClasseMatiere, Long> {
@@ -243,7 +239,7 @@ public class ClasseMatiereService implements PanacheRepositoryBase<ClasseMatiere
 				try {
 					classeMatiere = ClasseMatiere.find("matiere.id =?1 and branche.id=?2 and ecole.id =?3",
 							cl.getMatiere().getId(), cl.getBranche().getId(), cl.getEcole().getId()).singleResult();
-					System.out.println(classeMatiere);
+//					System.out.println(classeMatiere);
 				} catch (RuntimeException ex) {
 					logger.info(ex.getMessage());
 					if (!ex.getClass().getName().equals(NoResultException.class.getName()))

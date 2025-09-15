@@ -103,6 +103,20 @@ public class ProgressionSeanceService implements PanacheRepositoryBase<Progressi
 		}
 		return obj;
 	}
+	
+	public List<ProgressionSeance> getByClasseAndMatiere(Long classeId, Long matiereId, Long anneeId) {
+		List<ProgressionSeance> list = null;
+		try {
+			list = ProgressionSeance.find("seance.classe.id = ?1 and seance.matiere.id = ? 2 and seance.annee = ?3 ", classeId, matiereId, anneeId).list();
+		} catch (RuntimeException e) {
+			if (e.getClass().equals(NoResultException.class)) {
+				System.out.println(e.getMessage());
+			} else {
+				e.printStackTrace();
+			}
+		}
+		return list;
+	}
 
 	public ProgressionSeance populate(ProgressionSeance ps) {
 		if (ps != null) {
@@ -133,7 +147,17 @@ public class ProgressionSeanceService implements PanacheRepositoryBase<Progressi
 		}
 		return dto;
 	}
-
+	
+	public List<ProgressionSeanceDto> getDtoByClasseAndMatiere(Long classe, Long matiere, Long annee) {
+		System.out.println("classe "+classe + " matiere "+ matiere + "annee "+ annee);
+		List<ProgressionSeance> list = getByClasseAndMatiere(classe, matiere, annee).stream().map(p -> populate(p)).collect(Collectors.toList());
+		List<ProgressionSeanceDto> dtos = new ArrayList<>();
+		if (list != null && list.size() > 0) {
+			dtos = list.stream().map(p -> convertToDto(p)).collect(Collectors.toList()) ;
+		}
+		return dtos;
+	}
+	
 	public long getCountBySeanceAndPosition(String seanceId, Integer position) {
 		return ProgressionSeance.find("seance.id = ?1 and position = ? 2", seanceId, position).count();
 	}

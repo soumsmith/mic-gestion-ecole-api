@@ -1,24 +1,35 @@
 package com.vieecoles.ressource.operations.connexion;
 
-import com.vieecoles.dto.*;
+import java.util.List;
+
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
+
+import com.vieecoles.dto.AffecterProfilUtilisateurDto;
+import com.vieecoles.dto.CandidatConnexionDto;
+import com.vieecoles.dto.EleveDto;
+import com.vieecoles.dto.connexionDto;
+import com.vieecoles.dto.modifierMotPassDto;
+import com.vieecoles.dto.parametreConnexion;
+import com.vieecoles.dto.parametreInfo;
+import com.vieecoles.dto.personnelConnexionDto;
+import com.vieecoles.dto.utilisateur_has_personnelDto;
 import com.vieecoles.entities.profil;
 import com.vieecoles.entities.utilisateur;
-import com.vieecoles.entities.operations.Inscriptions;
-import com.vieecoles.entities.operations.eleve;
 import com.vieecoles.services.profilService;
 import com.vieecoles.services.connexion.connexionService;
-import com.vieecoles.services.eleves.EleveService;
 import com.vieecoles.services.eleves.InscriptionService;
-import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
-import jakarta.transaction.Transactional;
-import jakarta.ws.rs.*;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
-import java.time.LocalDate;
-import java.util.List;
 
 @Tag(name = "Mes Operations", description = "mes Operations")
 @Path("/connexion")
@@ -34,13 +45,9 @@ public class connexionRessource {
     @Inject
     InscriptionService inscriptionService ;
 
-    @Inject
-
-
     @GET
     @Path("/eleveDto")
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
     public List<EleveDto> list2() {
         return null ;
     }
@@ -68,8 +75,6 @@ public class connexionRessource {
     @GET
     @Path("email-par-personnel/{idPersonnel}")
     @Produces(MediaType.TEXT_PLAIN)
-    @Consumes(MediaType.APPLICATION_JSON)
-
     public String getEmailUtilisateurByIdPersonn( @PathParam("idPersonnel") Long idPersonnel )
     {
         return  myconnexionService.getEmailSouscripteur(idPersonnel);
@@ -80,7 +85,6 @@ public class connexionRessource {
     @GET
     @Path("/{emailUtilisateur}")
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.TEXT_PLAIN)
     public utilisateur checkEmailUtilisateur( @PathParam("emailUtilisateur") String emailUtilisateur )
     {
         return  myconnexionService.verifiEmailUtilisateur(emailUtilisateur);
@@ -89,7 +93,6 @@ public class connexionRessource {
     @GET
     @Path("check-pseudo/{login}")
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.TEXT_PLAIN)
     public String checkLogin( @PathParam("login") String login )
     {  String mess;
         mess=  myconnexionService.pseudo(login);
@@ -159,7 +162,6 @@ public class connexionRessource {
     @GET
     @Path("infos-personnel-connecte/{login}/{idEcole}")
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.TEXT_PLAIN)
     public personnelConnexionDto infoPersonnConnect(@PathParam("login") String login ,@PathParam("idEcole") Long idEcole)
     {
         Long idUtilisateur ;
@@ -176,7 +178,6 @@ public class connexionRessource {
     @GET
     @Path("infos-personnel-connecte-v2/{login}/{idEcole}/{profil}")
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.TEXT_PLAIN)
     public personnelConnexionDto infoPersonnConnectV2(@PathParam("login") String login ,@PathParam("idEcole") Long idEcole,@PathParam("profil") Long profilId)
     {
         Long idUtilisateur ;
@@ -194,7 +195,6 @@ public class connexionRessource {
     @GET
     @Path("infos-personnel-connecte-candidat/{login}")
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.TEXT_PLAIN)
     public CandidatConnexionDto infoPersonnConnectCandidat(@PathParam("login") String login )
     {
         Long idUtilisateur ;
@@ -211,7 +211,6 @@ public class connexionRessource {
     @GET
     @Path("parametreLogin/{login}")
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.TEXT_PLAIN)
     public parametreInfo infoParam(@PathParam("login") String login )
     {
         parametreInfo parm = new parametreInfo() ;
@@ -232,8 +231,18 @@ public class connexionRessource {
     @GET
     @Path("id-utilisateur-connecte/{login}")
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.TEXT_PLAIN)
     public Long idPersonnConnect(@PathParam("login") String login )
+    {
+        Long idUtilisateur ;
+        idUtilisateur = myconnexionService.getIdUtilisateur(login) ;
+
+        return   idUtilisateur ;
+    }
+    
+    @GET
+    @Path("id-utilisateur-connecte-v2/")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Long idPersonnConnectQueryParam(@QueryParam("login") String login )
     {
         Long idUtilisateur ;
         idUtilisateur = myconnexionService.getIdUtilisateur(login) ;

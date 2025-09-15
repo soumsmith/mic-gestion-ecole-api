@@ -3,6 +3,15 @@ package com.vieecoles.steph.ressources;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
+
+import com.vieecoles.steph.dto.DetailProgressionDto;
+import com.vieecoles.steph.entities.Constants;
+import com.vieecoles.steph.entities.DetailProgression;
+import com.vieecoles.steph.entities.Message;
+import com.vieecoles.steph.services.DetailProgressionService;
+
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
@@ -12,16 +21,6 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-
-import org.eclipse.microprofile.openapi.annotations.Operation;
-import org.eclipse.microprofile.openapi.annotations.tags.Tag;
-
-import com.vieecoles.steph.dto.DetailProgressionDto;
-import com.vieecoles.steph.dto.ProgressionDto;
-import com.vieecoles.steph.entities.Constants;
-import com.vieecoles.steph.entities.DetailProgression;
-import com.vieecoles.steph.entities.Message;
-import com.vieecoles.steph.services.DetailProgressionService;
 
 @Path("/detail-progression")
 public class DetailProgressionResource {
@@ -56,7 +55,6 @@ public class DetailProgressionResource {
 	@Path("/get-by-progression/{progression}")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.TEXT_PLAIN)
 	@Operation(description = "Listes des détails par progression", summary = "")
 	@Tag(name = "Detail Progression")
 	public Response getByAnnee(@PathParam("progression") String progression) {
