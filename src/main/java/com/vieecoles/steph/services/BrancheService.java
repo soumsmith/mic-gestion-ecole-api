@@ -41,6 +41,18 @@ public class BrancheService implements PanacheRepositoryBase<Branche, Long> {
 		return branches;
 	}
 
+	public List<Branche> findByNiveauEnseignementViaVie_Ecole(String code) {
+		Ecole ecole = Ecole.find("identifiantVieEcole =?1",code).firstResult();
+		List<Branche> branches = new ArrayList<>();
+		try {
+			branches = Branche.find("niveauEnseignement.id =?1 order by libelle desc", ecole.getNiveauEnseignement().getId())
+					.list();
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+		}
+		return branches;
+	}
+
 	public List<Branche> findByNiveauEnseignement(Long id) {
 
 		return Branche.find("niveauEnseignement.id =?1", id).list();

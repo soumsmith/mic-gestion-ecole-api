@@ -62,6 +62,19 @@ return  Response.ok().entity( EleveService.importerCreerEleve(lisImpo,idEcole,id
             return  Response.status(Response.Status.BAD_REQUEST.getStatusCode()).entity(e.getMessage()).build();
         }
     }
+  @POST
+  @Produces(MediaType.TEXT_PLAIN)
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Path("inscrire-eleves-vie-ecole/{idEcole}/{idAnneeScolaire}/{idBranche}")
+  public Response importerCreerEleveVieEcole(List<importEleveDto> lisImpo , @PathParam("idEcole") String ecole, @PathParam("idAnneeScolaire") Long idAnneeScolaire,
+                                     @PathParam("idBranche") Long idBranche ){
+    // System.out.print("lisImpo "+lisImpo);
+    try {
+      return  Response.ok().entity( EleveService.inscrireEleveVieEcole(lisImpo,ecole,idAnneeScolaire,idBranche)).build() ;
+    } catch (Exception e){
+      return  Response.status(Response.Status.BAD_REQUEST.getStatusCode()).entity(e.getMessage()).build();
+    }
+  }
 
     @PUT
     @Produces(MediaType.TEXT_PLAIN)
@@ -77,9 +90,22 @@ return  Response.ok().entity( EleveService.importerCreerEleve(lisImpo,idEcole,id
             return  Response.status(Response.Status.BAD_REQUEST.getStatusCode()).entity(e.getMessage()).build();
         }
 
-
-
     }
+  @PUT
+  @Produces(MediaType.TEXT_PLAIN)
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Path("modifier-eleves-vie-ecole/{ecole}/{idAnneeScolaire}/{typeOperation}/{idBranche}")
+  public Response modifierElevesVieEcole(List<importEleveDto> lisImpo , @PathParam("ecole") String ecole, @PathParam("idAnneeScolaire") Long idAnneeScolaire,
+                                        @PathParam("idBranche") Long idBranche ){
+    // System.out.print("lisImpo "+lisImpo);
+
+    try {
+      return  Response.ok().entity(EleveService.modifierEleveVieEcole(lisImpo,ecole,idAnneeScolaire,idBranche)).build() ;
+    } catch (Exception e){
+      return  Response.status(Response.Status.BAD_REQUEST.getStatusCode()).entity(e.getMessage()).build();
+    }
+
+  }
 
 
     @POST

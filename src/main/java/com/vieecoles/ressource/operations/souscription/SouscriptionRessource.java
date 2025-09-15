@@ -9,6 +9,7 @@ import com.vieecoles.services.profilService;
 import com.vieecoles.services.personnels.PersonnelService;
 import com.vieecoles.services.souscription.FileStorageService;
 import com.vieecoles.services.souscription.SouscPersonnelService;
+import com.vieecoles.steph.entities.Ecole;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -281,6 +282,47 @@ public class SouscriptionRessource {
    // return     souscPersonnelService.CreerSousCriperson(mySouscrip) ;
        return     souscPersonnelService.CreerSouscripCompteUtilisateur(mySouscrip) ;
     }
+  @POST
+  @Produces(MediaType.TEXT_PLAIN)
+  @Consumes(MediaType.APPLICATION_JSON)
+  //@Transactional
+  @Path("creer-professeurs-vie-ecole/{codeVieEcole}")
+  public String   RecruterVieEcole(@PathParam("codeVieEcole") String codeVieEcole,PersonnelVieEcoleDto  personnelDto ) throws IOException, SQLException {
+    // return     souscPersonnelService.CreerSousCriperson(mySouscrip) ;
+
+
+    Ecole ecole = Ecole.find("identifiantVieEcole =?1",codeVieEcole).firstResult();
+    if (ecole == null) {
+      return "Ecole introuvable dans Pouls-Pro";
+    } else {
+      String sexe = switch (personnelDto.getSous_attent_personn_sexe()) {
+        case "Mr", "M.", "Monsieur" -> "MASCULIN";
+        case "Mme", "Mlle", "Madame", "Mademoiselle" -> "FEMININ";
+        default -> "MASCULIN"; // valeur par défaut
+      };
+      Long typeCompteCode = switch (personnelDto.getTypecompte()) {
+        case "Professeur" -> 1L;
+        case "Educateur" -> 2L;
+        case "Fondateur" -> 3L;
+        default -> 1L; // ou une valeur par défaut
+      };
+      sous_attent_personnDto mySouscrip = new sous_attent_personnDto() ;
+      mySouscrip.setSous_attent_personn_nom(personnelDto.getSous_attent_personn_nom());
+      mySouscrip.setSous_attent_personn_prenom(personnelDto.getSous_attent_personn_prenom());
+      mySouscrip.setSous_attent_personn_email(personnelDto.getSous_attent_personn_email());
+      mySouscrip.setSous_attent_personn_sexe(sexe);
+      mySouscrip.setSous_attent_personn_date_naissance(personnelDto.getSous_attent_personn_date_naissance());
+      mySouscrip.setSous_attent_personn_login(personnelDto.getSous_attent_personn_login());
+      mySouscrip.setSous_attent_personn_password(personnelDto.getSous_attent_personn_password());
+      mySouscrip.setIdentifiantdomaine_formation(5L);
+      mySouscrip.setNiveau_etudeIdentifiant(26L);
+      mySouscrip.setFonctionidentifiant(typeCompteCode);
+      mySouscrip.setType_autorisation_idtype_autorisationid(1L);
+      Long idEcole=ecole.getId();
+      return     souscPersonnelService.creerProfesseurVieEcole(mySouscrip,idEcole);
+    }
+
+  }
 
 
 

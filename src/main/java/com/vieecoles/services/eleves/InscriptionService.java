@@ -344,19 +344,29 @@ public class InscriptionService implements PanacheRepositoryBase<Inscriptions, L
 
 
                public Inscriptions checkInscrit(Long idEcole , String matricule, Long idAnnee){
-                                   Inscriptions minScription = new Inscriptions() ;
-                               try {
-                                return    minScription = (Inscriptions) em.createQuery("select Max(i) from Inscriptions i , ecole ec , eleve e ,Annee_Scolaire a where i.eleve.eleveid=e.eleveid and i.ecole.ecoleid=ec.ecoleid and" +
-                                        " i.annee_scolaire.annee_scolaireid=a.id and ec.ecoleid=:idecole and a.annee_scolaireid=:idAnnee and e.eleve_matricule=:matricule " )
-                                        .setParameter("idecole", idEcole)
-                                        .setParameter("matricule",matricule)
-                                        .setParameter("idAnnee",idAnnee)
-                                        // .setParameter("branche",1L)
-                                    .getSingleResult();
-                            } catch (Exception e){
-                                   e.printStackTrace();
-                                return  null ;
-                            }
+                   try {
+                       // Option A: Max par ID (si l'ID représente l'ordre chronologique)
+                       Long maxId = (Long) em.createQuery(
+                               "SELECT MAX(i.id) FROM Inscriptions i " +
+                                   "WHERE i.eleve.eleveid = (SELECT e.eleveid FROM eleve e WHERE e.eleve_matricule = :matricule) " +
+                                   "AND i.ecole.ecoleid = :idecole " +
+                                   "AND i.annee_scolaire.annee_scolaireid = :idAnnee"
+                           )
+                           .setParameter("idecole", idEcole)
+                           .setParameter("matricule", matricule)
+                           .setParameter("idAnnee", idAnnee)
+                           .getSingleResult();
+
+                       // Puis récupérer l'entité avec cet ID
+                       if (maxId != null) {
+                           return em.find(Inscriptions.class, maxId);
+                       }
+                       return null;
+
+                   } catch (Exception e) {
+                       e.printStackTrace();
+                       return null;
+                   }
               }
 
     public Inscriptions checkInscritOld(Long idEcole , String matricule, Long idAnnee){

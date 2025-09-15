@@ -96,6 +96,21 @@ public class AnneeResource {
 	}
 
 	@GET
+	@Path("/list-opened-or-closed-to-ecole-vie-ecole")
+	@Operation(description = "Obtenir la liste des années centrales au moins ouvertes pour une école de vie-ecole", summary = "")
+	@Tag(name = "Année scolaire")
+	public Response listEcolevieEcole(@QueryParam("ecole") String ecoleCode) {
+		Ecole ecole = Ecole.find("identifiantVieEcole =?1",ecoleCode).firstResult();
+		if (ecole == null) {
+			return Response.status(Response.Status.NOT_FOUND).build();
+		} else {
+			Long idEcole=ecole.getId();
+			return Response.ok().entity(anneeService.getListOpenOrCloseByEcole(idEcole)).build();
+		}
+
+	}
+
+	@GET
 	@Path("/get-by-id/{id}")
 	@Operation(description = "Obtenir une année scolaire via son id", summary = "")
 	@Tag(name = "Année scolaire")
