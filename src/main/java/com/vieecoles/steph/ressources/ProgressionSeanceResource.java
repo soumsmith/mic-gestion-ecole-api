@@ -10,6 +10,8 @@ import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
+import java.util.List;
+
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 import com.google.gson.Gson;
@@ -44,7 +46,6 @@ public class ProgressionSeanceResource {
 
 	@Path("/get-by-seance-and-position")
 	@GET
-	@Consumes(MediaType.TEXT_PLAIN)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getBySeanceAndPosition(@QueryParam("seance") String seance, @QueryParam("position") Integer position) {
 		try {
@@ -56,4 +57,19 @@ public class ProgressionSeanceResource {
 		}
 
 	}
+	
+	@Path("/get-by-classe-matiere-annee")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getListByClasseAndMatiere(@QueryParam("classe") Long classe, @QueryParam("matiere") Long matiere, @QueryParam("annee") Long annee) {
+		try {
+			List<ProgressionSeanceDto> dto = progressionSeanceService.getDtoByClasseAndMatiere(classe, matiere, annee);
+			return Response.ok(dto).build();
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+			return Response.serverError().entity(e).build();
+		}
+
+	}
+	
 }

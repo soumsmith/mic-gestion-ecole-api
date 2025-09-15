@@ -303,7 +303,7 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 	// periodicite et d'année est UNIQUE
 	public Boolean isUniqueContraintValid(Long niveauEnseignement, Integer periodicite, Integer annee) {
 		long nbre = AnneeScolaire
-				.find("niveauEnseignement.id =?1 and periodicite.id =?2 and annee=?3 and ecole is null",
+				.find("niveauEnseignement.id =?1 and periodicite.id =?2 and anneeDebut=?3 and ecole is null",
 						niveauEnseignement, periodicite, annee)
 				.count();
 //		System.out.println("isUniqueContraintValid " + nbre);

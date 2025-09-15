@@ -1,6 +1,5 @@
 package com.vieecoles.steph.services;
 
-import com.google.gson.Gson;
 import com.vieecoles.steph.entities.Activite;
 import com.vieecoles.steph.entities.Constants;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
@@ -14,7 +13,6 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 import java.util.UUID;
 
 @ApplicationScoped
@@ -153,9 +151,9 @@ public class ActiviteService implements PanacheRepositoryBase<Activite, Integer>
 
 	@Transactional
 	public Response save(Activite activite) {
-		Gson gson = new Gson();
+//		Gson gson = new Gson();
 		// logger.info("persist activite ...");
-		System.out.println(gson.toJson(activite));
+//		System.out.println(gson.toJson(activite));
 		UUID uuid = UUID.randomUUID();
 		activite.setId(uuid.toString());
 		activite.setDateCreation(new Date());

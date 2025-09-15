@@ -2,6 +2,11 @@ package com.vieecoles.steph.ressources;
 
 import java.util.List;
 
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
+
+import com.vieecoles.steph.entities.AbsenceEleve;
+import com.vieecoles.steph.services.AbsenceService;
+
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
@@ -10,12 +15,6 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-
-import org.eclipse.microprofile.openapi.annotations.tags.Tag;
-
-import com.google.gson.Gson;
-import com.vieecoles.steph.entities.AbsenceEleve;
-import com.vieecoles.steph.services.AbsenceService;
 
 @Path("absence-eleve")
 public class AbsenceResource {

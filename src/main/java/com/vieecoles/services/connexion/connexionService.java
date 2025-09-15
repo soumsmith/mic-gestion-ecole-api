@@ -1,26 +1,26 @@
 package com.vieecoles.services.connexion;
 
-import com.vieecoles.dto.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.vieecoles.dto.AffecterProfilUtilisateurDto;
+import com.vieecoles.dto.CandidatConnexionDto;
+import com.vieecoles.dto.parametreConnexion;
+import com.vieecoles.dto.personnelConnexionDto;
+import com.vieecoles.dto.utilisateur_has_personnelDto;
 import com.vieecoles.entities.profil;
 import com.vieecoles.entities.utilisateur;
 import com.vieecoles.entities.utilisateur_has_personnel;
 import com.vieecoles.entities.operations.ecole;
-import com.vieecoles.entities.operations.sous_attent_personn;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
-
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
-import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.NotFoundException;
-import jakarta.ws.rs.core.Response;
-import java.net.URI;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 
 @ApplicationScoped

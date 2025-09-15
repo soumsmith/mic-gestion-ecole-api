@@ -121,7 +121,7 @@ public class ClasseService implements PanacheRepositoryBase<Classe,Integer> {
 	}
 
 	void buildClassesList(Classe classe, List<ClasseDto> classeList){
-		System.out.println( "ecole id : "+classe.getEcole().getId());
+//		System.out.println( "ecole id : "+classe.getEcole().getId());
 		ClasseDto cl = new ClasseDto(classe.getEcole().getId(), classe.getId(), classe.getLibelle());
 		classeList.add(cl);
 	}
@@ -131,7 +131,7 @@ public class ClasseService implements PanacheRepositoryBase<Classe,Integer> {
 		List<ClasseEleve> ceList = classeEleveService.getListByMatriculeAndAnnee(matricule, annee);
 		ceList.stream().forEach(ce -> buildClassesList(ce.getClasse(),classeList));
 //		System.out.println("getListClasseStudentByMatricule Size ::: "+ceList.size());
-		System.out.println("getListClasseStudentByMatricule Size ::: "+classeList.size());
+//		System.out.println("getListClasseStudentByMatricule Size ::: "+classeList.size());
 		return classeList;
 	}
 
@@ -158,7 +158,7 @@ public class ClasseService implements PanacheRepositoryBase<Classe,Integer> {
 	@Transactional
 	public Response save(Classe classe) {
 //	logger.info("persist classe ...");
-		System.out.println(classe);
+//		System.out.println(classe);
 		Ecole ecole;
 		// A supprimer lorsque le credential contenant l ecole sera disponible
 		// Par defaut pour tout enregistrement on set l ecole id à 1
@@ -171,7 +171,7 @@ public class ClasseService implements PanacheRepositoryBase<Classe,Integer> {
 		}
 		if(classe.getLangueVivante() != null && classe.getLangueVivante().getId() == 0) {
 			classe.setLangueVivante(null);
-			System.out.println("langue vivante initialisée à null");
+//			System.out.println("langue vivante initialisée à null");
 		}
 		classe.persist();
 		return Response.created(URI.create("/classe/" + classe.getId())).build();

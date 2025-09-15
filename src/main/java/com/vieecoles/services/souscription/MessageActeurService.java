@@ -47,7 +47,7 @@ public class MessageActeurService implements PanacheRepositoryBase<acteur_messag
         } catch (Exception e) {
             mesPaniers=  null;
         }
-        System.out.println("mesPaniersxx"+ mesPaniers);
+        //System.out.println("mesPaniersxx"+ mesPaniers);
         return mesPaniers ;
     }
 

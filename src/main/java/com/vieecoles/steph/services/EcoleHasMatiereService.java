@@ -2,20 +2,10 @@ package com.vieecoles.steph.services;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import jakarta.transaction.Transactional;
-import jakarta.ws.rs.NotFoundException;
-import jakarta.ws.rs.core.Response;
-
-import com.google.gson.Gson;
-import com.vieecoles.services.matiereService;
 import com.vieecoles.steph.dto.EcoleMatiereDto;
-import com.vieecoles.steph.dto.MatiereDto;
 import com.vieecoles.steph.entities.ClasseMatiere;
 import com.vieecoles.steph.entities.Constants;
 import com.vieecoles.steph.entities.Ecole;
@@ -23,6 +13,11 @@ import com.vieecoles.steph.entities.EcoleHasMatiere;
 import com.vieecoles.steph.entities.Matiere;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
+import jakarta.ws.rs.NotFoundException;
+import jakarta.ws.rs.core.Response;
 
 @ApplicationScoped
 public class EcoleHasMatiereService implements PanacheRepositoryBase<EcoleHasMatiere, Long> {
