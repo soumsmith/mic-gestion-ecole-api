@@ -214,7 +214,6 @@ public class PersonnelService implements PanacheRepositoryBase<personnel, Long> 
        entity.setElevelieu_naissance(elev.getElevelieu_naissance());
        entity.setElevenom(elev.getElevenom());
          entity.setEleve_sexe(elev.getEleveSexe());
-       entity.setParents(parentsList);
        entity.setEleve_matricule(elev.getElevematricule_national());
        entity.setEleveprenom(elev.getEleveprenom());
         return  entity;

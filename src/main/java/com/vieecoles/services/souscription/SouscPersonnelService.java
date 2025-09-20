@@ -3,6 +3,7 @@ package com.vieecoles.services.souscription;
 import com.vieecoles.dto.*;
 import com.vieecoles.entities.domaine_formation;
 import com.vieecoles.entities.fonction;
+import com.vieecoles.entities.matiere;
 import com.vieecoles.entities.niveau_etude;
 import com.vieecoles.entities.utilisateur;
 import com.vieecoles.entities.operations.Inscriptions;
@@ -15,6 +16,13 @@ import com.vieecoles.services.domaineService;
 import com.vieecoles.services.profilService;
 import com.vieecoles.services.connexion.connexionService;
 
+import com.vieecoles.steph.entities.AnneeScolaire;
+import com.vieecoles.steph.entities.Classe;
+import com.vieecoles.steph.entities.Ecole;
+import com.vieecoles.steph.entities.EcoleHasMatiere;
+import com.vieecoles.steph.entities.Personnel;
+import com.vieecoles.steph.entities.PersonnelMatiereClasse;
+import com.vieecoles.steph.services.PersonnelMatiereClasseService;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import jakarta.enterprise.context.ApplicationScoped;
@@ -48,6 +56,8 @@ public class SouscPersonnelService implements PanacheRepositoryBase<sous_attent_
 
     @Inject
     domaineFormationService domServ ;
+  @Inject
+  PersonnelMatiereClasseService persMatClasService;
 
 
 
@@ -93,12 +103,12 @@ public class SouscPersonnelService implements PanacheRepositoryBase<sous_attent_
 
           }
   @Transactional
-  public String   CreerSousCripersonVieEcole(sous_attent_personnDto souscriPersonn) throws IOException, SQLException {
+  public sous_attent_personn   CreerSousCripersonVieEcole(sous_attent_personnDto souscriPersonn) throws IOException, SQLException {
     sous_attent_personn  mysouscripPersonn1 = new sous_attent_personn() ;
     mysouscripPersonn1= getSouscripByEmail(souscriPersonn.getSous_attent_personn_email()) ;
     //System.out.println("souscripteur trouvé "+mysouscripPersonn1.toString());
     if (mysouscripPersonn1!=null) {
-      return  "EXISTE_DEJA !";
+      return  null;
     } else {
 
       niveau_etude myNiveauEtude = new niveau_etude() ;
@@ -127,10 +137,35 @@ public class SouscPersonnelService implements PanacheRepositoryBase<sous_attent_
       mysouscripPersonn.setSous_attent_personn_nbre_annee_experience(souscriPersonn.getSous_attent_personn_nbre_annee_experience());
       mysouscripPersonn.persist();
       System.out.println("Demande créée avec succes !");
-      return  "Demande créée avec succes !";
+      return  mysouscripPersonn;
 
     }
 
+  }
+  @Transactional
+  public PersonnelMatiereClasse prepareProfMatiereClasseDto(String email, Ecole ecole, Classe classe , matiere mat ,AnneeScolaire anneeScolaire){
+    sous_attent_personn  mysouscripPersonn1 = new sous_attent_personn() ;
+
+    Personnel personnel1 = new Personnel() ;
+    mysouscripPersonn1= getSouscripByEmail(email) ;
+    EcoleHasMatiere ecoleHasMatiere= new EcoleHasMatiere();
+    PersonnelMatiereClasse personnelMatiereClasse = new PersonnelMatiereClasse() ;
+
+
+
+    //System.out.println("souscripteur trouvé "+mysouscripPersonn1.toString());
+    if (mysouscripPersonn1!=null) {
+      personnel1= getPersonnelBySouscription(ecole.getId(),mysouscripPersonn1.getSous_attent_personnid());
+      ecoleHasMatiere= getidEcoleHasMatiere(ecole.getId(),mat.getMatiereid());
+
+      personnelMatiereClasse.setMatiere(ecoleHasMatiere);
+      personnelMatiereClasse.setClasse(classe);
+      personnelMatiereClasse.setAnnee(anneeScolaire);
+      personnelMatiereClasse.setPersonnel(personnel1);
+
+
+    }
+  return personnelMatiereClasse ;
   }
 
           public  String CreerSouscripCompteUtilisateur(sous_attent_personnDto souscriPersonn) throws SQLException, IOException {
@@ -155,11 +190,12 @@ public class SouscPersonnelService implements PanacheRepositoryBase<sous_attent_
     return  messageRetour ;
           }
 
-  public  String creerProfesseurVieEcole(sous_attent_personnDto souscriPersonn,Long idEcole) throws SQLException, IOException {
-    String messageRetour= null;
+  public  sous_attent_personn creerProfesseurVieEcole(sous_attent_personnDto souscriPersonn,Long idEcole) throws SQLException, IOException {
+    sous_attent_personn messageRetour = new sous_attent_personn();
     messageRetour = CreerSousCripersonVieEcole(souscriPersonn) ;
+    String messRespon=null ;
 
-    if (messageRetour.equals("Demande créée avec succes !")) {
+    if (messageRetour!=null) {
       sous_attent_personn  mysouscripPersonn1 = new sous_attent_personn() ;
       mysouscripPersonn1= getSouscripByEmail(souscriPersonn.getSous_attent_personn_email()) ;
       Long idsouscripteur = mysouscripPersonn1.getSous_attent_personnid() ;
@@ -169,10 +205,8 @@ public class SouscPersonnelService implements PanacheRepositoryBase<sous_attent_
       creerCompte.setSous_attent_personn_sous_attent_personnid(idsouscripteur);
       creerCompte.setUtilisateu_email(souscriPersonn.getSous_attent_personn_email());
        creerCompteUtilisateur(creerCompte) ;
-      messageRetour = recruterUnAgentVieecole(idEcole,mysouscripPersonn1);
 
-    } else if (messageRetour.equals("EXISTE_DEJA !")){
-      messageRetour ="EXISTE_DEJA !" ;
+
     }
 
     return  messageRetour ;
@@ -540,9 +574,28 @@ public class SouscPersonnelService implements PanacheRepositoryBase<sous_attent_
      } catch (Exception e) {
          return  null;
      }
-
-
     }
+
+  public  Personnel getPersonnelBySouscription(Long idEcole,Long idPerson){
+    try {
+      return (Personnel) em.createQuery("select o from Personnel o where o.souscriptionAttenteId=: idPerson and o.ecole.id=:idEcole" )
+          .setParameter("idPerson",idPerson)
+          .setParameter("idEcole",idEcole)
+          .getSingleResult();
+    } catch (Exception e) {
+      return  null;
+    }
+  }
+  public EcoleHasMatiere getidEcoleHasMatiere(Long idEcole, Long idMatiere){
+    try {
+      return (EcoleHasMatiere) em.createQuery("select o from EcoleHasMatiere o where o.ecole.id=:idEcole and o.matiere.id=:idMatiere")
+          .setParameter("idEcole",idEcole)
+          .setParameter("idMatiere",idMatiere)
+          .getSingleResult();
+    } catch (Exception e) {
+      return  null;
+    }
+  }
 
 
 

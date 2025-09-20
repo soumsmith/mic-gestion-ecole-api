@@ -251,9 +251,9 @@ public class RecapitulatifStatistiqueServices {
 
     Long getEffectParGenreClasse(Long idAnneId ,Long idBranche ,String sexe , Long idEcole ) {
         try {
-            TypedQuery<Long> q = (TypedQuery<Long>) em.createQuery( "SELECT count(ic.id) FROM ClasseEleve ic , Inscription i  ,Eleve e ,Classe  c" +
-                        " where ic.classe.id = c.id and ic.inscription.id = i.id and i.eleve.id= e.id and i.ecole.id =: idEcole and c.branche.id =:idBranche " +
-                    "and i.annee.id =:idAnn and e.sexe=:sexe");
+            TypedQuery<Long> q = (TypedQuery<Long>) em.createQuery( "SELECT count(distinct v.eleveid) FROM Inscriptions i ,ecole e ,eleve v, Annee_Scolaire an , ClasseEleve h , Classe c" +
+                        " where i.ecole.ecoleid=e.ecoleid and i.eleve.eleveid=v.eleveid and i.annee_scolaire.annee_scolaireid=an.annee_scolaireid and i.inscriptionsid=h.inscription.id and h.classe.id=c.id and " +
+                "i.ecole.ecoleid=:idEcole and i.annee_scolaire.annee_scolaireid=:idAnn and c.branche.id=:idBranche and v.eleve_sexe=:sexe ");
             Long size = q.setParameter("idBranche" ,idBranche).
                            setParameter("idAnn" ,idAnneId).
                           setParameter("sexe" ,sexe).

@@ -23,14 +23,14 @@ HEAD
 <<<<<<< HEAD
 =======
 <<<<<<< HEAD
- docker build -f src/main/docker/Dockerfile.jvm -t soumsmith/pouls-pro-api:202509141819 .
+ docker build -f src/main/docker/Dockerfile.jvm -t soumsmith/pouls-pro-api:202509151602 .
 =======
  docker build -f src/main/docker/Dockerfile.jvm -t europe-west1-docker.pkg.dev/fair-splice-361010/vie-ecole-docker-repo/vie-ecole-api:202507021649 .
 >>>>>>> 8ea47f7f0940c762207d02a931c4e3a900af2de5
 >>>>>>> master
 >>>>>>> apache_poi
 =======
- docker build -f src/main/docker/Dockerfile.jvm -t soumsmith/pouls-pro-api:202509011814 .
+ docker build -f src/main/docker/Dockerfile.jvm -t soumsmith/pouls-pro-api:202509191923 .
 >>>>>>> fusion_optimize
 
 

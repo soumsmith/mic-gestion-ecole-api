@@ -143,7 +143,7 @@ public class connexionRessource {
     @GET
     @Path("/checkPassword")
     @Produces(MediaType.TEXT_PLAIN)
-    @Consumes(MediaType.APPLICATION_JSON)
+    //@Consumes(MediaType.APPLICATION_JSON)
     public String checkPassword(@QueryParam("login") String login ,@QueryParam("motDepasse") String motDepasse )
     {
         String messageRetour=null;
@@ -238,7 +238,7 @@ public class connexionRessource {
 
         return   idUtilisateur ;
     }
-    
+
     @GET
     @Path("id-utilisateur-connecte-v2/")
     @Produces(MediaType.APPLICATION_JSON)

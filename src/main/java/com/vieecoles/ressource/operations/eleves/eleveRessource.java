@@ -7,6 +7,11 @@ import com.vieecoles.entities.operations.Inscriptions;
 import com.vieecoles.entities.operations.eleve;
 import com.vieecoles.services.eleves.EleveService;
 import com.vieecoles.services.eleves.InscriptionService;
+import com.vieecoles.steph.entities.Classe;
+import com.vieecoles.steph.entities.Ecole;
+import com.vieecoles.steph.entities.Inscription;
+import com.vieecoles.steph.services.ClasseEleveService;
+import java.util.ArrayList;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 import jakarta.inject.Inject;
@@ -28,6 +33,8 @@ public class eleveRessource {
     EntityManager em;
     @Inject
     InscriptionService inscriptionService ;
+  @Inject
+  ClasseEleveService classeEleveService;
 
     @Inject
 
@@ -65,16 +72,51 @@ return  Response.ok().entity( EleveService.importerCreerEleve(lisImpo,idEcole,id
   @POST
   @Produces(MediaType.TEXT_PLAIN)
   @Consumes(MediaType.APPLICATION_JSON)
-  @Path("inscrire-eleves-vie-ecole/{idEcole}/{idAnneeScolaire}/{idBranche}")
+  @Path("inscrire-eleves-vie-ecole/{idEcole}/{idAnneeScolaire}/{idBranche}/{idClasse}")
   public Response importerCreerEleveVieEcole(List<importEleveDto> lisImpo , @PathParam("idEcole") String ecole, @PathParam("idAnneeScolaire") Long idAnneeScolaire,
-                                     @PathParam("idBranche") Long idBranche ){
+                                     @PathParam("idBranche") Long idBranche ,@PathParam("idClasse") String idClasse ){
     // System.out.print("lisImpo "+lisImpo);
+
+    Ecole ecole1 = Ecole.find("identifiantVieEcole =?1",ecole).firstResult();
+    Classe classe = Classe.find("identifiantVieEcole =?1 and ecole.id=?2",idClasse,ecole1.getId()).firstResult();
+    Long idClass= 0L;
+    if(classe!=null){
+      idClass= classe.getId();
+    }
+
     try {
-      return  Response.ok().entity( EleveService.inscrireEleveVieEcole(lisImpo,ecole,idAnneeScolaire,idBranche)).build() ;
+      List<Inscriptions> inscriptions = new ArrayList<>() ;
+      List<Inscription> inscriptions2 = new ArrayList<>() ;
+      if(ecole1==null){
+        return  Response.ok().entity("Ecole introuvale sur pouls-scolaire").build();
+      }
+      inscriptions=  EleveService.inscrireEleveVieEcole(lisImpo,ecole,idAnneeScolaire,idBranche);
+      System.out.println("Longueur Tableau New"+inscriptions.size());
+      if(inscriptions.size()>0){
+        for (int i = 0; i < inscriptions.size(); i++){
+          Inscription inscription = new Inscription();
+          System.out.println("Identifiant à inscrire: "+inscriptions.get(i).getInscriptionsid());
+          inscription = Inscription.findById(inscriptions.get(i).getInscriptionsid());
+          inscriptions2.add(inscription);
+        }
+      }
+      if(classe==null){
+        return  Response.ok().entity("Classe introuvale sur pouls-scolaire").build();
+
+      } else if(inscriptions.size()==0){
+        return  Response.ok().entity("Aucune nouvelle inscription").build();
+      }else {
+    System.out.println("Affectation classe");
+        return  Response.ok().entity( classeEleveService.handleCreate(idClass,inscriptions2)).build() ;
+      }
+
     } catch (Exception e){
       return  Response.status(Response.Status.BAD_REQUEST.getStatusCode()).entity(e.getMessage()).build();
     }
   }
+
+
+
 
     @PUT
     @Produces(MediaType.TEXT_PLAIN)
@@ -98,7 +140,10 @@ return  Response.ok().entity( EleveService.importerCreerEleve(lisImpo,idEcole,id
   public Response modifierElevesVieEcole(List<importEleveDto> lisImpo , @PathParam("ecole") String ecole, @PathParam("idAnneeScolaire") Long idAnneeScolaire,
                                         @PathParam("idBranche") Long idBranche ){
     // System.out.print("lisImpo "+lisImpo);
-
+    Ecole ecole1 = Ecole.find("identifiantVieEcole =?1",ecole).firstResult();
+    if(ecole1==null){
+      return  Response.ok().entity("Ecole introuvale sur pouls-scolaire").build();
+    }
     try {
       return  Response.ok().entity(EleveService.modifierEleveVieEcole(lisImpo,ecole,idAnneeScolaire,idBranche)).build() ;
     } catch (Exception e){

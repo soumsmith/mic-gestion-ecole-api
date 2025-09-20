@@ -341,6 +341,105 @@ public class InscriptionService implements PanacheRepositoryBase<Inscriptions, L
 
     }
 
+    @Transactional
+    public Inscriptions createinscriptionVieEcole(InscriptionDto inscriptionDto) {
+        Inscriptions inscr = new Inscriptions() ;
+        List<Libellehandicap> libellehandicapList= new ArrayList<>() ;
+
+        System.out.println("Mon objet1");
+
+        for(int i = 0 ; i < inscriptionDto.getLibellehandicap().size() ; i++)
+        {
+            Libellehandicap libellehandicap = new Libellehandicap() ;
+            libellehandicap= Libellehandicap.findById(inscriptionDto.getLibellehandicap().get(i)) ;
+            libellehandicapList.add(libellehandicap) ;
+        }
+
+
+        System.out.println("Mon objet74444545545445//"+inscriptionDto.getIdentifiantEleve());
+
+        System.out.println("Mon objet3");
+        eleve  eleve1= eleve.findById(inscriptionDto.getIdentifiantEleve());
+        System.out.println("Mon objet////");
+        ecole ecole1= ecole.findById(inscriptionDto.getIdentifiantEcole()) ;
+        System.out.println("Mon objet4");
+        Annee_Scolaire annee_scolaire= Annee_Scolaire.findById(inscriptionDto.getIdentifiantAnnee_scolaire()) ;
+        System.out.println("Mon objet5 ");
+        Branche myBranche = Branche.findById(inscriptionDto.getIdentifiantBranche());
+
+        System.out.println("Mon objet7"+annee_scolaire);
+
+        System.out.println("Mon objet8"+annee_scolaire);
+        inscr.setInscriptions_delete(false);
+        System.out.println("Mon objet9"+annee_scolaire);
+        inscr.setInscriptionsdate_creation(LocalDate.now());
+        System.out.println("Mon objet19"+annee_scolaire);
+        if (inscriptionDto.getInscriptions_type() == Inscriptions.typeOperation.INSCRIPTION) {
+            inscr.setEcole(ecole1);
+            inscr.setEleve(eleve1);
+
+            inscr.setAnnee_scolaire(annee_scolaire);
+            inscr.setInscriptions_type(inscriptionDto.getInscriptions_type());
+            inscr.setInscriptions_statut_eleve(inscriptionDto.getInscriptions_statut_eleve());
+            // inscr.setLibellehandicap(libellehandicapList);
+            inscr.setInscriptions_processus(Inscriptions.processus.EN_COURS);
+            inscr.setInscriptions_status(Inscriptions.status.VALIDEE);
+            inscr.setInscriptions_boursier(inscriptionDto.getInscriptions_boursier());
+            inscr.setInscriptions_redoublant(inscriptionDto.getInscriptions_redoublant());
+            inscr.setInscriptions_contact1(inscriptionDto.getInscriptions_contact1());
+            inscr.setInscriptions_contact2(inscriptionDto.getInscriptions_contact2());
+            inscr.setInscriptions_code_interne(inscriptionDto.getInscriptions_code_interne());
+            inscr.setInscriptions_langue_vivante(inscriptionDto.getInscriptions_langue_vivante());
+            inscr.setInscriptions_classe_actuelle(inscriptionDto.getInscriptions_classe_actuelle());
+            inscr.setInscriptions_derniereclasse_religieuse(inscriptionDto.getInscriptions_derniereclasse_religieuse());
+            inscr.setInscriptions_classe_precedente(inscriptionDto.getInscriptions_classe_precedente());
+            inscr.setInscriptions_ecole_origine(inscriptionDto.getInscriptions_ecole_origine());
+            inscr.setBranche(myBranche);
+            inscr.setNom_prenoms_pere(inscriptionDto.getNom_prenoms_pere());
+            inscr.setNom_prenoms_tuteur(inscriptionDto.getNom_prenoms_tuteur());
+            inscr.setNom_prenoms_mere(inscriptionDto.getNom_prenoms_mere());
+            inscr.setDecision_ant(inscriptionDto.getDecision_ant());
+            inscr.setIvoirien(inscriptionDto.getIvoirien());
+            inscr.setEtranger_africain(inscriptionDto.getEtranger_africain());
+            inscr.setEtranger_non_africain(inscriptionDto.getEtranger_non_africain());
+            inscr.persist();
+
+        } else {
+            inscr.setEcole(ecole1);
+            inscr.setEleve(eleve1);
+            inscr.setInscriptions_type(inscriptionDto.getInscriptions_type());
+            inscr.setInscriptions_statut_eleve(inscriptionDto.getInscriptions_statut_eleve());
+            //    inscr.setLibellehandicap(libellehandicapList);
+            inscr.setInscriptions_processus(Inscriptions.processus.EN_COURS);
+            inscr.setInscriptions_status(Inscriptions.status.VALIDEE);
+            inscr.setInscriptions_contact1(inscriptionDto.getInscriptions_contact1());
+            inscr.setInscriptions_contact2(inscriptionDto.getInscriptions_contact2());
+            inscr.setInscriptions_code_interne(inscriptionDto.getInscriptions_code_interne());
+            inscr.setInscriptions_langue_vivante(inscriptionDto.getInscriptions_langue_vivante());
+            inscr.setInscriptions_classe_actuelle(inscriptionDto.getInscriptions_classe_actuelle());
+            inscr.setInscriptions_derniereclasse_religieuse(inscriptionDto.getInscriptions_derniereclasse_religieuse());
+            inscr.setInscriptions_classe_precedente(inscriptionDto.getInscriptions_classe_precedente());
+            inscr.setInscriptions_ecole_origine(inscriptionDto.getInscriptions_ecole_origine());
+
+            inscr.setNom_prenoms_pere(inscriptionDto.getNom_prenoms_pere());
+            inscr.setNom_prenoms_tuteur(inscriptionDto.getNom_prenoms_tuteur());
+            inscr.setNom_prenoms_mere(inscriptionDto.getNom_prenoms_mere());
+            inscr.setDecision_ant(inscriptionDto.getDecision_ant());
+            inscr.setAnnee_scolaire(annee_scolaire);
+            inscr.setBranche(myBranche);
+            inscr.setNom_prenoms_pere(inscriptionDto.getNom_prenoms_pere());
+            inscr.setNom_prenoms_tuteur(inscriptionDto.getNom_prenoms_tuteur());
+            inscr.setNom_prenoms_mere(inscriptionDto.getNom_prenoms_mere());
+            inscr.setDecision_ant(inscriptionDto.getDecision_ant());
+            inscr.setIvoirien(inscriptionDto.getIvoirien());
+            inscr.setEtranger_africain(inscriptionDto.getEtranger_africain());
+            inscr.setEtranger_non_africain(inscriptionDto.getEtranger_non_africain());
+            inscr.persist();
+        }
+
+        return inscr;
+
+    }
 
 
                public Inscriptions checkInscrit(Long idEcole , String matricule, Long idAnnee){
@@ -481,6 +580,22 @@ public class InscriptionService implements PanacheRepositoryBase<Inscriptions, L
         System.out.println("messageRetour** "+ messageRetour);
         return messageRetour ;
     }
+
+    @Transactional
+    public  Inscriptions verifInscriptionVieEcole(InscriptionDto inscriptionDto,  Long idEcole , String matricule, Long idAnnee){
+        eleve myeleve = new eleve() ;
+        Inscriptions minScription = new Inscriptions() ;
+        Inscriptions minScriptionCree;
+        minScription = checkInscrit(idEcole,matricule,idAnnee) ;
+        System.out.println("minScriptionBB** "+ minScription);
+        if(minScription==null){
+       return      minScriptionCree =  createinscriptionVieEcole(inscriptionDto);
+        } else {
+           return null;
+        }
+    }
+
+
 
     @Transactional
     public  String verifmodifierInscription(InscriptionDto inscriptionDto,  Long idEcole , String matricule, Long idAnnee){

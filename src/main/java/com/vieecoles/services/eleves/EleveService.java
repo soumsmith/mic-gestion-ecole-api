@@ -329,7 +329,7 @@ public class EleveService implements PanacheRepositoryBase<eleve, Long> {
         return messageRetour ;
     }
 
-  public String inscrireEleveVieEcole(List<importEleveDto> lisImpo ,String ecoleCode,Long idAnneeScolaire ,Long idBranche){
+  public List<Inscriptions>  inscrireEleveVieEcole(List<importEleveDto> lisImpo ,String ecoleCode,Long idAnneeScolaire ,Long idBranche){
     long timestamp = System.currentTimeMillis() ;
     String typeOperation="INSCRIPTION";
     Ecole ecole = Ecole.find("identifiantVieEcole =?1",ecoleCode).firstResult();
@@ -338,9 +338,10 @@ public class EleveService implements PanacheRepositoryBase<eleve, Long> {
 
     System.out.println("matriculeGenere "+matriculeGenere);
 
-    String messageRetour ="" ;
+    List<Inscriptions> inscriptionsList= new ArrayList<>();
     List<String> matriculeNonCreer = new ArrayList<>();
     for (int i = 0; i < lisImpo.size(); i++){
+      Inscriptions inscriptionCree =new Inscriptions();
       //String myStatut= lisImpo.get(i).getStatut() ;
       String NewmyStatut ;
       System.out.println("Statut0 "+lisImpo.get(i).getStatut());
@@ -458,21 +459,16 @@ public class EleveService implements PanacheRepositoryBase<eleve, Long> {
       } else {
         inscriptionDto.setEtranger_non_africain(false);
       }
-      messageRetour =  inscriptionService.verifInscriptionImporter(inscriptionDto,idEcole,elv.getEleve_matricule(),idAnneeScolaire);
+      inscriptionCree =  inscriptionService.verifInscriptionVieEcole(inscriptionDto,idEcole,elv.getEleve_matricule(),idAnneeScolaire);
 
-      if(!messageRetour.equals("DEMANDE D'INSCRIPTION EFFECTUEE AVEC SUCCES!")){
-        matriculeNonCreer.add(lisImpo.get(i).getMatricule()) ;
-      }
 
+    if(inscriptionCree!=null)
+      inscriptionsList.add(inscriptionCree);
     }
 
-    if(matriculeNonCreer.size()>0){
-      String mess="Les matricules suivants avaient probablement commencé leurs inscriptions";
-      messageRetour = String.join(", ", matriculeNonCreer);
-      messageRetour= mess+" "+ messageRetour ;
-    }
 
-    return messageRetour ;
+
+    return inscriptionsList ;
   }
 
    public String importerCreerEleve(List<importEleveDto> lisImpo ,Long idEcole,Long idAnneeScolaire,String typeOperation ,Long idBranche){

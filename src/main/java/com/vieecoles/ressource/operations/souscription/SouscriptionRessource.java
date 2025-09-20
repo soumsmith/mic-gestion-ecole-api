@@ -1,15 +1,23 @@
 package com.vieecoles.ressource.operations.souscription;
 
 import com.vieecoles.dto.*;
+import com.vieecoles.entities.matiere;
 import com.vieecoles.entities.profil;
 import com.vieecoles.entities.operations.personnel;
 import com.vieecoles.entities.operations.sous_attent_personn;
 import com.vieecoles.entities.operations.sousc_atten_etabliss;
+import com.vieecoles.services.connexion.connexionService;
 import com.vieecoles.services.profilService;
 import com.vieecoles.services.personnels.PersonnelService;
 import com.vieecoles.services.souscription.FileStorageService;
 import com.vieecoles.services.souscription.SouscPersonnelService;
+import com.vieecoles.steph.entities.AnneeScolaire;
+import com.vieecoles.steph.entities.Classe;
 import com.vieecoles.steph.entities.Ecole;
+import com.vieecoles.steph.entities.PersonnelMatiereClasse;
+import com.vieecoles.steph.services.AnneeService;
+import com.vieecoles.steph.services.PersonnelMatiereClasseService;
+import java.time.LocalDate;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -58,7 +66,12 @@ public class SouscriptionRessource {
 
     @Inject
     PersonnelService personnelService ;
-
+  @Inject
+  connexionService myconnexionService ;
+  @Inject
+  AnneeService anneeService;
+  @Inject
+  PersonnelMatiereClasseService persMatClasService;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -284,7 +297,7 @@ public class SouscriptionRessource {
   @Path("creer-professeurs-vie-ecole/{codeVieEcole}")
   public String   RecruterVieEcole(@PathParam("codeVieEcole") String codeVieEcole,PersonnelVieEcoleDto  personnelDto ) throws IOException, SQLException {
     // return     souscPersonnelService.CreerSousCriperson(mySouscrip) ;
-
+  String responsMess=null ;
 
     Ecole ecole = Ecole.find("identifiantVieEcole =?1",codeVieEcole).firstResult();
     if (ecole == null) {
@@ -314,11 +327,91 @@ public class SouscriptionRessource {
       mySouscrip.setFonctionidentifiant(typeCompteCode);
       mySouscrip.setType_autorisation_idtype_autorisationid(1L);
       Long idEcole=ecole.getId();
-      return     souscPersonnelService.creerProfesseurVieEcole(mySouscrip,idEcole);
+      sous_attent_personn messageRetour = new sous_attent_personn();
+      messageRetour=souscPersonnelService.creerProfesseurVieEcole(mySouscrip,idEcole);
+
+
+      personnel personnel= new personnel();
+      if(messageRetour!=null){
+        souscPersonnelService.recruterUnAgentVieecole(idEcole,messageRetour);
+        personnel= souscPersonnelService.verifExistancePersonnel(messageRetour.getSous_attent_personnid(),idEcole);
+        AffecterProfilUtilisateurDto myUtilisaDto = new AffecterProfilUtilisateurDto();
+        myUtilisaDto.setEcole_ecoleid(idEcole);
+        //myUtilisaDto.setProfilid(8L);
+        profil p= new profil();
+        p.setProfilid(8L);
+        List<profil>profils= new ArrayList<>();
+        profils.add(p);
+        myUtilisaDto.setListProfil(profils);
+        if(personnel !=null){
+          myUtilisaDto.setPersonnel_personnelid(personnel.getPersonnelid());
+        }
+        LocalDate dateActuelle = LocalDate.now();
+        LocalDate dateDans9Mois = dateActuelle.plusMonths(9);
+        myUtilisaDto.setUtilisateur_has_person_date_fin(dateDans9Mois);
+        responsMess=    myconnexionService.affecterProfilUtilisateur(myUtilisaDto) ;
+      }
+
+
+      return responsMess;
+
     }
 
   }
 
+  @POST
+  @Produces(MediaType.TEXT_PLAIN)
+  @Consumes(MediaType.APPLICATION_JSON)
+  //@Transactional
+  @Path("affecter-matiere-professeur-vie-ecole")
+  public Response   affecterMatiereProfesseur(@QueryParam("codeVieEcole") String codeVieEcole,
+                                            @QueryParam("codeClasse") String codeClasse ,
+                                            @QueryParam("codeMatiere") String codeMatiere,
+                                            @QueryParam("login") String login) throws IOException, SQLException {
+    // return     souscPersonnelService.CreerSousCriperson(mySouscrip) ;
+    String classeCode=null;
+    String matiereCode=null;
+    Ecole ecole = Ecole.find("identifiantVieEcole =?1",codeVieEcole).firstResult();
+    if (ecole == null) {
+      return Response.status(Response.Status.NOT_FOUND)
+          .entity("École introuvable dans Pouls-Pro").build();
+    }
+    Classe classe = Classe.find("identifiantVieEcole =?1 and ecole.id=?2",codeClasse,ecole.getId()).firstResult();
+    matiere mat = matiere.find("code_vie_ecole =?1",codeMatiere).firstResult();
+
+    AnneeScolaire anneeScolaire= new AnneeScolaire() ;
+    anneeScolaire=anneeService.findMainAnneeByEcole(ecole) ;
+    PersonnelMatiereClasse personnelMatiereClasse= new PersonnelMatiereClasse() ;
+    sous_attent_personn  mysouscripPersonn1 = new sous_attent_personn() ;
+    mysouscripPersonn1= souscPersonnelService.getSouscripByEmail(login) ;
+
+    if (mysouscripPersonn1 == null) {
+      return Response.status(Response.Status.NOT_FOUND)
+          .entity("Utilisateur  introuvable dans Pouls-Pro").build();
+    }
+
+    if (classe == null) {
+      return Response.status(Response.Status.NOT_FOUND)
+          .entity("Classe introuvable dans Pouls-Pro").build();
+    }
+
+    if (mat == null) {
+      return Response.status(Response.Status.NOT_FOUND)
+          .entity("Matière introuvable dans Pouls-Pro").build();
+    }
+
+    try {
+       personnelMatiereClasse = souscPersonnelService
+          .prepareProfMatiereClasseDto(login, ecole, classe, mat, anneeScolaire);
+      System.out.println("Saving and display ...");
+      persMatClasService.save(personnelMatiereClasse);
+    } catch(Exception e) {
+      e.printStackTrace();
+      return Response.serverError().entity(e).build();
+    }
+    return Response.ok().entity(persMatClasService.getByMatiereAndClasseDispo(personnelMatiereClasse).get(0)).build();
+
+  }
 
 
 
