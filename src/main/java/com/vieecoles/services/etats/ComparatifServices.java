@@ -383,7 +383,7 @@ System.out.println("anneePrecedente :"+anneePrecedente);
 
     public Long findNombreClasseBranche(long id, Long ecoleId) {
         //logger.info(String.format("find by Branche id :: %s", id));
-        return Classe.find("branche.id = ?1 and ecole.id=?2",id, ecoleId).count() ;
+        return Classe.find("branche.id = ?1 and ecole.id=?2 and visible=?3",id, ecoleId,1).count() ;
     }
 
     public String  getLibelleAnneScolaire(long anneId, Long ecoleId) {

@@ -530,7 +530,21 @@ public class SouscPersonnelService implements PanacheRepositoryBase<sous_attent_
     }
        return  mysous ;
     }
-
+  @Transactional
+  public personnel verifPersonnel(Long idPerson ){
+    personnel mysous = new personnel();
+    try {
+      mysous = (personnel) em.createQuery(
+              "select o from personnel o join o.sous_attent_personn s  where s.sous_attent_personnid = :idPerson",
+              personnel.class)
+          .setParameter("idPerson", idPerson)
+          .setMaxResults(1)  // Limite à 1 résultat
+          .getSingleResult();
+    } catch (Exception e) {
+      mysous = null;
+    }
+    return mysous;
+  }
     @Transactional
     public void validerSouscriptionFond(souscriptionValidationFondatDto mysouscription){
         sous_attent_personn  mysous= new sous_attent_personn() ;
@@ -626,6 +640,17 @@ public class SouscPersonnelService implements PanacheRepositoryBase<sous_attent_
         mysouscripPersonn.setSous_attent_personn_prenom(souscPersonn.getSous_attent_personn_prenom());
         mysouscripPersonn.setSous_attent_personn_sexe(souscPersonn.getSous_attent_personn_sexe());
         mysouscripPersonn.setSous_attent_personn_nbre_annee_experience(souscPersonn.getSous_attent_personn_nbre_annee_experience());
+      personnel personnel = verifPersonnel(souscPersonn.getSous_attent_personnid());
+      if(personnel!=null){
+        personnel.setPersonnel_contact(souscPersonn.getSous_attent_personn_contact());
+        personnel.setFonction(myFonction);
+        personnel.setDomaine_formation_domaine_formationid(myDomaineFormation);
+        personnel.setPersonneldatenaissance(souscPersonn.getSous_attent_personn_date_naissance());
+        personnel.setNiveau_etude(myNiveauEtude);
+        personnel.setPersonnelnom(souscPersonn.getSous_attent_personn_nom());
+        personnel.setPersonnelprenom(souscPersonn.getSous_attent_personn_prenom());
+        personnel.setPersonnel_sexe(souscPersonn.getSous_attent_personn_sexe());
+      }
         return  mysouscripPersonn ;
     }
 

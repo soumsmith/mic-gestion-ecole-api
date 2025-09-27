@@ -481,8 +481,8 @@ public class RecapitulatifStatistiqueBilan2Services {
         System.out.println(ecole);
         return Branche.find("niveauEnseignement.id =?1 order by libelle desc", ecole.getNiveauEnseignement().getId()).list();
     }
-    public Long findNombreClasseBranche(long id, Long ecoleId) {
-        //logger.info(String.format("find by Branche id :: %s", id));
-        return Classe.find("branche.id = ?1 and ecole.id=?2",id, ecoleId).count() ;
-    }
+  public Long findNombreClasseBranche(long id, Long ecoleId) {
+    //logger.info(String.format("find by Branche id :: %s", id));
+    return Classe.find("branche.id = ?1 and ecole.id=?2 and visible=?3",id, ecoleId,1).count() ;
+  }
 }

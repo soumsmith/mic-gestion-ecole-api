@@ -30,10 +30,16 @@ HEAD
 >>>>>>> master
 >>>>>>> apache_poi
 =======
- docker build -f src/main/docker/Dockerfile.jvm -t soumsmith/pouls-pro-api:202509191923 .
+ docker build -f src/main/docker/Dockerfile.jvm -t soumsmith/pouls-pro-api:202509260019 .
+
+ docker build -f src/main/docker/Dockerfile.jvm -t soumsmith/pouls-emploi-api:202509241821 .
+
+  docker build -f src/main/docker/Dockerfile.jvm -t soumsmith/pouls-tuteur-adom-api:202509242227 .
+
 >>>>>>> fusion_optimize
 
-
+ docker build -f src/main/docker/Dockerfile.jvm -t soumsmith/pouls-paid-api:202509231421 .
+ docker build -f src/main/docker/Dockerfile.jvm -t soumsmith/pouls-paid:202509231421 .
 
 
 --- push image to artifact registry
