@@ -216,6 +216,12 @@
 			<groupId>io.quarkus</groupId>
 			<artifactId>quarkus-narayana-jta</artifactId>
 		</dependency>
+		<!--genstion de l'historique-->
+		<dependency>
+		    <groupId>io.quarkus</groupId>
+		    <artifactId>quarkus-hibernate-envers</artifactId>
+		</dependency>
+		
 	</dependencies>
 	<build>
 		<plugins>

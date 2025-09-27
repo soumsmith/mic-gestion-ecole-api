@@ -177,6 +177,9 @@ public class DetailProgressionService implements PanacheRepositoryBase<DetailPro
 		if (entity == null) {
 			entity = new DetailProgression();
 		}
+		if (dto == null) {
+			return entity;
+		}
 		Progression progression = Progression.getEntityManager().getReference(Progression.class,
 				dto.getProgressionId());
 		entity.setId(dto.getId());
@@ -195,8 +198,11 @@ public class DetailProgressionService implements PanacheRepositoryBase<DetailPro
 	}
 
 	public DetailProgressionDto convertToDto(DetailProgression entity, DetailProgressionDto dto) {
-		if (dto == null) {
+		if (dto == null && entity != null) {
 			dto = new DetailProgressionDto();
+		}
+		if(entity==null) {
+			return dto;
 		}
 		dto.setId(entity.getId());
 		dto.setPeriode(new IdLongCodeLibelleDto(entity.getPeriode().getId(), null, entity.getPeriode().getLibelle()));

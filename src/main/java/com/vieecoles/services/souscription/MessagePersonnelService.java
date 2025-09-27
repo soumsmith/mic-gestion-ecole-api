@@ -31,7 +31,9 @@ public class MessagePersonnelService implements PanacheRepositoryBase<message_pe
       message.setMessage_personnel_date(LocalDate.now());
       message.setMessage_personnel_sujet(messageDto.getMessage_personnel_sujet());
       message.setIdemetteur(messageDto.getIdEmetteur());
+      System.out.println("messageDto.getIdEmetteur() "+messageDto.getIdEmetteur());
       message.setIdrecepteur(messageDto.getIdDestinataire());
+      System.out.println("messageDto.getIdDestinataire() "+messageDto.getIdDestinataire());
       message.persist();
       messageRetour="MESSAGE ENVOYE AVEC SUCCES" ;
       return  messageRetour ;
@@ -53,6 +55,8 @@ public long getGlobalIdUser(Long idPanier){
             IdUtilisateur= (Long) em.createQuery("select o.utilisateurid from utilisateur  o  where  o.sous_attent_personn_sous_attent_personnid =:idPersonnel ")
                     .setParameter("idPersonnel",idPersonnel)
                     .getSingleResult();
+            System.out.println("MessagePersonnelService.getIdUtilisateurByPersonnel()");
+            System.out.println("IdUtilisateur "+IdUtilisateur);
         } catch (Exception e) {
             IdUtilisateur = 0L;
         }

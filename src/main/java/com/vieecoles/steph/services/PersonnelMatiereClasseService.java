@@ -224,7 +224,10 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 			anneeDto = new IdLongCodeLibelleDto(pmc.getAnnee() != null ? pmc.getAnnee().getId() : null, null,
 					pmc.getAnnee() != null ? pmc.getAnnee().getLibelle() : null);
 		}
-		return new PersonnelMatiereClasseDto(cm.getMatiere().getId(), matiereDto, anneeDto, classeDto, personnelDto);
+		LockService lockService = new LockService();
+		Boolean isLocked = lockService.isLocked(String.format("%s%s", classe, cm.getMatiere().getId()),
+				Constants.CONCEPT_TYPE_TEXT_BOOK);
+		return new PersonnelMatiereClasseDto(cm.getMatiere().getId(), matiereDto, anneeDto, classeDto, personnelDto, isLocked);
 	}
 
 	public List<PersonnelMatiereClasse> findByProfesseurAndClasse(long profId, long classe, long annee) {

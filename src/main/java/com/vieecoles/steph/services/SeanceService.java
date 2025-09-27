@@ -176,6 +176,45 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 	}
 
 	/**
+	 * Retourne la liste de decomposition d'une seance par heure si celle ci faisait plus d'une heure.
+	 * 
+	 * @param seanceId
+	 * @return
+	 */
+	public List<SeanceDto> getListSeanceDestructuredById(String seanceId) {
+		Seances seance = findById(seanceId);
+		List<SeanceDto> dtos = new ArrayList<SeanceDto>();
+		if (seance != null) {
+			List<Seances> seances = new ArrayList<Seances>();
+			seances = destructSeanceByTimeUnit(seance, 0);
+			System.out.println("position " + seances.size());
+			if (seances.size() == 0) {
+				System.out.println("Ouye");
+				dtos.add(
+						new SeanceDto(seance.getId(), seance.getHeureDeb(), seance.getHeureFin(), seance.getDateSeance()
+								.toString(), seance.getMatiere().getId().toString(), seance.getMatiere().getLibelle(),
+								String.valueOf(seance.getClasse().getId()), seance.getClasse().getLibelle(),
+								String.valueOf(seance.getProfesseur().getId()), String.format("%seance %seance",
+										seance.getProfesseur().getNom(), seance.getProfesseur().getPrenom()),seance.getPosition(),
+								null, null));
+			} else {
+				System.out.println("Aie");
+				dtos = seances.stream()
+						.map(s -> new SeanceDto(s.getId(), s.getHeureDeb(), s.getHeureFin(),
+								s.getDateSeance().toString(), s.getMatiere().getId().toString(),
+								s.getMatiere().getLibelle(), String.valueOf(s.getClasse().getId()),
+								s.getClasse().getLibelle(), String.valueOf(s.getProfesseur().getId()),
+								String.format("%s %s", s.getProfesseur().getNom(), s.getProfesseur().getPrenom()),s.getPosition(), null,
+								null))
+						.collect(Collectors.toList());
+			}
+		} else {
+			System.out.println("Yo");
+		}
+		return dtos;
+	}
+
+	/**
 	 * Permet d'obténir le nombre de seance issues d'une séance de plusieurs heures
 	 * par rapport à l'unité horaire.
 	 *
@@ -333,7 +372,7 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 
 				} else {
 					AppelNumerique ap = new AppelNumerique();
-					System.out.println("SEANCE ID "+s.getId());
+					System.out.println("SEANCE ID " + s.getId());
 					ap = appelNumeriqueService.getBySeance(s.getId());
 					s.setAppelAlreadyExist(ap.getId() != null);
 					s.setIsVerrou(DateUtils.verifierHeureDansMarge(s.getHeureDeb(),
