@@ -1,26 +1,20 @@
 package com.vieecoles.steph.services;
 
-import com.google.gson.Gson;
-import com.vieecoles.steph.dto.MatiereDto;
-import com.vieecoles.steph.entities.CategorieMatiere;
-import com.vieecoles.steph.entities.Ecole;
-import com.vieecoles.steph.entities.EcoleHasMatiere;
-import com.vieecoles.steph.entities.Matiere;
-import com.vieecoles.steph.entities.NiveauEnseignement;
-import com.vieecoles.steph.projections.GenericBasicProjectionLongId;
-
-import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
-
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import jakarta.transaction.Transactional;
-import jakarta.ws.rs.NotFoundException;
-import jakarta.ws.rs.core.Response;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
+
+import com.google.gson.Gson;
+import com.vieecoles.steph.dto.MatiereDto;
+import com.vieecoles.steph.entities.Matiere;
+import com.vieecoles.steph.projections.GenericBasicProjectionLongId;
+
+import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
+import jakarta.ws.rs.NotFoundException;
 
 @ApplicationScoped
 public class MatiereService implements PanacheRepositoryBase<Matiere, Long> {
@@ -32,7 +26,7 @@ public class MatiereService implements PanacheRepositoryBase<Matiere, Long> {
 	EcoleHasMatiereService ecoleHasMatiereService;
 
 	Logger logger = Logger.getLogger(MatiereService.class.getName());
-	Gson gson = new Gson();
+//	Gson gson = new Gson();
 
 	public List<Matiere> getList() {
 		try {
@@ -54,7 +48,7 @@ public class MatiereService implements PanacheRepositoryBase<Matiere, Long> {
 
 	@Transactional
 	public void create(Matiere matiere) {
-		Gson g = new Gson();
+//		Gson g = new Gson();
 //		System.out.println(g.toJson(matiere));
 		matiere.persist();
 		matiere.setDateCreation(LocalDateTime.now());
@@ -69,8 +63,8 @@ public class MatiereService implements PanacheRepositoryBase<Matiere, Long> {
 	@Transactional
 	public Matiere createMatiereInEcole(Matiere matiere) {
 		try {
-			System.out.println("--------------------------------------");
-			System.out.println(gson.toJson(matiere));
+//			System.out.println("--------------------------------------");
+//			System.out.println(gson.toJson(matiere));
 			create(matiere);
 			ecoleHasMatiereService.createMatiereToEcoles(matiere);
 			return matiere;
@@ -118,7 +112,7 @@ public class MatiereService implements PanacheRepositoryBase<Matiere, Long> {
 
 	public Matiere buildDtoToEntity(MatiereDto matiereDto) {
 
-		System.out.println(gson.toJson(matiereDto));
+//		System.out.println(gson.toJson(matiereDto));
 		Matiere matiere = new Matiere();
 
 		matiere.setId(matiereDto.getId());

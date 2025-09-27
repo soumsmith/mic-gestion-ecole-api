@@ -3,7 +3,10 @@ package com.vieecoles.steph.services;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -13,7 +16,7 @@ import jakarta.persistence.NoResultException;
 import jakarta.transaction.Transactional;
 
 import com.vieecoles.steph.dto.ProgressionSeanceDto;
-import com.vieecoles.steph.entities.AppelNumerique;
+import com.vieecoles.steph.dto.SeanceDto;
 import com.vieecoles.steph.entities.DetailProgression;
 import com.vieecoles.steph.entities.DetailProgressionSeance;
 import com.vieecoles.steph.entities.ProgressionSeance;
@@ -27,6 +30,12 @@ public class ProgressionSeanceService implements PanacheRepositoryBase<Progressi
 
 	@Inject
 	DetailProgressionSeanceService detailProgressionSeanceService;
+	
+	@Inject
+	DetailProgressionService detailProgressionService;
+	
+	@Inject
+	SeanceService seanceService;
 
 	@Transactional
 	public String handleSave(ProgressionSeance progressionSeance) {
@@ -153,10 +162,39 @@ public class ProgressionSeanceService implements PanacheRepositoryBase<Progressi
 		List<ProgressionSeance> list = getByClasseAndMatiere(classe, matiere, annee).stream().map(p -> populate(p)).collect(Collectors.toList());
 		List<ProgressionSeanceDto> dtos = new ArrayList<>();
 		if (list != null && list.size() > 0) {
+			Map<String, List<SeanceDto>> seancesDestructuredMap = new HashMap<String, List<SeanceDto>>();
 			dtos = list.stream().map(p -> convertToDto(p)).collect(Collectors.toList()) ;
+			for(ProgressionSeanceDto dto : dtos) {
+				handleWithSeanceMap(seancesDestructuredMap, dto);
+				populateDetailProgression(dto);
+			}
 		}
 		return dtos;
 	}
+	
+	void handleWithSeanceMap(Map<String, List<SeanceDto>> map, ProgressionSeanceDto ps){
+		
+		if(!map.containsKey(ps.getSeanceId())) {
+			List<SeanceDto> dtos = seanceService.getListSeanceDestructuredById(ps.getSeanceId());
+			map.put(ps.getSeanceId(), dtos);
+		} 
+		System.out.println("Map size "+map.size());
+		System.out.println("ps position "+ ps.getPosition());
+		map.get(ps.getSeanceId()).forEach(m -> System.out.println("position -> "+ m.getPosition()));
+		
+		Optional<SeanceDto> sdto = map.get(ps.getSeanceId()).stream().filter(d -> d.getPosition() == ps.getPosition()).findFirst();
+		System.out.println("sdto.orElse(null) "+sdto.orElse(null));
+		ps.setSeanceDto(sdto.orElse(null));
+		
+	}
+	
+	private void populateDetailProgression(ProgressionSeanceDto dto) {
+		if (dto.getDetailProgressions() != null && dto.getDetailProgressions().size() > 0) {
+			dto.setFullDetailProgressions(dto.getDetailProgressions().stream().map(id -> detailProgressionService
+					.convertToDto(detailProgressionService.getById(id), null) ).collect(Collectors.toList()));
+		}
+	}
+	
 	
 	public long getCountBySeanceAndPosition(String seanceId, Integer position) {
 		return ProgressionSeance.find("seance.id = ?1 and position = ? 2", seanceId, position).count();

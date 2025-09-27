@@ -66,7 +66,6 @@ public class SalleResource {
 
 	@DELETE
     @Path("/delete/{id}")
-    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
     @Tag(name = "Salle")
     public Response delete(@PathParam("id") String id) {

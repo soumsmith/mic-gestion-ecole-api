@@ -1,6 +1,8 @@
 package com.vieecoles.ressource.operations.connexion;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
@@ -30,11 +32,10 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 @Tag(name = "Mes Operations", description = "mes Operations")
 @Path("/connexion")
-@Produces(MediaType.APPLICATION_JSON)
-@Consumes(MediaType.APPLICATION_JSON)
 public class connexionRessource {
     @Inject
     connexionService myconnexionService ;
@@ -143,7 +144,6 @@ public class connexionRessource {
     @GET
     @Path("/checkPassword")
     @Produces(MediaType.TEXT_PLAIN)
-    //@Consumes(MediaType.APPLICATION_JSON)
     public String checkPassword(@QueryParam("login") String login ,@QueryParam("motDepasse") String motDepasse )
     {
         String messageRetour=null;
@@ -157,6 +157,31 @@ public class connexionRessource {
             messageRetour= "Mot de passe incorrect!";
         }
         return  messageRetour;
+    }
+    
+    @GET
+    @Path("/checkPassword-v2")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response checkPassword_v2(@QueryParam("login") String login ,@QueryParam("motDepasse") String motDepasse )
+    {
+        String messageRetour=null;
+        Boolean passOk = false ;
+        utilisateur myUtilis = new utilisateur() ;
+        myUtilis = myconnexionService.checkPassword(login,motDepasse) ;
+
+        if(myUtilis!=null){
+            messageRetour= "Mot de passe correct!";
+            passOk = true ;
+        } else {
+            messageRetour= "Mot de passe incorrect!";
+            passOk = false ;
+        }
+        
+        Map<String, String> message = new HashMap<>();
+        message.put("message", messageRetour);
+        message.put("pass", passOk.toString());
+        
+        return  Response.ok(message).build();
     }
 
     @GET

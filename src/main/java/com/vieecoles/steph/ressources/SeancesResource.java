@@ -109,6 +109,15 @@ public class SeancesResource {
 
 		return Response.ok().entity(seanceService.getListByDateAndProf(1L, ourDate, profId)).build();
 	}
+	
+	@GET
+	@Path("/get-list-destructured")
+	@Tag(name = "Seances")
+	@Operation(description = "Obtenir la  decomposition du temps d'une séance par heure")
+	public Response getListDestructured(@QueryParam("seanceId") String seanceId) {
+		
+		return Response.ok().entity(seanceService.getListSeanceDestructuredById(seanceId)).build();
+	}
 
 	@GET
 	@Path("/get-distinct-list-date")
