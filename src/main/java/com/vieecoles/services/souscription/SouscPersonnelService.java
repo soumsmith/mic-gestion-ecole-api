@@ -3,6 +3,7 @@ package com.vieecoles.services.souscription;
 import com.vieecoles.dto.*;
 import com.vieecoles.entities.domaine_formation;
 import com.vieecoles.entities.fonction;
+import com.vieecoles.entities.matiere;
 import com.vieecoles.entities.niveau_etude;
 import com.vieecoles.entities.utilisateur;
 import com.vieecoles.entities.operations.Inscriptions;
@@ -15,6 +16,13 @@ import com.vieecoles.services.domaineService;
 import com.vieecoles.services.profilService;
 import com.vieecoles.services.connexion.connexionService;
 
+import com.vieecoles.steph.entities.AnneeScolaire;
+import com.vieecoles.steph.entities.Classe;
+import com.vieecoles.steph.entities.Ecole;
+import com.vieecoles.steph.entities.EcoleHasMatiere;
+import com.vieecoles.steph.entities.Personnel;
+import com.vieecoles.steph.entities.PersonnelMatiereClasse;
+import com.vieecoles.steph.services.PersonnelMatiereClasseService;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import jakarta.enterprise.context.ApplicationScoped;
@@ -48,6 +56,8 @@ public class SouscPersonnelService implements PanacheRepositoryBase<sous_attent_
 
     @Inject
     domaineFormationService domServ ;
+  @Inject
+  PersonnelMatiereClasseService persMatClasService;
 
 
 
@@ -92,6 +102,71 @@ public class SouscPersonnelService implements PanacheRepositoryBase<sous_attent_
     }
 
           }
+  @Transactional
+  public sous_attent_personn   CreerSousCripersonVieEcole(sous_attent_personnDto souscriPersonn) throws IOException, SQLException {
+    sous_attent_personn  mysouscripPersonn1 = new sous_attent_personn() ;
+    mysouscripPersonn1= getSouscripByEmail(souscriPersonn.getSous_attent_personn_email()) ;
+    //System.out.println("souscripteur trouvé "+mysouscripPersonn1.toString());
+    if (mysouscripPersonn1!=null) {
+      return  null;
+    } else {
+
+      niveau_etude myNiveauEtude = new niveau_etude() ;
+      domaine_formation myDomaineFormation = new domaine_formation() ;
+      sous_attent_personn  mysouscripPersonn = new sous_attent_personn() ;
+      fonction myFonction = new fonction() ;
+      myNiveauEtude= niveau_etude.findById(souscriPersonn.getNiveau_etudeIdentifiant()) ;
+      myDomaineFormation = domaine_formation.findById(souscriPersonn.getIdentifiantdomaine_formation());
+      myFonction = fonction.findById(souscriPersonn.getFonctionidentifiant());
+      mysouscripPersonn.setFonction(myFonction);
+      mysouscripPersonn.setType_autorisation_idtype_autorisationid(souscriPersonn.getType_autorisation_idtype_autorisationid());
+      mysouscripPersonn.setNiveau_etude(myNiveauEtude);
+      mysouscripPersonn.setDomaine_formation(myDomaineFormation);
+      mysouscripPersonn.setSous_attent_personn_date_naissance(souscriPersonn.getSous_attent_personn_date_naissance());
+      mysouscripPersonn.setSous_attent_personn_diplome_recent(souscriPersonn.getSous_attent_personn_diplome_recent());
+      mysouscripPersonn.setSous_attent_personn_email(souscriPersonn.getSous_attent_personn_email());
+      mysouscripPersonn.setSous_attent_personn_lien_cv(souscriPersonn.getSous_attent_personn_lien_cv());
+      mysouscripPersonn.setSous_attent_personn_nom(souscriPersonn.getSous_attent_personn_nom());
+      mysouscripPersonn.setSous_attent_personn_prenom(souscriPersonn.getSous_attent_personn_prenom());
+      mysouscripPersonn.setSous_attent_personn_sexe(souscriPersonn.getSous_attent_personn_sexe());
+      mysouscripPersonn.setSous_attent_personn_contact(souscriPersonn.getSous_attent_personn_contact());
+      mysouscripPersonn.setSous_attent_personn_lien_autorisation(souscriPersonn.getSous_attent_personn_lien_autorisation());
+      mysouscripPersonn.setSous_attent_personn_lien_piece(souscriPersonn.getSous_attent_personn_lien_piece());
+      mysouscripPersonn.setSous_attent_personn_statut("VALIDEE");
+      mysouscripPersonn.setSous_attent_personn_date_creation(LocalDateTime.now());
+      mysouscripPersonn.setSous_attent_personn_nbre_annee_experience(souscriPersonn.getSous_attent_personn_nbre_annee_experience());
+      mysouscripPersonn.persist();
+      System.out.println("Demande créée avec succes !");
+      return  mysouscripPersonn;
+
+    }
+
+  }
+  @Transactional
+  public PersonnelMatiereClasse prepareProfMatiereClasseDto(String email, Ecole ecole, Classe classe , matiere mat ,AnneeScolaire anneeScolaire){
+    sous_attent_personn  mysouscripPersonn1 = new sous_attent_personn() ;
+
+    Personnel personnel1 = new Personnel() ;
+    mysouscripPersonn1= getSouscripByEmail(email) ;
+    EcoleHasMatiere ecoleHasMatiere= new EcoleHasMatiere();
+    PersonnelMatiereClasse personnelMatiereClasse = new PersonnelMatiereClasse() ;
+
+
+
+    //System.out.println("souscripteur trouvé "+mysouscripPersonn1.toString());
+    if (mysouscripPersonn1!=null) {
+      personnel1= getPersonnelBySouscription(ecole.getId(),mysouscripPersonn1.getSous_attent_personnid());
+      ecoleHasMatiere= getidEcoleHasMatiere(ecole.getId(),mat.getMatiereid());
+
+      personnelMatiereClasse.setMatiere(ecoleHasMatiere);
+      personnelMatiereClasse.setClasse(classe);
+      personnelMatiereClasse.setAnnee(anneeScolaire);
+      personnelMatiereClasse.setPersonnel(personnel1);
+
+
+    }
+  return personnelMatiereClasse ;
+  }
 
           public  String CreerSouscripCompteUtilisateur(sous_attent_personnDto souscriPersonn) throws SQLException, IOException {
            String messageRetour= null;
@@ -115,7 +190,27 @@ public class SouscPersonnelService implements PanacheRepositoryBase<sous_attent_
     return  messageRetour ;
           }
 
+  public  sous_attent_personn creerProfesseurVieEcole(sous_attent_personnDto souscriPersonn,Long idEcole) throws SQLException, IOException {
+    sous_attent_personn messageRetour = new sous_attent_personn();
+    messageRetour = CreerSousCripersonVieEcole(souscriPersonn) ;
+    String messRespon=null ;
 
+    if (messageRetour!=null) {
+      sous_attent_personn  mysouscripPersonn1 = new sous_attent_personn() ;
+      mysouscripPersonn1= getSouscripByEmail(souscriPersonn.getSous_attent_personn_email()) ;
+      Long idsouscripteur = mysouscripPersonn1.getSous_attent_personnid() ;
+      CreerCompteUtilsateurDto creerCompte = new CreerCompteUtilsateurDto() ;
+      creerCompte.setUtilisateur_mot_de_passe(souscriPersonn.getSous_attent_personn_password());
+      creerCompte.setUtilisateu_login(souscriPersonn.getSous_attent_personn_login());
+      creerCompte.setSous_attent_personn_sous_attent_personnid(idsouscripteur);
+      creerCompte.setUtilisateu_email(souscriPersonn.getSous_attent_personn_email());
+       creerCompteUtilisateur(creerCompte) ;
+
+
+    }
+
+    return  messageRetour ;
+  }
 
 
        @Transactional
@@ -387,6 +482,40 @@ public class SouscPersonnelService implements PanacheRepositoryBase<sous_attent_
 
         return  messageRetour ;
     }
+
+  @Transactional
+  public String  recruterUnAgentVieecole(Long idEcole ,sous_attent_personn sous_attent){
+
+    personnel person = new personnel() ;
+    personnel person2 = new personnel() ;
+    ecole myecole= new ecole() ;
+    myecole= ecole.findById(idEcole) ;
+    niveau_etude myNive= new niveau_etude() ;
+    domaine_formation myDom = new domaine_formation();
+    person= verifExistancePersonnel(sous_attent.getSous_attent_personnid() ,idEcole) ;
+    sous_attent_personn  mysous= new sous_attent_personn() ;
+    String messageRetour  ;
+    if (person==null){
+      person2.setPersonnelnom(sous_attent.getSous_attent_personn_nom());
+      person2.setPersonnelprenom(sous_attent.getSous_attent_personn_prenom());
+      person2.setPersonnel_contact(sous_attent.getSous_attent_personn_contact());
+      person2.setPersonneldatenaissance(sous_attent.getSous_attent_personn_date_naissance());
+      person2.setSous_attent_personn(sous_attent);
+      person2.setFonction(sous_attent.getFonction());
+      person2.setEcole(myecole);
+      //Civilite mycivilite= Civilite.valueOf(sous_attent.getSous_attent_personn_sexe());
+      //person2.setCivilite(mycivilite);
+      person2.setDomaine_formation_domaine_formationid(sous_attent.getDomaine_formation());
+      person2.setNiveau_etude(sous_attent.getNiveau_etude());
+      person2.setPersonnel_sexe(sous_attent.getSous_attent_personn_sexe());
+      person2.persist();
+      messageRetour ="ENREGISTREMENT EFFECTUE AVEC SUCCES";
+    } else {
+      messageRetour = "CE PERSONNEL EXISTE DEJA" ;
+    }
+
+    return  messageRetour ;
+  }
 @Transactional
     public personnel verifExistancePersonnel(Long idPerson , Long idEcole){
     personnel mysous= new personnel() ;
@@ -445,9 +574,28 @@ public class SouscPersonnelService implements PanacheRepositoryBase<sous_attent_
      } catch (Exception e) {
          return  null;
      }
-
-
     }
+
+  public  Personnel getPersonnelBySouscription(Long idEcole,Long idPerson){
+    try {
+      return (Personnel) em.createQuery("select o from Personnel o where o.souscriptionAttenteId=: idPerson and o.ecole.id=:idEcole" )
+          .setParameter("idPerson",idPerson)
+          .setParameter("idEcole",idEcole)
+          .getSingleResult();
+    } catch (Exception e) {
+      return  null;
+    }
+  }
+  public EcoleHasMatiere getidEcoleHasMatiere(Long idEcole, Long idMatiere){
+    try {
+      return (EcoleHasMatiere) em.createQuery("select o from EcoleHasMatiere o where o.ecole.id=:idEcole and o.matiere.id=:idMatiere")
+          .setParameter("idEcole",idEcole)
+          .setParameter("idMatiere",idMatiere)
+          .getSingleResult();
+    } catch (Exception e) {
+      return  null;
+    }
+  }
 
 
 

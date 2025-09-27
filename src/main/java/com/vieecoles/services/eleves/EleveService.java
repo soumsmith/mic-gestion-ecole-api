@@ -8,6 +8,7 @@ import com.vieecoles.entities.cycle;
 import com.vieecoles.entities.operations.Inscriptions;
 import com.vieecoles.entities.operations.eleve;
 import com.vieecoles.steph.entities.Branche;
+import com.vieecoles.steph.entities.Ecole;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import jakarta.enterprise.context.ApplicationScoped;
@@ -35,7 +36,154 @@ public class EleveService implements PanacheRepositoryBase<eleve, Long> {
    public  eleve findById(Long cycleId){
        return eleve.findById(cycleId);
    }
+  public String modifierEleveVieEcole(List<importEleveDto> lisImpo ,String ecoleCode,Long idAnneeScolaire,Long idBranche){
+    String messageRetour ="" ;
+    List<String> matriculeNonCreer = new ArrayList<>();
+    Ecole ecole = Ecole.find("identifiantVieEcole =?1",ecoleCode).firstResult();
+    Long idEcole=ecole.getId();
+    String typeOperation="INSCRIPTION";
 
+    for (int i = 0; i < lisImpo.size(); i++){
+      //String myStatut= lisImpo.get(i).getStatut() ;
+      String NewmyStatut ;
+      if(lisImpo.get(i).getStatut().trim().equalsIgnoreCase("AFF")){
+        NewmyStatut= String.valueOf(Inscriptions.statusEleve.AFFECTE);
+      }else {
+        NewmyStatut= String.valueOf(Inscriptions.statusEleve.NON_AFFECTE);
+      }
+      EleveDto eleveDto= new EleveDto() ;
+      eleve elv =new eleve() ;
+      InscriptionDto inscriptionDto = new InscriptionDto() ;
+
+
+      if(lisImpo.get(i).getMatricule()==null|| lisImpo.get(i).getMatricule().isEmpty())
+      {
+        eleveDto.setElevematricule_national(lisImpo.get(i).getId_eleve());
+
+      }
+
+      else
+        eleveDto.setElevematricule_national(lisImpo.get(i).getMatricule());
+
+      String msexe ;
+      if(lisImpo.get(i).getSexe().trim().equalsIgnoreCase("F"))
+        msexe = "FEMININ";
+      else
+        msexe = "MASCULIN";
+
+      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+      eleveDto.setEleveSexe(msexe);
+      eleveDto.setElevenom(lisImpo.get(i).getNom());
+      eleveDto.setEleve_nationalite(lisImpo.get(i).getNationalite());
+      eleveDto.setEleveprenom(lisImpo.get(i).getPrenoms());
+      eleveDto.setEleve_nationalite(lisImpo.get(i).getNationalite());
+      eleveDto.setElevelieu_naissance(lisImpo.get(i).getLieun());
+      eleveDto.setEleve_numero_extrait_naiss(lisImpo.get(i).getExtrait_numero());
+
+
+      if(lisImpo.get(i).getExtrait_date()!=null){
+        LocalDate localDateExtre = LocalDate.parse(lisImpo.get(i).getExtrait_date(), formatter);
+        LocalDate localDateNaissExtre = localDateExtre;
+        eleveDto.setElevedate_etabli_extrait_naiss(localDateNaissExtre);
+      }
+
+      eleveDto.setElevelieu_etabliss_etrait_naissance(lisImpo.get(i).getExtrait_lieu());
+      eleveDto.setEleveadresse(lisImpo.get(i).getAdresse());
+      if(lisImpo.get(i).getDatenaissance()==null||
+          lisImpo.get(i).getDatenaissance().isEmpty()){
+        String date = "01/01/1900";
+        LocalDate localDate = LocalDate.parse(date, formatter);
+        LocalDate localDateNaiss = localDate;
+
+        eleveDto.setElevedate_naissance(localDateNaiss);
+      } else {
+        String date = lisImpo.get(i).getDatenaissance();
+        LocalDate localDate = LocalDate.parse(date, formatter);
+        LocalDate localDateNaiss = localDate;
+
+        eleveDto.setElevedate_naissance(localDateNaiss);
+      }
+
+
+
+      elv = ModifierEleve(eleveDto) ;
+
+
+
+      if(elv != null){
+
+        inscriptionDto.setIdentifiantEcole(idEcole);
+        inscriptionDto.setIdentifiantAnnee_scolaire(idAnneeScolaire);
+        inscriptionDto.setIdentifiantBranche(idBranche);
+        Inscriptions.typeOperation myOperation= Inscriptions.typeOperation.valueOf(typeOperation);
+
+        Inscriptions.statusEleve myStatutEleve = Inscriptions.statusEleve.valueOf(NewmyStatut);
+        inscriptionDto.setInscriptions_langue_vivante(lisImpo.get(i).getLv2());
+        inscriptionDto.setInscriptions_redoublant(lisImpo.get(i).getRedoublant());
+
+        inscriptionDto.setInscriptions_contact1(lisImpo.get(i).getMobile());
+        inscriptionDto.setInscriptions_contact2(lisImpo.get(i).getMobile2());
+        inscriptionDto.setNom_prenoms_pere(lisImpo.get(i).getPere());
+        inscriptionDto.setNom_prenoms_mere(lisImpo.get(i).getMere());
+        inscriptionDto.setInscriptions_statut_eleve(myStatutEleve);
+        inscriptionDto.setNom_prenoms_tuteur(lisImpo.get(i).getTuteur());
+        inscriptionDto.setDecision_ant(lisImpo.get(i).getDecision_ant());
+        inscriptionDto.setIdentifiantEleve(elv.getEleveid());
+        inscriptionDto.setInscriptions_type(myOperation);
+        inscriptionDto.setInscriptions_boursier(lisImpo.get(i).getRegime());
+        inscriptionDto.setInscriptionsdate_modification(LocalDate.now());
+
+        if(lisImpo.get(i).getIvoirien()!=null&& !lisImpo.get(i).getIvoirien().isEmpty()&&
+            lisImpo.get(i).getIvoirien().trim().equalsIgnoreCase("NON"))
+        {
+          inscriptionDto.setIvoirien(false);
+
+        } else {
+          inscriptionDto.setIvoirien(true);
+        }
+
+        if(lisImpo.get(i).getEtranger_africain()!=null&& !lisImpo.get(i).getEtranger_africain().isEmpty()&&
+            lisImpo.get(i).getEtranger_africain().trim().equalsIgnoreCase("OUI"))
+        {
+          inscriptionDto.setEtranger_africain(true);
+
+        } else {
+          inscriptionDto.setEtranger_africain(false);
+        }
+
+        if(lisImpo.get(i).getEtranger_non_africain()!=null&& !lisImpo.get(i).getEtranger_non_africain().isEmpty()&&
+            lisImpo.get(i).getEtranger_non_africain().trim().equalsIgnoreCase("OUI"))
+        {
+          inscriptionDto.setEtranger_non_africain(true);
+
+        } else {
+          inscriptionDto.setEtranger_non_africain(false);
+        }
+
+
+
+
+
+
+        messageRetour=  inscriptionService.verifmodifierInscription(inscriptionDto,idEcole,elv.getEleve_matricule(),idAnneeScolaire);
+
+        if(!messageRetour.equals("INSCRIPTION MODIFIEE AVEC SUCCES!")){
+          matriculeNonCreer.add(lisImpo.get(i).getMatricule()) ;
+        }
+      } else  {
+        matriculeNonCreer.add(lisImpo.get(i).getMatricule()) ;
+      }
+
+    }
+
+    if(matriculeNonCreer.size()>0){
+      String mess="Les matricules suivants n'existe pas!";
+      messageRetour = String.join(", ", matriculeNonCreer);
+      messageRetour= mess+" "+ messageRetour ;
+    }
+
+    return messageRetour ;
+  }
     public String importerMiseEleve(List<importEleveDto> lisImpo ,Long idEcole,Long idAnneeScolaire,String typeOperation ,Long idBranche){
         String messageRetour ="" ;
         List<String> matriculeNonCreer = new ArrayList<>();
@@ -181,7 +329,147 @@ public class EleveService implements PanacheRepositoryBase<eleve, Long> {
         return messageRetour ;
     }
 
+  public List<Inscriptions>  inscrireEleveVieEcole(List<importEleveDto> lisImpo ,String ecoleCode,Long idAnneeScolaire ,Long idBranche){
+    long timestamp = System.currentTimeMillis() ;
+    String typeOperation="INSCRIPTION";
+    Ecole ecole = Ecole.find("identifiantVieEcole =?1",ecoleCode).firstResult();
+    Long idEcole=ecole.getId();
+    String matriculeGenere = "G_"+ecole.getId()+timestamp ;
 
+    System.out.println("matriculeGenere "+matriculeGenere);
+
+    List<Inscriptions> inscriptionsList= new ArrayList<>();
+    List<String> matriculeNonCreer = new ArrayList<>();
+    for (int i = 0; i < lisImpo.size(); i++){
+      Inscriptions inscriptionCree =new Inscriptions();
+      //String myStatut= lisImpo.get(i).getStatut() ;
+      String NewmyStatut ;
+      System.out.println("Statut0 "+lisImpo.get(i).getStatut());
+      if(lisImpo.get(i).getStatut().trim().equalsIgnoreCase("AFF")){
+        NewmyStatut= String.valueOf(Inscriptions.statusEleve.AFFECTE);
+      }else {
+        NewmyStatut= String.valueOf(Inscriptions.statusEleve.NON_AFFECTE);
+      }
+      EleveDto eleveDto= new EleveDto() ;
+      eleve elv =new eleve() ;
+      InscriptionDto inscriptionDto = new InscriptionDto() ;
+
+
+
+
+
+
+
+      if(lisImpo.get(i).getMatricule()==null || lisImpo.get(i).getMatricule().isEmpty())
+      {
+        eleveDto.setElevematricule_national(matriculeGenere);
+
+      }
+
+      else
+        eleveDto.setElevematricule_national(lisImpo.get(i).getMatricule());
+
+      String msexe ;
+      if(lisImpo.get(i).getSexe().trim().equalsIgnoreCase("F"))
+        msexe = "FEMININ";
+      else
+        msexe = "MASCULIN";
+      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+      eleveDto.setEleveSexe(msexe);
+      eleveDto.setElevenom(lisImpo.get(i).getNom());
+      eleveDto.setEleve_nationalite(lisImpo.get(i).getNationalite());
+      eleveDto.setEleveprenom(lisImpo.get(i).getPrenoms());
+      eleveDto.setEleve_nationalite(lisImpo.get(i).getNationalite());
+      eleveDto.setElevelieu_naissance(lisImpo.get(i).getLieun());
+      eleveDto.setEleve_numero_extrait_naiss(lisImpo.get(i).getExtrait_numero());
+
+      if(lisImpo.get(i).getExtrait_date()!=null){
+        LocalDate localDateExtre = LocalDate.parse(lisImpo.get(i).getExtrait_date(), formatter);
+        LocalDate localDateNaissExtre = localDateExtre;
+        eleveDto.setElevedate_etabli_extrait_naiss(localDateNaissExtre);
+      }
+
+
+      eleveDto.setElevelieu_etabliss_etrait_naissance(lisImpo.get(i).getExtrait_lieu());
+      eleveDto.setEleveadresse(lisImpo.get(i).getAdresse());
+
+      if(lisImpo.get(i).getDatenaissance()==null|| lisImpo.get(i).getDatenaissance().isEmpty()){
+        String date = "01/01/1900";
+        LocalDate localDate = LocalDate.parse(date, formatter);
+        LocalDate localDateNaiss = localDate;
+
+        eleveDto.setElevedate_naissance(localDateNaiss);
+      } else {
+        String date = lisImpo.get(i).getDatenaissance();
+        LocalDate localDate = LocalDate.parse(date, formatter);
+        LocalDate localDateNaiss = localDate;
+
+        eleveDto.setElevedate_naissance(localDateNaiss);
+      }
+
+
+
+      ///Creer l'eleve
+      System.out.println("Debut creation eleve ");
+      elv= CreerUnEleve(eleveDto) ;
+      System.out.println("Fin creation eleve ");
+      inscriptionDto.setIdentifiantEcole(idEcole);
+      inscriptionDto.setIdentifiantAnnee_scolaire(idAnneeScolaire);
+      inscriptionDto.setIdentifiantBranche(idBranche);
+      Inscriptions.typeOperation myOperation= Inscriptions.typeOperation.valueOf(typeOperation);
+
+      Inscriptions.statusEleve myStatutEleve = Inscriptions.statusEleve.valueOf(NewmyStatut);
+      inscriptionDto.setInscriptions_langue_vivante(lisImpo.get(i).getLv2());
+      inscriptionDto.setInscriptions_redoublant(lisImpo.get(i).getRedoublant());
+      inscriptionDto.setInscriptions_contact1(lisImpo.get(i).getMobile() );
+      inscriptionDto.setInscriptions_contact2(lisImpo.get(i).getMobile2()) ;
+      inscriptionDto.setNom_prenoms_pere(lisImpo.get(i).getPere());
+      inscriptionDto.setNom_prenoms_mere(lisImpo.get(i).getMere());
+      inscriptionDto.setInscriptions_statut_eleve(myStatutEleve);
+      inscriptionDto.setNom_prenoms_tuteur(lisImpo.get(i).getTuteur());
+      inscriptionDto.setDecision_ant(lisImpo.get(i).getDecision_ant());
+      inscriptionDto.setIdentifiantEleve(elv.getEleveid());
+      inscriptionDto.setInscriptions_type(myOperation);
+      inscriptionDto.setInscriptions_boursier(lisImpo.get(i).getRegime());
+      inscriptionDto.setInscriptionsdate_creation(LocalDate.now());
+
+      if(lisImpo.get(i).getIvoirien()!=null&& !lisImpo.get(i).getIvoirien().isEmpty()&&
+          lisImpo.get(i).getIvoirien().trim().equalsIgnoreCase("NON"))
+      {
+        inscriptionDto.setIvoirien(false);
+
+      } else {
+        inscriptionDto.setIvoirien(true);
+      }
+
+      if(lisImpo.get(i).getEtranger_africain()!=null&& !lisImpo.get(i).getEtranger_africain().isEmpty()&&
+          lisImpo.get(i).getEtranger_africain().trim().equalsIgnoreCase("OUI"))
+      {
+        inscriptionDto.setEtranger_africain(true);
+
+      } else {
+        inscriptionDto.setEtranger_africain(false);
+      }
+
+      if(lisImpo.get(i).getEtranger_non_africain()!=null&& !lisImpo.get(i).getEtranger_non_africain().isEmpty()&&
+          lisImpo.get(i).getEtranger_non_africain().trim().equalsIgnoreCase("OUI"))
+      {
+        inscriptionDto.setEtranger_non_africain(true);
+
+      } else {
+        inscriptionDto.setEtranger_non_africain(false);
+      }
+      inscriptionCree =  inscriptionService.verifInscriptionVieEcole(inscriptionDto,idEcole,elv.getEleve_matricule(),idAnneeScolaire);
+
+
+    if(inscriptionCree!=null)
+      inscriptionsList.add(inscriptionCree);
+    }
+
+
+
+    return inscriptionsList ;
+  }
 
    public String importerCreerEleve(List<importEleveDto> lisImpo ,Long idEcole,Long idAnneeScolaire,String typeOperation ,Long idBranche){
        long timestamp = System.currentTimeMillis() ;

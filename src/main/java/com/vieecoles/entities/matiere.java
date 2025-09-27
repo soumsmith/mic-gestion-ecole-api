@@ -25,16 +25,24 @@ public class matiere extends PanacheEntityBase {
     private String  coef ;
     @Transient
     private String appreciation;
+    private String code_vie_ecole;
 
+    public String getCode_vie_ecole() {
+        return code_vie_ecole;
+    }
+
+    public void setCode_vie_ecole(String code_vie_ecole) {
+        this.code_vie_ecole = code_vie_ecole;
+    }
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "categorie_matiere_categorie_matiereid")
     private CategorieMatiere categorie_matiere ;
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    /*@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tenant_tenantid")
-    private com.vieecoles.entities.tenant tenant ;
+    private com.vieecoles.entities.tenant tenant ;*/
 
     public Long getMatiereid() {
         return matiereid;
@@ -76,11 +84,4 @@ public class matiere extends PanacheEntityBase {
         this.categorie_matiere = categorie_matiere;
     }
 
-    public com.vieecoles.entities.tenant getTenant() {
-        return tenant;
-    }
-
-    public void setTenant(com.vieecoles.entities.tenant tenant) {
-        this.tenant = tenant;
-    }
 }

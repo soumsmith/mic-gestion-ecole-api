@@ -36,7 +36,7 @@ public class importEleveDto {
         return extrait_numero;
     }
 
-    private  Long identifiantEcole;
+    //private  Long identifiantEcole;
 
 
 
@@ -280,11 +280,5 @@ public class importEleveDto {
         this.decision_aff = decision_aff;
     }
 
-    public Long getIdentifiantEcole() {
-        return identifiantEcole;
-    }
 
-    public void setIdentifiantEcole(Long identifiantEcole) {
-        this.identifiantEcole = identifiantEcole;
-    }
 }

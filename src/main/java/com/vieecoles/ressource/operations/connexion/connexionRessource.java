@@ -36,8 +36,6 @@ import jakarta.ws.rs.core.Response;
 
 @Tag(name = "Mes Operations", description = "mes Operations")
 @Path("/connexion")
-@Produces(MediaType.APPLICATION_JSON)
-@Consumes(MediaType.APPLICATION_JSON)
 public class connexionRessource {
     @Inject
     connexionService myconnexionService ;
@@ -265,7 +263,7 @@ public class connexionRessource {
 
         return   idUtilisateur ;
     }
-    
+
     @GET
     @Path("id-utilisateur-connecte-v2/")
     @Produces(MediaType.APPLICATION_JSON)

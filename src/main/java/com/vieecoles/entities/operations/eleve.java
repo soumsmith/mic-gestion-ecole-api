@@ -44,11 +44,11 @@ public class eleve extends PanacheEntityBase {
 
 
    // @JsonbTransient
-    @ManyToMany
+    /*@ManyToMany
     @JoinTable( name = "eleve_parent",
             joinColumns = @JoinColumn( name = "eleve_eleveid" ),
             inverseJoinColumns = @JoinColumn( name = "parent_parentid" ) )
-    private List<Parent> parents = new ArrayList<>();
+    private List<Parent> parents = new ArrayList<>();*/
 
 
     public enum sexeEleve{
@@ -69,7 +69,7 @@ public class eleve extends PanacheEntityBase {
                 ", eleveadresse='" + eleveadresse + '\'' +
                 ", elevecellulaire='" + elevecellulaire + '\'' +
                 ", eleve_mail='" + eleve_mail + '\'' +
-                 ", parents=" + parents +
+                 ", parents=" +
                 '}';
     }
 
@@ -198,12 +198,4 @@ public class eleve extends PanacheEntityBase {
         this.eleve_mail = eleve_mail;
     }
 
-
-    public List<Parent> getParents() {
-        return parents;
-    }
-
-    public void setParents(List<Parent> parents) {
-        this.parents = parents;
-    }
 }

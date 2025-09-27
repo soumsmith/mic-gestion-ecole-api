@@ -1,5 +1,7 @@
 package com.vieecoles.steph.ressources;
 
+import com.vieecoles.steph.entities.Classe;
+import com.vieecoles.steph.entities.Ecole;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +48,22 @@ public class NotesResource {
 			@QueryParam("periodeId") String periodeId) {
 		System.out.println(String.format("%s %s %s", classeId, anneeId, periodeId));
 		return Response.ok().entity(noteService.process(classeId, anneeId, periodeId)).build();
+	}
+	@GET
+	@Path("/list-note-classe-vie-ecole")
+	@Tag(name = "Notes")
+	public Response listByClassevieEcole(@QueryParam("classeId") String classeCode, @QueryParam("anneeId") String anneeId,
+								 @QueryParam("periodeId") String periodeId) {
+
+		Classe classe = Classe.find("identifiantVieEcole =?1",classeCode).firstResult();
+		if(classe == null) {
+			return Response.status(Response.Status.NOT_FOUND).build();
+		} else {
+			String  classeId=String.valueOf(classe.getId());
+			System.out.println(String.format("%s %s %s", classeId, anneeId, periodeId));
+			return Response.ok().entity(noteService.process(classeId, anneeId, periodeId)).build();
+		}
+
 	}
 
 	@GET
@@ -137,7 +155,7 @@ public class NotesResource {
 	/**
 	 * Cette méthode donne les notes et moyennes des élèves d'une classe pour une
 	 * matière
-	 * 
+	 *
 	 * @param classe
 	 * @param matiere
 	 * @param annee
@@ -157,7 +175,7 @@ public class NotesResource {
 
 	/**
 	 * Obtenir les notes et la moyenne d'un eleve pour une matiere.
-	 * 
+	 *
 	 * @param matricule
 	 * @param matiere
 	 * @param annee

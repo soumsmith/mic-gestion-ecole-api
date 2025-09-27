@@ -502,7 +502,7 @@ public class RapportRapideRentreServices {
 
  Long getNombreClasse( String niveau,Long IdEcole  ){
         List<Classe> myClass= new ArrayList<>();
-     myClass= Classe.find("branche.libelle = ?1 and ecole.id=?2",niveau, IdEcole).list() ;
+     myClass= Classe.find("branche.libelle = ?1 and ecole.id=?2 and visible=?3",niveau, IdEcole,1).list() ;
      try {
          return (long) myClass.size();
      }catch (NoResultException e) {

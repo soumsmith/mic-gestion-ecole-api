@@ -2,14 +2,11 @@ package com.vieecoles.ressource.operations.etats;
 
 
 import com.vieecoles.dto.EmploiDuTemps;
-import com.vieecoles.dto.RapportRentreeDto;
 import com.vieecoles.dto.Rapport_RappidDto;
 import com.vieecoles.entities.operations.ecole;
 import com.vieecoles.entities.parametre;
-import com.vieecoles.services.etats.EmploiDuTempsServices;
 import com.vieecoles.services.etats.MatriceMoyenneServices;
 import com.vieecoles.services.etats.RapportRapideRentreServices;
-import com.vieecoles.services.etats.RapportRentreeServices;
 import com.vieecoles.services.souscription.SousceecoleService;
 import com.vieecoles.steph.entities.PersonnelMatiereClasse;
 import com.vieecoles.steph.services.PersonnelMatiereClasseService;
@@ -96,14 +93,19 @@ public class RapportRapideRessource {
 
         InputStream myInpuStream ;
         /*myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/BulletinBean.jrxml");*/
-        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Enquete_rentree2.jrxml");
+        myInpuStream = this.getClass().getClassLoader().getResourceAsStream(
+            "etats/spider/Enquete_rentree2.jrxml");
         EmploiDuTemps emp= new EmploiDuTemps() ;
 
         Rapport_RappidDto m= new Rapport_RappidDto() ;
         List<Rapport_RappidDto> detailsBull  = new ArrayList<>() ;
        // emp = rapportRentree.EmploiDuTemps(idEcole ,idAnnee ,classeId) ;
+try {
+    m = rapportRentree.RapportRentree(idEcole ,idAnnee) ;
+} catch (RuntimeException e) {
+    e.printStackTrace();
+}
 
-        m = rapportRentree.RapportRentree(idEcole ,idAnnee) ;
         detailsBull.add(m);
         JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource( detailsBull) ;
         JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);

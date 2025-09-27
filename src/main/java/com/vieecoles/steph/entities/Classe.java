@@ -48,6 +48,8 @@ public class Classe extends PanacheEntityBase {
 	private Integer visible;
 	@Column(name = "date_update")
 	private Date dateUpdate;
+	@Column(name = "identifiant_vie_ecole")
+	private String identifiantVieEcole;
 //	@Transient
 //	@OneToMany
 //	private List<Eleve> eleve;

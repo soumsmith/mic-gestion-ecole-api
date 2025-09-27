@@ -20,12 +20,19 @@ public class RepartPartielElevParAnNaissServices {
     public List<RepartitionEleveParAnNaissDto> CalculRepartElevParAnnNaiss(Long idEcole ,String libelleAnnee ){
 
         List<DateNaissNiveauDto> dateNiveauDtoList = new ArrayList<>() ;
-        TypedQuery<DateNaissNiveauDto> q = em.createQuery( "SELECT new com.vieecoles.dto.DateNaissNiveauDto(SUBSTRING(e.elevedate_naissance,1,4)) from Inscriptions o , eleve  e where o.eleve.eleveid = e.eleveid and o.annee_scolaire.annee_scolaire_libelle=:annee and o.ecole.ecoleid =:idEcole  " +
-                " group by SUBSTRING(e.elevedate_naissance,1,4)  ", DateNaissNiveauDto.class);
+        TypedQuery<DateNaissNiveauDto> q = em.createQuery(
+            "SELECT new com.vieecoles.dto.DateNaissNiveauDto(CAST(YEAR(e.elevedate_naissance) AS string)) " +
+                "FROM Inscriptions o, eleve e " +
+                "WHERE o.eleve.eleveid = e.eleveid " +
+                "AND o.annee_scolaire.annee_scolaire_libelle = :annee " +
+                "AND o.ecole.ecoleid = :idEcole " +
+                "GROUP BY CAST(YEAR(e.elevedate_naissance) AS string)",
+            DateNaissNiveauDto.class
+        );
 
         dateNiveauDtoList = q.setParameter("idEcole", idEcole)
-                                .setParameter("annee", libelleAnnee)
-                             . getResultList() ;
+            .setParameter("annee", libelleAnnee)
+            .getResultList();
 
   System.out.println("dateNiveauDtoList "+dateNiveauDtoList.toString());
 
