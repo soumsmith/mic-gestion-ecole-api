@@ -1,5 +1,8 @@
 package com.vieecoles.steph.ressources;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
@@ -52,7 +55,13 @@ public class ActiviteRessource {
 	@Tag(name = "Activite")
 	public Response getByClasseAndJour(@QueryParam("annee") long anneeId, @QueryParam("classe") long classeId,
 			@QueryParam("jour") int jourId) {
-		return Response.ok().entity(activiteService.getListByClasseAndJour(classeId, jourId)).build();
+		List<Activite> activites = new ArrayList<>();
+		try {
+			activites = activiteService.getListByClasseAndJour(classeId, jourId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return Response.ok().entity(activites).build();
 	}
 
 	@GET

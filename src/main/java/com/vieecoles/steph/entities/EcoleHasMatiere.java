@@ -1,9 +1,8 @@
 package com.vieecoles.steph.entities;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Date;
 
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,8 +12,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
-
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -24,7 +21,8 @@ import lombok.ToString;
 @Data
 @ToString(of = {"id"})
 @EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
-public class EcoleHasMatiere extends PanacheEntityBase{
+public class EcoleHasMatiere extends PanacheEntityBase implements java.io.Serializable {
+	private static final long serialVersionUID = 1L;
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
 	@EqualsAndHashCode.Include

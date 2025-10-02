@@ -5,6 +5,8 @@ import com.vieecoles.steph.entities.Classe;
 import com.vieecoles.steph.entities.ClasseEleve;
 import com.vieecoles.steph.entities.Ecole;
 import com.vieecoles.steph.entities.LangueVivante;
+import com.vieecoles.steph.entities.Personnel;
+
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 import io.quarkus.panache.common.Sort;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -230,6 +232,22 @@ public class ClasseService implements PanacheRepositoryBase<Classe,Integer> {
 //			logger.info(new Gson().toJson(classe));
 		}
 		return classes;
+	}
+	
+	/**
+	 * @author Stephane
+	 * 
+	 * Renvoie la liste des classes d'un enseignant dans une école pour une année donnée.
+	 *
+	 * @param enseignantId identifiant de l'enseignant {@link Personnel}
+	 * @param ecoleId identifiant de l'école {@link Ecole}
+	 * @param anneeId identifiant de l'année scolaire
+	 * @return Liste des classes {@link ClasseDto}	
+	 */
+	public List<ClasseDto> getClassesByEnseignantId(Long enseignantId, Long ecoleId, Long anneeId){	
+		List<ClasseDto> list = new ArrayList<>();
+		// to do
+		return list;
 	}
 
 }

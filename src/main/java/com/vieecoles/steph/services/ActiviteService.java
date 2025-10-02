@@ -6,6 +6,8 @@ import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.json.bind.Jsonb;
+import jakarta.json.bind.JsonbBuilder;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.core.Response;
 import java.net.URI;
@@ -54,6 +56,10 @@ public class ActiviteService implements PanacheRepositoryBase<Activite, Integer>
 		List<Activite> list = new ArrayList<Activite>();
 		try {
 			list = Activite.find("classe.id = ?1 and jour.id = ?2 and statut = ?3", classeId, jourId, Constants.ACTIF).list();
+			Jsonb jsonb = JsonbBuilder.create();
+			String json = jsonb.toJson(list);
+			System.out.println(json);
+//			list.forEach(x -> x.setMatiere(null));
 		} catch (RuntimeException e) {
 			e.printStackTrace();// TODO: handle exception
 		}
