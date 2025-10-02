@@ -8,6 +8,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 
+import java.time.LocalDateTime;
+
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -40,5 +42,10 @@ public class AbsenceEleve extends PanacheEntityBase{
 	private Integer absJustifiee;
 	@Column(name = "abs_non_just")
 	private Integer absNonJustifiee;
+	
+	@Column(name = "date_creation")
+	private LocalDateTime createdAt;
+	@Column(name = "date_update")
+	private LocalDateTime updatedAt;
 
 }
