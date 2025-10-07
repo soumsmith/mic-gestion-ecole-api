@@ -104,7 +104,7 @@ public class PersonnelService {
 		}
 		return (long) 0;
 	}
-	
+
 	public Long countByEcoleAndFonctionAndStatut(Long ecoleId, int fonction, int statut) {
 		logger.info("countByEcoleAndFonctionAndStatut ecole id ::: " + ecoleId + " "+fonction+" "+statut);
 		try {
@@ -128,7 +128,7 @@ public class PersonnelService {
 			return (long) 0;
 		}
 	}
-	
+
 	public List<Personnel> getByEcoleAndProfil(Long ecole, Integer profil) {
 		TypedQuery<Personnel> query = em.createNamedQuery("Personnel.getByEcoleAndProfil", Personnel.class);
 		query.setParameter("ecoleId", ecole);
@@ -142,12 +142,24 @@ public class PersonnelService {
 			return new ArrayList<Personnel>();
 		}
 	}
-	
+
 	public List<Personnel> getByEcoleAndProfil_v2(Long ecole, Integer profil) {
 		try {
 			Long profilId = Long.parseLong(profil.toString());
 			List<Personnel> personnels =Personnel.find("select p from Personnel p left join utilisateur_has_personnel up on p.id = up.personnel_personnelid where "
 					+ " p.ecole.id = ?1 and up.profil.profilid = ?2 ", ecole, profilId).list();
+//			System.out.println(personnels);
+			return  personnels;
+		} catch (NoResultException ex) {
+			ex.getMessage();
+			return new ArrayList<Personnel>();
+		}
+	}
+	public List<Personnel> getByEcoleAndProfil_v2_Anneeid(Long ecole, Integer profil, Long anneeid) {
+		try {
+			Long profilId = Long.parseLong(profil.toString());
+			List<Personnel> personnels =Personnel.find("select p from Personnel p left join utilisateur_has_personnel up on p.id = up.personnel_personnelid where "
+					+ " p.ecole.id = ?1 and up.profil.profilid = ?2 and p.anneeId =?3 ", ecole, profilId,anneeid).list();
 //			System.out.println(personnels);
 			return  personnels;
 		} catch (NoResultException ex) {

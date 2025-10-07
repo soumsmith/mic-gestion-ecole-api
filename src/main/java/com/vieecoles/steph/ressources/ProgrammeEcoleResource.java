@@ -30,8 +30,8 @@ public class ProgrammeEcoleResource {
 	@Path("list-by-ecole-vie-ecole")
 	@Operation(description = "Obtenir la liste des programmes par école", summary = "")
 	@Tag(name = "Programme")
-	public Response getListByEcolevieecole(@QueryParam("ecoleId") String ecoleCode) {
-		Ecole ecole = Ecole.find("identifiantVieEcole =?1",ecoleCode).firstResult();
+	public Response getListByEcolevieecole(@QueryParam("ecoleId") String ecoleCode,@QueryParam("idNiveauEnseignement") Long idNiveauEnseignement) {
+		Ecole ecole = Ecole.find("identifiantVieEcole =?1 and niveauEnseignement.id=?2",ecoleCode,idNiveauEnseignement).firstResult();
 		if (ecole == null) {
 			return Response.status(Response.Status.NOT_FOUND).build();
 		} else {

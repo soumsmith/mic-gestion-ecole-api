@@ -1,6 +1,7 @@
 package com.vieecoles.services.eleves;
 
 import com.vieecoles.dto.EleveDto;
+import com.vieecoles.dto.EleveMatriculeDto;
 import com.vieecoles.dto.InscriptionDto;
 import com.vieecoles.dto.importEleveDto;
 import com.vieecoles.entities.Parent;
@@ -22,6 +23,7 @@ import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Optional;
 
 @ApplicationScoped
 public class EleveService implements PanacheRepositoryBase<eleve, Long> {
@@ -36,10 +38,10 @@ public class EleveService implements PanacheRepositoryBase<eleve, Long> {
    public  eleve findById(Long cycleId){
        return eleve.findById(cycleId);
    }
-  public String modifierEleveVieEcole(List<importEleveDto> lisImpo ,String ecoleCode,Long idAnneeScolaire,Long idBranche){
+  public String modifierEleveVieEcole(List<importEleveDto> lisImpo ,String ecoleCode,Long idAnneeScolaire,Long idBranche , Long idNiveauEnseignement){
     String messageRetour ="" ;
     List<String> matriculeNonCreer = new ArrayList<>();
-    Ecole ecole = Ecole.find("identifiantVieEcole =?1",ecoleCode).firstResult();
+    Ecole ecole = Ecole.find("identifiantVieEcole =?1 and niveauEnseignement.id=?2",ecoleCode,idNiveauEnseignement).firstResult();
     Long idEcole=ecole.getId();
     String typeOperation="INSCRIPTION";
 
@@ -89,14 +91,7 @@ public class EleveService implements PanacheRepositoryBase<eleve, Long> {
 
       eleveDto.setElevelieu_etabliss_etrait_naissance(lisImpo.get(i).getExtrait_lieu());
       eleveDto.setEleveadresse(lisImpo.get(i).getAdresse());
-      if(lisImpo.get(i).getDatenaissance()==null||
-          lisImpo.get(i).getDatenaissance().isEmpty()){
-        String date = "01/01/1900";
-        LocalDate localDate = LocalDate.parse(date, formatter);
-        LocalDate localDateNaiss = localDate;
-
-        eleveDto.setElevedate_naissance(localDateNaiss);
-      } else {
+      if(lisImpo.get(i).getDatenaissance()!=null){
         String date = lisImpo.get(i).getDatenaissance();
         LocalDate localDate = LocalDate.parse(date, formatter);
         LocalDate localDateNaiss = localDate;
@@ -165,7 +160,7 @@ public class EleveService implements PanacheRepositoryBase<eleve, Long> {
 
 
 
-        messageRetour=  inscriptionService.verifmodifierInscription(inscriptionDto,idEcole,elv.getEleve_matricule(),idAnneeScolaire);
+        messageRetour=  inscriptionService.verifmodifierInscription(inscriptionDto,idEcole,elv.getEleve_matricule(),idAnneeScolaire,idBranche);
 
         if(!messageRetour.equals("INSCRIPTION MODIFIEE AVEC SUCCES!")){
           matriculeNonCreer.add(lisImpo.get(i).getMatricule()) ;
@@ -176,6 +171,7 @@ public class EleveService implements PanacheRepositoryBase<eleve, Long> {
 
     }
 
+
     if(matriculeNonCreer.size()>0){
       String mess="Les matricules suivants n'existe pas!";
       messageRetour = String.join(", ", matriculeNonCreer);
@@ -184,6 +180,64 @@ public class EleveService implements PanacheRepositoryBase<eleve, Long> {
 
     return messageRetour ;
   }
+
+  public String modifierEleveMatricule(List<EleveMatriculeDto> lisImpo ){
+    String messageRetour ="" ;
+
+
+    for (int i = 0; i < lisImpo.size(); i++){
+
+
+      EleveDto eleveDto= new EleveDto() ;
+      String msexe ;
+      if(lisImpo.get(i).getSexe()!=null) {
+        if(lisImpo.get(i).getSexe().trim().equalsIgnoreCase("F"))
+          msexe = "FEMININ";
+        else
+          msexe = "MASCULIN";
+        eleveDto.setEleveSexe(msexe);
+      }
+
+
+      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+      eleveDto.setElevenom(lisImpo.get(i).getNom());
+      eleveDto.setEleve_nationalite(lisImpo.get(i).getNationalite());
+      eleveDto.setEleveprenom(lisImpo.get(i).getPrenom());
+      eleveDto.setEleve_nationalite(lisImpo.get(i).getNationalite());
+      eleveDto.setElevelieu_naissance(lisImpo.get(i).getLieuNaissance());
+      eleveDto.setEleve_numero_extrait_naiss(lisImpo.get(i).getNumeroExtraitNaiss());
+      eleveDto.setElevematricule_national(lisImpo.get(i).getMatriculeNational());
+
+      if(lisImpo.get(i).getDateEtabliExtraitNaiss()!=null){
+        LocalDate localDateExtre = LocalDate.parse(lisImpo.get(i).getDateEtabliExtraitNaiss(), formatter);
+        LocalDate localDateNaissExtre = localDateExtre;
+        eleveDto.setElevedate_etabli_extrait_naiss(localDateNaissExtre);
+      }
+
+      eleveDto.setElevelieu_etabliss_etrait_naissance(lisImpo.get(i).getLieuEtablissEtraitNaissance());
+      eleveDto.setEleveadresse(lisImpo.get(i).getAdresse());
+      if(lisImpo.get(i).getDateNaissance()!=null){
+        String date = lisImpo.get(i).getDateNaissance();
+        LocalDate localDate = LocalDate.parse(date, formatter);
+        LocalDate localDateNaiss = localDate;
+
+        eleveDto.setElevedate_naissance(localDateNaiss);
+      }
+
+
+
+      ModifierEleve(eleveDto) ;
+
+    }
+
+
+    messageRetour="Infos Modifiées avec succès!" ;
+
+    return messageRetour ;
+  }
+
+
     public String importerMiseEleve(List<importEleveDto> lisImpo ,Long idEcole,Long idAnneeScolaire,String typeOperation ,Long idBranche){
         String messageRetour ="" ;
         List<String> matriculeNonCreer = new ArrayList<>();
@@ -309,7 +363,7 @@ public class EleveService implements PanacheRepositoryBase<eleve, Long> {
 
 
 
-                messageRetour=  inscriptionService.verifmodifierInscription(inscriptionDto,idEcole,elv.getEleve_matricule(),idAnneeScolaire);
+                messageRetour=  inscriptionService.verifmodifierInscription(inscriptionDto,idEcole,elv.getEleve_matricule(),idAnneeScolaire,idBranche);
 
                 if(!messageRetour.equals("INSCRIPTION MODIFIEE AVEC SUCCES!")){
                     matriculeNonCreer.add(lisImpo.get(i).getMatricule()) ;
@@ -329,10 +383,10 @@ public class EleveService implements PanacheRepositoryBase<eleve, Long> {
         return messageRetour ;
     }
 
-  public List<Inscriptions>  inscrireEleveVieEcole(List<importEleveDto> lisImpo ,String ecoleCode,Long idAnneeScolaire ,Long idBranche){
+  public List<Inscriptions>  inscrireEleveVieEcole(List<importEleveDto> lisImpo ,String ecoleCode,Long idAnneeScolaire ,Long idBranche,Long idNiveauEnseignement){
     long timestamp = System.currentTimeMillis() ;
     String typeOperation="INSCRIPTION";
-    Ecole ecole = Ecole.find("identifiantVieEcole =?1",ecoleCode).firstResult();
+    Ecole ecole = Ecole.find("identifiantVieEcole =?1 and niveauEnseignement.id=?2",ecoleCode,idNiveauEnseignement).firstResult();
     Long idEcole=ecole.getId();
     String matriculeGenere = "G_"+ecole.getId()+timestamp ;
 
@@ -459,7 +513,7 @@ public class EleveService implements PanacheRepositoryBase<eleve, Long> {
       } else {
         inscriptionDto.setEtranger_non_africain(false);
       }
-      inscriptionCree =  inscriptionService.verifInscriptionVieEcole(inscriptionDto,idEcole,elv.getEleve_matricule(),idAnneeScolaire);
+      inscriptionCree =  inscriptionService.verifInscriptionVieEcole(inscriptionDto,idEcole,elv.getEleve_matricule(),idAnneeScolaire,idBranche);
 
 
     if(inscriptionCree!=null)
@@ -624,20 +678,20 @@ System.out.println("Statut0 "+lisImpo.get(i).getStatut());
             System.out.println(eleveDto.getElevematricule_national());
             System.out.println("Ancien elève");
             myElev = eleve.findById(myeleve.getEleveid());
-            myElev.setEleveprenom(eleveDto.getEleveprenom());
-            myElev.setElevenom(eleveDto.getElevenom());
-            myElev.setElevelieu_naissance(eleveDto.getElevelieu_naissance());
-            myElev.setEleveadresse(eleveDto.getEleveadresse());
-            myElev.setEleve_nationalite(eleveDto.getEleve_nationalite());
-            myElev.setElevecellulaire(eleveDto.getElevecellulaire());
-            myElev.setElevedate_naissance(eleveDto.getElevedate_naissance());
-            myElev.setElevedate_etabli_extrait_naiss(eleveDto.getElevedate_etabli_extrait_naiss());
-            myElev.setElevelieu_etabliss_etrait_naissance(eleveDto.getElevelieu_etabliss_etrait_naissance());
-            myElev.setEleve_sexe(eleveDto.getEleveSexe());
-            myElev.setEleveadresse(eleveDto.getEleveadresse());
+            Optional.ofNullable(eleveDto.getEleveprenom()).ifPresent(myElev::setEleveprenom);
+            Optional.ofNullable(eleveDto.getElevenom()).ifPresent(myElev::setElevenom);
+            Optional.ofNullable(eleveDto.getElevelieu_naissance()).ifPresent(myElev::setElevelieu_naissance);
+            Optional.ofNullable(eleveDto.getEleveadresse()).ifPresent(myElev::setEleveadresse);
+            Optional.ofNullable(eleveDto.getEleve_nationalite()).ifPresent(myElev::setEleve_nationalite);
+            Optional.ofNullable(eleveDto.getElevecellulaire()).ifPresent(myElev::setElevecellulaire);
+            Optional.ofNullable(eleveDto.getElevedate_naissance()).ifPresent(myElev::setElevedate_naissance);
+            Optional.ofNullable(eleveDto.getElevedate_etabli_extrait_naiss()).ifPresent(myElev::setElevedate_etabli_extrait_naiss);
+            Optional.ofNullable(eleveDto.getElevelieu_etabliss_etrait_naissance()).ifPresent(myElev::setElevelieu_etabliss_etrait_naissance);
+            Optional.ofNullable(eleveDto.getEleveSexe()).ifPresent(myElev::setEleve_sexe);
             myElev.setEleve_matricule(eleveDto.getElevematricule_national());
 
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
+          e.printStackTrace();
             System.out.println("Nouvel elève");
             myElev= null;
         }

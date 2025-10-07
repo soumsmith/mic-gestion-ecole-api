@@ -323,7 +323,7 @@ public class LivretScolaireServices2 {
             m.setTmoyCoefEMR(TmoyCoefEMR);
             myEcole=sousceecoleService.getInffosEcoleByID(idEcole);
             //System.out.println("myEcole "+myEcole.toString());
-            myIns = inscriptionService.checkInscrit(idEcole,classeNiveauDtoList.get(i).getNiveau(),1L);
+            myIns = inscriptionService.checkInscrit(idEcole,classeNiveauDtoList.get(i).getNiveau(),1L,null);
             parametre mpara = new parametre();
             mpara = parametre.findById(1L) ;
             m.setAmoirie(mpara.getImage() );

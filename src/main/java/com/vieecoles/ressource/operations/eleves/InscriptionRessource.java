@@ -249,7 +249,7 @@ public class InscriptionRessource {
     public String checkInscription(@PathParam("idEcole") Long  idEcole , @PathParam("matricule") String  matricule , @PathParam("idAnnee") Long  idAnnee ) {
        Inscriptions inscriptions= new  Inscriptions() ;
        String mess= null ;
-        inscriptions =   matService.checkInscrit(idEcole , matricule ,idAnnee);
+        //inscriptions =   matService.checkInscrit(idEcole , matricule ,idAnnee);
         if (inscriptions==null)
             mess ="Cet élève n'a pas encore entamé son inscription!";
         else {

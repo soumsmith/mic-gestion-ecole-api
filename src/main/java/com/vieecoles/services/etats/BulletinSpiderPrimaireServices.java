@@ -116,7 +116,7 @@ public class BulletinSpiderPrimaireServices {
                 k.setTmoyCoefEMR(TmoyCoefEMR);
                 myEcole=sousceecoleService.getInffosEcoleByID(idEcole);
                 //System.out.println("myEcole "+myEcole.toString());
-                myIns = inscriptionService.checkInscrit(idEcole,classeNiveauDtoList.get(i).getNiveau(),mainAnnee.getId());
+                myIns = inscriptionService.checkInscrit(idEcole,classeNiveauDtoList.get(i).getNiveau(),mainAnnee.getId(),null);
                 System.out.println("myIns>>> "+myIns);
                 parametre mpara = new parametre();
                 mpara = parametre.findById(1L) ;
@@ -152,7 +152,7 @@ public class BulletinSpiderPrimaireServices {
                 l.setTmoyCoefEMR(TmoyCoefEMR);
                 myEcole=sousceecoleService.getInffosEcoleByID(idEcole);
                 //System.out.println("myEcole "+myEcole.toString());
-                myIns = inscriptionService.checkInscrit(idEcole,classeNiveauDtoList.get(i).getNiveau(),mainAnnee.getId());
+                myIns = inscriptionService.checkInscrit(idEcole,classeNiveauDtoList.get(i).getNiveau(),mainAnnee.getId(),null);
                 parametre mpara = new parametre();
                 mpara = parametre.findById(1L) ;
                 l.setAmoirie(mpara.getImage() );

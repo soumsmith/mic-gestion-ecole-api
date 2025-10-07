@@ -108,7 +108,7 @@ public class SouscPersonnelService implements PanacheRepositoryBase<sous_attent_
     mysouscripPersonn1= getSouscripByEmail(souscriPersonn.getSous_attent_personn_email()) ;
     //System.out.println("souscripteur trouvé "+mysouscripPersonn1.toString());
     if (mysouscripPersonn1!=null) {
-      return  null;
+      return  mysouscripPersonn1;
     } else {
 
       niveau_etude myNiveauEtude = new niveau_etude() ;
@@ -194,8 +194,9 @@ public class SouscPersonnelService implements PanacheRepositoryBase<sous_attent_
     sous_attent_personn messageRetour = new sous_attent_personn();
     messageRetour = CreerSousCripersonVieEcole(souscriPersonn) ;
     String messRespon=null ;
-
-    if (messageRetour!=null) {
+utilisateur user = new utilisateur() ;
+  user = getAcountUser(souscriPersonn.getSous_attent_personn_login()) ;
+    if (messageRetour!=null && user==null) {
       sous_attent_personn  mysouscripPersonn1 = new sous_attent_personn() ;
       mysouscripPersonn1= getSouscripByEmail(souscriPersonn.getSous_attent_personn_email()) ;
       Long idsouscripteur = mysouscripPersonn1.getSous_attent_personnid() ;
@@ -589,7 +590,15 @@ public class SouscPersonnelService implements PanacheRepositoryBase<sous_attent_
          return  null;
      }
     }
-
+  public  utilisateur getAcountUser(String login){
+    try {
+      return (utilisateur) em.createQuery("select o from utilisateur o where o.utilisateu_login =:login")
+          .setParameter("login",login)
+          .getSingleResult();
+    } catch (Exception e) {
+      return  null;
+    }
+  }
   public  Personnel getPersonnelBySouscription(Long idEcole,Long idPerson){
     try {
       return (Personnel) em.createQuery("select o from Personnel o where o.souscriptionAttenteId=: idPerson and o.ecole.id=:idEcole" )

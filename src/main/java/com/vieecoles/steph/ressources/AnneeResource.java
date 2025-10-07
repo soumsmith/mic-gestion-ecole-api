@@ -99,8 +99,8 @@ public class AnneeResource {
 	@Path("/list-opened-or-closed-to-ecole-vie-ecole")
 	@Operation(description = "Obtenir la liste des années centrales au moins ouvertes pour une école de vie-ecole", summary = "")
 	@Tag(name = "Année scolaire")
-	public Response listEcolevieEcole(@QueryParam("ecole") String ecoleCode) {
-		Ecole ecole = Ecole.find("identifiantVieEcole =?1",ecoleCode).firstResult();
+	public Response listEcolevieEcole(@QueryParam("ecole") String ecoleCode,@QueryParam("idNiveauEnseignement") Long idNiveauEnseignement) {
+		Ecole ecole = Ecole.find("identifiantVieEcole =?1 and niveauEnseignement.id=?2",ecoleCode,idNiveauEnseignement).firstResult();
 		if (ecole == null) {
 			return Response.status(Response.Status.NOT_FOUND).build();
 		} else {

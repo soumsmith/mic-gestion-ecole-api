@@ -161,7 +161,7 @@ public class LivretRessource {
 
         myEcole=sousceecoleService.getInffosEcoleByID(idEcole);
         //System.out.println("myEcole "+myEcole.toString());
-        myIns = inscriptionService.checkInscrit(idEcole,matricule,1L);
+        myIns = inscriptionService.checkInscrit(idEcole,matricule,1L,null);
         // System.out.println("Inscription "+ myIns.toString());
         byte[] imagebytes = new byte[0],imagebytes2 = new byte[0],imagebytes3 = new byte[0] ,imagebytes4 = new byte[0] ;
         if(myIns.getPhoto_eleve()!=null)

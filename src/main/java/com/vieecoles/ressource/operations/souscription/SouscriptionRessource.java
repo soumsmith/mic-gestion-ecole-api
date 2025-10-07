@@ -18,6 +18,7 @@ import com.vieecoles.steph.entities.PersonnelMatiereClasse;
 import com.vieecoles.steph.services.AnneeService;
 import com.vieecoles.steph.services.PersonnelMatiereClasseService;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.http.client.HttpClient;
@@ -295,14 +296,16 @@ public class SouscriptionRessource {
   @Produces(MediaType.TEXT_PLAIN)
   @Consumes(MediaType.APPLICATION_JSON)
   //@Transactional
-  @Path("creer-professeurs-vie-ecole/{codeVieEcole}")
-  public Response   RecruterVieEcole(@PathParam("codeVieEcole") String codeVieEcole,
+  @Path("creer-professeurs-vie-ecoles/{codeVieEcole}/{idNiveauEnseignement}")
+  public Response   RecruterVieEcole(@PathParam("codeVieEcole") String codeVieEcole,@PathParam("idNiveauEnseignement") Long idNiveauEnseignement,
                                    List<PersonnelVieEcoleDto> personnelList) throws IOException, SQLException {
     List<String> resultats = new ArrayList<>();
     List<String> erreurs = new ArrayList<>();
 
     // Vérification de l'école une seule fois
-    Ecole ecole = Ecole.find("identifiantVieEcole =?1", codeVieEcole).firstResult();
+    System.out.println("Entrée Pour créer un professeur **** ");
+    Ecole ecole = Ecole.find("identifiantVieEcole =?1 and niveauEnseignement.id=?2",codeVieEcole,idNiveauEnseignement).firstResult();
+    System.out.println("ecole **** "+ecole);
     if (ecole == null) {
       return Response.status(Response.Status.NOT_FOUND)
           .entity(Map.of("erreur", "Ecole introuvable dans Pouls-Pro"))
@@ -315,8 +318,13 @@ public class SouscriptionRessource {
     for (int i = 0; i < personnelList.size(); i++) {
       PersonnelVieEcoleDto personnelDto = personnelList.get(i);
       try {
-        String resultat = traiterUnPersonnel(personnelDto, idEcole, i + 1);
-        resultats.add(resultat);
+        try {
+          String resultat = traiterUnPersonnel(personnelDto, idEcole, i + 1);
+          resultats.add(resultat);
+        } catch (RuntimeException e) {
+          e.printStackTrace();
+        }
+
       } catch (Exception e) {
         String erreur = String.format("Erreur pour le personnel %d (%s %s): %s",
             i + 1,
@@ -357,11 +365,12 @@ public class SouscriptionRessource {
   public Response   affecterMatiereProfesseur(@QueryParam("codeVieEcole") String codeVieEcole,
                                             @QueryParam("codeClasse") String codeClasse ,
                                             @QueryParam("codeMatiere") String codeMatiere,
-                                            @QueryParam("login") String login) throws IOException, SQLException {
+                                            @QueryParam("login") String login,
+                                              @QueryParam("idNiveauEnseignement") Long  idNiveauEnseignement) throws IOException, SQLException {
     // return     souscPersonnelService.CreerSousCriperson(mySouscrip) ;
     String classeCode=null;
     String matiereCode=null;
-    Ecole ecole = Ecole.find("identifiantVieEcole =?1",codeVieEcole).firstResult();
+    Ecole ecole = Ecole.find("identifiantVieEcole =?1 and niveauEnseignement.id=?2",codeVieEcole,idNiveauEnseignement).firstResult();
     if (ecole == null) {
       return Response.status(Response.Status.NOT_FOUND)
           .entity("École introuvable dans Pouls-Pro").build();
@@ -542,7 +551,24 @@ public class SouscriptionRessource {
     mySouscrip.setSous_attent_personn_prenom(personnelDto.getSous_attent_personn_prenom());
     mySouscrip.setSous_attent_personn_email(personnelDto.getSous_attent_personn_email());
     mySouscrip.setSous_attent_personn_sexe(sexe);
-    mySouscrip.setSous_attent_personn_date_naissance(personnelDto.getSous_attent_personn_date_naissance());
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+
+    if(personnelDto.getSous_attent_personn_date_naissance()==null||
+        personnelDto.getSous_attent_personn_date_naissance().isEmpty()||personnelDto.getSous_attent_personn_date_naissance().equalsIgnoreCase("null")){
+      String date = "01/01/1900";
+      LocalDate localDate = LocalDate.parse(date, formatter);
+      LocalDate localDateNaiss = localDate;
+
+      mySouscrip.setSous_attent_personn_date_naissance(localDateNaiss);
+    } else {
+      String date =personnelDto.getSous_attent_personn_date_naissance();
+      LocalDate localDate = LocalDate.parse(date, formatter);
+      LocalDate localDateNaiss = localDate;
+
+      mySouscrip.setSous_attent_personn_date_naissance(localDateNaiss);
+    }
+
     mySouscrip.setSous_attent_personn_login(personnelDto.getSous_attent_personn_login());
     mySouscrip.setSous_attent_personn_password(personnelDto.getSous_attent_personn_password());
     mySouscrip.setIdentifiantdomaine_formation(5L);

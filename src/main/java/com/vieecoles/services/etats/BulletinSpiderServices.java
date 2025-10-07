@@ -8,6 +8,7 @@ import com.drew.metadata.exif.ExifIFD0Directory;
 import com.vieecoles.dto.*;
 import com.vieecoles.entities.InfosPersoBulletins;
 import com.vieecoles.entities.operations.Inscriptions;
+import com.vieecoles.entities.operations.classe;
 import com.vieecoles.entities.operations.ecole;
 import com.vieecoles.entities.operations.eleve;
 import com.vieecoles.entities.parametre;
@@ -51,6 +52,7 @@ public class BulletinSpiderServices {
     SousceecoleService sousceecoleService ;
 @Transactional
     public List<InfosPersoBulletins>  bulletinInfos(Long idEcole ,String libelleAnnee , String libelleTrimestre , Long libelleClasse,boolean logoPosi ,boolean filigranne){
+    classe myClasse= classe.findById(libelleClasse);
 
         int LongTableau;
         AnneeScolaire mainAnnee = new AnneeScolaire() ;
@@ -160,7 +162,7 @@ public class BulletinSpiderServices {
                 k.setTmoyCoefEMR(TmoyCoefEMR);
                 myEcole=sousceecoleService.getInffosEcoleByID(idEcole);
 
-                myIns = inscriptionService.checkInscrit(idEcole,classeNiveauDtoList.get(i).getNiveau(),mainAnnee.getId());
+                myIns = inscriptionService.checkInscrit(idEcole,classeNiveauDtoList.get(i).getNiveau(),mainAnnee.getId(),myClasse.getBranche().getId());
 
                 parametre mpara = new parametre();
                 mpara = parametre.findById(1L) ;
@@ -206,7 +208,7 @@ public class BulletinSpiderServices {
                 l.setTrangEMR(TrangEMR);
                 l.setTmoyCoefEMR(TmoyCoefEMR);
                 myEcole=sousceecoleService.getInffosEcoleByID(idEcole);
-                myIns = inscriptionService.checkInscrit(idEcole,classeNiveauDtoList.get(i).getNiveau(),mainAnnee.getId());
+                myIns = inscriptionService.checkInscrit(idEcole,classeNiveauDtoList.get(i).getNiveau(),mainAnnee.getId(),myClasse.getBranche().getId());
 
                 parametre mpara = new parametre();
                 mpara = parametre.findById(1L) ;

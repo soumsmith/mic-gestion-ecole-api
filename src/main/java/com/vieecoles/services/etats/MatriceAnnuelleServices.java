@@ -74,7 +74,7 @@ public class MatriceAnnuelleServices {
             List<matiereMoyenneDto> matiMoy = new  ArrayList() ;
             matriceAnnuelleDto m =new matriceAnnuelleDto();
             Inscriptions myIns= new Inscriptions() ;
-            myIns = inscriptionService.checkInscrit(idEcole,matriculeList.get(i).getNiveau(),anneeId);
+            myIns = inscriptionService.checkInscrit(idEcole,matriculeList.get(i).getNiveau(),anneeId,null);
 
 
             if(myIns != null){

@@ -104,7 +104,7 @@ public class MatriceClasseServices {
             List<matiereMoyenneDto> matiMoy = new  ArrayList() ;
             matriceClasseDto m =new matriceClasseDto();
             Inscriptions myIns= new Inscriptions() ;
-            myIns = inscriptionService.checkInscrit(idEcole,matriculeList.get(i).getNiveau(),anneeId);
+            myIns = inscriptionService.checkInscrit(idEcole,matriculeList.get(i).getNiveau(),anneeId,null);
             InfosEleveDto infosEleveDto=new InfosEleveDto();
 
                      infosEleveDto=getInfosEleve(matriculeList.get(i).getNiveau(),periode,libelleAnnee,idEcole);
