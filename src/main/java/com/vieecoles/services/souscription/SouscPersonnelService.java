@@ -485,7 +485,7 @@ utilisateur user = new utilisateur() ;
     }
 
   @Transactional
-  public String  recruterUnAgentVieecole(Long idEcole ,sous_attent_personn sous_attent){
+  public String  recruterUnAgentVieecole(Long idEcole ,sous_attent_personn sous_attent,Long idAnnee){
 
     personnel person = new personnel() ;
     personnel person2 = new personnel() ;
@@ -504,6 +504,7 @@ utilisateur user = new utilisateur() ;
       person2.setSous_attent_personn(sous_attent);
       person2.setFonction(sous_attent.getFonction());
       person2.setEcole(myecole);
+      person2.setAnneeId(idAnnee);
       //Civilite mycivilite= Civilite.valueOf(sous_attent.getSous_attent_personn_sexe());
       //person2.setCivilite(mycivilite);
       person2.setDomaine_formation_domaine_formationid(sous_attent.getDomaine_formation());

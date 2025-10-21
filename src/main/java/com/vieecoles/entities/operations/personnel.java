@@ -45,12 +45,19 @@ public class personnel extends PanacheEntityBase {
     private com.vieecoles.entities.operations.sous_attent_personn sous_attent_personn ;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fonction_fonctionid")
-    private com.vieecoles.entities.fonction fonction;
-
+   private com.vieecoles.entities.fonction fonction;
+   private Long  anneeId ;
 
     @Transient
-    @Enumerated(EnumType.STRING)
     private Civilite civilite;
+
+    public Long getAnneeId() {
+        return anneeId;
+    }
+
+    public void setAnneeId(Long anneeId) {
+        this.anneeId = anneeId;
+    }
     public com.vieecoles.entities.fonction getFonction() {
         return fonction;
     }
@@ -185,5 +192,6 @@ public class personnel extends PanacheEntityBase {
 
     public void setPersonnel_contact(String personnel_contact) {
         this.personnel_contact = personnel_contact;
-    }
+    } 
+
 }

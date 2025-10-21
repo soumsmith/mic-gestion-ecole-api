@@ -296,8 +296,9 @@ public class SouscriptionRessource {
   @Produces(MediaType.TEXT_PLAIN)
   @Consumes(MediaType.APPLICATION_JSON)
   //@Transactional
-  @Path("creer-professeurs-vie-ecoles/{codeVieEcole}/{idNiveauEnseignement}")
+  @Path("creer-professeurs-vie-ecoles/{codeVieEcole}/{idNiveauEnseignement}/{idAnnee}")
   public Response   RecruterVieEcole(@PathParam("codeVieEcole") String codeVieEcole,@PathParam("idNiveauEnseignement") Long idNiveauEnseignement,
+                                  @PathParam("idAnnee") Long idAnnee,
                                    List<PersonnelVieEcoleDto> personnelList) throws IOException, SQLException {
     List<String> resultats = new ArrayList<>();
     List<String> erreurs = new ArrayList<>();
@@ -319,7 +320,7 @@ public class SouscriptionRessource {
       PersonnelVieEcoleDto personnelDto = personnelList.get(i);
       try {
         try {
-          String resultat = traiterUnPersonnel(personnelDto, idEcole, i + 1);
+          String resultat = traiterUnPersonnel(personnelDto, idEcole, i + 1, idAnnee);
           resultats.add(resultat);
         } catch (RuntimeException e) {
           e.printStackTrace();
@@ -527,7 +528,7 @@ public class SouscriptionRessource {
      }
 
 
-  private String traiterUnPersonnel(PersonnelVieEcoleDto personnelDto, Long idEcole, int index)
+  private String traiterUnPersonnel(PersonnelVieEcoleDto personnelDto, Long idEcole, int index,Long idAnnee)
       throws IOException, SQLException {
 
     // Logique de mapping du sexe
@@ -584,7 +585,7 @@ public class SouscriptionRessource {
     }
 
     // Recrutement de l'agent
-    souscPersonnelService.recruterUnAgentVieecole(idEcole, messageRetour);
+    souscPersonnelService.recruterUnAgentVieecole(idEcole, messageRetour,idAnnee);
 
     // Vérification de l'existence du personnel
     personnel personnel = souscPersonnelService.verifExistancePersonnel(messageRetour.getSous_attent_personnid(), idEcole);
