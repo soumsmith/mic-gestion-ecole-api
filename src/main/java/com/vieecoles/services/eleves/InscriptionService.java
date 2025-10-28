@@ -442,18 +442,19 @@ public class InscriptionService implements PanacheRepositoryBase<Inscriptions, L
     }
 
 
-               public Inscriptions checkInscrit(Long idEcole , String matricule, Long idAnnee){
+               public Inscriptions checkInscrit(Long idEcole , String matricule, Long idAnnee,Long idBranche){
                    try {
                        // Option A: Max par ID (si l'ID représente l'ordre chronologique)
                        Long maxId = (Long) em.createQuery(
                                "SELECT MAX(i.id) FROM Inscriptions i " +
                                    "WHERE i.eleve.eleveid = (SELECT e.eleveid FROM eleve e WHERE e.eleve_matricule = :matricule) " +
                                    "AND i.ecole.ecoleid = :idecole " +
-                                   "AND i.annee_scolaire.annee_scolaireid = :idAnnee"
+                                   "AND i.annee_scolaire.annee_scolaireid = :idAnnee AND i.branche.id=:idBranche"
                            )
                            .setParameter("idecole", idEcole)
                            .setParameter("matricule", matricule)
                            .setParameter("idAnnee", idAnnee)
+                           .setParameter("idBranche", idBranche)
                            .getSingleResult();
 
                        // Puis récupérer l'entité avec cet ID
@@ -550,11 +551,11 @@ public class InscriptionService implements PanacheRepositoryBase<Inscriptions, L
 
 
    @Transactional
-   public  String verifInscription(InscriptionDto inscriptionDto,  Long idEcole , String matricule, Long idAnnee){
+   public  String verifInscription(InscriptionDto inscriptionDto,  Long idEcole , String matricule, Long idAnnee,Long idBranche){
        eleve myeleve = new eleve() ;
        Inscriptions minScription = new Inscriptions() ;
        String messageRetour = null;
-       minScription = checkInscrit(idEcole,matricule,idAnnee) ;
+       minScription = checkInscrit(idEcole,matricule,idAnnee,idBranche) ;
        System.out.println("minScriptionAAA** "+ minScription);
        if(minScription==null){
            messageRetour =  createinscription(inscriptionDto);
@@ -570,7 +571,7 @@ public class InscriptionService implements PanacheRepositoryBase<Inscriptions, L
         eleve myeleve = new eleve() ;
         Inscriptions minScription = new Inscriptions() ;
         String messageRetour = null;
-        minScription = checkInscrit(idEcole,matricule,idAnnee) ;
+        minScription = checkInscrit(idEcole,matricule,idAnnee,inscriptionDto.getIdentifiantBranche()) ;
         System.out.println("minScriptionBB** "+ minScription);
         if(minScription==null){
             messageRetour =  createinscriptionImporter(inscriptionDto);
@@ -582,11 +583,11 @@ public class InscriptionService implements PanacheRepositoryBase<Inscriptions, L
     }
 
     @Transactional
-    public  Inscriptions verifInscriptionVieEcole(InscriptionDto inscriptionDto,  Long idEcole , String matricule, Long idAnnee){
+    public  Inscriptions verifInscriptionVieEcole(InscriptionDto inscriptionDto,  Long idEcole , String matricule, Long idAnnee,Long idBranche){
         eleve myeleve = new eleve() ;
         Inscriptions minScription = new Inscriptions() ;
         Inscriptions minScriptionCree;
-        minScription = checkInscrit(idEcole,matricule,idAnnee) ;
+        minScription = checkInscrit(idEcole,matricule,idAnnee ,idBranche) ;
         System.out.println("minScriptionBB** "+ minScription);
         if(minScription==null){
        return      minScriptionCree =  createinscriptionVieEcole(inscriptionDto);
@@ -598,11 +599,11 @@ public class InscriptionService implements PanacheRepositoryBase<Inscriptions, L
 
 
     @Transactional
-    public  String verifmodifierInscription(InscriptionDto inscriptionDto,  Long idEcole , String matricule, Long idAnnee){
+    public  String verifmodifierInscription(InscriptionDto inscriptionDto,  Long idEcole , String matricule, Long idAnnee,Long idBranche){
         eleve myeleve = new eleve() ;
         Inscriptions minScription = new Inscriptions() ;
         String messageRetour = null;
-        minScription = checkInscrit(idEcole,matricule,idAnnee) ;
+        minScription = checkInscrit(idEcole,matricule,idAnnee,idBranche) ;
 
         Long idInscrip= minScription.getInscriptionsid();
 

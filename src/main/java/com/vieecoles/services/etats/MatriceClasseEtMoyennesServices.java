@@ -85,7 +85,7 @@ public class MatriceClasseEtMoyennesServices {
 
             for (int k=0; k< sizeMatricule;k++) {
                 Inscriptions myIns= new Inscriptions() ;
-                myIns = inscriptionService.checkInscrit(idEcole,matriculeList.get(k).getNiveau() ,anneeId);
+                myIns = inscriptionService.checkInscrit(idEcole,matriculeList.get(k).getNiveau() ,anneeId,null);
 
 
                 if(myIns != null){

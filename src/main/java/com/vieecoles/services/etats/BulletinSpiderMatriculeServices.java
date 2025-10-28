@@ -126,7 +126,7 @@ public class BulletinSpiderMatriculeServices {
                 k.setTrangEMR(TrangEMR);
                 k.setTmoyCoefEMR(TmoyCoefEMR);
                 myEcole=sousceecoleService.getInffosEcoleByID(idEcole);
-                myIns = inscriptionService.checkInscrit(idEcole,classeNiveauDtoList.get(i).getNiveau(),mainAnnee.getId());
+                myIns = inscriptionService.checkInscrit(idEcole,classeNiveauDtoList.get(i).getNiveau(),mainAnnee.getId(),null);
                 parametre mpara = new parametre();
                 mpara = parametre.findById(1L) ;
                 if(logoPosi){
@@ -168,7 +168,7 @@ public class BulletinSpiderMatriculeServices {
                 l.setTrangEMR(TrangEMR);
                 l.setTmoyCoefEMR(TmoyCoefEMR);
                 myEcole=sousceecoleService.getInffosEcoleByID(idEcole);
-                myIns = inscriptionService.checkInscrit(idEcole,classeNiveauDtoList.get(i).getNiveau(),mainAnnee.getId());
+                myIns = inscriptionService.checkInscrit(idEcole,classeNiveauDtoList.get(i).getNiveau(),mainAnnee.getId(),null);
 
                 parametre mpara = new parametre();
                 mpara = parametre.findById(1L) ;

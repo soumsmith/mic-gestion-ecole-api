@@ -10,7 +10,7 @@ public class PersonnelVieEcoleDto {
     private  String sous_attent_personn_prenom;
     private  String sous_attent_personn_email;
     private String  sous_attent_personn_sexe;
-    private LocalDate sous_attent_personn_date_naissance;
+    private String sous_attent_personn_date_naissance;
     private String sous_attent_personn_login ;
     private String sous_attent_personn_password ;
     private  String sous_attent_personn_contact ;
@@ -55,11 +55,11 @@ public class PersonnelVieEcoleDto {
     this.sous_attent_personn_sexe = sous_attent_personn_sexe;
   }
 
-  public LocalDate getSous_attent_personn_date_naissance() {
+  public String getSous_attent_personn_date_naissance() {
     return sous_attent_personn_date_naissance;
   }
 
-  public void setSous_attent_personn_date_naissance(LocalDate sous_attent_personn_date_naissance) {
+  public void setSous_attent_personn_date_naissance(String sous_attent_personn_date_naissance) {
     this.sous_attent_personn_date_naissance = sous_attent_personn_date_naissance;
   }
 

@@ -1,5 +1,7 @@
 package com.vieecoles.steph.ressources;
 
+import com.vieecoles.steph.dto.AnneeDto;
+import com.vieecoles.steph.services.AnneeService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -23,7 +25,8 @@ import com.vieecoles.steph.services.PersonnelService;
 
 @Path("/personnels")
 public class PersonnelResource {
-
+	@Inject
+	AnneeService anneeService;
 	@Inject
 	PersonnelService personnelService;
 
@@ -59,22 +62,24 @@ public class PersonnelResource {
 		}
 		return Response.ok().entity(personnels).build();
 	}
-	
+
 	@GET
 	@Path("/get-by-ecole-and-profil")
 	@Tag(name = "Personnel")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response listByEcoleAndProfil(@QueryParam("ecole") Long ecoleId, @QueryParam("profil") int profilId) {
 		List<Personnel> personnels = new ArrayList<>();
+		AnneeDto  anneeDto= new AnneeDto() ;
+		anneeDto=anneeService.getOpenAnneeByEcoleDto(ecoleId) ;
 		try {
-			personnels = personnelService.getByEcoleAndProfil_v2(ecoleId, profilId);
+			personnels = personnelService.getByEcoleAndProfil_v2_Anneeid(ecoleId, profilId,anneeDto.getAnneeOuverteCentraleId());
 			logger.log(Level.INFO, "Param - listProf size ::: {0} ", personnels.size());
 		} catch (RuntimeException e) {
 			logger.log(Level.WARNING, "Error - listProf :::{0} ", e);
 		}
 		return Response.ok().entity(personnels.stream().sorted((x,y) -> x.getNom().compareTo(y.getNom())).collect(Collectors.toList())).build();
 	}
-	
+
 	@GET
 	@Path("/get-by-fonction-and-classe")
 	@Tag(name = "Personnel")
@@ -89,7 +94,7 @@ public class PersonnelResource {
 	public Response getByUserId(@PathParam("id") Long userId) {
 		return Response.ok().entity(personnelService.getByUserId(userId)).build();
 	}
-	
+
 	@GET
 	@Path("/get-by-user-ecole/{userId}/{ecoleId}")
 	@Tag(name = "Personnel")
@@ -97,7 +102,7 @@ public class PersonnelResource {
 	public Response getByUserAndEcole(@PathParam("userId") Long userId, @PathParam("ecoleId") Long ecoleId) {
 		return Response.ok().entity(personnelService.getByUserAndEcole(userId, ecoleId)).build();
 	}
-	
+
 	@GET
 	@Path("/get-by-ecole/{ecoleId}")
 	@Tag(name = "Personnel")
@@ -105,7 +110,7 @@ public class PersonnelResource {
 	public Response getByEcole(@PathParam("ecoleId") Long ecoleId) {
 		return Response.ok().entity(personnelService.getByEcole(ecoleId)).build();
 	}
-	
+
 	@GET
 	@Path("/count-by-ecole/{ecoleId}")
 	@Tag(name = "Personnel")
@@ -113,7 +118,7 @@ public class PersonnelResource {
 	public Response countByEcole(@PathParam("ecoleId") Long ecoleId) {
 		return Response.ok().entity(personnelService.countByEcole(ecoleId)).build();
 	}
-	
+
 	@GET
 	@Path("/count-by-ecole-genre/{ecoleId}")
 	@Tag(name = "Personnel")

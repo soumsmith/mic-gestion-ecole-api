@@ -108,7 +108,7 @@ public class SouscPersonnelService implements PanacheRepositoryBase<sous_attent_
     mysouscripPersonn1= getSouscripByEmail(souscriPersonn.getSous_attent_personn_email()) ;
     //System.out.println("souscripteur trouvé "+mysouscripPersonn1.toString());
     if (mysouscripPersonn1!=null) {
-      return  null;
+      return  mysouscripPersonn1;
     } else {
 
       niveau_etude myNiveauEtude = new niveau_etude() ;
@@ -194,8 +194,9 @@ public class SouscPersonnelService implements PanacheRepositoryBase<sous_attent_
     sous_attent_personn messageRetour = new sous_attent_personn();
     messageRetour = CreerSousCripersonVieEcole(souscriPersonn) ;
     String messRespon=null ;
-
-    if (messageRetour!=null) {
+utilisateur user = new utilisateur() ;
+  user = getAcountUser(souscriPersonn.getSous_attent_personn_login()) ;
+    if (messageRetour!=null && user==null) {
       sous_attent_personn  mysouscripPersonn1 = new sous_attent_personn() ;
       mysouscripPersonn1= getSouscripByEmail(souscriPersonn.getSous_attent_personn_email()) ;
       Long idsouscripteur = mysouscripPersonn1.getSous_attent_personnid() ;
@@ -484,7 +485,7 @@ public class SouscPersonnelService implements PanacheRepositoryBase<sous_attent_
     }
 
   @Transactional
-  public String  recruterUnAgentVieecole(Long idEcole ,sous_attent_personn sous_attent){
+  public String  recruterUnAgentVieecole(Long idEcole ,sous_attent_personn sous_attent,Long idAnnee){
 
     personnel person = new personnel() ;
     personnel person2 = new personnel() ;
@@ -503,6 +504,7 @@ public class SouscPersonnelService implements PanacheRepositoryBase<sous_attent_
       person2.setSous_attent_personn(sous_attent);
       person2.setFonction(sous_attent.getFonction());
       person2.setEcole(myecole);
+      person2.setAnneeId(idAnnee);
       //Civilite mycivilite= Civilite.valueOf(sous_attent.getSous_attent_personn_sexe());
       //person2.setCivilite(mycivilite);
       person2.setDomaine_formation_domaine_formationid(sous_attent.getDomaine_formation());
@@ -530,7 +532,21 @@ public class SouscPersonnelService implements PanacheRepositoryBase<sous_attent_
     }
        return  mysous ;
     }
-
+  @Transactional
+  public personnel verifPersonnel(Long idPerson ){
+    personnel mysous = new personnel();
+    try {
+      mysous = (personnel) em.createQuery(
+              "select o from personnel o join o.sous_attent_personn s  where s.sous_attent_personnid = :idPerson",
+              personnel.class)
+          .setParameter("idPerson", idPerson)
+          .setMaxResults(1)  // Limite à 1 résultat
+          .getSingleResult();
+    } catch (Exception e) {
+      mysous = null;
+    }
+    return mysous;
+  }
     @Transactional
     public void validerSouscriptionFond(souscriptionValidationFondatDto mysouscription){
         sous_attent_personn  mysous= new sous_attent_personn() ;
@@ -575,7 +591,15 @@ public class SouscPersonnelService implements PanacheRepositoryBase<sous_attent_
          return  null;
      }
     }
-
+  public  utilisateur getAcountUser(String login){
+    try {
+      return (utilisateur) em.createQuery("select o from utilisateur o where o.utilisateu_login =:login")
+          .setParameter("login",login)
+          .getSingleResult();
+    } catch (Exception e) {
+      return  null;
+    }
+  }
   public  Personnel getPersonnelBySouscription(Long idEcole,Long idPerson){
     try {
       return (Personnel) em.createQuery("select o from Personnel o where o.souscriptionAttenteId=: idPerson and o.ecole.id=:idEcole" )
@@ -626,6 +650,17 @@ public class SouscPersonnelService implements PanacheRepositoryBase<sous_attent_
         mysouscripPersonn.setSous_attent_personn_prenom(souscPersonn.getSous_attent_personn_prenom());
         mysouscripPersonn.setSous_attent_personn_sexe(souscPersonn.getSous_attent_personn_sexe());
         mysouscripPersonn.setSous_attent_personn_nbre_annee_experience(souscPersonn.getSous_attent_personn_nbre_annee_experience());
+      personnel personnel = verifPersonnel(souscPersonn.getSous_attent_personnid());
+      if(personnel!=null){
+        personnel.setPersonnel_contact(souscPersonn.getSous_attent_personn_contact());
+        personnel.setFonction(myFonction);
+        personnel.setDomaine_formation_domaine_formationid(myDomaineFormation);
+        personnel.setPersonneldatenaissance(souscPersonn.getSous_attent_personn_date_naissance());
+        personnel.setNiveau_etude(myNiveauEtude);
+        personnel.setPersonnelnom(souscPersonn.getSous_attent_personn_nom());
+        personnel.setPersonnelprenom(souscPersonn.getSous_attent_personn_prenom());
+        personnel.setPersonnel_sexe(souscPersonn.getSous_attent_personn_sexe());
+      }
         return  mysouscripPersonn ;
     }
 

@@ -1,6 +1,7 @@
 package com.vieecoles.ressource.operations.eleves;
 
 import com.vieecoles.dto.EleveDto;
+import com.vieecoles.dto.EleveMatriculeDto;
 import com.vieecoles.dto.InscriptionDto;
 import com.vieecoles.dto.importEleveDto;
 import com.vieecoles.entities.operations.Inscriptions;
@@ -72,12 +73,14 @@ return  Response.ok().entity( EleveService.importerCreerEleve(lisImpo,idEcole,id
   @POST
   @Produces(MediaType.TEXT_PLAIN)
   @Consumes(MediaType.APPLICATION_JSON)
-  @Path("inscrire-eleves-vie-ecole/{idEcole}/{idAnneeScolaire}/{idBranche}/{idClasse}")
-  public Response importerCreerEleveVieEcole(List<importEleveDto> lisImpo , @PathParam("idEcole") String ecole, @PathParam("idAnneeScolaire") Long idAnneeScolaire,
-                                     @PathParam("idBranche") Long idBranche ,@PathParam("idClasse") String idClasse ){
+  @Path("inscrire-eleves-vie-ecole/{idEcole}/{idAnneeScolaire}/{idBranche}/{idClasse}/{idNiveauEnseignement}")
+  public Response importerCreerEleveVieEcole(List<importEleveDto> lisImpo , @PathParam("idEcole") String ecole,
+                                             @PathParam("idAnneeScolaire") Long idAnneeScolaire,
+                                     @PathParam("idBranche") Long idBranche ,@PathParam("idClasse") String idClasse ,
+                                             @PathParam("idNiveauEnseignement") Long idNiveauEnseignement){
     // System.out.print("lisImpo "+lisImpo);
 
-    Ecole ecole1 = Ecole.find("identifiantVieEcole =?1",ecole).firstResult();
+    Ecole ecole1 = Ecole.find("identifiantVieEcole =?1 and niveauEnseignement.id=?2",ecole,idNiveauEnseignement).firstResult();
     Classe classe = Classe.find("identifiantVieEcole =?1 and ecole.id=?2",idClasse,ecole1.getId()).firstResult();
     Long idClass= 0L;
     if(classe!=null){
@@ -90,7 +93,7 @@ return  Response.ok().entity( EleveService.importerCreerEleve(lisImpo,idEcole,id
       if(ecole1==null){
         return  Response.ok().entity("Ecole introuvale sur pouls-scolaire").build();
       }
-      inscriptions=  EleveService.inscrireEleveVieEcole(lisImpo,ecole,idAnneeScolaire,idBranche);
+      inscriptions=  EleveService.inscrireEleveVieEcole(lisImpo,ecole,idAnneeScolaire,idBranche,idNiveauEnseignement);
       System.out.println("Longueur Tableau New"+inscriptions.size());
       if(inscriptions.size()>0){
         for (int i = 0; i < inscriptions.size(); i++){
@@ -136,16 +139,28 @@ return  Response.ok().entity( EleveService.importerCreerEleve(lisImpo,idEcole,id
   @PUT
   @Produces(MediaType.TEXT_PLAIN)
   @Consumes(MediaType.APPLICATION_JSON)
-  @Path("modifier-eleves-vie-ecole/{ecole}/{idAnneeScolaire}/{typeOperation}/{idBranche}")
+  @Path("modifier-eleves-vie-ecole/{ecole}/{idAnneeScolaire}/{typeOperation}/{idBranche}/{idNiveauEnseignement}")
   public Response modifierElevesVieEcole(List<importEleveDto> lisImpo , @PathParam("ecole") String ecole, @PathParam("idAnneeScolaire") Long idAnneeScolaire,
-                                        @PathParam("idBranche") Long idBranche ){
+                                        @PathParam("idBranche") Long idBranche ,@PathParam("idNiveauEnseignement") Long idNiveauEnseignement){
     // System.out.print("lisImpo "+lisImpo);
-    Ecole ecole1 = Ecole.find("identifiantVieEcole =?1",ecole).firstResult();
+    Ecole ecole1 = Ecole.find("identifiantVieEcole =?1 and niveauEnseignement.id=?2",ecole,idNiveauEnseignement).firstResult();
     if(ecole1==null){
       return  Response.ok().entity("Ecole introuvale sur pouls-scolaire").build();
     }
     try {
-      return  Response.ok().entity(EleveService.modifierEleveVieEcole(lisImpo,ecole,idAnneeScolaire,idBranche)).build() ;
+      return  Response.ok().entity(EleveService.modifierEleveVieEcole(lisImpo,ecole,idAnneeScolaire,idBranche,idNiveauEnseignement)).build() ;
+    } catch (Exception e){
+      return  Response.status(Response.Status.BAD_REQUEST.getStatusCode()).entity(e.getMessage()).build();
+    }
+
+  }
+  @PUT
+  @Produces(MediaType.TEXT_PLAIN)
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Path("modifier-eleves-vie-ecole")
+  public Response modifierElevesVieEcoleMatricule(List<EleveMatriculeDto> lisImpo ){
+    try {
+      return  Response.ok().entity(EleveService.modifierEleveMatricule(lisImpo)).build() ;
     } catch (Exception e){
       return  Response.status(Response.Status.BAD_REQUEST.getStatusCode()).entity(e.getMessage()).build();
     }
@@ -180,7 +195,7 @@ return  Response.ok().entity( EleveService.importerCreerEleve(lisImpo,idEcole,id
         System.out.println("idAnneeScolaire =="+idAnneeScolaire);
 
         System.out.println("matricule**** =="+elv.getEleve_matricule());
-        return   inscriptionService.verifInscription(inscriptionDto,idEcole,elv.getEleve_matricule(),idAnneeScolaire);
+        return   inscriptionService.verifInscription(inscriptionDto,idEcole,elv.getEleve_matricule(),idAnneeScolaire,idBranche);
 
     }
 

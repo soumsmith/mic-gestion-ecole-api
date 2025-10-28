@@ -143,7 +143,7 @@ public class bulletinRessource {
 
         myEcole=sousceecoleService.getInffosEcoleByID(idEcole);
         //System.out.println("myEcole "+myEcole.toString());
-        myIns = inscriptionService.checkInscrit(idEcole,matricule,1L);
+        myIns = inscriptionService.checkInscrit(idEcole,matricule,1L,null);
         System.out.println("Inscription "+ myIns.toString());
             byte[] imagebytes = new byte[0];
             if(myIns!=null){

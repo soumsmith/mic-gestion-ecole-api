@@ -94,7 +94,7 @@ public class RapportRapideRessource {
         InputStream myInpuStream ;
         /*myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/BulletinBean.jrxml");*/
         myInpuStream = this.getClass().getClassLoader().getResourceAsStream(
-            "etats/spider/Enquete_rentree2.jrxml");
+            "etats/spider/Enquete_rentreeold2.jrxml");
         EmploiDuTemps emp= new EmploiDuTemps() ;
 
         Rapport_RappidDto m= new Rapport_RappidDto() ;

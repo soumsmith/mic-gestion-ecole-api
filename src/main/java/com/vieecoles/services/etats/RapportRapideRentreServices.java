@@ -11,6 +11,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
+import jakarta.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,21 +84,21 @@ public class RapportRapideRentreServices {
         classeParNiveauDto.add(cl) ;
         String libAffect = String.valueOf(Inscriptions.statusEleve.AFFECTE);
         // Get Inscription attendus Affectee ;
-        attenAFF6= getNombreInscripStatutAttendu("6EME",idEcole,AnneeId ,libAffect);
+        attenAFF6= getNombreInscripStatutAttendu(1L,idEcole,AnneeId ,libAffect);
         System.out.println("Attendu et Affecté en 6eme"+attenAFF6);
-        attenAFF5= getNombreInscripStatutAttendu("5EME",idEcole,AnneeId , libAffect);
-        attenAFF4= getNombreInscripStatutAttendu("4EME",idEcole,AnneeId , libAffect);
-        attenAFF3= getNombreInscripStatutAttendu("3EME",idEcole,AnneeId ,libAffect);
-        attenAFF2A= getNombreInscripStatutAttendu("2ND A",idEcole,AnneeId , libAffect);
-        attenAFF2C= getNombreInscripStatutAttendu("2ND C",idEcole,AnneeId , libAffect);
-        attenAFF1A= getNombreInscripStatutAttendu("1 ERE A",idEcole,AnneeId , libAffect);
-        attenAFF1C= getNombreInscripStatutAttendu("1 ERE C",idEcole,AnneeId , libAffect);
-        attenAFF1D= getNombreInscripStatutAttendu("1 ERE D",idEcole,AnneeId , libAffect);
-       Long attenAFFTLA1 = getNombreInscripStatutAttendu("TLE A1",idEcole,AnneeId , libAffect) ;
-        Long attenAFFTLA2 = getNombreInscripStatutAttendu("TLE A2",idEcole,AnneeId , libAffect) ;
+        attenAFF5= getNombreInscripStatutAttendu(2L,idEcole,AnneeId , libAffect);
+        attenAFF4= getNombreInscripStatutAttendu(7L,idEcole,AnneeId , libAffect);
+        attenAFF3= getNombreInscripStatutAttendu(8L,idEcole,AnneeId ,libAffect);
+        attenAFF2A= getNombreInscripStatutAttendu(9L,idEcole,AnneeId , libAffect);
+        attenAFF2C= getNombreInscripStatutAttendu(10L,idEcole,AnneeId , libAffect);
+        attenAFF1A= getNombreInscripStatutAttendu(11L,idEcole,AnneeId , libAffect);
+        attenAFF1C= getNombreInscripStatutAttendu(5L,idEcole,AnneeId , libAffect);
+        attenAFF1D= getNombreInscripStatutAttendu(12L,idEcole,AnneeId , libAffect);
+       Long attenAFFTLA1 = getNombreInscripStatutAttendu(13L,idEcole,AnneeId , libAffect) ;
+        Long attenAFFTLA2 = getNombreInscripStatutAttendu(16L,idEcole,AnneeId , libAffect) ;
        attenAFFTLA = attenAFFTLA1+attenAFFTLA2 ;
-        attenAFFTLC = getNombreInscripStatutAttendu("TLE C",idEcole,AnneeId , libAffect) ;
-        attenAFFTLD = getNombreInscripStatutAttendu("TLE D",idEcole,AnneeId , libAffect) ;
+        attenAFFTLC = getNombreInscripStatutAttendu(14L,idEcole,AnneeId , libAffect) ;
+        attenAFFTLD = getNombreInscripStatutAttendu(15L,idEcole,AnneeId , libAffect) ;
 
         AffecteParNiveauDto aff = new AffecteParNiveauDto() ;
         aff.setAttenAFF6(attenAFF6);
@@ -207,21 +208,21 @@ public class RapportRapideRentreServices {
         //getResultat Nonaffectes+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         // Get Inscription attendus Affectee ;
         String libNonAff = String.valueOf(Inscriptions.statusEleve.NON_AFFECTE);
-        attenNAFF6= getNombreInscripStatutAttendu("6EME",idEcole,AnneeId , libNonAff);
+        attenNAFF6= getNombreInscripStatutAttendu(1L,idEcole,AnneeId , libNonAff);
         System.out.println("Attendu et non Affectés en 6eme "+attenNAFF6);
-        attenNAFF5= getNombreInscripStatutAttendu("5EME",idEcole,AnneeId , libNonAff);
-        attenNAFF4= getNombreInscripStatutAttendu("4EME",idEcole,AnneeId , libNonAff);
-        attenNAFF3= getNombreInscripStatutAttendu("3EME",idEcole,AnneeId , libNonAff);
-        attenNAFF2A= getNombreInscripStatutAttendu("2ND A",idEcole,AnneeId , libNonAff);
-        attenNAFF2C= getNombreInscripStatutAttendu("2ND C",idEcole,AnneeId , libNonAff);
-        attenNAFF1A= getNombreInscripStatutAttendu("1 ERE A",idEcole,AnneeId ,libNonAff);
-        attenNAFF1C= getNombreInscripStatutAttendu("1 ERE C",idEcole,AnneeId , libNonAff);
-        attenNAFF1D= getNombreInscripStatutAttendu("1 ERE D",idEcole,AnneeId , libNonAff);
-        Long attenNAFFTLA1 = getNombreInscripStatutAttendu("TLE A1",idEcole,AnneeId , libNonAff) ;
-        Long attenNAFFTLA2 = getNombreInscripStatutAttendu("TLE A2",idEcole,AnneeId , libNonAff) ;
+        attenNAFF5= getNombreInscripStatutAttendu(2L,idEcole,AnneeId , libNonAff);
+        attenNAFF4= getNombreInscripStatutAttendu(7L,idEcole,AnneeId , libNonAff);
+        attenNAFF3= getNombreInscripStatutAttendu(8L,idEcole,AnneeId , libNonAff);
+        attenNAFF2A= getNombreInscripStatutAttendu(9L,idEcole,AnneeId , libNonAff);
+        attenNAFF2C= getNombreInscripStatutAttendu(10L,idEcole,AnneeId , libNonAff);
+        attenNAFF1A= getNombreInscripStatutAttendu(11L,idEcole,AnneeId ,libNonAff);
+        attenNAFF1C= getNombreInscripStatutAttendu(5L,idEcole,AnneeId , libNonAff);
+        attenNAFF1D= getNombreInscripStatutAttendu(12L,idEcole,AnneeId , libNonAff);
+        Long attenNAFFTLA1 = getNombreInscripStatutAttendu(13L,idEcole,AnneeId , libNonAff) ;
+        Long attenNAFFTLA2 = getNombreInscripStatutAttendu(16L,idEcole,AnneeId , libNonAff) ;
         attenNAFFTLA = attenNAFFTLA1+attenNAFFTLA2 ;
-        attenNAFFTLC = getNombreInscripStatutAttendu("TLE C",idEcole,AnneeId , libNonAff) ;
-        attenNAFFTLD = getNombreInscripStatutAttendu("TLE D",idEcole,AnneeId ,libNonAff) ;
+        attenNAFFTLC = getNombreInscripStatutAttendu(14L,idEcole,AnneeId , libNonAff) ;
+        attenNAFFTLD = getNombreInscripStatutAttendu(15L,idEcole,AnneeId ,libNonAff) ;
 
 
 
@@ -513,7 +514,7 @@ public class RapportRapideRentreServices {
 
     Long getNombreTotalClasse( Long IdEcole  ){
         List<Classe> myClass= new ArrayList<>();
-        myClass= Classe.find("ecole.id=?1", IdEcole).list() ;
+        myClass= Classe.find("ecole.id=?1 and visible=?2", IdEcole,1).list() ;
         try {
             return (long) myClass.size();
         }catch (NoResultException e) {
@@ -540,7 +541,7 @@ public class RapportRapideRentreServices {
         }
     }
 
-   private  Long getNombreInscripStatutAttendu(String niveau, Long IdEcole , Long ann , String statusEleve){
+   private  Long getNombreInscripStatutAttendu(Long idBranche, Long IdEcole , Long idAnneId , String statusEleve){
         Inscriptions.statusEleve statusEleve1 ;
 
         if(statusEleve.equals("AFFECTE")){
@@ -549,13 +550,20 @@ public class RapportRapideRentreServices {
             statusEleve1 = Inscriptions.statusEleve.NON_AFFECTE ;
         }
 
-        List<Inscriptions> inscriptionsList= new ArrayList<>();
-        inscriptionsList = Inscriptions.find("select m from Inscriptions m where  m.branche.libelle = ?1 and m.ecole.ecoleid=?2 and m.annee_scolaire.annee_scolaireid=?3 and m.inscriptions_statut_eleve=?4 ",niveau, IdEcole,ann,statusEleve1).list() ;
-        try {
-            return (long) inscriptionsList.size();
-        }catch (NoResultException e) {
-            return 0L;
-        }
+     try {
+       TypedQuery<Long> q = (TypedQuery<Long>) em.createQuery( "SELECT count(distinct v.eleveid) FROM Inscriptions i ,ecole e ,eleve v, Annee_Scolaire an , ClasseEleve h , Classe c" +
+           " where i.ecole.ecoleid=e.ecoleid and i.eleve.eleveid=v.eleveid and i.annee_scolaire.annee_scolaireid=an.annee_scolaireid and i.inscriptionsid=h.inscription.id and h.classe.id=c.id and " +
+           "i.ecole.ecoleid=:idEcole and i.annee_scolaire.annee_scolaireid=:idAnn and c.branche.id=:idBranche and i.inscriptions_statut_eleve=:statut");
+       Long size = q.setParameter("idBranche" ,idBranche).
+           setParameter("idAnn" ,idAnneId).
+           setParameter("idEcole" ,IdEcole).
+           setParameter("statut" ,statusEleve1).
+           getSingleResult() ;
+
+       return size;
+     } catch (NoResultException e) {
+       return 0L ;
+     }
     }
     private Rapide_rapide getInfoEnquete(String niveau, Long IdEcole , Long ann , String statusEleve){
         Inscriptions.statusEleve statusEleve1 ;

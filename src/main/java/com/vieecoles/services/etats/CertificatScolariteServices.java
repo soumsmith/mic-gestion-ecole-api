@@ -38,7 +38,7 @@ public class CertificatScolariteServices {
         String dateDebutFrequen  = null,dateFinFrequen = null ;
 
 
-        myIns = inscriptionService.checkInscrit(idEcole,matricule,anneeId);
+        myIns = inscriptionService.checkInscrit(idEcole,matricule,anneeId , null);
         if(myIns != null){
             nomPrenomEleve = myIns.getEleve().getElevenom() +" "+myIns.getEleve().getEleveprenom() ;
             dateNaiss = String.valueOf(myIns.getEleve().getElevedate_naissance());

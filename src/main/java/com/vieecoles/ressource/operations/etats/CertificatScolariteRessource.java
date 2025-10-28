@@ -82,7 +82,7 @@ public class CertificatScolariteRessource {
     ) throws Exception, JRException {
 
         Inscriptions myIns= new Inscriptions() ;
-        myIns = inscriptionService.checkInscrit(idEcole,matricule,AnneeId);
+        myIns = inscriptionService.checkInscrit(idEcole,matricule,AnneeId, null);
         byte[] imagebytes = new byte[0];
         if(myIns!=null){
             imagebytes = myIns.getPhoto_eleve() ;
