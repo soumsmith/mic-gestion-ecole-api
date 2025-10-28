@@ -1,7 +1,9 @@
 package com.vieecoles.ressource.operations.souscription;
 
 import com.vieecoles.dto.*;
+import com.vieecoles.entities.domaine_formation;
 import com.vieecoles.entities.matiere;
+import com.vieecoles.entities.niveau_etude;
 import com.vieecoles.entities.profil;
 import com.vieecoles.entities.operations.personnel;
 import com.vieecoles.entities.operations.sous_attent_personn;
@@ -19,6 +21,7 @@ import com.vieecoles.steph.services.AnneeService;
 import com.vieecoles.steph.services.PersonnelMatiereClasseService;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.http.client.HttpClient;
@@ -357,6 +360,72 @@ public class SouscriptionRessource {
     }
 
   }
+@PUT
+  @Produces(MediaType.TEXT_PLAIN)
+  @Consumes(MediaType.APPLICATION_JSON)
+  //@Transactional
+  @Path("modifier-professeurs-vie-ecoles/{codeVieEcole}/{idNiveauEnseignement}/{idAnnee}")
+  public Response   ModifierRecrutementVieEcole(@PathParam("codeVieEcole") String codeVieEcole,@PathParam("idNiveauEnseignement") Long idNiveauEnseignement,
+                                  @PathParam("idAnnee") Long idAnnee,
+                                   List<PersonnelVieEcoleDto> personnelList) throws IOException, SQLException {
+    List<String> resultats = new ArrayList<>();
+    List<String> erreurs = new ArrayList<>();
+
+    // Vérification de l'école une seule fois
+    System.out.println("Entrée Pour créer un professeur **** ");
+    Ecole ecole = Ecole.find("identifiantVieEcole =?1 and niveauEnseignement.id=?2",codeVieEcole,idNiveauEnseignement).firstResult();
+    System.out.println("ecole **** "+ecole);
+    if (ecole == null) {
+      return Response.status(Response.Status.NOT_FOUND)
+          .entity(Map.of("erreur", "Ecole introuvable dans Pouls-Pro"))
+          .build();
+    }
+
+    Long idEcole = ecole.getId();
+
+    // Traitement de chaque personnel
+    for (int i = 0; i < personnelList.size(); i++) {
+      PersonnelVieEcoleDto personnelDto = personnelList.get(i);
+      try {
+        try {
+          //verifExistancePersonnelForUpdate()
+          String resultat = ModifierUnPersonnel(personnelDto, idEcole, i + 1, idAnnee);
+          resultats.add(resultat);
+        } catch (RuntimeException e) {
+          e.printStackTrace();
+        }
+
+      } catch (Exception e) {
+        String erreur = String.format("Erreur pour le personnel %d (%s %s): %s",
+            i + 1,
+            personnelDto.getSous_attent_personn_prenom(),
+            personnelDto.getSous_attent_personn_nom(),
+            e.getMessage());
+        erreurs.add(erreur);
+      }
+    }
+
+    // Construction de la réponse
+    Map<String, Object> response = new HashMap<>();
+    response.put("total_traite", personnelList.size());
+    response.put("succes", resultats.size());
+    response.put("echecs", erreurs.size());
+    response.put("resultats", resultats);
+
+    if (!erreurs.isEmpty()) {
+      response.put("erreurs", erreurs);
+    }
+
+    // Retourner le statut approprié
+    if (erreurs.isEmpty()) {
+      return Response.ok(response).build();
+    } else if (resultats.isEmpty()) {
+      return Response.status(Response.Status.BAD_REQUEST).entity(response).build();
+    } else {
+      return Response.status(Response.Status.PARTIAL_CONTENT).entity(response).build();
+    }
+
+  }
 
   @POST
   @Produces(MediaType.TEXT_PLAIN)
@@ -377,8 +446,8 @@ public class SouscriptionRessource {
           .entity("École introuvable dans Pouls-Pro").build();
     }
     Classe classe = Classe.find("identifiantVieEcole =?1 and ecole.id=?2",codeClasse,ecole.getId()).firstResult();
-    matiere mat = matiere.find("code_vie_ecole =?1",codeMatiere).firstResult();
-
+   // matiere mat = matiere.find("code_vie_ecole =?1",codeMatiere).firstResult();
+   matiere mat = souscPersonnelService.getMatiereByCodeAndIdEcole( codeMatiere, ecole.getId()) ;
     AnneeScolaire anneeScolaire= new AnneeScolaire() ;
     anneeScolaire=anneeService.findMainAnneeByEcole(ecole) ;
     PersonnelMatiereClasse personnelMatiereClasse= new PersonnelMatiereClasse() ;
@@ -412,7 +481,69 @@ public class SouscriptionRessource {
     return Response.ok().entity(persMatClasService.getByMatiereAndClasseDispo(personnelMatiereClasse).get(0)).build();
 
   }
+  @POST
+  @Produces(MediaType.TEXT_PLAIN)
+  @Consumes(MediaType.APPLICATION_JSON)
+  //@Transactional
+  @Path("get-matiere-vie-ecole")
+  public matiere   getMatiereByEcole(@QueryParam("codeVieEcole") Long codeVieEcole,
+                                            @QueryParam("codeMatiere") String codeMatiere) {
+    return souscPersonnelService.getMatiereByCodeAndIdEcole(codeMatiere, codeVieEcole);
+  }
 
+   @PUT
+  @Produces(MediaType.TEXT_PLAIN)
+  @Consumes(MediaType.APPLICATION_JSON)
+  //@Transactional
+  @Path("desaffecter-matiere-professeur-vie-ecole")
+  public Response   desaffecterMatiereProfesseur(@QueryParam("codeVieEcole") String codeVieEcole,
+                                            @QueryParam("codeClasse") String codeClasse ,
+                                            @QueryParam("codeMatiere") String codeMatiere,
+                                            @QueryParam("login") String login,
+                                              @QueryParam("idNiveauEnseignement") Long  idNiveauEnseignement) throws IOException, SQLException {
+    // return     souscPersonnelService.CreerSousCriperson(mySouscrip) ;
+    String classeCode=null;
+    String matiereCode=null;
+    Ecole ecole = Ecole.find("identifiantVieEcole =?1 and niveauEnseignement.id=?2",codeVieEcole,idNiveauEnseignement).firstResult();
+    if (ecole == null) {
+      return Response.status(Response.Status.NOT_FOUND)
+          .entity("École introuvable dans Pouls-Pro").build();
+    }
+    Classe classe = Classe.find("identifiantVieEcole =?1 and ecole.id=?2",codeClasse,ecole.getId()).firstResult();
+    matiere mat = souscPersonnelService.getMatiereByCodeAndIdEcole(codeMatiere, ecole.getId());
+
+    AnneeScolaire anneeScolaire= new AnneeScolaire() ;
+    anneeScolaire=anneeService.findMainAnneeByEcole(ecole) ;
+    PersonnelMatiereClasse personnelMatiereClasse= new PersonnelMatiereClasse() ;
+    sous_attent_personn  mysouscripPersonn1 = new sous_attent_personn() ;
+    mysouscripPersonn1= souscPersonnelService.getSouscripByEmail(login) ;
+
+    if (mysouscripPersonn1 == null) {
+      return Response.status(Response.Status.NOT_FOUND)
+          .entity("Utilisateur  introuvable dans Pouls-Pro").build();
+    }
+
+    if (classe == null) {
+      return Response.status(Response.Status.NOT_FOUND)
+          .entity("Classe introuvable dans Pouls-Pro").build();
+    }
+
+    if (mat == null) {
+      return Response.status(Response.Status.NOT_FOUND)
+          .entity("Matière introuvable dans Pouls-Pro").build();
+    }
+
+    try {
+       personnelMatiereClasse = souscPersonnelService
+          .prepareProfMatiereClasseDto(login, ecole, classe, mat, anneeScolaire);
+      System.out.println("deleting ...");
+      persMatClasService.deleteByStatus(personnelMatiereClasse);
+    } catch(Exception e) {
+      e.printStackTrace();
+      return Response.serverError().entity(e).build();
+    }
+    return Response.ok("Suppression effectuée").build();
+  }
 
 
 
@@ -552,30 +683,40 @@ public class SouscriptionRessource {
     mySouscrip.setSous_attent_personn_prenom(personnelDto.getSous_attent_personn_prenom());
     mySouscrip.setSous_attent_personn_email(personnelDto.getSous_attent_personn_email());
     mySouscrip.setSous_attent_personn_sexe(sexe);
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
 
-    if(personnelDto.getSous_attent_personn_date_naissance()==null||
-        personnelDto.getSous_attent_personn_date_naissance().isEmpty()||personnelDto.getSous_attent_personn_date_naissance().equalsIgnoreCase("null")){
-      String date = "01/01/1900";
-      LocalDate localDate = LocalDate.parse(date, formatter);
-      LocalDate localDateNaiss = localDate;
-
-      mySouscrip.setSous_attent_personn_date_naissance(localDateNaiss);
-    } else {
-      String date =personnelDto.getSous_attent_personn_date_naissance();
-      LocalDate localDate = LocalDate.parse(date, formatter);
-      LocalDate localDateNaiss = localDate;
-
-      mySouscrip.setSous_attent_personn_date_naissance(localDateNaiss);
+    LocalDate dateNaissance = personnelDto.getSous_attent_personn_date_naissance();
+    Long domaineFormation= personnelDto.getIdentifiantdomaine_formation();
+    Long niveauEtude= personnelDto.getNiveau_etudeIdentifiant();
+    Long typeAutorisation= personnelDto.getType_autorisationIdentifiant();
+    
+    if (dateNaissance == null) {
+        dateNaissance = LocalDate.of(1900, 1, 1);
     }
 
+     mySouscrip.setSous_attent_personn_date_naissance(dateNaissance);
+    mySouscrip.setSous_attent_personn_contact(personnelDto.getSous_attent_personn_contact());
     mySouscrip.setSous_attent_personn_login(personnelDto.getSous_attent_personn_login());
     mySouscrip.setSous_attent_personn_password(personnelDto.getSous_attent_personn_password());
+   if (domaineFormation == null) {
     mySouscrip.setIdentifiantdomaine_formation(5L);
+} else {
+    mySouscrip.setIdentifiantdomaine_formation(domaineFormation);
+}
+
+if (niveauEtude == null) {
     mySouscrip.setNiveau_etudeIdentifiant(26L);
-    mySouscrip.setFonctionidentifiant(typeCompteCode);
+} else {
+    mySouscrip.setNiveau_etudeIdentifiant(niveauEtude);
+}
+
+if (typeAutorisation == null) {
     mySouscrip.setType_autorisation_idtype_autorisationid(1L);
+} else {
+    mySouscrip.setType_autorisation_idtype_autorisationid(typeAutorisation);
+}
+    mySouscrip.setFonctionidentifiant(typeCompteCode);
+    
 
     // Création du personnel
     sous_attent_personn messageRetour = souscPersonnelService.creerProfesseurVieEcole(mySouscrip, idEcole);
@@ -618,5 +759,99 @@ public class SouscriptionRessource {
         responseMess != null ? responseMess : "Créé avec succès");
   }
 
+  @Transactional
+  String ModifierUnPersonnel(PersonnelVieEcoleDto personnelDto, Long idEcole, int index, Long idAnnee)
+      throws IOException, SQLException {
 
+    // Logique de mapping du sexe
+    String sexe = switch (personnelDto.getSous_attent_personn_sexe()) {
+      case "Mr", "M.", "Monsieur" -> "MASCULIN";
+      case "Mme", "Mlle", "Madame", "Mademoiselle" -> "FEMININ";
+      default -> "MASCULIN";
+    };
+
+    // Logique de mapping du type de compte
+    Long typeCompteCode = switch (personnelDto.getTypecompte()) {
+      case "Professeur" -> 1L;
+      case "Educateur" -> 2L;
+      case "Fondateur" -> 3L;
+      default -> 1L;
+    };
+
+
+
+    LocalDate dateNaissance = personnelDto.getSous_attent_personn_date_naissance();
+    Long domaineFormation= personnelDto.getIdentifiantdomaine_formation();
+    System.out.println("domaineFormation **** "+domaineFormation);
+    Long niveauEtude= personnelDto.getNiveau_etudeIdentifiant();
+    System.out.println("niveauEtude **** "+niveauEtude);
+    Long typeAutorisation= personnelDto.getType_autorisationIdentifiant();
+    System.out.println("typeAutorisation **** "+typeAutorisation);
+
+    if (dateNaissance == null) {
+        dateNaissance = LocalDate.of(1900, 1, 1);
+    }
+
+   if (domaineFormation == null) {
+    personnelDto.setIdentifiantdomaine_formation(5L);
+} else {
+    personnelDto.setIdentifiantdomaine_formation(domaineFormation);
+}
+
+if (niveauEtude == null) {
+    personnelDto.setNiveau_etudeIdentifiant(26L);
+} else {
+    personnelDto.setNiveau_etudeIdentifiant(niveauEtude);
+} 
+
+
+    // Vérification de l'existence du personnel
+    personnel personnel = souscPersonnelService.verifExistancePersonnelForUpdate(personnelDto.getSous_attent_personn_login(), idEcole, idAnnee);
+    domaine_formation domaine_formations= new domaine_formation();
+    domaine_formations= domaine_formation.findById(personnelDto.getIdentifiantdomaine_formation()) ;
+    //domaine_formations= domaine_formation.findById(domaineFormation) ;
+    niveau_etude niveau_etudes= new niveau_etude();
+    niveau_etudes= niveau_etude.findById(personnelDto.getNiveau_etudeIdentifiant()) ;
+   // niveau_etudes= niveau_etude.findById(niveauEtude) ;
+  
+    if( personnel == null) {
+      throw new RuntimeException("Personnel non trouvé pour la mise à jour");
+    } else {
+      personnel.setPersonnelnom(personnelDto.getSous_attent_personn_nom());
+    personnel.setPersonnelprenom(personnelDto.getSous_attent_personn_prenom());
+    personnel.setPersonneldatenaissance(dateNaissance);
+    personnel.setPersonnel_sexe(sexe);
+    personnel.setPersonnel_contact(personnelDto.getSous_attent_personn_contact());
+    personnel.setDomaine_formation_domaine_formationid(domaine_formations);
+    personnel.setNiveau_etude(niveau_etudes);
+    }
+    
+
+   
+    return String.format("Personnel %d (%s %s): %s",
+        index,
+        personnelDto.getSous_attent_personn_prenom(),
+        personnelDto.getSous_attent_personn_nom(),
+       personnel == null ? "personnel non trouvé" : "Modifier avec succès");
+  }
+
+private String convertirDateFormat(String dateIso) {
+    if (dateIso == null || dateIso.isEmpty() || dateIso.equalsIgnoreCase("null")) {
+        return "01/01/1900";
+    }
+    
+    try {
+        // Parser le format ISO (yyyy-MM-dd)
+        DateTimeFormatter formatEntree = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate date = LocalDate.parse(dateIso, formatEntree);
+        
+        // Formater vers dd/MM/yyyy
+        DateTimeFormatter formatSortie = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return date.format(formatSortie);
+        
+    } catch (DateTimeParseException e) {
+        // Si le format d'entrée est déjà dd/MM/yyyy, le retourner tel quel
+        return dateIso;
+    }
+}
 }

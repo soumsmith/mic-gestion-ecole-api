@@ -3,6 +3,10 @@ package com.vieecoles.dto;
 
 import java.time.LocalDate;
 
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 
 public class PersonnelVieEcoleDto {
 
@@ -10,12 +14,51 @@ public class PersonnelVieEcoleDto {
     private  String sous_attent_personn_prenom;
     private  String sous_attent_personn_email;
     private String  sous_attent_personn_sexe;
-    private String sous_attent_personn_date_naissance;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate sous_attent_personn_date_naissance;
     private String sous_attent_personn_login ;
     private String sous_attent_personn_password ;
     private  String sous_attent_personn_contact ;
     private String typecompte ;
-  public String getSous_attent_personn_nom() {
+  @Schema(nullable = true, example = "26", description = "Identifiant du niveau d'étude")
+  private Long niveau_etudeIdentifiant;
+
+  @Schema(nullable = true, example = "1", description = "Identifiant du type d'autorisation")
+  private Long type_autorisationIdentifiant;
+
+  @Schema(nullable = true, example = "5", description = "Identifiant du domaine de formation")
+  private Long identifiantdomaine_formation;
+
+
+    public Long getIdentifiantdomaine_formation() {
+      return identifiantdomaine_formation;
+    }
+
+    public void setIdentifiantdomaine_formation(Long identifiantdomaine_formation) {
+      this.identifiantdomaine_formation = identifiantdomaine_formation;
+    }
+
+    
+
+    public Long getNiveau_etudeIdentifiant() {
+      return niveau_etudeIdentifiant;
+    }
+
+    public void setNiveau_etudeIdentifiant(Long niveau_etudeIdentifiant) {
+      this.niveau_etudeIdentifiant = niveau_etudeIdentifiant;
+    }
+
+    
+   
+    public Long getType_autorisationIdentifiant() {
+      return type_autorisationIdentifiant;
+    }
+
+    public void setType_autorisationIdentifiant(Long type_autorisationIdentifiant) {
+      this.type_autorisationIdentifiant = type_autorisationIdentifiant;
+    }
+
+    public String getSous_attent_personn_nom() {
     return sous_attent_personn_nom;
   }
 
@@ -55,11 +98,11 @@ public class PersonnelVieEcoleDto {
     this.sous_attent_personn_sexe = sous_attent_personn_sexe;
   }
 
-  public String getSous_attent_personn_date_naissance() {
+  public LocalDate getSous_attent_personn_date_naissance() {
     return sous_attent_personn_date_naissance;
   }
 
-  public void setSous_attent_personn_date_naissance(String sous_attent_personn_date_naissance) {
+  public void setSous_attent_personn_date_naissance(LocalDate sous_attent_personn_date_naissance) {
     this.sous_attent_personn_date_naissance = sous_attent_personn_date_naissance;
   }
 

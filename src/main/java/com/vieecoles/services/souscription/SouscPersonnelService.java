@@ -20,6 +20,7 @@ import com.vieecoles.steph.entities.AnneeScolaire;
 import com.vieecoles.steph.entities.Classe;
 import com.vieecoles.steph.entities.Ecole;
 import com.vieecoles.steph.entities.EcoleHasMatiere;
+import com.vieecoles.steph.entities.Matiere;
 import com.vieecoles.steph.entities.Personnel;
 import com.vieecoles.steph.entities.PersonnelMatiereClasse;
 import com.vieecoles.steph.services.PersonnelMatiereClasseService;
@@ -28,14 +29,13 @@ import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.NonUniqueResultException;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.core.Response;
 import java.io.*;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.sql.SQLException;
@@ -532,6 +532,8 @@ utilisateur user = new utilisateur() ;
     }
        return  mysous ;
     }
+
+
   @Transactional
   public personnel verifPersonnel(Long idPerson ){
     personnel mysous = new personnel();
@@ -560,7 +562,40 @@ utilisateur user = new utilisateur() ;
     }
 
 
-
+@Transactional
+  public personnel verifExistancePersonnelForUpdate(String login, Long idEcole, Long anneeId) {
+    try {
+        return (personnel) em.createNativeQuery(
+            "SELECT p.* FROM personnel p " +
+            "JOIN utilisateur_has_personnel u ON p.personnelid = u.personnel_personnelid " +
+            "JOIN utilisateur r ON u.utilisateur_utilisateurid = r.utilisateurid " +
+            "WHERE u.ecole_ecoleid = :idEcole " +
+            "AND r.utilisateu_login = :login " +
+            "AND p.anneeId = :idAnnee",
+            personnel.class
+        )
+        .setParameter("idEcole", idEcole)
+        .setParameter("login", login)
+        .setParameter("idAnnee", anneeId)
+        .getSingleResult();
+        
+    } catch (NoResultException e) {
+        // Aucun résultat trouvé
+        return null;
+        
+    } catch (NonUniqueResultException e) {
+        // Plusieurs résultats trouvés (ne devrait pas arriver)
+        System.err.println("Plusieurs personnels trouvés pour login=" + login + 
+                          ", ecole=" + idEcole + ", annee=" + anneeId);
+        return null;
+        
+    } catch (Exception e) {
+        // Autre erreur
+        System.err.println("Erreur lors de la vérification du personnel: " + e.getMessage());
+        e.printStackTrace();
+        return null;
+    }
+}
 
 @Transactional
     public void validerSouscription(souscriptionValidationDto mysouscription){
@@ -731,7 +766,31 @@ utilisateur user = new utilisateur() ;
 
         return  response;
 
+    } 
+
+    @Transactional
+public matiere getMatiereByCodeAndIdEcole(String codeMatiere, Long idEcole) {
+     try {
+        List<matiere> resultList = em.createNativeQuery(
+            "SELECT m.* FROM matiere m " +
+            "JOIN ecole_has_matiere e " +
+            "ON m.matiereid = e.matiere_matiereid " +
+            "WHERE m.code_vie_ecole = :codeMatiere AND e.ecole_ecoleid = :idEcole",
+            matiere.class
+        )
+        .setParameter("codeMatiere", codeMatiere)
+        .setParameter("idEcole", idEcole)
+        .setMaxResults(1)  // Limite à 1 résultat
+        .getResultList();
+        
+        return resultList.isEmpty() ? null : resultList.get(0);
+        
+    } catch (Exception e) {
+        System.err.println("Erreur lors de la récupération de la matière: " + e.getMessage());
+        e.printStackTrace();
+        return null;
     }
+}
 
 
 }
