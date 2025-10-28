@@ -66,6 +66,9 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 
 	@Inject
 	ProgressionSeanceService progressionSeanceService;
+	
+	@Inject
+	LockService lockService;
 
 	Logger logger = Logger.getLogger(SeanceService.class.getName());
 
@@ -125,14 +128,21 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 	}
 
 	List<Seances> destructSeanceByTimeUnit(Seances seances, int minutes) {
-		if (minutes == 0)
+		if (minutes == 0) {
 			minutes = Constants.DEFAULT_DUREE_SEANCE_MINUTES;
+		}
 		int duree = DateUtils.calculerDuree(seances.getHeureDeb(), seances.getHeureFin());
 		int nbreSeances = duree / minutes;
-		if (duree % minutes > 0)
+		if (duree % minutes > 0) {
 			nbreSeances++;
+		}
 		String dateDebNew = seances.getHeureDeb();
 		System.out.println(String.format("Nombre de de seances pour la séance %s = %s", seances.getId(), nbreSeances));
+		// L'identifiant du cahier de texte est composé de l'id de la classe et de l'id de la matière
+		String idtextBookConcept = String.format("%s-%s", seances.getClasse().getId(), seances.getMatiere().getId());
+		System.out.println(String.format("idtextBookConcept %s", idtextBookConcept));
+		// Vérifier si le cahier de texte est verrouillé
+		Boolean isTextBookLocked = lockService.isLocked(idtextBookConcept, Constants.CONCEPT_TYPE_TEXT_BOOK);
 		List<Seances> list = new ArrayList<>();
 		if (nbreSeances > 1) {
 //			List<Integer> dureePerSeanceList = dureePerSeance(duree, nbreSeances);
@@ -158,6 +168,7 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 				seance.setTypeActivite(seances.getTypeActivite());
 				seance.setActivite(seances.getActivite());
 				seance.setPosition(i);
+				seance.setIsTextBookLocked(isTextBookLocked);
 				seance.setIsVerrou(DateUtils.verifierHeureDansMarge(dateDebNew,
 						Constants.DEFAULT_DELAI_AVANT_DESACTIVE_APPEL_MINUTES,
 						Constants.DEFAULT_DELAI_APRES_DESACTIVE_APPEL_MINUTES));
@@ -371,6 +382,11 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 					listWithDestructSeances.addAll(seanceDestruct);
 
 				} else {
+					// L'identifiant du cahier de texte est composé de l'id de la classe et de l'id de la matière
+					String idtextBookConcept = String.format("%s-%s", s.getClasse().getId(), s.getMatiere().getId());
+					System.out.println(String.format("idtextBookConcept %s", idtextBookConcept));
+					// Vérifier si le cahier de texte est verrouillé
+					Boolean isTextBookLocked = lockService.isLocked(idtextBookConcept, Constants.CONCEPT_TYPE_TEXT_BOOK);
 					AppelNumerique ap = new AppelNumerique();
 					System.out.println("SEANCE ID " + s.getId());
 					ap = appelNumeriqueService.getBySeance(s.getId());
@@ -382,6 +398,7 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 					s.setIsClassEnded(verifySeanceEnded(s.getHeureFin()) ? "surface-300" : "");
 					s.setDuree(DateUtils.calculerDuree(s.getHeureDeb(), s.getHeureFin()));
 					s.setDureeTotale(DateUtils.calculerDuree(s.getHeureDeb(), s.getHeureFin()));
+					s.setIsTextBookLocked(isTextBookLocked);
 					listWithDestructSeances.add(s);
 				}
 
@@ -744,11 +761,12 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 //		jourNum = DateUtils.getNumDay(DateUtils.asDate(tomorrow));
 //		Jour jour = jourService.findByIdSys(jourNum);
 		logger.info("*** GENERATION AUTOMATIQUE DES EMPLOI DU TEMPS ***");
+		System.out.println(String.format("*** GENERATION AUTOMATIQUE DES EMPLOI DU TEMPS ( %s ) ***", LocalDateTime.now()));
 		logger.info(String.format("Date de generation des bulletins %s", DateUtils.asDate(tomorrow)));
 
 		for (Ecole ecole : ecoles) {
 
-//			System.out.println(String.format("Ecole %s", ecole.getLibelle()));
+			System.out.print(String.format("Ecole %s", ecole.getLibelle()));
 			AnneeDto annee = anneeService.getOpenAnneeByEcoleDto(ecole.getId());
 			if (annee.getAnneeEcoleList() != null && annee.getAnneeEcoleList().size() > 0) {
 				AnneePeriode ap = AnneePeriode.find("anneeScolaire.id =?1 and ecole.id=?2 order by dateFin desc",
@@ -758,13 +776,17 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 					GenericProjectionLongId anneeCentrale = anneeService.findMainAnneeWithProjectionByEcole(ecole);
 					try {
 						generateSeances(DateUtils.asDate(tomorrow), null, ecole.getId(), anneeCentrale.getId());
+						System.out.print(" --> ok");
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
 				}
 			}
+			System.out.println("");
 		}
 		logger.info("*** FIN GENERATION ***");
+		System.out.println(String.format("*** FIN DE GENERATION ( %s )***",  LocalDateTime.now()) );
+		
 	}
 
 	/**

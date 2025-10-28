@@ -300,14 +300,19 @@ public class EvaluationService implements PanacheRepositoryBase<Evaluation, Long
 		LockedDto dto = new LockedDto();
 		int flat = 1;
 		if (ev != null) {
+			System.out.println("Annee ID : " + ev.getAnnee().getId());
 			AnneeScolaire annee = anneeService.getById(ev.getAnnee().getId());
+			System.out.println("Ecole ID : " + ev.getClasse().getEcole().getId());
+			System.out.println("Annee debut : " + annee.getAnneeDebut());
 			AnneeScolaire anneeEcole = anneeService.getByEcoleAndAnneeDebut(ev.getClasse().getEcole().getId(),
 					annee.getAnneeDebut());
+			System.out
+					.println("-- AnneeEcole ID : " + (anneeEcole != null ? anneeEcole.getId() : "AnneeEcole is null"));
 			AnneePeriode anneePeriode = anneePeriodeService.getByAnneeAndEcoleAndPeriode(anneeEcole.getId(),
 					ev.getClasse().getEcole().getId(), ev.getPeriode().getId());
 			Date dateEvaluation = ev.getDate();
 			Integer nombreJoursDelai = anneeEcole.getDelaiNotes() != null ? anneeEcole.getDelaiNotes() : 0;
-//			System.out.println("nombreJoursDelai : " + nombreJoursDelai);
+			System.out.println("nombreJoursDelai : " + nombreJoursDelai);
 			Date dateLimiteSaisieAutorise = DateUtils.addDays(dateEvaluation, nombreJoursDelai);
 			Date today = new Date();
 			today = DateUtils.getDateAtStartDay(today);
@@ -316,7 +321,9 @@ public class EvaluationService implements PanacheRepositoryBase<Evaluation, Long
 							dateEvaluation, nombreJoursDelai, dateLimiteSaisieAutorise, flat, today));
 			// Si la date délai est postérieure à la date de fin de la période retourner la
 			// date de fin de période
-//			System.out.println(DateUtils.asDate(anneePeriode.getDateLimite()));
+			System.out.print("DateUtils.asDate(anneePeriode.getDateLimite())  :: ");
+			System.out.println(DateUtils.asDate(anneePeriode.getDateLimite()));
+			System.out.println(anneePeriode.getDateLimite());
 //			System.out.println(dateLimiteSaisieAutorise);
 			if (DateUtils.asDate(anneePeriode.getDateLimite()).compareTo(dateLimiteSaisieAutorise) >= 0)
 				dto.setDateLimite(dateLimiteSaisieAutorise);

@@ -68,8 +68,12 @@ public class Seances extends PanacheEntityBase {
 	// Indique le positionnement au cas où plusieurs séances par rapport à l'unité de temps
 	@Transient
 	private int position;
+	// Indique si la séance est verrouillée ou pas pour l'appel numérique
 	@Transient
 	private Boolean isVerrou;
+	// Indique si le cahier de texte est verrouillé ou pas
+	@Transient
+	private Boolean isTextBookLocked;
 	@Transient
 	private Boolean isEnded;
 	@Transient
