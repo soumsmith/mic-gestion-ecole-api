@@ -1,56 +1,11 @@
---- change project
-  $ gcloud config set project fair-splice-361010
 
---- list region
-  $ gcloud compute zones list
-
---- list repositories
-  gcloud artifacts repositories list
-
---- configure repo auth
-  gcloud auth configure-docker europe-west1-docker.pkg.dev
-
---- tag container
-  docker tag urbis-api:latest europe-west1-docker.pkg.dev/fair-splice-361010/vie-ecole-docker-repo/example:latest
-
-
-
- :w
-
-HEAD
-  :wq
-
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
- docker build -f src/main/docker/Dockerfile.jvm -t soumsmith/pouls-pro-api:202510071241 .
-=======
- docker build -f src/main/docker/Dockerfile.jvm -t europe-west1-docker.pkg.dev/fair-splice-361010/vie-ecole-docker-repo/vie-ecole-api:202507021649 .
->>>>>>> 8ea47f7f0940c762207d02a931c4e3a900af2de5
->>>>>>> master
->>>>>>> apache_poi
-=======
- docker build -f src/main/docker/Dockerfile.jvm -t soumsmith/pouls-pro-api:202510262155 .
+ docker build -f src/main/docker/Dockerfile.jvm -t soumsmith/pouls-pro-api:202510281512 .
 
  docker build -f src/main/docker/Dockerfile.jvm -t soumsmith/pouls-emploi-api:202509241821 .
 
   docker build -f src/main/docker/Dockerfile.jvm -t soumsmith/pouls-tuteur-adom-api:202509242227 .
 
->>>>>>> fusion_optimize
 
- docker build -f src/main/docker/Dockerfile.jvm -t soumsmith/pouls-paid-api:202509231421 .
- docker build -f src/main/docker/Dockerfile.jvm -t soumsmith/pouls-paid:202509231421 .
-
-
---- push image to artifact registry
-  docker push europe-west1-docker.pkg.dev/fair-splice-361010/vie-ecole-docker-repo/example:latest
-  docker push europe-west1-docker.pkg.dev/fair-splice-361010/vie-ecole-docker-repo/example:202209201329
-  docker push europe-west1-docker.pkg.dev/fair-splice-361010/vie-ecole-docker-repo/vie-ecole-api:202210211723
-
-
---- pull from artifact registry
-  docker pull europe-west1-docker.pkg.dev/fair-splice-361010/vie-ecole-docker-repo/example:latest
-3
 SELECT
     COUNT(e.eleve_matricule) AS nombre,
     i.inscriptionsid,
