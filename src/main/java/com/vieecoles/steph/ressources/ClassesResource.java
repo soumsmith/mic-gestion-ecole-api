@@ -119,6 +119,15 @@ public class ClassesResource {
 			return Response.serverError().entity("Erreur de serveur").build();
 		}
 	}
+	
+	@GET
+	@Path("/get-classe-dto-by-user-type")
+	@Operation(description = "Obtenir les classes visibles d'un enseignant", summary = "")
+	@Tag(name = "Classe")
+	public Response getClasseStoByAnneeAndPersonnelAndEcoleAndProfil(@QueryParam("personnel") Long personnelId,
+			@QueryParam("ecole") Long ecoleId, @QueryParam("annee") Long anneeId, @QueryParam("profil") Long profilId) {
+		return Response.ok(classeService.getByEcoleAndPersonnelAndProfil(anneeId,ecoleId,personnelId,profilId)).build();
+	}
 
 	@POST
 	@Path("/save")

@@ -225,7 +225,7 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 					pmc.getAnnee() != null ? pmc.getAnnee().getLibelle() : null);
 		}
 		LockService lockService = new LockService();
-		Boolean isLocked = lockService.isLocked(String.format("%s%s", classe, cm.getMatiere().getId()),
+		Boolean isLocked = lockService.isLocked(String.format("%s-%s", classe, cm.getMatiere().getId()),
 				Constants.CONCEPT_TYPE_TEXT_BOOK);
 		return new PersonnelMatiereClasseDto(cm.getMatiere().getId(), matiereDto, anneeDto, classeDto, personnelDto, isLocked);
 	}
@@ -550,6 +550,18 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 			r.printStackTrace();
 			return 0;
 		}
+	}
+	
+	public List<PersonnelMatiereClasse> findByAnneeAndPersonnelAndEcole(Long annee, Long personnelId, Long ecoleId){
+		List<PersonnelMatiereClasse> list = new ArrayList<>();
+		
+		try {
+			list = PersonnelMatiereClasse.find("annee.id = ?1 and personnel.id =?2 and classe.ecole.id = ?3", annee, personnelId, ecoleId).list();
+		} catch(RuntimeException r) {
+			System.out.println(String.format("Execption : %s ", r.getClass().getName()));
+		}
+		
+		return list;
 	}
 
 }

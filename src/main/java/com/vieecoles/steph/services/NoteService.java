@@ -185,7 +185,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				create(note);
 
 			} else if (note.getId() != 0 && note.getStatut() != null && note.getStatut().equals("M")) {
-				logger.info(gson.toJson(note));
+//				logger.info(gson.toJson(note));
 				logger.info("--> Maj de note ...");
 				update(note);
 			}
@@ -220,6 +220,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			Evaluation evaluation = evaluationService.findByCode(evalCode);
 			// Gson gson = new Gson();
 			// obtenir la liste des eleves d une classe
+			System.out.println(evaluation.getClasse().getId()+" "+evaluation.getAnnee().getId());
 			List<ClasseEleve> classeEleves = classeEleveService.getByClasseAnnee(evaluation.getClasse().getId(),
 					evaluation.getAnnee().getId());
 			// logger.info(gson.toJson(classeEleves));
