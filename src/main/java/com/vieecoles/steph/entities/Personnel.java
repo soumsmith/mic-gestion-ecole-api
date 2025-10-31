@@ -58,7 +58,8 @@ public class Personnel extends PanacheEntityBase {
 	private String sexe;
 	@Column(name = "niveau_etude_niveau_etudeid")
 	private Integer niveauEtude;
-	@Column(name = "anneeId")
+//	@Column(name = "anneeId")
+	@Transient
 	private Long anneeId;
 
 }

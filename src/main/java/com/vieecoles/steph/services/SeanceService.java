@@ -1,7 +1,5 @@
 package com.vieecoles.steph.services;
 
-import com.google.gson.Gson;
-import com.vieecoles.services.operations.ecoleService;
 import com.vieecoles.steph.dto.AnneeDto;
 import com.vieecoles.steph.dto.SeanceDto;
 import com.vieecoles.steph.dto.SeanceSearchResponseDto;
@@ -9,7 +7,6 @@ import com.vieecoles.steph.dto.SeancesStatDto;
 import com.vieecoles.steph.entities.*;
 import com.vieecoles.steph.enumerations.SearchLevelSeanceEnum;
 import com.vieecoles.steph.projections.GenericProjectionLongId;
-import com.vieecoles.steph.util.CommonUtils;
 import com.vieecoles.steph.util.DateUtils;
 
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
@@ -606,7 +603,7 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 
 	@Transactional
 	public Response save(Seances seances) {
-		Gson gson = new Gson();
+//		Gson gson = new Gson();
 		logger.info("persist seance ...");
 		UUID uuid = UUID.randomUUID();
 		seances.setId(uuid.toString());
@@ -632,7 +629,7 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 
 			seances.getEvaluation().setClasse(seances.getClasse());
 			seances.getEvaluation().setUser(seances.getUser());
-			logger.info(gson.toJson(seances.getEvaluation()));
+//			logger.info(gson.toJson(seances.getEvaluation()));
 			evaluationService.create(seances.getEvaluation());
 		} else {
 			seances.setEvaluation(null);
@@ -819,7 +816,7 @@ public class SeanceService implements PanacheRepositoryBase<Seances, Long> {
 //							atv.getClasse().getId());
 					PersonnelMatiereClasse pers = personnelMatiereClasseService.findByMatiereAndClasse(
 							atv.getMatiere().getId(), anneeCentrale.getId(), atv.getClasse().getId());
-					Gson g = new Gson();
+//					Gson g = new Gson();
 //					System.out.println(g.toJson(persGeneric));
 //					if(persGeneric!=null) {
 //						pers = new Personnel();
