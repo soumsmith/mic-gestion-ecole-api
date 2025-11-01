@@ -153,10 +153,10 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 			obj = PersonnelMatiereClasse.find(
 					"matiere.id = ?1 and annee.id = ?2 and classe.id = ?3 and (statut is null or statut <> 'DELETED') ",
 					matiereId, annee, classeId).project(GenericProjectionLongId.class).singleResult();
-			System.out.println(obj);
+//			System.out.println(obj);
 			return obj;
 		} catch (RuntimeException re) {
-			System.out.println(obj);
+//			System.out.println(obj);
 			re.printStackTrace();
 			logger.log(Level.WARNING, "Aucun PersonnelMatiereClasse trouve");
 			return null;
@@ -175,10 +175,10 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 					"matiere.id = ?1 and annee.id = ?2 and classe.id = ?3 and (statut is null or statut <> 'DELETED') ",
 					matiereId, annee, classeId).project(GenericPersonelProjectionLongIdFonctionEcole.class)
 					.singleResult();
-			System.out.println(obj);
+//			System.out.println(obj);
 			return obj;
 		} catch (RuntimeException re) {
-			System.out.println(obj);
+//			System.out.println(obj);
 			re.printStackTrace();
 			logger.log(Level.WARNING, "Aucun PersonnelMatiereClasse trouve");
 			return null;
@@ -187,9 +187,16 @@ public class PersonnelMatiereClasseService implements PanacheRepositoryBase<Pers
 
 	public List<PersonnelMatiereClasse> findByProfesseur(long profId, long annee, long ecole) {
 		logger.info(String.format("find by Prof id :: %s and annee :: %s", profId, annee));
-		return PersonnelMatiereClasse.find(
+		List<PersonnelMatiereClasse> list; 
+		try {
+		list =  PersonnelMatiereClasse.find(
 				"personnel.id = ?1 and annee.id = ?2  and classe.ecole.id=?3 and matiere is not null and (statut is null or statut <> 'DELETED') ",
 				profId, annee, ecole).list();
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+			list = new ArrayList<PersonnelMatiereClasse>();
+		}
+		return list;
 	}
 
 	/**

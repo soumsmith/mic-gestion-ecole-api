@@ -5,11 +5,20 @@ import com.vieecoles.steph.entities.Matiere;
 import com.vieecoles.steph.entities.NiveauEnseignement;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class MatiereDto {
+	
+	public MatiereDto(Long id, String code, String libelle) {
+		super();
+		this.id = id;
+		this.code = code;
+		this.libelle = libelle;
+	}
 	private Long id;
 	private String code;
 	private String libelle;
