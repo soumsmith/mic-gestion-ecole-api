@@ -104,14 +104,14 @@ public class ClasseMatiereService implements PanacheRepositoryBase<ClasseMatiere
 	}
 
 	public List<ClasseMatiere> getByEcole(long ecoleId) {
-		System.out.println("Ecole ::: " + ecoleId);
+//		System.out.println("Ecole ::: " + ecoleId);
 		return ClasseMatiere
 				.find("select distinct m.matiere.libelle from ClasseMatiere m where m.matiere.ecole.id = ?1", ecoleId)
 				.list();
 	}
 
 	public List<ClasseMatiere> getByBranche(long brancheId, long ecoleId) {
-		System.out.println("branche :: " + brancheId + " ecole ::: " + ecoleId);
+//		System.out.println("branche :: " + brancheId + " ecole ::: " + ecoleId);
 		return ClasseMatiere.find("branche.id = ?1 and ecole.id=?2", brancheId, ecoleId).list();
 	}
 
@@ -163,7 +163,7 @@ public class ClasseMatiereService implements PanacheRepositoryBase<ClasseMatiere
 
 	public List<ClasseMatiere> getByBrancheViaClasse(long classeId) {
 		Classe classe = classeService.findById(classeId);
-		System.out.println(classe);
+//		System.out.println(classe);
 		return getByBranche(classe.getBranche().getId(), classe.getEcole().getId());
 	}
 

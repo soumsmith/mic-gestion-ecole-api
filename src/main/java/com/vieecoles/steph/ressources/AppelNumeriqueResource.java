@@ -4,6 +4,15 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
+
+import com.vieecoles.steph.entities.AppelNumerique;
+import com.vieecoles.steph.entities.Constants;
+import com.vieecoles.steph.services.AppelNumeriqueDto;
+import com.vieecoles.steph.services.AppelNumeriqueService;
+import com.vieecoles.steph.util.DateUtils;
+
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
@@ -13,15 +22,6 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-
-import org.eclipse.microprofile.openapi.annotations.tags.Tag;
-
-import com.google.gson.Gson;
-import com.vieecoles.steph.entities.AppelNumerique;
-import com.vieecoles.steph.entities.Constants;
-import com.vieecoles.steph.services.AppelNumeriqueDto;
-import com.vieecoles.steph.services.AppelNumeriqueService;
-import com.vieecoles.steph.util.DateUtils;
 
 @Path("appel-numerique")
 @Tag(name = "Appel", description = "Appel numérique")
@@ -75,8 +75,8 @@ public class AppelNumeriqueResource {
 	@Produces(MediaType.TEXT_PLAIN)
 	@Path("/save-handle-dto")
 	public Response save(AppelNumeriqueDto dto) {
-		Gson gson = new Gson();
-		System.out.println(gson.toJson(dto));
+//		Gson gson = new Gson();
+//		System.out.println(gson.toJson(dto));
 		try {
 			LocalTime timeDebut = LocalTime.parse(dto.getHeureDebutSeance(), DateTimeFormatter.ofPattern("HH:mm"));
 			LocalTime timeDelai = timeDebut.plusMinutes(Constants.DEFAULT_DELAI_APPEL_MINUTES);

@@ -7,11 +7,6 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import jakarta.transaction.Transactional;
-
-import com.google.gson.Gson;
 import com.vieecoles.steph.dto.DetailProgressionDto;
 import com.vieecoles.steph.dto.IdLongCodeLibelleDto;
 import com.vieecoles.steph.dto.ProgressionDto;
@@ -26,6 +21,9 @@ import com.vieecoles.steph.projections.GenericProjectionStringId;
 import com.vieecoles.steph.util.DateUtils;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 
 @ApplicationScoped
 public class ProgressionService implements PanacheRepositoryBase<Progression, String> {

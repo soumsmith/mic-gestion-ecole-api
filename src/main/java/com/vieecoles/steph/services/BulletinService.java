@@ -13,12 +13,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-import jakarta.enterprise.context.RequestScoped;
-import jakarta.inject.Inject;
-import jakarta.persistence.NoResultException;
-import jakarta.transaction.Transactional;
-
-import com.google.gson.Gson;
 import com.vieecoles.entities.InfosPersoBulletins;
 import com.vieecoles.steph.dto.BulletinDto;
 import com.vieecoles.steph.dto.DetailBulletinDto;
@@ -44,6 +38,10 @@ import com.vieecoles.steph.util.CommonUtils;
 
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
+import jakarta.persistence.NoResultException;
+import jakarta.transaction.Transactional;
 
 @RequestScoped
 public class BulletinService implements PanacheRepositoryBase<Bulletin, String> {
@@ -79,7 +77,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 	EcoleHasMatiereService ecoleHasMatiereService;
 
 	Logger logger = Logger.getLogger(BulletinService.class.getName());
-	Gson g = new Gson();
+//	Gson g = new Gson();
 
 	@Transactional
 	public void save(Bulletin bulletin) {

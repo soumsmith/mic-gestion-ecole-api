@@ -1,15 +1,13 @@
 package com.vieecoles.steph.ressources;
 
-import com.google.gson.Gson;
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
+
 import com.vieecoles.steph.entities.AnneeScolaire;
 import com.vieecoles.steph.entities.Ecole;
 import com.vieecoles.steph.services.AnneePeriodeService;
 import com.vieecoles.steph.services.AnneeService;
 import com.vieecoles.steph.services.EcoleService;
-
-import org.eclipse.microprofile.openapi.annotations.Operation;
-import org.eclipse.microprofile.openapi.annotations.tags.Tag;
-import org.jboss.logging.annotations.Param;
 
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
@@ -213,7 +211,7 @@ public class AnneeResource {
 	@Path("/save-update")
 	@Tag(name = "Année scolaire")
 	public Response saveOrDisplayAndDisplay(AnneeScolaire anneeScolaire) {
-		Gson g = new Gson();
+//		Gson g = new Gson();
 		try {
 //			System.out.println(g.toJson(anneeScolaire));
 			AnneeScolaire annee = anneeService.handleOpenAnnee(anneeScolaire);
@@ -228,9 +226,9 @@ public class AnneeResource {
 	@Path("/save-update-ecole")
 	@Tag(name = "Année scolaire")
 	public Response updateAndDisplayToEcole(AnneeScolaire anneeScolaire) {
-		Gson g = new Gson();
+//		Gson g = new Gson();
 		try {
-			System.out.println(g.toJson(anneeScolaire));
+//			System.out.println(g.toJson(anneeScolaire));
 			AnneeScolaire annee = anneeService.handleOpenAnneeToEcole(anneeScolaire);
 			return Response.ok(annee).build();
 		} catch (RuntimeException e) {

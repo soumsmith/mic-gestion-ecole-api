@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import com.google.gson.Gson;
 import com.vieecoles.steph.dto.MatiereDto;
 import com.vieecoles.steph.entities.Matiere;
 import com.vieecoles.steph.projections.GenericBasicProjectionLongId;
@@ -138,9 +137,6 @@ public class MatiereService implements PanacheRepositoryBase<Matiere, Long> {
 
 	@Transactional
 	public Matiere update(Matiere matiere) {
-
-		Gson g = new Gson();
-		System.out.println(g.toJson(matiere));
 
 		Matiere entity = Matiere.findById(matiere.getId());
 		if (entity == null) {
