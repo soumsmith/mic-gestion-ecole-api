@@ -1,5 +1,13 @@
 package com.vieecoles.steph.ressources;
 
+import java.util.List;
+
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
+
+import com.vieecoles.steph.dto.ProgressionSeanceDto;
+import com.vieecoles.steph.entities.ProgressionSeance;
+import com.vieecoles.steph.services.ProgressionSeanceService;
+
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
@@ -9,15 +17,6 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-
-import java.util.List;
-
-import org.eclipse.microprofile.openapi.annotations.tags.Tag;
-
-import com.google.gson.Gson;
-import com.vieecoles.steph.dto.ProgressionSeanceDto;
-import com.vieecoles.steph.entities.ProgressionSeance;
-import com.vieecoles.steph.services.ProgressionSeanceService;
 
 @Path("progression-seance")
 @Tag(name = "Progression seance")
@@ -32,7 +31,7 @@ public class ProgressionSeanceResource {
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response handleSave(ProgressionSeanceDto dto) {
 		try {
-			Gson g = new Gson();
+//			Gson g = new Gson();
 //			System.out.println(g.toJson(dto));
 			ProgressionSeance ps = progressionSeanceService.convertToEntity(dto);
 			String message = progressionSeanceService.handleSave(ps);

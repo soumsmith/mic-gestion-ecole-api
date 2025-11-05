@@ -6,11 +6,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import jakarta.enterprise.context.RequestScoped;
-import jakarta.transaction.Transactional;
-import jakarta.ws.rs.NotFoundException;
-
-import com.google.gson.Gson;
 import com.vieecoles.steph.entities.AnneePeriode;
 import com.vieecoles.steph.entities.AnneeScolaire;
 import com.vieecoles.steph.entities.Periode;
@@ -18,6 +13,9 @@ import com.vieecoles.steph.pojos.AnneePeriodePojo;
 import com.vieecoles.steph.util.DateUtils;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.transaction.Transactional;
+import jakarta.ws.rs.NotFoundException;
 
 @RequestScoped
 public class AnneePeriodeService implements PanacheRepositoryBase<AnneePeriode, Long> {

@@ -1,37 +1,5 @@
 package com.vieecoles.steph.services;
 
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-import com.google.gson.Gson;
-import com.vieecoles.entities.operations.personnel;
-import com.vieecoles.services.utilisateurService;
-import com.vieecoles.services.personnels.PersonnelService;
-import com.vieecoles.steph.dto.ImportEvaluationDto;
-import com.vieecoles.steph.dto.NotesLoaderDto;
-import com.vieecoles.steph.entities.AnneeScolaire;
-import com.vieecoles.steph.entities.Classe;
-import com.vieecoles.steph.entities.ClasseEleve;
-import com.vieecoles.steph.entities.Constants;
-import com.vieecoles.steph.entities.EcoleHasMatiere;
-import com.vieecoles.steph.entities.Eleve;
-import com.vieecoles.steph.entities.Evaluation;
-import com.vieecoles.steph.entities.EvaluationLoader;
-import com.vieecoles.steph.entities.Matiere;
-import com.vieecoles.steph.entities.Notes;
-import com.vieecoles.steph.entities.NotesLoader;
-import com.vieecoles.steph.entities.Periode;
-import com.vieecoles.steph.entities.TypeActivite;
-import com.vieecoles.steph.entities.TypeEvaluation;
-import com.vieecoles.steph.util.CommonUtils;
-import com.vieecoles.steph.util.DateUtils;
-
-import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
-import io.quarkus.panache.common.Parameters;
-
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import jakarta.transaction.Transactional;
-import jakarta.ws.rs.NotFoundException;
-
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -42,6 +10,30 @@ import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 import java.util.logging.Logger;
+
+import com.vieecoles.services.personnels.PersonnelService;
+import com.vieecoles.steph.dto.NotesLoaderDto;
+import com.vieecoles.steph.entities.AnneeScolaire;
+import com.vieecoles.steph.entities.Classe;
+import com.vieecoles.steph.entities.ClasseEleve;
+import com.vieecoles.steph.entities.Constants;
+import com.vieecoles.steph.entities.EcoleHasMatiere;
+import com.vieecoles.steph.entities.Eleve;
+import com.vieecoles.steph.entities.Evaluation;
+import com.vieecoles.steph.entities.EvaluationLoader;
+import com.vieecoles.steph.entities.Notes;
+import com.vieecoles.steph.entities.NotesLoader;
+import com.vieecoles.steph.entities.Periode;
+import com.vieecoles.steph.entities.TypeActivite;
+import com.vieecoles.steph.util.CommonUtils;
+import com.vieecoles.steph.util.DateUtils;
+
+import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
+import io.quarkus.panache.common.Parameters;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
+import jakarta.ws.rs.NotFoundException;
 
 @ApplicationScoped
 public class EvaluationLoaderService implements PanacheRepositoryBase<EvaluationLoader, Long> {
@@ -216,7 +208,7 @@ public class EvaluationLoaderService implements PanacheRepositoryBase<Evaluation
 
 	@Transactional
 	public EvaluationLoader create(EvaluationLoader ev) {
-		Gson gson = new Gson();
+//		Gson gson = new Gson();
 		Date date = new Date();
 //		personnel pers = personnelService.findById(Long.parseLong(ev.getUser()));
 //		if (pers != null)
@@ -224,7 +216,7 @@ public class EvaluationLoaderService implements PanacheRepositoryBase<Evaluation
 		ev.setStatut(Constants.LOADED);
 		ev.setDateCreation(Timestamp.from(date.toInstant()).toString());
 		ev.setDateUpdate(Timestamp.from(date.toInstant()).toString());
-		logger.info(gson.toJson(ev));
+//		logger.info(gson.toJson(ev));
 		ev.persist();
 		return ev;
 	}

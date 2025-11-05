@@ -19,7 +19,6 @@ import jakarta.ws.rs.core.Response;
 
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
-import com.google.gson.Gson;
 import com.vieecoles.steph.entities.ClasseMatiere;
 import com.vieecoles.steph.services.ClasseMatiereService;
 
@@ -70,14 +69,14 @@ public class ClasseMatiereResource {
 	@Path("/maj-coefficients")
 	@Tag(name = "ClasseMatiere")
 	public Response saveAndUpdateDisplay(List<ClasseMatiere> classeMatieres) {
-		Gson g = new Gson();
+//		Gson g = new Gson();
 		try {
 			List<ClasseMatiere> cmList = new ArrayList<ClasseMatiere>();
 			Long brancheId = (long) 0;
 			Long ecoleId = (long) 0;
 			if (classeMatieres != null && classeMatieres.size() > 0) {
 				classeMatiereService.handleSaveOrUpdate(classeMatieres);
-				System.out.println(g.toJson(classeMatieres));
+//				System.out.println(g.toJson(classeMatieres));
 				brancheId = classeMatieres.get(0).getBranche().getId();
 				ecoleId = classeMatieres.get(0).getEcole().getId();
 //			System.out.println(brancheId);

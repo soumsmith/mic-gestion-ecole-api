@@ -1,8 +1,13 @@
 package com.vieecoles.steph.services;
 
-import com.google.gson.Gson;
-import com.vieecoles.entities.operations.classe;
-import com.vieecoles.services.operations.classeService;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
+import java.util.logging.Logger;
+
 import com.vieecoles.steph.dto.DetailsEvaluationProfDto;
 import com.vieecoles.steph.dto.EvaluationsProfStatDto;
 import com.vieecoles.steph.dto.LockedDto;
@@ -19,19 +24,10 @@ import com.vieecoles.steph.util.DateUtils;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 import io.quarkus.panache.common.Parameters;
-
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.NotFoundException;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
-import java.util.logging.Logger;
 
 @RequestScoped
 public class EvaluationService implements PanacheRepositoryBase<Evaluation, Long> {

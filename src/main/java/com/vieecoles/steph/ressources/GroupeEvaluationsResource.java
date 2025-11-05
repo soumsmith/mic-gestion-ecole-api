@@ -1,16 +1,12 @@
 package com.vieecoles.steph.ressources;
 
-import com.google.gson.Gson;
-import com.vieecoles.steph.entities.AnneeScolaire;
-import com.vieecoles.steph.entities.Ecole;
-import com.vieecoles.steph.entities.GroupeEvaluations;
-import com.vieecoles.steph.services.AnneePeriodeService;
-import com.vieecoles.steph.services.AnneeService;
-import com.vieecoles.steph.services.EcoleService;
-import com.vieecoles.steph.services.GroupeEvaluationService;
-
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
+
+import com.vieecoles.steph.entities.GroupeEvaluations;
+import com.vieecoles.steph.services.AnneePeriodeService;
+import com.vieecoles.steph.services.EcoleService;
+import com.vieecoles.steph.services.GroupeEvaluationService;
 
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;

@@ -1,10 +1,12 @@
 package com.vieecoles.steph.util;
 
-import org.apache.commons.io.IOUtils;
-
-import com.google.gson.Gson;
-
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
@@ -17,6 +19,8 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+
+import org.apache.commons.io.IOUtils;
 
 /**
  * Commonly used file utility methods.

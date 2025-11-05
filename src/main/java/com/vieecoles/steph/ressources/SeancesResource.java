@@ -1,7 +1,13 @@
 package com.vieecoles.steph.ressources;
 
-import com.google.gson.Gson;
-import com.vieecoles.steph.dto.SeanceDto;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
+
 import com.vieecoles.steph.dto.SeanceSearchResponseDto;
 import com.vieecoles.steph.entities.Activite;
 import com.vieecoles.steph.entities.Message;
@@ -9,17 +15,18 @@ import com.vieecoles.steph.entities.Seances;
 import com.vieecoles.steph.services.SeanceService;
 import com.vieecoles.steph.util.DateUtils;
 
-import org.eclipse.microprofile.openapi.annotations.Operation;
-import org.eclipse.microprofile.openapi.annotations.tags.Tag;
-
 import jakarta.inject.Inject;
-import jakarta.ws.rs.*;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.NotFoundException;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 @Path("/seances")
 public class SeancesResource {
@@ -126,8 +133,8 @@ public class SeancesResource {
 		LocalDate ld = DateUtils.getDateWithString(date);
 		Date ourDate = DateUtils.asDate(ld);
 		List<Seances> seances = seanceService.getDistinctListByDate(ourDate, Long.parseLong(ecole));
-		Gson gson = new Gson();
-		System.out.println(gson.toJson(seances));
+//		Gson gson = new Gson();
+//		System.out.println(gson.toJson(seances));
 		return Response.ok().entity(seances).build();
 	}
 
@@ -148,8 +155,8 @@ public class SeancesResource {
 		LocalDate ld = DateUtils.getDateWithString(date);
 		Date ourDate = DateUtils.asDate(ld);
 		List<Seances> seances = seanceService.getDistinctListByDateAndClasse(ourDate, classeId);
-		Gson gson = new Gson();
-		System.out.println(gson.toJson(seances));
+//		Gson gson = new Gson();
+//		System.out.println(gson.toJson(seances));
 		return Response.ok().entity(seances).build();
 	}
 
@@ -164,8 +171,8 @@ public class SeancesResource {
 		Date ourDate = DateUtils.asDate(ld);
 		System.out.println(ourDate);
 		Long seances = seanceService.countSallesUtiliseInSeanceByEcoleAndDate(ecoleId, ourDate);
-		Gson gson = new Gson();
-		System.out.println(gson.toJson(seances));
+//		Gson gson = new Gson();
+//		System.out.println(gson.toJson(seances));
 		return Response.ok().entity(seances).build();
 	}
 

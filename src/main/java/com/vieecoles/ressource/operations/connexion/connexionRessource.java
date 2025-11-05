@@ -192,7 +192,7 @@ public class connexionRessource {
         Long idUtilisateur ;
         idUtilisateur = myconnexionService.getIdUtilisateur(login) ;
         personnelConnexionDto myPersonn= new personnelConnexionDto();
-        System.out.println("idUtilisateurxxx "+ idUtilisateur);
+//        System.out.println("idUtilisateurxxx "+ idUtilisateur);
 
         if(idUtilisateur!=0L) {
             myPersonn =  myconnexionService.infosUtilisateurConnecte(login,idEcole) ;
@@ -208,7 +208,7 @@ public class connexionRessource {
         Long idUtilisateur ;
         idUtilisateur = myconnexionService.getIdUtilisateur(login) ;
         personnelConnexionDto myPersonn= new personnelConnexionDto();
-        System.out.println("idUtilisateurxxx "+ idUtilisateur);
+//        System.out.println("idUtilisateurxxx "+ idUtilisateur);
 
         if(idUtilisateur!=0L) {
             myPersonn =  myconnexionService.infosUtilisateurConnecteV2(login,idEcole,profilId) ;

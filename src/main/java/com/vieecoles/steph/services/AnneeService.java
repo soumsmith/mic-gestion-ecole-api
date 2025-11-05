@@ -1,6 +1,5 @@
 package com.vieecoles.steph.services;
 
-import com.google.gson.Gson;
 import com.vieecoles.steph.dto.AnneeDto;
 import com.vieecoles.steph.dto.AnneeInfoDto;
 import com.vieecoles.steph.dto.DetailAnneeDto;
@@ -161,7 +160,6 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 	}
 
 	public List<AnneeScolaire> getListOpenOrCloseByEcole(Long ecoleId) {
-		Gson g = new Gson();
 		List<AnneeScolaire> annees = new ArrayList<AnneeScolaire>();
 		List<AnneeScolaire> anneesCentrales = new ArrayList<AnneeScolaire>();
 		try {
@@ -567,7 +565,6 @@ public class AnneeService implements PanacheRepositoryBase<AnneeScolaire, Long> 
 
 	public AnneeInfoDto getAnneeInfo(Long ecoleId) {
 		Date today = new Date();
-		Gson g = new Gson();
 		AnneeInfoDto infos = new AnneeInfoDto();
 		List<AnneeScolaire> anneeOuverteList = getByEcoleAndStatut(ecoleId, Constants.OUVERT);
 		AnneeScolaire anneeOuverte = new AnneeScolaire();

@@ -1,19 +1,28 @@
 package com.vieecoles.steph.ressources;
 
-import com.google.gson.Gson;
+import java.util.List;
+
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
+
 import com.vieecoles.steph.dto.EvaluationsProfStatDto;
 import com.vieecoles.steph.dto.ImportEvaluationDto;
 import com.vieecoles.steph.entities.Evaluation;
 import com.vieecoles.steph.entities.Message;
 import com.vieecoles.steph.services.EvaluationService;
-import org.eclipse.microprofile.openapi.annotations.Operation;
-import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 import jakarta.inject.Inject;
-import jakarta.ws.rs.*;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.NotFoundException;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import java.util.List;
 
 @Path("/evaluations")
 public class EvaluationResource {
@@ -177,8 +186,8 @@ public class EvaluationResource {
 	public Response importation(List<ImportEvaluationDto> importEvaluationDtos) {
 		try {
 			// logger.info("Saving ...");
-			Gson g = new Gson();
-			System.out.println(g.toJson(importEvaluationDtos));
+//			Gson g = new Gson();
+//			System.out.println(g.toJson(importEvaluationDtos));
 //    		evaluationService.create(evaluation);
 		} catch (Exception e) {
 			e.printStackTrace();

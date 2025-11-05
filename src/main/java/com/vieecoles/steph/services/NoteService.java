@@ -177,7 +177,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 
 	@Transactional
 	public void handleNotes(List<Notes> noteList) {
-		Gson gson = new Gson();
+//		Gson gson = new Gson();
 		for (Notes note : noteList) {
 			if (note.getId() == 0 && note.getStatut() != null && note.getStatut().equals("M")) {
 //	    			logger.info(gson.toJson(note));
@@ -377,7 +377,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			Classe classe;
 			MoyenneEleveDto moyenneEleveDto;
 			EvaluationPeriode evaluationPeriode = null;
-			Gson g = new Gson();
+//			Gson g = new Gson();
 			// pour chaque évaluation avoir la liste des notes des élèves
 //			System.out.println("ealist "+evalList);
 
@@ -1075,7 +1075,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 		Map<Long, MoyenneAdjustment> moyenneAdjustmentByEleveMap = new HashMap<Long, MoyenneAdjustment>();
 		Map<Long, String> coefParMatiereMap = new HashMap<Long, String>();
 
-		Gson g = new Gson();
+//		Gson g = new Gson();
 
 //		System.out.println(g.toJson(moyEleve));
 		for (MoyenneEleveDto me : moyEleve) {
@@ -1572,7 +1572,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 		List<ClasseMatiere> classeMatList = ClasseMatiere.find("branche.id = ?1 and ecole.id =?2", brancheId, ecoleId)
 				.list();
 		Map<Double, MoyenneEleveDto> mapt;
-		Gson g = new Gson();
+//		Gson g = new Gson();
 		int i = 0;
 		for (ClasseMatiere cm : classeMatList) {
 //			logger.info("---> " + cm.getMatiere().getId() + " " + cm.getMatiere().getLibelle());

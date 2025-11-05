@@ -1,25 +1,12 @@
 package com.vieecoles.steph;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.context.BeforeDestroyed;
-import jakarta.enterprise.context.Destroyed;
-import jakarta.enterprise.context.Initialized;
-import jakarta.enterprise.event.Observes;
-import jakarta.inject.Inject;
-import jakarta.transaction.Status;
-import jakarta.transaction.SystemException;
-import jakarta.transaction.TransactionManager;
-import jakarta.transaction.TransactionScoped;
-
-import com.google.gson.Gson;
-
 //@ApplicationScoped
 public class MyTransactionEventListeningBean {
 
 //	@Inject
 //	TransactionManager tx;
 
-	Gson g = new Gson();
+//	Gson g = new Gson();
 
 //    void onBeginTransaction(@Observes @Initialized(TransactionScoped.class) Object event) {
 //        // This gets invoked when a transaction begins.
