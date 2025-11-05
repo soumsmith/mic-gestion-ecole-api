@@ -71,6 +71,8 @@ public class PersonnelResource {
 		List<Personnel> personnels = new ArrayList<>();
 		AnneeDto  anneeDto= new AnneeDto() ;
 		anneeDto=anneeService.getOpenAnneeByEcoleDto(ecoleId) ;
+		System.out.println("Annee ouverte id :"+anneeDto.getAnneeOuverteCentraleId());
+		System.out.println("Ecole id :"+ecoleId+" Profil id :"+profilId);	
 		try {
 			personnels = personnelService.getByEcoleAndProfil_v2_Anneeid(ecoleId, profilId,anneeDto.getAnneeOuverteCentraleId());
 			logger.log(Level.INFO, "Param - listProf size ::: {0} ", personnels.size());
