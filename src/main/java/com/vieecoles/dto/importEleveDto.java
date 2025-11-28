@@ -31,6 +31,15 @@ public class importEleveDto {
     private String ivoirien;
     private String etranger_africain;
     private String etranger_non_africain;
+    private String photo;
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
 
     public String getExtrait_numero() {
         return extrait_numero;

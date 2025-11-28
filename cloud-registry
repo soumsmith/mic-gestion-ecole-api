@@ -1,9 +1,12 @@
 
- docker build -f src/main/docker/Dockerfile.jvm -t soumsmith/pouls-pro-api:202511041625 .
+ docker build -f src/main/docker/Dockerfile.jvm -t soumsmith/pouls-pro-api:202511260946 .
 
  docker build -f src/main/docker/Dockerfile.jvm -t soumsmith/pouls-emploi-api:202509241821 .
 
   docker build -f src/main/docker/Dockerfile.jvm -t soumsmith/pouls-tuteur-adom-api:202509242227 .
+
+
+  docker build -f src/main/docker/Dockerfile.jvm -t soumsmith/conduite-api:202511251602 .
 
 
 SELECT

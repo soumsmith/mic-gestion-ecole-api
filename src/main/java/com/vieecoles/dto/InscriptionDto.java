@@ -120,6 +120,16 @@ public class InscriptionDto {
     private Boolean etranger_non_africain;
     private  String matriculeEleve ;
     private  String sexeEleve ;
+  
+    private String cheminphoto;
+
+    public String getCheminphoto() {
+        return cheminphoto;
+    }
+
+    public void setCheminphoto(String cheminphoto) {
+        this.cheminphoto = cheminphoto;
+    }
 
     public String getSexeEleve() {
         return sexeEleve;

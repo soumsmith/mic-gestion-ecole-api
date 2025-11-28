@@ -20,6 +20,14 @@ public class EleveDto {
     private  String  elevecellulaire ;
     private  String  eleve_mail ;
     private  String eleve_nationalite ;
+    private  String elevephoto ;
+    public String getElevephoto() {
+        return elevephoto;
+    }
+
+    public void setElevephoto(String elevephoto) {
+        this.elevephoto = elevephoto;
+    }
 
     private  String elevematricule_national ;
     private  String eleveSexe ;

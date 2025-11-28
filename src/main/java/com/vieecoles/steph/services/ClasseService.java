@@ -246,6 +246,7 @@ public class ClasseService implements PanacheRepositoryBase<Classe, Integer> {
 			cl.setLibelle(classe.getLibelle());
 			cl.setEffectif(classe.getEffectif());
 			cl.setVisible(classe.getVisible());
+			cl.setIdentifiantVieEcole(classe.getIdentifiantVieEcole());
 		}
 //		logger.info(new Gson().toJson(cl));
 		return cl;
