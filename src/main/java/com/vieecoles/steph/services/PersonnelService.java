@@ -156,16 +156,26 @@ public class PersonnelService {
 		}
 	}
 	public List<Personnel> getByEcoleAndProfil_v2_Anneeid(Long ecole, Integer profil, Long anneeid) {
-		try {
-			Long profilId = Long.parseLong(profil.toString());
-			List<Personnel> personnels =Personnel.find("select p from Personnel p left join utilisateur_has_personnel up on p.id = up.personnel_personnelid where "
-					+ " p.ecole.id = ?1 and up.profil.profilid = ?2 and p.anneeId =?3 ", ecole, profilId,anneeid).list();
-//			System.out.println(personnels);
-			return  personnels;
-		} catch (NoResultException ex) {
-			ex.getMessage();
-			return new ArrayList<Personnel>();
-		}
+	 try {
+        Long profilId = Long.parseLong(profil.toString());
+        
+        String sql = "SELECT p.* FROM personnel p " +
+                     "LEFT JOIN utilisateur_has_personnel up ON p.personnelid = up.personnel_personnelid " +
+                     "WHERE p.ecole_ecoleid = ?1 " +
+                     "AND up.profil_profilid = ?2 " +
+                     "AND p.anneeId = ?3";
+        Query query = em.createNativeQuery(sql, Personnel.class);
+        query.setParameter(1, ecole);
+        query.setParameter(2, profilId);
+        query.setParameter(3, anneeid);
+        
+        return query.getResultList();
+        
+    } catch (Exception ex) {
+        System.err.println("Erreur getByEcoleAndProfil_v2_Anneeid");
+        return new ArrayList<>();
+    }
+
 	}
 
 	public Long countByGenreAndFonctionAndStatut(Long ecole, Integer fonction, String genre, int statut) {

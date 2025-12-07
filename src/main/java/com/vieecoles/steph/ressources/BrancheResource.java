@@ -1,5 +1,8 @@
 package com.vieecoles.steph.ressources;
 
+import com.vieecoles.steph.entities.Branche;
+import com.vieecoles.steph.entities.Classe;
+import com.vieecoles.steph.entities.Ecole;
 import com.vieecoles.steph.services.BrancheService;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
@@ -61,6 +64,30 @@ public class BrancheResource {
 	@Tag(name = "Branche")
 	public Response getByNiveauEnseignementOnly(@QueryParam("programme") String programme,@QueryParam("niveau") String niveau) {
 		return Response.ok().entity(brancheService.findByProgrammeAndNiveauEnseignement(programme, niveau)).build();
+	} 
+
+	@GET
+	@Path("/get-by-classe-vie-ecole")
+	@Tag(name = "Branche")
+	public Response listByClassevieEcole(@QueryParam("classeId") String classeCode, @QueryParam("codeVieEcole") String codeVieEcole,
+	@QueryParam("idNiveauEnseignement") Long idNiveauEnseignement) {
+     Ecole ecole = Ecole.find("identifiantVieEcole =?1 and niveauEnseignement.id=?2",codeVieEcole,idNiveauEnseignement).firstResult();
+	
+		if (ecole == null) {
+			return Response.status(Response.Status.NOT_FOUND)
+				.entity("École introuvable dans Pouls-Pro").build();
+			}
+
+			Classe classe = Classe.find("identifiantVieEcole =?1 and ecole.id=?2",classeCode,ecole.getId()).firstResult();
+			if(classe == null) {
+				return Response.status(Response.Status.NOT_FOUND).build();
+			} else {
+				Long brancheId = classe.getBranche().getId();
+				Branche branche =new Branche();
+				branche = Branche.findById(brancheId);
+				return Response.ok().entity(branche).build();
+			}
+
 	}
 
 }

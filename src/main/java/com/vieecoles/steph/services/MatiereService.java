@@ -156,6 +156,7 @@ public class MatiereService implements PanacheRepositoryBase<Matiere, Long> {
 		entity.setNumOrdre(matiere.getNumOrdre());
 		entity.setBonus(matiere.getBonus());
 		entity.setDateUpdate(LocalDateTime.now());
+		entity.setCode_vie_ecole(matiere.getCode_vie_ecole());
 
 		return entity;
 	}

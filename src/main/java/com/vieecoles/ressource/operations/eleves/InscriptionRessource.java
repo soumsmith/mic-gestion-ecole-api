@@ -2,6 +2,7 @@ package com.vieecoles.ressource.operations.eleves;
 
 import com.vieecoles.dto.InscriptionAvaliderDto;
 import com.vieecoles.dto.InscriptionDto;
+import com.vieecoles.dto.ListeElevesClasse;
 import com.vieecoles.entities.operations.Inscriptions;
 import com.vieecoles.entities.operations.eleve;
 import com.vieecoles.entities.parametre;
@@ -49,7 +50,7 @@ public class InscriptionRessource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("list-eleve-classe/{idEcole}/{idAnnee}")
-    public List<InscriptionAvaliderDto> elevesClasse(@PathParam("idEcole") Long idEcole,@PathParam("idAnnee") Long idAnnee) {
+    public List<ListeElevesClasse> elevesClasse(@PathParam("idEcole") Long idEcole,@PathParam("idAnnee") Long idAnnee) {
 
         return matService.listDesElevesInscrits(idEcole,idAnnee) ;
     }

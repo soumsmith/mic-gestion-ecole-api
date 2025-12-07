@@ -277,6 +277,7 @@ public class EleveService implements PanacheRepositoryBase<eleve, Long> {
             eleveDto.setEleve_nationalite(lisImpo.get(i).getNationalite());
             eleveDto.setElevelieu_naissance(lisImpo.get(i).getLieun());
             eleveDto.setEleve_numero_extrait_naiss(lisImpo.get(i).getExtrait_numero());
+            eleveDto.setElevephoto(lisImpo.get(i).getPhoto());
 
 
           if(lisImpo.get(i).getExtrait_date()!=null){
@@ -330,6 +331,7 @@ public class EleveService implements PanacheRepositoryBase<eleve, Long> {
                 inscriptionDto.setInscriptions_type(myOperation);
                 inscriptionDto.setInscriptions_boursier(lisImpo.get(i).getRegime());
                 inscriptionDto.setInscriptionsdate_modification(LocalDate.now());
+                inscriptionDto.setCheminphoto(lisImpo.get(i).getPhoto());
 
               if(lisImpo.get(i).getIvoirien()!=null&& !lisImpo.get(i).getIvoirien().isEmpty()&&
                   lisImpo.get(i).getIvoirien().trim().equalsIgnoreCase("NON"))
@@ -436,7 +438,7 @@ public class EleveService implements PanacheRepositoryBase<eleve, Long> {
       eleveDto.setEleve_nationalite(lisImpo.get(i).getNationalite());
       eleveDto.setElevelieu_naissance(lisImpo.get(i).getLieun());
       eleveDto.setEleve_numero_extrait_naiss(lisImpo.get(i).getExtrait_numero());
-
+      eleveDto.setElevephoto(lisImpo.get(i).getPhoto());
       if(lisImpo.get(i).getExtrait_date()!=null){
         LocalDate localDateExtre = LocalDate.parse(lisImpo.get(i).getExtrait_date(), formatter);
         LocalDate localDateNaissExtre = localDateExtre;
@@ -486,6 +488,7 @@ public class EleveService implements PanacheRepositoryBase<eleve, Long> {
       inscriptionDto.setInscriptions_type(myOperation);
       inscriptionDto.setInscriptions_boursier(lisImpo.get(i).getRegime());
       inscriptionDto.setInscriptionsdate_creation(LocalDate.now());
+      inscriptionDto.setCheminphoto(lisImpo.get(i).getPhoto());
 
       if(lisImpo.get(i).getIvoirien()!=null&& !lisImpo.get(i).getIvoirien().isEmpty()&&
           lisImpo.get(i).getIvoirien().trim().equalsIgnoreCase("NON"))
@@ -688,6 +691,7 @@ System.out.println("Statut0 "+lisImpo.get(i).getStatut());
             Optional.ofNullable(eleveDto.getElevedate_etabli_extrait_naiss()).ifPresent(myElev::setElevedate_etabli_extrait_naiss);
             Optional.ofNullable(eleveDto.getElevelieu_etabliss_etrait_naissance()).ifPresent(myElev::setElevelieu_etabliss_etrait_naissance);
             Optional.ofNullable(eleveDto.getEleveSexe()).ifPresent(myElev::setEleve_sexe);
+            Optional.ofNullable(eleveDto.getElevephoto()).ifPresent(myElev::setCheminphoto);
             myElev.setEleve_matricule(eleveDto.getElevematricule_national());
 
         } catch (RuntimeException e) {
@@ -733,7 +737,7 @@ System.out.println("Soumm>>>>>");
            myElev.setElevedate_naissance(eleveDto.getElevedate_naissance());
            myElev.setElevedate_etabli_extrait_naiss(eleveDto.getElevedate_etabli_extrait_naiss());
            myElev.setElevelieu_etabliss_etrait_naissance(eleveDto.getElevelieu_etabliss_etrait_naissance());
-
+           myElev.setCheminphoto(eleveDto.getElevephoto());
            myElev.setEleve_sexe(eleveDto.getEleveSexe());
            myElev.setEleveadresse(eleveDto.getEleveadresse());
            myElev.setEleve_matricule(eleveDto.getElevematricule_national());

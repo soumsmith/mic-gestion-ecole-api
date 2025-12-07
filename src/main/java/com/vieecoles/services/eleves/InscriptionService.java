@@ -2,6 +2,7 @@ package com.vieecoles.services.eleves;
 
 import com.vieecoles.dto.InscriptionAvaliderDto;
 import com.vieecoles.dto.InscriptionDto;
+import com.vieecoles.dto.ListeElevesClasse;
 import com.vieecoles.entities.*;
 import com.vieecoles.entities.operations.Inscriptions;
 import com.vieecoles.entities.operations.ecole;
@@ -212,6 +213,7 @@ public class InscriptionService implements PanacheRepositoryBase<Inscriptions, L
             inscr.setIvoirien(inscriptionDto.getIvoirien());
             inscr.setEtranger_africain(inscriptionDto.getEtranger_africain());
             inscr.setEtranger_non_africain(inscriptionDto.getEtranger_non_africain());
+            inscr.setCheminphoto(inscriptionDto.getCheminphoto());
 
         } else {
             inscr.setInscriptions_type(inscriptionDto.getInscriptions_type());
@@ -233,6 +235,7 @@ public class InscriptionService implements PanacheRepositoryBase<Inscriptions, L
             inscr.setIvoirien(inscriptionDto.getIvoirien());
             inscr.setEtranger_africain(inscriptionDto.getEtranger_africain());
             inscr.setEtranger_non_africain(inscriptionDto.getEtranger_non_africain());
+            inscr.setCheminphoto(inscriptionDto.getCheminphoto());
 
         }
 
@@ -402,6 +405,7 @@ public class InscriptionService implements PanacheRepositoryBase<Inscriptions, L
             inscr.setIvoirien(inscriptionDto.getIvoirien());
             inscr.setEtranger_africain(inscriptionDto.getEtranger_africain());
             inscr.setEtranger_non_africain(inscriptionDto.getEtranger_non_africain());
+            inscr.setCheminphoto(inscriptionDto.getCheminphoto());
             inscr.persist();
 
         } else {
@@ -505,17 +509,17 @@ public class InscriptionService implements PanacheRepositoryBase<Inscriptions, L
     }
 
     @Transactional
-    public List<InscriptionAvaliderDto> listDesElevesInscrits(Long idEcole , Long idAnnee){
-        List <InscriptionAvaliderDto> minScription ;
+    public List<ListeElevesClasse> listDesElevesInscrits(Long idEcole , Long idAnnee){
+        List <ListeElevesClasse> minScription ;
         try {
             System.out.println("entree1");
-            return  minScription = em.createQuery("SELECT new com.vieecoles.dto.InscriptionAvaliderDto(q.eleveid,o.inscriptionsid,q.elevenom,q.eleveprenom,q.eleve_matricule,q.elevedate_naissance,q.eleve_sexe,q.elevecellulaire,o.inscriptions_statut_eleve,o.inscriptions_status,o.inscriptions_type ,o.inscriptions_processus, o.branche.id ,c.classe.libelle,o.nom_prenoms_pere ,o.nom_prenoms_mere,o.nom_prenoms_tuteur,o.commune ,o.handicap, o.moteur,o.visuel ," +
+            return  minScription = em.createQuery("SELECT new com.vieecoles.dto.ListeElevesClasse(q.eleveid,o.inscriptionsid,q.elevenom,q.eleveprenom,q.eleve_matricule,q.elevedate_naissance,q.eleve_sexe,q.elevecellulaire,o.inscriptions_statut_eleve,o.inscriptions_status,o.inscriptions_type ,o.inscriptions_processus, o.branche.id ,c.classe.libelle,o.nom_prenoms_pere ,o.nom_prenoms_mere,o.nom_prenoms_tuteur,o.commune ,o.handicap, o.moteur,o.visuel ," +
                             " o.auditif ,o.reaffecte ,o.regularisation ,o.reintegration ,o.prise_en_charge ,o.origine_prise_en_charge ,o.profession_pere,o.boite_postal_pere," +
                             "o.tel1_pere ,o.tel2_pere , o.profession_mere ,o.boite_postal_mere,o.tel1_mere,o.tel2_mere ,o.profession_tuteur,o.boite_postal_tuteur,o.tel1_tuteur," +
-                            " o.tel2_tuteur ,o.profession_pers_en_charge ,o.boite_postale_pers_en_charge ,o.tel1_pers_en_charge , o.tel2_pers_en_charge ,o.autre_handicap ,o.nom_prenom_pers_en_charge ,o.classe_arabe , o.inscriptions_ecole_origine ,o.transfert ,o.num_decision_affecte ,o.inscriptions_langue_vivante ,o.inscriptions_redoublant , o.inscriptions_boursier ,o.internes ,o.demi_pension ,o.externes,o.ivoirien ,o.etranger_africain ,o.etranger_non_africain ,o.cheminphoto,q.eleve_nationalite ,q.elevelieu_naissance) from Inscriptions o" +
+                            " o.tel2_tuteur ,o.profession_pers_en_charge ,o.boite_postale_pers_en_charge ,o.tel1_pers_en_charge , o.tel2_pers_en_charge ,o.autre_handicap ,o.nom_prenom_pers_en_charge ,o.classe_arabe , o.inscriptions_ecole_origine ,o.transfert ,o.num_decision_affecte ,o.inscriptions_langue_vivante ,o.inscriptions_redoublant , o.inscriptions_boursier ,o.internes ,o.demi_pension ,o.externes,o.ivoirien ,o.etranger_africain ,o.etranger_non_africain ,o.cheminphoto,q.eleve_nationalite ,q.elevelieu_naissance,c.classe.id,c.classe.libelle) from Inscriptions o" +
                             " , ecole e  ,eleve q ,Annee_Scolaire n ,ClasseEleve c" +
                             " where o.ecole.ecoleid = e.ecoleid and o.eleve.eleveid = q.eleveid and o.annee_scolaire.annee_scolaireid=n.annee_scolaireid and o.inscriptionsid=c.inscription.id and  " +
-                            " o.ecole.ecoleid =:idecole and o.annee_scolaire.annee_scolaireid =:idAnnee ",InscriptionAvaliderDto.class )
+                            " o.ecole.ecoleid =:idecole and o.annee_scolaire.annee_scolaireid =:idAnnee ",ListeElevesClasse.class )
                     .setParameter("idecole", idEcole)
                     .setParameter("idAnnee",idAnnee)
                     .getResultList();
