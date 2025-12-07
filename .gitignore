@@ -55,3 +55,6 @@ mvnw.cmd
 .native-micro
 .legacy-jar
 README.md
+
+# Firebase
+src/main/resources/firebase-service-account.json

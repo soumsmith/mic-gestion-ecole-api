@@ -7,9 +7,12 @@ import com.vieecoles.services.etats.*;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRXlsExporter;
+import net.sf.jasperreports.engine.export.JRXlsExporterParameter;
 import net.sf.jasperreports.engine.export.ooxml.JRDocxExporter;
 import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
+import net.sf.jasperreports.export.SimpleXlsReportConfiguration;
+
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -50,13 +53,16 @@ public class DspsSpiderRessource {
 
     @GET
     @Transactional
-    @Path("/pouls-rapport-dsps/{idEcole}/{libellePeriode}/{libelleAnnee}")
+    @Path("/pouls-rapport-dsps/{idEcole}/{libellePeriode}/{libelleAnnee}/{cycle}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public ResponseEntity<byte[]>  getDtoRapport(@PathParam("idEcole") Long idEcole ,@PathParam("libellePeriode") String libellePeriode ,
-                                                 @PathParam("libelleAnnee") String libelleAnnee) throws Exception, JRException {
+                                                 @PathParam("libelleAnnee") String libelleAnnee,@PathParam("cycle") boolean cycle) throws Exception, JRException {
         InputStream myInpuStream ;
         /*myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/BulletinBean.jrxml");*/
-        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/rapport_dsps.jrxml");
+        if(cycle)
+            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/rapport_dspsCycle2.jrxml");
+        else
+        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/rapport_dspsCycle1.jrxml");
         spiderDspsDto detailsBull= new spiderDspsDto() ;
         List<DspsDto>  dspsDto = new ArrayList<>() ;
 
@@ -79,6 +85,7 @@ public class DspsSpiderRessource {
         map.put("idEcole", idEcole);
         map.put("annee", libelleAnnee);
         map.put("periode", libellePeriode);
+        map.put("REPORT_LOCALE", java.util.Locale.FRANCE);
         // map.put("title", type);
           try {
             JasperPrint report = JasperFillManager.fillReport(compileReport, map, connection);
@@ -89,10 +96,17 @@ public class DspsSpiderRessource {
         JasperPrint report = JasperFillManager.fillReport(compileReport, map, connection);
         JRXlsExporter exporter = new JRXlsExporter();
         exporter.setExporterInput(new SimpleExporterInput(report));
-        // File exportReportFile = new File("profils" + ".docx");
+         SimpleXlsReportConfiguration config = new SimpleXlsReportConfiguration();
+        config.setDetectCellType(true);
+        config.setFormatPatternsMap(new HashMap<String, String>() {{
+  put(java.math.BigDecimal.class.getName(), "#0,00;(#0,00-)");
+}});// 👈 Tout en texte
+        exporter.setConfiguration(config);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(baos));
+        
         exporter.exportReport();
+        
         byte[] data = baos.toByteArray() ;
         HttpHeaders headers= new HttpHeaders();
         // headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Rapport"+myScole.getEcoleclibelle()+".docx");
