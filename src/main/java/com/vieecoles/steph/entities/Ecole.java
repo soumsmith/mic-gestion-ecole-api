@@ -39,4 +39,6 @@ public class Ecole extends PanacheEntityBase{
 	private NiveauEnseignement niveauEnseignement;
 	@Column(name = "identifiant_vie_ecole ")
 	private String identifiantVieEcole ;
+	@Column(name = "utilise_formule_confessionnelle_arabe ")
+	private Integer utiliseFormuleConfessionnelleArabe;
 }
