@@ -3,6 +3,7 @@ package com.vieecoles.steph.services;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -1074,6 +1075,8 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 		Double sommeEMRIntermediaire;
 		Map<Long, MoyenneAdjustment> moyenneAdjustmentByEleveMap = new HashMap<Long, MoyenneAdjustment>();
 		Map<Long, String> coefParMatiereMap = new HashMap<Long, String>();
+		List<String> codesMatiereEdhcArabe = Arrays.asList("11", "73"); // codes des matieres EDHC et ARABE
+		List<String> codesMatiereConduiteArabe = Arrays.asList("12", "73");
 
 //		Gson g = new Gson();
 
@@ -1086,8 +1089,11 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			diviserEMR = 0.0;
 			moyenneEMR = 0.0;
 			moyenneEMRList = new ArrayList<>();
+			List<Double> moyennesEdhcGeneral = new ArrayList<Double>();
+			List<Double> moyennesConduiteGeneral = new ArrayList<Double>();
 			List<MoyenneCoefPojo> moyennesSousMatieresFrancais = new ArrayList<MoyenneCoefPojo>();
 			List<Double> moyennesMatieresReligion = new ArrayList<Double>();
+			EcoleHasMatiere edhc = new EcoleHasMatiere();
 			Boolean EMRFlat = false;
 			Boolean CheckEMRCalculFlat = false;
 			Boolean calculExcpFrFlat = false;
@@ -1119,6 +1125,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 						new MoyenneAdjustment());
 				String isAdjustment = Constants.NON;
 				if (moyenneAdjustment.getId() == null) {
+					// Si pas d'ajustement saisie
 					for (Notes note : entry.getValue()) {
 // On vérifie que l'evaluation et la note sont prises en compte dans le calcul de moyenne
 						if (note.getEvaluation().getPec() == Constants.PEC_1 && note.getPec() != null
@@ -1170,6 +1177,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 
 //					logger.info("Moyenne = " + somme + " / " + diviser + " = " + CommonUtils.roundDouble(moyenne, 2));
 				} else {
+					// Si ajustement saisi
 					isAdjustment = Constants.OUI;
 					moyenne = moyenneAdjustment.getMoyenne();
 					entry.getKey().setMoyenneIntermediaire(moyenne);
@@ -1238,7 +1246,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 					moyenneEMRList.add(noteEMR);
 
 				}
-
+System.out.println("entry.getKey().getEcole().getUtiliseFormuleConfessionnelleArabe() ZZZZZZZZZZZZZZZZZZ "+entry.getKey().getEcole().getUtiliseFormuleConfessionnelleArabe());
 				if (!CheckEMRCalculFlat
 						&& entry.getKey().getNiveauEnseignement().getCode().equals(Constants.CODE_NIVEAU_ENS_SECONDAIRE)
 						&& entry.getKey().getCategorie().getCode().equals(Constants.CODE_CATEGORIE_RELIGION)) {
@@ -1246,6 +1254,37 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 					calculExcpReligionFlat = true;
 					CheckEMRCalculFlat = false;
 				}
+				
+				// Nouvelle formule de calcul de EDHC au 1er cycle des ecoles ARABES (voir marqueur getEcole().getUtiliseFormuleConfessionnelleArabe()==1)
+				
+				if(entry.getKey().getEcole().getUtiliseFormuleConfessionnelleArabe() !=null 
+						&& entry.getKey().getEcole().getUtiliseFormuleConfessionnelleArabe() == 1 
+						&& me.getClasse().getBranche().getNiveau()!= null 
+						&& me.getClasse().getBranche().getNiveau().getId() <= 4) {
+					
+					if(codesMatiereEdhcArabe.contains(entry.getKey().getCode())) {		
+						System.out.println("MOYENNE ARABE - EDHC "+me.getEleve().getMatricule()+"  "+entry.getKey().getMoyenne());
+						moyennesEdhcGeneral.add(entry.getKey().getMoyenne());
+						
+					} 
+					// pour l'ajout de la moyenne EMR voir plus bas lors du calcul de moyenne EMR				
+				}
+				
+				//List<Integer> secondCycleNiveau = Arrays.asList(5,6,7,8,9);
+				
+				if(entry.getKey().getEcole().getUtiliseFormuleConfessionnelleArabe() !=null 
+						&& entry.getKey().getEcole().getUtiliseFormuleConfessionnelleArabe() == 1 
+						&& me.getClasse().getBranche().getNiveau()!= null 
+						&& me.getClasse().getBranche().getNiveau().getId() > 4 && me.getClasse().getBranche().getNiveau().getId() <= 24) {
+					
+					if(codesMatiereConduiteArabe.contains(entry.getKey().getCode())) {			
+						moyennesConduiteGeneral.add(entry.getKey().getMoyenne());
+						
+					} 
+					// pour l'ajout de la moyenne EMR voir plus bas lors du calcul de moyenne EMR				
+				}
+				
+				
 
 //				logger.info("++++> "+g.toJson(me.getNotesMatiereMap()));
 			}
@@ -1299,6 +1338,8 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 					isAdjustment = Constants.OUI;
 					moyenneEMR = moyenneAdjustment.getMoyenne();
 				}
+				moyennesEdhcGeneral.add(moyenneEMR);
+				moyennesConduiteGeneral.add(moyenneEMR);
 				// Pour le calcul spécifique des moyennes religieuses
 				moyennesMatieresReligion.add(CommonUtils.roundDouble(moyenneEMR, 2));
 				calculExcpReligionFlat = true;
@@ -1332,6 +1373,45 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 //								moyReli));
 				me.setMoyReli(moyReli);
 				me.setAppreciationReli(CommonUtils.appreciation(moyReli));
+			}
+			
+			if(moyennesEdhcGeneral.size()>=2) {
+				System.out.println("AAAAAAAAAAAA");
+				Double edhcMoyenne = CommonUtils
+						.roundDouble(moyennesEdhcGeneral.stream().mapToDouble(a -> a).average().orElse(0), 2);
+				
+				EcoleHasMatiere targetKey = null;
+				for (EcoleHasMatiere key : me.getNotesMatiereMap().keySet()) {
+				    if (key.getMatiere() != null && key.getMatiere().getId() == Long.valueOf(11) ) {
+				        targetKey = key;
+				        break;
+				    }
+				}
+				if (targetKey != null) {
+				    List<Notes> notes = me.getNotesMatiereMap().get(targetKey);
+				    me.getNotesMatiereMap().remove(targetKey);   
+				    targetKey.setMoyenne(edhcMoyenne); 
+				    me.getNotesMatiereMap().put(targetKey, notes);
+				}
+			}
+			if(moyennesConduiteGeneral.size()>=2) {
+				System.out.println("BBBBBBBBBBBBBBBBB");
+				Double conduiteMoyenne = CommonUtils
+						.roundDouble(moyennesConduiteGeneral.stream().mapToDouble(a -> a).average().orElse(0), 2);
+				
+				EcoleHasMatiere targetKey = null;
+				for (EcoleHasMatiere key : me.getNotesMatiereMap().keySet()) {
+				    if (key.getMatiere() != null && key.getMatiere().getId() ==  Long.valueOf(12)) {
+				        targetKey = key;
+				        break;
+				    }
+				}
+				if (targetKey != null) {
+				    List<Notes> notes = me.getNotesMatiereMap().get(targetKey);
+				    me.getNotesMatiereMap().remove(targetKey);   
+				    targetKey.setMoyenne(conduiteMoyenne); 
+				    me.getNotesMatiereMap().put(targetKey, notes);
+				}
 			}
 //			me.setMoyenne(calculMoyenneGeneralWithCoef(moyenneList));
 		}

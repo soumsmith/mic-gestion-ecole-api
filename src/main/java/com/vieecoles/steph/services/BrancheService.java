@@ -30,7 +30,9 @@ public class BrancheService implements PanacheRepositoryBase<Branche, Long> {
 	}
 
 	public List<Branche> findByNiveauEnseignementViaEcole(Long id) {
+		System.out.println("Ecole id "+ id);
 		Ecole ecole = Ecole.findById(id);
+		System.out.println(ecole);
 		List<Branche> branches = new ArrayList<>();
 		try {
 			branches = Branche.find("niveauEnseignement.id =?1 order by libelle desc", ecole.getNiveauEnseignement().getId())
