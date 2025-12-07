@@ -1075,7 +1075,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 		Double sommeEMRIntermediaire;
 		Map<Long, MoyenneAdjustment> moyenneAdjustmentByEleveMap = new HashMap<Long, MoyenneAdjustment>();
 		Map<Long, String> coefParMatiereMap = new HashMap<Long, String>();
-		List<String> codesMatiereEdhcArabe = Arrays.asList("11", "73"); // codes des matieres EDHC et ARABE
+		List<String> codesMatiereEdhcArabe = Arrays.asList("EDHC", "73"); // codes des matieres EDHC et ARABE
 		List<String> codesMatiereConduiteArabe = Arrays.asList("12", "73");
 
 //		Gson g = new Gson();
@@ -1246,7 +1246,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 					moyenneEMRList.add(noteEMR);
 
 				}
-System.out.println("entry.getKey().getEcole().getUtiliseFormuleConfessionnelleArabe() ZZZZZZZZZZZZZZZZZZ "+entry.getKey().getEcole().getUtiliseFormuleConfessionnelleArabe());
+//System.out.println("entry.getKey().getEcole().getUtiliseFormuleConfessionnelleArabe() ZZZZZZZZZZZZZZZZZZ "+entry.getKey().getEcole().getUtiliseFormuleConfessionnelleArabe());
 				if (!CheckEMRCalculFlat
 						&& entry.getKey().getNiveauEnseignement().getCode().equals(Constants.CODE_NIVEAU_ENS_SECONDAIRE)
 						&& entry.getKey().getCategorie().getCode().equals(Constants.CODE_CATEGORIE_RELIGION)) {
@@ -1262,10 +1262,9 @@ System.out.println("entry.getKey().getEcole().getUtiliseFormuleConfessionnelleAr
 						&& me.getClasse().getBranche().getNiveau()!= null 
 						&& me.getClasse().getBranche().getNiveau().getId() <= 4) {
 					
-					if(codesMatiereEdhcArabe.contains(entry.getKey().getCode())) {		
-						System.out.println("MOYENNE ARABE - EDHC "+me.getEleve().getMatricule()+"  "+entry.getKey().getMoyenne());
+					if(codesMatiereEdhcArabe.contains(entry.getKey().getMatiere().getCode())) {		
+//						System.out.println("MOYENNE ARABE - EDHC "+me.getEleve().getMatricule()+"  "+entry.getKey().getMoyenne());
 						moyennesEdhcGeneral.add(entry.getKey().getMoyenne());
-						
 					} 
 					// pour l'ajout de la moyenne EMR voir plus bas lors du calcul de moyenne EMR				
 				}
@@ -1277,9 +1276,8 @@ System.out.println("entry.getKey().getEcole().getUtiliseFormuleConfessionnelleAr
 						&& me.getClasse().getBranche().getNiveau()!= null 
 						&& me.getClasse().getBranche().getNiveau().getId() > 4 && me.getClasse().getBranche().getNiveau().getId() <= 24) {
 					
-					if(codesMatiereConduiteArabe.contains(entry.getKey().getCode())) {			
+					if(codesMatiereConduiteArabe.contains(entry.getKey().getMatiere().getCode())) {			
 						moyennesConduiteGeneral.add(entry.getKey().getMoyenne());
-						
 					} 
 					// pour l'ajout de la moyenne EMR voir plus bas lors du calcul de moyenne EMR				
 				}
@@ -1376,7 +1374,7 @@ System.out.println("entry.getKey().getEcole().getUtiliseFormuleConfessionnelleAr
 			}
 			
 			if(moyennesEdhcGeneral.size()>=2) {
-				System.out.println("AAAAAAAAAAAA");
+//				System.out.println("AAAAAAAAAAAA");
 				Double edhcMoyenne = CommonUtils
 						.roundDouble(moyennesEdhcGeneral.stream().mapToDouble(a -> a).average().orElse(0), 2);
 				
@@ -1395,7 +1393,7 @@ System.out.println("entry.getKey().getEcole().getUtiliseFormuleConfessionnelleAr
 				}
 			}
 			if(moyennesConduiteGeneral.size()>=2) {
-				System.out.println("BBBBBBBBBBBBBBBBB");
+//				System.out.println("BBBBBBBBBBBBBBBBB");
 				Double conduiteMoyenne = CommonUtils
 						.roundDouble(moyennesConduiteGeneral.stream().mapToDouble(a -> a).average().orElse(0), 2);
 				
