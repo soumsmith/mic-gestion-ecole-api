@@ -1075,7 +1075,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 		Double sommeEMRIntermediaire;
 		Map<Long, MoyenneAdjustment> moyenneAdjustmentByEleveMap = new HashMap<Long, MoyenneAdjustment>();
 		Map<Long, String> coefParMatiereMap = new HashMap<Long, String>();
-		List<String> codesMatiereEdhcArabe = Arrays.asList("EDHC", "73"); // codes des matieres EDHC et ARABE
+		List<String> codesMatiereEdhcArabe = Arrays.asList("11", "73"); // codes des matieres EDHC et ARABE
 		List<String> codesMatiereConduiteArabe = Arrays.asList("12", "73");
 
 //		Gson g = new Gson();
