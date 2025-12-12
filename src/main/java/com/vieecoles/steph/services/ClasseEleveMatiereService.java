@@ -31,6 +31,7 @@ public class ClasseEleveMatiereService implements PanacheRepositoryBase<ClasseEl
 			long annee, long periode) {
 		ClasseEleveMatiere cem = null;
 		try {
+			logger.info(String.format("findByClasseAndMatiereAndEleveAndAnneeAndPeriode classe %s - matiere %s - eleve %s - annee %s - periode %s ", classe,matiere, eleve, annee, periode));
 			cem = ClasseEleveMatiere
 					.find("classe.id =?1 and matiere.id = ?2 and eleve.id = ?3 and annee.id=?4 and periode.id =?5",
 							classe, matiere, eleve, annee, periode)
@@ -41,7 +42,7 @@ public class ClasseEleveMatiereService implements PanacheRepositoryBase<ClasseEl
 //					"Aucune classe elève matiere trouvée [classe %s] [matiere %s] [eleve %s] [annee %s] [periode %s]",
 //					String.valueOf(classe), String.valueOf(matiere), String.valueOf(eleve), String.valueOf(annee),
 //					String.valueOf(periode)));
-				System.out.print("-");
+				System.out.print("--- No result ex findByClasseAndMatiereAndEleveAndAnneeAndPeriode");
 			else
 				ex.printStackTrace();
 		}
