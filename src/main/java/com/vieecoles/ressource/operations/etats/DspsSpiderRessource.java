@@ -81,11 +81,13 @@ public class DspsSpiderRessource {
         JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
 
         //   JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");
+       Locale.setDefault(Locale.US);
+       Locale franceLoc = new Locale("en", "US");
+       
         Map<String, Object> map = new HashMap<>();
         map.put("idEcole", idEcole);
         map.put("annee", libelleAnnee);
         map.put("periode", libellePeriode);
-        map.put("REPORT_LOCALE", java.util.Locale.FRANCE);
         // map.put("title", type);
           try {
             JasperPrint report = JasperFillManager.fillReport(compileReport, map, connection);
@@ -96,12 +98,12 @@ public class DspsSpiderRessource {
         JasperPrint report = JasperFillManager.fillReport(compileReport, map, connection);
         JRXlsExporter exporter = new JRXlsExporter();
         exporter.setExporterInput(new SimpleExporterInput(report));
-         SimpleXlsReportConfiguration config = new SimpleXlsReportConfiguration();
+        
+        SimpleXlsReportConfiguration config = new SimpleXlsReportConfiguration();
         config.setDetectCellType(true);
-        config.setFormatPatternsMap(new HashMap<String, String>() {{
-  put(java.math.BigDecimal.class.getName(), "#0,00;(#0,00-)");
-}});// 👈 Tout en texte
-        exporter.setConfiguration(config);
+        
+// 👈 Tout en texte
+       //exporter.setConfiguration(config);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(baos));
         
