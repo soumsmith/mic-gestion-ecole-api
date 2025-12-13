@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="callSpiderNobel" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5a2b5033-89f0-4350-bb7d-4afdfdd95def">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ecolevieDB"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="175"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="812"/>
+	<parameter name="classe" class="java.lang.String"/>
+	<parameter name="idEcole" class="java.lang.Long"/>
+	<parameter name="libelleAnnee" class="java.lang.String"/>
+	<parameter name="libellePeriode" class="java.lang.String"/>
+	<parameter name="matricule" class="java.lang.String"/>
+	<parameter name="infosAmoirie" class="java.lang.String"/>
+	<parameter name="distinctin" class="java.lang.String"/>
+	<parameter name="bg" class="java.lang.String"/>
+	<parameter name="positionLogo" class="java.lang.String"/>
+	<parameter name="setBg" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select *
+from  `ecoleviedbv2`.ve_details_infos_bulletins_spider
+where `ecoleviedbv2`.ve_details_infos_bulletins_spider.libelle_classe =  $P{classe} and
+   `ecoleviedbv2`.ve_details_infos_bulletins_spider.id_ecole  =  $P{idEcole}  and
+    `ecoleviedbv2`.ve_details_infos_bulletins_spider.annee_libelle =  $P{libelleAnnee}
+    and  `ecoleviedbv2`.ve_details_infos_bulletins_spider.libelle_periode like  $P{libellePeriode}
+     order by `ecoleviedbv2`.ve_details_infos_bulletins_spider.nom , `ecoleviedbv2`.ve_details_infos_bulletins_spider.prenoms]]>
+	</queryString>
+	<field name="id_ecole" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="id_ecole"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_ecole"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="nom_ecole" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nom_ecole"/>
+		<property name="com.jaspersoft.studio.field.label" value="nom_ecole"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="statut_ecole" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="statut_ecole"/>
+		<property name="com.jaspersoft.studio.field.label" value="statut_ecole"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="url_logo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="url_logo"/>
+		<property name="com.jaspersoft.studio.field.label" value="url_logo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="adresse_ecole" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="adresse_ecole"/>
+		<property name="com.jaspersoft.studio.field.label" value="adresse_ecole"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="tel_ecole" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="tel_ecole"/>
+		<property name="com.jaspersoft.studio.field.label" value="tel_ecole"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="annee_libelle" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="annee_libelle"/>
+		<property name="com.jaspersoft.studio.field.label" value="annee_libelle"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="libelle_periode" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="libelle_periode"/>
+		<property name="com.jaspersoft.studio.field.label" value="libelle_periode"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="matricule" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="matricule"/>
+		<property name="com.jaspersoft.studio.field.label" value="matricule"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="nom" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nom"/>
+		<property name="com.jaspersoft.studio.field.label" value="nom"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="prenoms" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="prenoms"/>
+		<property name="com.jaspersoft.studio.field.label" value="prenoms"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="sexe" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="sexe"/>
+		<property name="com.jaspersoft.studio.field.label" value="sexe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="date_naissance" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="date_naissance"/>
+		<property name="com.jaspersoft.studio.field.label" value="date_naissance"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="lieu_naissance" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="lieu_naissance"/>
+		<property name="com.jaspersoft.studio.field.label" value="lieu_naissance"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="nationalite" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nationalite"/>
+		<property name="com.jaspersoft.studio.field.label" value="nationalite"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="redoublant" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="redoublant"/>
+		<property name="com.jaspersoft.studio.field.label" value="redoublant"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="boursier" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="boursier"/>
+		<property name="com.jaspersoft.studio.field.label" value="boursier"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="affecte" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="affecte"/>
+		<property name="com.jaspersoft.studio.field.label" value="affecte"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="libelle_classe" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="libelle_classe"/>
+		<property name="com.jaspersoft.studio.field.label" value="libelle_classe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="effectif_classe" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="effectif_classe"/>
+		<property name="com.jaspersoft.studio.field.label" value="effectif_classe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="total_coef" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="total_coef"/>
+		<property name="com.jaspersoft.studio.field.label" value="total_coef"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="total_moy_coef" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="total_moy_coef"/>
+		<property name="com.jaspersoft.studio.field.label" value="total_moy_coef"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="nom_prof_princ" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nom_prof_princ"/>
+		<property name="com.jaspersoft.studio.field.label" value="nom_prof_princ"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="heures_abs_just" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="heures_abs_just"/>
+		<property name="com.jaspersoft.studio.field.label" value="heures_abs_just"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="heures_abs_non_just" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="heures_abs_non_just"/>
+		<property name="com.jaspersoft.studio.field.label" value="heures_abs_non_just"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="moy_general" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="moy_general"/>
+		<property name="com.jaspersoft.studio.field.label" value="moy_general"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="moy_max" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="moy_max"/>
+		<property name="com.jaspersoft.studio.field.label" value="moy_max"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="moy_min" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="moy_min"/>
+		<property name="com.jaspersoft.studio.field.label" value="moy_min"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="moy_avg" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="moy_avg"/>
+		<property name="com.jaspersoft.studio.field.label" value="moy_avg"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="moy_annuelle" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="moy_annuelle"/>
+		<property name="com.jaspersoft.studio.field.label" value="moy_annuelle"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="rang_annuelle" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="rang_annuelle"/>
+		<property name="com.jaspersoft.studio.field.label" value="rang_annuelle"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="appreciation_conseil" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="appreciation_conseil"/>
+		<property name="com.jaspersoft.studio.field.label" value="appreciation_conseil"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="date_creation" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="date_creation"/>
+		<property name="com.jaspersoft.studio.field.label" value="date_creation"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="code_qr" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="code_qr"/>
+		<property name="com.jaspersoft.studio.field.label" value="code_qr"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="statut" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="statut"/>
+		<property name="com.jaspersoft.studio.field.label" value="statut"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="libelle_matiere" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="libelle_matiere"/>
+		<property name="com.jaspersoft.studio.field.label" value="libelle_matiere"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="moyenne" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="moyenne"/>
+		<property name="com.jaspersoft.studio.field.label" value="moyenne"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="rang" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="rang"/>
+		<property name="com.jaspersoft.studio.field.label" value="rang"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="coef" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="coef"/>
+		<property name="com.jaspersoft.studio.field.label" value="coef"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="moy_coef" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="moy_coef"/>
+		<property name="com.jaspersoft.studio.field.label" value="moy_coef"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="appreciation" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="appreciation"/>
+		<property name="com.jaspersoft.studio.field.label" value="appreciation"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="num_ordre" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="num_ordre"/>
+		<property name="com.jaspersoft.studio.field.label" value="num_ordre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="rangBulletin" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="rangBulletin"/>
+		<property name="com.jaspersoft.studio.field.label" value="rangBulletin"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="nom_prenom_professeur" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nom_prenom_professeur"/>
+		<property name="com.jaspersoft.studio.field.label" value="nom_prenom_professeur"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="libelle_categorie" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="libelle_categorie"/>
+		<property name="com.jaspersoft.studio.field.label" value="libelle_categorie"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="categorie" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="categorie"/>
+		<property name="com.jaspersoft.studio.field.label" value="categorie"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="signataire" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="signataire"/>
+		<property name="com.jaspersoft.studio.field.label" value="signataire"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="bonus" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="bonus"/>
+		<property name="com.jaspersoft.studio.field.label" value="bonus"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="pec" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="pec"/>
+		<property name="com.jaspersoft.studio.field.label" value="pec"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="parent_matiere" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="parent_matiere"/>
+		<property name="com.jaspersoft.studio.field.label" value="parent_matiere"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="is_classed_mat" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="is_classed_mat"/>
+		<property name="com.jaspersoft.studio.field.label" value="is_classed_mat"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="is_classed_periode" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="is_classed_periode"/>
+		<property name="com.jaspersoft.studio.field.label" value="is_classed_periode"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="effectif_non_classe" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="effectif_non_classe"/>
+		<property name="com.jaspersoft.studio.field.label" value="effectif_non_classe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="moy_fr" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="moy_fr"/>
+		<property name="com.jaspersoft.studio.field.label" value="moy_fr"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="coef_fr" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="coef_fr"/>
+		<property name="com.jaspersoft.studio.field.label" value="coef_fr"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="moy_coef_fr" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="moy_coef_fr"/>
+		<property name="com.jaspersoft.studio.field.label" value="moy_coef_fr"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="moy_reli" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="moy_reli"/>
+		<property name="com.jaspersoft.studio.field.label" value="moy_reli"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="appr_fr" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="appr_fr"/>
+		<property name="com.jaspersoft.studio.field.label" value="appr_fr"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="appr_reli" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="appr_reli"/>
+		<property name="com.jaspersoft.studio.field.label" value="appr_reli"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="url_photo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="url_photo"/>
+		<property name="com.jaspersoft.studio.field.label" value="url_photo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<group name="groupeMatricule">
+		<groupExpression><![CDATA[$F{matricule}]]></groupExpression>
+		<groupHeader>
+			<band height="723">
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<subreport>
+					<reportElement stretchType="RelativeToTallestObject" x="-16" y="10" width="584" height="200" uuid="4ac0ee79-a3ca-47bd-a7ea-48f4b0a47e5b">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<subreportParameter name="matricule">
+						<subreportParameterExpression><![CDATA[$F{matricule}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="annee">
+						<subreportParameterExpression><![CDATA[$F{annee_libelle}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="idEcole">
+						<subreportParameterExpression><![CDATA[$F{id_ecole}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="libellePeriode">
+						<subreportParameterExpression><![CDATA[$F{libelle_periode}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="infosAmoirie">
+						<subreportParameterExpression><![CDATA[$P{infosAmoirie}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="distinctin">
+						<subreportParameterExpression><![CDATA[$P{distinctin}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="positionLogo">
+						<subreportParameterExpression><![CDATA[$P{positionLogo}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="setBg">
+						<subreportParameterExpression><![CDATA[$P{setBg}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="classe">
+						<subreportParameterExpression><![CDATA[$P{classe}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA["etats/spider/BulletinArabePrimaire.jasper"]]></subreportExpression>
+				</subreport>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band height="802" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<image scaleImage="FillFrame" onErrorType="Blank">
+				<reportElement x="-16" y="0" width="584" height="802" uuid="381f9557-868c-45e1-8d15-b28b5d8b2b17"/>
+				<imageExpression><![CDATA[$P{bg}]]></imageExpression>
+			</image>
+		</band>
+	</background>
+</jasperReport>
