@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.21.3.final using JasperReports Library version 6.21.3-4a3078d20785ebe464f18037d738d12fc98c13cf  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name=" callSpiderArabe" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5a2b5033-89f0-4350-bb7d-4afdfdd95def">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="PoulsAdapteur"/>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="callSpiderNobel" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5a2b5033-89f0-4350-bb7d-4afdfdd95def">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ecolevieDB"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
@@ -12,18 +12,15 @@
 	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
-	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="1000"/>
-	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="0"/>
-	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="252"/>
-	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="742"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="343"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="647"/>
 	<parameter name="classe" class="java.lang.String"/>
 	<parameter name="idEcole" class="java.lang.Long"/>
 	<parameter name="libelleAnnee" class="java.lang.String"/>
 	<parameter name="libellePeriode" class="java.lang.String"/>
 	<parameter name="matricule" class="java.lang.String"/>
-	<parameter name="infosAmoirie" class="java.lang.String"/>
+	<parameter name="infosAmoirie" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="distinctin" class="java.lang.String"/>
-	<parameter name="bg" class="java.lang.String"/>
 	<parameter name="positionLogo" class="java.lang.String"/>
 	<parameter name="setBg" class="java.lang.String"/>
 	<queryString>
@@ -135,12 +132,12 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.libelle_classe =  $P{clas
 		<property name="com.jaspersoft.studio.field.label" value="effectif_classe"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
 	</field>
-	<field name="total_coef" class="java.lang.Double">
+	<field name="total_coef" class="java.math.BigDecimal">
 		<property name="com.jaspersoft.studio.field.name" value="total_coef"/>
 		<property name="com.jaspersoft.studio.field.label" value="total_coef"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
 	</field>
-	<field name="total_moy_coef" class="java.lang.Double">
+	<field name="total_moy_coef" class="java.math.BigDecimal">
 		<property name="com.jaspersoft.studio.field.name" value="total_moy_coef"/>
 		<property name="com.jaspersoft.studio.field.label" value="total_moy_coef"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
@@ -160,27 +157,27 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.libelle_classe =  $P{clas
 		<property name="com.jaspersoft.studio.field.label" value="heures_abs_non_just"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
 	</field>
-	<field name="moy_general" class="java.lang.Double">
+	<field name="moy_general" class="java.math.BigDecimal">
 		<property name="com.jaspersoft.studio.field.name" value="moy_general"/>
 		<property name="com.jaspersoft.studio.field.label" value="moy_general"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
 	</field>
-	<field name="moy_max" class="java.lang.Double">
+	<field name="moy_max" class="java.math.BigDecimal">
 		<property name="com.jaspersoft.studio.field.name" value="moy_max"/>
 		<property name="com.jaspersoft.studio.field.label" value="moy_max"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
 	</field>
-	<field name="moy_min" class="java.lang.Double">
+	<field name="moy_min" class="java.math.BigDecimal">
 		<property name="com.jaspersoft.studio.field.name" value="moy_min"/>
 		<property name="com.jaspersoft.studio.field.label" value="moy_min"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
 	</field>
-	<field name="moy_avg" class="java.lang.Double">
+	<field name="moy_avg" class="java.math.BigDecimal">
 		<property name="com.jaspersoft.studio.field.name" value="moy_avg"/>
 		<property name="com.jaspersoft.studio.field.label" value="moy_avg"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
 	</field>
-	<field name="moy_annuelle" class="java.lang.Double">
+	<field name="moy_annuelle" class="java.math.BigDecimal">
 		<property name="com.jaspersoft.studio.field.name" value="moy_annuelle"/>
 		<property name="com.jaspersoft.studio.field.label" value="moy_annuelle"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
@@ -210,12 +207,17 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.libelle_classe =  $P{clas
 		<property name="com.jaspersoft.studio.field.label" value="statut"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
 	</field>
+	<field name="ordre_niveau" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="ordre_niveau"/>
+		<property name="com.jaspersoft.studio.field.label" value="ordre_niveau"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
 	<field name="libelle_matiere" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="libelle_matiere"/>
 		<property name="com.jaspersoft.studio.field.label" value="libelle_matiere"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
 	</field>
-	<field name="moyenne" class="java.lang.Double">
+	<field name="moyenne" class="java.math.BigDecimal">
 		<property name="com.jaspersoft.studio.field.name" value="moyenne"/>
 		<property name="com.jaspersoft.studio.field.label" value="moyenne"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
@@ -225,12 +227,12 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.libelle_classe =  $P{clas
 		<property name="com.jaspersoft.studio.field.label" value="rang"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
 	</field>
-	<field name="coef" class="java.lang.Double">
+	<field name="coef" class="java.math.BigDecimal">
 		<property name="com.jaspersoft.studio.field.name" value="coef"/>
 		<property name="com.jaspersoft.studio.field.label" value="coef"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
 	</field>
-	<field name="moy_coef" class="java.lang.Double">
+	<field name="moy_coef" class="java.math.BigDecimal">
 		<property name="com.jaspersoft.studio.field.name" value="moy_coef"/>
 		<property name="com.jaspersoft.studio.field.label" value="moy_coef"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
@@ -245,7 +247,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.libelle_classe =  $P{clas
 		<property name="com.jaspersoft.studio.field.label" value="num_ordre"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
 	</field>
-	<field name="rangBulletin" class="java.lang.Integer">
+	<field name="rangBulletin" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="rangBulletin"/>
 		<property name="com.jaspersoft.studio.field.label" value="rangBulletin"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
@@ -295,27 +297,27 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.libelle_classe =  $P{clas
 		<property name="com.jaspersoft.studio.field.label" value="is_classed_periode"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
 	</field>
-	<field name="effectif_non_classe" class="java.lang.Integer">
+	<field name="effectif_non_classe" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="effectif_non_classe"/>
 		<property name="com.jaspersoft.studio.field.label" value="effectif_non_classe"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
 	</field>
-	<field name="moy_fr" class="java.lang.Double">
+	<field name="moy_fr" class="java.math.BigDecimal">
 		<property name="com.jaspersoft.studio.field.name" value="moy_fr"/>
 		<property name="com.jaspersoft.studio.field.label" value="moy_fr"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
 	</field>
-	<field name="coef_fr" class="java.lang.Double">
+	<field name="coef_fr" class="java.math.BigDecimal">
 		<property name="com.jaspersoft.studio.field.name" value="coef_fr"/>
 		<property name="com.jaspersoft.studio.field.label" value="coef_fr"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
 	</field>
-	<field name="moy_coef_fr" class="java.lang.Double">
+	<field name="moy_coef_fr" class="java.math.BigDecimal">
 		<property name="com.jaspersoft.studio.field.name" value="moy_coef_fr"/>
 		<property name="com.jaspersoft.studio.field.label" value="moy_coef_fr"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
 	</field>
-	<field name="moy_reli" class="java.lang.Double">
+	<field name="moy_reli" class="java.math.BigDecimal">
 		<property name="com.jaspersoft.studio.field.name" value="moy_reli"/>
 		<property name="com.jaspersoft.studio.field.label" value="moy_reli"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
@@ -335,13 +337,33 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.libelle_classe =  $P{clas
 		<property name="com.jaspersoft.studio.field.label" value="url_photo"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
 	</field>
+	<field name="amoirie" class="java.sql.Blob">
+		<property name="com.jaspersoft.studio.field.name" value="amoirie"/>
+		<property name="com.jaspersoft.studio.field.label" value="amoirie"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="bg" class="java.sql.Blob">
+		<property name="com.jaspersoft.studio.field.name" value="bg"/>
+		<property name="com.jaspersoft.studio.field.label" value="bg"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="codeEcole" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="codeEcole"/>
+		<property name="com.jaspersoft.studio.field.label" value="codeEcole"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
+	<field name="logo" class="java.sql.Blob">
+		<property name="com.jaspersoft.studio.field.name" value="logo"/>
+		<property name="com.jaspersoft.studio.field.label" value="logo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_details_infos_bulletins_spider"/>
+	</field>
 	<group name="groupeMatricule">
 		<groupExpression><![CDATA[$F{matricule}]]></groupExpression>
 		<groupHeader>
 			<band height="723">
 				<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				<subreport>
-					<reportElement stretchType="RelativeToTallestObject" x="-16" y="10" width="584" height="200" uuid="4ac0ee79-a3ca-47bd-a7ea-48f4b0a47e5b">
+					<reportElement stretchType="RelativeToTallestObject" x="-16" y="10" width="584" height="480" uuid="4ac0ee79-a3ca-47bd-a7ea-48f4b0a47e5b">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
 					<subreportParameter name="matricule">
@@ -372,7 +394,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.libelle_classe =  $P{clas
 						<subreportParameterExpression><![CDATA[$P{classe}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression><![CDATA["etats/spider/BulletinArabeSpiders.jasper"]]></subreportExpression>
+					<subreportExpression><![CDATA["etats/spider/BulletinNobelSpiderEtan.jasper"]]></subreportExpression>
 				</subreport>
 			</band>
 		</groupHeader>
@@ -382,7 +404,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.libelle_classe =  $P{clas
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<image scaleImage="FillFrame" onErrorType="Blank">
 				<reportElement x="-16" y="0" width="584" height="802" uuid="381f9557-868c-45e1-8d15-b28b5d8b2b17"/>
-				<imageExpression><![CDATA[$P{bg}]]></imageExpression>
+				<imageExpression><![CDATA[$F{bg}]]></imageExpression>
 			</image>
 		</band>
 	</background>

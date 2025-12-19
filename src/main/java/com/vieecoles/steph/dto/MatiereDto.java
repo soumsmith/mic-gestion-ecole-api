@@ -1,5 +1,7 @@
 package com.vieecoles.steph.dto;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.vieecoles.steph.entities.CategorieMatiere;
 import com.vieecoles.steph.entities.Matiere;
 import com.vieecoles.steph.entities.NiveauEnseignement;
@@ -11,6 +13,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class MatiereDto {
 	
 	public MatiereDto(Long id, String code, String libelle) {
@@ -31,5 +34,7 @@ public class MatiereDto {
 	private String appreciation;
 	private Matiere matiereParent;
 	private CategorieMatiere categorie;
-	private Integer numOrdre;
+	private Integer numOrdre;	
+	private String codeVieEcole;
+
 }

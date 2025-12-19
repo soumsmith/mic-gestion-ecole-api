@@ -9,25 +9,26 @@ import java.util.Set;
 @Table(name = "notification_tokens")
 public class NotificationToken {
     
-    @Id
+     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Column(nullable = false)
+    @Column(name = "user_id", nullable = false)
     private String userId;
     
-    @Column(nullable = false, unique = true, length = 500)
+    @Column(name = "token", nullable = false, unique = true, length = 500)
     private String token;
     
-    @Column(nullable = false)
+    @Column(name = "device_type", nullable = false)
     private String deviceType; // "android" ou "ios"
-     @OneToMany(mappedBy = "token", cascade = CascadeType.ALL, orphanRemoval = true)
+    
+    @OneToMany(mappedBy = "token", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<TokenMatricule> matricules = new HashSet<>();
     
-    @Column(nullable = false)
+    @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
     
-    @Column(nullable = false)
+    @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
     
     // Getters et setters

@@ -6,8 +6,7 @@ import jakarta.persistence.*;
 @Table(name = "token_matricules", 
        uniqueConstraints = @UniqueConstraint(columnNames = {"token_id", "matricule"}))
 public class TokenMatricule {
-    
-    @Id
+       @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
@@ -15,10 +14,10 @@ public class TokenMatricule {
     @JoinColumn(name = "token_id", nullable = false)
     private NotificationToken token;
     
-    @Column(nullable = false, length = 50)
+    @Column(name = "matricule", nullable = false, length = 50)
     private String matricule;
     
-    @Column(nullable = false)
+    @Column(name = "created_at", nullable = false)
     private java.time.LocalDateTime createdAt;
     
     // Constructeurs
