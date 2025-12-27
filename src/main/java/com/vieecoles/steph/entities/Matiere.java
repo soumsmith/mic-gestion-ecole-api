@@ -30,8 +30,7 @@ public class Matiere extends PanacheEntityBase {
     private  String code;
 	@Column(name = "matierelibelle")
     private  String libelle;
-    @Column(name = "code_vie_ecole")
-    private String codeVieEcole;
+    private String code_vie_ecole;
 
 	private Integer pec;
 	private Integer bonus;

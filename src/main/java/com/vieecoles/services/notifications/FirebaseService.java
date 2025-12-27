@@ -52,8 +52,7 @@ public class FirebaseService {
             LOG.error("❌ Erreur lors de l'initialisation de Firebase", e);
             throw new RuntimeException("Impossible d'initialiser Firebase", e);
         }
-    } 
-    
+    }
     
     /**
      * Envoie une notification à un token FCM spécifique
