@@ -26,6 +26,7 @@
 	<parameter name="bg" class="java.lang.String"/>
 	<parameter name="positionLogo" class="java.lang.String"/>
 	<parameter name="setBg" class="java.lang.String"/>
+	<parameter name="SUBREPORT_BulletinArabeSpiders" class="net.sf.jasperreports.engine.JasperReport"/>
 	<queryString>
 		<![CDATA[select *
 from  `ecoleviedbv2`.ve_details_infos_bulletins_spider
@@ -372,7 +373,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.libelle_classe =  $P{clas
 						<subreportParameterExpression><![CDATA[$P{classe}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression><![CDATA["etats/spider/BulletinArabeSpiders.jasper"]]></subreportExpression>
+					<subreportExpression><![CDATA[$P{SUBREPORT_BulletinArabeSpiders}]]></subreportExpression>
 				</subreport>
 			</band>
 		</groupHeader>

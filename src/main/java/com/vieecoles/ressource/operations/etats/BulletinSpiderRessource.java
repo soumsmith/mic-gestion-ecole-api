@@ -230,12 +230,12 @@ public class BulletinSpiderRessource {
                 } 
                  else if (bulletinArabe){
                     if(libellePeriode.equals("Troisième Trimestre")) {
-                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/callSpiderArabeTrois.jrxml");
+                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderArabe.jrxml");
                     }
                    
                     else {
-                         System.out.println("callSpiderAnnour.jrxml") ;
-                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderAnnour.jrxml");
+                         System.out.println("callSpiderArabeAAA.jrxml") ;
+                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderArabe.jrxml");
 
                     }
                 }
@@ -364,10 +364,10 @@ public class BulletinSpiderRessource {
                 }
                 else if (bulletinArabe){
                     if(libellePeriode.equals("Troisième Trimestre")) {
-                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/callSpiderArabeTrois.jrxml");
+                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderArabe");
                     }
                     else {
-                        System.out.println("callSpiderAnnourlDecompress") ;
+                        System.out.println("callSpiderArabeDecompress") ;
                         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderArabe.jrxml");
         
                     }
@@ -408,7 +408,7 @@ public class BulletinSpiderRessource {
             else if (niveauEnseign==1) {
                 if (bulletinArabe){
                     if(moisTrimestre.contains(libellePeriode)) {
-                        System.out.println("callSpiderArabePrimaire.jrxmlDecompress");
+                        System.out.println("callSpiderArabePrimaire.jrxmlDecompressFF");
                         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderArabePrimaire.jrxml");
                     }
                     else {
@@ -470,8 +470,8 @@ public class BulletinSpiderRessource {
 
 
 
-        //Connection connection = DriverManager.getConnection("jdbc:mysql://db:3306/ecoleviedbv2", USER, PASS);
-        Connection connection = DriverManager.getConnection("jdbc:mysql://94.23.162.171:33061/ecoleviedbv2", USER, PASS);
+        //Connection connection = DriverManager.getConnection("jdbc:mysql://db:3306/ecoleviedbv2?useUnicode=true&characterEncoding=UTF-8", USER, PASS);
+        Connection connection = DriverManager.getConnection("jdbc:mysql://94.23.162.171:33061/ecoleviedbv2?useUnicode=true&characterEncoding=UTF-8", USER, PASS);
        
         JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
         //JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromInputStream(myInpuStream);
@@ -479,6 +479,32 @@ public class BulletinSpiderRessource {
 
         //   JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");
         Map<String, Object> map = new HashMap<>();
+        
+        // Compiler le sous-rapport BulletinArabePrimaire si nécessaire
+        if (niveauEnseign == 1 && bulletinArabe) {
+            try (java.io.InputStream subreportStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinArabePrimaire.jrxml")) {
+                if (subreportStream != null) {
+                    JasperReport subreport = JasperCompileManager.compileReport(subreportStream);
+                    map.put("SUBREPORT_BulletinArabePrimaire", subreport);
+                }
+            } catch (Exception e) {
+                System.err.println("Erreur lors de la compilation du sous-rapport BulletinArabePrimaire: " + e.getMessage());
+                e.printStackTrace();
+            }
+        }
+        
+        // Compiler le sous-rapport BulletinArabeSpiders si nécessaire (pour callSpiderArabe.jrxml)
+        if (bulletinArabe && niveauEnseign != 1) {
+            try (java.io.InputStream subreportStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinArabeSpiders.jrxml")) {
+                if (subreportStream != null) {
+                    JasperReport subreport = JasperCompileManager.compileReport(subreportStream);
+                    map.put("SUBREPORT_BulletinArabeSpiders", subreport);
+                }
+            } catch (Exception e) {
+                System.err.println("Erreur lors de la compilation du sous-rapport BulletinArabeSpiders: " + e.getMessage());
+                e.printStackTrace();
+            }
+        }
         String infos= null ;
         String pdistinct= null ;
         String plogoPosi= null ;
@@ -813,7 +839,7 @@ Set<String> moisTrimestre = Set.of(
 
 
 
-        Connection connection = DriverManager.getConnection("jdbc:mysql://db:3306/ecoleviedbv2", USER, PASS);
+        Connection connection = DriverManager.getConnection("jdbc:mysql://db:3306/ecoleviedbv2?useUnicode=true&characterEncoding=UTF-8", USER, PASS);
         JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
         //   JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");
         Map<String, Object> map = new HashMap<>();
@@ -1165,7 +1191,7 @@ Set<String> moisTrimestre = Set.of(
 
            // Connection connection = DriverManager.getConnection("jdbc:mysql://db:3306/ecoleviedbv2", USER, PASS);
             
-        Connection connection = DriverManager.getConnection("jdbc:mysql://94.23.162.171:33061/ecoleviedbv2", USER, PASS);
+        Connection connection = DriverManager.getConnection("jdbc:mysql://94.23.162.171:33061/ecoleviedbv2?useUnicode=true&characterEncoding=UTF-8", USER, PASS);
             JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
             String infos= null ;
             String pdistinct= null ;
@@ -1240,7 +1266,8 @@ Set<String> moisTrimestre = Set.of(
 
         try {
 
-            dbConnection = DriverManager.getConnection(DB_URL, USER, PASS);
+            String dbUrlWithEncoding = DB_URL.contains("?") ? DB_URL + "&useUnicode=true&characterEncoding=UTF-8" : DB_URL + "?useUnicode=true&characterEncoding=UTF-8";
+            dbConnection = DriverManager.getConnection(dbUrlWithEncoding, USER, PASS);
 
 
         } catch (SQLException e) {
