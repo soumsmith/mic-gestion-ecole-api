@@ -159,14 +159,14 @@ public class WordTempResultaNonAffProcessor {
 
         // 3. Gestion des tableaux dynamiques
         // Sixième
-        XWPFTable table = document.getTableArray(21);
+        XWPFTable table = document.getTableArray(14);
         try {
           ajoutTableauDynamique(detailsBull6,table);
         } catch (RuntimeException e) {
           e.printStackTrace();
         }
         // Cinquième
-        XWPFTable tableCinquieme = document.getTableArray(22);
+        XWPFTable tableCinquieme = document.getTableArray(15);
         try {
           ajoutTableauDynamique(detailsBull5,tableCinquieme);
         } catch (RuntimeException e) {
@@ -174,7 +174,7 @@ public class WordTempResultaNonAffProcessor {
         }
 
         // Quatrieme
-        XWPFTable tableQuatrieme = document.getTableArray(23);
+        XWPFTable tableQuatrieme = document.getTableArray(16);
         try {
           ajoutTableauDynamique(detailsBull4,tableQuatrieme);
         } catch (RuntimeException e) {
@@ -182,90 +182,50 @@ public class WordTempResultaNonAffProcessor {
         }
 
         // Troixième
-        XWPFTable tableTroixieme = document.getTableArray(24);
+        XWPFTable tableTroixieme = document.getTableArray(17);
         try {
           ajoutTableauDynamique(detailsBull3,tableTroixieme);
         } catch (RuntimeException e) {
           e.printStackTrace();
         }
 
-        // SecondeA
-        XWPFTable table2NDA = document.getTableArray(25);
+        // SecondeA et SecondeC fusionnées
+        List<ResultatsElevesNonAffecteDto> detailsBull2ND = new ArrayList<>();
+        detailsBull2ND.addAll(detailsBull2NDA);
+        detailsBull2ND.addAll(detailsBull2NDC);
+        
+        XWPFTable table2NDA = document.getTableArray(18);
         try {
-          ajoutTableauDynamique(detailsBull2NDA,table2NDA);
+          ajoutTableauDynamique(detailsBull2ND,table2NDA);
         } catch (RuntimeException e) {
           e.printStackTrace();
         }
 
-        // SecondeC
-        XWPFTable table2NDC = document.getTableArray(26);
+        // PremiereA, PremiereC et PremiereD fusionnées
+        List<ResultatsElevesNonAffecteDto> detailsBull1ERE = new ArrayList<>();
+        detailsBull1ERE.addAll(detailsBull1EREA);
+        detailsBull1ERE.addAll(detailsBull1EREC);
+        detailsBull1ERE.addAll(detailsBull1ERED);
+        
+        XWPFTable table1EREA = document.getTableArray(19);
         try {
-          ajoutTableauDynamique(detailsBull2NDC,table2NDC);
-        } catch (RuntimeException e) {
-          e.printStackTrace();
-        }
-
-        // PremiereA
-        XWPFTable table1EREA = document.getTableArray(27);
-        try {
-          ajoutTableauDynamique(detailsBull1EREA,table1EREA);
-        } catch (RuntimeException e) {
-          e.printStackTrace();
-        }
-
-        // PremiereC
-        XWPFTable table1EREC = document.getTableArray(28);
-        try {
-          ajoutTableauDynamique(detailsBull1EREC,table1EREC);
-        } catch (RuntimeException e) {
-          e.printStackTrace();
-        }
-
-        // PremiereD
-        XWPFTable table1ERED = document.getTableArray(29);
-        try {
-          ajoutTableauDynamique(detailsBull1ERED,table1ERED);
+          ajoutTableauDynamique(detailsBull1ERE,table1EREA);
         } catch (RuntimeException e) {
           e.printStackTrace();
         }
 
 
-        // Terminale A
-        XWPFTable tableTLEA = document.getTableArray(30);
+        // Terminale A, A1, A2, C et D fusionnées
+        List<ResultatsElevesNonAffecteDto> detailsBullTLE = new ArrayList<>();
+        detailsBullTLE.addAll(detailsBullTLEA);
+        detailsBullTLE.addAll(detailsBullTLEA1);
+        detailsBullTLE.addAll(detailsBullTLEA2);
+        detailsBullTLE.addAll(detailsBullTLEC);
+        detailsBullTLE.addAll(detailsBullTLED);
+        
+        XWPFTable tableTLEA = document.getTableArray(20);
         try {
-          ajoutTableauDynamique(detailsBullTLEA,tableTLEA);
-        } catch (RuntimeException e) {
-          e.printStackTrace();
-        }
-
-        // Terminale A1
-        XWPFTable tableTLEA1 = document.getTableArray(31);
-        try {
-          ajoutTableauDynamique(detailsBullTLEA1,tableTLEA1);
-        } catch (RuntimeException e) {
-          e.printStackTrace();
-        }
-
-        // Terminale A2
-        XWPFTable tableTLEA2 = document.getTableArray(32);
-        try {
-          ajoutTableauDynamique(detailsBullTLEA2,tableTLEA2);
-        } catch (RuntimeException e) {
-          e.printStackTrace();
-        }
-
-        // Terminale C
-        XWPFTable tableTLEC = document.getTableArray(33);
-        try {
-          ajoutTableauDynamique(detailsBullTLEC,tableTLEC);
-        } catch (RuntimeException e) {
-          e.printStackTrace();
-        }
-
-        // Terminale D
-        XWPFTable tableTLED = document.getTableArray(34);
-        try {
-          ajoutTableauDynamique(detailsBullTLED,tableTLED);
+          ajoutTableauDynamique(detailsBullTLE,tableTLEA);
         } catch (RuntimeException e) {
           e.printStackTrace();
         }
@@ -604,7 +564,21 @@ public class WordTempResultaNonAffProcessor {
         }
       XWPFTableRow generalfillesRow = table.createRow();
       ensureCellCount(generalfillesRow, 12);
-      generalfillesRow.getCell(0).setText("Total "+libelleNiveau);
+      String totalLibelle;
+      if (libelleNiveau != null) {
+        if (libelleNiveau.startsWith("2nde")) {
+          totalLibelle = "Total 2nde";
+        } else if (libelleNiveau.startsWith("1ère")) {
+          totalLibelle = "Total 1ère";
+        } else if (libelleNiveau.startsWith("Tle")) {
+          totalLibelle = "Total Tle";
+        } else {
+          totalLibelle = "Total "+libelleNiveau;
+        }
+      } else {
+        totalLibelle = "Total "+libelleNiveau;
+      }
+      generalfillesRow.getCell(0).setText(totalLibelle);
       generalfillesRow.getCell(1).setText(" F");
       generalfillesRow.getCell(2).setText(String.valueOf(effectifCycle1F));
       generalfillesRow.getCell(3).setText(String.valueOf(effectifClasseCycle1F));

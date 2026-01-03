@@ -185,83 +185,43 @@ public class WordTempResultaAffProcessor {
           e.printStackTrace();
         }
 
-        // SecondeA
+        // SecondeA et SecondeC fusionnées
+        List<ResultatsElevesAffecteDto> detailsBull2ND = new ArrayList<>();
+        detailsBull2ND.addAll(detailsBull2NDA);
+        detailsBull2ND.addAll(detailsBull2NDC);
+        
         XWPFTable table2NDA = document.getTableArray(10);
         try {
-          ajoutTableauDynamique(detailsBull2NDA,table2NDA);
+          ajoutTableauDynamique(detailsBull2ND,table2NDA);
         } catch (RuntimeException e) {
           e.printStackTrace();
         }
 
-        // SecondeC
-        XWPFTable table2NDC = document.getTableArray(11);
+        // PremiereA, PremiereC et PremiereD fusionnées
+        List<ResultatsElevesAffecteDto> detailsBull1ERE = new ArrayList<>();
+        detailsBull1ERE.addAll(detailsBull1EREA);
+        detailsBull1ERE.addAll(detailsBull1EREC);
+        detailsBull1ERE.addAll(detailsBull1ERED);
+        
+        XWPFTable table1EREA = document.getTableArray(11);
         try {
-          ajoutTableauDynamique(detailsBull2NDC,table2NDC);
-        } catch (RuntimeException e) {
-          e.printStackTrace();
-        }
-
-        // PremiereA
-        XWPFTable table1EREA = document.getTableArray(12);
-        try {
-          ajoutTableauDynamique(detailsBull1EREA,table1EREA);
-        } catch (RuntimeException e) {
-          e.printStackTrace();
-        }
-
-        // PremiereC
-        XWPFTable table1EREC = document.getTableArray(13);
-        try {
-          ajoutTableauDynamique(detailsBull1EREC,table1EREC);
-        } catch (RuntimeException e) {
-          e.printStackTrace();
-        }
-
-        // PremiereD
-        XWPFTable table1ERED = document.getTableArray(14);
-        try {
-          ajoutTableauDynamique(detailsBull1ERED,table1ERED);
+          ajoutTableauDynamique(detailsBull1ERE,table1EREA);
         } catch (RuntimeException e) {
           e.printStackTrace();
         }
 
 
-        // Terminale A
-        XWPFTable tableTLEA = document.getTableArray(15);
+        // Terminale A, A1, A2, C et D fusionnées
+        List<ResultatsElevesAffecteDto> detailsBullTLE = new ArrayList<>();
+        detailsBullTLE.addAll(detailsBullTLEA);
+        detailsBullTLE.addAll(detailsBullTLEA1);
+        detailsBullTLE.addAll(detailsBullTLEA2);
+        detailsBullTLE.addAll(detailsBullTLEC);
+        detailsBullTLE.addAll(detailsBullTLED);
+        
+        XWPFTable tableTLEA = document.getTableArray(12);
         try {
-          ajoutTableauDynamique(detailsBullTLEA,tableTLEA);
-        } catch (RuntimeException e) {
-          e.printStackTrace();
-        }
-
-        // Terminale A1
-        XWPFTable tableTLEA1 = document.getTableArray(16);
-        try {
-          ajoutTableauDynamique(detailsBullTLEA1,tableTLEA1);
-        } catch (RuntimeException e) {
-          e.printStackTrace();
-        }
-
-        // Terminale A2
-        XWPFTable tableTLEA2 = document.getTableArray(17);
-        try {
-          ajoutTableauDynamique(detailsBullTLEA2,tableTLEA2);
-        } catch (RuntimeException e) {
-          e.printStackTrace();
-        }
-
-        // Terminale C
-        XWPFTable tableTLEC = document.getTableArray(18);
-        try {
-          ajoutTableauDynamique(detailsBullTLEC,tableTLEC);
-        } catch (RuntimeException e) {
-          e.printStackTrace();
-        }
-
-        // Terminale D
-        XWPFTable tableTLED = document.getTableArray(19);
-        try {
-          ajoutTableauDynamique(detailsBullTLED,tableTLED);
+          ajoutTableauDynamique(detailsBullTLE,tableTLEA);
         } catch (RuntimeException e) {
           e.printStackTrace();
         }
@@ -596,7 +556,21 @@ public class WordTempResultaAffProcessor {
         }
       XWPFTableRow generalfillesRow = table.createRow();
       ensureCellCount(generalfillesRow, 12);
-      generalfillesRow.getCell(0).setText("Total "+libelleNiveau);
+      String totalLibelle;
+      if (libelleNiveau != null) {
+        if (libelleNiveau.startsWith("2nde")) {
+          totalLibelle = "Total 2nde";
+        } else if (libelleNiveau.startsWith("1ère")) {
+          totalLibelle = "Total 1ère";
+        } else if (libelleNiveau.startsWith("Tle")) {
+          totalLibelle = "Total Tle";
+        } else {
+          totalLibelle = "Total "+libelleNiveau;
+        }
+      } else {
+        totalLibelle = "Total "+libelleNiveau;
+      }
+      generalfillesRow.getCell(0).setText(totalLibelle);
       generalfillesRow.getCell(1).setText(" F");
       generalfillesRow.getCell(2).setText(String.valueOf(effectifCycle1F));
       generalfillesRow.getCell(3).setText(String.valueOf(effectifClasseCycle1F));
