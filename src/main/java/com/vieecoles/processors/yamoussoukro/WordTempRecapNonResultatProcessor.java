@@ -22,7 +22,7 @@ public class WordTempRecapNonResultatProcessor {
 
     public   void getRecapResultatANonffProcessor(XWPFDocument document ,
                                           Long idEcole ,String libelleAnnee , String libelleTrimetre) {
-        XWPFTable table = document.getTableArray(35);
+        XWPFTable table = document.getTableArray(21);
 
         List<RecapDesResultatsElevesNonAffecteDto> detailsBull= new ArrayList<>();
         long nombMoySup10Etabli =0l ; long nombMoyInf10Etabli =0l ;long nombMoyInf8_5Etabli =0l;
@@ -143,7 +143,7 @@ public class WordTempRecapNonResultatProcessor {
             totalRow.getCell(9).setText(String.valueOf(nombMoyInf8_5));
             totalRow.getCell(10).setText(String.valueOf(arrondie(pourInf8_5)));
             totalRow.getCell(11).setText(String.valueOf(arrondie(classe.getMoyClasse())));
-            mergeCellsVertically(table, 0, table.getNumberOfRows() - 3, table.getNumberOfRows() -1);
+            mergeCellsVertically(table, 0, table.getNumberOfRows() - 3, table.getNumberOfRows() -2);
         }
         //Total Etablissement
         XWPFTableRow etabliRow = table.createRow();

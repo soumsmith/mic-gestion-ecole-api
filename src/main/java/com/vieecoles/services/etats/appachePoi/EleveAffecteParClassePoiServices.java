@@ -115,7 +115,7 @@ public class EleveAffecteParClassePoiServices {
                     //eleve.setProfesseurPrincipal((String) bulletinData[12]);
                     //eleve.setRang(rang);
                     //eleve.setObservat(appreciation);
-                    //eleve.setProfesseurPrincipal(nomProfesseur);
+                   //eleve.setProfesseurPrincipal(nomProfesseur);
 
                     elevesMap.put(matricule, eleve);
                 }
@@ -125,9 +125,15 @@ public class EleveAffecteParClassePoiServices {
 
                 if ("Premier Trimestre".equals(trimestre)) {
                     eleve.setMoyeGeneralTrim1(moyenneGenerale);
+                    eleve.setRang(rang);
+                    eleve.setProfesseurPrincipal(nomProfesseur);
+                    eleve.setObservat(appreciation);
 
                 } else if ("Deuxième Trimestre".equals(trimestre)) {
                     eleve.setMoyeGeneralTrim2(moyenneGenerale);
+                    eleve.setRang(rang);
+                    eleve.setProfesseurPrincipal(nomProfesseur);
+                    eleve.setObservat(appreciation);
 
                 } else if ("Troisième Trimestre".equals(trimestre)) {
                     eleve.setMoyeGeneralTrim3(moyenneGenerale);
