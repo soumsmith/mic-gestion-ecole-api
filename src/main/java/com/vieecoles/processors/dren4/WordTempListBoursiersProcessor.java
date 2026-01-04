@@ -3,20 +3,17 @@ package com.vieecoles.processors.dren4;
 import com.vieecoles.dto.BoursierDto;
 import com.vieecoles.dto.NiveauDto;
 import com.vieecoles.services.etats.BoursiersServices;
-import java.util.ArrayList;
-import java.util.List;
+import org.apache.poi.xwpf.usermodel.*;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTcPr;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTVMerge;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.STMerge;
+
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
-import org.apache.poi.xwpf.usermodel.XWPFDocument;
-import org.apache.poi.xwpf.usermodel.XWPFParagraph;
-import org.apache.poi.xwpf.usermodel.XWPFTable;
-import org.apache.poi.xwpf.usermodel.XWPFTableCell;
-import org.apache.poi.xwpf.usermodel.XWPFTableRow;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTcPr;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTVMerge;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.STMerge;
+import java.util.ArrayList;
+import java.util.List;
 
 @ApplicationScoped
 public class WordTempListBoursiersProcessor {
@@ -30,6 +27,35 @@ public class WordTempListBoursiersProcessor {
         int currentCellCount = row.getTableCells().size();
         for (int i = currentCellCount; i < cellCount; i++) {
             row.addNewTableCell(); // Ajouter une nouvelle cellule si nécessaire
+        }
+    }
+
+    private void mergeCellsHorizontally(XWPFTable table, int row, int fromCell, int toCell) {
+        XWPFTableRow tableRow = table.getRow(row);
+        if (tableRow != null) {
+            ensureCellCount(tableRow, toCell + 1); // S'assurer que toutes les cellules nécessaires sont présentes
+            for (int cellIndex = fromCell; cellIndex <= toCell; cellIndex++) {
+                XWPFTableCell cell = tableRow.getCell(cellIndex);
+                if (cell != null) {
+                    CTTcPr tcPr = cell.getCTTc().getTcPr();
+                    if (tcPr == null) {
+                        tcPr = cell.getCTTc().addNewTcPr();
+                    }
+                    if (cellIndex == fromCell) {
+                        if (tcPr.getHMerge() == null) {
+                            tcPr.addNewHMerge().setVal(STMerge.RESTART);
+                        } else {
+                            tcPr.getHMerge().setVal(STMerge.RESTART);
+                        }
+                    } else {
+                        if (tcPr.getHMerge() == null) {
+                            tcPr.addNewHMerge().setVal(STMerge.CONTINUE);
+                        } else {
+                            tcPr.getHMerge().setVal(STMerge.CONTINUE);
+                        }
+                    }
+                }
+            }
         }
     }
     public   void getListeBoursierClasse(XWPFDocument document ,
@@ -92,20 +118,22 @@ public class WordTempListBoursiersProcessor {
 
                     // Ajouter une ligne pour le niveau
                     XWPFTableRow niveauRow = table.createRow();
-
-                    // Fusionner manuellement les cellules pour le niveau
+                    
+                    // S'assurer que la ligne a 6 cellules (N°, Matricule, Nom et Prénoms, Sexe, Date de naissance, Lieu de naissance)
+                    ensureCellCount(niveauRow, 6);
+                    
+                    // Mettre le texte du niveau dans la première cellule
                     XWPFTableCell cell = niveauRow.getCell(0);
-                    if (cell == null) {
-                        cell = niveauRow.createCell();
-                    }
-                    cell.setText(currentNiveau.toUpperCase());
-
-                    // Ajouter les autres cellules sans texte pour donner l'apparence de fusion
-
+                    cell.setText("NIVEAU " + currentNiveau.toUpperCase());
+                    
+                    // Fusionner toutes les cellules (de 0 à 5) pour créer une seule cellule qui s'étend sur toute la largeur
+                    int rowIndex = table.getRows().indexOf(niveauRow);
+                    mergeCellsHorizontally(table, rowIndex, 0, 5);
                 }
 
                 // Ajouter une ligne pour chaque élève
                 XWPFTableRow row = table.createRow();
+                ensureCellCount(row, 6); // S'assurer que la ligne a 6 cellules
                 row.getCell(0).setText(String.valueOf(studentIndex++));
                 row.getCell(1).setText(eleve.getMatricule());
                 row.getCell(2).setText(eleve.getNom() + " " + eleve.getPrenoms());

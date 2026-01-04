@@ -47,7 +47,7 @@ public class WordTempListMajorProcessor {
             for (int i = 0; i < paragraphs.size(); i++) {
                 String text = paragraphs.get(i).getText();
                 // Identifier l'emplacement où insérer le tableau (par exemple après "Liste des élèves affectés par classe")
-                if (text.contains("Liste des  majors de classe par niveau")) {
+                if (text.contains("Liste des majors de classe par niveau")) {
 
                     indexToInsert = i + 1; // Ajouter après ce paragraphe
                     break;
@@ -57,8 +57,8 @@ public class WordTempListMajorProcessor {
 
             // Récupérer les données
             List<MajorParClasseNiveauDto> listeMajors = majorServices.MajorParNiveauClasse(idEcole, libelleAnnee, libelleTrimestre);
-            if(!listeMajors.isEmpty())
-                listeMajors.sort(Comparator.comparing(MajorParClasseNiveauDto::getOrdre_niveau));
+          if(!listeMajors.isEmpty())
+            listeMajors.sort(Comparator.comparing(MajorParClasseNiveauDto::getOrdre_niveau));
             // Vérifier si on a trouvé l'emplacement et si on a des données
             if (indexToInsert != -1 && listeMajors != null && !listeMajors.isEmpty()) {
 
@@ -94,13 +94,13 @@ public class WordTempListMajorProcessor {
                 // Remplir l'en-tête - vérifier chaque cellule avant de l'utiliser
                 if (headerRow.getTableCells().size() >= 10) {
                     headerRow.getCell(0).setText("NIVEAU");
-                    headerRow.getCell(1).setText("RANG");
+                    headerRow.getCell(1).setText("CLASSE");
                     headerRow.getCell(2).setText("MATRICULE");
                     headerRow.getCell(3).setText("NOM ET PRENOMS");
                     headerRow.getCell(4).setText("ANNEE NAIS");
                     headerRow.getCell(5).setText("SEXE");
-                    headerRow.getCell(6).setText("STATUT (AFF/NAFF)");
-                    headerRow.getCell(7).setText("CLASSE");
+                    headerRow.getCell(6).setText("NATURE");
+                    headerRow.getCell(7).setText("R");
                     headerRow.getCell(8).setText("MOY");
                     headerRow.getCell(9).setText("LV2");
                 } else {
@@ -157,7 +157,8 @@ public class WordTempListMajorProcessor {
                         case 3: rang = "3è"; break;
                         default: rang = String.valueOf(rangInNiveau) + "è"; break;
                     }
-                    row.getCell(1).setText(rang);
+                    //row.getCell(1).setText(rang);
+                    row.getCell(1).setText(eleve.getClasseLibelle ()!= null ? eleve.getClasseLibelle() : "");
 
                     // Remplir les autres colonnes avec vérification null
                     row.getCell(2).setText(eleve.getMatricule() != null ? eleve.getMatricule() : "");
@@ -172,7 +173,7 @@ public class WordTempListMajorProcessor {
                     row.getCell(4).setText(eleve.getAnneeNaiss() != null ? eleve.getAnneeNaiss() : "");
                     row.getCell(5).setText(eleve.getSexe() != null ? eleve.getSexe() : "");
                     row.getCell(6).setText(eleve.getAffecte() != null ? eleve.getAffecte() : "");
-                    row.getCell(7).setText(eleve.getClasseLibelle() != null ? eleve.getClasseLibelle() : "");
+                    row.getCell(7).setText(eleve.getRedoublant() != null ? eleve.getRedoublant() : "");
                     row.getCell(8).setText(eleve.getMoyGeneral() != null ? String.valueOf(eleve.getMoyGeneral()) : "");
                     row.getCell(9).setText(eleve.getLv2() != null ? String.valueOf(eleve.getLv2()) : "");
 

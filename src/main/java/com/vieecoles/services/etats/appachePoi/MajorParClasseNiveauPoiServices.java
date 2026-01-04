@@ -1,6 +1,6 @@
 package com.vieecoles.services.etats.appachePoi;
 
-import com.vieecoles.dto.ClasseNiveauOrderDto;
+import com.vieecoles.dto.NiveauDto;
 import com.vieecoles.dto.MajorParClasseNiveauDto;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -18,9 +18,9 @@ public class MajorParClasseNiveauPoiServices {
 
     public List<MajorParClasseNiveauDto> MajorParNiveauClasse(Long idEcole ,String libelleAnnee , String libelleTrimestre){
 
-        List<ClasseNiveauOrderDto> classeNiveauDtoList = new ArrayList<>() ;
-        TypedQuery<ClasseNiveauOrderDto> q = em.createQuery( "SELECT new com.vieecoles.dto.ClasseNiveauOrderDto(b.libelleClasse ,b.niveau ,b.ordreNiveau) from Bulletin b  where b.ecoleId =:idEcole  and b.libellePeriode=:periode and b.anneeLibelle=:annee " +
-                "group by b.ordreNiveau, b.niveau,b.libelleClasse order by b.ordreNiveau, b.niveau,b.libelleClasse", ClasseNiveauOrderDto.class);
+        List<NiveauDto> classeNiveauDtoList = new ArrayList<>() ;
+        TypedQuery<NiveauDto> q = em.createQuery( "SELECT new com.vieecoles.dto.NiveauDto(b.libelleClasse) from Bulletin b  where b.ecoleId =:idEcole  and b.libellePeriode=:periode and b.anneeLibelle=:annee " +
+                "group by b.libelleClasse order by b.libelleClasse", NiveauDto.class);
         classeNiveauDtoList = q.setParameter("idEcole", idEcole)
                             .setParameter("annee", libelleAnnee)
                             .setParameter("periode", libelleTrimestre)
@@ -47,17 +47,17 @@ public class MajorParClasseNiveauPoiServices {
     List<MajorParClasseNiveauDto> tousLesMajors = new ArrayList<>();
 
     try {
-      // Une seule requête pour récupérer les 3 premiers de chaque niveau
+      // Une seule requête pour récupérer les premiers de chaque classe
       Query q = em.createNativeQuery(
           "SELECT niveau, libelle_classe, matricule, nom, prenoms, " +
-              "date_naissance, sexe, affecte, moy_general, lv2 ,ordre_niveau " +
-              "FROM ( " +
-              "  SELECT *, ROW_NUMBER() OVER (PARTITION BY niveau ORDER BY moy_general DESC) as rn " +
-              "  FROM Bulletins " +
-              "  WHERE id_ecole = ?1 AND libelle_periode = ?2 AND annee_libelle = ?3 " +
-              ") ranked " +
-              "WHERE rn <= 3 " +
-              "ORDER BY niveau, moy_general DESC");
+            "date_naissance, sexe, affecte, moy_general, lv2, ordre_niveau " +
+            "FROM ( " +
+            "  SELECT *, ROW_NUMBER() OVER (PARTITION BY libelle_classe ORDER BY moy_general DESC) as rn " +
+            "  FROM Bulletins " +
+            "  WHERE id_ecole = ?1 AND libelle_periode = ?2 AND annee_libelle = ?3 " +
+            ") ranked " +
+            "WHERE rn = 1 " +
+            "ORDER BY libelle_classe, moy_general DESC");
 
       q.setParameter(1, idEcole);
       q.setParameter(2, libelleTrimestre);
