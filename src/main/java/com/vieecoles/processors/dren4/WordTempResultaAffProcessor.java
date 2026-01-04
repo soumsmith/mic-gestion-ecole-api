@@ -1,35 +1,31 @@
 package com.vieecoles.processors.dren4;
 
-import static com.vieecoles.processors.yamoussoukro.WordTempResultaAffProcessor.afficherValeurParNiveau;
+import static org.apache.poi.ss.usermodel.TableStyleType.totalRow;
 
+import com.vieecoles.dto.NiveauDto;
 import com.vieecoles.dto.ResultatsElevesAffecteDto;
-import com.vieecoles.dto.ResultatsElevesNonAffecteDto;
-import com.vieecoles.services.etats.appachePoi.resultatsNonAffectePoiServices;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import org.apache.poi.xwpf.usermodel.XWPFDocument;
-import org.apache.poi.xwpf.usermodel.XWPFParagraph;
-import org.apache.poi.xwpf.usermodel.XWPFRun;
-import org.apache.poi.xwpf.usermodel.XWPFTable;
-import org.apache.poi.xwpf.usermodel.XWPFTableCell;
-import org.apache.poi.xwpf.usermodel.XWPFTableRow;
+import com.vieecoles.services.etats.appachePoi.resultatsPoiServices;
+import com.vieecoles.services.etats.resultatsRecapServices;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
+import org.apache.poi.xwpf.usermodel.*;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.STMerge;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import java.util.*;
 @ApplicationScoped
-public class WordTempResultaNonAffProcessor {
-  @Inject
-  com.vieecoles.services.etats.resultatsNonAffecteServices resultatsNonAffecteServices ;
+public class WordTempResultaAffProcessor {
     @Inject
-    resultatsNonAffectePoiServices resultatsServices ;
+    resultatsPoiServices resultatsServices ;
+    @Inject
+    resultatsRecapServices resultatsRecapServices ;
+  @Inject
+  EntityManager em;
 
-
-      public   void getResultatNonAffProcessor(XWPFDocument document ,
+      public   void getResultatAffProcessor(XWPFDocument document ,
           Long idEcole ,String libelleAnnee , String libelleTrimetre) {
-        List<ResultatsElevesNonAffecteDto> detailsBull6 = new ArrayList<>();
+        List<ResultatsElevesAffecteDto> detailsBull6 = new ArrayList<>();
         System.out.println("classeNiveauDtoList entree");
         try {
           detailsBull6= resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,1)  ;
@@ -39,7 +35,7 @@ public class WordTempResultaNonAffProcessor {
         }
         // Cinquième
 
-        List<ResultatsElevesNonAffecteDto> detailsBull5 = new ArrayList<>();
+        List<ResultatsElevesAffecteDto> detailsBull5 = new ArrayList<>();
         try {
           detailsBull5= resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,2)  ;
 
@@ -49,7 +45,7 @@ public class WordTempResultaNonAffProcessor {
 
         // Quatrieme
 
-        List<ResultatsElevesNonAffecteDto> detailsBull4 = new ArrayList<>();
+        List<ResultatsElevesAffecteDto> detailsBull4 = new ArrayList<>();
         try {
           detailsBull4= resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,3)  ;
 
@@ -60,7 +56,7 @@ public class WordTempResultaNonAffProcessor {
 
         // Troixième
 
-        List<ResultatsElevesNonAffecteDto> detailsBull3 = new ArrayList<>();
+        List<ResultatsElevesAffecteDto> detailsBull3 = new ArrayList<>();
         try {
           detailsBull3= resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,4)  ;
 
@@ -68,7 +64,7 @@ public class WordTempResultaNonAffProcessor {
           e.printStackTrace();
         }
         // Seconde A
-        List<ResultatsElevesNonAffecteDto> detailsBull2NDA = new ArrayList<>();
+        List<ResultatsElevesAffecteDto> detailsBull2NDA = new ArrayList<>();
         try {
           detailsBull2NDA= resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,5)  ;
 
@@ -77,7 +73,7 @@ public class WordTempResultaNonAffProcessor {
         }
 
         // Seconde C
-        List<ResultatsElevesNonAffecteDto> detailsBull2NDC = new ArrayList<>();
+        List<ResultatsElevesAffecteDto> detailsBull2NDC = new ArrayList<>();
         try {
           detailsBull2NDC= resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,6)  ;
 
@@ -86,7 +82,7 @@ public class WordTempResultaNonAffProcessor {
         }
 
         // Premiere A
-        List<ResultatsElevesNonAffecteDto> detailsBull1EREA = new ArrayList<>();
+        List<ResultatsElevesAffecteDto> detailsBull1EREA = new ArrayList<>();
         try {
           detailsBull1EREA= resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,7)  ;
 
@@ -95,7 +91,7 @@ public class WordTempResultaNonAffProcessor {
         }
 
         // Premiere C
-        List<ResultatsElevesNonAffecteDto> detailsBull1EREC = new ArrayList<>();
+        List<ResultatsElevesAffecteDto> detailsBull1EREC = new ArrayList<>();
         try {
           detailsBull1EREC = resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,8)  ;
 
@@ -104,7 +100,7 @@ public class WordTempResultaNonAffProcessor {
         }
 
         // Premiere D
-        List<ResultatsElevesNonAffecteDto> detailsBull1ERED = new ArrayList<>();
+        List<ResultatsElevesAffecteDto> detailsBull1ERED = new ArrayList<>();
         try {
           detailsBull1ERED = resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,9)  ;
 
@@ -113,7 +109,7 @@ public class WordTempResultaNonAffProcessor {
         }
 
         // Terminale A
-        List<ResultatsElevesNonAffecteDto> detailsBullTLEA = new ArrayList<>();
+        List<ResultatsElevesAffecteDto> detailsBullTLEA = new ArrayList<>();
         try {
           detailsBullTLEA = resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,10)  ;
 
@@ -122,7 +118,7 @@ public class WordTempResultaNonAffProcessor {
         }
 
         // Terminale A1
-        List<ResultatsElevesNonAffecteDto> detailsBullTLEA1 = new ArrayList<>();
+        List<ResultatsElevesAffecteDto> detailsBullTLEA1 = new ArrayList<>();
         try {
           detailsBullTLEA1 = resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,11)  ;
 
@@ -131,7 +127,7 @@ public class WordTempResultaNonAffProcessor {
         }
 
         // Terminale A2
-        List<ResultatsElevesNonAffecteDto> detailsBullTLEA2 = new ArrayList<>();
+        List<ResultatsElevesAffecteDto> detailsBullTLEA2 = new ArrayList<>();
         try {
           detailsBullTLEA2 = resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,12)  ;
 
@@ -140,7 +136,7 @@ public class WordTempResultaNonAffProcessor {
         }
 
         // Terminale C
-        List<ResultatsElevesNonAffecteDto> detailsBullTLEC = new ArrayList<>();
+        List<ResultatsElevesAffecteDto> detailsBullTLEC = new ArrayList<>();
         try {
           detailsBullTLEC = resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,13)  ;
 
@@ -149,7 +145,7 @@ public class WordTempResultaNonAffProcessor {
         }
 
         // Terminale D
-        List<ResultatsElevesNonAffecteDto> detailsBullTLED = new ArrayList<>();
+        List<ResultatsElevesAffecteDto> detailsBullTLED = new ArrayList<>();
         try {
           detailsBullTLED = resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,14)  ;
 
@@ -159,14 +155,14 @@ public class WordTempResultaNonAffProcessor {
 
         // 3. Gestion des tableaux dynamiques
         // Sixième
-        XWPFTable table = document.getTableArray(14);
+        XWPFTable table = document.getTableArray(6);
         try {
           ajoutTableauDynamique(detailsBull6,table);
         } catch (RuntimeException e) {
           e.printStackTrace();
         }
         // Cinquième
-        XWPFTable tableCinquieme = document.getTableArray(15);
+        XWPFTable tableCinquieme = document.getTableArray(7);
         try {
           ajoutTableauDynamique(detailsBull5,tableCinquieme);
         } catch (RuntimeException e) {
@@ -174,7 +170,7 @@ public class WordTempResultaNonAffProcessor {
         }
 
         // Quatrieme
-        XWPFTable tableQuatrieme = document.getTableArray(16);
+        XWPFTable tableQuatrieme = document.getTableArray(8);
         try {
           ajoutTableauDynamique(detailsBull4,tableQuatrieme);
         } catch (RuntimeException e) {
@@ -182,7 +178,7 @@ public class WordTempResultaNonAffProcessor {
         }
 
         // Troixième
-        XWPFTable tableTroixieme = document.getTableArray(17);
+        XWPFTable tableTroixieme = document.getTableArray(9);
         try {
           ajoutTableauDynamique(detailsBull3,tableTroixieme);
         } catch (RuntimeException e) {
@@ -190,11 +186,11 @@ public class WordTempResultaNonAffProcessor {
         }
 
         // SecondeA et SecondeC fusionnées
-        List<ResultatsElevesNonAffecteDto> detailsBull2ND = new ArrayList<>();
+        List<ResultatsElevesAffecteDto> detailsBull2ND = new ArrayList<>();
         detailsBull2ND.addAll(detailsBull2NDA);
         detailsBull2ND.addAll(detailsBull2NDC);
         
-        XWPFTable table2NDA = document.getTableArray(18);
+        XWPFTable table2NDA = document.getTableArray(10);
         try {
           ajoutTableauDynamique(detailsBull2ND,table2NDA);
         } catch (RuntimeException e) {
@@ -202,12 +198,12 @@ public class WordTempResultaNonAffProcessor {
         }
 
         // PremiereA, PremiereC et PremiereD fusionnées
-        List<ResultatsElevesNonAffecteDto> detailsBull1ERE = new ArrayList<>();
+        List<ResultatsElevesAffecteDto> detailsBull1ERE = new ArrayList<>();
         detailsBull1ERE.addAll(detailsBull1EREA);
         detailsBull1ERE.addAll(detailsBull1EREC);
         detailsBull1ERE.addAll(detailsBull1ERED);
         
-        XWPFTable table1EREA = document.getTableArray(19);
+        XWPFTable table1EREA = document.getTableArray(11);
         try {
           ajoutTableauDynamique(detailsBull1ERE,table1EREA);
         } catch (RuntimeException e) {
@@ -216,14 +212,14 @@ public class WordTempResultaNonAffProcessor {
 
 
         // Terminale A, A1, A2, C et D fusionnées
-        List<ResultatsElevesNonAffecteDto> detailsBullTLE = new ArrayList<>();
+        List<ResultatsElevesAffecteDto> detailsBullTLE = new ArrayList<>();
         detailsBullTLE.addAll(detailsBullTLEA);
         detailsBullTLE.addAll(detailsBullTLEA1);
         detailsBullTLE.addAll(detailsBullTLEA2);
         detailsBullTLE.addAll(detailsBullTLEC);
         detailsBullTLE.addAll(detailsBullTLED);
         
-        XWPFTable tableTLEA = document.getTableArray(20);
+        XWPFTable tableTLEA = document.getTableArray(12);
         try {
           ajoutTableauDynamique(detailsBullTLE,tableTLEA);
         } catch (RuntimeException e) {
@@ -295,8 +291,7 @@ public class WordTempResultaNonAffProcessor {
     }
 
 
-    private static void ajoutTableauDynamique(List<ResultatsElevesNonAffecteDto> detailsBull, XWPFTable table) {
-
+    private static void ajoutTableauDynamique(List<ResultatsElevesAffecteDto> detailsBull, XWPFTable table) {
       double pourSup10,pourInf10,pourInf8_5;
       long nombMoySup10Cycle1 =0l ; long nombMoyInf10Cycle1 =0l ;long nombMoyInf8_5Cycle1 =0l;
       long effectifClasseCycle1=0l ;  long effNonClassCycle1=0l;
@@ -314,10 +309,10 @@ public class WordTempResultaNonAffProcessor {
       Double moyenCycle1=0d;
       Long effectifCycle1 = 0L; Long effectifCycle1G = 0L; Long effectifCycle1F = 0L;
       Long effectifNonClasseCycle1 = 0L; Long effectifNonClasseCycle1G = 0L; Long effectifNonClasseCycle1F = 0L;
-
       String libelleNiveau="";
-      for (ResultatsElevesNonAffecteDto classe : detailsBull) {
-          /*  long nombMoySup10 =
+
+        for (ResultatsElevesAffecteDto classe : detailsBull) {
+       /*     long nombMoySup10 =
                     (classe.getNbreMoySup10F() != null ? classe.getNbreMoySup10F() : 0L) +
                             (classe.getNbreMoySup10G() != null ? classe.getNbreMoySup10G() : 0L);
 
@@ -356,6 +351,7 @@ public class WordTempResultaNonAffProcessor {
             long effNonClass =
                     (classe.getNonclassF() != null ? classe.getNonclassF() : 0L) +
                             (classe.getNonclassG() != null ? classe.getNonclassG() : 0L);*/
+
           Long effectifNiveau1=classe.getEffeG()+classe.getEffeF();
           Long effectifNiveau1G=classe.getEffeG();
           Long effectifNiveau1F=classe.getEffeF();
@@ -410,7 +406,7 @@ public class WordTempResultaNonAffProcessor {
           nombMoyInf10Cycle1F=nombMoyInf10Cycle1F+nombMoyInf10F;
 
 
-
+          libelleNiveau=afficherValeurParNiveau(classe.getNiveau());
 
 
           long nombMoyInf8_5 =
@@ -510,10 +506,6 @@ public class WordTempResultaNonAffProcessor {
 
 
 
-            // Créer une ligne principale pour la classe (6ème 1, 6ème 2, etc.)
-            //XWPFTableRow classRow = table.createRow();
-           // ensureCellCount(classRow, 14); // 14 colonnes comme dans le modèle
-        libelleNiveau=afficherValeurParNiveau(classe.getNiveau());
 // Remplir la ligne pour les filles (F)
             XWPFTableRow fillesRow = table.createRow();
             ensureCellCount(fillesRow, 12);
@@ -621,127 +613,10 @@ public class WordTempResultaNonAffProcessor {
       GeneraltotalRow.getCell(11).setText(String.valueOf(arrondie(moyenCycle1)));
       mergeCellsVertically(table, 0, table.getNumberOfRows() - 3, table.getNumberOfRows() -1);
 
-    }
-
-
-    private static void resultatsElevesAffectes6E(ResultatsElevesAffecteDto resultatsBull,XWPFTable table){
-        if(resultatsBull!=null){
-            System.out.println("Objet Trouvé "+resultatsBull.toString());
-
-        for (int i = 1; i < table.getRows().size(); i++) {
-            XWPFTableRow row = table.getRow(i);
-            Map<String, String> rowData = new HashMap<>();
-
-            long nombMoySup10 =
-                    (resultatsBull.getNbreMoySup10F() != null ? resultatsBull.getNbreMoySup10F() : 0L) +
-                            (resultatsBull.getNbreMoySup10G() != null ? resultatsBull.getNbreMoySup10G() : 0L);
-
-            long nombMoyInf10 =
-                    (resultatsBull.getNbreMoyInf999F() != null ? resultatsBull.getNbreMoyInf999F() : 0L) +
-                            (resultatsBull.getNbreMoyInf999G() != null ? resultatsBull.getNbreMoyInf999G() : 0L);
-
-            long nombMoyInf8_5 =
-                    (resultatsBull.getNbreMoyInf85F() != null ? resultatsBull.getNbreMoyInf85F() : 0L) +
-                            (resultatsBull.getNbreMoyInf85G() != null ? resultatsBull.getNbreMoyInf85G() : 0L);
-
-            long effectifClasse =
-                    (resultatsBull.getClassF() != null ? resultatsBull.getClassF() : 0L) +
-                            (resultatsBull.getClassG() != null ? resultatsBull.getClassG() : 0L);
-
-// Éviter une division par zéro pour effectifClasse
-            double pourSup10,pourInf10,pourInf8_5;
-            if (effectifClasse > 0) {
-                 pourSup10 = nombMoySup10 / (Double.valueOf(effectifClasse)) * 100d;
-                 pourInf10 = nombMoyInf10 / (Double.valueOf(effectifClasse)) * 100d;
-                pourInf8_5 = nombMoyInf8_5 / (Double.valueOf(effectifClasse)) * 100d;
-
-                // Calculer d'autres statistiques ou utiliser ces valeurs
-            } else {
-                // Gérer le cas où effectifClasse est 0 pour éviter une division par zéro
-                 pourSup10 = 0d;
-                 pourInf10 = 0d;
-                 pourInf8_5 = 0d;
-                // Logique alternative ou gestion d'erreur
-            }
-
-            long effectif =
-                    (resultatsBull.getEffeF() != null ? resultatsBull.getEffeF() : 0L) +
-                            (resultatsBull.getEffeG() != null ? resultatsBull.getEffeG() : 0L);
-
-            long effNonClass =
-                    (resultatsBull.getNonclassF() != null ? resultatsBull.getNonclassF() : 0L) +
-                            (resultatsBull.getNonclassG() != null ? resultatsBull.getNonclassG() : 0L);
-
-
-            rowData.put("{{NOMBRE_MOY_SUP_10_6E}}", String.valueOf(nombMoySup10));
-            rowData.put("{{NOMBRE_MOY_INF_10_6E}}", String.valueOf(nombMoyInf10));
-            rowData.put("{{NOMBRE_MOY_INF_08_5_6E}}", String.valueOf(nombMoyInf8_5));
-            rowData.put("{{POURC_MOY_SUP_10_6E}}", String.valueOf(pourSup10));
-            rowData.put("{{POURC_MOY_INF_10_6E}}", String.valueOf(pourInf10));
-            rowData.put("{{POURC_MOY_INF_08_5_6E}}", String.valueOf(pourInf8_5));
-            rowData.put("{{NOMBRE_ELEV_6E}}", String.valueOf(effectif));
-            rowData.put("{{NOMBRE_ELEV_CLASSES_6E}}", String.valueOf(effectifClasse));
-            rowData.put("{{NOMBRE_ELEV_NON_CLASSES_6E}}", String.valueOf(effNonClass));
-            replacePlaceholdersInTableRow(row, rowData);
-
-    }
-        }
 
     }
 
-    private static void resultatsElevesAffectes(List<ResultatsElevesAffecteDto> resultatsBull,XWPFTable table){
-        for (int i = 1; i < table.getRows().size(); i++) {
-            XWPFTableRow row = table.getRow(i);
-            Map<String, String> rowData = new HashMap<>();
 
-            rowData.put("{{NOMBRE_MOY_SUP_10_6E}}", "SOUMAHORO Moustapha");
-            rowData.put("{{NOMBRE_MOY_INF_10_6E}}", "0358 pm 455");
-            rowData.put("{{NOMBRE_MOY_INF_08_5_6E}}", "0345897564122");
-            rowData.put("{{POURC_MOY_SUP_10_6E}}", "0345897564122");
-            rowData.put("{{POURC_MOY_INF_10_6E}}", "0345897564122");
-            rowData.put("{{POURC_MOY_INF_08_5_6E}}", "0345897564122");
-            rowData.put("{{NOMBRE_ELEV_6E}}", "0345897564122");
-            rowData.put("{{NOMBRE_ELEV_CLASSES_6E}}", "0345897564122");
-            rowData.put("{{NOMBRE_ELEV_NON_CLASSES_6E}}", "0345897564122");
-            //
-            rowData.put("{{NOMBRE_MOY_SUP_10_5E}}", "0345897564122");
-            rowData.put("{{NOMBRE_MOY_INF_10_5E}}", "0345897564122");
-            rowData.put("{{NOMBRE_MOY_INF_08_5_5E}}", "0345897564122");
-            rowData.put("{{POURC_MOY_SUP_10_5E}}", "0345897564122");
-            rowData.put("{{NOMBRE_ELEV_5E}}", "0345897564122");
-            rowData.put("{{NOMBRE_ELEV_CLASSES_5E}}", "0345897564122");
-            rowData.put("{{NOMBRE_ELEV_NON_CLASSES_5E}}", "0345897564122");
-            rowData.put("{{NOMBRE_MOY_SUP_10_4E}}", "0345897564122");
-            rowData.put("{{NOMBRE_MOY_INF_10_4E}}", "0345897564122");
-            rowData.put("{{NOMBRE_MOY_INF_08_5_4E}}", "0345897564122");
-            rowData.put("{{POURC_MOY_SUP_10_4E}}", "0345897564122");
-            rowData.put("{{POURC_MOY_INF_10_4E}}", "0345897564122");
-            rowData.put("{{POURC_MOY_INF_08_5_4E}}", "0345897564122");
-            rowData.put("{{NOMBRE_ELEV_4E}}", "0345897564122");
-            rowData.put("{{NOMBRE_ELEV_CLASSES_4E}}", "0345897564122");
-            rowData.put("{{NOMBRE_ELEV_NON_CLASSES_4E}}", "0345897564122");
-            rowData.put("{{NOMBRE_MOY_SUP_10_3E}}", "0345897564122");
-            rowData.put("{{NOMBRE_MOY_INF_10_3E}}", "0345897564122");
-            rowData.put("{{NOMBRE_MOY_INF_08_5_3E}}", "0345897564122");
-            rowData.put("{{POURC_MOY_SUP_10_3E}}", "0345897564122");
-            rowData.put("{{POURC_MOY_INF_10_3E}}", "0345897564122");
-            rowData.put("{{POURC_MOY_INF_08_5_3E}}", "0345897564122");
-            rowData.put("{{NOMBRE_ELEV_3E}}", "0345897564122");
-            rowData.put("{{NOMBRE_ELEV_CLASSES_3E}}", "0345897564122");
-            rowData.put("{{NOMBRE_MOY_SUP_10_CLASSE}}", "0345897564122");
-            rowData.put("{{NOMBRE_MOY_INF_10_CLASSE}}", "0345897564122");
-            rowData.put("{{NOMBRE_MOY_INF_08_5_CLASSE}}", "0345897564122");
-            rowData.put("{{POURC_MOY_SUP_10_CLASSE}}", "0345897564122");
-            rowData.put("{{POURC_MOY_INF_10_CLASSE}}", "0345897564122");
-            rowData.put("{{POURC_MOY_INF_08_5_CLASSE}}", "0345897564122");
-            rowData.put("{{NOMBRE_ELEV_CLASSE}}", "0345897564122");
-            rowData.put("{{NOMBRE_ELEV_CLASSES_CLASSE}}", "0345897564122");
-            rowData.put("{{NOMBRE_ELEV_NON_CLASSES_CLASSE}}", "0345897564122");
-            replacePlaceholdersInTableRow(row, rowData);
-        }
-
-
-    }
 
     private static void mergeCellsVertically(XWPFTable table, int col, int fromRow, int toRow) {
         for (int rowIndex = fromRow; rowIndex <= toRow; rowIndex++) {
@@ -757,4 +632,50 @@ public class WordTempResultaNonAffProcessor {
     public static double arrondie(double d) {
         return Double.parseDouble(String.format("%.2f", d));
     }
+  public int getNombreDeclasseParNiveau(Long idEcole,String libelleAnnee ,String libelleTrimetre,String niveau){
+    List<NiveauDto> classeNiveauDtoList = new ArrayList<>() ;
+    TypedQuery<NiveauDto> q = em.createQuery( "SELECT new com.vieecoles.dto.NiveauDto(b.libelleClasse) from Bulletin b  where b.ecoleId =:idEcole and b.libellePeriode=:periode and b.anneeLibelle=:annee and b.niveau=:niveau " +
+        "group by b.libelleClasse", NiveauDto.class);
+    classeNiveauDtoList = q.setParameter("idEcole", idEcole)
+        .setParameter("annee", libelleAnnee)
+        .setParameter("periode", libelleTrimetre)
+        .setParameter("niveau", niveau)
+        . getResultList() ;
+    return classeNiveauDtoList.size() ;
+  }
+  public static String afficherValeurParNiveau(String niveau) {
+    // Mapping des niveaux avec leurs correspondants
+    switch (niveau) {
+      case "Sixième":
+        return "6ème";
+      case "Cinquième":
+        return "5ème";
+      case "Quatrième":
+        return "4ème";
+      case "Troisième":
+        return "3ème";
+      case "Seconde C":
+        return "2nde C";
+      case "Seconde A":
+        return "2nde A";
+      case "Première A":
+        return "1ère A";
+      case "Première C":
+        return "1ère C";
+      case "Première D":
+        return "1ère D";
+      case "Terminale A":
+        return "Tle A";
+      case "Terminale A1":
+        return "Tle A1";
+      case "Terminale A2":
+        return "Tle A2";
+      case "Terminale C":
+        return "Tle C";
+      case "Terminale D":
+        return "Tle D";
+      default:
+        return niveau;
+    }
+  }
 }

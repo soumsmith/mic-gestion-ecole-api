@@ -1,23 +1,17 @@
 package com.vieecoles.processors.dren4;
 
-import static com.vieecoles.processors.dren3.WordTempListAffectesProcessor.setHeaderCell;
-
 import com.vieecoles.dto.NiveauOrderDto;
 import com.vieecoles.dto.eleveAffecteParClasseDto;
 import com.vieecoles.dto.eleveAffecteParClasseDtoAvecTousTrimestres;
 import com.vieecoles.services.etats.appachePoi.EleveAffecteParClassePoiServices;
-import java.util.ArrayList;
-import java.util.List;
+import org.apache.poi.xwpf.usermodel.*;
+
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
-import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
-import org.apache.poi.xwpf.usermodel.XWPFDocument;
-import org.apache.poi.xwpf.usermodel.XWPFParagraph;
-import org.apache.poi.xwpf.usermodel.XWPFRun;
-import org.apache.poi.xwpf.usermodel.XWPFTable;
-import org.apache.poi.xwpf.usermodel.XWPFTableRow;
+import java.util.ArrayList;
+import java.util.List;
 
 @ApplicationScoped
 public class WordTempListAffectesProcessor {
@@ -67,13 +61,13 @@ public class WordTempListAffectesProcessor {
             List<eleveAffecteParClasseDtoAvecTousTrimestres>  elevAffectes = new ArrayList<>() ;
             elevAffectes= eleveAffecteParClassePoiServices.eleveAffecteParClasse(idEcole,libelleAnnee,libelleTrimestre,classeList.get(k).getNiveau());
 
-        if (indexToInsert != -1) {
+        if (indexToInsert != -1 && !elevAffectes.isEmpty()) {
            // for (int z=0; z< classeList.size();z++) {
 
             // Créer un nouveau paragraphe avant d'insérer le tableau
             XWPFParagraph newParagraph = document.insertNewParagraph(paragraphs.get(indexToInsert).getCTP().newCursor());
             XWPFRun run = newParagraph.createRun();
-            run.setText(classeList.get(k).getNiveau()+" \t\tProfesseur Principal:\t\tEducateur:");
+            run.setText(classeList.get(k).getNiveau()+" Professeur Principal: "+elevAffectes.get(0).getProfesseurPrincipal() +" Educateur: "+elevAffectes.get(0).getNomEducateur());
             run.setBold(true);  // Mettre le texte en gras
             newParagraph.setAlignment(ParagraphAlignment.LEFT);
 
@@ -82,39 +76,96 @@ public class WordTempListAffectesProcessor {
 
             // Créer l'en-tête du tableau (1 ligne, 11 colonnes)
             XWPFTableRow headerRow = table.getRow(0);
-            setHeaderCell(headerRow.getCell(0), "N°", "D9D9D9");
-            setHeaderCell(headerRow.addNewTableCell(), "ETABLISSEMENTS", "D9D9D9");
-            setHeaderCell(headerRow.addNewTableCell(), "N°", "D9D9D9");
-            setHeaderCell(headerRow.addNewTableCell(), "MATRICULE", "D9D9D9");
-            setHeaderCell(headerRow.addNewTableCell(), "NOM ET PRENOMS", "D9D9D9");
-            setHeaderCell(headerRow.addNewTableCell(), "AGE (NE(E)LE)", "D9D9D9");
-            setHeaderCell(headerRow.addNewTableCell(), "GENRE", "D9D9D9");
-            setHeaderCell(headerRow.addNewTableCell(), "NAT.", "D9D9D9");
-            setHeaderCell(headerRow.addNewTableCell(), "RED", "D9D9D9");
-            setHeaderCell(headerRow.addNewTableCell(), "STATUT AFF /NON AFF", "D9D9D9");
-            setHeaderCell(headerRow.addNewTableCell(), "N° DECISION D’AFF", "D9D9D9");
-            setHeaderCell(headerRow.addNewTableCell(), "LV2", "D9D9D9");
-            setHeaderCell(headerRow.addNewTableCell(), "MOY T1", "D9D9D9");
-            setHeaderCell(headerRow.addNewTableCell(), "MOY T2", "D9D9D9");
-            setHeaderCell(headerRow.addNewTableCell(), "MOY T3", "D9D9D9");
-            setHeaderCell(headerRow.addNewTableCell(), "RANG", "D9D9D9");
-            setHeaderCell(headerRow.addNewTableCell(), "CLASSE", "D9D9D9");
-            setHeaderCell(headerRow.addNewTableCell(), "OBSERVATIONS", "D9D9D9");
+            headerRow.getCell(0).setText("N°");
+            headerRow.addNewTableCell().setText("Matricule");
+            headerRow.addNewTableCell().setText("Nom et prénoms");
+            headerRow.addNewTableCell().setText("Sexe");
+            headerRow.addNewTableCell().setText("AN");
+            headerRow.addNewTableCell().setText("Nat");
+            headerRow.addNewTableCell().setText("R");
+            headerRow.addNewTableCell().setText("Statut");
+            headerRow.addNewTableCell().setText("N°DEC AFF");
+            
+            // Afficher les colonnes selon le trimestre
+            if (libelleTrimestre != null) {
+                if (libelleTrimestre.equals("Premier Trimestre")) {
+                    headerRow.addNewTableCell().setText("MOY T1");
+                } else if (libelleTrimestre.equals("Deuxième Trimestre")) {
+                    headerRow.addNewTableCell().setText("MOY T1");
+                    headerRow.addNewTableCell().setText("MOY T2");
+                } else if (libelleTrimestre.equals("Troisième Trimestre")) {
+                    headerRow.addNewTableCell().setText("MOY T1");
+                    headerRow.addNewTableCell().setText("MOY T2");
+                    headerRow.addNewTableCell().setText("MOY T3");
+                } else {
+                    // Cas par défaut : afficher toutes les colonnes
+                    headerRow.addNewTableCell().setText("MOY T1");
+                    headerRow.addNewTableCell().setText("MOY T2");
+                    headerRow.addNewTableCell().setText("MOY T3");
+                }
+            } else {
+                // Si libelleTrimestre est null, afficher toutes les colonnes
+                headerRow.addNewTableCell().setText("MOY T1");
+                headerRow.addNewTableCell().setText("MOY T2");
+                headerRow.addNewTableCell().setText("MOY T3");
+            }
+            
+            headerRow.addNewTableCell().setText("RANG");
+            headerRow.addNewTableCell().setText("OBSERVATION");
 
             // Ajouter des lignes au tableau
+            int numerotation=1;
             for (eleveAffecteParClasseDtoAvecTousTrimestres eleve : elevAffectes) {  // Exemple de 3 lignes
                 XWPFTableRow row = table.createRow();
-                row.getCell(0).setText(eleve.getMatricule());
-                row.getCell(1).setText(eleve.getNomEleve()+" "+eleve.getPrenomEleve());
-                row.getCell(2).setText(eleve.getSexe());
-                row.getCell(3).setText("");
-                row.getCell(4).setText(eleve.getNationnalite());
-                row.getCell(5).setText(eleve.getRedoublan());
-                row.getCell(6).setText(eleve.getAffecte());
-                row.getCell(7).setText(eleve.getNumDecisionAffecte());
-                row.getCell(8).setText(String.valueOf(eleve.getMoyeGeneral()));
-                row.getCell(9).setText(String.valueOf(eleve.getRang()));
-                row.getCell(10).setText(eleve.getObservat());
+                row.getCell(0).setText(numerotation+"");
+                row.getCell(1).setText(eleve.getMatricule());
+                row.getCell(2).setText(eleve.getNomEleve()+" "+eleve.getPrenomEleve());
+                row.getCell(3).setText(eleve.getSexe());
+                row.getCell(4).setText(eleve.getAnneeNaissance());
+                row.getCell(5).setText(eleve.getNationnalite());
+                row.getCell(6).setText(eleve.getRedoublan());
+                row.getCell(7).setText(eleve.getAffecte());
+                row.getCell(8).setText(eleve.getNumDecisionAffecte());
+                
+                // Afficher les valeurs selon le trimestre
+                int currentCellIndex = 9;
+                if (libelleTrimestre != null) {
+                    if (libelleTrimestre.equals("Premier Trimestre")) {
+                        ensureCellCount(row, currentCellIndex + 1);
+                        row.getCell(currentCellIndex).setText(String.valueOf(eleve.getMoyeGeneralTrim1()));
+                        currentCellIndex = 10;
+                    } else if (libelleTrimestre.equals("Deuxième Trimestre")) {
+                        ensureCellCount(row, currentCellIndex + 2);
+                        row.getCell(currentCellIndex).setText(String.valueOf(eleve.getMoyeGeneralTrim1()));
+                        row.getCell(currentCellIndex + 1).setText(String.valueOf(eleve.getMoyeGeneralTrim2()));
+                        currentCellIndex = 11;
+                    } else if (libelleTrimestre.equals("Troisième Trimestre")) {
+                        ensureCellCount(row, currentCellIndex + 3);
+                        row.getCell(currentCellIndex).setText(String.valueOf(eleve.getMoyeGeneralTrim1()));
+                        row.getCell(currentCellIndex + 1).setText(String.valueOf(eleve.getMoyeGeneralTrim2()));
+                        row.getCell(currentCellIndex + 2).setText(String.valueOf(eleve.getMoyeGeneralTrim3()));
+                        currentCellIndex = 12;
+                    } else {
+                        // Cas par défaut : afficher toutes les colonnes
+                        ensureCellCount(row, currentCellIndex + 3);
+                        row.getCell(currentCellIndex).setText(String.valueOf(eleve.getMoyeGeneralTrim1()));
+                        row.getCell(currentCellIndex + 1).setText(String.valueOf(eleve.getMoyeGeneralTrim2()));
+                        row.getCell(currentCellIndex + 2).setText(String.valueOf(eleve.getMoyeGeneralTrim3()));
+                        currentCellIndex = 12;
+                    }
+                } else {
+                    // Si libelleTrimestre est null, afficher toutes les colonnes
+                    ensureCellCount(row, currentCellIndex + 3);
+                    row.getCell(currentCellIndex).setText(String.valueOf(eleve.getMoyeGeneralTrim1()));
+                    row.getCell(currentCellIndex + 1).setText(String.valueOf(eleve.getMoyeGeneralTrim2()));
+                    row.getCell(currentCellIndex + 2).setText(String.valueOf(eleve.getMoyeGeneralTrim3()));
+                    currentCellIndex = 12;
+                }
+                
+                ensureCellCount(row, currentCellIndex + 2);
+                row.getCell(currentCellIndex).setText(String.valueOf(eleve.getRang()));
+                row.getCell(currentCellIndex + 1).setText(eleve.getObservat());
+                numerotation++;
             }
         //}
         }

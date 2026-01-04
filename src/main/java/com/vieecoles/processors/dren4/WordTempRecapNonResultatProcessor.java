@@ -1,5 +1,7 @@
 package com.vieecoles.processors.dren4;
 
+import static com.vieecoles.processors.yamoussoukro.WordTempResultaAffProcessor.afficherValeurParNiveau;
+
 import com.vieecoles.dto.RecapDesResultatsElevesNonAffecteDto;
 import com.vieecoles.services.etats.resultatsRecapNonAffServices;
 import java.util.ArrayList;
@@ -20,7 +22,8 @@ public class WordTempRecapNonResultatProcessor {
 
     public   void getRecapResultatANonffProcessor(XWPFDocument document ,
                                           Long idEcole ,String libelleAnnee , String libelleTrimetre) {
-        XWPFTable table = document.getTableArray(35);
+        XWPFTable table = document.getTableArray(21);
+
         List<RecapDesResultatsElevesNonAffecteDto> detailsBull= new ArrayList<>();
         long nombMoySup10Etabli =0l ; long nombMoyInf10Etabli =0l ;long nombMoyInf8_5Etabli =0l;
         long effectifClasseEtabli=0l ;  long effectifEtabli=0l; long effNonClassEtabli=0l; Double
@@ -97,7 +100,7 @@ public class WordTempRecapNonResultatProcessor {
             // Remplir la ligne pour les filles (F)
             XWPFTableRow fillesRow = table.createRow();
             ensureCellCount(fillesRow, 12);
-            fillesRow.getCell(0).setText(classe.getNiveau());
+            fillesRow.getCell(0).setText(afficherValeurParNiveau(classe.getNiveau()));
             fillesRow.getCell(1).setText(" F");
             fillesRow.getCell(2).setText(String.valueOf(classe.getEffeF()));
             fillesRow.getCell(3).setText(String.valueOf(classe.getClassF()));
@@ -128,6 +131,7 @@ public class WordTempRecapNonResultatProcessor {
 // Remplir la ligne pour le total (T)
             XWPFTableRow totalRow = table.createRow();
             ensureCellCount(totalRow, 12);
+            totalRow.getCell(0).setText("Total "+afficherValeurParNiveau(classe.getNiveau()));
             totalRow.getCell(1).setText(" T");
             totalRow.getCell(2).setText(String.valueOf(effectif));
             totalRow.getCell(3).setText(String.valueOf(effectifClasse));
@@ -139,7 +143,7 @@ public class WordTempRecapNonResultatProcessor {
             totalRow.getCell(9).setText(String.valueOf(nombMoyInf8_5));
             totalRow.getCell(10).setText(String.valueOf(arrondie(pourInf8_5)));
             totalRow.getCell(11).setText(String.valueOf(arrondie(classe.getMoyClasse())));
-            mergeCellsVertically(table, 0, table.getNumberOfRows() - 3, table.getNumberOfRows() -1);
+            mergeCellsVertically(table, 0, table.getNumberOfRows() - 3, table.getNumberOfRows() -2);
         }
         //Total Etablissement
         XWPFTableRow etabliRow = table.createRow();
