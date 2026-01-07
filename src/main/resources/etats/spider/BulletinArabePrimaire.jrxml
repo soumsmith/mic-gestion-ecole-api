@@ -618,7 +618,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 		<band height="111" splitType="Stretch">
 			<image scaleImage="FillFrame" onErrorType="Blank">
 				<reportElement x="29" y="10" width="537" height="60" uuid="9d68a8cb-e267-4558-bb34-56516dc0a774"/>
-				<imageExpression><![CDATA["etats/spider/arabe/images/entete.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["etats/spider/arabe/images/entete.jpeg"]]></imageExpression>
 			</image>
 			<line>
 				<reportElement x="29" y="70" width="539" height="1" uuid="a6cd5d08-605a-4c34-b3ae-b932070ef3de">
@@ -1140,7 +1140,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 					</textElement>
 					<textFieldExpression><![CDATA["Mention"]]></textFieldExpression>
 				</textField>
-				<textField>
+				<textField textAdjust="ScaleFont">
 					<reportElement style="TitreLibelle" x="428" y="0" width="108" height="18" uuid="a0294bf2-99c7-469f-bd51-2989b3f2b740">
 						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
 						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
@@ -1160,7 +1160,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font fontName="SansSerif" size="8" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA["Professeur"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[" Maître /Maîtresse"]]></textFieldExpression>
 				</textField>
 			</frame>
 		</band>
@@ -2034,7 +2034,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<textElement>
 									<font fontName="SansSerif" size="8"/>
 								</textElement>
-								<textFieldExpression><![CDATA["Moyenne de la classe: "+ new java.text.DecimalFormat("0.00").format($F{moy_avg}/2.0) ]]></textFieldExpression>
+								<textFieldExpression><![CDATA["Moyenne de la classe: "+ new java.text.DecimalFormat("0.00").format($F{moy_avg}/2.0)]]></textFieldExpression>
 							</textField>
 							<textField isBlankWhenNull="true">
 								<reportElement style="champsLibelle" x="0" y="25" width="160" height="12" uuid="f15bac83-da0c-4913-a5b0-f45fba595f18">
@@ -2049,7 +2049,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<textElement>
 									<font fontName="SansSerif" size="8"/>
 								</textElement>
-								<textFieldExpression><![CDATA["Moyenne la plus forte: "+  new java.text.DecimalFormat("0.00").format($F{moy_max}/2.0) ]]></textFieldExpression>
+								<textFieldExpression><![CDATA["Moyenne la plus forte: "+  new java.text.DecimalFormat("0.00").format($F{moy_max}/2.0)]]></textFieldExpression>
 							</textField>
 							<textField isBlankWhenNull="true">
 								<reportElement style="champsLibelle" x="0" y="37" width="160" height="12" uuid="f0b1c72e-c69f-48fe-9e65-97112de6ebec">
@@ -2065,7 +2065,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<textElement>
 									<font fontName="SansSerif" size="8"/>
 								</textElement>
-								<textFieldExpression><![CDATA["Moyenne la plus faible: "+ new java.text.DecimalFormat("0.00").format($F{moy_min}/2.0) ]]></textFieldExpression>
+								<textFieldExpression><![CDATA["Moyenne la plus faible: "+ new java.text.DecimalFormat("0.00").format($F{moy_min}/2.0)]]></textFieldExpression>
 							</textField>
 						</frame>
 					</frame>
@@ -2088,8 +2088,8 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 							<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 							<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						</box>
-						<staticText>
-							<reportElement style="TotalCateg" x="0" y="0" width="145" height="20" uuid="95f77e89-ef9c-47cc-a1d3-c8a2eb642a29">
+						<textField textAdjust="ScaleFont">
+							<reportElement style="TotalCateg" x="0" y="0" width="145" height="20" uuid="eb53ecd6-e8b7-4896-bc7e-334aa735f506">
 								<property name="com.jaspersoft.layout.grid.x" value="0"/>
 								<property name="com.jaspersoft.layout.grid.y" value="0"/>
 								<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -2105,8 +2105,8 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<font fontName="SansSerif" size="7" isBold="true" isUnderline="true"/>
 								<paragraph spacingBefore="4"/>
 							</textElement>
-							<text><![CDATA[Nom et signature du Prof principal]]></text>
-						</staticText>
+							<textFieldExpression><![CDATA["Nom et signature du Maître /Maîtresse"]]></textFieldExpression>
+						</textField>
 						<textField>
 							<reportElement x="0" y="20" width="145" height="23" uuid="e47634ee-95b4-4631-93d2-34c6d591ff2b">
 								<property name="com.jaspersoft.layout.grid.x" value="-1"/>

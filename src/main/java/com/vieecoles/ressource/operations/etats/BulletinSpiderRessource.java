@@ -292,7 +292,16 @@ public class BulletinSpiderRessource {
                         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderArabePrimaire.jrxml");
 
                     }
-                }
+                } else 
+                    {
+                        if(moisTrimestre.contains(libellePeriode)) {
+                            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderAutrePrimaire.jrxml");
+                        }
+                        else {
+                            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderAutrePrimaire.jrxml");
+    
+                        }
+                    }
 
             }   else if (niveauEnseign==4) {
                 if(!pivoter){
@@ -408,14 +417,22 @@ public class BulletinSpiderRessource {
             else if (niveauEnseign==1) {
                 if (bulletinArabe){
                     if(moisTrimestre.contains(libellePeriode)) {
-                        System.out.println("callSpiderArabePrimaire.jrxmlDecompressFF");
                         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderArabePrimaire.jrxml");
                     }
                     else {
                         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderArabePrimaire.jrxml");
 
                     }
-                }
+                } else 
+                    {
+                        if(moisTrimestre.contains(libellePeriode)) {
+                            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderAutrePrimaire.jrxml");
+                        }
+                        else {
+                            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderAutrePrimaire.jrxml");
+    
+                        }
+                    }
 
 
 
@@ -489,6 +506,19 @@ public class BulletinSpiderRessource {
                 }
             } catch (Exception e) {
                 System.err.println("Erreur lors de la compilation du sous-rapport BulletinArabePrimaire: " + e.getMessage());
+                e.printStackTrace();
+            }
+        }
+        
+        // Compiler le sous-rapport BulletinPrimaireAutre si nécessaire (pour callSpiderAutrePrimaire.jrxml)
+        if (niveauEnseign == 1 && !bulletinArabe) {
+            try (java.io.InputStream subreportStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinPrimaireAutre.jrxml")) {
+                if (subreportStream != null) {
+                    JasperReport subreport = JasperCompileManager.compileReport(subreportStream);
+                    map.put("SUBREPORT_BulletinPrimaireAutre", subreport);
+                }
+            } catch (Exception e) {
+                System.err.println("Erreur lors de la compilation du sous-rapport BulletinPrimaireAutre: " + e.getMessage());
                 e.printStackTrace();
             }
         }
