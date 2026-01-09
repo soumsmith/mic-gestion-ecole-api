@@ -163,7 +163,7 @@ public class WordTempProcessorDren3 {
       } else {
         wordTempIdentiteProcessor.getIdentiteProcessor(document,idEcole,libelleAnnee,libelleTrimetre);
         System.out.println("Statistique Identité okjj");
-        wordTempRecapAffNonAffResultatProcessor.getRecapResultatAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
+       wordTempRecapAffNonAffResultatProcessor.getRecapResultatAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
         System.out.println("Statistique Ok");
         wordTempStatistiqueResultatProcessor.getResultatAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
         System.out.println("Details Statistique Ok");
@@ -190,6 +190,8 @@ public class WordTempProcessorDren3 {
         wordTempStatistiqueGenreProcessor.getResultatAffProcessor(document,idEcole,libelleAnnee,libelleTrimetre,anneeId);
         System.out.println("Statistique Genregg Ok");
         wordTempStatistiqueProfesseurProcessor.getNbreProfessProcessor(document,idEcole ,libelleAnnee,libelleTrimetre,anneeId);
+       
+      
       }
 
 
