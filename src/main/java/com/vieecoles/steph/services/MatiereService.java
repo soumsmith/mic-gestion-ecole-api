@@ -92,6 +92,7 @@ public class MatiereService implements PanacheRepositoryBase<Matiere, Long> {
 
 		dto.setId(matiere.getId());
 		dto.setCode(matiere.getCode());
+		dto.setCodeVieEcole(matiere.getCodeVieEcole());
 		dto.setLibelle(matiere.getLibelle());
 		dto.setPec(matiere.getPec());
 		dto.setNiveauEnseignement(matiere.getNiveauEnseignement());
@@ -126,6 +127,7 @@ public class MatiereService implements PanacheRepositoryBase<Matiere, Long> {
 		matiere.setCategorie(matiereDto.getCategorie());
 		matiere.setNumOrdre(matiereDto.getNumOrdre());
 		matiere.setBonus(matiereDto.getBonus());
+		matiere.setCodeVieEcole(matiereDto.getCodeVieEcole());
 
 		if (matiereDto.getMatiereParent().getId() != 0)
 			matiere.setMatiereParent(matiereDto.getMatiereParent().getId().toString());
@@ -156,7 +158,7 @@ public class MatiereService implements PanacheRepositoryBase<Matiere, Long> {
 		entity.setNumOrdre(matiere.getNumOrdre());
 		entity.setBonus(matiere.getBonus());
 		entity.setDateUpdate(LocalDateTime.now());
-		entity.setCode_vie_ecole(matiere.getCode_vie_ecole());
+		entity.setCodeVieEcole(matiere.getCodeVieEcole());
 
 		return entity;
 	}
