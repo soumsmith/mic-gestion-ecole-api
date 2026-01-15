@@ -1,5 +1,5 @@
 
- docker build -f src/main/docker/Dockerfile.jvm -t soumsmith/pouls-pro-api:202512101242 .
+ docker build -f src/main/docker/Dockerfile.jvm -t soumsmith/pouls-pro-api:202601141551 .
 
  docker build -f src/main/docker/Dockerfile.jvm -t soumsmith/pouls-emploi-api:202509241821 .
 
