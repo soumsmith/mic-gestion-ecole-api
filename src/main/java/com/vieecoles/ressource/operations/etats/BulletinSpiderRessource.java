@@ -38,6 +38,7 @@ import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRXlsExporter;
 import net.sf.jasperreports.engine.export.ooxml.JRDocxExporter;
+import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
@@ -205,22 +206,36 @@ public class BulletinSpiderRessource {
     ) throws Exception, JRException {
 
 
-
+    ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 
         InputStream myInpuStream = null;
         Classe classe= new Classe() ;
         classe = Classe.findById(libelleClasse) ;
-
+ Set<String> moisTrimestre = Set.of(
+    "Novembre", "Décembre", "Janvier", "Février", "Mars", "Avril"
+);
         if(!compress) {
             if(niveauEnseign==2) {
 
                 System.out.println("Libelle Periode "+libellePeriode);
+                System.out.println("bulletinArabe>>>"+bulletinArabe);
                 if(testLourd){
                     if(libellePeriode.equals("Troisième Trimestre")) {
                         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/callSpiderNobelTroisLourd.jrxml");
                     }
                     else {
                         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/callSpiderNobelTroisLourd.jrxml");
+
+                    }
+                } 
+                 else if (bulletinArabe){
+                    if(libellePeriode.equals("Troisième Trimestre")) {
+                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderArabe.jrxml");
+                    }
+                   
+                    else {
+                         System.out.println("callSpiderArabeAAA.jrxml") ;
+                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderArabe.jrxml");
 
                     }
                 }
@@ -268,28 +283,25 @@ public class BulletinSpiderRessource {
                 }
 
 
-            } else if (niveauEnseign==1) {
-               if (bulletinArabe){
-                    if(libellePeriode.equals("Troisième Trimestre")) {
-                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/callSpiderArabeTrois.jrxml");
+            } else if (niveauEnseign==1) { 
+            if (bulletinArabe){
+                    if(moisTrimestre.contains(libellePeriode)) {
+                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderArabePrimaire.jrxml");
                     }
                     else {
-                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderArabe.jrxml");
+                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderArabePrimaire.jrxml");
 
                     }
-                }
-
-                else {
-                    if(libellePeriode.equals("Troisième Trimestre"))
-                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/callSpiderNobelDecompressTrois.jrxml");
-
-
-                    else
-                    {myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderNobelDecompress.jrxml");
-                        System.out.println("callSpiderNobelDecompress") ;
+                } else 
+                    {
+                        if(moisTrimestre.contains(libellePeriode)) {
+                            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderAutrePrimaire.jrxml");
+                        }
+                        else {
+                            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderAutrePrimaire.jrxml");
+    
+                        }
                     }
-                }
-
 
             }   else if (niveauEnseign==4) {
                 if(!pivoter){
@@ -349,6 +361,7 @@ public class BulletinSpiderRessource {
         } else {
             if(niveauEnseign==2) {
                 System.out.println("Libelle Periode "+libellePeriode);
+                System.out.println("bulletinArabe>>>"+bulletinArabe);
                 if(testLourd){
                     if(libellePeriode.equals("Troisième Trimestre")) {
                         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/callSpiderNobelTroisLourd.jrxml");
@@ -360,11 +373,12 @@ public class BulletinSpiderRessource {
                 }
                 else if (bulletinArabe){
                     if(libellePeriode.equals("Troisième Trimestre")) {
-                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/callSpiderArabeTrois.jrxml");
+                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderArabe");
                     }
                     else {
+                        System.out.println("callSpiderArabeDecompress") ;
                         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderArabe.jrxml");
-
+        
                     }
                 }
                 else  if(!pivoter){
@@ -401,26 +415,25 @@ public class BulletinSpiderRessource {
 
             }
             else if (niveauEnseign==1) {
-               if (bulletinArabe){
-                    if(libellePeriode.equals("Troisième Trimestre")) {
-                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/callSpiderArabeTrois.jrxml");
+                if (bulletinArabe){
+                    if(moisTrimestre.contains(libellePeriode)) {
+                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderArabePrimaire.jrxml");
                     }
                     else {
-                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderArabe.jrxml");
+                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderArabePrimaire.jrxml");
 
                     }
-                }
-
-                else {
-                    if(libellePeriode.equals("Troisième Trimestre"))
-                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/callSpiderNobelDecompressTrois.jrxml");
-
-
-                    else
-                    {myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderNobelDecompress.jrxml");
-                        System.out.println("callSpiderNobelDecompress") ;
+                } else 
+                    {
+                        if(moisTrimestre.contains(libellePeriode)) {
+                            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderAutrePrimaire.jrxml");
+                        }
+                        else {
+                            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderAutrePrimaire.jrxml");
+    
+                        }
                     }
-                }
+
 
 
             }
@@ -474,10 +487,54 @@ public class BulletinSpiderRessource {
 
 
 
-        Connection connection = DriverManager.getConnection("jdbc:mysql://db:3306/ecoleviedbv2", USER, PASS);
+        //Connection connection = DriverManager.getConnection("jdbc:mysql://db:3306/ecoleviedbv2?useUnicode=true&characterEncoding=UTF-8", USER, PASS);
+        Connection connection = DriverManager.getConnection("jdbc:mysql://94.23.162.171:33061/ecoleviedbv2?useUnicode=true&characterEncoding=UTF-8", USER, PASS);
+       
         JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
+        //JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromInputStream(myInpuStream);
+        
+
         //   JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");
         Map<String, Object> map = new HashMap<>();
+        
+        // Compiler le sous-rapport BulletinArabePrimaire si nécessaire
+        if (niveauEnseign == 1 && bulletinArabe) {
+            try (java.io.InputStream subreportStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinArabePrimaire.jrxml")) {
+                if (subreportStream != null) {
+                    JasperReport subreport = JasperCompileManager.compileReport(subreportStream);
+                    map.put("SUBREPORT_BulletinArabePrimaire", subreport);
+                }
+            } catch (Exception e) {
+                System.err.println("Erreur lors de la compilation du sous-rapport BulletinArabePrimaire: " + e.getMessage());
+                e.printStackTrace();
+            }
+        }
+        
+        // Compiler le sous-rapport BulletinPrimaireAutre si nécessaire (pour callSpiderAutrePrimaire.jrxml)
+        if (niveauEnseign == 1 && !bulletinArabe) {
+            try (java.io.InputStream subreportStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinPrimaireAutre.jrxml")) {
+                if (subreportStream != null) {
+                    JasperReport subreport = JasperCompileManager.compileReport(subreportStream);
+                    map.put("SUBREPORT_BulletinPrimaireAutre", subreport);
+                }
+            } catch (Exception e) {
+                System.err.println("Erreur lors de la compilation du sous-rapport BulletinPrimaireAutre: " + e.getMessage());
+                e.printStackTrace();
+            }
+        }
+        
+        // Compiler le sous-rapport BulletinArabeSpiders si nécessaire (pour callSpiderArabe.jrxml)
+        if (bulletinArabe && niveauEnseign != 1) {
+            try (java.io.InputStream subreportStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinArabeSpiders.jrxml")) {
+                if (subreportStream != null) {
+                    JasperReport subreport = JasperCompileManager.compileReport(subreportStream);
+                    map.put("SUBREPORT_BulletinArabeSpiders", subreport);
+                }
+            } catch (Exception e) {
+                System.err.println("Erreur lors de la compilation du sous-rapport BulletinArabeSpiders: " + e.getMessage());
+                e.printStackTrace();
+            }
+        }
         String infos= null ;
         String pdistinct= null ;
         String plogoPosi= null ;
@@ -614,7 +671,8 @@ Set<String> moisTrimestre = Set.of(
             } else if (niveauEnseign==1) {
                 if (bulletinArabe){
                     if(moisTrimestre.contains(libellePeriode)) {
-                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/callSpiderArabePrimaire.jrxml");
+                        System.out.println("callSpiderArabePrimaire.jrxmlPPPPPP"); 
+                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderArabePrimaire.jrxml");
                     }
                     else {
                         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderArabePrimaire.jrxml");
@@ -622,16 +680,7 @@ Set<String> moisTrimestre = Set.of(
                     }
                 }
 
-                else {
-                    if(libellePeriode.equals("Troisième Trimestre"))
-                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/callSpiderPrimaireAutre.jrxml");
-
-
-                    else
-                    {myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderPrimaireAutre.jrxml");
-                        System.out.println("callSpiderNobelDecompress") ;
-                    }
-                }
+                
 
 
             }   else if (niveauEnseign==4) {
@@ -759,7 +808,8 @@ Set<String> moisTrimestre = Set.of(
             else if (niveauEnseign==1) {
                  if (bulletinArabe){
                     if(moisTrimestre.contains(libellePeriode)) {
-                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/callSpiderArabePrimaire.jrxml");
+                         System.out.println("callSpiderArabePrimaire.jrxmlDecompressTTTTT"); 
+                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderArabePrimaire.jrxml");
                     }
                     else {
                         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderArabePrimaire.jrxml");
@@ -767,16 +817,6 @@ Set<String> moisTrimestre = Set.of(
                     }
                 }
 
-                else {
-                    if(moisTrimestre.contains(libellePeriode))
-                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/callSpiderPrimaireAutre.jrxml");
-
-
-                    else
-                    {myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderPrimaireAutre.jrxml");
-                        System.out.println("callSpiderNobelDecompress") ;
-                    }
-                }
 
             }
             else if (niveauEnseign==5||niveauEnseign==6) {
@@ -829,7 +869,7 @@ Set<String> moisTrimestre = Set.of(
 
 
 
-        Connection connection = DriverManager.getConnection("jdbc:mysql://db:3306/ecoleviedbv2", USER, PASS);
+        Connection connection = DriverManager.getConnection("jdbc:mysql://db:3306/ecoleviedbv2?useUnicode=true&characterEncoding=UTF-8", USER, PASS);
         JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
         //   JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");
         Map<String, Object> map = new HashMap<>();
@@ -976,6 +1016,7 @@ Set<String> moisTrimestre = Set.of(
                         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/BulletinArabePrimaire.jrxml");
                     }
                     else {
+                       System.out.print("Imprimer etats/spider/BulletinArabePrimaire.jrxml");
                         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinArabePrimaire.jrxml");
 
                     }
@@ -987,7 +1028,8 @@ Set<String> moisTrimestre = Set.of(
 
 
                     else
-                    {myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinPrimaireAutre.jrxml");
+                    {  System.out.print("Imprimer etats/spider/BulletinPrimaireAutre.jrxml");
+                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinPrimaireAutre.jrxml");
                         System.out.println("callSpiderNobelDecompress") ;
                     }
                 }
@@ -1060,7 +1102,8 @@ Set<String> moisTrimestre = Set.of(
                             myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/BulletinArabeSpiderEtanTrois.jrxml");
                         }
                         else {
-                            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinArabeSpiderEtan.jrxml");
+                            System.out.print("Imprimer etats/spider/BulletinArabeSpiders.jrxml"+">>>>>Decompresse");
+                            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinArabeSpiders.jrxml");
 
                         }
                     }
@@ -1083,7 +1126,26 @@ Set<String> moisTrimestre = Set.of(
                     }
 
 
-                } else if (niveauEnseign==4||niveauEnseign==1) {
+                } 
+                
+                
+                else if (niveauEnseign ==1) {
+                    if (bulletinArabe){
+                    if(moisTrimestre.contains(libellePeriode)) {
+                        System.out.print("Imprimer etats/spider/BulletinArabePrimaire.jrxmlDecompresseAAAA");
+                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinArabePrimaire.jrxml");
+                    }
+                    else {
+                       System.out.print("Imprimer etats/spider/BulletinArabePrimaire.jrxmlDecompresse");
+                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinArabePrimaire.jrxml");
+
+                    }
+                }
+
+                }
+                
+                
+                else if (niveauEnseign==4||niveauEnseign==1) {
                     if (bulletinArabe){
                     if(moisTrimestre.contains(libellePeriode)) {
                         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/BulletinArabePrimaire.jrxml");
@@ -1157,7 +1219,9 @@ Set<String> moisTrimestre = Set.of(
 
             //bulletinSpiderMatriculeServices.bulletinInfos(idEcole ,libelleAnnee ,libellePeriode ,matricule,positionLogo,filigranne) ;
 
-            Connection connection = DriverManager.getConnection("jdbc:mysql://db:3306/ecoleviedbv2", USER, PASS);
+           // Connection connection = DriverManager.getConnection("jdbc:mysql://db:3306/ecoleviedbv2", USER, PASS);
+            
+        Connection connection = DriverManager.getConnection("jdbc:mysql://94.23.162.171:33061/ecoleviedbv2?useUnicode=true&characterEncoding=UTF-8", USER, PASS);
             JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
             String infos= null ;
             String pdistinct= null ;
@@ -1232,7 +1296,8 @@ Set<String> moisTrimestre = Set.of(
 
         try {
 
-            dbConnection = DriverManager.getConnection(DB_URL, USER, PASS);
+            String dbUrlWithEncoding = DB_URL.contains("?") ? DB_URL + "&useUnicode=true&characterEncoding=UTF-8" : DB_URL + "?useUnicode=true&characterEncoding=UTF-8";
+            dbConnection = DriverManager.getConnection(dbUrlWithEncoding, USER, PASS);
 
 
         } catch (SQLException e) {
