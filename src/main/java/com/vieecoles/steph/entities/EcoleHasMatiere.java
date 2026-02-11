@@ -8,12 +8,14 @@ import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PostLoad;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import lombok.Data;
@@ -80,6 +82,10 @@ public class EcoleHasMatiere extends PanacheEntityBase implements java.io.Serial
 	@JoinColumn(name = "matiere_parent_id")
 	@JsonbTransient
 	private EcoleHasMatiere matiereParent;
+	
+	@Transient
+	private Long matiereParentId;
+	
 	@ManyToOne
 	@JoinColumn(name = "categorie")
 	@EqualsAndHashCode.Include
@@ -108,12 +114,13 @@ public class EcoleHasMatiere extends PanacheEntityBase implements java.io.Serial
 	@Transient
 	private MatiereDto parent;
 
-	@PostLoad
-	private void loadParent() {
+	// Permet de charger le parent s'il en existe et d'eviter les erreur de données récursives avec JSON ou JACKSON
+	public void loadParent() {
 		MatiereDto parent = null;
-		if (matiereParent != null) {
-			parent = new MatiereDto(matiereParent.getId(), matiereParent.getCode(), matiereParent.getLibelle());
-
+		if (getMatiereParentId() != null) {
+			EcoleHasMatiere matiereEcole = EcoleHasMatiere.findById(this.matiereParentId);
+			this.matiereParent = matiereEcole;
+			parent = new MatiereDto(this.matiereParent.getId(), this.matiereParent.getCode(), this.matiereParent.getLibelle());
 		}
 		this.parent = parent;
 	}

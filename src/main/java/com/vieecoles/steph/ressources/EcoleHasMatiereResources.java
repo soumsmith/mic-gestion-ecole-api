@@ -85,7 +85,7 @@ public class EcoleHasMatiereResources {
 	@Produces(MediaType.APPLICATION_JSON)
 
 	public Response updateAndDisplay(EcoleHasMatiere matiereEcole) {
-
+		System.out.println("ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ");
 		EcoleHasMatiere ev = matiereEcoleService.updateAndDisplay(matiereEcole);
 		if (ev == null) {
 			throw new NotFoundException();
@@ -99,6 +99,7 @@ public class EcoleHasMatiereResources {
 	@Produces(MediaType.TEXT_PLAIN)
 
 	public Response create(EcoleHasMatiere matiereEcole) {
+		System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
 		try {
 			// logger.info("Saving ...");
 			matiereEcoleService.create(matiereEcole);

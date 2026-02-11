@@ -63,7 +63,7 @@ public class PersonnelService {
 		if (user != null) {
 			try {
 				return Personnel.find("sous_attent_personn_sous_attent_personnid = ?1",
-						user.getSous_attent_personn_sous_attent_personnid()).firstResult();
+						user.getSousAttentPersonnId()).firstResult();
 			} catch (RuntimeException e) {
 				logger.log(Level.WARNING, "Erreur getByUserId {0}", e.getMessage());
 			}
@@ -77,7 +77,7 @@ public class PersonnelService {
 		if (user != null) {
 			try {
 				return Personnel.find("sous_attent_personn_sous_attent_personnid = ?1 and ecole.ecoleid = ?2",
-						user.getSous_attent_personn_sous_attent_personnid(), ecoleId).firstResult();
+						user.getSousAttentPersonnId(), ecoleId).firstResult();
 			} catch (RuntimeException e) {
 				logger.log(Level.WARNING, "Erreur getByUserId {0}", e.getMessage());
 			}
