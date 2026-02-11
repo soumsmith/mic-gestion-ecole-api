@@ -196,7 +196,7 @@ return  messageRetour ;
       utilisateur myNewInser = new utilisateur() ;
       myNewInser.setUtilisateu_email(creerCompte.getUtilisateu_email());
       myNewInser.setUtilisateu_login(creerCompte.getUtilisateu_login());
-      myNewInser.setSous_attent_personn_sous_attent_personnid(creerCompte.getSous_attent_personn_sous_attent_personnid());
+      myNewInser.setSousAttentPersonnId(creerCompte.getSous_attent_personn_sous_attent_personnid());
       myNewInser.setUtilisateur_mot_de_passe(creerCompte.getUtilisateur_mot_de_passe());
       myNewInser.persist();
       return  "Demande créée avec succes !";
