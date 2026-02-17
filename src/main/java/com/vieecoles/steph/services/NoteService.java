@@ -2440,7 +2440,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 
 		double moyenne = (moyenneNormale * poidsNormale + moyenneTestLourd * poidsTestLourd) / totalPoids;
 
-		return Math.round(moyenne * 100) / 100;
+		return CommonUtils.roundDouble(moyenne, 2);
 	}
 
 	private EleveMatiereDto calculerMoyenneEleve(EleveMatiereDto eleve) {
@@ -2450,7 +2450,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 		Double moyenne = sommeCoef != 0 ? sommeMoyenneCoef / sommeCoef : 0.0;
 		System.out.println(String.format("Moyenne generale eleve %s somme moyenne %s / somme coef %s = %s",
 				eleve.getEleve().getMatricule(), sommeMoyenneCoef, sommeCoef, moyenne));
-		eleve.setMoyenne(moyenne);
+		eleve.setMoyenne(CommonUtils.roundDouble(moyenne, 2));
 		eleve.setObservation(CommonUtils.appreciation(moyenne));
 		return eleve;
 
@@ -2477,7 +2477,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 					m.setMoyenne(calculerMoyenne(m.getNotes()));
 					m.setAppreciation(CommonUtils.appreciation(m.getMoyenne()));
 					m.setCoef(getCoefficient(m.getMatiereId()));
-					m.setMoyenneCoef((double) (Math.round(m.getMoyenne() * m.getCoef() * 100) / 100));
+					m.setMoyenneCoef((double) (CommonUtils.roundDouble(m.getMoyenne() * m.getCoef(), 2)));
 				})).collect(Collectors.toList());
 
 		// calculer les moyennes par eleves
