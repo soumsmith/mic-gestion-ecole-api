@@ -239,7 +239,7 @@ public class connexionService implements PanacheRepositoryBase<utilisateur_has_p
 		Long idUtilisateur = null;
 		try {
 			idUtilisateur = (Long) em.createQuery(
-					"select o.utilisateurid from utilisateur  o  where  o.sous_attent_personn_sous_attent_personnid =:idSouscripteur ")
+					"select o.utilisateurid from utilisateur  o  where  o.sousAttentPersonnId =:idSouscripteur ")
 					.setParameter("idSouscripteur", idSouscripteur).getSingleResult();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -289,7 +289,7 @@ public class connexionService implements PanacheRepositoryBase<utilisateur_has_p
 		Long IdPersonnel = null;
 		try {
 			IdPersonnel = (Long) em.createQuery(
-					"select distinct  o.sous_attent_personnid from sous_attent_personn  o , utilisateur  u where  o.sous_attent_personnid= u.sous_attent_personn_sous_attent_personnid  and u.utilisateu_login  =:login ")
+					"select distinct  o.sous_attent_personnid from sous_attent_personn  o , utilisateur  u where  o.sous_attent_personnid= u.sousAttentPersonnId  and u.utilisateu_login  =:login ")
 					.setParameter("login", login).getSingleResult();
 			return IdPersonnel;
 		} catch (Exception e) {

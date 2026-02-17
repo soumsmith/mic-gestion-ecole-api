@@ -136,7 +136,7 @@ public class connexionRessource {
         motPasse= myConnexionDto.getMotdePasse().trim() ;
         profilId= myProfil.getProfilid() ;
 
-//        System.out.println("Info-compte "+login +" "+motPasse+" "+ profilId);
+     System.out.println("Info-compte "+login +" "+motPasse+" "+ profilId);
         return  myconnexionService.seConnecterAdmin(login,motPasse,profilId) ;
     }
 

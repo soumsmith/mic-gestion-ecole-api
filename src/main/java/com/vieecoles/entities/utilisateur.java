@@ -15,6 +15,7 @@ public class utilisateur extends PanacheEntityBase {
 	private String utilisateur_mot_de_passe;
 	private String utilisateu_email;
 	private String utilisateu_login;
+	@Column(name = "sous_attent_personn_sous_attent_personnid")
 	private Long sousAttentPersonnId;
 
 	public String getUtilisateu_login() {
