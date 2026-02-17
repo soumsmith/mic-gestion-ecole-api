@@ -49,26 +49,28 @@ public class NotesResource {
 		System.out.println(String.format("%s %s %s", classeId, anneeId, periodeId));
 		return Response.ok().entity(noteService.process(classeId, anneeId, periodeId)).build();
 	}
+
 	@GET
 	@Path("/list-note-classe-vie-ecole")
 	@Tag(name = "Notes")
-	public Response listByClassevieEcole(@QueryParam("codeClasse") String codeClasse ,
-	@QueryParam("codeVieEcole") String codeVieEcole,
-	@QueryParam("idNiveauEnseignement") Long idNiveauEnseignement,
-	 @QueryParam("anneeId") String anneeId,
-	 @QueryParam("periodeId") String periodeId) {
-    Ecole ecole = Ecole.find("identifiantVieEcole =?1 and niveauEnseignement.id=?2",codeVieEcole,idNiveauEnseignement).firstResult();
-    if (ecole == null) {
-      return Response.status(Response.Status.NOT_FOUND)
-          .entity("École introuvable dans Pouls-Pro").build();
-    }
-    Classe classe = Classe.find("identifiantVieEcole =?1 and ecole.id=?2",codeClasse,ecole.getId()).firstResult();						
+	public Response listByClassevieEcole(@QueryParam("codeClasse") String codeClasse,
+			@QueryParam("codeVieEcole") String codeVieEcole,
+			@QueryParam("idNiveauEnseignement") Long idNiveauEnseignement, @QueryParam("anneeId") String anneeId,
+			@QueryParam("periodeId") String periodeId) {
+		Ecole ecole = Ecole
+				.find("identifiantVieEcole =?1 and niveauEnseignement.id=?2", codeVieEcole, idNiveauEnseignement)
+				.firstResult();
+		if (ecole == null) {
+			return Response.status(Response.Status.NOT_FOUND).entity("École introuvable dans Pouls-Pro").build();
+		}
+		Classe classe = Classe.find("identifiantVieEcole =?1 and ecole.id=?2", codeClasse, ecole.getId()).firstResult();
 
-		//Classe classe = Classe.find("identifiantVieEcole =?1",classeCode).firstResult();
-		if(classe == null) {
+		// Classe classe = Classe.find("identifiantVieEcole
+		// =?1",classeCode).firstResult();
+		if (classe == null) {
 			return Response.status(Response.Status.NOT_FOUND).build();
 		} else {
-			String  classeId=String.valueOf(classe.getId());
+			String classeId = String.valueOf(classe.getId());
 			System.out.println(String.format("%s %s %s", classeId, anneeId, periodeId));
 			return Response.ok().entity(noteService.process(classeId, anneeId, periodeId)).build();
 		}
