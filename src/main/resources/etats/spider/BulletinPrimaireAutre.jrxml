@@ -596,13 +596,9 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 		</band>
 	</background>
 	<title>
-		<band height="111" splitType="Stretch">
-			<image scaleImage="FillFrame" onErrorType="Blank">
-				<reportElement x="29" y="10" width="537" height="60" uuid="9d68a8cb-e267-4558-bb34-56516dc0a774"/>
-				<imageExpression><![CDATA["etats/spider/arabe/images/entete.jpeg"]]></imageExpression>
-			</image>
+		<band height="52" splitType="Stretch">
 			<line>
-				<reportElement x="29" y="70" width="539" height="1" uuid="a6cd5d08-605a-4c34-b3ae-b932070ef3de">
+				<reportElement x="30" y="12" width="526" height="1" uuid="a6cd5d08-605a-4c34-b3ae-b932070ef3de">
 					<property name="com.jaspersoft.layout.grid.x" value="0"/>
 					<property name="com.jaspersoft.layout.grid.y" value="3"/>
 					<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
@@ -614,37 +610,37 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 				</reportElement>
 			</line>
 			<staticText>
-				<reportElement x="30" y="72" width="48" height="18" uuid="6eab1972-deff-46a0-bc0d-076377648b2f"/>
+				<reportElement x="31" y="13" width="48" height="18" uuid="6eab1972-deff-46a0-bc0d-076377648b2f"/>
 				<text><![CDATA[STATUT :]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="78" y="72" width="68" height="18" uuid="14e71fd4-d22f-437b-af7d-2139241c8a86"/>
+				<reportElement x="79" y="13" width="68" height="18" uuid="14e71fd4-d22f-437b-af7d-2139241c8a86"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{statut_ecole}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="200" y="72" width="200" height="18" uuid="b8cd19d1-d90c-4287-a049-adf700ca82c9"/>
+				<reportElement x="201" y="13" width="200" height="18" uuid="b8cd19d1-d90c-4287-a049-adf700ca82c9"/>
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{annee_libelle}.replace("Année ", "")]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="438" y="71" width="48" height="18" uuid="bff05133-bdd1-4170-85b9-fa2d46c28c46"/>
+				<reportElement x="439" y="12" width="48" height="18" uuid="bff05133-bdd1-4170-85b9-fa2d46c28c46"/>
 				<textElement textAlignment="Right"/>
 				<text><![CDATA[CODE :]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="487" y="72" width="68" height="18" uuid="64553d77-b30b-4842-8470-c0ddb2fae4e3"/>
+				<reportElement x="488" y="13" width="68" height="18" uuid="64553d77-b30b-4842-8470-c0ddb2fae4e3"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{codeEcole}]]></textFieldExpression>
 			</textField>
 			<frame>
-				<reportElement x="30" y="91" width="525" height="20" uuid="1bb90efa-a4b7-47c9-9551-b529911a1ae7">
+				<reportElement x="31" y="32" width="525" height="20" uuid="1bb90efa-a4b7-47c9-9551-b529911a1ae7">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
 				</reportElement>

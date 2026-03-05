@@ -671,7 +671,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 		<band height="111" splitType="Stretch">
 			<image scaleImage="FillFrame" onErrorType="Blank">
 				<reportElement x="29" y="10" width="537" height="60" uuid="9d68a8cb-e267-4558-bb34-56516dc0a774"/>
-				<imageExpression><![CDATA["etats/spider/arabe/images/entete.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["etats/spider/arabe/images/entete.jpeg"]]></imageExpression>
 			</image>
 			<line>
 				<reportElement x="29" y="70" width="539" height="1" uuid="a6cd5d08-605a-4c34-b3ae-b932070ef3de">

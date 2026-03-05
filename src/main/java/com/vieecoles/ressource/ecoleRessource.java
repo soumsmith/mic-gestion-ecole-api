@@ -3,6 +3,7 @@ package com.vieecoles.ressource;
 
 import com.vieecoles.dto.ecoleDto;
 import com.vieecoles.dto.ecoleDto2;
+import com.vieecoles.dto.ecoleDto3;
 import com.vieecoles.entities.profil;
 import com.vieecoles.services.operations.ecoleService;
 import com.vieecoles.services.profilService;
@@ -21,7 +22,7 @@ public class ecoleRessource {
     @Inject
     ecoleService ecoleService ;
     @GET
-    public List<ecoleDto2> list() {
+    public List<ecoleDto3> list() {
         return ecoleService.findAllecoleDto2() ;
     }
 

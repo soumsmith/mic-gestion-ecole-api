@@ -29,6 +29,8 @@ public class ecole extends PanacheEntityBase {
     private  String  ecole_adresse ;
     private  String  ecole_telephone ;
     private  String  ecole_statut ;
+    @Column(name = "identifiant_vie_ecole ")
+	private String identifiantVieEcole ;
 
     //private Long ville_villeid ;
     private Long sousc_atten_etabliss_idSOUS_ATTENT_ETABLISSEMENT;

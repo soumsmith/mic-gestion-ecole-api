@@ -1,7 +1,7 @@
 
 <<<<<<< HEAD
 <<<<<<< HEAD
- docker build -f src/main/docker/Dockerfile.jvm -t soumsmith/pouls-pro-api:202601141551 .
+ docker build -f src/main/docker/Dockerfile.jvm -t soumsmith/pouls-pro-api:202602242228 .
 =======
  docker build -f src/main/docker/Dockerfile.jvm -t soumsmith/pouls-pro-api:202512191159 .
 >>>>>>> 4902506 (mise à jour rapport yakro pour 2026)

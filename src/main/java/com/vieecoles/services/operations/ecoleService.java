@@ -2,6 +2,7 @@ package com.vieecoles.services.operations;
 
 import com.vieecoles.dto.ecoleDto;
 import com.vieecoles.dto.ecoleDto2;
+import com.vieecoles.dto.ecoleDto3;
 import com.vieecoles.entities.operations.ecole;
 
 import com.vieecoles.steph.entities.Ecole;
@@ -38,15 +39,15 @@ public class ecoleService implements PanacheRepositoryBase<ecole, Long> {
         return  listEcoleDto;
     }
 
-    public  List<ecoleDto2> findAllecoleDto2(){
+    public  List<ecoleDto3> findAllecoleDto2(){
 
- TypedQuery<ecoleDto2> q = em.createQuery( "SELECT new com.vieecoles.dto.ecoleDto2(o.ecoleid,o.ecolecode,o.ecoleclibelle) from ecole o where o.visible='1'",
-                ecoleDto2.class);
+ TypedQuery<ecoleDto3> q = em.createQuery( "SELECT new com.vieecoles.dto.ecoleDto3(o.ecoleid,o.ecolecode,o.ecoleclibelle,o.identifiantVieEcole) from ecole o where o.visible='1'",
+                ecoleDto3.class);
 
  /*TypedQuery<ecoleDto2> q = em.createQuery( "SELECT new com.vieecoles.dto.ecoleDto2(o.ecoleid,o.ecolecode,o.ecoleclibelle) from ecole o ",
           ecoleDto2.class);
 */
-        List<ecoleDto2> listEcoleDto = q.getResultList();
+        List<ecoleDto3> listEcoleDto = q.getResultList();
 
         return  listEcoleDto;
     }
