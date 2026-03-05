@@ -9,6 +9,7 @@ import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 import com.vieecoles.steph.dto.MoyenneEleveDto;
+import com.vieecoles.steph.dto.NotesEleveDto;
 import com.vieecoles.steph.dto.moyennes.EleveDto;
 import com.vieecoles.steph.entities.Notes;
 import com.vieecoles.steph.services.NoteService;
@@ -214,6 +215,26 @@ public class NotesResource {
 		List<MoyenneEleveDto> list = new ArrayList<>();
 		list.add(noteService.moyennesAndNotesByMatriculeHandle(matricule, annee, periode));
 		return list;
+	}
+
+	@GET
+	@Path("/eleve/{matricule}")
+	public Response getNotesByMatricule(@PathParam("matricule") String matricule, @QueryParam("annee") Long annee,
+			@QueryParam("classe") Long classe, @QueryParam("periode") Long periode) {
+		try {
+			if (matricule == null || annee == null || classe == null || periode == null) {
+				return Response.status(Response.Status.BAD_REQUEST)
+						.entity("Les paramètres matricule, annee, classe et periode sont obligatoires").build();
+			}
+			System.out.println(String.format("matricule %s annee %s classe %s periode %s", matricule, annee, classe, periode));
+			NotesEleveDto result = noteService.getNotesByMatricule(matricule, annee, classe, periode);
+
+			return Response.ok(result).build();
+
+		} catch (Exception e) {
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Erreur serveur : " + e.getMessage())
+					.build();
+		}
 	}
 
 	@POST
