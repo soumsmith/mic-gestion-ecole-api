@@ -12,4 +12,5 @@ public class MatiereNotesEleveDto {
 	private Long matiereId;
 	private String matiereLibelle;
 	private List<String> notes = new ArrayList<>();
+	private List<NoteEvaluationDto> notesEvaluation = new ArrayList<>();
 }

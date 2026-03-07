@@ -27,6 +27,7 @@ import com.vieecoles.steph.dto.MatiereNotesEleveDto;
 import com.vieecoles.steph.dto.MoyenneEleveDto;
 import com.vieecoles.steph.dto.MoyenneEleveOptimizedDto;
 import com.vieecoles.steph.dto.NoteDto;
+import com.vieecoles.steph.dto.NoteEvaluationDto;
 import com.vieecoles.steph.dto.NotesEleveDto;
 import com.vieecoles.steph.dto.moyennes.EcoleMatiereDto;
 import com.vieecoles.steph.dto.moyennes.EleveDto;
@@ -3953,7 +3954,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 	    NotesEleveDto dto = new NotesEleveDto();
 	    List<EcoleHasMatiere> matieresEcole = EcoleHasMatiere
 	        .find("ecole.id = ?1", classeEleve.getEcole().getId()).list();
-	    Map<String, List<String>> noteStructure = new HashMap<>();
+	    Map<String, List<NoteEvaluationDto>> noteStructure = new HashMap<>();
 	    boolean infoFlag = false;
 
 	    for (Notes n : notes) {
@@ -3967,11 +3968,16 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 
 	        String key = String.valueOf(n.getEvaluation().getMatiereEcole().getId());
 	        String noteFormate = String.format("%s/%s", n.getNote(), n.getEvaluation().getNoteSur());
-
-	        noteStructure.computeIfAbsent(key, k -> new ArrayList<>()).add(noteFormate);
+	        NoteEvaluationDto noteEvaluationDto = new NoteEvaluationDto();
+	        noteEvaluationDto.setNote(String.valueOf(n.getNote()));
+	        noteEvaluationDto.setNoteSur(n.getEvaluation().getNoteSur());
+	        noteEvaluationDto.setEvaluationType(n.getEvaluation().getType().getLibelle());
+	        noteEvaluationDto.setEvaluationNumber(String.valueOf(n.getEvaluation().getNumero()));
+	        
+	        noteStructure.computeIfAbsent(key, k -> new ArrayList<>()).add(noteEvaluationDto);
 	    }
 
-	    for (Map.Entry<String, List<String>> entry : noteStructure.entrySet()) {
+	    for (Map.Entry<String, List<NoteEvaluationDto>> entry : noteStructure.entrySet()) {
 	        MatiereNotesEleveDto matiereNotesEleveDto = new MatiereNotesEleveDto();
 	        matiereNotesEleveDto.setMatiereId(Long.valueOf(entry.getKey()));
 	        matiereNotesEleveDto.setMatiereLibelle(
@@ -3981,7 +3987,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 	                .map(EcoleHasMatiere::getLibelle)
 	                .orElse(null)
 	        );
-	        matiereNotesEleveDto.setNotes(entry.getValue());
+	        matiereNotesEleveDto.setNotesEvaluation(entry.getValue());
 	        dto.getList().add(matiereNotesEleveDto);
 	    }
 

@@ -284,6 +284,7 @@ public class ClasseEleveService implements PanacheRepositoryBase<ClasseEleve, Lo
 
 		return list;
 	}
+	
 
 	public long count() {
 		return ClasseEleve.count();

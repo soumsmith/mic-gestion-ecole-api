@@ -1,17 +1,31 @@
 package com.vieecoles.steph.ressources;
 
-import com.vieecoles.steph.entities.ClasseEleve;
-import com.vieecoles.steph.entities.Inscription;
-import com.vieecoles.steph.services.ClasseEleveService;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
+import com.vieecoles.steph.dto.ClasseEleveDto;
+import com.vieecoles.steph.dto.IdLongCodeLibelleDto;
+import com.vieecoles.steph.dto.moyennes.PersonneDto;
+import com.vieecoles.steph.entities.Classe;
+import com.vieecoles.steph.entities.ClasseEleve;
+import com.vieecoles.steph.entities.Inscription;
+import com.vieecoles.steph.services.ClasseEleveService;
+
 import jakarta.inject.Inject;
-import jakarta.ws.rs.*;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.NotFoundException;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import java.util.ArrayList;
-import java.util.List;
 
 @Path("/classe-eleve")
 public class ClasseEleveResource {
@@ -54,9 +68,9 @@ public class ClasseEleveResource {
 	@Path("/retrieve-by-branche-annee/{brancheId}/{anneeId}/")
 	@Operation(description = "Obtenir les eleve affecte dans des classes par branche", summary = "")
 	@Tag(name = "Classe-Eleve")
-	public Response getByBrancheAnnee(@PathParam("brancheId") long brancheId,
-			@PathParam("anneeId") Long anneeId, @QueryParam("ecole") Long ecoleId) {
-		System.out.println("anne: "+anneeId+" ecole : "+ecoleId+" branche : "+brancheId);
+	public Response getByBrancheAnnee(@PathParam("brancheId") long brancheId, @PathParam("anneeId") Long anneeId,
+			@QueryParam("ecole") Long ecoleId) {
+		System.out.println("anne: " + anneeId + " ecole : " + ecoleId + " branche : " + brancheId);
 		return Response.ok(classeEleveService.getByBrancheAndAnnee(brancheId, anneeId, ecoleId)).build();
 
 	}
@@ -66,12 +80,43 @@ public class ClasseEleveResource {
 	@Operation(description = "Obtenir le nombre d Eleve par classe et annee", summary = "")
 	@Produces(MediaType.TEXT_PLAIN)
 	@Tag(name = "Classe-Eleve")
-	public int getCountByClasseAnnee(@PathParam("classeId") long classeId,
-			@PathParam("anneeId") Long anneeId) {
-		return  classeEleveService.getCountByClasseAnnee(classeId, anneeId);
+	public int getCountByClasseAnnee(@PathParam("classeId") long classeId, @PathParam("anneeId") Long anneeId) {
+		return classeEleveService.getCountByClasseAnnee(classeId, anneeId);
 
 	}
-
+	
+	@GET
+	@Path("/get-ecole-by-classe/{matricule}")
+	@Operation(description = "Obtenir le nombre d Eleve par classe et annee", summary = "")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Tag(name = "Classe-Eleve")
+	public Response getByMatriculeAndClasseAndAnnee(@PathParam("matricule") String matricule,
+			@QueryParam("classe") Long classeId, @QueryParam("annee") Long anneeId) {
+		ClasseEleveDto dto = new ClasseEleveDto();
+		try {
+			Classe classe = Classe.findById(classeId);
+		if (classe != null) {
+			Long ecoleId = classe.getEcole().getId();
+			ClasseEleve classeEleve = classeEleveService.getByMatriculeAndAnnee(matricule, ecoleId, anneeId, classeId);
+			dto.setClasse(new IdLongCodeLibelleDto(classeEleve.getClasse().getId(), classeEleve.getClasse().getCode(),
+					classeEleve.getClasse().getLibelle()));
+			dto.setEcole(new IdLongCodeLibelleDto(classe.getEcole().getId(), classe.getEcole().getCode(),
+					classe.getEcole().getLibelle()));
+			dto.setEleve(new PersonneDto(classeEleve.getInscription().getEleve().getId(), matricule,
+					classeEleve.getInscription().getEleve().getNom(),
+					classeEleve.getInscription().getEleve().getPrenom(),
+					classeEleve.getInscription().getEleve().getSexe(),
+					classeEleve.getInscription().getEleve().getUrlPhoto()));
+			dto.setEffectifClasse(getCountByClasseAnnee(classeId,anneeId));
+			dto.setIdentifiantVieEcole(classe.getEcole().getIdentifiantVieEcole());
+			System.out.println("dto ok");
+		}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return Response.ok(dto).build();
+	}
+	
 	@POST
 	@Path("/handle-save/{classe}")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -157,10 +202,11 @@ public class ClasseEleveResource {
 	public Response delete(@PathParam("id") long id) {
 		try {
 			classeEleveService.deleteHandle(id);
-			return Response.ok("Retrait de classe éffectué [ id = " + id+" ]").build();
+			return Response.ok("Retrait de classe éffectué [ id = " + id + " ]").build();
 		} catch (RuntimeException re) {
 			re.printStackTrace();
 			return Response.serverError().entity(re.getMessage()).build();
 		}
 	}
+
 }
