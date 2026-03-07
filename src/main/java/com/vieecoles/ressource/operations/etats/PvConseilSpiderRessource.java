@@ -67,15 +67,33 @@ public class PvConseilSpiderRessource {
         /*myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/BulletinBean.jrxml");*/
         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/Spider_Book_PV_Conseil_classe.jrxml");
 
+
         spiderPvDto detailsBull= new spiderPvDto() ;
         List<ConseilClasseDto>  dspsDto = new ArrayList<>() ;
 
         List<matriceClasseDto> detailsBull1= new ArrayList<>() ;
         List<matiereMoyenneBilanDto> detailsBull2= new ArrayList<>() ;
+        try {
         detailsBull2=  matriceBilanClasseServices.getInfosBilanMatriceClasse(idEcole ,libelleAnnee ,libelleTrimetre ,anneeId, idclasse) ;
-
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("detailsBull2 "+ "ok");
+        try {
         detailsBull1=   matriceClasseServices.getInfosMatriceClasse(idEcole ,libelleAnnee ,libelleTrimetre ,anneeId, idclasse) ;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("detailsBull1 "+ "ok");
+        try {
         dspsDto= resultatsServices.RecapCalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,classe) ;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("dspsDto "+ "ok");
+
+       // detailsBull1=   matriceClasseServices.getInfosMatriceClasse(idEcole ,libelleAnnee ,libelleTrimetre ,anneeId, idclasse) ;
+        //dspsDto= resultatsServices.RecapCalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,classe) ;
 
         detailsBull.setMatiereMoyenneBilanDto(detailsBull2);
         detailsBull.setMatriceClasseDto(detailsBull1);
