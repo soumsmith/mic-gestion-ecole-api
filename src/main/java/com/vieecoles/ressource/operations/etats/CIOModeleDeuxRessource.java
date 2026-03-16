@@ -76,7 +76,7 @@ public class CIOModeleDeuxRessource {
        // detailsBull.setDspsDto(dspsDto);
 
         Connection connection = DriverManager.getConnection("jdbc:mysql://db:3306/ecoleviedbv2", USER, PASS);
-        //Connection connection = DriverManager.getConnection("jdbc:mysql://94.23.162.171:33061/ecoleviedbv2", USER, PASS);
+        //Connection connection = DriverManager.getConnection("jdbc:mysql://94.130.15.245:33061/ecoleviedbv2", USER, PASS);
         JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
 
         //   JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");

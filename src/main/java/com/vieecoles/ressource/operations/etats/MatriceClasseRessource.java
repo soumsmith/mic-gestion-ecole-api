@@ -79,13 +79,7 @@ public class MatriceClasseRessource {
 
         SpiderMatriceClasseDto detailsBull= new SpiderMatriceClasseDto() ;
 
-        if(periode.equals("Deuxième Trimestre")) {
-            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/DeuxiemeTrimestre/matriceClasse.jrxml");
-
-        } else {
-            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/matriceClasse.jrxml");
-
-        }
+        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/matriceClasse.jrxml");
 
 
         List<matriceClasseDto> detailsBull1= new ArrayList<>() ;
@@ -293,7 +287,8 @@ public class MatriceClasseRessource {
         }
 
 
-        Connection connection = DriverManager.getConnection("jdbc:mysql://db:3306/ecoleviedbv2", USER, PASS);
+       // Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecoleviedbv2", "root", "root");
+        Connection connection = DriverManager.getConnection("jdbc:mysql://94.130.15.245:33061/ecoleviedbv2", USER, PASS);
         JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
         Classe myClasse = Classe.findById(classe);
         Map<String, Object> map = new HashMap<>();

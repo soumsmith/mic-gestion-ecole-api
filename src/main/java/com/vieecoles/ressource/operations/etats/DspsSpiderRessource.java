@@ -117,6 +117,75 @@ public class DspsSpiderRessource {
 
 
 
+    } 
+
+
+    @GET
+    @Transactional
+    @Path("/pouls-rapport-dsps-anour/{idEcole}/{libellePeriode}/{libelleAnnee}/{cycle}")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public ResponseEntity<byte[]>  getDtoRapportanour(@PathParam("idEcole") Long idEcole ,@PathParam("libellePeriode") String libellePeriode ,
+                                                 @PathParam("libelleAnnee") String libelleAnnee,@PathParam("cycle") boolean cycle) throws Exception, JRException {
+        InputStream myInpuStream ;
+        /*myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/BulletinBean.jrxml");*/
+        if(cycle)
+            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/rapport_dspsCycle2.jrxml");
+        else
+        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/rapport_dspsCycle1_Annour.jrxml");
+        spiderDspsDto detailsBull= new spiderDspsDto() ;
+        List<DspsDto>  dspsDto = new ArrayList<>() ;
+
+       /* try {
+            dspsDto = dpspServices.DspspDto(idEcole,libellePeriode,libelleAnnee) ;
+
+        } catch (RuntimeException e){
+            e.printStackTrace ();
+        }*/
+
+
+
+       // detailsBull.setDspsDto(dspsDto);
+
+        Connection connection = DriverManager.getConnection("jdbc:mysql://db:3306/ecoleviedbv2", USER, PASS);
+        JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
+
+        //   JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");
+       Locale.setDefault(Locale.US);
+       Locale franceLoc = new Locale("en", "US");
+       
+        Map<String, Object> map = new HashMap<>();
+        map.put("idEcole", idEcole);
+        map.put("annee", libelleAnnee);
+        map.put("periode", libellePeriode);
+        // map.put("title", type);
+          try {
+            JasperPrint report = JasperFillManager.fillReport(compileReport, map, connection);
+
+        } catch (RuntimeException e){
+            e.printStackTrace ();
+        }
+        JasperPrint report = JasperFillManager.fillReport(compileReport, map, connection);
+        JRXlsExporter exporter = new JRXlsExporter();
+        exporter.setExporterInput(new SimpleExporterInput(report));
+        
+        SimpleXlsReportConfiguration config = new SimpleXlsReportConfiguration();
+        config.setDetectCellType(true);
+        
+// 👈 Tout en texte
+       //exporter.setConfiguration(config);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(baos));
+        
+        exporter.exportReport();
+        
+        byte[] data = baos.toByteArray() ;
+        HttpHeaders headers= new HttpHeaders();
+        // headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Rapport"+myScole.getEcoleclibelle()+".docx");
+        headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Rapport Pouls-Scolaire-dsps.xls");
+        return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.MULTIPART_FORM_DATA).body(data);
+
+
+
     }
 
 
