@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<!-- Created with Jaspersoft Studio version 6.21.3.final using JasperReports Library version 6.21.3-4a3078d20785ebe464f18037d738d12fc98c13cf  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Etab Rendement au général" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fd11097e-1c28-4e33-a7d6-b26489c9d5f7">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="PoulsAdapteur"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
@@ -11,6 +11,7 @@
 	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<style name="Titrecadre">
 		<box>
 			<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -21,8 +22,16 @@
 	</style>
 	<style name="contenu2"/>
 	<style name="contenu"/>
+	<parameter name="idEcole" class="java.lang.Long"/>
+	<parameter name="libelleAnnee" class="java.lang.String"/>
+	<parameter name="libelleTrimestre" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[]]>
+		<![CDATA[SELECT *
+    FROM V_RAPPORT_CIO2
+    WHERE id_ecole     = $P{idEcole}
+      AND annee_libelle  = $P{libelleAnnee}
+      AND periode = $P{libelleTrimestre}
+    ORDER BY ordre_niveau, niveau]]>
 	</queryString>
 	<field name="cycle" class="java.lang.String"/>
 	<field name="niveau" class="java.lang.String"/>

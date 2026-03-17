@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<!-- Created with Jaspersoft Studio version 6.21.3.final using JasperReports Library version 6.21.3-4a3078d20785ebe464f18037d738d12fc98c13cf  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Moy par discipline au général" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fd11097e-1c28-4e33-a7d6-b26489c9d5f7">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="PoulsAdapteur"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
@@ -11,6 +11,7 @@
 	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<style name="Titrecadre">
 		<box>
 			<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -21,8 +22,16 @@
 	</style>
 	<style name="contenu2"/>
 	<style name="contenu"/>
+	<parameter name="idEcole" class="java.lang.Long"/>
+	<parameter name="libelleAnnee" class="java.lang.String"/>
+	<parameter name="libelleTrimestre" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[]]>
+		<![CDATA[SELECT *
+    FROM V_RAPPORT_CIO_PAR_DISCIPLINE
+    WHERE id_ecole        = $P{idEcole}
+      AND annee_libelle   = $P{libelleAnnee}
+      AND periode = $P{libelleTrimestre}
+    ORDER BY ordre_niveau, niveau]]>
 	</queryString>
 	<field name="cycle" class="java.lang.String"/>
 	<field name="niveau" class="java.lang.String"/>
@@ -342,7 +351,7 @@
 		<groupExpression><![CDATA[$F{cycle}]]></groupExpression>
 		<groupFooter>
 			<band height="60">
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="626" y="40" width="21" height="20" uuid="b9d6044f-8eac-47c5-b2c3-1fe83a8b4187">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -358,7 +367,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ToPourSVT}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) :$V{ToPourSVT}==null? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($V{ToPourSVT}))]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="606" y="40" width="20" height="20" uuid="81ed6bab-ebb4-41c0-90a2-0ab2d7043e11">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -374,7 +383,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ToeffSVTF}+$V{ToeffSVTG}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="315" y="0" width="25" height="20" uuid="a6fa1f3c-8463-4deb-a1f3-0e49a09faed9">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -390,7 +399,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ToCLEspF}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="96" y="40" width="21" height="20" uuid="8547f61b-c1e7-4117-8a77-79c51a70cd94">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -406,7 +415,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$V{ToPourCompFr}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) :$V{ToPourCompFr}==null? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($V{ToPourCompFr}))]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="427" y="0" width="21" height="20" uuid="d9799fab-4db3-4d6b-8347-1a96abf296f2">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -422,7 +431,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{T_pour_inf_10HgF} ==0? new DecimalFormat("#.##").format(Double.valueOf(0)): new DecimalFormat("#.##").format(Double.valueOf($V{T_pour_inf_10HgF}  ))]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="712" y="20" width="25" height="20" uuid="f00c20a9-855b-4673-814a-2176e429788d">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -438,7 +447,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$V{ToCLFrancaisG}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="647" y="40" width="25" height="20" uuid="2a6a93ef-bf51-469a-aabb-b8baae0d036f">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -454,7 +463,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$V{ToCLPHILOF}+$V{ToCLPHILOG}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="757" y="0" width="20" height="20" uuid="e3fe6032-cb3c-43b0-9b71-d7851a1569d7">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -470,7 +479,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":($V{T_pour_inf_10FrancaisF}  ==0||$V{T_pour_inf_10FrancaisF}  ==null)? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($V{T_pour_inf_10FrancaisF}  ))]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="448" y="40" width="25" height="20" uuid="95473fd5-0a05-45f0-a42f-661199ddbb5b">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -486,7 +495,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ToCLMathF}+$V{ToCLMathG}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="51" y="0" width="24" height="20" uuid="31a7d76d-5833-4137-91e0-bbf7629f7e46">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -502,7 +511,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$V{ToCLCompFrF}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="692" y="0" width="20" height="20" uuid="c2c29fcb-0005-41cc-9dd9-8170e6eed925">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -518,7 +527,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":($V{T_pour_inf_10PHILOF}  ==0||$V{T_pour_inf_10PHILOF}  ==null)? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($V{T_pour_inf_10PHILOF}  ))]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="208" y="0" width="20" height="20" uuid="b9d1b796-ad11-4d80-ac5d-6916a0b8cf7d">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -534,7 +543,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ToeffAngF}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="581" y="20" width="25" height="20" uuid="c2906186-cb40-4e9b-9ba2-b002c7f81179">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -550,7 +559,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ToCLSVTG}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="75" y="0" width="21" height="20" uuid="790a242e-4343-440d-8952-d58b23396459">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -566,7 +575,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$V{ToeffCompFrF}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="514" y="0" width="25" height="20" uuid="fb6d035c-d085-4733-993b-a49abdbc560f">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -582,7 +591,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ToCLPCF}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="183" y="0" width="25" height="20" uuid="67224535-02c6-4924-ab8a-332c89396fdc">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -598,7 +607,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ToCLAngF}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="340" y="40" width="21" height="20" uuid="6ebecb0f-2b38-4252-a882-1b17d93522cd">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -614,7 +623,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ToeffEspF}+$V{ToeffEspG}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="539" y="20" width="21" height="20" uuid="cdc7f47a-fe1f-4ac5-ae9c-7c3d9d112b31">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -630,7 +639,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ToeffPCG}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="473" y="40" width="20" height="20" uuid="76a1300f-729b-4290-90eb-1225ecfdd014">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -646,7 +655,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ToeffMathF}+$V{ToeffMathG}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="274" y="0" width="20" height="20" uuid="f4668133-bc83-45b5-8a52-ea1dc92735f3">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -662,7 +671,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ToeffAllF}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="606" y="20" width="20" height="20" uuid="b4e60106-8c4b-4d0a-a583-69bf22a73f57">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -678,7 +687,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ToeffSVTG}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="162" y="20" width="21" height="20" uuid="ff5e24e9-ce14-4661-8452-81503a536f41">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -694,7 +703,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$V{T_pour_inf_10OrthGramG}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($V{T_pour_inf_10OrthGramG}))]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="294" y="40" width="21" height="20" uuid="a0292748-4401-473b-8902-585d1117be6e">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -710,7 +719,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ToPourAll}==0? new DecimalFormat("#.##").format(Double.valueOf(0)):$V{ToPourAll}==null? new DecimalFormat("#.##").format(Double.valueOf(0)): new DecimalFormat("#.##").format(Double.valueOf($V{ToPourAll}))]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="606" y="0" width="20" height="20" uuid="bae4dbe3-f973-46f6-add8-b6c40681fd62">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -726,7 +735,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ToeffSVTF}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="117" y="40" width="24" height="20" uuid="313e2b94-b8bd-417f-ac6e-dfdd05f3c7b8">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -742,7 +751,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$V{ToCLOrthGramF}+$V{ToCLOrthGramG}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="626" y="0" width="21" height="20" uuid="6c8602cb-a7c0-461c-9324-5b9e374c962e">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -758,7 +767,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{T_pour_inf_10SVTF} ==0? new DecimalFormat("#.##").format(Double.valueOf(0)): new DecimalFormat("#.##").format(Double.valueOf($V{T_pour_inf_10SVTF} ))]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="294" y="0" width="21" height="20" uuid="d8025c91-2e52-4c59-b844-890f7d0b0d3b">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -774,7 +783,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{T_pour_inf_10AllF} ==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($V{T_pour_inf_10AllF}  ))]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="757" y="20" width="20" height="20" uuid="36519971-2916-43e7-8a8f-c878d596fdf1">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -790,7 +799,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":($V{T_pour_inf_10FrancaisG}  ==0||$V{T_pour_inf_10FrancaisG}  ==null)? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($V{T_pour_inf_10FrancaisG}  ))]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="208" y="20" width="20" height="20" uuid="fcd43ea0-d64e-4353-9e25-36a0b9c43f2d">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -806,7 +815,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ToeffAngG}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="581" y="40" width="25" height="20" uuid="13730482-8206-4987-b7e4-535a278bdc03">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -822,7 +831,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ToCLSVTF}+$V{ToCLSVTG}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="407" y="0" width="20" height="20" uuid="50fb0a7f-5df6-42dc-9bb9-b045f6812bb8">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -838,7 +847,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ToeffHgF}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="672" y="0" width="20" height="20" uuid="0e7bb3df-84dd-44ef-b6ee-eaaaaee56dc2">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -854,7 +863,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$V{ToeffPHILOF}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="340" y="20" width="21" height="20" uuid="abaf99f0-caa6-4673-9b45-9b2f73bec93b">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -870,7 +879,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ToeffEspG}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="737" y="0" width="20" height="20" uuid="e42a3e3d-bbc9-4467-b5d0-b6c47ba69fb5">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -886,7 +895,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$V{ToeffFrancaisF}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="427" y="40" width="21" height="20" uuid="80f957a6-883a-4ee5-afab-3275a01e8176">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -902,7 +911,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ToPourHg}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) :$V{ToPourHg}==null? new DecimalFormat("#.##").format(Double.valueOf(0)): new DecimalFormat("#.##").format(Double.valueOf($V{ToPourHg}))]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="712" y="0" width="25" height="20" uuid="af3af7d7-58df-425a-a4d3-60dfc19768fd">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -918,7 +927,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$V{ToCLFrancaisF}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="514" y="20" width="25" height="20" uuid="a0f4148a-28ef-4281-acdf-55bdf1f74698">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -934,7 +943,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ToCLPCG}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="141" y="0" width="21" height="20" uuid="cf73c68a-110f-4e7f-afff-e9ec7b0ba195">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -950,7 +959,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$V{ToeffOrthGramF}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="183" y="20" width="25" height="20" uuid="d7271453-04a5-4430-9f14-087c48d0b648">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -966,7 +975,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ToCLAngG}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="672" y="20" width="20" height="20" uuid="0895843c-2306-4c59-ab49-4cfdffca3fed">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -982,7 +991,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$V{ToeffPHILOG}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="712" y="40" width="25" height="20" uuid="1072f2cc-467a-4f8e-aaf7-b0d9c9e5f560">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -998,7 +1007,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$V{ToCLFrancaisF}+$V{ToCLFrancaisG}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="228" y="20" width="21" height="20" uuid="8b0c37c5-082f-48ea-8cb7-df984b5e1752">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1014,7 +1023,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{T_pour_inf_10AngG} ==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($V{T_pour_inf_10AngG} ))]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="448" y="20" width="25" height="20" uuid="ba76dca5-ff82-441d-84c9-d079ce2d5f28">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1030,7 +1039,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ToCLMathG}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="493" y="0" width="21" height="20" uuid="f3c60736-0b6b-4e42-a96d-e87aa74b17fe">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1046,7 +1055,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{T_pour_inf_10MathF} ==0? new DecimalFormat("#.##").format(Double.valueOf(0)): new DecimalFormat("#.##").format(Double.valueOf($V{T_pour_inf_10MathF}  ))]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="51" y="20" width="24" height="20" uuid="229e7abf-bb5d-4a4b-893f-740e48226d56">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1062,7 +1071,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$V{ToCLCompFrG}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="361" y="20" width="21" height="20" uuid="c4ec8df5-32c4-44ed-a132-4d2dd7840337">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1078,7 +1087,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{T_pour_inf_10EspG}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($V{T_pour_inf_10EspG}  ))]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="249" y="20" width="25" height="20" uuid="36ca9ed5-4bb9-4592-bd18-edff045f5dba">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1094,7 +1103,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ToCLAllG}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="162" y="0" width="21" height="20" uuid="4351dcf4-db92-45e4-824b-c8b8697cae9f">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1110,7 +1119,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$V{T_pour_inf_10OrthGramF}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($V{T_pour_inf_10OrthGramF}))]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="737" y="40" width="20" height="20" uuid="87e63ea7-f4cb-43f3-90b8-9b43189b4a00">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1126,7 +1135,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$V{ToeffFrancaisF}+$V{ToeffFrancaisG}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="581" y="0" width="25" height="20" uuid="5b4c0b98-b95e-40ca-a6ae-7a91b444c6fc">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1142,7 +1151,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ToCLSVTF}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="315" y="40" width="25" height="20" uuid="7bf6cb83-c908-4649-ba76-0e3a5a20c61f">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1158,7 +1167,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ToCLEspF}+$V{ToCLEspG}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="208" y="40" width="20" height="20" uuid="402cd4d8-2355-43ed-bf30-4c19c3cb21ac">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1174,7 +1183,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ToeffAngF}+$V{ToeffAngG}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="626" y="20" width="21" height="20" uuid="b3f32c88-ee60-45d5-b94e-d9feae13fa68">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1190,7 +1199,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{T_pour_inf_10SVTG} ==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($V{T_pour_inf_10SVTG} ))]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="361" y="40" width="21" height="20" uuid="a12fadb3-e445-4d99-84a6-74f9b86992c6">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1206,7 +1215,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ToPourEsp}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) :$V{ToPourEsp}==null? new DecimalFormat("#.##").format(Double.valueOf(0)): new DecimalFormat("#.##").format(Double.valueOf($V{ToPourEsp}))]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="382" y="40" width="25" height="20" uuid="c306bacd-25ea-4cca-8b6e-83fda40164b0">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1222,7 +1231,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ToCLHgF}+$V{ToCLHgG}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="647" y="0" width="25" height="20" uuid="3a85a58d-2365-4177-bfd1-c9874f8187e2">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1238,7 +1247,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$V{ToCLPHILOF}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="560" y="40" width="21" height="20" uuid="41d1248b-6dc6-4f23-a5f7-658b3b37f061">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1254,7 +1263,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ToPourPC}==0? new DecimalFormat("#.##").format(Double.valueOf(0)):$V{ToPourPC}==null? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($V{ToPourPC}))]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="117" y="20" width="24" height="20" uuid="af40144e-7bbc-4de9-8f69-459b272a5869">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1270,7 +1279,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$V{ToCLOrthGramG}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="361" y="0" width="21" height="20" uuid="a9d277bf-14ae-4f72-913a-206169c4297b">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1286,7 +1295,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{T_pour_inf_10EspF}==0? new DecimalFormat("#.##").format(Double.valueOf(0)): new DecimalFormat("#.##").format(Double.valueOf($V{T_pour_inf_10EspF}  ))]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="427" y="20" width="21" height="20" uuid="f9b13a20-2b18-4c32-952c-5c8a35b308e2">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1302,7 +1311,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{T_pour_inf_10HgG} ==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($V{T_pour_inf_10HgG}  ))]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="294" y="20" width="21" height="20" uuid="658abbd8-2ca4-4ccf-b0a0-ac109a3a60db">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1318,7 +1327,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{T_pour_inf_10AllG} ==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($V{T_pour_inf_10AllG}  ))]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="249" y="40" width="25" height="20" uuid="41a0d4cd-0f87-4e8b-ae74-7ed3b372644c">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1334,7 +1343,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ToCLAllF}+$V{ToCLAllG}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="647" y="20" width="25" height="20" uuid="b8a2ebfb-3a16-4084-8d2f-7525e40c4bd0">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1350,7 +1359,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$V{ToCLPHILOG}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="560" y="0" width="21" height="20" uuid="127f6b3a-b245-45fa-b47f-d906cced8b1f">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1366,7 +1375,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{T_pour_inf_10PCF} ==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($V{T_pour_inf_10PCF} ))]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="249" y="0" width="25" height="20" uuid="86b1d6bf-975f-45f8-bd2b-1b9558195d17">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1382,7 +1391,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ToCLAllF}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="117" y="0" width="24" height="20" uuid="e2a0ed10-fcdb-4864-af0e-1e5467c70828">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1398,7 +1407,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$V{ToCLOrthGramF}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="448" y="0" width="25" height="20" uuid="ff18f08a-323f-4b76-b6b4-2c863056c553">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1414,7 +1423,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ToCLMathF}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="672" y="40" width="20" height="20" uuid="53b33030-7512-4d1b-b6c1-67647c547911">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1430,7 +1439,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$V{ToeffPHILOF}+$V{ToeffPHILOG}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="228" y="0" width="21" height="20" uuid="41fb20a1-03de-4960-891a-760795205ca9">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1446,7 +1455,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{T_pour_inf_10AngF} ==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($V{T_pour_inf_10AngF} ))]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="493" y="20" width="21" height="20" uuid="1526b983-b396-4fca-ba95-c76cadc091c3">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1462,7 +1471,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{T_pour_inf_10MathG} ==0? new DecimalFormat("#.##").format(Double.valueOf(0)): new DecimalFormat("#.##").format(Double.valueOf($V{T_pour_inf_10MathG}  ))]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="96" y="20" width="21" height="20" uuid="7da6a75a-a9d7-4ecd-9a35-0b1d09e6bd0b">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1478,7 +1487,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$V{T_pour_inf_10CompFrG}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($V{T_pour_inf_10CompFrG}))]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="274" y="40" width="20" height="20" uuid="4bc29244-838c-4f06-bec1-2ce09cb5b851">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1494,7 +1503,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ToeffAllF}+$V{ToeffAllG}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="473" y="0" width="20" height="20" uuid="f35ed2c3-4931-404f-909e-aaabc17ab867">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1510,7 +1519,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ToeffMathF}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="560" y="20" width="21" height="20" uuid="feee01b3-ff85-452f-9005-0b9ccf7c91a3">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1526,7 +1535,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{T_pour_inf_10PCG} ==0? new DecimalFormat("#.##").format(Double.valueOf(0)): new DecimalFormat("#.##").format(Double.valueOf($V{T_pour_inf_10PCG} ))]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="96" y="0" width="21" height="20" uuid="8a0617bb-2ea2-4e27-bcdd-7d8e84cc0f34">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1542,7 +1551,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$V{T_pour_inf_10CompFrF}==0? new DecimalFormat("#.##").format(Double.valueOf(0)): new DecimalFormat("#.##").format(Double.valueOf($V{T_pour_inf_10CompFrF}))]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="315" y="20" width="25" height="20" uuid="b3b16a64-5f03-4beb-938f-8f193a927529">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1558,7 +1567,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ToCLEspG}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="141" y="20" width="21" height="20" uuid="50a71c2c-e6b9-4b14-a017-bc31cbe8bf03">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1574,7 +1583,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$V{ToeffOrthGramG}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="737" y="20" width="20" height="20" uuid="4b1fa87d-6df4-4eb9-a6cf-175694694a37">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1590,7 +1599,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$V{ToeffFrancaisG}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="493" y="40" width="21" height="20" uuid="2ef579e5-0a26-4e78-afae-85363c55f667">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1606,7 +1615,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ToPourMath}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) :$V{ToPourMath}==null? new DecimalFormat("#.##").format(Double.valueOf(0)): new DecimalFormat("#.##").format(Double.valueOf($V{ToPourMath}))]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="757" y="40" width="20" height="20" uuid="f643a410-0fe1-4495-9909-2d8dc14d8b52">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1622,7 +1631,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":($V{ToPourFrancais}==0||$V{ToPourFrancais}==null)? new DecimalFormat("#.##").format(Double.valueOf(0)):$V{ToPourFrancais}==null? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($V{ToPourFrancais}))]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="407" y="40" width="20" height="20" uuid="2bef9b06-bc27-4eaa-a8d3-0fa2d749475a">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1638,7 +1647,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ToeffHgF}+$V{ToeffHgG}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="382" y="0" width="25" height="20" uuid="63ee164e-9026-42f8-a35b-f22f3c1004a9">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1654,7 +1663,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ToCLHgF}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="539" y="0" width="21" height="20" uuid="0eda74e9-00cc-4335-817a-5c6ec0a95536">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1670,7 +1679,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ToeffPCF}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="274" y="20" width="20" height="20" uuid="8e29e66f-a620-43e4-8f3f-a6086098c80c">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1686,7 +1695,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ToeffAllG}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="473" y="20" width="20" height="20" uuid="fd3d5879-2aa1-43c2-ab62-f4133d574a01">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1702,7 +1711,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ToeffMathG}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="75" y="40" width="21" height="20" uuid="cd89a98d-3215-496b-ba53-0bd7bed2326c">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1718,7 +1727,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$V{ToeffCompFrF}+$V{ToeffCompFrG}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="692" y="40" width="20" height="20" uuid="95300c87-bdb6-4812-a94c-d6060fa099bf">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1764,7 +1773,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA["F"]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="692" y="20" width="20" height="20" uuid="031da717-ca04-4d5e-9d33-4fc041459a40">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1780,7 +1789,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":($V{T_pour_inf_10PHILOG}  ==0||$V{T_pour_inf_10PHILOG}  ==null)? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($V{T_pour_inf_10PHILOG}  ))]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="141" y="40" width="21" height="20" uuid="27340e20-89f0-4b0b-b284-f387419c183a">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1796,7 +1805,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$V{ToeffOrthGramF}+$V{ToeffOrthGramG}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="382" y="20" width="25" height="20" uuid="7998d846-6a5c-4f5c-aa0b-4a7dcec7f33d">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1812,7 +1821,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ToCLHgG}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="183" y="40" width="25" height="20" uuid="0e26d70c-f1d7-4f02-beb9-5f928f41132c">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1828,7 +1837,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ToCLAngF}+$V{ToCLAngG}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="407" y="20" width="20" height="20" uuid="46db9164-677f-418e-a43a-cd811802943b">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1844,7 +1853,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ToeffHgG}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="75" y="20" width="21" height="20" uuid="93838415-07ea-4f5d-9ca9-f292cd806de4">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1860,7 +1869,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$V{ToeffCompFrG}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="51" y="40" width="24" height="20" uuid="d392da56-4796-4a89-b237-96ad04ce0043">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1892,7 +1901,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA["T"]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="228" y="40" width="21" height="20" uuid="bdeab442-939a-4549-a244-c68a9cd613cf">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1908,7 +1917,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ToPourAng}==0? new DecimalFormat("#.##").format(Double.valueOf(0)):$V{ToPourAng}==null? new DecimalFormat("#.##").format(Double.valueOf(0)): new DecimalFormat("#.##").format(Double.valueOf($V{ToPourAng}))]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="340" y="0" width="21" height="20" uuid="b6944712-d1c2-4caa-ac07-de8d4048eba0">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1924,7 +1933,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ToeffEspF}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="162" y="40" width="21" height="20" uuid="08a51e1f-05e6-4549-96eb-dadf60392bb6">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1940,7 +1949,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$V{ToPourOrthGram}==0? new DecimalFormat("#.##").format(Double.valueOf(0)):$V{ToPourOrthGram}==null? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($V{ToPourOrthGram}))]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="514" y="40" width="25" height="20" uuid="abe735d1-1ca6-4658-bb9a-896e1271063f">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -1972,7 +1981,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA["G"]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE">
+				<textField evaluationTime="Group" evaluationGroup="GroupecYCLE" isBlankWhenNull="true">
 					<reportElement x="539" y="40" width="21" height="20" uuid="80c15da6-169c-47a8-a840-fe6afed55183">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -3387,7 +3396,7 @@ Classés]]></text>
 	</columnHeader>
 	<detail>
 		<band height="60" splitType="Stretch">
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="493" y="20" width="21" height="20" uuid="f1fecb39-5940-4815-a4bb-b6b90649492f">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -3403,7 +3412,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{pourMoyInf10MathG}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10MathG}))]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="581" y="0" width="25" height="20" uuid="c53b6afe-6aa0-415c-b7c2-f1d7f6f1f704">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -3419,7 +3428,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{classSVTF}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="539" y="0" width="21" height="20" uuid="5e31c017-7766-4ca3-a3ee-a611aaff5fab">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -3435,7 +3444,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nbreMoyInf10PCF}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="448" y="20" width="25" height="20" uuid="a7803025-c7ce-4064-b9e6-babacc58514a">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -3451,7 +3460,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{classMathG}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="361" y="0" width="21" height="20" uuid="05fc349e-49d2-4c85-a9e0-8abaf62d7dcc">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -3467,7 +3476,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{pourMoyInf10EspF}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10EspF}))]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="274" y="0" width="20" height="20" uuid="0796e721-ea38-4695-b3ee-08a6e600c3d2">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -3483,7 +3492,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nbreMoyInf10AllF}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="117" y="40" width="24" height="20" uuid="02a98cc5-6937-4bb8-84c5-549eb1870ad8">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -3499,7 +3508,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$F{classOrthGramF}+$F{classOrthGramG}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="493" y="40" width="21" height="20" uuid="84196be2-5b9c-45fa-bed1-2060e291b71a">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -3515,7 +3524,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{pourMoyInf10Math}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) :$F{pourMoyInf10Math}==null? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10Math}))]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="672" y="20" width="20" height="20" uuid="2c07840e-c576-4eea-80ac-206d742ab2ac">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -3531,7 +3540,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$F{nbreMoyInf10PHILOG}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="514" y="40" width="25" height="20" uuid="57f3bb8b-5b28-4d3f-8909-01f02ae98294">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -3547,7 +3556,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{classPCF}+$F{classPCG}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="51" y="40" width="24" height="20" uuid="32c70a5e-d965-4b99-8fcc-94c7af9ab1c9">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -3563,7 +3572,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$F{classCompFrF}+$F{classCompFrG}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="382" y="20" width="25" height="20" uuid="9c230b05-d4b4-461b-85e7-17a1988e019e">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -3579,7 +3588,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{classHgG}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="208" y="0" width="20" height="20" uuid="502c326a-397f-4ea5-a4ef-7dcbebac0c64">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -3595,7 +3604,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nbreMoyInf10AngF}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="162" y="40" width="21" height="20" uuid="298c4833-a425-4296-9bde-d78d6b63f760">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -3611,7 +3620,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$F{pourMoyInf10OrthGram}==0? new DecimalFormat("#.##").format(Double.valueOf(0)):$F{pourMoyInf10OrthGram}==null? new DecimalFormat("#.##").format(Double.valueOf(0)): new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10OrthGram}))]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="407" y="40" width="20" height="20" uuid="017577ee-73fe-4a26-b7ed-8fc572a041a3">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -3627,7 +3636,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nbreMoyInf10HgF}+$F{nbreMoyInf10HgG}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="712" y="20" width="25" height="20" uuid="f730ecc6-0559-4dbf-b573-884561b2214e">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -3643,7 +3652,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$F{classFrancaisG}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="672" y="40" width="20" height="20" uuid="cce65f18-edac-4fc0-94b4-18f8cfb9a110">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -3659,7 +3668,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$F{nbreMoyInf10PHILOF}+$F{nbreMoyInf10PHILOG}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="141" y="0" width="21" height="20" uuid="f90dc4a8-5659-4c32-b222-963df9a5ab87">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -3675,7 +3684,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$F{nbreMoyInf10OrthGramF}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="208" y="40" width="20" height="20" uuid="b9b00ec1-e1ec-40bb-9ff5-4c0f1d867e66">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -3691,7 +3700,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nbreMoyInf10AngF}+$F{nbreMoyInf10AngG}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="183" y="0" width="25" height="20" uuid="2f07608f-3db9-415b-9ada-1f58def2afbf">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -3707,7 +3716,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{classAngF}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="672" y="0" width="20" height="20" uuid="db51f286-0fd6-473d-b281-35938c6e075a">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -3723,7 +3732,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$F{nbreMoyInf10PHILOF}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="96" y="20" width="21" height="20" uuid="fc91ef19-e6be-4eb8-86d7-8ff111e67c50">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -3739,7 +3748,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":($F{pourMoyInf10CompFrG}==0||$F{pourMoyInf10CompFrG}==null)? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10CompFrG}))]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="249" y="40" width="25" height="20" uuid="afa33a0f-b894-4e4b-91ea-3c6ab9c7443f">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -3755,7 +3764,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{classAllF}+$F{classAllG}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="712" y="0" width="25" height="20" uuid="feff01df-a5b6-40a2-bdb1-4ae284e9e1a0">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -3771,7 +3780,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$F{classFrancaisF}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="606" y="20" width="20" height="20" uuid="259ee45a-01ed-4f8e-8c0b-96a3e9aaee40">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -3803,7 +3812,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA["T"]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="581" y="40" width="25" height="20" uuid="e9921108-1b44-476a-afb9-8d96d906bde2">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -3819,7 +3828,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{classSVTF}+$F{classSVTG}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="407" y="20" width="20" height="20" uuid="ab6d0167-78b7-4928-a427-a10719315d21">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -3835,7 +3844,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nbreMoyInf10HgG}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="448" y="0" width="25" height="20" uuid="b155527f-8b1c-454c-901b-abff54d15f13">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -3851,7 +3860,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{classMathF}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="737" y="40" width="20" height="20" uuid="a10ddc2e-7a0f-445e-8c42-72163fab58e4">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -3867,7 +3876,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$F{nbreMoyInf10FrancaisF}+$F{nbreMoyInf10FrancaisG}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="75" y="20" width="21" height="20" uuid="667332f3-4296-4458-9071-2e126b678527">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -3883,7 +3892,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$F{nbreMoyInf10CompFrG}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="427" y="0" width="21" height="20" uuid="69726ed2-8b8c-46d0-a25c-1bea18b5b9b8">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -3899,7 +3908,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{pourMoyInf10HgF}==0? new DecimalFormat("#.##").format(Double.valueOf(0)): new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10HgF}))]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="647" y="20" width="25" height="20" uuid="e96787de-37ba-4cd3-8340-e7bd8f30ccc4">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -3915,7 +3924,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$F{classPHILOG}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="626" y="0" width="21" height="20" uuid="7553e6a7-2390-498c-9604-3f2c042567af">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -3931,7 +3940,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{pourMoyInf10SVTF}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10SVTF}))]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="692" y="0" width="20" height="20" uuid="38845d79-a63d-4f7e-b1d7-e86d96f32cbd">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -3947,7 +3956,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$F{pourMoyInf10PHILOF} ==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10PHILOF} ))]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="473" y="20" width="20" height="20" uuid="95ae22ef-46fe-477b-be61-81649284224f">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -3963,7 +3972,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nbreMoyInf10MathG}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="51" y="20" width="24" height="20" uuid="524fe94e-a5f0-4f09-8d7e-94db42686d0a">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -3979,7 +3988,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$F{classCompFrG}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="382" y="0" width="25" height="20" uuid="554f8841-df32-421c-a0fb-601921021543">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -3995,7 +4004,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{classHgF}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="117" y="0" width="24" height="20" uuid="689be05a-1ddb-48d1-b719-314d40d067cf">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4011,7 +4020,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$F{classOrthGramF}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="315" y="0" width="25" height="20" uuid="0bc0959a-b9a1-4e9f-ba22-b16be490f910">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4027,7 +4036,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{classEspF}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="228" y="20" width="21" height="20" uuid="6bf9d78e-8c4f-4abd-a1cd-ecec04c4ef63">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4043,7 +4052,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{pourMoyInf10AngG}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10AngG}))]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="647" y="40" width="25" height="20" uuid="53598f8f-1c3d-4359-9030-51ce7fa9bc23">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4059,7 +4068,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$F{classPHILOF}+$F{classPHILOG}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="315" y="20" width="25" height="20" uuid="e8ec1c7e-c9b9-43e4-b11e-000ba0a9b698">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4075,7 +4084,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{classEspG}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="361" y="40" width="21" height="20" uuid="04aaef7e-7bba-463e-8715-5d57b96d0367">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4091,7 +4100,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{pourMoyInf10Esp}==0? new DecimalFormat("#.##").format(Double.valueOf(0)):$F{pourMoyInf10Esp}==null? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10Esp}))]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="162" y="0" width="21" height="20" uuid="5132d210-3d7c-4d7d-a05b-e6981f0a4381">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4107,7 +4116,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$F{pourMoyInf10OrthGramF}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10OrthGramF}))]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="581" y="20" width="25" height="20" uuid="0d54e677-5997-4bf5-b93a-df18c934ae21">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4123,7 +4132,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{classSVTG}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="340" y="40" width="21" height="20" uuid="71eecae4-93df-4573-836c-df8811aa9dad">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4139,7 +4148,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nbreMoyInf10EspF}+$F{nbreMoyInf10EspG}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="514" y="20" width="25" height="20" uuid="e62759da-fa9e-4e21-811e-4c9cb3add88d">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4155,7 +4164,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{classPCG}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="427" y="40" width="21" height="20" uuid="0755b786-9fd0-4cfe-9d1b-72931befea17">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4171,7 +4180,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{pourMoyInf10Hg}==0? new DecimalFormat("#.##").format(Double.valueOf(0)):$F{pourMoyInf10Hg}==null? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10Hg}))]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="141" y="20" width="21" height="20" uuid="2aa8f884-97e6-4237-98cd-93434aa1a019">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4187,7 +4196,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$F{nbreMoyInf10OrthGramG}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="757" y="40" width="20" height="20" uuid="06e7b281-d1ba-4868-875b-6c1e53c101fb">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4203,7 +4212,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$F{pourMoyInf10Francais}  ==0? new DecimalFormat("#.##").format(Double.valueOf(0)):$F{pourMoyInf10Francais}==null? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10Francais} ))]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="493" y="0" width="21" height="20" uuid="65238644-2150-4ff7-b6d9-68068b4269c8">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4219,7 +4228,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{pourMoyInf10MathF}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10MathF}))]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="692" y="20" width="20" height="20" uuid="2ab13774-2243-4358-8831-47276692e59f">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4235,7 +4244,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$F{pourMoyInf10PHILOG} ==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10PHILOG} ))]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="208" y="20" width="20" height="20" uuid="d56f1885-0aa8-4ff5-a732-39dfe34f91cd">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4251,7 +4260,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nbreMoyInf10AngG}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="692" y="40" width="20" height="20" uuid="9c61628a-e657-496e-8ec6-7be6c6b200b9">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4267,7 +4276,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$F{pourMoyInf10PHILO} ==0? new DecimalFormat("#.##").format(Double.valueOf(0)) :$F{pourMoyInf10PHILO}==null? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10PHILO} ))]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="606" y="40" width="20" height="20" uuid="cb9658b9-b9df-4023-a157-3d9c1b18fcbb">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4283,7 +4292,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nbreMoyInf10SVTF}+$F{nbreMoyInf10SVTG}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="427" y="20" width="21" height="20" uuid="37a4898f-5fab-47fb-8df5-d25752525a66">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4299,7 +4308,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{pourMoyInf10HgG}==0? new DecimalFormat("#.##").format(Double.valueOf(0)): new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10HgG}))]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="560" y="20" width="21" height="20" uuid="9bcc0a9a-de2a-417f-8e07-545d7241ab4f">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4315,7 +4324,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{pourMoyInf10PCG}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10PCG}))]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="560" y="0" width="21" height="20" uuid="83e8b2e2-340c-48ed-87e8-78bbe886f0f8">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4347,7 +4356,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA["F"]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="75" y="40" width="21" height="20" uuid="376a76a0-ce38-4176-8b9b-47b524061826">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4363,7 +4372,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$F{nbreMoyInf10CompFrF}+$F{nbreMoyInf10CompFrG}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="539" y="40" width="21" height="20" uuid="f824f4f2-b15c-4c38-8807-062a634c7054">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4379,7 +4388,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nbreMoyInf10PCF}+$F{nbreMoyInf10PCG}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="117" y="20" width="24" height="20" uuid="944492d2-bcf5-49dd-8866-7ea2e3c392b1">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4395,7 +4404,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$F{classOrthGramG}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="294" y="20" width="21" height="20" uuid="7d2732cd-b33f-4c6d-8c7c-6a183298fa2f">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4411,7 +4420,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{pourMoyInf10AllG}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10AllG}))]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="560" y="40" width="21" height="20" uuid="75a14a70-cb50-4eb3-9f6c-66ce746144eb">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4427,7 +4436,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{pourMoyInf10PC}==0? new DecimalFormat("#.##").format(Double.valueOf(0)):$F{pourMoyInf10PC}==null? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10PC}))]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="249" y="0" width="25" height="20" uuid="83bc9c4c-2578-48c5-b393-1698ebc19473">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4443,7 +4452,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{classAllF}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="228" y="40" width="21" height="20" uuid="a2ebadba-de43-4abc-8439-5876a67740e3">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4459,7 +4468,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{pourMoyInf10Ang}==0? new DecimalFormat("#.##").format(Double.valueOf(0)):$F{pourMoyInf10Ang}==null? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10Ang}))]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="294" y="40" width="21" height="20" uuid="ea3f25d5-c573-4651-8d61-397a184e641a">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4475,7 +4484,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{pourMoyInf10All}==0? new DecimalFormat("#.##").format(Double.valueOf(0)):$F{pourMoyInf10All}==null? new DecimalFormat("#.##").format(Double.valueOf(0))  : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10All}))]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="514" y="0" width="25" height="20" uuid="e20aace3-503f-458b-8a20-0618cea953aa">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4507,7 +4516,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA["G"]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="315" y="40" width="25" height="20" uuid="894afc12-2aa7-4fe3-a1ff-f2495acd3d49">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4523,7 +4532,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{classEspF}+$F{classEspG}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="162" y="20" width="21" height="20" uuid="7550eae7-0aa9-47bc-885e-c67043c002eb">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4539,7 +4548,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$F{pourMoyInf10OrthGramG}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10OrthGramG}))]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="141" y="40" width="21" height="20" uuid="601ae1a5-1573-449b-aa0e-4dd6306fd204">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4555,7 +4564,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$F{nbreMoyInf10OrthGramF}+$F{nbreMoyInf10OrthGramG}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="757" y="0" width="20" height="20" uuid="8b85b318-e6e7-44d9-9e00-abdc7d589268">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4571,7 +4580,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$F{pourMoyInf10FrancaisF}  ==0? new DecimalFormat("#.##").format(Double.valueOf(0)): new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10FrancaisF} ))]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="249" y="20" width="25" height="20" uuid="3edc036c-eda3-4505-baf1-a296ae3ea09e">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4587,7 +4596,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{classAllG}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="274" y="20" width="20" height="20" uuid="f4ebc494-3f1a-424d-8975-a057f564a8ed">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4603,7 +4612,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nbreMoyInf10AllG}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="228" y="0" width="21" height="20" uuid="b0850dc9-3489-4692-82e8-5a4a49273580">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4619,7 +4628,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{pourMoyInf10AngF}==0? new DecimalFormat("#.##").format(Double.valueOf(0)): new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10AngF}))]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="626" y="20" width="21" height="20" uuid="9d8db2ed-c589-427d-9faa-9a21dfb61b13">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4635,7 +4644,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{pourMoyInf10SVTG}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10SVTG}))]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="274" y="40" width="20" height="20" uuid="0440520b-ff1f-4586-a2ad-6e03cdccf08b">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4651,7 +4660,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nbreMoyInf10AllF}+$F{nbreMoyInf10AllG}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="183" y="40" width="25" height="20" uuid="704b6e9b-bfd4-45f2-b422-ed5064a904a1">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4667,7 +4676,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{classAngF}+$F{classAngG}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="712" y="40" width="25" height="20" uuid="afa70b38-44aa-496a-821c-b72e13367768">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4683,7 +4692,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$F{classFrancaisF}+$F{classFrancaisG}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="96" y="40" width="21" height="20" uuid="67b2fc14-d29f-459c-bc9d-a4ed3a2e9655">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4699,7 +4708,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":($F{pourMoyInf10CompFr}==0||$F{pourMoyInf10CompFr}==null)? new DecimalFormat("#.##").format(Double.valueOf(0)) :$F{pourMoyInf10CompFr}==null? new DecimalFormat("#.##").format(Double.valueOf(0)): new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10CompFr}))]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="75" y="0" width="21" height="20" uuid="f42fd62b-e546-43ba-832d-e54f9569f112">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4715,7 +4724,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$F{nbreMoyInf10CompFrF}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="539" y="20" width="21" height="20" uuid="b1598af1-5731-459d-b065-fa086563655e">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4731,7 +4740,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nbreMoyInf10PCG}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="183" y="20" width="25" height="20" uuid="8e8489fb-d80d-4a87-abb9-28c07fbeda2a">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4747,7 +4756,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{classAngG}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="647" y="0" width="25" height="20" uuid="275ded67-cb71-45ea-9459-c5c3925c4237">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4763,7 +4772,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$F{classPHILOF}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="626" y="40" width="21" height="20" uuid="0d6ecd35-fcec-4905-a304-8011a43e5dbe">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4779,7 +4788,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{pourMoyInf10SVT}==0? new DecimalFormat("#.##").format(Double.valueOf(0)):$F{pourMoyInf10SVT}==null? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10SVT}))]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="757" y="20" width="20" height="20" uuid="0ddcb429-de30-4418-8e71-c92d8387431e">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4795,7 +4804,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$F{pourMoyInf10FrancaisG}  ==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10FrancaisG} ))]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="473" y="0" width="20" height="20" uuid="ff41e488-8bb5-446f-8f1a-20dc8da29dd0">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4811,7 +4820,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nbreMoyInf10MathF}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="96" y="0" width="21" height="20" uuid="4607a88b-7b81-455d-9d7f-5ed415ab9bf8">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4827,7 +4836,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":($F{pourMoyInf10CompFrF}==0 || $F{pourMoyInf10CompFrF}==null)? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10CompFrF}))]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="737" y="0" width="20" height="20" uuid="5fdc056e-9b0b-4139-8e0b-5f10f239a5e9">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4843,7 +4852,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$F{nbreMoyInf10FrancaisF}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="51" y="0" width="24" height="20" uuid="1336a2ab-98f9-4e62-9ed7-210fae0267ff">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4859,7 +4868,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cycle}.equals("2nd")?"":$F{classCompFrF}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="340" y="20" width="21" height="20" uuid="6899ef90-f72d-4c54-9b02-3a6a47e8a22b">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4875,7 +4884,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nbreMoyInf10EspG}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="407" y="0" width="20" height="20" uuid="d8599301-720f-4bf5-ad30-ded1964ba49f">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4891,7 +4900,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nbreMoyInf10HgF}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="382" y="40" width="25" height="20" uuid="3680556a-5e7c-4379-867d-8bdb212d1515">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4907,7 +4916,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{classHgF}+$F{classHgG}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="340" y="0" width="21" height="20" uuid="ce139ad9-5f4a-4be3-af51-318cc907d547">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4923,7 +4932,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nbreMoyInf10EspF}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="294" y="0" width="21" height="20" uuid="4fa49361-a577-46ef-87f9-24d24b035990">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4939,7 +4948,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{pourMoyInf10AllF}==0? new DecimalFormat("#.##").format(Double.valueOf(0)): new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10AllF}))]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="606" y="0" width="20" height="20" uuid="cd71e5a6-3226-4311-a52b-42ed45dc24fe">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4955,7 +4964,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nbreMoyInf10SVTF}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="361" y="20" width="21" height="20" uuid="689030d1-3b9f-413a-9977-980dcdfbe5a0">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4971,7 +4980,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{pourMoyInf10EspG}==0? new DecimalFormat("#.##").format(Double.valueOf(0)) : new DecimalFormat("#.##").format(Double.valueOf($F{pourMoyInf10EspG}))]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="473" y="40" width="20" height="20" uuid="faf43525-13d0-4030-b99e-eada2d53f7a6">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -4987,7 +4996,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nbreMoyInf10MathF}+$F{nbreMoyInf10MathG}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="737" y="20" width="20" height="20" uuid="fd02efc3-8055-4fb7-9e57-d60bb35410e4">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -5003,7 +5012,7 @@ Classés]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cycle}.equals("1er")?"":$F{nbreMoyInf10FrancaisG}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band">
+			<textField evaluationTime="Band" isBlankWhenNull="true">
 				<reportElement x="448" y="40" width="25" height="20" uuid="31450071-7152-4677-8bac-253fc7d35d8e">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
