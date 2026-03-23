@@ -1,10 +1,7 @@
 package com.vieecoles.processors.yamoussoukro;
 
-import com.vieecoles.dto.BoursiersDto;
-import com.vieecoles.dto.EffectifElevLangueVivante2Dto;
 import com.vieecoles.dto.LangVivanteDto;
 import com.vieecoles.dto.NiveauDto;
-import com.vieecoles.processors.dren3.services.StatistiqueBoursierServices;
 import com.vieecoles.processors.yamoussoukro.services.EffectifParLangueServices;
 import com.vieecoles.steph.entities.Ecole;
 import java.math.BigDecimal;
@@ -30,18 +27,22 @@ import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTShd;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTblBorders;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTcPr;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.STBorder;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTbl;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTcBorders;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTblWidth;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.STMerge;
-import org.apache.poi.xwpf.usermodel.*;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.*;
-
-import java.math.BigInteger;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.STTblWidth;
+import org.jboss.logging.Logger;
 
 @ApplicationScoped
 public class WordTempStatistiqueLangueVivanteProcessor {
+
+    private static final Logger LOG = Logger.getLogger(WordTempStatistiqueLangueVivanteProcessor.class);
+
     @Inject
-    EffectifParLangueServices resultatsServices ;
-  @Inject
-  EntityManager em;
+    EffectifParLangueServices resultatsServices;
+    @Inject
+    EntityManager em;
 
       public   void getResultatAffProcessor(XWPFDocument document ,
           Long idEcole ,String libelleAnnee , String libelleTrimetre,Long idAnnee) {
@@ -51,7 +52,7 @@ public class WordTempStatistiqueLangueVivanteProcessor {
 
           elevesPremierCycle= resultatsServices.getLangueVivante(idEcole,libelleAnnee,libelleTrimetre,idAnnee);
         } catch (Exception e) {
-          e.printStackTrace();
+            LOG.errorf(e, "getLangueVivante idEcole=%d", idEcole);
         }
 
 

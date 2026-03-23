@@ -260,7 +260,7 @@ public class BulletinSpiderRessource {
                     }
                     else  {
                         System.out.println("callSpiderNobel_par_interval.jrxml") ;
-                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderNobel.jrxml");
+                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderNobelPiedPage.jrxml");
 
                     }
 
@@ -389,7 +389,27 @@ public class BulletinSpiderRessource {
 
                     else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderNobelDecompress90.jrxml");
                     System.out.println("callSpiderNobelDecompress90") ;
-                } else {
+                } 
+                else if(piedPage) {
+                    System.out.println("piedPage ");
+                    if(libellePeriode.equals("Troisième Trimestre")) {
+                        System.out.println("callSpiderNobelPiedPageTrois.jrxml") ;
+                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/callSpiderNobelPiedPageTrois.jrxml");
+                    }
+                    else  {
+                        System.out.println("callSpiderNobel_par_interval.jrxml") ;
+                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderNobelPiedPage.jrxml");
+
+                    }
+
+                }
+                
+                
+                
+                
+                
+                
+                else {
                     if(libellePeriode.equals("Troisième Trimestre"))
                         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/callSpiderNobelDecompressTrois.jrxml");
 
@@ -535,6 +555,22 @@ public class BulletinSpiderRessource {
                 e.printStackTrace();
             }
         }
+
+        // Compiler les sous-rapports PiedPage pour éviter NoClassDefFoundError (wrong name) avec les .jasper précompilés
+        if (piedPage) {
+            try (java.io.InputStream sub1 = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinNobelSpiderAvecPiedPage.jrxml");
+                 java.io.InputStream sub2 = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/BulletinNobelSpiderAvecPiedTroisV2.jrxml")) {
+                if (sub1 != null) {
+                    map.put("BulletinNobelSpiderAvecPiedPageReport", JasperCompileManager.compileReport(sub1));
+                }
+                if (sub2 != null) {
+                    map.put("BulletinNobelSpiderAvecPiedTroisV2Report", JasperCompileManager.compileReport(sub2));
+                }
+            } catch (Exception e) {
+                System.err.println("Erreur lors de la compilation des sous-rapports PiedPage: " + e.getMessage());
+                e.printStackTrace();
+            }
+        }
         String infos= null ;
         String pdistinct= null ;
         String plogoPosi= null ;
@@ -573,7 +609,7 @@ public class BulletinSpiderRessource {
         // map.put("codeEcole", "myEcole.getEcolecode()");
         map.put("positionLogo", plogoPosi);
         map.put("setBg", psetBg);
-
+        map.put(JRParameter.REPORT_CONNECTION, connection);
 
         JasperPrint report = JasperFillManager.fillReport(compileReport, map, connection);
         byte[] data =JasperExportManager.exportReportToPdf(report);
@@ -873,6 +909,23 @@ Set<String> moisTrimestre = Set.of(
         JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
         //   JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");
         Map<String, Object> map = new HashMap<>();
+
+        // Compiler les sous-rapports PiedPage si nécessaire (éviter NoClassDefFoundError avec .jasper précompilés)
+        if (piedPage) {
+            try (java.io.InputStream sub1 = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinNobelSpiderAvecPiedPage.jrxml");
+                 java.io.InputStream sub2 = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/BulletinNobelSpiderAvecPiedTroisV2.jrxml")) {
+                if (sub1 != null) {
+                    map.put("BulletinNobelSpiderAvecPiedPageReport", JasperCompileManager.compileReport(sub1));
+                }
+                if (sub2 != null) {
+                    map.put("BulletinNobelSpiderAvecPiedTroisV2Report", JasperCompileManager.compileReport(sub2));
+                }
+            } catch (Exception e) {
+                System.err.println("Erreur lors de la compilation des sous-rapports PiedPage: " + e.getMessage());
+                e.printStackTrace();
+            }
+        }
+
         String infos= null ;
         String pdistinct= null ;
         String plogoPosi= null ;
@@ -913,7 +966,7 @@ Set<String> moisTrimestre = Set.of(
         map.put("setBg", psetBg);
         map.put("offsetValue", debutImpression);
         map.put("limitValue", finImpression);
-
+        map.put(JRParameter.REPORT_CONNECTION, connection);
 
         JasperPrint report = JasperFillManager.fillReport(compileReport, map, connection);
         byte[] data =JasperExportManager.exportReportToPdf(report);
@@ -977,7 +1030,7 @@ Set<String> moisTrimestre = Set.of(
 
                         }
 
-                        else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinNobelSpider.jrxml");
+                        else myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinNobelSpiderAvecPiedPage.jrxml");
                     }
 
 

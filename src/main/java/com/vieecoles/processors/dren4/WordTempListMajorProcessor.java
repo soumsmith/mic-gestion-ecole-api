@@ -1,33 +1,29 @@
 package com.vieecoles.processors.dren4;
 
 import com.vieecoles.dto.MajorParClasseNiveauDto;
-import com.vieecoles.services.etats.appachePoi.Annuels.EleveAffecteAnnuelsParClassePoiServices;
-import com.vieecoles.services.etats.appachePoi.Annuels.MajorAnnuelsParClasseNiveauPoiServices;
-import com.vieecoles.services.etats.appachePoi.EleveAffecteParClassePoiServices;
 import com.vieecoles.services.etats.appachePoi.MajorParClasseNiveauPoiServices;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import jakarta.persistence.EntityManager;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.apache.poi.xwpf.usermodel.XWPFTableCell;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
+import org.jboss.logging.Logger;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTcPr;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTVMerge;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.STMerge;
 
 @ApplicationScoped
 public class WordTempListMajorProcessor {
+
+    private static final Logger LOG = Logger.getLogger(WordTempListMajorProcessor.class);
+
     @Inject
-    EntityManager em;
-    @Inject
-    EleveAffecteAnnuelsParClassePoiServices eleveAffecteParClassePoiServices ;
-    @Inject
-    MajorParClasseNiveauPoiServices majorServices ;
+    MajorParClasseNiveauPoiServices majorServices;
     int LongTableau;
 
     private static void ensureCellCount(XWPFTableRow row, int cellCount) {
@@ -76,7 +72,7 @@ public class WordTempListMajorProcessor {
 
                 // Vérifier que le tableau a été créé
                 if (table == null) {
-                    System.err.println("Impossible de créer le tableau");
+                    LOG.warn("Impossible de créer le tableau");
                     return;
                 }
 
@@ -104,7 +100,7 @@ public class WordTempListMajorProcessor {
                     headerRow.getCell(8).setText("MOY");
                     headerRow.getCell(9).setText("LV2");
                 } else {
-                    System.err.println("Impossible de créer assez de cellules dans l'en-tête");
+                    LOG.warn("Impossible de créer assez de cellules dans l'en-tête");
                     return;
                 }
 
@@ -125,7 +121,7 @@ public class WordTempListMajorProcessor {
 
                     // Vérifier que nous avons bien 10 cellules
                     if (row.getTableCells().size() < 10) {
-                        System.err.println("Impossible de créer assez de cellules dans la ligne " + rowIndex);
+                        LOG.warnf("Impossible de créer assez de cellules dans la ligne %d", rowIndex);
                         continue;
                     }
 
@@ -185,19 +181,18 @@ public class WordTempListMajorProcessor {
                     mergeVerticalCells(table, startRowIndex, rowIndex - 1, 0);
                 }
 
-                System.out.println("Tableau créé avec succès avec " + (rowIndex - 1) + " lignes de données");
+                LOG.debugf("Tableau majors créé avec %d lignes de données", rowIndex - 1);
             } else {
                 if (indexToInsert == -1) {
-                    System.err.println("Texte 'Liste des majors de classe par niveau (Annuels)' non trouvé dans le document");
+                    LOG.warn("Texte 'Liste des majors de classe par niveau' non trouvé dans le document");
                 }
                 if (listeMajors == null || listeMajors.isEmpty()) {
-                    System.err.println("Aucune donnée de majors trouvée");
+                    LOG.warn("Aucune donnée de majors trouvée");
                 }
             }
 
         } catch (Exception e) {
-            System.err.println("Erreur générale dans getListeMajorClasse: " + e.getMessage());
-            e.printStackTrace();
+            LOG.error("Erreur dans getListeMajorClasse", e);
         }
     }
 
@@ -226,7 +221,7 @@ public class WordTempListMajorProcessor {
                 }
             }
         } catch (Exception e) {
-            System.err.println("Erreur lors de la fusion des cellules: " + e.getMessage());
+            LOG.warn("Erreur lors de la fusion des cellules", e);
         }
     }
 

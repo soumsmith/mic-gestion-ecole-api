@@ -6,15 +6,13 @@ import static com.vieecoles.processors.dren3.WordTempListAffectesProcessor.setHe
 import com.vieecoles.dto.NiveauOrderDto;
 import com.vieecoles.dto.eleveAffecteParClasseDtoAvecTousTrimestres;
 import com.vieecoles.dto.eleveNonAffecteParClasseDto;
+import com.vieecoles.services.etats.BulletinNiveauClasseQueryService;
 import com.vieecoles.services.etats.appachePoi.EleveAffecteNonAffecteParClassePoiServices;
-import com.vieecoles.services.etats.appachePoi.EleveNonAffecteParClassePoiServices;
 import com.vieecoles.steph.entities.Ecole;
 import java.util.ArrayList;
 import java.util.List;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.TypedQuery;
 import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
@@ -27,22 +25,16 @@ import org.openxmlformats.schemas.wordprocessingml.x2006.main.STMerge;
 @ApplicationScoped
 public class WordTempListAffecteNonAffectesProcessor {
     @Inject
-    EntityManager em;
+    BulletinNiveauClasseQueryService bulletinNiveauClasseQueryService;
     @Inject
-    EleveAffecteNonAffecteParClassePoiServices eleveAffecteParClassePoiServices ;
+    EleveAffecteNonAffecteParClassePoiServices eleveAffecteParClassePoiServices;
 
     public   void getEleveNosAffecteParClasse(XWPFDocument document ,
                                               Long idEcole ,String libelleAnnee , String libelleTrimestre) {
 
 
-//Get classe
-        List<NiveauOrderDto> classeList = new ArrayList<>() ;
-        TypedQuery<NiveauOrderDto> c = em.createQuery( "SELECT new com.vieecoles.dto.NiveauOrderDto(b.libelleClasse,b.ordreNiveau) from Bulletin b  where b.ecoleId =:idEcole and b.libellePeriode=:periode and b.anneeLibelle=:annee  " +
-            "group by b.ordreNiveau,b.libelleClasse order by b.ordreNiveau,b.libelleClasse", NiveauOrderDto.class);
-        classeList = c.setParameter("idEcole", idEcole)
-            .setParameter("annee", libelleAnnee)
-            .setParameter("periode", libelleTrimestre)
-            .getResultList() ;
+        List<NiveauOrderDto> classeList = bulletinNiveauClasseQueryService.listClassesOrderedByNiveau(
+                idEcole, libelleAnnee, libelleTrimestre);
 
 
         // Créer une nouvelle ligne dans le tableau

@@ -3,9 +3,7 @@ package com.vieecoles.processors.yamoussoukro.Annuels;
 import static com.vieecoles.processors.yamoussoukro.WordTempResultaAffProcessor.afficherValeurParNiveau;
 
 import com.vieecoles.dto.RecapDesResultatsElevesAffecteDto;
-import com.vieecoles.services.etats.appachePoi.resultatsPoiServices;
 import com.vieecoles.services.etats.resultatsRecapAnnuelleServices;
-import com.vieecoles.services.etats.resultatsRecapServices;
 import java.util.ArrayList;
 import java.util.List;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -22,9 +20,7 @@ import org.openxmlformats.schemas.wordprocessingml.x2006.main.STMerge;
 @ApplicationScoped
 public class WordTempRecapResultatAnnuelsProcessor {
     @Inject
-    resultatsPoiServices resultatsServices ;
-    @Inject
-    resultatsRecapAnnuelleServices resultatsRecapServices ;
+    resultatsRecapAnnuelleServices resultatsRecapServices;
 
     public   void getRecapResultatAffProcessor(XWPFDocument document ,
                                           Long idEcole ,String libelleAnnee , String libelleTrimetre) {

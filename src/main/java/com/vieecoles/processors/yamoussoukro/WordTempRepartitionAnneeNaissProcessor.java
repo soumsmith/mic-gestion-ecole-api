@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import jakarta.persistence.EntityManager;
 import org.apache.poi.xwpf.usermodel.BodyElementType;
 import org.apache.poi.xwpf.usermodel.IBodyElement;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
@@ -23,9 +22,7 @@ import org.openxmlformats.schemas.wordprocessingml.x2006.main.STMerge;
 @ApplicationScoped
 public class WordTempRepartitionAnneeNaissProcessor {
     @Inject
-    EntityManager em;
-    @Inject
-    RepartitionElevParAnNaissServices repartitionElevParAnNaissServices ;
+    RepartitionElevParAnNaissServices repartitionElevParAnNaissServices;
     int LongTableau;
 
     private static void ensureCellCount(XWPFTableRow row, int cellCount) {

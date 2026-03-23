@@ -34,9 +34,9 @@ public class MatiereParDisciplinePvServices {
                 .setParameter("classe", classe)
                 .getResultList() ;
 
-  //System.out.println("classeNiveauDtoList "+classeNiveauDtoList.toString());
-        System.out.println("Longueur Tableau" +classeNiveauDtoList.size());
-      int LongTableau =classeNiveauDtoList.size() ;
+        int LongTableau = classeNiveauDtoList.size();
+        Long idAnnee = getIdAnneeScolaire(idEcole, libelleAnnee, libelleTrimestre);
+        Long classeId = getIdClasse(idEcole, libelleAnnee, libelleTrimestre, classe);
 
         Long  effeG,effeF,classF,classG,nonclassF,nonclassG,nbreMoySup10F,nbreMoySup10G,nbreMoyInf999F,nbreMoyInf999G,nbreMoyInf85G,nbreMoyInf85F;
         Double pourMoySup10=0d,pourMoyInf999=0d,pourMoyInf85=0d, pourMoySup10F =0d ,pourMoySup10G =0d,pourMoyInf999F =0d,pourMoyInf999G =0d,pourMoyInf85G =0d,pourMoyInf85F =0d,
@@ -45,16 +45,11 @@ public class MatiereParDisciplinePvServices {
         String cycle ,professeur;
         List<ProcesVerbalStatistiqueDisciplineDto> resultatsListElevesDto = new ArrayList<>(LongTableau);
        // System.out.println("resultatsListElevesDto Size "+ resultatsListElevesDto.size());
-        for (int i=0; i< LongTableau;i++) {
-            ProcesVerbalStatistiqueDisciplineDto resultatsListEleves= new ProcesVerbalStatistiqueDisciplineDto();
-            long idMatiere = 0;
-            Matiere myMatiere = new Matiere();
-            String libelleMatiere ;
+        for (int i = 0; i < LongTableau; i++) {
+            ProcesVerbalStatistiqueDisciplineDto resultatsListEleves = new ProcesVerbalStatistiqueDisciplineDto();
             String id = String.valueOf(classeNiveauDtoList.get(i).getNiveau());
-            idMatiere = Long.parseLong(id);
-            System.out.println("idMatiere "+idMatiere);
-            myMatiere = Matiere.findById(idMatiere) ;
-            libelleMatiere = getCodeLIbelleById(idMatiere);
+            long idMatiere = Long.parseLong(id);
+            String libelleMatiere = getCodeLIbelleById(idMatiere);
             effectifClasse= getEffectifParClasse(idEcole,id ,libelleAnnee , libelleTrimestre,classe);
             resultatsListEleves.setEffectif(effectifClasse);
             resultatsListEleves.setClasse(classe);
@@ -74,7 +69,6 @@ public class MatiereParDisciplinePvServices {
 
             if(classF !=0)
                 pourMoyInf85F= (double) ((nbreMoyInf85F*100d)/classF);
-            System.out.println("pourMoyInf85F "+pourMoyInf85G);
 
             if(classG !=0||classF !=0)
                 pourMoyInf85 = (double)((nbreMoyInf85F+nbreMoyInf85G)*100d/(classG+classF)) ;
@@ -112,12 +106,14 @@ public class MatiereParDisciplinePvServices {
             String nomProfesseur="";
             nomProfesseur= getNomProfesseur(idEcole,id,libelleAnnee , libelleTrimestre,classe);
             resultatsListEleves.setNomProfesseur(nomProfesseur);
-            Long idMatiereReal= getidMatiereReal(idEcole,id,libelleAnnee , libelleTrimestre,classe);
-            Long idAnnee= getIdAnneeScolaire(idEcole,libelleAnnee,libelleTrimestre);
-            Long classeId= getIdClasse(idEcole,libelleAnnee,libelleTrimestre,classe);
-            PersonnelMatiereClasse personnel = persMatClasService.findProfesseurByMatiereAndClasse(Long.valueOf(idAnnee),Long.valueOf(classeId) ,Long.valueOf(idMatiereReal) );
-            if(personnel!=null)
-                resultatsListEleves.setSexeProfesseur(personnel.getPersonnel().getSexe());
+            Long idMatiereReal = getidMatiereReal(idEcole, id, libelleAnnee, libelleTrimestre, classe);
+            if (idAnnee != null && classeId != null && idMatiereReal != null) {
+                PersonnelMatiereClasse personnel = persMatClasService.findProfesseurByMatiereAndClasse(
+                        idAnnee, classeId, idMatiereReal);
+                if (personnel != null) {
+                    resultatsListEleves.setSexeProfesseur(personnel.getPersonnel().getSexe());
+                }
+            }
             resultatsListElevesDto.add(resultatsListEleves) ;
 
 

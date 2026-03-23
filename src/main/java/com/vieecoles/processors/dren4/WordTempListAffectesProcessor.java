@@ -3,22 +3,21 @@ package com.vieecoles.processors.dren4;
 import com.vieecoles.dto.NiveauOrderDto;
 import com.vieecoles.dto.eleveAffecteParClasseDto;
 import com.vieecoles.dto.eleveAffecteParClasseDtoAvecTousTrimestres;
+import com.vieecoles.services.etats.BulletinNiveauClasseQueryService;
 import com.vieecoles.services.etats.appachePoi.EleveAffecteParClassePoiServices;
 import org.apache.poi.xwpf.usermodel.*;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.List;
 
 @ApplicationScoped
 public class WordTempListAffectesProcessor {
     @Inject
-    EntityManager em;
+    BulletinNiveauClasseQueryService bulletinNiveauClasseQueryService;
     @Inject
-    EleveAffecteParClassePoiServices eleveAffecteParClassePoiServices ;
+    EleveAffecteParClassePoiServices eleveAffecteParClassePoiServices;
     int LongTableau;
 
     private static void ensureCellCount(XWPFTableRow row, int cellCount) {
@@ -31,14 +30,8 @@ public class WordTempListAffectesProcessor {
                                            Long idEcole ,String libelleAnnee , String libelleTrimestre) {
 
 
-//Get classe
-        List<NiveauOrderDto> classeList = new ArrayList<>() ;
-        TypedQuery<NiveauOrderDto> c = em.createQuery( "SELECT new com.vieecoles.dto.NiveauOrderDto(b.libelleClasse,b.ordreNiveau) from Bulletin b  where b.ecoleId =:idEcole and b.libellePeriode=:periode and b.anneeLibelle=:annee  " +
-                "group by b.ordreNiveau,b.libelleClasse order by b.ordreNiveau,b.libelleClasse", NiveauOrderDto.class);
-        classeList = c.setParameter("idEcole", idEcole)
-                .setParameter("annee", libelleAnnee)
-                .setParameter("periode", libelleTrimestre)
-                .getResultList() ;
+        List<NiveauOrderDto> classeList = bulletinNiveauClasseQueryService.listClassesOrderedByNiveau(
+                idEcole, libelleAnnee, libelleTrimestre);
 
 
         // Créer une nouvelle ligne dans le tableau

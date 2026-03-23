@@ -2,7 +2,6 @@ package com.vieecoles.processors.dren4.Annuels;
 
 import com.vieecoles.dto.ResultatsElevesAffecteDto;
 import com.vieecoles.processors.dren4.Services.resultatsAnnuelsPoiServices;
-import com.vieecoles.processors.dren4.Services.resultatsPoiServices;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Comparator;

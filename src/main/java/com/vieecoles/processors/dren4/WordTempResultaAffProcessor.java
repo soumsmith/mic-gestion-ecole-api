@@ -2,12 +2,10 @@ package com.vieecoles.processors.dren4;
 
 import static org.apache.poi.ss.usermodel.TableStyleType.totalRow;
 
-import com.vieecoles.dto.NiveauDto;
 import com.vieecoles.dto.ResultatsElevesAffecteDto;
+import com.vieecoles.services.etats.BulletinNiveauClasseQueryService;
 import com.vieecoles.services.etats.appachePoi.resultatsPoiServices;
 import com.vieecoles.services.etats.resultatsRecapServices;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.TypedQuery;
 import org.apache.poi.xwpf.usermodel.*;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.STMerge;
 
@@ -19,9 +17,9 @@ public class WordTempResultaAffProcessor {
     @Inject
     resultatsPoiServices resultatsServices ;
     @Inject
-    resultatsRecapServices resultatsRecapServices ;
-  @Inject
-  EntityManager em;
+    resultatsRecapServices resultatsRecapServices;
+    @Inject
+    BulletinNiveauClasseQueryService bulletinNiveauClasseQueryService;
 
       public   void getResultatAffProcessor(XWPFDocument document ,
           Long idEcole ,String libelleAnnee , String libelleTrimetre) {
@@ -633,15 +631,8 @@ public class WordTempResultaAffProcessor {
         return Double.parseDouble(String.format("%.2f", d));
     }
   public int getNombreDeclasseParNiveau(Long idEcole,String libelleAnnee ,String libelleTrimetre,String niveau){
-    List<NiveauDto> classeNiveauDtoList = new ArrayList<>() ;
-    TypedQuery<NiveauDto> q = em.createQuery( "SELECT new com.vieecoles.dto.NiveauDto(b.libelleClasse) from Bulletin b  where b.ecoleId =:idEcole and b.libellePeriode=:periode and b.anneeLibelle=:annee and b.niveau=:niveau " +
-        "group by b.libelleClasse", NiveauDto.class);
-    classeNiveauDtoList = q.setParameter("idEcole", idEcole)
-        .setParameter("annee", libelleAnnee)
-        .setParameter("periode", libelleTrimetre)
-        .setParameter("niveau", niveau)
-        . getResultList() ;
-    return classeNiveauDtoList.size() ;
+    return bulletinNiveauClasseQueryService.listLibellesClasseParNiveau(idEcole, libelleAnnee, libelleTrimetre, niveau)
+        .size();
   }
   public static String afficherValeurParNiveau(String niveau) {
     // Mapping des niveaux avec leurs correspondants

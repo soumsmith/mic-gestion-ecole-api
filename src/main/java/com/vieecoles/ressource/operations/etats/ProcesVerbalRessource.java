@@ -1,6 +1,4 @@
 package com.vieecoles.ressource.operations.etats;
-
-
 import com.vieecoles.dto.ClasseNiveauDto;
 import com.vieecoles.dto.ProcesVerbalDto;
 import com.vieecoles.dto.ProcesVerbalListeClasseDto;
@@ -14,6 +12,7 @@ import com.vieecoles.dto.SpiderRapportRentreeDto;
 import com.vieecoles.entities.operations.ecole;
 import com.vieecoles.entities.parametre;
 import com.vieecoles.services.etats.ProcesVerbalServices;
+import com.vieecoles.services.etats.SpiderPvConseilJasperCache;
 import com.vieecoles.services.etats.PvConseilsClasse.ListeClassePvServices;
 import com.vieecoles.services.etats.PvConseilsClasse.MajorClassePvServices;
 import com.vieecoles.services.etats.PvConseilsClasse.MatiereParDisciplinePvServices;
@@ -41,6 +40,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import org.jboss.logging.Logger;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -50,6 +50,9 @@ import java.util.*;
 @Path("/imprimer-proces-verbal")
 
 public class ProcesVerbalRessource {
+
+    private static final Logger LOG = Logger.getLogger(ProcesVerbalRessource.class);
+
     @Inject
     EntityManager em;
     @Inject
@@ -69,6 +72,8 @@ public class ProcesVerbalRessource {
     MatiereSpecifiquePvServices matiereSpecifiquePvServices;
     @Inject
     StatistiqueClassePvServices statistiqueClassePvServices;
+    @Inject
+    SpiderPvConseilJasperCache spiderPvConseilJasperCache;
 
 
     @GET
@@ -164,16 +169,14 @@ public class ProcesVerbalRessource {
                                                                 @PathParam("libelleAnnee") String libelleAnnee ,
                                                                 @PathParam("libelleTrimestre") String libelleTrimestre,
                                                                 @PathParam("idClasse") Long idClasse,@PathParam("libelleClasse") String libelleClasse )  throws Exception, JRException {
-        Ecole myEcole= new Ecole() ;
         parametre mpara = new parametre();
         mpara = parametre.findById(1L) ;
 
-        ecole myEcole2= new ecole() ;
-      myEcole2 =ecole.findById(idEcole) ;
+        ecole myEcole2 = ecole.findById(idEcole) ;
 
-        if(myEcole2.getEcolecode()!=null)
-        System.out.println("Libelle Ecole "+myEcole2.getEcoleclibelle());
-        byte[] imagebytes = new byte[0],imagebytes2 = new byte[0],imagebytes3 = new byte[0] ,imagebytes4 = new byte[0] ;
+        LOG.debugf("PV conseil v2: ecole=%d idClasse=%d classe=%s annee=%s periode=%s",
+                idEcole, idClasse, libelleClasse, libelleAnnee, libelleTrimestre);
+        byte[] imagebytes2 = new byte[0],imagebytes3 = new byte[0] ,imagebytes4 = new byte[0] ;
 
          if(myEcole2.getLogoBlob()!=null)
             imagebytes2 = myEcole2.getLogoBlob() ;
@@ -181,7 +184,7 @@ public class ProcesVerbalRessource {
         imagebytes3 = mpara.getImage() ;
        if(myEcole2.getFiligramme()!=null)
             imagebytes4 = myEcole2.getFiligramme() ;
-        BufferedImage photo_eleve = null,logo= null ,amoirie= null,bg= null;
+        BufferedImage logo= null ,amoirie= null,bg= null;
         String codeEcole = myEcole2.getEcolecode() ;
         String statut = myEcole2.getEcole_statut() ;
         if(imagebytes2!=null){
@@ -195,7 +198,6 @@ public class ProcesVerbalRessource {
         if(imagebytes4!=null){
             bg = ImageIO.read(new ByteArrayInputStream(imagebytes4)) ;
         }
-        InputStream myInpuStream ;
 
         SpiderPvConseilDto detailsBull= new SpiderPvConseilDto() ;
         List<ProcesVerbalListeClasseDto> procesVerbalListeClasseDto = new ArrayList<>() ;
@@ -203,23 +205,15 @@ public class ProcesVerbalRessource {
         List<ProcesVerbalMatiereSpecifiqueDto> procesVerbalMatiereSpecifiqueDto = new ArrayList<>();
         List<ProcesVerbalListeClasseDto> listMajors = new ArrayList<>() ;
         List<ProcesVerbalStatistiqueClasseDto>procesVerbalStatistiqueClasseDto= new ArrayList<>() ;
-        System.out.println("Entree Majors");
         listMajors = majorClassePvServices.MajorParNiveauClasse(idEcole,libelleAnnee,libelleTrimestre,libelleClasse) ;
-        System.out.println("listMajors ok");
         procesVerbalListeClasseDto=listeClassePvServices.getListClasse(idEcole  ,libelleAnnee,libelleTrimestre,libelleClasse);
-        System.out.println("procesVerbalListeClasseDto ok");
         procesVerbalStatistiqueDisciplineDto=matiereParDisciplinePvServices.getDiscpline(idEcole  ,libelleAnnee,libelleTrimestre,libelleClasse);
-        System.out.println("procesVerbalStatistiqueDisciplineDto ok");
-        ProcesVerbalMatiereSpecifiqueDto procesVerbalMatiereSpecifiqueDto1= new ProcesVerbalMatiereSpecifiqueDto();
-
-        procesVerbalMatiereSpecifiqueDto1=matiereSpecifiquePvServices.getMatiereSpecifique(idEcole  ,libelleTrimestre,libelleAnnee,libelleClasse);
-        System.out.println("ProcesVerbalMatiereSpecifiqueDto ok");
-        ProcesVerbalStatistiqueClasseDto procesVerbalStatistiqueClasseDto1= new ProcesVerbalStatistiqueClasseDto();
-        procesVerbalStatistiqueClasseDto1= statistiqueClassePvServices.getStatistiqueClasse(idEcole,libelleAnnee,libelleTrimestre,libelleClasse);
+        ProcesVerbalMatiereSpecifiqueDto procesVerbalMatiereSpecifiqueDto1 =
+                matiereSpecifiquePvServices.getMatiereSpecifique(idEcole  ,libelleTrimestre,libelleAnnee,libelleClasse);
+        ProcesVerbalStatistiqueClasseDto procesVerbalStatistiqueClasseDto1 =
+                statistiqueClassePvServices.getStatistiqueClasse(idEcole,libelleAnnee,libelleTrimestre,libelleClasse);
         procesVerbalStatistiqueClasseDto.add(procesVerbalStatistiqueClasseDto1);
-        System.out.println("Statistique classe ok");
-        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/PvConseil/Spider_PV_Conseil_classe.jrxml");
-        System.out.println("Rapport chargé ok");
+        JasperReport compileReport = spiderPvConseilJasperCache.getSpiderPvConseilReport();
         procesVerbalMatiereSpecifiqueDto.add(procesVerbalMatiereSpecifiqueDto1);
         detailsBull.setProcesVerbalListeClasseDto(procesVerbalListeClasseDto);
         detailsBull.setListeMajors(listMajors);
@@ -227,7 +221,6 @@ public class ProcesVerbalRessource {
         detailsBull.setProcesVerbalStatistiqueDisciplineDto(procesVerbalStatistiqueDisciplineDto);
         detailsBull.setProcesVerbalStatistiqueClasseDto(procesVerbalStatistiqueClasseDto);
         JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(Collections.singleton(detailsBull)) ;
-        JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
 
         Map<String, Object> map = new HashMap<>();
        map.put("ecoleclibelle",myEcole2.getEcoleclibelle());
@@ -246,17 +239,12 @@ public class ProcesVerbalRessource {
         map.put("amoirie",null);
         map.put("classe",libelleClasse);*/
 
-        System.out.println("Rapport chargé ok2");
-
-
         JasperPrint report = JasperFillManager.fillReport(compileReport, map, beanCollectionDataSource);
-        System.out.println("Rapport chargé ok3");
 
-        //to pdf ;
         byte[] data =JasperExportManager.exportReportToPdf(report);
         HttpHeaders headers= new HttpHeaders();
         headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=pv-conseil-classe.pdf");
-        return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.MULTIPART_FORM_DATA).body(data);
+        return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.APPLICATION_PDF).body(data);
 
     }
 

@@ -2,21 +2,21 @@ package com.vieecoles.processors.dren4.Services;
 
 import com.vieecoles.dto.NiveauClasseIdDto;
 import com.vieecoles.dto.StatistiquesNiveauSexeDto;
-import com.vieecoles.steph.entities.Classe;
+import com.vieecoles.services.etats.BulletinAnneeLookupService;
+import com.vieecoles.services.etats.BulletinEffectifQueryService;
 import java.util.ArrayList;
 import java.util.List;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.NoResultException;
-import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 
 @ApplicationScoped
 public class StatistiquesNiveauSexeService {
 
   @Inject
-  EntityManager em;
+  BulletinEffectifQueryService bulletinEffectifQueryService;
+  @Inject
+  BulletinAnneeLookupService bulletinAnneeLookupService;
 
   @Transactional
   public List<StatistiquesNiveauSexeDto> getStatistiqueDfa(Long idEcole, String libelleAnnee, String libelleTrimestre) {
@@ -39,23 +39,14 @@ public class StatistiquesNiveauSexeService {
     Long nombreClasse=0L;
 
 
-    System.out.println("Identifiant idEcole "+idEcole);
-    System.out.println("Identifiant libelleAnnee "+libelleAnnee);
-    System.out.println("Identifiant libelleTrimestre "+libelleTrimestre);
-    Long idAnnee=getIdAnnee(idEcole,libelleAnnee,libelleTrimestre);
-    System.out.println("Identifiant idAnnee "+idAnnee);
-    List<NiveauClasseIdDto> niveauDtoList = new ArrayList<>() ;
-    System.out.println("Debut Longueur Tableau "+niveauDtoList.size());
-    niveauDtoList= getListClasse(idEcole,idAnnee);
-System.out.println("Longueur Tableau "+niveauDtoList.size());
+    Long idAnnee = getIdAnnee(idEcole, libelleAnnee, libelleTrimestre);
+    List<NiveauClasseIdDto> niveauDtoList = new ArrayList<>(getListClasse(idEcole, idAnnee));
 
     int longTableau =niveauDtoList.size();
     List<StatistiquesNiveauSexeDto> statistiquesNiveauSexeDtosList = new ArrayList<>() ;
     for (int i=0; i< longTableau;i++) {
       StatistiquesNiveauSexeDto statistiquesNiveauSexeDtos = new StatistiquesNiveauSexeDto();
       Integer ordre=niveauDtoList.get(i).getId();
-      System.out.println("ordre: " + ordre);
-      System.out.println("idEcole: " + idEcole);
       try {
         nombreClasse = findNombreClasseBranche(ordre,idEcole ,libelleAnnee) ;
         if (nombreClasse==null)
@@ -68,14 +59,7 @@ System.out.println("Longueur Tableau "+niveauDtoList.size());
 
 
 
-      System.out.println("nombreClasse: " + nombreClasse);
-
       try {
-        // Vérification que l'EntityManager est bien injecté
-        if (em == null) {
-          throw new RuntimeException("EntityManager is null - injection failed");
-        }
-
         admisGarcon = compterAdmisGarconsNiveau(idEcole, libelleTrimestre, libelleAnnee, ordre);
 
 
@@ -148,126 +132,8 @@ System.out.println("Longueur Tableau "+niveauDtoList.size());
   @Transactional
   public List<StatistiquesNiveauSexeDto> obtenirStatistiquesParNiveauEtSexe(Long idEcole, String libelleTrimestre, String libelleAnnee) {
 
-    // Vérification que l'EntityManager est bien injecté
-    if (em == null) {
-      throw new RuntimeException("EntityManager is null - injection failed");
-    }
-
-    // Requête mise à jour avec les non classés
-    String jpql = "SELECT " +
-        "b.ordreNiveau, " +
-        "b.niveau, " +
-
-        // Admis Garçon
-        "SUM(CASE " +
-        "WHEN (b.sexe = 'M' OR b.sexe = 'MASCULIN' OR b.sexe = 'Garçon') " +
-        "AND b.isClassed = 'O' " +
-        "AND ( " +
-        // Cas par défaut : Admis en classe supérieure
-        "NOT ( " +
-        "(b.moyAn < 10 AND (b.ordreNiveau != 4 AND b.ordreNiveau < 10) AND b.redoublant = 'OUI') " +
-        "OR (b.moyAn < 8.5 AND (b.ordreNiveau != 4 AND b.ordreNiveau < 10) AND b.redoublant = 'NON') " +
-        "OR (b.moyAn < 8.5 AND (b.ordreNiveau != 4 AND b.ordreNiveau < 10) AND b.redoublant IS NULL) " +
-        "OR (b.moyAn >= 8.5 AND b.moyAn < 10 AND (b.ordreNiveau != 4 AND b.ordreNiveau < 10) AND b.redoublant = 'NON') " +
-        "OR (b.moyAn >= 8.5 AND b.moyAn < 10 AND (b.ordreNiveau != 4 AND b.ordreNiveau < 10) AND b.redoublant IS NULL) " +
-        "OR (b.ordreNiveau = 4) " +
-        "OR (b.ordreNiveau > 9 AND b.redoublant = 'OUI') " +
-        "OR (b.ordreNiveau > 9 AND b.redoublant = 'NON' AND b.moyAn >= 8.5) " +
-        "OR (b.ordreNiveau > 9 AND b.redoublant IS NULL AND b.moyAn >= 8.5) " +
-        "OR (b.ordreNiveau > 9 AND b.redoublant = 'NON' AND b.moyAn < 8.5) " +
-        "OR (b.ordreNiveau > 9 AND b.redoublant IS NULL AND b.moyAn < 8.5) " +
-        ") " +
-        ") " +
-        "THEN 1 ELSE 0 END) as admisGarcon, " +
-
-        // Admis Fille
-        "SUM(CASE " +
-        "WHEN (b.sexe = 'F' OR b.sexe = 'FEMININ' OR b.sexe = 'Fille') " +
-        "AND b.isClassed = 'O' " +
-        "AND ( " +
-        "NOT ( " +
-        "(b.moyAn < 10 AND (b.ordreNiveau != 4 AND b.ordreNiveau < 10) AND b.redoublant = 'OUI') " +
-        "OR (b.moyAn < 8.5 AND (b.ordreNiveau != 4 AND b.ordreNiveau < 10) AND b.redoublant = 'NON') " +
-        "OR (b.moyAn < 8.5 AND (b.ordreNiveau != 4 AND b.ordreNiveau < 10) AND b.redoublant IS NULL) " +
-        "OR (b.moyAn >= 8.5 AND b.moyAn < 10 AND (b.ordreNiveau != 4 AND b.ordreNiveau < 10) AND b.redoublant = 'NON') " +
-        "OR (b.moyAn >= 8.5 AND b.moyAn < 10 AND (b.ordreNiveau != 4 AND b.ordreNiveau < 10) AND b.redoublant IS NULL) " +
-        "OR (b.ordreNiveau = 4) " +
-        "OR (b.ordreNiveau > 9 AND b.redoublant = 'OUI') " +
-        "OR (b.ordreNiveau > 9 AND b.redoublant = 'NON' AND b.moyAn >= 8.5) " +
-        "OR (b.ordreNiveau > 9 AND b.redoublant IS NULL AND b.moyAn >= 8.5) " +
-        "OR (b.ordreNiveau > 9 AND b.redoublant = 'NON' AND b.moyAn < 8.5) " +
-        "OR (b.ordreNiveau > 9 AND b.redoublant IS NULL AND b.moyAn < 8.5) " +
-        ") " +
-        ") " +
-        "THEN 1 ELSE 0 END) as admisFille, " +
-
-        // Redoublant Garçon
-        "SUM(CASE " +
-        "WHEN (b.sexe = 'M' OR b.sexe = 'MASCULIN' OR b.sexe = 'Garçon') " +
-        "AND b.isClassed = 'O' " +
-        "AND ( " +
-        "(b.moyAn >= 8.5 AND b.moyAn < 10 AND (b.ordreNiveau != 4 AND b.ordreNiveau < 10) AND b.redoublant = 'NON') " +
-        "OR (b.moyAn >= 8.5 AND b.moyAn < 10 AND (b.ordreNiveau != 4 AND b.ordreNiveau < 10) AND b.redoublant IS NULL) " +
-        ") " +
-        "THEN 1 ELSE 0 END) as redoublantGarcon, " +
-
-        // Redoublant Fille
-        "SUM(CASE " +
-        "WHEN (b.sexe = 'F' OR b.sexe = 'FEMININ' OR b.sexe = 'Fille') " +
-        "AND b.isClassed = 'O' " +
-        "AND ( " +
-        "(b.moyAn >= 8.5 AND b.moyAn < 10 AND (b.ordreNiveau != 4 AND b.ordreNiveau < 10) AND b.redoublant = 'NON') " +
-        "OR (b.moyAn >= 8.5 AND b.moyAn < 10 AND (b.ordreNiveau != 4 AND b.ordreNiveau < 10) AND b.redoublant IS NULL) " +
-        ") " +
-        "THEN 1 ELSE 0 END) as redoublantFille, " +
-
-        // Exclus Garçon
-        "SUM(CASE " +
-        "WHEN (b.sexe = 'M' OR b.sexe = 'MASCULIN' OR b.sexe = 'Garçon') " +
-        "AND b.isClassed = 'O' " +
-        "AND ( " +
-        "(b.moyAn < 10 AND (b.ordreNiveau != 4 AND b.ordreNiveau < 10) AND b.redoublant = 'OUI') " +
-        "OR (b.moyAn < 8.5 AND (b.ordreNiveau != 4 AND b.ordreNiveau < 10) AND b.redoublant = 'NON') " +
-        "OR (b.moyAn < 8.5 AND (b.ordreNiveau != 4 AND b.ordreNiveau < 10) AND b.redoublant IS NULL) " +
-        ") " +
-        "THEN 1 ELSE 0 END) as exclusGarcon, " +
-
-        // Exclus Fille
-        "SUM(CASE " +
-        "WHEN (b.sexe = 'F' OR b.sexe = 'FEMININ' OR b.sexe = 'Fille') " +
-        "AND b.isClassed = 'O' " +
-        "AND ( " +
-        "(b.moyAn < 10 AND (b.ordreNiveau != 4 AND b.ordreNiveau < 10) AND b.redoublant = 'OUI') " +
-        "OR (b.moyAn < 8.5 AND (b.ordreNiveau != 4 AND b.ordreNiveau < 10) AND b.redoublant = 'NON') " +
-        "OR (b.moyAn < 8.5 AND (b.ordreNiveau != 4 AND b.ordreNiveau < 10) AND b.redoublant IS NULL) " +
-        ") " +
-        "THEN 1 ELSE 0 END) as exclusFille, " +
-
-        // NOUVEAU: Non classé Garçon
-        "SUM(CASE " +
-        "WHEN (b.sexe = 'M' OR b.sexe = 'MASCULIN' OR b.sexe = 'Garçon') " +
-        "AND (b.isClassed = 'N' OR b.isClassed IS NULL) " +
-        "THEN 1 ELSE 0 END) as nonClasseGarcon, " +
-
-        // NOUVEAU: Non classé Fille
-        "SUM(CASE " +
-        "WHEN (b.sexe = 'F' OR b.sexe = 'FEMININ' OR b.sexe = 'Fille') " +
-        "AND (b.isClassed = 'N' OR b.isClassed IS NULL) " +
-        "THEN 1 ELSE 0 END) as nonClasseFille " +
-
-        "FROM Bulletin b " +
-        "WHERE b.ecoleId = :idEcole " +
-        "AND b.libellePeriode = :periode " +
-        "AND b.anneeLibelle = :annee " +
-        "GROUP BY b.ordreNiveau, b.niveau " +
-        "ORDER BY b.ordreNiveau";
-
     try {
-      TypedQuery<Object[]> query = em.createQuery(jpql, Object[].class);
-      List<Object[]> results = query.setParameter("idEcole", idEcole)
-          .setParameter("periode", libelleTrimestre)
-          .setParameter("annee", libelleAnnee)
-          .getResultList();
+      List<Object[]> results = bulletinEffectifQueryService.fetchDfaAggregationRows(idEcole, libelleTrimestre, libelleAnnee);
 
       List<StatistiquesNiveauSexeDto> statistiques = new ArrayList<>();
 
@@ -307,72 +173,16 @@ System.out.println("Longueur Tableau "+niveauDtoList.size());
 
   // Méthodes spécifiques pour compter les non classés
   public Long compterNonClasseGarconsNiveau(Long idEcole, String libelleTrimestre, String libelleAnnee, Integer ordreNiveau) {
-    try {
-      String jpql = "SELECT COUNT(b.id) FROM Bulletin b " +
-          "WHERE b.ecoleId = :idEcole " +
-          "AND b.libellePeriode = :periode " +
-          "AND b.anneeLibelle = :annee " +
-          "AND b.ordreNiveau = :ordreNiveau " +
-          "AND (b.sexe = 'M' OR b.sexe = 'MASCULIN' OR b.sexe = 'Garçon') " +
-          "AND (b.isClassed = 'N' OR b.isClassed IS NULL)";
-
-      Long count = (Long) em.createQuery(jpql)
-          .setParameter("idEcole", idEcole)
-          .setParameter("periode", libelleTrimestre)
-          .setParameter("annee", libelleAnnee)
-          .setParameter("ordreNiveau", ordreNiveau)
-          .getSingleResult();
-
-      return count != null ? count : 0L;
-    } catch (NoResultException e) {
-      return 0L;
-    }
+    return bulletinEffectifQueryService.countNonClasseGarconsByOrdre(idEcole, libelleTrimestre, libelleAnnee, ordreNiveau);
   }
 
   public Long compterNonClasseFillesNiveau(Long idEcole, String libelleTrimestre, String libelleAnnee, Integer ordreNiveau) {
-    try {
-      String jpql = "SELECT COUNT(b.id) FROM Bulletin b " +
-          "WHERE b.ecoleId = :idEcole " +
-          "AND b.libellePeriode = :periode " +
-          "AND b.anneeLibelle = :annee " +
-          "AND b.ordreNiveau = :ordreNiveau " +
-          "AND (b.sexe = 'F' OR b.sexe = 'FEMININ' OR b.sexe = 'Fille') " +
-          "AND (b.isClassed = 'N' OR b.isClassed IS NULL)";
-
-      Long count = (Long) em.createQuery(jpql)
-          .setParameter("idEcole", idEcole)
-          .setParameter("periode", libelleTrimestre)
-          .setParameter("annee", libelleAnnee)
-          .setParameter("ordreNiveau", ordreNiveau)
-          .getSingleResult();
-
-      return count != null ? count : 0L;
-    } catch (NoResultException e) {
-      return 0L;
-    }
+    return bulletinEffectifQueryService.countNonClasseFillesByOrdre(idEcole, libelleTrimestre, libelleAnnee, ordreNiveau);
   }
 
   // Fonction basée sur votre exemple
   public Long getNonClasseF(Long idEcole, String classe, String niveau, String annee, String periode) {
-    try {
-      Long nonclassF = (Long) em.createQuery("SELECT COUNT(o.id) FROM Bulletin o " +
-              "WHERE o.ecoleId = :idEcole " +
-              "AND o.isClassed = :isClass " +
-              "AND o.libellePeriode = :periode " +
-              "AND o.anneeLibelle = :annee " +
-              "AND o.libelleClasse = :classe " +
-              "AND o.niveau = :niveau")
-          .setParameter("idEcole", idEcole)
-          .setParameter("isClass", "N")
-          .setParameter("classe", classe)
-          .setParameter("niveau", niveau)
-          .setParameter("annee", annee)
-          .setParameter("periode", periode)
-          .getSingleResult();
-      return nonclassF;
-    } catch (NoResultException e) {
-      return 0L;
-    }
+    return bulletinEffectifQueryService.countNonClasseByClasseNiveau(idEcole, classe, niveau, annee, periode);
   }
 
   // Méthodes rapides pour des statistiques spécifiques (mises à jour)
@@ -432,28 +242,14 @@ System.out.println("Longueur Tableau "+niveauDtoList.size());
   }
   @Transactional
   List<NiveauClasseIdDto> getListClasse(Long idEcole , Long idAnneId) {
-    List<NiveauClasseIdDto> classeNiveauDtoList = new ArrayList<>() ;
-    TypedQuery<NiveauClasseIdDto> q = em.createQuery( "SELECT DISTINCT new com.vieecoles.dto.NiveauClasseIdDto(b.niveau,b.ordreNiveau) FROM Bulletin b where  b.ecoleId =:idEcole and b.anneeId=:annee  order by b.ordreNiveau "
-        , NiveauClasseIdDto.class);
-    return      classeNiveauDtoList = q.setParameter("idEcole" ,idEcole)
-        . setParameter("annee" ,idAnneId)
-        .getResultList() ;
-
+    if (idAnneId == null) {
+      return new ArrayList<>();
+    }
+    return bulletinEffectifQueryService.listDistinctNiveauOrdreByEcoleAnneeId(idEcole, idAnneId);
   }
   @Transactional
   public  Long getIdAnnee(Long idEcole ,String libelleAnnee,String periode){
-    try {
-      Long   anneeID = (Long) em.createQuery("select distinct b.anneeId  from Bulletin b  where   b.anneeLibelle=:libelleAnnee " +
-              " and b.libellePeriode=:periode and b.ecoleId=:idEcole ")
-          .setParameter("periode",periode)
-          .setParameter("libelleAnnee", libelleAnnee)
-          .setParameter("idEcole", idEcole)
-          .getSingleResult();
-      return  anneeID ;
-    } catch (NoResultException e){
-      return null ;
-    }
-
+    return bulletinAnneeLookupService.findAnneeId(idEcole, libelleAnnee, periode);
   }
 
   /**
@@ -461,20 +257,8 @@ System.out.println("Longueur Tableau "+niveauDtoList.size());
    */
   @Transactional
   public void debugBulletinData(Long idEcole, String libelleTrimestre, String libelleAnnee, Integer ordreNiveau) {
-    String jpql = "SELECT b.matricule, b.nom, b.prenoms, b.sexe, b.moyAn, b.redoublant, b.ordreNiveau, b.isClassed " +
-        "FROM Bulletin b " +
-        "WHERE b.ecoleId = :idEcole " +
-        "AND b.libellePeriode = :periode " +
-        "AND b.anneeLibelle = :annee " +
-        "AND b.ordreNiveau = :ordreNiveau " +
-        "ORDER BY b.nom, b.prenoms";
-
-    TypedQuery<Object[]> query = em.createQuery(jpql, Object[].class);
-    List<Object[]> results = query.setParameter("idEcole", idEcole)
-        .setParameter("periode", libelleTrimestre)
-        .setParameter("annee", libelleAnnee)
-        .setParameter("ordreNiveau", ordreNiveau)
-        .getResultList();
+    List<Object[]> results = bulletinEffectifQueryService.debugBulletinRowsForNiveau(idEcole, libelleTrimestre,
+        libelleAnnee, ordreNiveau);
 
     System.out.println("=== DEBUG - Données niveau " + ordreNiveau + " ===");
     for (Object[] row : results) {
@@ -494,14 +278,7 @@ System.out.println("Longueur Tableau "+niveauDtoList.size());
   }
   @Transactional
   public Long findNombreClasseBranche(Integer id, Long ecoleId, String anneeLibelle) {
-    String jpql = "SELECT COUNT(DISTINCT c.classeId) FROM Bulletin c WHERE c.ordreNiveau= :ordreId AND c.ecoleId = :ecoleId and c.anneeLibelle=:anneeLibelle ";
-
-    TypedQuery<Long> query = em.createQuery(jpql, Long.class);
-    query.setParameter("ordreId", id);
-    query.setParameter("ecoleId", ecoleId);
-    query.setParameter("anneeLibelle", anneeLibelle);
-
-    return query.getSingleResult();
+    return bulletinEffectifQueryService.countDistinctClassesByOrdreEcoleAnnee(id, ecoleId, anneeLibelle);
   }
 
 

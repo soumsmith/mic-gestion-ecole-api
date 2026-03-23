@@ -3,7 +3,6 @@ package com.vieecoles.processors.yamoussoukro;
 import static com.vieecoles.processors.yamoussoukro.WordTempResultaAffProcessor.afficherValeurParNiveau;
 
 import com.vieecoles.dto.RecapDesResultatsElevesAffecteDto;
-import com.vieecoles.services.etats.appachePoi.resultatsPoiServices;
 import com.vieecoles.services.etats.resultatsRecapServices;
 import org.apache.poi.xwpf.usermodel.*;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.STMerge;
@@ -16,9 +15,7 @@ import java.util.List;
 @ApplicationScoped
 public class WordTempRecapResultatProcessor {
     @Inject
-    resultatsPoiServices resultatsServices ;
-    @Inject
-    resultatsRecapServices resultatsRecapServices ;
+    resultatsRecapServices resultatsRecapServices;
 
     public   void getRecapResultatAffProcessor(XWPFDocument document ,
                                           Long idEcole ,String libelleAnnee , String libelleTrimetre) {

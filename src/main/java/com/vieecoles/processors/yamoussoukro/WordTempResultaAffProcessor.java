@@ -1,232 +1,84 @@
 package com.vieecoles.processors.yamoussoukro;
 
-import static org.apache.poi.ss.usermodel.TableStyleType.totalRow;
-
 import com.vieecoles.dto.NiveauDto;
 import com.vieecoles.dto.ResultatsElevesAffecteDto;
 import com.vieecoles.services.etats.appachePoi.resultatsPoiServices;
-import com.vieecoles.services.etats.resultatsRecapServices;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import org.apache.poi.xwpf.usermodel.*;
+import org.jboss.logging.Logger;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.STMerge;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 @ApplicationScoped
 public class WordTempResultaAffProcessor {
+
+    private static final Logger LOG = Logger.getLogger(WordTempResultaAffProcessor.class);
+
     @Inject
-    resultatsPoiServices resultatsServices ;
+    resultatsPoiServices resultatsServices;
     @Inject
-    resultatsRecapServices resultatsRecapServices ;
-  @Inject
-  EntityManager em;
+    EntityManager em;
 
-      public   void getResultatAffProcessor(XWPFDocument document ,
-          Long idEcole ,String libelleAnnee , String libelleTrimetre) {
-        List<ResultatsElevesAffecteDto> detailsBull6 = new ArrayList<>();
-        System.out.println("classeNiveauDtoList entree");
+    private List<ResultatsElevesAffecteDto> calculResultatsParOrdre(Long idEcole, String libelleAnnee,
+            String libelleTrimetre, int ordreNiveau) {
         try {
-          detailsBull6= resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,1)  ;
-          System.out.println("classeNiveauDtoList Sortie");
+            return resultatsServices.CalculResultatsEleveAffecte(idEcole, libelleAnnee, libelleTrimetre, ordreNiveau);
         } catch (Exception e) {
-          e.printStackTrace();
+            LOG.errorf(e, "CalculResultatsEleveAffecte (affectés) ordreNiveau=%d", ordreNiveau);
+            return new ArrayList<>();
         }
-        // Cinquième
+    }
 
-        List<ResultatsElevesAffecteDto> detailsBull5 = new ArrayList<>();
-        try {
-          detailsBull5= resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,2)  ;
-
-        } catch (Exception e) {
-          e.printStackTrace();
+    public void getResultatAffProcessor(XWPFDocument document, Long idEcole, String libelleAnnee,
+            String libelleTrimetre) {
+        List<List<ResultatsElevesAffecteDto>> parOrdre = new ArrayList<>(15);
+        parOrdre.add(Collections.emptyList());
+        for (int o = 1; o <= 14; o++) {
+            parOrdre.add(calculResultatsParOrdre(idEcole, libelleAnnee, libelleTrimetre, o));
         }
 
-        // Quatrieme
-
-        List<ResultatsElevesAffecteDto> detailsBull4 = new ArrayList<>();
-        try {
-          detailsBull4= resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,3)  ;
-
-        } catch (Exception e) {
-          e.printStackTrace();
+        // Tableaux document : indices 6–9 (4 niveaux), puis 10–12 (fusions Seconde / Première / Terminale)
+        final int premierTableau = 6;
+        for (int o = 1; o <= 4; o++) {
+            remplirTableauResultatsAffectesSafe(parOrdre.get(o), document.getTableArray(premierTableau + o - 1),
+                    "trimestre affectés ordre=" + o);
         }
+        List<ResultatsElevesAffecteDto> detailsBull2ND = new ArrayList<>(parOrdre.get(5));
+        detailsBull2ND.addAll(parOrdre.get(6));
+        remplirTableauResultatsAffectesSafe(detailsBull2ND, document.getTableArray(premierTableau + 4),
+                "trimestre affectés Seconde fusionnée");
 
+        List<ResultatsElevesAffecteDto> detailsBull1ERE = new ArrayList<>(parOrdre.get(7));
+        detailsBull1ERE.addAll(parOrdre.get(8));
+        detailsBull1ERE.addAll(parOrdre.get(9));
+        remplirTableauResultatsAffectesSafe(detailsBull1ERE, document.getTableArray(premierTableau + 5),
+                "trimestre affectés Première fusionnée");
 
-        // Troixième
+        List<ResultatsElevesAffecteDto> detailsBullTLE = new ArrayList<>(parOrdre.get(10));
+        detailsBullTLE.addAll(parOrdre.get(11));
+        detailsBullTLE.addAll(parOrdre.get(12));
+        detailsBullTLE.addAll(parOrdre.get(13));
+        detailsBullTLE.addAll(parOrdre.get(14));
+        remplirTableauResultatsAffectesSafe(detailsBullTLE, document.getTableArray(premierTableau + 6),
+                "trimestre affectés Terminale fusionnée");
+    }
 
-        List<ResultatsElevesAffecteDto> detailsBull3 = new ArrayList<>();
+    private void remplirTableauResultatsAffectesSafe(List<ResultatsElevesAffecteDto> data, XWPFTable table,
+            String context) {
         try {
-          detailsBull3= resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,4)  ;
-
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-        // Seconde A
-        List<ResultatsElevesAffecteDto> detailsBull2NDA = new ArrayList<>();
-        try {
-          detailsBull2NDA= resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,5)  ;
-
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-
-        // Seconde C
-        List<ResultatsElevesAffecteDto> detailsBull2NDC = new ArrayList<>();
-        try {
-          detailsBull2NDC= resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,6)  ;
-
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-
-        // Premiere A
-        List<ResultatsElevesAffecteDto> detailsBull1EREA = new ArrayList<>();
-        try {
-          detailsBull1EREA= resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,7)  ;
-
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-
-        // Premiere C
-        List<ResultatsElevesAffecteDto> detailsBull1EREC = new ArrayList<>();
-        try {
-          detailsBull1EREC = resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,8)  ;
-
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-
-        // Premiere D
-        List<ResultatsElevesAffecteDto> detailsBull1ERED = new ArrayList<>();
-        try {
-          detailsBull1ERED = resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,9)  ;
-
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-
-        // Terminale A
-        List<ResultatsElevesAffecteDto> detailsBullTLEA = new ArrayList<>();
-        try {
-          detailsBullTLEA = resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,10)  ;
-
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-
-        // Terminale A1
-        List<ResultatsElevesAffecteDto> detailsBullTLEA1 = new ArrayList<>();
-        try {
-          detailsBullTLEA1 = resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,11)  ;
-
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-
-        // Terminale A2
-        List<ResultatsElevesAffecteDto> detailsBullTLEA2 = new ArrayList<>();
-        try {
-          detailsBullTLEA2 = resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,12)  ;
-
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-
-        // Terminale C
-        List<ResultatsElevesAffecteDto> detailsBullTLEC = new ArrayList<>();
-        try {
-          detailsBullTLEC = resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,13)  ;
-
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-
-        // Terminale D
-        List<ResultatsElevesAffecteDto> detailsBullTLED = new ArrayList<>();
-        try {
-          detailsBullTLED = resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,14)  ;
-
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-
-        // 3. Gestion des tableaux dynamiques
-        // Sixième
-        XWPFTable table = document.getTableArray(6);
-        try {
-          ajoutTableauDynamique(detailsBull6,table);
+            ajoutTableauDynamique(data, table);
         } catch (RuntimeException e) {
-          e.printStackTrace();
+            LOG.errorf(e, "Remplissage tableau résultats affectés (%s)", context);
         }
-        // Cinquième
-        XWPFTable tableCinquieme = document.getTableArray(7);
-        try {
-          ajoutTableauDynamique(detailsBull5,tableCinquieme);
-        } catch (RuntimeException e) {
-          e.printStackTrace();
-        }
-
-        // Quatrieme
-        XWPFTable tableQuatrieme = document.getTableArray(8);
-        try {
-          ajoutTableauDynamique(detailsBull4,tableQuatrieme);
-        } catch (RuntimeException e) {
-          e.printStackTrace();
-        }
-
-        // Troixième
-        XWPFTable tableTroixieme = document.getTableArray(9);
-        try {
-          ajoutTableauDynamique(detailsBull3,tableTroixieme);
-        } catch (RuntimeException e) {
-          e.printStackTrace();
-        }
-
-        // SecondeA et SecondeC fusionnées
-        List<ResultatsElevesAffecteDto> detailsBull2ND = new ArrayList<>();
-        detailsBull2ND.addAll(detailsBull2NDA);
-        detailsBull2ND.addAll(detailsBull2NDC);
-        
-        XWPFTable table2NDA = document.getTableArray(10);
-        try {
-          ajoutTableauDynamique(detailsBull2ND,table2NDA);
-        } catch (RuntimeException e) {
-          e.printStackTrace();
-        }
-
-        // PremiereA, PremiereC et PremiereD fusionnées
-        List<ResultatsElevesAffecteDto> detailsBull1ERE = new ArrayList<>();
-        detailsBull1ERE.addAll(detailsBull1EREA);
-        detailsBull1ERE.addAll(detailsBull1EREC);
-        detailsBull1ERE.addAll(detailsBull1ERED);
-        
-        XWPFTable table1EREA = document.getTableArray(11);
-        try {
-          ajoutTableauDynamique(detailsBull1ERE,table1EREA);
-        } catch (RuntimeException e) {
-          e.printStackTrace();
-        }
-
-
-        // Terminale A, A1, A2, C et D fusionnées
-        List<ResultatsElevesAffecteDto> detailsBullTLE = new ArrayList<>();
-        detailsBullTLE.addAll(detailsBullTLEA);
-        detailsBullTLE.addAll(detailsBullTLEA1);
-        detailsBullTLE.addAll(detailsBullTLEA2);
-        detailsBullTLE.addAll(detailsBullTLEC);
-        detailsBullTLE.addAll(detailsBullTLED);
-        
-        XWPFTable tableTLEA = document.getTableArray(12);
-        try {
-          ajoutTableauDynamique(detailsBullTLE,tableTLEA);
-        } catch (RuntimeException e) {
-          e.printStackTrace();
-        }
-
-      }
+    }
 
 
 

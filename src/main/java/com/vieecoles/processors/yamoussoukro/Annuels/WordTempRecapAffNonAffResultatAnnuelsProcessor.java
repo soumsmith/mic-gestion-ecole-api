@@ -3,7 +3,6 @@ package com.vieecoles.processors.yamoussoukro.Annuels;
 import static com.vieecoles.processors.yamoussoukro.WordTempResultaAffProcessor.afficherValeurParNiveau;
 
 import com.vieecoles.dto.RecapResultatsElevesAffeEtNonAffDto;
-import com.vieecoles.services.etats.resultatsRecapAffEtNonAffServices;
 import com.vieecoles.services.etats.resultatsRecapAffEtNonAffServicesAnnuels;
 import java.util.ArrayList;
 import java.util.List;

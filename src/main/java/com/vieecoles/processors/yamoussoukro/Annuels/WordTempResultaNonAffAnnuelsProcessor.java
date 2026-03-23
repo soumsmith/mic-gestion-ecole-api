@@ -5,8 +5,8 @@ import static com.vieecoles.processors.yamoussoukro.WordTempResultaAffProcessor.
 import com.vieecoles.dto.ResultatsElevesAffecteDto;
 import com.vieecoles.dto.ResultatsElevesNonAffecteDto;
 import com.vieecoles.services.etats.appachePoi.Annuels.resultatsAnnuelsNonAffectePoiServices;
-import com.vieecoles.services.etats.appachePoi.resultatsNonAffectePoiServices;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,261 +20,39 @@ import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.apache.poi.xwpf.usermodel.XWPFTableCell;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
+import org.jboss.logging.Logger;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.STMerge;
 
 @ApplicationScoped
 public class WordTempResultaNonAffAnnuelsProcessor {
-  @Inject
-  com.vieecoles.services.etats.resultatsNonAffecteServices resultatsNonAffecteServices ;
+
+    private static final Logger LOG = Logger.getLogger(WordTempResultaNonAffAnnuelsProcessor.class);
+
     @Inject
-    resultatsAnnuelsNonAffectePoiServices resultatsServices ;
+    resultatsAnnuelsNonAffectePoiServices resultatsServices;
 
-
-      public   void getResultatNonAffProcessor(XWPFDocument document ,
-          Long idEcole ,String libelleAnnee , String libelleTrimetre) {
-        List<ResultatsElevesNonAffecteDto> detailsBull6 = new ArrayList<>();
-
-        try {
-          detailsBull6= resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,1)  ;
-
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-        // Cinquième
-
-        List<ResultatsElevesNonAffecteDto> detailsBull5 = new ArrayList<>();
-        try {
-          detailsBull5= resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,2)  ;
-
-        } catch (Exception e) {
-          e.printStackTrace();
+    public void getResultatNonAffProcessor(XWPFDocument document,
+            Long idEcole, String libelleAnnee, String libelleTrimetre) {
+        List<List<ResultatsElevesNonAffecteDto>> parOrdre = new ArrayList<>(15);
+        parOrdre.add(Collections.emptyList());
+        for (int o = 1; o <= 14; o++) {
+            try {
+                parOrdre.add(resultatsServices.CalculResultatsEleveAffecte(idEcole, libelleAnnee, libelleTrimetre, o));
+            } catch (Exception e) {
+                LOG.errorf(e, "Calcul annuel non affectés ordreNiveau=%d", o);
+                parOrdre.add(new ArrayList<>());
+            }
         }
 
-        // Quatrieme
-
-        List<ResultatsElevesNonAffecteDto> detailsBull4 = new ArrayList<>();
-        try {
-          detailsBull4= resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,3)  ;
-
-        } catch (Exception e) {
-          e.printStackTrace();
+        for (int o = 1; o <= 14; o++) {
+            String codeTableau = "CODE_NAFF_" + (5 + o);
+            try {
+                ajoutTableauDynamique(parOrdre.get(o), obtenirUnTableau(document, codeTableau));
+            } catch (RuntimeException e) {
+                LOG.errorf(e, "Remplissage tableau annuel non affectés %s", codeTableau);
+            }
         }
-
-
-        // Troixième
-
-        List<ResultatsElevesNonAffecteDto> detailsBull3 = new ArrayList<>();
-        try {
-          detailsBull3= resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,4)  ;
-
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-        // Seconde A
-        List<ResultatsElevesNonAffecteDto> detailsBull2NDA = new ArrayList<>();
-        try {
-          detailsBull2NDA= resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,5)  ;
-
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-
-        // Seconde C
-        List<ResultatsElevesNonAffecteDto> detailsBull2NDC = new ArrayList<>();
-        try {
-          detailsBull2NDC= resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,6)  ;
-
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-
-        // Premiere A
-        List<ResultatsElevesNonAffecteDto> detailsBull1EREA = new ArrayList<>();
-        try {
-          detailsBull1EREA= resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,7)  ;
-
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-
-        // Premiere C
-        List<ResultatsElevesNonAffecteDto> detailsBull1EREC = new ArrayList<>();
-        try {
-          detailsBull1EREC = resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,8)  ;
-
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-
-        // Premiere D
-        List<ResultatsElevesNonAffecteDto> detailsBull1ERED = new ArrayList<>();
-        try {
-          detailsBull1ERED = resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,9)  ;
-
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-
-        // Terminale A
-        List<ResultatsElevesNonAffecteDto> detailsBullTLEA = new ArrayList<>();
-        try {
-          detailsBullTLEA = resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,10)  ;
-
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-
-        // Terminale A1
-        List<ResultatsElevesNonAffecteDto> detailsBullTLEA1 = new ArrayList<>();
-        try {
-          detailsBullTLEA1 = resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,11)  ;
-
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-
-        // Terminale A2
-        List<ResultatsElevesNonAffecteDto> detailsBullTLEA2 = new ArrayList<>();
-        try {
-          detailsBullTLEA2 = resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,12)  ;
-
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-
-        // Terminale C
-        List<ResultatsElevesNonAffecteDto> detailsBullTLEC = new ArrayList<>();
-        try {
-          detailsBullTLEC = resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,13)  ;
-
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-
-        // Terminale D
-        List<ResultatsElevesNonAffecteDto> detailsBullTLED = new ArrayList<>();
-        try {
-          detailsBullTLED = resultatsServices.CalculResultatsEleveAffecte(idEcole ,libelleAnnee,libelleTrimetre,14)  ;
-
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-
-        // 3. Gestion des tableaux dynamiques
-        // Sixième
-
-        XWPFTable table = obtenirUnTableau(document,"CODE_NAFF_6");
-        try {
-          ajoutTableauDynamique(detailsBull6,table);
-        } catch (RuntimeException e) {
-          e.printStackTrace();
-        }
-        // Cinquième
-        XWPFTable tableCinquieme = obtenirUnTableau(document,"CODE_NAFF_7");
-        try {
-          ajoutTableauDynamique(detailsBull5,tableCinquieme);
-        } catch (RuntimeException e) {
-          e.printStackTrace();
-        }
-
-        // Quatrieme
-        XWPFTable tableQuatrieme = obtenirUnTableau(document,"CODE_NAFF_8");
-        try {
-          ajoutTableauDynamique(detailsBull4,tableQuatrieme);
-        } catch (RuntimeException e) {
-          e.printStackTrace();
-        }
-
-        // Troixième
-        XWPFTable tableTroixieme = obtenirUnTableau(document,"CODE_NAFF_9");
-        try {
-          ajoutTableauDynamique(detailsBull3,tableTroixieme);
-        } catch (RuntimeException e) {
-          e.printStackTrace();
-        }
-
-        // SecondeA
-        XWPFTable table2NDA = obtenirUnTableau(document,"CODE_NAFF_10");
-        try {
-          ajoutTableauDynamique(detailsBull2NDA,table2NDA);
-        } catch (RuntimeException e) {
-          e.printStackTrace();
-        }
-
-        // SecondeC
-        XWPFTable table2NDC = obtenirUnTableau(document,"CODE_NAFF_11");
-        try {
-          ajoutTableauDynamique(detailsBull2NDC,table2NDC);
-        } catch (RuntimeException e) {
-          e.printStackTrace();
-        }
-
-        // PremiereA
-        XWPFTable table1EREA = obtenirUnTableau(document,"CODE_NAFF_12");
-        try {
-          ajoutTableauDynamique(detailsBull1EREA,table1EREA);
-        } catch (RuntimeException e) {
-          e.printStackTrace();
-        }
-
-        // PremiereC
-        XWPFTable table1EREC = obtenirUnTableau(document,"CODE_NAFF_13");
-        try {
-          ajoutTableauDynamique(detailsBull1EREC,table1EREC);
-        } catch (RuntimeException e) {
-          e.printStackTrace();
-        }
-
-        // PremiereD
-        XWPFTable table1ERED = obtenirUnTableau(document,"CODE_NAFF_14");
-        try {
-          ajoutTableauDynamique(detailsBull1ERED,table1ERED);
-        } catch (RuntimeException e) {
-          e.printStackTrace();
-        }
-
-
-        // Terminale A
-        XWPFTable tableTLEA = obtenirUnTableau(document,"CODE_NAFF_15");
-        try {
-          ajoutTableauDynamique(detailsBullTLEA,tableTLEA);
-        } catch (RuntimeException e) {
-          e.printStackTrace();
-        }
-
-        // Terminale A1
-        XWPFTable tableTLEA1 = obtenirUnTableau(document,"CODE_NAFF_16");
-        try {
-          ajoutTableauDynamique(detailsBullTLEA1,tableTLEA1);
-        } catch (RuntimeException e) {
-          e.printStackTrace();
-        }
-
-        // Terminale A2
-        XWPFTable tableTLEA2 = obtenirUnTableau(document,"CODE_NAFF_17");
-        try {
-          ajoutTableauDynamique(detailsBullTLEA2,tableTLEA2);
-        } catch (RuntimeException e) {
-          e.printStackTrace();
-        }
-
-        // Terminale C
-        XWPFTable tableTLEC = obtenirUnTableau(document,"CODE_NAFF_18");
-        try {
-          ajoutTableauDynamique(detailsBullTLEC,tableTLEC);
-        } catch (RuntimeException e) {
-          e.printStackTrace();
-        }
-
-        // Terminale D
-        XWPFTable tableTLED = obtenirUnTableau(document,"CODE_NAFF_19");
-        try {
-          ajoutTableauDynamique(detailsBullTLED,tableTLED);
-        } catch (RuntimeException e) {
-          e.printStackTrace();
-        }
-
-      }
+    }
 
 
 

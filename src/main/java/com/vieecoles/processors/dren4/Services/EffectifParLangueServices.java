@@ -3,17 +3,15 @@ package com.vieecoles.processors.dren4.Services;
 import com.vieecoles.dto.EffectifElevLangueVivante2Dto;
 import com.vieecoles.dto.LangVivanteDto;
 import com.vieecoles.services.eleves.InscriptionService;
+import com.vieecoles.services.etats.BulletinEffectifQueryService;
 import com.vieecoles.services.souscription.SousceecoleService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.NoResultException;
-import jakarta.persistence.TypedQuery;
 
 @ApplicationScoped
 public class EffectifParLangueServices {
     @Inject
-    EntityManager em;
+    BulletinEffectifQueryService bulletinEffectifQueryService;
     @Inject
     InscriptionService inscriptionService ;
     @Inject
@@ -385,180 +383,52 @@ public class EffectifParLangueServices {
 
 
        Long getCountNomBreParLangueClasse(Long idEcole , Long idAnneId ,Integer niveauId ,String langueid) {
-           try {
-               TypedQuery<Long> q = (TypedQuery<Long>) em.createQuery( "SELECT  count(o.id) from Bulletin o   where o.ecoleId =:idEcole   and o.ordreNiveau=:niveauId and o.lv2=:langueid ");
-               Long size = q.setParameter("idEcole" ,idEcole).
-                                  setParameter("niveauId" ,niveauId).
-                                     setParameter("langueid" ,langueid).
-                              getSingleResult() ;
-
-               return size;
-           } catch (NoResultException e) {
-               return 0L ;
-           }
+           return bulletinEffectifQueryService.countByEcoleOrdreNiveauAndLv2(idEcole, niveauId, langueid);
        }
 
     public  Long geteffeEspF(Long idEcole , int  niveau ,String libelleAnnee , String libelleTrimestre){
-        Long effeF ;
-        try {
-            return  effeF = (Long) em.createQuery("select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole  and o.libellePeriode=:periode and o.anneeLibelle=:annee " +
-                    " and o.lv2=:lv2  and  o.ordreNiveau=:niveau  order by o.ordreNiveau desc ")
-                .setParameter("sexe","FEMININ")
-                .setParameter("idEcole",idEcole)
-                .setParameter("niveau",niveau)
-                .setParameter("annee", libelleAnnee)
-                .setParameter("periode", libelleTrimestre)
-                .setParameter("lv2", "ESP")
-                .getSingleResult();
-        } catch (NoResultException e){
-            return 0L ;
-        }
+        return bulletinEffectifQueryService.countBySexeLv2Ordre(idEcole, niveau, libelleAnnee, libelleTrimestre,
+                "FEMININ", "ESP");
     }
     public  Long geteffeEspAFF(Long idEcole , int  niveau ,String libelleAnnee , String libelleTrimestre){
-        Long effeF ;
-        try {
-            return  effeF = (Long) em.createQuery("select count(o.id) from Bulletin o where  o.affecte=:affecte and o.ecoleId=:idEcole  and o.libellePeriode=:periode and o.anneeLibelle=:annee " +
-                    " and o.lv2=:lv2  and  o.ordreNiveau=:niveau  order by o.ordreNiveau desc ")
-                .setParameter("affecte","AFFECTE")
-                .setParameter("idEcole",idEcole)
-                .setParameter("niveau",niveau)
-                .setParameter("annee", libelleAnnee)
-                .setParameter("periode", libelleTrimestre)
-                .setParameter("lv2", "ESP")
-                .getSingleResult();
-        } catch (NoResultException e){
-            return 0L ;
-        }
+        return bulletinEffectifQueryService.countByAffecteLv2Ordre(idEcole, niveau, libelleAnnee, libelleTrimestre,
+                "AFFECTE", "ESP");
     }
     public  Long geteffeAllAFF(Long idEcole , int  niveau ,String libelleAnnee , String libelleTrimestre){
-        Long effeF ;
-        try {
-            return  effeF = (Long) em.createQuery("select count(o.id) from Bulletin o where  o.affecte=:affecte and o.ecoleId=:idEcole  and o.libellePeriode=:periode and o.anneeLibelle=:annee " +
-                    " and o.lv2=:lv2  and  o.ordreNiveau=:niveau  order by o.ordreNiveau desc ")
-                .setParameter("affecte","AFFECTE")
-                .setParameter("idEcole",idEcole)
-                .setParameter("niveau",niveau)
-                .setParameter("annee", libelleAnnee)
-                .setParameter("periode", libelleTrimestre)
-                .setParameter("lv2", "ALL")
-                .getSingleResult();
-        } catch (NoResultException e){
-            return 0L ;
-        }
+        return bulletinEffectifQueryService.countByAffecteLv2Ordre(idEcole, niveau, libelleAnnee, libelleTrimestre,
+                "AFFECTE", "ALL");
     }
     public  Long geteffeEspNonAFF(Long idEcole , int  niveau ,String libelleAnnee , String libelleTrimestre){
-        Long effeF ;
-        try {
-            return  effeF = (Long) em.createQuery("select count(o.id) from Bulletin o where  o.affecte=:affecte and o.ecoleId=:idEcole  and o.libellePeriode=:periode and o.anneeLibelle=:annee " +
-                    " and o.lv2=:lv2  and  o.ordreNiveau=:niveau  order by o.ordreNiveau desc ")
-                .setParameter("affecte","NON_AFFECTE")
-                .setParameter("idEcole",idEcole)
-                .setParameter("niveau",niveau)
-                .setParameter("annee", libelleAnnee)
-                .setParameter("periode", libelleTrimestre)
-                .setParameter("lv2", "ESP")
-                .getSingleResult();
-        } catch (NoResultException e){
-            return 0L ;
-        }
+        return bulletinEffectifQueryService.countByAffecteLv2Ordre(idEcole, niveau, libelleAnnee, libelleTrimestre,
+                "NON_AFFECTE", "ESP");
     }
     public  Long geteffeAllNonAFF(Long idEcole , int  niveau ,String libelleAnnee , String libelleTrimestre){
-        Long effeF ;
-        try {
-            return  effeF = (Long) em.createQuery("select count(o.id) from Bulletin o where  o.affecte=:affecte and o.ecoleId=:idEcole  and o.libellePeriode=:periode and o.anneeLibelle=:annee " +
-                    " and o.lv2=:lv2  and  o.ordreNiveau=:niveau  order by o.ordreNiveau desc ")
-                .setParameter("affecte","NON_AFFECTE")
-                .setParameter("idEcole",idEcole)
-                .setParameter("niveau",niveau)
-                .setParameter("annee", libelleAnnee)
-                .setParameter("periode", libelleTrimestre)
-                .setParameter("lv2", "ALL")
-                .getSingleResult();
-        } catch (NoResultException e){
-            return 0L ;
-        }
+        return bulletinEffectifQueryService.countByAffecteLv2Ordre(idEcole, niveau, libelleAnnee, libelleTrimestre,
+                "NON_AFFECTE", "ALL");
     }
     public  Long geteffeEspG(Long idEcole , int  niveau ,String libelleAnnee , String libelleTrimestre){
-        Long effeF ;
-        try {
-            return  effeF = (Long) em.createQuery("select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole  and o.libellePeriode=:periode and o.anneeLibelle=:annee " +
-                    " and o.lv2=:lv2  and  o.ordreNiveau=:niveau  order by o.ordreNiveau desc ")
-                .setParameter("sexe","MASCULIN")
-                .setParameter("idEcole",idEcole)
-                .setParameter("niveau",niveau)
-                .setParameter("annee", libelleAnnee)
-                .setParameter("periode", libelleTrimestre)
-                .setParameter("lv2", "ESP")
-                .getSingleResult();
-        } catch (NoResultException e){
-            return 0L ;
-        }
+        return bulletinEffectifQueryService.countBySexeLv2Ordre(idEcole, niveau, libelleAnnee, libelleTrimestre,
+                "MASCULIN", "ESP");
     }
 
     public  Long geteffeAllF(Long idEcole , int  niveau ,String libelleAnnee , String libelleTrimestre){
-        Long effeF ;
-        try {
-            return  effeF = (Long) em.createQuery("select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole  and o.libellePeriode=:periode and o.anneeLibelle=:annee " +
-                    " and o.lv2=:lv2  and  o.ordreNiveau=:niveau  order by o.ordreNiveau desc ")
-                .setParameter("sexe","FEMININ")
-                .setParameter("idEcole",idEcole)
-                .setParameter("niveau",niveau)
-                .setParameter("annee", libelleAnnee)
-                .setParameter("periode", libelleTrimestre)
-                .setParameter("lv2", "ALL")
-                .getSingleResult();
-        } catch (NoResultException e){
-            return 0L ;
-        }
+        return bulletinEffectifQueryService.countBySexeLv2Ordre(idEcole, niveau, libelleAnnee, libelleTrimestre,
+                "FEMININ", "ALL");
     }
     public  Long geteffeAllG(Long idEcole , int  niveau ,String libelleAnnee , String libelleTrimestre){
-        Long effeF ;
-        try {
-            return  effeF = (Long) em.createQuery("select count(o.id) from Bulletin o where  o.sexe=:sexe and o.ecoleId=:idEcole  and o.libellePeriode=:periode and o.anneeLibelle=:annee " +
-                    " and o.lv2=:lv2 and  o.ordreNiveau=:niveau order by o.ordreNiveau desc ")
-                .setParameter("sexe","MASCULIN")
-                .setParameter("idEcole",idEcole)
-                .setParameter("niveau",niveau)
-                .setParameter("annee", libelleAnnee)
-                .setParameter("periode", libelleTrimestre)
-                .setParameter("lv2", "ALL")
-                .getSingleResult();
-        } catch (NoResultException e){
-            return 0L ;
-        }
+        return bulletinEffectifQueryService.countBySexeLv2Ordre(idEcole, niveau, libelleAnnee, libelleTrimestre,
+                "MASCULIN", "ALL");
     }
 
 
   public  Long getClasseAll(Long idEcole , int  niveau ,String libelleAnnee , String libelleTrimestre){
-    Long effeF ;
-    try {
-      return  effeF = (Long) em.createQuery("select distinct count(o.classeId) from Bulletin o where   o.ecoleId=:idEcole  and o.libellePeriode=:periode and o.anneeLibelle=:annee " +
-              " and o.lv2=:lv2 and  o.ordreNiveau=:niveau order by o.ordreNiveau desc ")
-          .setParameter("idEcole",idEcole)
-          .setParameter("niveau",niveau)
-          .setParameter("annee", libelleAnnee)
-          .setParameter("periode", libelleTrimestre)
-          .setParameter("lv2", "ALL")
-          .getSingleResult();
-    } catch (NoResultException e){
-      return 0L ;
-    }
+    return bulletinEffectifQueryService.countDistinctClasseByLv2Ordre(idEcole, niveau, libelleAnnee, libelleTrimestre,
+            "ALL");
   }
 
   public  Long getClasseEsp(Long idEcole , int  niveau ,String libelleAnnee , String libelleTrimestre){
-    Long effeF ;
-    try {
-      return  effeF = (Long) em.createQuery("select distinct count(o.classeId) from Bulletin o where   o.ecoleId=:idEcole  and o.libellePeriode=:periode and o.anneeLibelle=:annee " +
-              " and o.lv2=:lv2 and  o.ordreNiveau=:niveau order by o.ordreNiveau desc ")
-          .setParameter("idEcole",idEcole)
-          .setParameter("niveau",niveau)
-          .setParameter("annee", libelleAnnee)
-          .setParameter("periode", libelleTrimestre)
-          .setParameter("lv2", "ESP")
-          .getSingleResult();
-    } catch (NoResultException e){
-      return 0L ;
-    }
+    return bulletinEffectifQueryService.countDistinctClasseByLv2Ordre(idEcole, niveau, libelleAnnee, libelleTrimestre,
+            "ESP");
   }
 
 

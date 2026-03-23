@@ -5,7 +5,6 @@ import com.vieecoles.services.etats.ApprocheParNiveauParGenreServices;
 import java.util.List;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import jakarta.persistence.EntityManager;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
@@ -16,9 +15,7 @@ import org.openxmlformats.schemas.wordprocessingml.x2006.main.STMerge;
 @ApplicationScoped
 public class WordTempEffectifApprocheNiveauGenre {
     @Inject
-    EntityManager em;
-    @Inject
-    ApprocheParNiveauParGenreServices approcheParNiveauParGenreServices ;
+    ApprocheParNiveauParGenreServices approcheParNiveauParGenreServices;
     int LongTableau;
 
     private static void ensureCellCount(XWPFTableRow row, int cellCount) {

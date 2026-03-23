@@ -1,7 +1,5 @@
 package com.vieecoles.processors.bouake;
 
-import com.vieecoles.dto.RecapDesResultatsElevesAffecteDto;
-import com.vieecoles.dto.eleveAffecteParClasseDto;
 import com.vieecoles.processors.bouake.annuels.WordTempIdentiteAnnuelProcessor;
 import com.vieecoles.processors.bouake.annuels.WordTempListAffecteNonAffectesAnnuelProcessor;
 import com.vieecoles.processors.bouake.annuels.WordTempListAffectesAnnuelProcessor;
@@ -9,192 +7,180 @@ import com.vieecoles.processors.bouake.annuels.WordTempListMajorAnnuelProcessor;
 import com.vieecoles.processors.bouake.annuels.WordTempResultaAffAnnuelProcessor;
 import com.vieecoles.processors.bouake.annuels.WordTempResultaAffEtNonAffAnnuelProcessor;
 import com.vieecoles.processors.bouake.annuels.WordTempResultaNonAffAnnuelProcessor;
-import com.vieecoles.services.etats.EleveAffecteParClasseServices;
-import com.vieecoles.services.etats.appachePoi.resultatsPoiServices;
-import com.vieecoles.services.etats.resultatsRecapServices;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.NoResultException;
-import org.apache.poi.xwpf.usermodel.*;
-
+import com.vieecoles.services.etats.BulletinAnneeLookupService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
-import java.util.List;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.jboss.logging.Logger;
 
 @ApplicationScoped
 public class WordTempProcessorBouake {
-  @Inject
-  EntityManager em;
-    @Inject
-    resultatsPoiServices resultatsServices ;
-    @Inject
-    resultatsRecapServices resultatsRecapServices ;
-    @Inject
-    WordTempResultaAffProcessor  wordTempRecapResultatProcessor ;
-  @Inject
-  WordTempResultaAffAnnuelProcessor wordTempRecapResultatAnnuelProcessor ;
 
+    private static final Logger LOG = Logger.getLogger(WordTempProcessorBouake.class);
+    private static final String TROISIEME_TRIMESTRE = "Troisième Trimestre";
 
     @Inject
-    WordTempListAffectesProcessor  wordTempListAffectesProcessor ;
-  @Inject
-  WordTempListAffectesAnnuelProcessor wordTempListAffectesAnnuelProcessor ;
+    BulletinAnneeLookupService bulletinAnneeLookupService;
+    /** Nom historique : processeur des résultats affectés (trimestre). */
     @Inject
-    EleveAffecteParClasseServices eleveAffecteParClasseServices ;
+    WordTempResultaAffProcessor wordTempRecapResultatProcessor;
     @Inject
-    WordTempListMajorProcessor  wordTempListMajorProcessor ;
-  @Inject
-  WordTempListMajorAnnuelProcessor wordTempListMajorAnnuelProcessor ;
+    WordTempResultaAffAnnuelProcessor wordTempRecapResultatAnnuelProcessor;
     @Inject
-    WordTempListTransfertProcessor  wordTempListTransfertProcessor ;
+    WordTempListAffectesProcessor wordTempListAffectesProcessor;
     @Inject
-    com.vieecoles.processors.yamoussoukro.WordTempRepartitionAnneeNaissProcessor
-        WordTempRepartitionAnneeNaissProcessor ;
+    WordTempListAffectesAnnuelProcessor wordTempListAffectesAnnuelProcessor;
     @Inject
-    WordTempListBoursiersProcessor wordTempListBoursiersProcessor ;
+    WordTempListMajorProcessor wordTempListMajorProcessor;
     @Inject
-    WordTempEffectifApprocheNiveauGenre  wordTempEffectifApprocheNiveauGenre ;
+    WordTempListMajorAnnuelProcessor wordTempListMajorAnnuelProcessor;
+    @Inject
+    WordTempListTransfertProcessor wordTempListTransfertProcessor;
     @Inject
     WordTempIdentiteProcessor wordTempIdentiteProcessor;
-  @Inject
-  WordTempIdentiteAnnuelProcessor wordTempIdentiteAnnuelProcessor;
     @Inject
-    WordTempResultaNonAffProcessor  wordTempResultaNonAffProcessor ;
-  @Inject
-  WordTempResultaNonAffAnnuelProcessor  wordTempResultaNonAffAnnuelProcessor ;
-  @Inject
-  WordTempResultaAffEtNonAffProcessor  wordTempResultaAffEtNonAffProcessor ;
-  @Inject
-  WordTempResultaAffEtNonAffAnnuelProcessor wordTempResultaAffEtNonAffAnnuelProcessor ;
+    WordTempIdentiteAnnuelProcessor wordTempIdentiteAnnuelProcessor;
     @Inject
-    WordTempEffectifConseilClasseProcessor wordTempEffectifConseilClasseProcessor ;
-
-  @Inject
-  WordTempEffectifConseilClasse2Processor wordTempEffectifConseilClasse2Processor ;
-  @Inject
-  WordTempPyramideProcessor wordTempPyramideProcessor ;
+    WordTempResultaNonAffProcessor wordTempResultaNonAffProcessor;
     @Inject
-    WordTempRecapAffNonAffResultatProcessor wordTempRecapAffNonAffResultatProcessor ;
+    WordTempResultaNonAffAnnuelProcessor wordTempResultaNonAffAnnuelProcessor;
+    @Inject
+    WordTempResultaAffEtNonAffProcessor wordTempResultaAffEtNonAffProcessor;
+    @Inject
+    WordTempResultaAffEtNonAffAnnuelProcessor wordTempResultaAffEtNonAffAnnuelProcessor;
+    @Inject
+    WordTempEffectifConseilClasseProcessor wordTempEffectifConseilClasseProcessor;
+    @Inject
+    WordTempEffectifConseilClasse2Processor wordTempEffectifConseilClasse2Processor;
+    @Inject
+    WordTempPyramideProcessor wordTempPyramideProcessor;
     @Inject
     WordTempStatistiqueAgeProcessor wordTempStatistiqueAgeProcessor;
     @Inject
-  WordTempListAffecteNonAffectesProcessor wordTempListAffecteNonAffectesProcessor ;
-  @Inject
-  WordTempListAffecteNonAffectesAnnuelProcessor wordTempListAffecteNonAffectesAnnuelProcessor ;
+    WordTempListAffecteNonAffectesProcessor wordTempListAffecteNonAffectesProcessor;
     @Inject
+    WordTempListAffecteNonAffectesAnnuelProcessor wordTempListAffecteNonAffectesAnnuelProcessor;
+    @Inject
+    WordTempStatistiqueProfesseurProcessor wordTempStatistiqueProfesseurProcessor;
 
-  WordTempStatistiqueLangueVivanteProcessor wordTempStatistiqueLangueVivanteProcessor ;
-        @Inject
-   WordTempStatistiqueProfesseurProcessor wordTempStatistiqueProfesseurProcessor ;
-
-    public  byte[] generateWordFile(Long idEcole,String libelleAnnee ,String  libelleTrimetre, ByteArrayInputStream  fis) throws Exception {
-      Long anneeId=getIdAnnee(idEcole,libelleAnnee,libelleTrimetre);
-
-
-
+    public byte[] generateWordFile(Long idEcole, String libelleAnnee, String libelleTrimetre, ByteArrayInputStream fis)
+            throws Exception {
+        Long anneeId = bulletinAnneeLookupService.findAnneeId(idEcole, libelleAnnee, libelleTrimetre);
         XWPFDocument document = new XWPFDocument(fis);
-      if (libelleTrimetre.equals("Troisième Trimestre")) {
-
-
-        wordTempIdentiteAnnuelProcessor.getIdentiteProcessor(document,idEcole,libelleAnnee,libelleTrimetre);
-        wordTempListAffecteNonAffectesProcessor.getEleveNosAffecteParClasse(document,idEcole ,libelleAnnee,libelleTrimetre);
-        System.out.println("Liste affecte et non affecté Ok");
-        wordTempListAffecteNonAffectesAnnuelProcessor.getEleveNosAffecteParClasse(document,idEcole ,libelleAnnee,libelleTrimetre);
-        System.out.println("Liste affecte et non affecté Annuel Ok");
-
-        wordTempListAffectesProcessor.getEleveAffecteParClasse(document,idEcole ,libelleAnnee,libelleTrimetre);
-        System.out.println("Liste Eleve Affectes ok");
-        wordTempListAffectesAnnuelProcessor.getEleveAffecteParClasse(document,idEcole ,libelleAnnee,libelleTrimetre);
-        System.out.println("Liste Eleve Affectes Annuel ok");
-
-        wordTempRecapResultatProcessor.getResultatAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
-        System.out.println("RecapResultaAff ok");
-        wordTempRecapResultatAnnuelProcessor.getResultatAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
-        System.out.println("RecapResultaAff Annuel ok");
-
-
-        wordTempResultaNonAffProcessor.getResultatNonAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
-        System.out.println("ResultaNonAff ok");
-        wordTempResultaNonAffAnnuelProcessor.getResultatNonAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
-        System.out.println("ResultaNonAff Annuel ok");
-
-
-        wordTempResultaAffEtNonAffProcessor.getResultatAffEtNonAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
-        System.out.println("ResultaAffEtNonAff ok");
-        wordTempResultaAffEtNonAffAnnuelProcessor.getResultatAffEtNonAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
-        System.out.println("ResultaAffEtNonAff Annuel ok");
-
-      wordTempListMajorProcessor.getListeMajorClasse(document,idEcole ,libelleAnnee,libelleTrimetre);
-        System.out.println("ListMajor ok");
-
-        wordTempListMajorAnnuelProcessor.getListeMajorClasse(document,idEcole ,libelleAnnee,libelleTrimetre);
-        System.out.println("ListMajor ok Annuel");
-
-
-        wordTempListTransfertProcessor.getListTransfert(document,idEcole) ;
-        System.out.println("ListeTransfert ok");
-        wordTempEffectifConseilClasseProcessor.getEffectifConseilProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
-        System.out.println("Effectifi Conseil ok");
-        wordTempEffectifConseilClasse2Processor.getEffectifConseilProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
-        System.out.println("Effectifi Conseil ok");
-        wordTempPyramideProcessor.getNombreClasseProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
-        System.out.println("Pyramide ok");
-        wordTempStatistiqueAgeProcessor.getResultatAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
-        System.out.println("Statistique ok");
-        wordTempStatistiqueProfesseurProcessor.getNbreProfessProcessor(document,idEcole,libelleAnnee,libelleTrimetre,anneeId);
-        System.out.println("Statistique professeur ok");
-      } else {
-        wordTempIdentiteProcessor.getIdentiteProcessor(document,idEcole,libelleAnnee,libelleTrimetre);
-        wordTempListAffecteNonAffectesProcessor.getEleveNosAffecteParClasse(document,idEcole ,libelleAnnee,libelleTrimetre);
-        System.out.println("Liste affecte et non affecté Ok");
-        wordTempListAffectesProcessor.getEleveAffecteParClasse(document,idEcole ,libelleAnnee,libelleTrimetre);
-        System.out.println("Liste Eleve Affectes ok");
-        wordTempRecapResultatProcessor.getResultatAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
-        System.out.println("RecapResultaAff ok");
-        wordTempResultaNonAffProcessor.getResultatNonAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
-        System.out.println("ResultaNonAff ok");
-        wordTempResultaAffEtNonAffProcessor.getResultatAffEtNonAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
-        System.out.println("ResultaAffEtNonAff ok");
-        wordTempListMajorProcessor.getListeMajorClasse(document,idEcole ,libelleAnnee,libelleTrimetre);
-        System.out.println("ListMajor ok");
-        wordTempListTransfertProcessor.getListTransfert(document,idEcole) ;
-        System.out.println("ListeTransfert ok");
-        wordTempEffectifConseilClasseProcessor.getEffectifConseilProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
-        System.out.println("Effectifi Conseil ok");
-        wordTempEffectifConseilClasse2Processor.getEffectifConseilProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
-        System.out.println("Effectifi Conseil ok");
-        wordTempPyramideProcessor.getNombreClasseProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
-        System.out.println("Pyramide ok");
-        wordTempStatistiqueAgeProcessor.getResultatAffProcessor(document,idEcole ,libelleAnnee,libelleTrimetre);
-        System.out.println("Statistique ok");
-        wordTempStatistiqueProfesseurProcessor.getNbreProfessProcessor(document,idEcole,libelleAnnee,libelleTrimetre,anneeId);
-        System.out.println("Statistique professeur ok");
-      }
-
-
-
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        document.write(outputStream);
-        document.close();
-        fis.close();
-
-        return outputStream.toByteArray();
-    }
-  public  Long getIdAnnee(Long idEcole ,String libelleAnnee,String periode){
-    try {
-      Long   anneeID = (Long) em.createQuery("select distinct b.anneeId  from Bulletin b  where   b.anneeLibelle=:libelleAnnee " +
-              " and b.libellePeriode=:periode and b.ecoleId=:idEcole ")
-          .setParameter("periode",periode)
-          .setParameter("libelleAnnee", libelleAnnee)
-          .setParameter("idEcole", idEcole)
-          .getSingleResult();
-      return  anneeID ;
-    } catch (NoResultException e){
-      return null ;
+        try {
+            if (TROISIEME_TRIMESTRE.equals(libelleTrimetre)) {
+                fillTroisiemeTrimestre(document, idEcole, libelleAnnee, libelleTrimetre, anneeId);
+            } else {
+                fillAutresTrimestres(document, idEcole, libelleAnnee, libelleTrimetre, anneeId);
+            }
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            document.write(outputStream);
+            return outputStream.toByteArray();
+        } finally {
+            document.close();
+            fis.close();
+        }
     }
 
-  }
+    private void fillTroisiemeTrimestre(XWPFDocument document, Long idEcole, String libelleAnnee, String libelleTrimetre,
+            Long anneeId) throws Exception {
+        wordTempIdentiteAnnuelProcessor.getIdentiteProcessor(document, idEcole, libelleAnnee, libelleTrimetre);
+        trace("Identité annuelle");
 
+        wordTempListAffecteNonAffectesProcessor.getEleveNosAffecteParClasse(document, idEcole, libelleAnnee,
+                libelleTrimetre);
+        trace("Liste aff+non aff");
+        wordTempListAffecteNonAffectesAnnuelProcessor.getEleveNosAffecteParClasse(document, idEcole, libelleAnnee,
+                libelleTrimetre);
+        trace("Liste aff+non aff annuel");
+
+        wordTempListAffectesProcessor.getEleveAffecteParClasse(document, idEcole, libelleAnnee, libelleTrimetre);
+        trace("Liste affectés");
+        wordTempListAffectesAnnuelProcessor.getEleveAffecteParClasse(document, idEcole, libelleAnnee, libelleTrimetre);
+        trace("Liste affectés annuel");
+
+        wordTempRecapResultatProcessor.getResultatAffProcessor(document, idEcole, libelleAnnee, libelleTrimetre);
+        trace("Résultats affectés");
+        wordTempRecapResultatAnnuelProcessor.getResultatAffProcessor(document, idEcole, libelleAnnee, libelleTrimetre);
+        trace("Résultats affectés annuel");
+
+        wordTempResultaNonAffProcessor.getResultatNonAffProcessor(document, idEcole, libelleAnnee, libelleTrimetre);
+        trace("Résultats non affectés");
+        wordTempResultaNonAffAnnuelProcessor.getResultatNonAffProcessor(document, idEcole, libelleAnnee, libelleTrimetre);
+        trace("Résultats non affectés annuel");
+
+        wordTempResultaAffEtNonAffProcessor.getResultatAffEtNonAffProcessor(document, idEcole, libelleAnnee,
+                libelleTrimetre);
+        trace("Résultats aff+non aff");
+        wordTempResultaAffEtNonAffAnnuelProcessor.getResultatAffEtNonAffProcessor(document, idEcole, libelleAnnee,
+                libelleTrimetre);
+        trace("Résultats aff+non aff annuel");
+
+        wordTempListMajorProcessor.getListeMajorClasse(document, idEcole, libelleAnnee, libelleTrimetre);
+        trace("Majors");
+        wordTempListMajorAnnuelProcessor.getListeMajorClasse(document, idEcole, libelleAnnee, libelleTrimetre);
+        trace("Majors annuel");
+
+        wordTempListTransfertProcessor.getListTransfert(document, idEcole);
+        trace("Transferts");
+        wordTempEffectifConseilClasseProcessor.getEffectifConseilProcessor(document, idEcole, libelleAnnee,
+                libelleTrimetre);
+        trace("Effectif conseil 1");
+        wordTempEffectifConseilClasse2Processor.getEffectifConseilProcessor(document, idEcole, libelleAnnee,
+                libelleTrimetre);
+        trace("Effectif conseil 2");
+        wordTempPyramideProcessor.getNombreClasseProcessor(document, idEcole, libelleAnnee, libelleTrimetre);
+        trace("Pyramide");
+        wordTempStatistiqueAgeProcessor.getResultatAffProcessor(document, idEcole, libelleAnnee, libelleTrimetre);
+        trace("Âge");
+        wordTempStatistiqueProfesseurProcessor.getNbreProfessProcessor(document, idEcole, libelleAnnee, libelleTrimetre,
+                anneeId);
+        trace("Professeurs");
+    }
+
+    private void fillAutresTrimestres(XWPFDocument document, Long idEcole, String libelleAnnee, String libelleTrimetre,
+            Long anneeId) throws Exception {
+        wordTempIdentiteProcessor.getIdentiteProcessor(document, idEcole, libelleAnnee, libelleTrimetre);
+        trace("Identité");
+
+        wordTempListAffecteNonAffectesProcessor.getEleveNosAffecteParClasse(document, idEcole, libelleAnnee,
+                libelleTrimetre);
+        trace("Liste aff+non aff");
+        wordTempListAffectesProcessor.getEleveAffecteParClasse(document, idEcole, libelleAnnee, libelleTrimetre);
+        trace("Liste affectés");
+
+        wordTempRecapResultatProcessor.getResultatAffProcessor(document, idEcole, libelleAnnee, libelleTrimetre);
+        trace("Résultats affectés");
+        wordTempResultaNonAffProcessor.getResultatNonAffProcessor(document, idEcole, libelleAnnee, libelleTrimetre);
+        trace("Résultats non affectés");
+        wordTempResultaAffEtNonAffProcessor.getResultatAffEtNonAffProcessor(document, idEcole, libelleAnnee,
+                libelleTrimetre);
+        trace("Résultats aff+non aff");
+
+        wordTempListMajorProcessor.getListeMajorClasse(document, idEcole, libelleAnnee, libelleTrimetre);
+        trace("Majors");
+        wordTempListTransfertProcessor.getListTransfert(document, idEcole);
+        trace("Transferts");
+        wordTempEffectifConseilClasseProcessor.getEffectifConseilProcessor(document, idEcole, libelleAnnee,
+                libelleTrimetre);
+        trace("Effectif conseil 1");
+        wordTempEffectifConseilClasse2Processor.getEffectifConseilProcessor(document, idEcole, libelleAnnee,
+                libelleTrimetre);
+        trace("Effectif conseil 2");
+        wordTempPyramideProcessor.getNombreClasseProcessor(document, idEcole, libelleAnnee, libelleTrimetre);
+        trace("Pyramide");
+        wordTempStatistiqueAgeProcessor.getResultatAffProcessor(document, idEcole, libelleAnnee, libelleTrimetre);
+        trace("Âge");
+        wordTempStatistiqueProfesseurProcessor.getNbreProfessProcessor(document, idEcole, libelleAnnee, libelleTrimetre,
+                anneeId);
+        trace("Professeurs");
+    }
+
+    private static void trace(String step) {
+        if (LOG.isTraceEnabled()) {
+            LOG.tracef("WordTempProcessorBouake: %s", step);
+        }
+    }
 }

@@ -3,8 +3,8 @@ package com.vieecoles.processors.dren4;
 import com.vieecoles.dto.BoursiersDto;
 import com.vieecoles.dto.EffectifElevLangueVivante2Dto;
 import com.vieecoles.dto.LangVivanteDto;
-import com.vieecoles.dto.NiveauDto;
 import com.vieecoles.processors.dren3.services.StatistiqueBoursierServices;
+import com.vieecoles.services.etats.BulletinNiveauClasseQueryService;
 import com.vieecoles.processors.yamoussoukro.services.EffectifParLangueServices;
 import com.vieecoles.steph.entities.Ecole;
 import java.math.BigDecimal;
@@ -14,8 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.TypedQuery;
 import org.apache.poi.xwpf.usermodel.BodyElementType;
 import org.apache.poi.xwpf.usermodel.IBodyElement;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
@@ -39,9 +37,9 @@ import java.math.BigInteger;
 @ApplicationScoped
 public class WordTempStatistiqueLangueVivanteProcessor {
     @Inject
-    EffectifParLangueServices resultatsServices ;
-  @Inject
-  EntityManager em;
+    EffectifParLangueServices resultatsServices;
+    @Inject
+    BulletinNiveauClasseQueryService bulletinNiveauClasseQueryService;
 
       public   void getResultatAffProcessor(XWPFDocument document ,
           Long idEcole ,String libelleAnnee , String libelleTrimetre,Long idAnnee) {
@@ -491,15 +489,8 @@ if(targetTable!=null) {
     }
 
     public int getNombreDeclasseParNiveau(Long idEcole,String libelleAnnee ,String libelleTrimetre,String niveau){
-      List<NiveauDto> classeNiveauDtoList = new ArrayList<>() ;
-      TypedQuery<NiveauDto> q = em.createQuery( "SELECT new com.vieecoles.dto.NiveauDto(b.libelleClasse) from Bulletin b  where b.ecoleId =:idEcole and b.libellePeriode=:periode and b.anneeLibelle=:annee and b.niveau=:niveau " +
-          "group by b.libelleClasse", NiveauDto.class);
-      classeNiveauDtoList = q.setParameter("idEcole", idEcole)
-          .setParameter("annee", libelleAnnee)
-          .setParameter("periode", libelleTrimetre)
-          .setParameter("niveau", niveau)
-          . getResultList() ;
-      return classeNiveauDtoList.size() ;
+      return bulletinNiveauClasseQueryService.listLibellesClasseParNiveau(idEcole, libelleAnnee, libelleTrimetre, niveau)
+          .size();
     }
 
 }

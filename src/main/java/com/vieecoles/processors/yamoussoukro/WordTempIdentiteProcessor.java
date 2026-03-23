@@ -1,25 +1,18 @@
 package com.vieecoles.processors.yamoussoukro;
 
-import com.vieecoles.dto.IdentiteEtatDto;
-import com.vieecoles.dto.ResultatsElevesAffecteDto;
-import com.vieecoles.dto.eleveAffecteParClasseDto;
-import com.vieecoles.entities.operations.ecole;
-import com.vieecoles.services.etats.IdentiteEtatService;
-import com.vieecoles.services.etats.appachePoi.resultatsPoiServices;
 import com.vieecoles.steph.entities.Ecole;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
+import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
+import org.apache.poi.xwpf.usermodel.UnderlinePatterns;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
-import org.apache.poi.xwpf.usermodel.*;
-import org.apache.xmlbeans.XmlCursor;
-import org.apache.xmlbeans.XmlObject;
-import org.apache.poi.xwpf.usermodel.*;
+import org.apache.poi.xwpf.usermodel.XWPFTable;
+import org.apache.poi.xwpf.usermodel.XWPFTableCell;
+import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 import org.apache.xmlbeans.XmlCursor;
 import org.apache.xmlbeans.XmlObject;
 import org.openxmlformats.schemas.drawingml.x2006.wordprocessingDrawing.CTInline;
@@ -27,15 +20,9 @@ import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTDrawing;
 
 @ApplicationScoped
 public class WordTempIdentiteProcessor {
-    @Inject
-    resultatsPoiServices resultatsServices ;
-    @Inject
-    IdentiteEtatService identiteEtatService ;
-    public   void getIdentiteProcessor(XWPFDocument document ,
-                                           Long idEcole ,String libelleAnnee , String libelleTrimestre) {
-        List<IdentiteEtatDto>  identiteEtatDto = new ArrayList<>() ;
-        //identiteEtatDto= identiteEtatService.getIdentiteDto(idEcole) ;
 
+    public void getIdentiteProcessor(XWPFDocument document,
+            Long idEcole, String libelleAnnee, String libelleTrimestre) {
         String ecoleName;
         Ecole myEcole= new Ecole();
         myEcole=Ecole.findById(idEcole);

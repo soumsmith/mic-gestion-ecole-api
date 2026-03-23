@@ -3,12 +3,11 @@ package com.vieecoles.processors.dren4.Annuels;
 import com.vieecoles.dto.BoursierDto;
 import com.vieecoles.dto.NiveauDto;
 import com.vieecoles.services.etats.BoursiersServices;
+import com.vieecoles.services.etats.BulletinNiveauClasseQueryService;
 import java.util.ArrayList;
 import java.util.List;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.TypedQuery;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
@@ -21,9 +20,9 @@ import org.openxmlformats.schemas.wordprocessingml.x2006.main.STMerge;
 @ApplicationScoped
 public class WordTempListBoursiersAnnuelsProcessor {
     @Inject
-    EntityManager em;
+    BulletinNiveauClasseQueryService bulletinNiveauClasseQueryService;
     @Inject
-    BoursiersServices boursiersServices ;
+    BoursiersServices boursiersServices;
     int LongTableau;
 
     private static void ensureCellCount(XWPFTableRow row, int cellCount) {
@@ -54,13 +53,8 @@ public class WordTempListBoursiersAnnuelsProcessor {
             }
         }
 
-        List<NiveauDto> niveauDtoList = new ArrayList<>() ;
-        TypedQuery<NiveauDto> q = em.createQuery( "SELECT new com.vieecoles.dto.NiveauDto(b.niveau) from Bulletin b  where b.ecoleId =:idEcole and b.libellePeriode=:periode and b.anneeLibelle=:annee " +
-                "group by b.niveau ", NiveauDto.class);
-        niveauDtoList = q.setParameter("idEcole", idEcole)
-                .setParameter("annee", libelleAnnee)
-                .setParameter("periode", libelleTrimestre)
-                .getResultList() ;
+        List<NiveauDto> niveauDtoList = new ArrayList<>(
+                bulletinNiveauClasseQueryService.listNiveauxDistincts(idEcole, libelleAnnee, libelleTrimestre));
 
         List<BoursierDto> boursierDtoList = new ArrayList<>() ;
         boursierDtoList = boursiersServices.boursier(idEcole ,libelleAnnee,libelleTrimestre) ;

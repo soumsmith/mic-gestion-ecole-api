@@ -1,6 +1,5 @@
 package com.vieecoles.services.etats.PvConseilsClasse;
 
-import com.vieecoles.dto.ClasseNiveauDto;
 import com.vieecoles.dto.MajorParClasseNiveauDto;
 import com.vieecoles.dto.ProcesVerbalListeClasseDto;
 import java.util.ArrayList;
@@ -25,40 +24,33 @@ public class MajorClassePvServices {
         List<ProcesVerbalListeClasseDto> resultatsListElevesDto = new ArrayList<>();
         List<MajorParClasseNiveauDto> majorExeco = new ArrayList<>();
 
-            MajorParClasseNiveauDto resultatsListEleves= new MajorParClasseNiveauDto();
-            ProcesVerbalListeClasseDto procesVerbalListeClasseDto= new ProcesVerbalListeClasseDto();
+            Double moyMajor = getMajorDto(idEcole, classe, libelleAnnee, libelleTrimestre);
+            majorExeco = getListMajorParClasseNiveau(idEcole, classe, moyMajor, libelleAnnee, libelleTrimestre);
 
-            Double moyMajor = null;
-
-            moyMajor = getMajorDto(idEcole,classe,libelleAnnee , libelleTrimestre) ;
-           System.out.println("moyMajor++++++++++++++++++ ");
-            majorExeco = getListMajorParClasseNiveau(idEcole,classe,moyMajor,libelleAnnee , libelleTrimestre) ;
-            System.out.println("majorExeco++++++++++++++++++ ");
-
-            if(!majorExeco.isEmpty()&& majorExeco.size() >1){
-
-                for (int k=0 ;k< majorExeco.size(); k++){
-                    resultatsListEleves = majorExeco.get(k);
-                    procesVerbalListeClasseDto.setMoyenne(resultatsListEleves.getMoyGeneral());
-                    procesVerbalListeClasseDto.setMatricule(resultatsListEleves.getMatricule());
-                    procesVerbalListeClasseDto.setDateNaissance(resultatsListEleves.getAnneeNaiss());
-                    procesVerbalListeClasseDto.setNom(resultatsListEleves.getNom());
-                    procesVerbalListeClasseDto.setPrenoms(resultatsListEleves.getPrenom());
-                    procesVerbalListeClasseDto.setClasse(classe);
-                    procesVerbalListeClasseDto.setRang(1);
-                    resultatsListElevesDto.add(procesVerbalListeClasseDto) ;
+            if (majorExeco != null && majorExeco.size() > 1) {
+                for (int k = 0; k < majorExeco.size(); k++) {
+                    MajorParClasseNiveauDto major = majorExeco.get(k);
+                    ProcesVerbalListeClasseDto dto = new ProcesVerbalListeClasseDto();
+                    dto.setMoyenne(major.getMoyGeneral());
+                    dto.setMatricule(major.getMatricule());
+                    dto.setDateNaissance(major.getAnneeNaiss());
+                    dto.setNom(major.getNom());
+                    dto.setPrenoms(major.getPrenom());
+                    dto.setClasse(classe);
+                    dto.setRang(1);
+                    resultatsListElevesDto.add(dto);
                 }
-            }else {
-                if(!majorExeco.isEmpty())
-                resultatsListEleves = majorExeco.get(0);
-                procesVerbalListeClasseDto.setMoyenne(resultatsListEleves.getMoyGeneral());
-                procesVerbalListeClasseDto.setMatricule(resultatsListEleves.getMatricule());
-                procesVerbalListeClasseDto.setDateNaissance(resultatsListEleves.getAnneeNaiss());
-                procesVerbalListeClasseDto.setNom(resultatsListEleves.getNom());
-                procesVerbalListeClasseDto.setPrenoms(resultatsListEleves.getPrenom());
-                procesVerbalListeClasseDto.setClasse(classe);
-                procesVerbalListeClasseDto.setRang(1);
-                resultatsListElevesDto.add(procesVerbalListeClasseDto) ;
+            } else if (majorExeco != null && !majorExeco.isEmpty()) {
+                MajorParClasseNiveauDto major = majorExeco.get(0);
+                ProcesVerbalListeClasseDto dto = new ProcesVerbalListeClasseDto();
+                dto.setMoyenne(major.getMoyGeneral());
+                dto.setMatricule(major.getMatricule());
+                dto.setDateNaissance(major.getAnneeNaiss());
+                dto.setNom(major.getNom());
+                dto.setPrenoms(major.getPrenom());
+                dto.setClasse(classe);
+                dto.setRang(1);
+                resultatsListElevesDto.add(dto);
             }
 
 
@@ -80,7 +72,7 @@ public class MajorClassePvServices {
                     .getResultList() ;
             return classeNiveauDtoList ;
         } catch (NoResultException e){
-            return null ;
+            return new ArrayList<>();
         }
 
     }

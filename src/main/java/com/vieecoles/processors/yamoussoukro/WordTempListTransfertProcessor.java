@@ -11,9 +11,13 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.List;
+import org.jboss.logging.Logger;
 
 @ApplicationScoped
 public class WordTempListTransfertProcessor {
+
+    private static final Logger LOG = Logger.getLogger(WordTempListTransfertProcessor.class);
+
     @Inject
     EntityManager em;
     @Inject
@@ -56,7 +60,7 @@ public class WordTempListTransfertProcessor {
         for (int k = classeList.size() - 1; k >= 0; k--) {
             List<TransfertsDto>  elevTransferes = new ArrayList<>() ;
             elevTransferes= transfertsServices.transferts(idEcole,classeList.get(k).getNiveau());
-            System.out.println("LISTE DES TRANSFERTS"+elevTransferes.toString());
+            LOG.debugf("Liste transferts niveau=%s, entrées=%d", classeList.get(k).getNiveau(), elevTransferes.size());
 
         if (indexToInsert != -1) {
            // for (int z=0; z< classeList.size();z++) {

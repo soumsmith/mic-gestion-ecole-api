@@ -4,7 +4,6 @@ import static com.vieecoles.processors.yamoussoukro.WordTempResultaAffProcessor.
 
 import com.vieecoles.dto.RecapDesResultatsElevesNonAffecteDto;
 import com.vieecoles.services.etats.resultatsRecapNonAffAnnuelleServices;
-import com.vieecoles.services.etats.resultatsRecapNonAffServices;
 import java.util.ArrayList;
 import java.util.List;
 import jakarta.enterprise.context.ApplicationScoped;
