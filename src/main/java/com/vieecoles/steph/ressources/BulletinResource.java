@@ -62,6 +62,16 @@ public class BulletinResource {
 	public Response getBulletinsElevesByAnnee(@QueryParam("annee") Long annee ,@QueryParam("matricule") String  matricule, @QueryParam("classe") Long classe) {
 		return Response.ok(bulletinService.getBulletinsEleveByAnnee(annee, matricule, classe)).build();
 	}
+	
+	@GET
+	@Path("/get-bulletin-min")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	@Operation(description = "Obtenir le bulletin d'un élève", summary = "")
+	@Tag(name = "Bulletins")
+	public Response getBulletins(@QueryParam("annee") Long annee ,@QueryParam("matricule") String  matricule, @QueryParam("classe") Long classe, @QueryParam("periode") Long periode) {
+		return Response.ok(bulletinService.getBulletinInfosParMatricule(matricule, classe, annee, periode)).build();
+	}
 
 	@GET
 	@Path("/get-bulletin-eleve-annee-periode")
