@@ -6,11 +6,13 @@ import com.vieecoles.steph.dto.IdLongCodeLibelleDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@ToString(includeFieldNames = true)
 public class EcoleMatiereDto {
 	private Long id;
 	private String code;

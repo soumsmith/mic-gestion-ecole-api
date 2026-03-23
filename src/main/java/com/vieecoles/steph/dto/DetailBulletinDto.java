@@ -1,6 +1,10 @@
 package com.vieecoles.steph.dto;
 
 import java.util.Date;
+import java.util.List;
+
+import com.vieecoles.steph.dto.moyennes.NoteDto;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -37,5 +41,5 @@ public class DetailBulletinDto {
 	private Long matiereRealId;
 	private String isAdjustment;
 	private Date dateCreation;
-
+	private List<NoteDto> notes;
 }

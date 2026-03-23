@@ -10,8 +10,11 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 import com.vieecoles.steph.dto.MoyenneEleveDto;
 import com.vieecoles.steph.dto.NotesEleveDto;
+import com.vieecoles.steph.dto.bulletin.BulletinClasseResultDto;
 import com.vieecoles.steph.dto.moyennes.EleveDto;
 import com.vieecoles.steph.entities.Notes;
+import com.vieecoles.steph.services.BulletinNotesOptmizedService;
+import com.vieecoles.steph.services.BulletinService;
 import com.vieecoles.steph.services.NoteService;
 
 import jakarta.inject.Inject;
@@ -32,6 +35,12 @@ public class NotesResource {
 
 	@Inject
 	NoteService noteService;
+	
+	@Inject
+	BulletinNotesOptmizedService bulletinNoteService;
+	
+	@Inject
+	BulletinService bulletinService;
 
 	// Logger logger = Logger.getLogger(NotesResource.class.getName());
 
@@ -132,6 +141,24 @@ public class NotesResource {
 //    	return  Response.ok(medtos).build();
 		return Response.ok(noteService.buildListMoyenneEleve(medtos)).build();
 	}
+	
+	@GET
+	@Path("/calcul-moyenne-optimise/{classe}/{annee}/{periode}")
+	@Operation(description = "Calcul optimisé des moyennes des eleves d une classe par periode ", summary = "")
+	@Tag(name = "Notes")
+	public Response calculMoyenneClasse(@PathParam("classe") Long classe, @PathParam("annee") Long annee,
+			@PathParam("periode") Long periode) {
+		BulletinClasseResultDto bulletin = new BulletinClasseResultDto();
+
+		try {
+			bulletin = bulletinNoteService.calculerBulletinsClasse(classe, annee, periode);
+		} catch (RuntimeException r) {
+			r.printStackTrace();
+			return Response.serverError().entity(r).build();
+		}
+//    	return  Response.ok(medtos).build();
+		return Response.ok(bulletin).build();
+	}
 
 	@GET
 	@Path("/list-notes-eleve-by-periode/{matricule}/{classe}/{annee}/{periode}")
@@ -207,14 +234,17 @@ public class NotesResource {
 	}
 
 	@GET
-	@Path("/list-matricule-notes-moyennes/{matricule}/{annee}/{periode}")
+	@Path("/list-matricule-notes-moyennes/{matricule}/")
 	@Operation(description = "Obtenir les notes des eleves d une classe par periode ", summary = "")
 	@Tag(name = "Notes")
-	public List<MoyenneEleveDto> getNotesByMatriculeAndPeriode(@PathParam("matricule") String matricule,
-			@PathParam("annee") String annee, @PathParam("periode") String periode) {
-		List<MoyenneEleveDto> list = new ArrayList<>();
-		list.add(noteService.moyennesAndNotesByMatriculeHandle(matricule, annee, periode));
-		return list;
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getNotesByMatriculeAndPeriode(@PathParam("matricule") String matricule, @QueryParam("classe") Long classe,
+			@QueryParam("annee") Long annee, @QueryParam("periode") Long periode) {
+//		List<MoyenneEleveDto> list = new ArrayList<>();
+//		list.add(noteService.moyennesAndNotesByMatriculeHandle(matricule, annee, periode));
+		//bulletinService.getBulletinInfosParMatricule(matricule, classe, annee, periode);
+		return Response.ok(bulletinService.getBulletinInfosParMatricule(matricule, classe, annee, periode)).build();
 	}
 
 	@GET
