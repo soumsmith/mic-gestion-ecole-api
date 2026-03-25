@@ -61,12 +61,12 @@ public class NotesResource {
 	}
 
 	@GET
-	@Path("/list-note-classe-vie-ecole")
+	@Path("/list-note-classe-vie-ecole/{matricule}/")
 	@Tag(name = "Notes")
 	public Response listByClassevieEcole(@QueryParam("codeClasse") String codeClasse,
 			@QueryParam("codeVieEcole") String codeVieEcole,
-			@QueryParam("idNiveauEnseignement") Long idNiveauEnseignement, @QueryParam("anneeId") String anneeId,
-			@QueryParam("periodeId") String periodeId) {
+			@QueryParam("idNiveauEnseignement") Long idNiveauEnseignement, @QueryParam("anneeId") long anneeId,
+			@QueryParam("periodeId") Long periodeId,@PathParam("matricule") String matricule) {
 		Ecole ecole = Ecole
 				.find("identifiantVieEcole =?1 and niveauEnseignement.id=?2", codeVieEcole, idNiveauEnseignement)
 				.firstResult();
@@ -82,7 +82,7 @@ public class NotesResource {
 		} else {
 			String classeId = String.valueOf(classe.getId());
 			System.out.println(String.format("%s %s %s", classeId, anneeId, periodeId));
-			return Response.ok().entity(noteService.process(classeId, anneeId, periodeId)).build();
+			return Response.ok(bulletinService.getBulletinInfosParMatricule(matricule, classe.getId(), anneeId, periodeId)).build();
 		}
 
 	}
