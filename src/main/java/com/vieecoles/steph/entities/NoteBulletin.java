@@ -24,4 +24,8 @@ public class NoteBulletin extends PanacheEntityBase {
 	@ManyToOne
 	@JoinColumn(name = "detail_bulletin_id")
 	private DetailBulletin detailBulletin;
+	@Column(name="note_reference")
+	private String referenceId;
+	@Column(name="type_evaluation")
+	private String type;
 }

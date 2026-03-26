@@ -3,11 +3,14 @@ package com.vieecoles.steph.dto;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class BulletinDto {
 	private String id;
 	private Long ecoleId;
