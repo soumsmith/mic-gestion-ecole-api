@@ -1389,6 +1389,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 			bulletinDto.setPrenoms(bulletin.getPrenoms());
 			bulletinDto.setSexe(bulletin.getSexe());
 			bulletinDto.setNomPrenomProfPrincipal(bulletin.getNomPrenomProfPrincipal());
+			bulletinDto.setMoyFr(bulletin.getMoyFr());
 
 			List<DetailBulletin> details = DetailBulletin.find("bulletin.id = ?1", bulletin.getId()).list();
 			List<DetailBulletinDto> detailsDto = new ArrayList<DetailBulletinDto>();
