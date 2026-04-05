@@ -15,13 +15,15 @@
 	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
-	<style name="champsLibelle" fontName="Serif" fontSize="8">
+	<property name="net.sf.jasperreports.export.pdf.force.singlenbytechars" value="false"/>
+	<property name="net.sf.jasperreports.default.pdf.embedded.font" value="true"/>
+	<style name="champsLibelle" fontName="Noto Sans Arabic" fontSize="8" pdfEncoding="Identity-H" isPdfEmbedded="true">
 		<box leftPadding="5"/>
 	</style>
-	<style name="TitreLibelle" fontName="Serif" fontSize="10">
+	<style name="TitreLibelle" fontName="Noto Sans Arabic" fontSize="10" pdfEncoding="Identity-H" isPdfEmbedded="true">
 		<box leftPadding="5"/>
 	</style>
-	<style name="TotalCateg" hTextAlign="Center" fontName="Serif" fontSize="10"/>
+	<style name="TotalCateg" hTextAlign="Center" fontName="Noto Sans Arabic" fontSize="10" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 	<parameter name="matricule" class="java.lang.String"/>
 	<parameter name="annee" class="java.lang.String"/>
 	<parameter name="idEcole" class="java.lang.Long"/>
@@ -442,7 +444,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 						</reportElement>
 						<textElement textAlignment="Left" verticalAlignment="Top">
-							<font fontName="SansSerif" size="8" isBold="true"/>
+							<font fontName="Noto Sans Arabic" size="8" isBold="true"/>
 						</textElement>
 						<textFieldExpression><![CDATA["Bilan "+$F{libelle_categorie}]]></textFieldExpression>
 					</textField>
@@ -457,7 +459,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 						</reportElement>
 						<textElement textAlignment="Center">
-							<font fontName="SansSerif" size="8" isBold="true"/>
+							<font fontName="Noto Sans Arabic" size="8" isBold="true"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{libelle_categorie}.equals("Religion")? $F{moy_reli}:$V{TotalMoyeCoefParCategorie}/$V{TotalCoeffParCategParMatier}]]></textFieldExpression>
 						<patternExpression><![CDATA["##.##"]]></patternExpression>
@@ -474,7 +476,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 							<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						</reportElement>
 						<textElement textAlignment="Center">
-							<font fontName="SansSerif" size="8" isBold="true"/>
+							<font fontName="Noto Sans Arabic" size="8" isBold="true"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{libelle_categorie}.equals("Religion")? 1:$V{TotalCoeffParCategParMatier}]]></textFieldExpression>
 					</textField>
@@ -489,7 +491,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 							<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 						</reportElement>
 						<textElement textAlignment="Center">
-							<font fontName="SansSerif" size="8" isBold="true"/>
+							<font fontName="Noto Sans Arabic" size="8" isBold="true"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{libelle_categorie}.equals("Religion")? $F{moy_reli}:$V{TotalMoyeCoefParCategorie}]]></textFieldExpression>
 					</textField>
@@ -530,7 +532,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 							<pen lineWidth="0.5"/>
 						</box>
 						<textElement textAlignment="Left" verticalAlignment="Middle">
-							<font fontName="SansSerif" size="8" isBold="false"/>
+							<font fontName="Noto Sans Arabic" size="8" isBold="false"/>
 							<paragraph leftIndent="0"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{parent_matiere}.equals("HISTOIRE-GEOGAPHIE")? "Histoire-Géographie":$F{parent_matiere}.equals("MATHEMATIQUES")? "Mathématiques" :$F{parent_matiere}.equals("SVT")? "SVT" :$F{parent_matiere}.equals("EDHC")? "EDHC"  :$F{parent_matiere}.equals("EPS")? "EPS"  :$F{parent_matiere}.substring(0,1).toUpperCase() + $F{parent_matiere}.substring(1).toLowerCase()]]></textFieldExpression>
@@ -550,7 +552,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 							<pen lineWidth="0.5"/>
 						</box>
 						<textElement textAlignment="Center" verticalAlignment="Middle">
-							<font fontName="SansSerif" size="8"/>
+							<font fontName="Noto Sans Arabic" size="8"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{parent_matiere}.equals("FRANCAIS")&&$F{ordre_niveau}<5?$F{moy_fr}:$F{parent_matiere}.equals("")?"":$F{moyenne}]]></textFieldExpression>
 						<patternExpression><![CDATA[$F{bonus}.equals("1") ? "+#.##": "##.##"]]></patternExpression>
@@ -569,7 +571,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 							<pen lineWidth="0.5"/>
 						</box>
 						<textElement textAlignment="Center" verticalAlignment="Middle">
-							<font fontName="SansSerif" size="8"/>
+							<font fontName="Noto Sans Arabic" size="8"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{parent_matiere}.equals("FRANCAIS")&&$F{ordre_niveau}<5?$F{coef_fr}:$F{parent_matiere}.equals("")?"":$F{coef}]]></textFieldExpression>
 					</textField>
@@ -589,7 +591,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 							<pen lineWidth="0.5"/>
 						</box>
 						<textElement textAlignment="Center" verticalAlignment="Middle">
-							<font fontName="SansSerif" size="8"/>
+							<font fontName="Noto Sans Arabic" size="8"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{parent_matiere}.equals("FRANCAIS")&&$F{ordre_niveau}<5?$F{moy_coef_fr}:$F{parent_matiere}.equals("")?"":$F{bonus}.equals("0")?$F{moyenne}*$F{coef}:$F{moyenne}]]></textFieldExpression>
 						<patternExpression><![CDATA["##.##"]]></patternExpression>
@@ -609,7 +611,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 							<pen lineWidth="0.5"/>
 						</box>
 						<textElement verticalAlignment="Middle">
-							<font fontName="SansSerif" size="8"/>
+							<font fontName="Noto Sans Arabic" size="8"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":($F{parent_matiere}.equals("FRANCAIS")&&$F{ordre_niveau}<5) ? $F{rang_fr}+"e":$F{rang}==1 ?  $F{rang}+" er" :$F{rang}!=1? $F{rang} +" e": $F{rang} +" e"]]></textFieldExpression>
 					</textField>
@@ -631,7 +633,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 							<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textElement textAlignment="Left" verticalAlignment="Middle">
-							<font fontName="SansSerif" size="8" isItalic="true"/>
+							<font fontName="Noto Sans Arabic" size="8" isItalic="true"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{parent_matiere}.equals("FRANCAIS")&&$F{ordre_niveau}<5?$F{appr_fr}:$F{parent_matiere}.equals("")?"":$F{appreciation}]]></textFieldExpression>
 					</textField>
@@ -649,7 +651,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 							<pen lineWidth="0.5"/>
 						</box>
 						<textElement textAlignment="Left" verticalAlignment="Middle">
-							<font fontName="SansSerif" size="8"/>
+							<font fontName="Noto Sans Arabic" size="8"/>
 						</textElement>
 						<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")||$F{parent_matiere}.equals("")? "" :$F{nom_prenom_professeur}.toUpperCase()]]></textFieldExpression>
 					</textField>
@@ -671,7 +673,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 		<band height="111" splitType="Stretch">
 			<image scaleImage="FillFrame" onErrorType="Blank">
 				<reportElement x="29" y="10" width="537" height="60" uuid="9d68a8cb-e267-4558-bb34-56516dc0a774"/>
-				<imageExpression><![CDATA["etats/spider/arabe/images/entete.jpeg"]]></imageExpression>
+				<imageExpression><![CDATA["etats/spider/arabe/images/entete.png"]]></imageExpression>
 			</image>
 			<line>
 				<reportElement x="29" y="70" width="539" height="1" uuid="a6cd5d08-605a-4c34-b3ae-b932070ef3de">
@@ -1119,7 +1121,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="SansSerif" size="7" isBold="true"/>
+						<font fontName="Noto Sans Arabic" size="7" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Matières]]></text>
 				</staticText>
@@ -1142,7 +1144,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="SansSerif" size="8" isBold="true"/>
+						<font fontName="Noto Sans Arabic" size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Moy./20]]></text>
 				</staticText>
@@ -1165,7 +1167,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="SansSerif" size="8" isBold="true"/>
+						<font fontName="Noto Sans Arabic" size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Coeff.]]></text>
 				</staticText>
@@ -1189,7 +1191,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="SansSerif" size="8" isBold="true"/>
+						<font fontName="Noto Sans Arabic" size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Total]]></text>
 				</staticText>
@@ -1213,7 +1215,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="SansSerif" size="8" isBold="true"/>
+						<font fontName="Noto Sans Arabic" size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Rang]]></text>
 				</staticText>
@@ -1236,7 +1238,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="SansSerif" size="8" isBold="true"/>
+						<font fontName="Noto Sans Arabic" size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA["Appréciation"]]></textFieldExpression>
 				</textField>
@@ -1258,7 +1260,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="SansSerif" size="8" isBold="true"/>
+						<font fontName="Noto Sans Arabic" size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA["Professeur"]]></textFieldExpression>
 				</textField>
@@ -1280,7 +1282,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="SansSerif" size="8" isBold="true"/>
+						<font fontName="Noto Sans Arabic" size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA["Signature"]]></textFieldExpression>
 				</textField>
@@ -1317,7 +1319,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 						<pen lineWidth="0.5"/>
 					</box>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="SansSerif" size="8" isBold="false" isItalic="true"/>
+						<font fontName="Noto Sans Arabic" size="8" isBold="false" isItalic="true"/>
 						<paragraph leftIndent="10"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{libelle_matiere}.substring(0,1).toUpperCase() + $F{libelle_matiere}.substring(1).toLowerCase()]]></textFieldExpression>
@@ -1338,7 +1340,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 						<pen lineWidth="0.5"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="SansSerif" size="8"/>
+						<font fontName="Noto Sans Arabic" size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC": $F{moyenne}]]></textFieldExpression>
 					<patternExpression><![CDATA[$F{bonus}.equals("1") ? "+#.##": "##.##"]]></patternExpression>
@@ -1358,7 +1360,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 						<pen lineWidth="0.5"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="SansSerif" size="8"/>
+						<font fontName="Noto Sans Arabic" size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC" :$F{coef}]]></textFieldExpression>
 				</textField>
@@ -1378,7 +1380,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 						<pen lineWidth="0.5"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="SansSerif" size="8"/>
+						<font fontName="Noto Sans Arabic" size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{bonus}.equals("0")?$F{moyenne}*$F{coef}:$F{moyenne}]]></textFieldExpression>
 				</textField>
@@ -1398,7 +1400,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 						<pen lineWidth="0.5"/>
 					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="SansSerif" size="8"/>
+						<font fontName="Noto Sans Arabic" size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{rang}.equals("1") ?  $F{rang}+" er" :$F{rang}+" e"]]></textFieldExpression>
 				</textField>
@@ -1417,7 +1419,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 						<pen lineWidth="0.5"/>
 					</box>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="SansSerif" size="8"/>
+						<font fontName="Noto Sans Arabic" size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")||$F{parent_matiere}.equals("")? "" :$F{nom_prenom_professeur}.toUpperCase()]]></textFieldExpression>
 				</textField>
@@ -1440,7 +1442,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="SansSerif" size="8" isItalic="true"/>
+						<font fontName="Noto Sans Arabic" size="8" isItalic="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{is_classed_mat}.equals("N")? "NC":$F{appreciation}]]></textFieldExpression>
 				</textField>
@@ -1532,7 +1534,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="SansSerif" size="8" isBold="true"/>
+					<font fontName="Noto Sans Arabic" size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{is_classed_periode}.equals("N")? "NC" :"Moyenne: "+ $F{moy_general}+" / 20"]]></textFieldExpression>
 			</textField>
@@ -1611,7 +1613,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 							</reportElement>
 							<textElement textAlignment="Center" verticalAlignment="Top">
-								<font fontName="SansSerif" size="9" isBold="true"/>
+								<font fontName="Noto Sans Arabic" size="9" isBold="true"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{appreciation_conseil}]]></textFieldExpression>
 						</textField>
@@ -1773,7 +1775,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 									<property name="com.jaspersoft.studio.unit.height" value="px"/>
 								</reportElement>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="SansSerif" size="8" isBold="true" isUnderline="true"/>
+									<font fontName="Noto Sans Arabic" size="8" isBold="true" isUnderline="true"/>
 								</textElement>
 								<text><![CDATA[DISTINCTIONS]]></text>
 							</staticText>
@@ -1818,7 +1820,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 										<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 									</reportElement>
 									<textElement textAlignment="Left" verticalAlignment="Middle">
-										<font fontName="SansSerif" size="7"/>
+										<font fontName="Noto Sans Arabic" size="7"/>
 									</textElement>
 									<text><![CDATA[Tableau d'honneur]]></text>
 								</staticText>
@@ -1857,7 +1859,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 										<property name="com.jaspersoft.studio.unit.height" value="px"/>
 									</reportElement>
 									<textElement textAlignment="Left" verticalAlignment="Middle">
-										<font fontName="SansSerif" size="7"/>
+										<font fontName="Noto Sans Arabic" size="7"/>
 									</textElement>
 									<text><![CDATA[Tableau d'honneur +Encouragement]]></text>
 								</staticText>
@@ -1884,7 +1886,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 										<property name="com.jaspersoft.studio.unit.height" value="px"/>
 									</reportElement>
 									<textElement textAlignment="Left" verticalAlignment="Middle">
-										<font fontName="SansSerif" size="7"/>
+										<font fontName="Noto Sans Arabic" size="7"/>
 									</textElement>
 									<text><![CDATA[Tableau d'honneur +Félicitation]]></text>
 								</staticText>
@@ -1900,7 +1902,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 										<property name="com.jaspersoft.studio.unit.height" value="px"/>
 									</reportElement>
 									<textElement textAlignment="Center" verticalAlignment="Middle">
-										<font fontName="SansSerif" size="7" isBold="true" isUnderline="true"/>
+										<font fontName="Noto Sans Arabic" size="7" isBold="true" isUnderline="true"/>
 									</textElement>
 									<text><![CDATA[SANCTIONS]]></text>
 								</staticText>
@@ -1916,7 +1918,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 										<property name="com.jaspersoft.studio.unit.height" value="px"/>
 									</reportElement>
 									<textElement>
-										<font fontName="SansSerif" size="7"/>
+										<font fontName="Noto Sans Arabic" size="7"/>
 									</textElement>
 									<text><![CDATA[Avertissement pour travail insuffisant]]></text>
 								</staticText>
@@ -1938,7 +1940,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 										<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 									</box>
 									<textElement>
-										<font fontName="SansSerif" size="7"/>
+										<font fontName="Noto Sans Arabic" size="7"/>
 									</textElement>
 									<text><![CDATA[]]></text>
 								</staticText>
@@ -1960,7 +1962,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 										<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 									</box>
 									<textElement>
-										<font fontName="SansSerif" size="7"/>
+										<font fontName="Noto Sans Arabic" size="7"/>
 									</textElement>
 									<text><![CDATA[]]></text>
 								</staticText>
@@ -1976,7 +1978,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 										<property name="com.jaspersoft.studio.unit.height" value="px"/>
 									</reportElement>
 									<textElement>
-										<font fontName="SansSerif" size="7"/>
+										<font fontName="Noto Sans Arabic" size="7"/>
 									</textElement>
 									<text><![CDATA[Blâme pour travail insuffisant]]></text>
 								</staticText>
@@ -1998,7 +2000,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 										<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 									</box>
 									<textElement>
-										<font fontName="SansSerif" size="7"/>
+										<font fontName="Noto Sans Arabic" size="7"/>
 									</textElement>
 									<text><![CDATA[]]></text>
 								</staticText>
@@ -2014,7 +2016,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 										<property name="com.jaspersoft.studio.unit.height" value="px"/>
 									</reportElement>
 									<textElement>
-										<font fontName="SansSerif" size="7"/>
+										<font fontName="Noto Sans Arabic" size="7"/>
 									</textElement>
 									<text><![CDATA[Avertissement pour mauvaise conduite]]></text>
 								</staticText>
@@ -2036,7 +2038,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 										<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 									</box>
 									<textElement>
-										<font fontName="SansSerif" size="8"/>
+										<font fontName="Noto Sans Arabic" size="8"/>
 									</textElement>
 									<text><![CDATA[]]></text>
 								</staticText>
@@ -2052,7 +2054,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 										<property name="com.jaspersoft.studio.unit.height" value="px"/>
 									</reportElement>
 									<textElement>
-										<font fontName="SansSerif" size="7"/>
+										<font fontName="Noto Sans Arabic" size="7"/>
 									</textElement>
 									<text><![CDATA[Blâme pour mauvaise conduite]]></text>
 								</staticText>
@@ -2068,7 +2070,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 										<property name="com.jaspersoft.studio.unit.height" value="px"/>
 									</reportElement>
 									<textElement textAlignment="Left" verticalAlignment="Middle">
-										<font fontName="SansSerif" size="7"/>
+										<font fontName="Noto Sans Arabic" size="7"/>
 									</textElement>
 									<text><![CDATA[Refusé]]></text>
 								</staticText>
@@ -2204,7 +2206,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font fontName="SansSerif" size="8" isBold="true" isUnderline="true"/>
+								<font fontName="Noto Sans Arabic" size="8" isBold="true" isUnderline="true"/>
 							</textElement>
 							<text><![CDATA[ASSIDUTE]]></text>
 						</staticText>
@@ -2231,7 +2233,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 									<property name="com.jaspersoft.studio.unit.height" value="px"/>
 								</reportElement>
 								<textElement>
-									<font fontName="SansSerif" size="8"/>
+									<font fontName="Noto Sans Arabic" size="8"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{heures_abs_just}]]></textFieldExpression>
 							</textField>
@@ -2247,7 +2249,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 									<property name="com.jaspersoft.studio.unit.height" value="px"/>
 								</reportElement>
 								<textElement>
-									<font fontName="SansSerif" size="8"/>
+									<font fontName="Noto Sans Arabic" size="8"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{heures_abs_non_just}]]></textFieldExpression>
 							</textField>
@@ -2262,7 +2264,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 								</reportElement>
 								<textElement textAlignment="Left">
-									<font fontName="SansSerif" size="8"/>
+									<font fontName="Noto Sans Arabic" size="8"/>
 								</textElement>
 								<text><![CDATA[Heures d'absences Non justifiées:]]></text>
 							</staticText>
@@ -2277,7 +2279,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 								</reportElement>
 								<textElement textAlignment="Left">
-									<font fontName="SansSerif" size="8"/>
+									<font fontName="Noto Sans Arabic" size="8"/>
 								</textElement>
 								<text><![CDATA[Heures d'absences justifiées:]]></text>
 							</staticText>
@@ -2305,7 +2307,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 								</reportElement>
 								<textElement textAlignment="Center">
-									<font fontName="SansSerif" size="8" isBold="true" isUnderline="true"/>
+									<font fontName="Noto Sans Arabic" size="8" isBold="true" isUnderline="true"/>
 									<paragraph leftIndent="5"/>
 								</textElement>
 								<text><![CDATA[RESULTATS DE LA CLASSE]]></text>
@@ -2322,7 +2324,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 									<property name="com.jaspersoft.studio.unit.height" value="px"/>
 								</reportElement>
 								<textElement>
-									<font fontName="SansSerif" size="8"/>
+									<font fontName="Noto Sans Arabic" size="8"/>
 								</textElement>
 								<textFieldExpression><![CDATA["Moyenne de la classe: "+$F{moy_avg}]]></textFieldExpression>
 							</textField>
@@ -2337,7 +2339,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 									<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
 								</reportElement>
 								<textElement>
-									<font fontName="SansSerif" size="8"/>
+									<font fontName="Noto Sans Arabic" size="8"/>
 								</textElement>
 								<textFieldExpression><![CDATA["Moyenne la plus forte: "+$F{moy_max}]]></textFieldExpression>
 							</textField>
@@ -2353,7 +2355,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 									<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 								</reportElement>
 								<textElement>
-									<font fontName="SansSerif" size="8"/>
+									<font fontName="Noto Sans Arabic" size="8"/>
 								</textElement>
 								<textFieldExpression><![CDATA["Moyenne la plus faible: "+$F{moy_min}]]></textFieldExpression>
 							</textField>
@@ -2392,7 +2394,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							</reportElement>
 							<textElement verticalAlignment="Top">
-								<font fontName="SansSerif" size="7" isBold="true" isUnderline="true"/>
+								<font fontName="Noto Sans Arabic" size="7" isBold="true" isUnderline="true"/>
 								<paragraph spacingBefore="4"/>
 							</textElement>
 							<text><![CDATA[Nom et signature du Prof principal]]></text>
@@ -2420,7 +2422,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement>
-					<font fontName="SansSerif" size="8" isBold="true"/>
+					<font fontName="Noto Sans Arabic" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[TOTAUX]]></text>
 			</staticText>
@@ -2437,7 +2439,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement>
-					<font fontName="SansSerif" size="8" isBold="true"/>
+					<font fontName="Noto Sans Arabic" size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{TotauxCoefficient}]]></textFieldExpression>
 			</textField>
@@ -2453,7 +2455,7 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spider.matricule =  $P{matricule
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement>
-					<font fontName="SansSerif" size="8" isBold="true"/>
+					<font fontName="Noto Sans Arabic" size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{TotauxMoyenCoef}]]></textFieldExpression>
 			</textField>

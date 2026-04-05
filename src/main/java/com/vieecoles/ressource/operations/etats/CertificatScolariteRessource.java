@@ -74,11 +74,11 @@ public class CertificatScolariteRessource {
 
     @GET
     @Transactional
-    @Path("imprimer/{idEcole}/{matricule}/{AnneeId}/{signataire}/{fonction}/{periode}")
+    @Path("imprimer/{idEcole}/{matricule}/{AnneeId}/{signataire}/{fonction}/{periode}/{arabe}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public ResponseEntity<byte[]>  getDtoRapport(@PathParam("idEcole") Long idEcole , @PathParam("matricule") String matricule ,@PathParam("AnneeId") Long AnneeId
             , @PathParam("signataire") String signataire , @PathParam("fonction") String fonction
-            , @PathParam("periode") String periode
+            , @PathParam("periode") String periode , @PathParam("arabe") boolean arabe
     ) throws Exception, JRException {
 
         Inscriptions myIns= new Inscriptions() ;
@@ -103,6 +103,7 @@ public class CertificatScolariteRessource {
         telephone= myEcole.getEcole_telephone() ;
         code = myEcole.getEcolecode() ;
         statut = myEcole.getEcole_statut() ;
+        Long niveauEnseignement = myEcole.getNiveau_Enseignement_id();
 
         if(imagebytes2!=null){
             logo= ImageIO.read(new ByteArrayInputStream(imagebytes2));
@@ -119,9 +120,17 @@ public class CertificatScolariteRessource {
             photo_eleve= ImageIO.read(new ByteArrayInputStream(imagebytes));
         }
         InputStream myInpuStream ;
-        /*myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/BulletinBean.jrxml");*/
-
-        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/CertificatScolarite.jrxml");
+        if (arabe) {
+            if (Long.valueOf(1L).equals(niveauEnseignement)) {
+                myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/CertificatScolariteAnnourPrimaire.jrxml");
+            } else if (Long.valueOf(2L).equals(niveauEnseignement)) {
+                myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/CertificatScolariteAnnourSecondaire.jrxml");
+            } else {
+                myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/CertificatScolarite.jrxml");
+            }
+        } else {
+            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/CertificatScolarite.jrxml");
+        }
         certificatScolariteDto emp= new certificatScolariteDto() ;
 
         List<certificatScolariteDto> detailsBull= new ArrayList<>() ;
@@ -177,11 +186,11 @@ try {
     }
 
     @GET
-    @Path("/certificat-de-frequentation/{matricule}/{ecoleId}/{annee}/{signataire}/{fonction}/{autre}")
+    @Path("/certificat-de-frequentation/{matricule}/{ecoleId}/{annee}/{signataire}/{fonction}/{autre}/{arabe}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public ResponseEntity<byte[]>  getDtoRapport7(@PathParam("matricule") String matricule ,@PathParam("ecoleId") Long ecoleId ,@PathParam("annee") String annee
             ,@PathParam("signataire") String signataire ,@PathParam("fonction") String fonction
-            ,@PathParam("autre") boolean autre    ) throws Exception, JRException {
+            ,@PathParam("autre") boolean autre  ,@PathParam("arabe") boolean arabe   ) throws Exception, JRException {
 
 
         parametre mpara = new parametre();
@@ -200,6 +209,7 @@ try {
         telephone= myEcole.getEcole_telephone() ;
         code = myEcole.getEcolecode() ;
         statut = myEcole.getEcole_statut() ;
+        Long niveauEnseignement = myEcole.getNiveau_Enseignement_id();
 
         if(imagebytes2!=null){
             logo= ImageIO.read(new ByteArrayInputStream(imagebytes2));
@@ -214,11 +224,18 @@ try {
         }
 
         InputStream myInpuStream ;
-        if(!autre){
+        if (arabe) {
+            if (Long.valueOf(1L).equals(niveauEnseignement)) {
+                myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/CertificatFrequentationAnnourPrimaire.jrxml");
+            } else if (Long.valueOf(2L).equals(niveauEnseignement)) {
+                myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/CertificatFrequentationAnnourSecondaire.jrxml");
+            } else {
+                myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/CertificatFrequentation.jrxml");
+            }
+        } else if(!autre){
             myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/CertificatFrequentation.jrxml");
 
-        } else
-        {
+        } else {
             myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/CertificatFrequentationIGON.jrxml");
 
         }
