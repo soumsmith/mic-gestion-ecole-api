@@ -1197,6 +1197,8 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 					noteBulletin.setNote(note.getNote());
 					noteBulletin.setNoteSur(note.getEvaluation().getNoteSur());
 					noteBulletin.setDetailBulletin(detail);
+					noteBulletin.setReferenceId(String.valueOf(note.getId()));
+					noteBulletin.setType(note.getEvaluation().getType().getLibelle());
 					notesBatch.add(noteBulletin);
 				}
 			}
@@ -1407,6 +1409,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 					NoteDto nt = new NoteDto();
 					nt.setNote(n.getNote());
 					nt.setNoteSur(Double.valueOf(n.getNoteSur()));
+					nt.setEvaluationType(n.getType());
 					notesDto.add(nt);
 				}
 				detailDto.setNotes(notesDto);
