@@ -290,7 +290,7 @@ if(!detailsCycle1.isEmpty()){
                 colonne10.setText(String.format("%.2f", pourInf8_5Cycle1));
             }
             if (colonne11 != null) {
-                colonne11.setText(String.format("%.2f", moyCycle2));
+                colonne11.setText(String.format("%.2f", moyCycle1));
             }
             if (colonne12 != null) {
                 colonne12.setText(String.valueOf(""));

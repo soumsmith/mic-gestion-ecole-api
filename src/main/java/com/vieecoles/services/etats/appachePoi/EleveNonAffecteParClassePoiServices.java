@@ -85,6 +85,8 @@ public class EleveNonAffecteParClassePoiServices {
                 Integer rang = (Integer) bulletinData[15];
                 String appreciation = (String) bulletinData[16];
                 String nomProfesseur= (String) bulletinData[12];
+                boolean appliquerRangEtApreciation =
+                    libelleTrimestre != null && libelleTrimestre.equals(trimestre);
 
                 if (!elevesMap.containsKey(matricule)) {
                     eleveAffecteParClasseDtoAvecTousTrimestres eleve = new eleveAffecteParClasseDtoAvecTousTrimestres();
@@ -115,21 +117,27 @@ public class EleveNonAffecteParClassePoiServices {
 
                 if ("Premier Trimestre".equals(trimestre)) {
                     eleve.setMoyeGeneralTrim1(moyenneGenerale);
-                    eleve.setRang(rang);
-                    eleve.setProfesseurPrincipal(nomProfesseur);
-                    eleve.setObservat(appreciation);
+                    if (appliquerRangEtApreciation) {
+                        eleve.setRang(rang);
+                        eleve.setProfesseurPrincipal(nomProfesseur);
+                        eleve.setObservat(appreciation);
+                    }
 
                 } else if ("Deuxième Trimestre".equals(trimestre)) {
                     eleve.setMoyeGeneralTrim2(moyenneGenerale);
-                    eleve.setRang(rang);
-                    eleve.setProfesseurPrincipal(nomProfesseur);
-                    eleve.setObservat(appreciation);
+                    if (appliquerRangEtApreciation) {
+                        eleve.setRang(rang);
+                        eleve.setProfesseurPrincipal(nomProfesseur);
+                        eleve.setObservat(appreciation);
+                    }
 
                 } else if ("Troisième Trimestre".equals(trimestre)) {
                     eleve.setMoyeGeneralTrim3(moyenneGenerale);
-                    eleve.setRang(rang);
-                    eleve.setProfesseurPrincipal(nomProfesseur);
-                    eleve.setObservat(appreciation);
+                    if (appliquerRangEtApreciation) {
+                        eleve.setRang(rang);
+                        eleve.setProfesseurPrincipal(nomProfesseur);
+                        eleve.setObservat(appreciation);
+                    }
 
                 }
             }

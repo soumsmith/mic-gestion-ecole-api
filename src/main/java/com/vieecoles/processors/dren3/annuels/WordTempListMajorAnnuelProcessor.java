@@ -1,5 +1,6 @@
 package com.vieecoles.processors.dren3.annuels;
 
+import com.vieecoles.processors.dren3.Dren3WordMajorAnchor;
 import com.vieecoles.dto.MajorParClasseNiveauDto;
 import com.vieecoles.services.etats.appachePoi.Annuels.EleveAffecteAnnuelsParClassePoiServices;
 import com.vieecoles.services.etats.appachePoi.Annuels.MajorAnnuelsParClasseNiveauPoiServices;
@@ -44,7 +45,7 @@ public class WordTempListMajorAnnuelProcessor {
             for (int i = 0; i < paragraphs.size(); i++) {
                 String text = paragraphs.get(i).getText();
                 // Identifier l'emplacement où insérer le tableau (par exemple après "Liste des élèves affectés par classe")
-                if (text.contains("LISTE DES MAJORS DE CLASSE DU PREMIER TRIMESTRE  (03 par niveau)(ANNUELS)")) {
+                if (Dren3WordMajorAnchor.matchesListeMajorsAnnuel(text)) {
                     indexToInsert = i + 1; // Ajouter après ce paragraphe
                     break;
                 }

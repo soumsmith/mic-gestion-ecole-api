@@ -28,24 +28,30 @@ public class WordTempIdentiteProcessor {
         Ecole myEcole= new Ecole();
         myEcole=Ecole.findById(idEcole);
         ecoleName=myEcole.getLibelle().toUpperCase();
-        
-        String placeholder = "{{NOM_ECOLE}}";
-        
-        // Remplacer dans les paragraphes
+        String trimestreLibelle = libelleTrimestre != null ? libelleTrimestre : "";
+
+        replaceBodyPlaceholder(document, "{{NOM_ECOLE}}", ecoleName);
+        replaceBodyPlaceholder(document, "{{TRIMESTRE}}", trimestreLibelle);
+
+        replacePlaceholdersInTextBoxes(document, ecoleName, "{{NOM_ECOLE}}");
+        replacePlaceholdersInTextBoxes(document, trimestreLibelle, "{{TRIMESTRE}}");
+    }
+
+    private static void replaceBodyPlaceholder(XWPFDocument document, String placeholder, String replacementValue) {
+        if (replacementValue == null) {
+            replacementValue = "";
+        }
         for (XWPFParagraph paragraph : document.getParagraphs()) {
             String fullText = paragraph.getText();
             if (fullText != null && fullText.contains(placeholder)) {
-                // Remplacer le placeholder dans le texte complet
-                String newFullText = fullText.replace(placeholder, ecoleName);
-                
-                // Sauvegarder le style du premier run (pour conserver la couleur verte)
+                String newFullText = fullText.replace(placeholder, replacementValue);
+
                 boolean isBold = false;
                 boolean isItalic = false;
                 int fontSize = 0;
                 String fontFamily = null;
                 String color = null;
-                
-                // Parcourir tous les runs pour trouver la couleur (peut être dans n'importe quel run)
+
                 for (XWPFRun run : paragraph.getRuns()) {
                     try {
                         if (color == null || color.isEmpty()) {
@@ -54,62 +60,104 @@ public class WordTempIdentiteProcessor {
                                 color = runColor;
                             }
                         }
-                    } catch (Exception e) {}
-                    
-                    // Prendre le style du premier run non vide
+                    } catch (Exception e) {
+                        // ignore
+                    }
+
                     if (!isBold) {
-                        try { isBold = run.isBold(); } catch (Exception e) {}
+                        try {
+                            isBold = run.isBold();
+                        } catch (Exception e) {
+                            // ignore
+                        }
                     }
                     if (!isItalic) {
-                        try { isItalic = run.isItalic(); } catch (Exception e) {}
+                        try {
+                            isItalic = run.isItalic();
+                        } catch (Exception e) {
+                            // ignore
+                        }
                     }
                     if (fontSize == 0) {
-                        try { fontSize = run.getFontSize(); } catch (Exception e) {
-                            try { double fontSizeDouble = run.getFontSizeAsDouble(); if (fontSizeDouble > 0) { fontSize = (int)fontSizeDouble; } } catch (Exception e2) {}
+                        try {
+                            fontSize = run.getFontSize();
+                        } catch (Exception e) {
+                            try {
+                                double fontSizeDouble = run.getFontSizeAsDouble();
+                                if (fontSizeDouble > 0) {
+                                    fontSize = (int) fontSizeDouble;
+                                }
+                            } catch (Exception e2) {
+                                // ignore
+                            }
                         }
                     }
                     if (fontFamily == null || fontFamily.isEmpty()) {
-                        try { fontFamily = run.getFontFamily(); } catch (Exception e) {}
+                        try {
+                            fontFamily = run.getFontFamily();
+                        } catch (Exception e) {
+                            // ignore
+                        }
                     }
                 }
-                
-                // Supprimer tous les runs existants
+
                 int runsCount = paragraph.getRuns().size();
                 for (int i = runsCount - 1; i >= 0; i--) {
                     paragraph.removeRun(i);
                 }
-                
-                // Créer un nouveau run avec le texte modifié
+
                 XWPFRun newRun = paragraph.createRun();
                 newRun.setText(newFullText);
-                
-                // Restaurer le style (y compris la couleur verte)
-                try { newRun.setBold(isBold); } catch (Exception e) {}
-                try { newRun.setItalic(isItalic); } catch (Exception e) {}
-                try { if (fontSize > 0) { newRun.setFontSize(fontSize); } } catch (Exception e) {}
-                try { if (fontFamily != null && !fontFamily.isEmpty()) { newRun.setFontFamily(fontFamily); } } catch (Exception e) {}
-                try { if (color != null && !color.isEmpty()) { newRun.setColor(color); } } catch (Exception e) {}
-                
-                // Forcer l'alignement CENTER
+
+                try {
+                    newRun.setBold(isBold);
+                } catch (Exception e) {
+                    // ignore
+                }
+                try {
+                    newRun.setItalic(isItalic);
+                } catch (Exception e) {
+                    // ignore
+                }
+                try {
+                    if (fontSize > 0) {
+                        newRun.setFontSize(fontSize);
+                    }
+                } catch (Exception e) {
+                    // ignore
+                }
+                try {
+                    if (fontFamily != null && !fontFamily.isEmpty()) {
+                        newRun.setFontFamily(fontFamily);
+                    }
+                } catch (Exception e) {
+                    // ignore
+                }
+                try {
+                    if (color != null && !color.isEmpty()) {
+                        newRun.setColor(color);
+                    }
+                } catch (Exception e) {
+                    // ignore
+                }
+
                 paragraph.setAlignment(ParagraphAlignment.CENTER);
             }
         }
-        
-        // Remplacer aussi dans les tableaux
+
         for (XWPFTable table : document.getTables()) {
             for (XWPFTableRow row : table.getRows()) {
                 for (XWPFTableCell cell : row.getTableCells()) {
                     for (XWPFParagraph paragraph : cell.getParagraphs()) {
                         String fullText = paragraph.getText();
                         if (fullText != null && fullText.contains(placeholder)) {
-                            String newFullText = fullText.replace(placeholder, ecoleName);
-                            
-                            // Sauvegarder le style (couleur, etc.)
+                            String newFullText = fullText.replace(placeholder, replacementValue);
+
                             String color = null;
                             boolean isBold = false;
                             int fontSize = 0;
                             String fontFamily = null;
-                            
+
                             for (XWPFRun run : paragraph.getRuns()) {
                                 try {
                                     if (color == null || color.isEmpty()) {
@@ -118,46 +166,80 @@ public class WordTempIdentiteProcessor {
                                             color = runColor;
                                         }
                                     }
-                                } catch (Exception e) {}
+                                } catch (Exception e) {
+                                    // ignore
+                                }
                                 if (!isBold) {
-                                    try { isBold = run.isBold(); } catch (Exception e) {}
+                                    try {
+                                        isBold = run.isBold();
+                                    } catch (Exception e) {
+                                        // ignore
+                                    }
                                 }
                                 if (fontSize == 0) {
-                                    try { fontSize = run.getFontSize(); } catch (Exception e) {
-                                        try { double fontSizeDouble = run.getFontSizeAsDouble(); if (fontSizeDouble > 0) { fontSize = (int)fontSizeDouble; } } catch (Exception e2) {}
+                                    try {
+                                        fontSize = run.getFontSize();
+                                    } catch (Exception e) {
+                                        try {
+                                            double fontSizeDouble = run.getFontSizeAsDouble();
+                                            if (fontSizeDouble > 0) {
+                                                fontSize = (int) fontSizeDouble;
+                                            }
+                                        } catch (Exception e2) {
+                                            // ignore
+                                        }
                                     }
                                 }
                                 if (fontFamily == null || fontFamily.isEmpty()) {
-                                    try { fontFamily = run.getFontFamily(); } catch (Exception e) {}
+                                    try {
+                                        fontFamily = run.getFontFamily();
+                                    } catch (Exception e) {
+                                        // ignore
+                                    }
                                 }
                             }
-                            
-                            // Supprimer tous les runs existants
+
                             int runsCount = paragraph.getRuns().size();
                             for (int i = runsCount - 1; i >= 0; i--) {
                                 paragraph.removeRun(i);
                             }
-                            
-                            // Créer un nouveau run avec le texte modifié
+
                             XWPFRun newRun = paragraph.createRun();
                             newRun.setText(newFullText);
-                            
-                            // Restaurer le style
-                            try { newRun.setBold(isBold); } catch (Exception e) {}
-                            try { if (fontSize > 0) { newRun.setFontSize(fontSize); } } catch (Exception e) {}
-                            try { if (fontFamily != null && !fontFamily.isEmpty()) { newRun.setFontFamily(fontFamily); } } catch (Exception e) {}
-                            try { if (color != null && !color.isEmpty()) { newRun.setColor(color); } } catch (Exception e) {}
-                            
-                            // Forcer l'alignement CENTER
+
+                            try {
+                                newRun.setBold(isBold);
+                            } catch (Exception e) {
+                                // ignore
+                            }
+                            try {
+                                if (fontSize > 0) {
+                                    newRun.setFontSize(fontSize);
+                                }
+                            } catch (Exception e) {
+                                // ignore
+                            }
+                            try {
+                                if (fontFamily != null && !fontFamily.isEmpty()) {
+                                    newRun.setFontFamily(fontFamily);
+                                }
+                            } catch (Exception e) {
+                                // ignore
+                            }
+                            try {
+                                if (color != null && !color.isEmpty()) {
+                                    newRun.setColor(color);
+                                }
+                            } catch (Exception e) {
+                                // ignore
+                            }
+
                             paragraph.setAlignment(ParagraphAlignment.CENTER);
                         }
                     }
                 }
             }
         }
-        
-        // Remplacer dans les TextBox et formes (cadres)
-        replacePlaceholdersInTextBoxes(document, ecoleName, placeholder);
     }
 
     /**
