@@ -97,7 +97,7 @@ public class BulletinNotesOptmizedService {
         // ── Phase 0 : Chargement des référentiels (une seule fois) ────────────
         Classe classe     = classeService.findById(classeId);
         Periode periode   = Periode.findById(periodeId);
-        boolean estFinale = "O".equals(periode.getIsfinal());
+        boolean estFinale = "O".equals(periode.getIsFinal());
  
         // Coefficients des matières pour la branche (Map matiereId → coef)
         Map<Long, Double> coefParMatiere = chargerCoefficients(classe);
@@ -500,7 +500,7 @@ public class BulletinNotesOptmizedService {
                 for (Periode p : toutesLesPeriodes) {
                     if (bul.getPeriodeId().equals(p.getId())
                             && "O".equals(bul.getIsClassed())
-                            && p.getIsfinal() == null) {
+                            && p.getIsFinal() == null) {
  
                         double coefP = p.getCoef() != null && !p.getCoef().isBlank()
                                 ? Double.parseDouble(p.getCoef()) : 1.0;
@@ -588,7 +588,7 @@ public class BulletinNotesOptmizedService {
                 for (Periode p : toutesLesPeriodes) {
                     if (bul.getPeriodeId().equals(p.getId())
                             && "O".equals(bul.getIsClassed())
-                            && p.getIsfinal() == null) {
+                            && p.getIsFinal() == null) {
 
                         double coefP = p.getCoef() != null && !p.getCoef().isBlank()
                                 ? Double.parseDouble(p.getCoef()) : 1.0;

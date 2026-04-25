@@ -549,7 +549,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			// annuels
 			Periode periodeCtrl = Periode.findById(Long.parseLong(periodeId));
 			if (periodeCtrl != null) {
-				if (periodeCtrl.getIsfinal() != null && periodeCtrl.getIsfinal().equals(Constants.OUI)) {
+				if (periodeCtrl.getIsFinal() != null && periodeCtrl.getIsFinal().equals(Constants.OUI)) {
 //					System.out.println("CALCUL MOYENNE ANNUELLE");
 					try {
 						List<ClasseMatiere> classeMatList = ClasseMatiere.find("branche.id = ?1 and ecole.id =?2",
@@ -1773,7 +1773,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			System.out.println("Entree>>> 1+++++ " + periode.getPeriodicite().getId());
 			try {
 				per = Periode.getEntityManager().createQuery(
-						"SELECT p FROM Periode p WHERE p.periodicite.id = :periodiciteId AND p.isfinal = :finalValue",
+						"SELECT p FROM Periode p WHERE p.periodicite.id = :periodiciteId AND p.isFinal = :finalValue",
 						Periode.class).setParameter("periodiciteId", periode.getPeriodicite().getId())
 						.setParameter("finalValue", "O").getSingleResult();
 
@@ -1806,7 +1806,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			List<Double> moyAnInterne = new ArrayList<>();
 			List<Double> moyAnIEPP = new ArrayList<>();
 			List<Double> moyAnPassage = new ArrayList<>();
-			Periode finalPeriode = periodes.stream().filter(p -> (p.getIsfinal() != null && p.getIsfinal().equals("O")))
+			Periode finalPeriode = periodes.stream().filter(p -> (p.getIsFinal() != null && p.getIsFinal().equals("O")))
 					.findAny().orElse(new Periode());
 //			System.out.println("FINAL PERIODE "+finalPeriode.getCoef()+" "+finalPeriode.getLibelle());
 			if (ecole.getNiveauEnseignement().getId() == Constants.NIVEAU_ENSEIGNEMENT_PRIMAIRE) {
@@ -1858,7 +1858,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 					for (Periode p : periodes) {
 						if (dtb.getBulletin().getPeriodeId().equals(p.getId())) {
 							if (dtb.getIsRanked() != null && dtb.getIsRanked().equals(Constants.OUI)) {
-								if (p.getIsfinal() != null && p.getIsfinal().equals("O")) {
+								if (p.getIsFinal() != null && p.getIsFinal().equals("O")) {
 									for (Map.Entry<EcoleHasMatiere, List<Notes>> entry : me.getNotesMatiereMap()
 											.entrySet()) {
 										if (entry.getKey().getId().equals(cml.getMatiere().getId())) {
@@ -1956,7 +1956,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			for (Periode p : periodes) {
 				if (bul.getPeriodeId().equals(p.getId())) {
 					if (bul.getIsClassed() != null && bul.getIsClassed().equals(Constants.OUI)) {
-						if (p.getIsfinal() == null) {
+						if (p.getIsFinal() == null) {
 							moyAn = moyAn + bul.getMoyGeneral() * Double.parseDouble(p.getCoef());
 							coef = coef + Double.parseDouble(p.getCoef());
 //							System.out.println("############################################1");
@@ -2025,7 +2025,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			for (Periode p : periodes) {
 				if (bul.getPeriodeId().equals(p.getId())) {
 					if (bul.getIsClassed() != null && bul.getIsClassed().equals(Constants.OUI)) {
-						if (p.getIsfinal() == null) {
+						if (p.getIsFinal() == null) {
 							moyAn = moyAn + bul.getMoyGeneral() * Double.parseDouble(p.getCoef());
 							coef = coef + Double.parseDouble(p.getCoef());
 							if (bul.getTypeEvaluation() == 7) {
@@ -3405,7 +3405,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			return;
 		}
 
-		final Periode finalPeriode = periodes.stream().filter(p -> p != null && "O".equals(p.getIsfinal())).findFirst()
+		final Periode finalPeriode = periodes.stream().filter(p -> p != null && "O".equals(p.getIsFinal())).findFirst()
 				.orElse(new Periode());
 
 		final double coefFinal = parseCoef(finalPeriode.getCoef());
@@ -3445,7 +3445,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 		}
 
 		try {
-			Periode per = Periode.find("periodicite.id=?1 and isfinal = 'O'", periode.getPeriodicite().getId())
+			Periode per = Periode.find("periodicite.id=?1 and isFinal = 'O'", periode.getPeriodicite().getId())
 					.singleResult();
 			if (per == null) {
 				logger.warning("Aucune période finale trouvée");
@@ -3657,7 +3657,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 					if (dtb.getIsRanked() != null && dtb.getIsRanked().equals(Constants.OUI)) {
 						double coefPeriode = parseCoef(p.getCoef());
 
-						if (p.getIsfinal() != null && p.getIsfinal().equals("O")) {
+						if (p.getIsFinal() != null && p.getIsFinal().equals("O")) {
 							// COPIE EXACTE DE LA LOGIQUE ORIGINALE
 							for (Map.Entry<EcoleHasMatiere, List<Notes>> entry : me.getNotesMatiereMap().entrySet()) {
 								if (entry.getKey().getId().equals(cml.getMatiere().getId())) {
@@ -3829,7 +3829,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				for (DetailBulletin dtb : dtbs) {
 					if (Constants.OUI.equals(dtb.getIsRanked())) {
 
-						if (p.getIsfinal() != null && p.getIsfinal().equals("O")) {
+						if (p.getIsFinal() != null && p.getIsFinal().equals("O")) {
 // LOGIQUE EXACTE DE L'ORIGINAL - recherche dans getNotesMatiereMap
 							for (Map.Entry<EcoleHasMatiere, List<Notes>> entry : me.getNotesMatiereMap().entrySet()) {
 								if (entry.getKey().getId().equals(cml.getMatiere().getId())) {
@@ -3925,7 +3925,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 
 				for (DetailBulletin dtb : dtbs) {
 					if (Constants.OUI.equals(dtb.getIsRanked())) {
-						double note = (p.getIsfinal() != null && p.getIsfinal().equals("O")) ? ecoleMatiere.getMoyenne()
+						double note = (p.getIsFinal() != null && p.getIsFinal().equals("O")) ? ecoleMatiere.getMoyenne()
 								: dtb.getMoyenne();
 						sommePonderee += note * coefP;
 						coefTotal += coefP;
