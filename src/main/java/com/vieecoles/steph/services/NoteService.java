@@ -3445,7 +3445,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 		}
 
 		try {
-			Periode per = Periode.find("periodicite.id=?1 and final = 'O'", periode.getPeriodicite().getId())
+			Periode per = Periode.find("periodicite.id=?1 and isfinal = 'O'", periode.getPeriodicite().getId())
 					.singleResult();
 			if (per == null) {
 				logger.warning("Aucune période finale trouvée");
