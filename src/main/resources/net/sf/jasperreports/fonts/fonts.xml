@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<fontFamilies>
+
+	<fontFamily name="DejaVu Sans">
+		<normal>net/sf/jasperreports/fonts/dejavu/DejaVuSans.ttf</normal>
+		<bold>net/sf/jasperreports/fonts/dejavu/DejaVuSans-Bold.ttf</bold>
+		<italic>net/sf/jasperreports/fonts/dejavu/DejaVuSans-Oblique.ttf</italic>
+		<boldItalic>net/sf/jasperreports/fonts/dejavu/DejaVuSans-BoldOblique.ttf</boldItalic>
+		<pdfEncoding>Identity-H</pdfEncoding>
+		<pdfEmbedded>true</pdfEmbedded>
+		<exportFonts>
+			<export key="net.sf.jasperreports.html">'DejaVu Sans', Arial, Helvetica, sans-serif</export>
+		</exportFonts>
+	</fontFamily>
+
+	<fontFamily name="DejaVu Serif">
+		<normal>net/sf/jasperreports/fonts/dejavu/DejaVuSerif.ttf</normal>
+		<bold>net/sf/jasperreports/fonts/dejavu/DejaVuSerif-Bold.ttf</bold>
+		<italic>net/sf/jasperreports/fonts/dejavu/DejaVuSerif-Italic.ttf</italic>
+		<boldItalic>net/sf/jasperreports/fonts/dejavu/DejaVuSerif-BoldItalic.ttf</boldItalic>
+		<pdfEncoding>Identity-H</pdfEncoding>
+		<pdfEmbedded>true</pdfEmbedded>
+		<exportFonts>
+			<export key="net.sf.jasperreports.html">'DejaVu Serif', 'Times New Roman', Times, serif</export>
+		</exportFonts>
+	</fontFamily>
+
+	<fontFamily name="DejaVu Sans Mono">
+		<normal>net/sf/jasperreports/fonts/dejavu/DejaVuSansMono.ttf</normal>
+		<bold>net/sf/jasperreports/fonts/dejavu/DejaVuSansMono-Bold.ttf</bold>
+		<italic>net/sf/jasperreports/fonts/dejavu/DejaVuSansMono-Oblique.ttf</italic>
+		<boldItalic>net/sf/jasperreports/fonts/dejavu/DejaVuSansMono-BoldOblique.ttf</boldItalic>
+		<pdfEncoding>Identity-H</pdfEncoding>
+		<pdfEmbedded>true</pdfEmbedded>
+		<exportFonts>
+			<export key="net.sf.jasperreports.html">'DejaVu Sans Mono', 'Courier New', Courier, monospace</export>
+		</exportFonts>
+	</fontFamily>
+
+	<fontFamily name="SansSerif">
+		<exportFonts>
+			<export key="net.sf.jasperreports.html">'DejaVu Sans', Arial, Helvetica, sans-serif</export>
+		</exportFonts>
+	</fontFamily>
+	<fontFamily name="Serif">
+		<exportFonts>
+			<export key="net.sf.jasperreports.html">'DejaVu Serif', 'Times New Roman', Times, serif</export>
+		</exportFonts>
+	</fontFamily>
+	<fontFamily name="Monospaced">
+		<exportFonts>
+			<export key="net.sf.jasperreports.html">'DejaVu Sans Mono', 'Courier New', Courier, monospace</export>
+		</exportFonts>
+	</fontFamily>
+
+	<!-- Police arabe : m�me m�canisme Identity-H / embedding que DejaVu (extension officielle). -->
+	<fontFamily name="Noto Sans Arabic">
+		<normal><![CDATA[net/sf/jasperreports/fonts/NotoSansArabic-Variable.ttf]]></normal>
+		<bold><![CDATA[net/sf/jasperreports/fonts/NotoSansArabic-Variable.ttf]]></bold>
+		<italic><![CDATA[net/sf/jasperreports/fonts/NotoSansArabic-Variable.ttf]]></italic>
+		<boldItalic><![CDATA[net/sf/jasperreports/fonts/NotoSansArabic-Variable.ttf]]></boldItalic>
+		<pdfEncoding>Identity-H</pdfEncoding>
+		<pdfEmbedded>true</pdfEmbedded>
+	</fontFamily>
+
+</fontFamilies>
