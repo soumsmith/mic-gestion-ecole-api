@@ -50,6 +50,10 @@ public class Classe extends PanacheEntityBase {
 	private Date dateUpdate;
 	@Column(name = "identifiant_vie_ecole")
 	private String identifiantVieEcole;
+	@Column(name = "is_arabe")
+	private Integer isArabe;
+	@Column(name = "type_formule_calcul_moyenne_annuelle")
+	private String typeFormuleCalculMoyenneAnnuelle;
 //	@Transient
 //	@OneToMany
 //	private List<Eleve> eleve;

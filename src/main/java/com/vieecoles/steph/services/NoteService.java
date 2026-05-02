@@ -2021,13 +2021,31 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			List<Bulletin> bulletinsElevesList, Double moyAn, List<Double> moyAnInterne, List<Double> moyAnIEPP,
 			List<Double> moyAnPassage) {
 		Double coef = 0.0;
+
+		String typeFormuleCalculMoyenneAnnuel = me.getClasse().getTypeFormuleCalculMoyenneAnnuelle();
+		if (typeFormuleCalculMoyenneAnnuel == null) {
+			typeFormuleCalculMoyenneAnnuel = me.getClasse().getEcole().getTypeFormuleCalculMoyenneAnnuelle();
+		}
+		
+		System.out.println( String.format("TYPE FORMULE DE CALCUL ANNUEL PRIMAIRE: %s", typeFormuleCalculMoyenneAnnuel==null ? "PAR DEFAUT" :typeFormuleCalculMoyenneAnnuel));
+
 		for (Bulletin bul : bulletinsElevesList) {
 			for (Periode p : periodes) {
 				if (bul.getPeriodeId().equals(p.getId())) {
 					if (bul.getIsClassed() != null && bul.getIsClassed().equals(Constants.OUI)) {
 						if (p.getIsFinal() == null) {
-							moyAn = moyAn + bul.getMoyGeneral() * Double.parseDouble(p.getCoef());
-							coef = coef + Double.parseDouble(p.getCoef());
+							
+								if (typeFormuleCalculMoyenneAnnuel == null || typeFormuleCalculMoyenneAnnuel
+										.equals(Constants.TYPE_CALCUL_MOYENNE_ANNUELLE_PAR_DEFAUT)) {
+									moyAn = moyAn + bul.getMoyGeneral() * Double.parseDouble(p.getCoef());
+									coef = coef + Double.parseDouble(p.getCoef());
+								} else if (typeFormuleCalculMoyenneAnnuel != null && typeFormuleCalculMoyenneAnnuel
+										.equals(Constants.TYPE_CALCUL_MOYENNE_ANNUELLE_AN_NOUR)) {
+									moyAn = moyAn + bul.getMoyGeneral();
+									coef++;
+								}
+							
+							
 							if (bul.getTypeEvaluation() == 7) {
 								// composition de passage
 								moyAnPassage.add(bul.getMoyGeneral());
@@ -2054,10 +2072,18 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			// composition IEPP
 			moyAnIEPP.add(me.getMoyenne());
 		}
-		moyAn = moyAn + me.getMoyenne() * coefFinalPeriode;
-		coef = coef + coefFinalPeriode;
-
+		if (typeFormuleCalculMoyenneAnnuel == null || typeFormuleCalculMoyenneAnnuel
+				.equals(Constants.TYPE_CALCUL_MOYENNE_ANNUELLE_PAR_DEFAUT)) {
+			moyAn = moyAn + me.getMoyenne() * coefFinalPeriode;
+			coef = coef + coefFinalPeriode;
+		} else if (typeFormuleCalculMoyenneAnnuel != null && typeFormuleCalculMoyenneAnnuel
+				.equals(Constants.TYPE_CALCUL_MOYENNE_ANNUELLE_AN_NOUR)) {
+			moyAn = moyAn/coef + me.getMoyenne();
+			coef = 2.0;
+		}
+		
 		moyAn = CommonUtils.roundDouble(moyAn / (coef == 0.0 ? 1.0 : coef), 2);
+		System.out.println( String.format("MOYENNE ANNUEL: %s", moyAn));
 	}
 
 	public Integer getRangByValue(List<Double> list, Double value) {
@@ -3940,58 +3966,51 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 			}
 		}
 	}
-	
+
 	// Nouveaux services pour mobile
 	public NotesEleveDto getNotesByMatricule(String matricule, Long annee, Long classe, Long periode) {
-	    List<Notes> notes = Notes.find(
-	        "classeEleve.inscription.eleve.matricule =?1 and evaluation.annee.id = ?2 " +
-	        "and evaluation.classe.id = ?3 and evaluation.periode.id = ?4 " +
-	        "and evaluation.pec = 1 and pec = 1",
-	        matricule, annee, classe, periode
-	    ).list();
+		List<Notes> notes = Notes.find("classeEleve.inscription.eleve.matricule =?1 and evaluation.annee.id = ?2 "
+				+ "and evaluation.classe.id = ?3 and evaluation.periode.id = ?4 "
+				+ "and evaluation.pec = 1 and pec = 1", matricule, annee, classe, periode).list();
 
-	    Classe classeEleve = Classe.findById(classe);
-	    NotesEleveDto dto = new NotesEleveDto();
-	    List<EcoleHasMatiere> matieresEcole = EcoleHasMatiere
-	        .find("ecole.id = ?1", classeEleve.getEcole().getId()).list();
-	    Map<String, List<NoteEvaluationDto>> noteStructure = new HashMap<>();
-	    boolean infoFlag = false;
+		Classe classeEleve = Classe.findById(classe);
+		NotesEleveDto dto = new NotesEleveDto();
+		List<EcoleHasMatiere> matieresEcole = EcoleHasMatiere.find("ecole.id = ?1", classeEleve.getEcole().getId())
+				.list();
+		Map<String, List<NoteEvaluationDto>> noteStructure = new HashMap<>();
+		boolean infoFlag = false;
 
-	    for (Notes n : notes) {
-	        // Infos élève — une seule fois
-	        if (!infoFlag) {
-	            dto.setMatricule(matricule);
-	            dto.setNom(n.getClasseEleve().getInscription().getEleve().getNom());
-	            dto.setPrenom(n.getClasseEleve().getInscription().getEleve().getPrenom());
-	            infoFlag = true;
-	        }
+		for (Notes n : notes) {
+			// Infos élève — une seule fois
+			if (!infoFlag) {
+				dto.setMatricule(matricule);
+				dto.setNom(n.getClasseEleve().getInscription().getEleve().getNom());
+				dto.setPrenom(n.getClasseEleve().getInscription().getEleve().getPrenom());
+				infoFlag = true;
+			}
 
-	        String key = String.valueOf(n.getEvaluation().getMatiereEcole().getId());
-	        String noteFormate = String.format("%s/%s", n.getNote(), n.getEvaluation().getNoteSur());
-	        NoteEvaluationDto noteEvaluationDto = new NoteEvaluationDto();
-	        noteEvaluationDto.setNote(String.valueOf(n.getNote()));
-	        noteEvaluationDto.setNoteSur(n.getEvaluation().getNoteSur());
-	        noteEvaluationDto.setEvaluationType(n.getEvaluation().getType().getLibelle());
-	        noteEvaluationDto.setEvaluationNumber(String.valueOf(n.getEvaluation().getNumero()));
-	        
-	        noteStructure.computeIfAbsent(key, k -> new ArrayList<>()).add(noteEvaluationDto);
-	    }
+			String key = String.valueOf(n.getEvaluation().getMatiereEcole().getId());
+			String noteFormate = String.format("%s/%s", n.getNote(), n.getEvaluation().getNoteSur());
+			NoteEvaluationDto noteEvaluationDto = new NoteEvaluationDto();
+			noteEvaluationDto.setNote(String.valueOf(n.getNote()));
+			noteEvaluationDto.setNoteSur(n.getEvaluation().getNoteSur());
+			noteEvaluationDto.setEvaluationType(n.getEvaluation().getType().getLibelle());
+			noteEvaluationDto.setEvaluationNumber(String.valueOf(n.getEvaluation().getNumero()));
 
-	    for (Map.Entry<String, List<NoteEvaluationDto>> entry : noteStructure.entrySet()) {
-	        MatiereNotesEleveDto matiereNotesEleveDto = new MatiereNotesEleveDto();
-	        matiereNotesEleveDto.setMatiereId(Long.valueOf(entry.getKey()));
-	        matiereNotesEleveDto.setMatiereLibelle(
-	            matieresEcole.stream()
-	                .filter(mt -> mt.getId().equals(Long.valueOf(entry.getKey()))) 
-	                .findFirst()
-	                .map(EcoleHasMatiere::getLibelle)
-	                .orElse(null)
-	        );
-	        matiereNotesEleveDto.setNotesEvaluation(entry.getValue());
-	        dto.getList().add(matiereNotesEleveDto);
-	    }
+			noteStructure.computeIfAbsent(key, k -> new ArrayList<>()).add(noteEvaluationDto);
+		}
 
-	    return dto;
+		for (Map.Entry<String, List<NoteEvaluationDto>> entry : noteStructure.entrySet()) {
+			MatiereNotesEleveDto matiereNotesEleveDto = new MatiereNotesEleveDto();
+			matiereNotesEleveDto.setMatiereId(Long.valueOf(entry.getKey()));
+			matiereNotesEleveDto.setMatiereLibelle(
+					matieresEcole.stream().filter(mt -> mt.getId().equals(Long.valueOf(entry.getKey()))).findFirst()
+							.map(EcoleHasMatiere::getLibelle).orElse(null));
+			matiereNotesEleveDto.setNotesEvaluation(entry.getValue());
+			dto.getList().add(matiereNotesEleveDto);
+		}
+
+		return dto;
 	}
 
 }

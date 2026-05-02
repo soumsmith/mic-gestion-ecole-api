@@ -112,6 +112,9 @@ public class Constants {
 	public static final String UNLOCKED = "DEVERROUILLE";
 	
 	public static final String CONCEPT_TYPE_TEXT_BOOK = "TEXTBOOK";
+	
+	public static final String TYPE_CALCUL_MOYENNE_ANNUELLE_PAR_DEFAUT = "DEFAULT_ANNUAL_FORMULA_TYPE";
+	public static final String TYPE_CALCUL_MOYENNE_ANNUELLE_AN_NOUR = "AN_NOUR_ANNUAL_FORMULA_TYPE";
 
 
 }

@@ -41,4 +41,11 @@ public class Ecole extends PanacheEntityBase{
 	private String identifiantVieEcole ;
 	@Column(name = "utilise_formule_confessionnelle_arabe ")
 	private Integer utiliseFormuleConfessionnelleArabe;
+	/*
+	 * Définit le type de formule à utiliser pour le calcul de la moyenne annuelle.
+	 * Si cette valeur est renseignée au niveau de la classe c'est cette dernière qui devient
+	 * valide.
+	 */
+	@Column(name = "type_formule_calcul_moyenne_annuelle")
+	private String typeFormuleCalculMoyenneAnnuelle;
 }
