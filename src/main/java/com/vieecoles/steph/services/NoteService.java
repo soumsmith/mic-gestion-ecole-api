@@ -2026,33 +2026,33 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 		if (typeFormuleCalculMoyenneAnnuel == null) {
 			typeFormuleCalculMoyenneAnnuel = me.getClasse().getEcole().getTypeFormuleCalculMoyenneAnnuelle();
 		}
-		
-		System.out.println( String.format("TYPE FORMULE DE CALCUL ANNUEL PRIMAIRE: %s", typeFormuleCalculMoyenneAnnuel==null ? "PAR DEFAUT" :typeFormuleCalculMoyenneAnnuel));
+
+		System.out.println(String.format("TYPE FORMULE DE CALCUL ANNUEL PRIMAIRE: %s",
+				typeFormuleCalculMoyenneAnnuel == null ? "PAR DEFAUT" : typeFormuleCalculMoyenneAnnuel));
 
 		for (Bulletin bul : bulletinsElevesList) {
 			for (Periode p : periodes) {
 				if (bul.getPeriodeId().equals(p.getId())) {
 					if (bul.getIsClassed() != null && bul.getIsClassed().equals(Constants.OUI)) {
 						if (p.getIsFinal() == null) {
-							
-								if (typeFormuleCalculMoyenneAnnuel == null || typeFormuleCalculMoyenneAnnuel
-										.equals(Constants.TYPE_CALCUL_MOYENNE_ANNUELLE_PAR_DEFAUT)) {
-									moyAn = moyAn + bul.getMoyGeneral() * Double.parseDouble(p.getCoef());
-									coef = coef + Double.parseDouble(p.getCoef());
-								} else if (typeFormuleCalculMoyenneAnnuel != null && typeFormuleCalculMoyenneAnnuel
-										.equals(Constants.TYPE_CALCUL_MOYENNE_ANNUELLE_AN_NOUR)) {
-									moyAn = moyAn + bul.getMoyGeneral();
-									coef++;
-								}
-							
-							
-							if (bul.getTypeEvaluation() == 7) {
+
+							if (typeFormuleCalculMoyenneAnnuel == null || typeFormuleCalculMoyenneAnnuel
+									.equals(Constants.TYPE_CALCUL_MOYENNE_ANNUELLE_PAR_DEFAUT)) {
+								moyAn = moyAn + bul.getMoyGeneral() * Double.parseDouble(p.getCoef());
+								coef = coef + Double.parseDouble(p.getCoef());
+							} else if (typeFormuleCalculMoyenneAnnuel != null && typeFormuleCalculMoyenneAnnuel
+									.equals(Constants.TYPE_CALCUL_MOYENNE_ANNUELLE_AN_NOUR)) {
+								moyAn = moyAn + bul.getMoyGeneral();
+								coef++;
+							}
+
+							if (bul.getTypeEvaluation() != null && bul.getTypeEvaluation() == 7) {
 								// composition de passage
 								moyAnPassage.add(bul.getMoyGeneral());
-							} else if (bul.getTypeEvaluation() == 15) {
+							} else if (bul.getTypeEvaluation() != null && bul.getTypeEvaluation() == 15) {
 								// composition interne
 								moyAnInterne.add(bul.getMoyGeneral());
-							} else if (bul.getTypeEvaluation() == 16) {
+							} else if (bul.getTypeEvaluation() != null && bul.getTypeEvaluation() == 16) {
 								// composition IEPP
 								moyAnIEPP.add(bul.getMoyGeneral());
 							}
@@ -2062,28 +2062,33 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 				}
 			}
 		}
-		if (me.getTypeEvaluation() == 7) {
+		if (me.getTypeEvaluation() != null && me.getTypeEvaluation() == 7) {
 			// composition de passage
 			moyAnPassage.add(me.getMoyenne());
-		} else if (me.getTypeEvaluation() == 15) {
+		} else if (me.getTypeEvaluation() != null && me.getTypeEvaluation() == 15) {
 			// composition interne
 			moyAnInterne.add(me.getMoyenne());
-		} else if (me.getTypeEvaluation() == 16) {
+		} else if (me.getTypeEvaluation() != null && me.getTypeEvaluation() == 16) {
 			// composition IEPP
 			moyAnIEPP.add(me.getMoyenne());
 		}
-		if (typeFormuleCalculMoyenneAnnuel == null || typeFormuleCalculMoyenneAnnuel
-				.equals(Constants.TYPE_CALCUL_MOYENNE_ANNUELLE_PAR_DEFAUT)) {
+		if (typeFormuleCalculMoyenneAnnuel == null
+				|| typeFormuleCalculMoyenneAnnuel.equals(Constants.TYPE_CALCUL_MOYENNE_ANNUELLE_PAR_DEFAUT)) {
 			moyAn = moyAn + me.getMoyenne() * coefFinalPeriode;
 			coef = coef + coefFinalPeriode;
-		} else if (typeFormuleCalculMoyenneAnnuel != null && typeFormuleCalculMoyenneAnnuel
-				.equals(Constants.TYPE_CALCUL_MOYENNE_ANNUELLE_AN_NOUR)) {
-			moyAn = moyAn/coef + me.getMoyenne();
-			coef = 2.0;
+		} else if (typeFormuleCalculMoyenneAnnuel != null
+				&& typeFormuleCalculMoyenneAnnuel.equals(Constants.TYPE_CALCUL_MOYENNE_ANNUELLE_AN_NOUR)) {
+			if (me.getClasse().getIsArabe() != null && me.getClasse().getIsArabe() == 1) {
+				moyAn = moyAn + me.getMoyenne();
+				coef++;
+			} else {
+				moyAn = moyAn / coef + me.getMoyenne();
+				coef = 2.0;
+			}
 		}
-		
+
 		moyAn = CommonUtils.roundDouble(moyAn / (coef == 0.0 ? 1.0 : coef), 2);
-		System.out.println( String.format("MOYENNE ANNUEL: %s", moyAn));
+		System.out.println(String.format("MOYENNE ANNUEL: %s", moyAn));
 	}
 
 	public Integer getRangByValue(List<Double> list, Double value) {
