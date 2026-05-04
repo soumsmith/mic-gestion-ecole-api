@@ -1811,7 +1811,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 //			System.out.println("FINAL PERIODE "+finalPeriode.getCoef()+" "+finalPeriode.getLibelle());
 			if (ecole.getNiveauEnseignement().getId() == Constants.NIVEAU_ENSEIGNEMENT_PRIMAIRE) {
 				logger.info("ENS PRIMAIRE");
-				handleMoyenneAnnuelleEnsPrimaire(periodes,
+				infoCalcul = handleMoyenneAnnuelleEnsPrimaire(periodes,
 						Double.parseDouble(per.getCoef().equals("") ? "1" : finalPeriode.getCoef()), me,
 						bulletinsElevesList, moyAn, moyAnInterne, moyAnIEPP, moyAnPassage);
 			} else {
@@ -2017,7 +2017,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 		return infoCalcul;
 	}
 
-	public void handleMoyenneAnnuelleEnsPrimaire(List<Periode> periodes, Double coefFinalPeriode, MoyenneEleveDto me,
+	public InfoCalculMoyennePojo handleMoyenneAnnuelleEnsPrimaire(List<Periode> periodes, Double coefFinalPeriode, MoyenneEleveDto me,
 			List<Bulletin> bulletinsElevesList, Double moyAn, List<Double> moyAnInterne, List<Double> moyAnIEPP,
 			List<Double> moyAnPassage) {
 		Double coef = 0.0;
@@ -2089,6 +2089,10 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 
 		moyAn = CommonUtils.roundDouble(moyAn / (coef == 0.0 ? 1.0 : coef), 2);
 		System.out.println(String.format("MOYENNE ANNUEL: %s", moyAn));
+		InfoCalculMoyennePojo infoCalcul = new InfoCalculMoyennePojo();
+		infoCalcul.setMoyenneAnnuelle(moyAn);
+		infoCalcul.setCoeficient(coef);
+		return infoCalcul;
 	}
 
 	public Integer getRangByValue(List<Double> list, Double value) {
@@ -3553,7 +3557,7 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 		try {
 			if (isEnseignementPrimaire) {
 				logger.info("ENS PRIMAIRE");
-				handleMoyenneAnnuelleEnsPrimaire(periodes, coefFinal, me, bulletinsElevesList, 0.0, moyAnInterne,
+				infoCalcul =  handleMoyenneAnnuelleEnsPrimaire(periodes, coefFinal, me, bulletinsElevesList, 0.0, moyAnInterne,
 						moyAnIEPP, moyAnPassage);
 			} else {
 				logger.info("ENS SECONDAIRE ET AUTRES");
