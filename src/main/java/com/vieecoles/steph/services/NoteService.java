@@ -718,9 +718,29 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 		Map<String, Map<Long, Notes>> notesByEleveAndEval = new HashMap<String, Map<Long, Notes>>();
 		try {
 			// liste des notes valides de la classe
-			listNotesByClasse = Notes.find(
-					"evaluation.classe.id = ?1 AND evaluation.annee.id = ?2 AND evaluation.periode.id = ?3 AND pec = ?4",
-					Long.valueOf(classeId), Long.valueOf(anneeId), Long.valueOf(periodeId), Constants.PEC_1).list();
+//			listNotesByClasse = Notes.find(
+//					"evaluation.classe.id = ?1 AND evaluation.annee.id = ?2 AND evaluation.periode.id = ?3 AND pec = ?4",
+//					Long.valueOf(classeId), Long.valueOf(anneeId), Long.valueOf(periodeId), Constants.PEC_1).list();
+			
+			listNotesByClasse = getEntityManager()
+				    .createQuery("""
+				        SELECT n
+				        FROM Notes n
+				        JOIN FETCH n.evaluation e
+				        LEFT JOIN FETCH e.type
+				        JOIN FETCH n.classeEleve ce
+				        JOIN FETCH ce.inscription i
+				        JOIN FETCH i.eleve el
+				        WHERE e.classe.id = :classeId
+				          AND e.annee.id = :anneeId
+				          AND e.periode.id = :periodeId
+				          AND n.pec = :pec
+				    """, Notes.class)
+				    .setParameter("classeId", Long.valueOf(classeId))
+				    .setParameter("anneeId", Long.valueOf(anneeId))
+				    .setParameter("periodeId", Long.valueOf(periodeId))
+				    .setParameter("pec", Constants.PEC_1)
+				    .getResultList();
 // Regroupement par  matricule (clé).
 			// chaque matricule a comme valeur un map evaluation - notes
 			notesByEleveAndEval = listNotesByClasse.stream().parallel()
