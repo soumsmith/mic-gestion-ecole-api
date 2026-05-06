@@ -1134,74 +1134,84 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 
 	private void processMatieresForBulletin(MoyenneEleveDto me, Bulletin bulletin, BulletinProcessingContext context,
 			List<DetailBulletin> detailsBatch, List<NoteBulletin> notesBatch) {
+		try {
+			for (Map.Entry<EcoleHasMatiere, List<Notes>> entry : me.getNotesMatiereMap().entrySet()) {
+				EcoleHasMatiere matiere = entry.getKey();
+				// Pour debug. A supprimer sans risque après debug ok.
+				if(me.getEleve().getMatricule().equals("23660665Y")) {
+				System.out
+						.println(" -> DETAIL MATIERE A SAUVEGARDER : " + matiere.getId() + " " + matiere.getLibelle());
+				}
+				// Création du détail bulletin
+				DetailBulletin detail = new DetailBulletin();
+				detail.setId(UUID.randomUUID().toString());
 
-		for (Map.Entry<EcoleHasMatiere, List<Notes>> entry : me.getNotesMatiereMap().entrySet()) {
-			EcoleHasMatiere matiere = entry.getKey();
+				// Données de base
+				Double moyCoef = matiere.getMoyenne() * Double.parseDouble(matiere.getCoef());
+				detail.setMatiereCode(matiere.getMatiere().getId().toString());
+				detail.setMatiereId(matiere.getMatiere().getId());
+				detail.setMatiereRealId(matiere.getId());
+				detail.setTestLourdNote(matiere.getTestLourdNote());
+				detail.setTestLourdNoteSur(matiere.getTestLourdNoteSur());
+				detail.setMatiereLibelle(matiere.getLibelle());
+				detail.setMoyenne(CommonUtils.roundDouble(matiere.getMoyenne(), 2));
+				detail.setMoyCoef(CommonUtils.roundDouble(moyCoef, 2));
+				detail.setCoef(Double.valueOf(matiere.getCoef()));
+				detail.setAppreciation(matiere.getAppreciation());
+				detail.setRang(Integer.valueOf(matiere.getRang()));
+				detail.setNum_ordre(matiere.getNumOrdre());
+				detail.setCategorieMatiere(matiere.getCategorie().getLibelle());
+				detail.setCategorie(matiere.getCategorie().getCode());
+				detail.setBulletin(bulletin);
+				detail.setBonus(matiere.getBonus());
+				detail.setPec(matiere.getPec());
+				detail.setParentMatiere(matiere.getParentMatiereLibelle());
+				detail.setMoyAn(matiere.getMoyenneAnnuelle());
+				detail.setRangAn(matiere.getRangAnnuel());
+				detail.setMoyenneIntermediaire(matiere.getMoyenneIntermediaire());
+				detail.setIsAdjustment(matiere.getIsAdjustment());
+				detail.setDateCreation(new Date());
 
-			// Création du détail bulletin
-			DetailBulletin detail = new DetailBulletin();
-			detail.setId(UUID.randomUUID().toString());
+				if (matiere.getMoyenneAnnuelle() != null) {
+					detail.setAppreciationAn(CommonUtils.appreciation(Double.valueOf(matiere.getMoyenneAnnuelle())));
+				}
 
-			// Données de base
-			Double moyCoef = matiere.getMoyenne() * Double.parseDouble(matiere.getCoef());
-			detail.setMatiereCode(matiere.getMatiere().getId().toString());
-			detail.setMatiereId(matiere.getMatiere().getId());
-			detail.setMatiereRealId(matiere.getId());
-			detail.setTestLourdNote(matiere.getTestLourdNote());
-			detail.setTestLourdNoteSur(matiere.getTestLourdNoteSur());
-			detail.setMatiereLibelle(matiere.getLibelle());
-			detail.setMoyenne(CommonUtils.roundDouble(matiere.getMoyenne(), 2));
-			detail.setMoyCoef(CommonUtils.roundDouble(moyCoef, 2));
-			detail.setCoef(Double.valueOf(matiere.getCoef()));
-			detail.setAppreciation(matiere.getAppreciation());
-			detail.setRang(Integer.valueOf(matiere.getRang()));
-			detail.setNum_ordre(matiere.getNumOrdre());
-			detail.setCategorieMatiere(matiere.getCategorie().getLibelle());
-			detail.setCategorie(matiere.getCategorie().getCode());
-			detail.setBulletin(bulletin);
-			detail.setBonus(matiere.getBonus());
-			detail.setPec(matiere.getPec());
-			detail.setParentMatiere(matiere.getParentMatiereLibelle());
-			detail.setMoyAn(matiere.getMoyenneAnnuelle());
-			detail.setRangAn(matiere.getRangAnnuel());
-			detail.setMoyenneIntermediaire(matiere.getMoyenneIntermediaire());
-			detail.setIsAdjustment(matiere.getIsAdjustment());
-			detail.setDateCreation(new Date());
+				// Classification avec index optimisé
+				Long compositeKey = me.getEleve().getId() * 1000000L + matiere.getId();
+				ClasseEleveMatiere cem = context.cemByEleveAndMatiere.get(compositeKey);
+				detail.setIsRanked(cem != null ? cem.getIsClassed() : Constants.OUI);
 
-			if (matiere.getMoyenneAnnuelle() != null) {
-				detail.setAppreciationAn(CommonUtils.appreciation(Double.valueOf(matiere.getMoyenneAnnuelle())));
-			}
+				// Professeur avec cache
+				PersonnelMatiereClasse professeur = context.professeursMap.get(matiere.getId());
+				if (professeur != null && professeur.getPersonnel() != null) {
+					detail.setNom_prenom_professeur(
+							professeur.getPersonnel().getNom() + " " + professeur.getPersonnel().getPrenom());
+					detail.setSexeProfesseur(professeur.getPersonnel().getSexe());
+				} else {
+					detail.setNom_prenom_professeur("N/A");
+				}
 
-			// Classification avec index optimisé
-			Long compositeKey = me.getEleve().getId() * 1000000L + matiere.getId();
-			ClasseEleveMatiere cem = context.cemByEleveAndMatiere.get(compositeKey);
-			detail.setIsRanked(cem != null ? cem.getIsClassed() : Constants.OUI);
+				detailsBatch.add(detail);
 
-			// Professeur avec cache
-			PersonnelMatiereClasse professeur = context.professeursMap.get(matiere.getId());
-			if (professeur != null && professeur.getPersonnel() != null) {
-				detail.setNom_prenom_professeur(
-						professeur.getPersonnel().getNom() + " " + professeur.getPersonnel().getPrenom());
-				detail.setSexeProfesseur(professeur.getPersonnel().getSexe());
-			} else {
-				detail.setNom_prenom_professeur("N/A");
-			}
-
-			detailsBatch.add(detail);
-
-			// Traitement des notes
-			for (Notes note : entry.getValue()) {
-				if (note.getEvaluation().getPec() == 1) {
-					NoteBulletin noteBulletin = new NoteBulletin();
-					noteBulletin.setId(UUID.randomUUID().toString());
-					noteBulletin.setNote(note.getNote());
-					noteBulletin.setNoteSur(note.getEvaluation().getNoteSur());
-					noteBulletin.setDetailBulletin(detail);
-					noteBulletin.setReferenceId(String.valueOf(note.getId()));
-					noteBulletin.setType(note.getEvaluation().getType().getLibelle());
-					notesBatch.add(noteBulletin);
+				// Traitement des notes
+				for (Notes note : entry.getValue()) {
+					if (note.getEvaluation().getPec() == 1) {
+						NoteBulletin noteBulletin = new NoteBulletin();
+						noteBulletin.setId(UUID.randomUUID().toString());
+						noteBulletin.setNote(note.getNote());
+						noteBulletin.setNoteSur(note.getEvaluation().getNoteSur());
+						noteBulletin.setDetailBulletin(detail);
+						noteBulletin.setReferenceId(String.valueOf(note.getId()));
+						System.out.println("EVALUATION BUGGER " + note.getEvaluation().getId());
+						System.out.println("NOTE BUGGER " + note.getId());
+						noteBulletin.setType(note.getEvaluation().getType() != null ? note.getEvaluation().getType().getLibelle() : "N/A");
+						notesBatch.add(noteBulletin);
+					}
 				}
 			}
+		} catch (RuntimeException r) {
+			System.out.println("Erreur dans le traitement des détails mbulletins (processMatieresForBulletin)");
+			r.printStackTrace();
 		}
 	}
 
