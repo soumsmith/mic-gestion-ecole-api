@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<!-- Created with Jaspersoft Studio version 6.21.3.final using JasperReports Library version 6.21.3-4a3078d20785ebe464f18037d738d12fc98c13cf  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="MatriceAnnuelleParDiscipline" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8a2e5481-8cf4-499b-9ddc-cf4bdb8f8563">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ecolevieDB"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
@@ -471,11 +471,16 @@ where `ecoleviedbv2`.ve_details_infos_bulletins_spidertrois.libelle_classe =  $P
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="32" splitType="Stretch">
+		<band height="62" splitType="Stretch">
 			<textField>
 				<reportElement x="20" y="2" width="540" height="30" uuid="2702fb1d-fb67-475a-8432-76e12acfed81"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA["MATRICE ANNUELLE PAR MATIERE "+"( "+$F{libelle_matiere}+" )"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="20" y="32" width="540" height="30" uuid="8ec9fd20-c334-4a22-977e-ea58f7a6adfe"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Professeur "+"( "+$F{nom_prenom_professeur}+" )"]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>

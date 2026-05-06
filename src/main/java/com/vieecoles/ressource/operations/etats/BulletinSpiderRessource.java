@@ -212,7 +212,7 @@ public class BulletinSpiderRessource {
         Classe classe= new Classe() ;
         classe = Classe.findById(libelleClasse) ;
  Set<String> moisTrimestre = Set.of(
-    "Novembre", "Décembre", "Janvier", "Février", "Mars", "Avril"
+    "Novembre", "Décembre", "Janvier", "Février", "Mars"
 );
         if(!compress) {
             if(niveauEnseign==2) {
@@ -289,7 +289,7 @@ public class BulletinSpiderRessource {
                         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderArabePrimaire.jrxml");
                     }
                     else {
-                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderArabePrimaire.jrxml");
+                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderArabePrimaireTrois.jrxml");
 
                     }
                 } else 
@@ -440,7 +440,7 @@ public class BulletinSpiderRessource {
                         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderArabePrimaire.jrxml");
                     }
                     else {
-                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderArabePrimaire.jrxml");
+                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderArabePrimaireTrois.jrxml");
 
                     }
                 } else 
@@ -529,6 +529,21 @@ public class BulletinSpiderRessource {
                 e.printStackTrace();
             }
         }
+
+          // Compiler le sous-rapport BulletinArabePrimaire si nécessaire
+          if (niveauEnseign == 1 && bulletinArabe && !moisTrimestre.contains(libellePeriode)) {
+            try (java.io.InputStream subreportStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinArabePrimaireTrois.jrxml")) {
+                if (subreportStream != null) {
+                    JasperReport subreport = JasperCompileManager.compileReport(subreportStream);
+                    map.put("SUBREPORT_BulletinArabePrimaireTrois", subreport);
+                }
+            } catch (Exception e) {
+                System.err.println("Erreur lors de la compilation du sous-rapport BulletinArabePrimaireTrois: " + e.getMessage());
+                e.printStackTrace();
+            }
+        }
+
+
         
         // Compiler le sous-rapport BulletinPrimaireAutre si nécessaire (pour callSpiderAutrePrimaire.jrxml)
         if (niveauEnseign == 1 && !bulletinArabe) {
@@ -1000,7 +1015,7 @@ Set<String> moisTrimestre = Set.of(
             Classe classe= new Classe() ;
             classe = Classe.findById(libelleClasse) ;
             List<String> moisTrimestre = Arrays.asList(
-    "Novembre", "Décembre", "Janvier", "Février", "Mars", "Avril"
+    "Novembre", "Décembre", "Janvier", "Février", "Mars"
 );
             if (!compress){
                 if(niveauEnseign ==2) {
@@ -1070,7 +1085,7 @@ Set<String> moisTrimestre = Set.of(
                     }
                     else {
                        System.out.print("Imprimer etats/spider/BulletinArabePrimaire.jrxml");
-                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinArabePrimaire.jrxml");
+                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinArabePrimaireTrois.jrxml");
 
                     }
                 }
@@ -1190,7 +1205,7 @@ Set<String> moisTrimestre = Set.of(
                     }
                     else {
                        System.out.print("Imprimer etats/spider/BulletinArabePrimaire.jrxmlDecompresse");
-                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinArabePrimaire.jrxml");
+                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinArabePrimaireTrois.jrxml");
 
                     }
                 }
