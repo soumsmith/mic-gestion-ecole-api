@@ -24,6 +24,7 @@
 	<parameter name="bg" class="java.lang.String"/>
 	<parameter name="positionLogo" class="java.lang.String"/>
 	<parameter name="setBg" class="java.lang.String"/>
+	<parameter name="SUBREPORT_BulletinNobelSpiderTroisV2" class="net.sf.jasperreports.engine.JasperReport"/>
 	<queryString>
 		<![CDATA[select *
 from  `ecoleviedbv2`.imprimer_les_derniers_bulletins_et_livrets
@@ -366,8 +367,13 @@ where `ecoleviedbv2`.imprimer_les_derniers_bulletins_et_livrets.libelle_classe =
 					<subreportParameter name="setBg">
 						<subreportParameterExpression><![CDATA[$P{setBg}]]></subreportParameterExpression>
 					</subreportParameter>
+
+					<subreportParameter name="classe">
+						<subreportParameterExpression><![CDATA[$P{classe}]]></subreportParameterExpression>
+					</subreportParameter>
+
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression><![CDATA["etats/spider/TroixiemeTrimestre/BulletinNobelSpiderTroisV2.jasper"]]></subreportExpression>
+					<subreportExpression><![CDATA[$P{SUBREPORT_BulletinNobelSpiderTroisV2}]]></subreportExpression>
 				</subreport>
 			</band>
 		</groupHeader>

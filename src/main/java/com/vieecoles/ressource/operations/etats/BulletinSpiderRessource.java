@@ -230,7 +230,7 @@ public class BulletinSpiderRessource {
                 } 
                  else if (bulletinArabe){
                     if(libellePeriode.equals("Troisième Trimestre")) {
-                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderArabe.jrxml");
+                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/callSpiderArabeTrois.jrxml");
                     }
                    
                     else {
@@ -270,8 +270,10 @@ public class BulletinSpiderRessource {
                 else {
                     if(libellePeriode.equals("Troisième Trimestre")) {
                         System.out.println("callSpiderNobelTrois.jrxmlMouuuuu") ;
+
                         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/callSpiderNobelTrois.jrxml");
 
+                   
                     }
                     else {
                         System.out.println("callSpiderNobel.jrxml") ;
@@ -373,7 +375,7 @@ public class BulletinSpiderRessource {
                 }
                 else if (bulletinArabe){
                     if(libellePeriode.equals("Troisième Trimestre")) {
-                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderArabe");
+                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/callSpiderArabeTrois.jrxml");
                     }
                     else {
                         System.out.println("callSpiderArabeDecompress") ;
@@ -543,6 +545,7 @@ public class BulletinSpiderRessource {
             }
         }
 
+              
 
         
         // Compiler le sous-rapport BulletinPrimaireAutre si nécessaire (pour callSpiderAutrePrimaire.jrxml)
@@ -585,7 +588,48 @@ public class BulletinSpiderRessource {
                 System.err.println("Erreur lors de la compilation des sous-rapports PiedPage: " + e.getMessage());
                 e.printStackTrace();
             }
+        } 
+
+        if (!compress && niveauEnseign == 2 && libellePeriode.equals("Troisième Trimestre")) {
+            try (java.io.InputStream subreportStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/BulletinNobelSpiderTroisV2.jrxml")) {
+                if (subreportStream != null) {
+                    JasperReport subreport = JasperCompileManager.compileReport(subreportStream);
+                    map.put("SUBREPORT_BulletinNobelSpiderTroisV2", subreport);
+                }
+            } catch (Exception e) {
+                System.err.println("Erreur lors de la compilation du sous-rapport BulletinNobelSpiderTroisV2: " + e.getMessage());
+                e.printStackTrace();
+            }
+            
+        } 
+
+        if (compress && niveauEnseign == 2 && libellePeriode.equals("Troisième Trimestre")) {
+            try (java.io.InputStream subreportStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/BulletinNobelSpiderEtanTroisV2.jrxml")) {
+                if (subreportStream != null) {
+                    JasperReport subreport = JasperCompileManager.compileReport(subreportStream);
+                    map.put("SUBREPORT_BulletinNobelSpiderEtanTroisV2", subreport);
+                }
+            } catch (Exception e) {
+                System.err.println("Erreur lors de la compilation du sous-rapport BulletinNobelSpiderEtanTroisV2: " + e.getMessage());
+                e.printStackTrace();
+            }
+            
         }
+        if (bulletinArabe &&niveauEnseign == 2 && libellePeriode.equals("Troisième Trimestre")) {
+            try (java.io.InputStream subreportStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/BulletinArabeSpiderEtanTrois.jrxml")) {
+                if (subreportStream != null) {
+                    JasperReport subreport = JasperCompileManager.compileReport(subreportStream);
+                    map.put("SUBREPORT_BulletinArabeSpiderEtanTrois", subreport);
+                }
+            } catch (Exception e) {
+                System.err.println("Erreur lors de la compilation du sous-rapport BulletinArabeSpiderEtanTrois: " + e.getMessage());
+                e.printStackTrace();
+            }
+            
+        }
+
+
+
         String infos= null ;
         String pdistinct= null ;
         String plogoPosi= null ;
@@ -625,6 +669,7 @@ public class BulletinSpiderRessource {
         map.put("positionLogo", plogoPosi);
         map.put("setBg", psetBg);
         map.put(JRParameter.REPORT_CONNECTION, connection);
+        map.put(JRParameter.REPORT_CLASS_LOADER, this.getClass().getClassLoader());
 
         JasperPrint report = JasperFillManager.fillReport(compileReport, map, connection);
         byte[] data =JasperExportManager.exportReportToPdf(report);
@@ -982,6 +1027,7 @@ Set<String> moisTrimestre = Set.of(
         map.put("offsetValue", debutImpression);
         map.put("limitValue", finImpression);
         map.put(JRParameter.REPORT_CONNECTION, connection);
+        map.put(JRParameter.REPORT_CLASS_LOADER, this.getClass().getClassLoader());
 
         JasperPrint report = JasperFillManager.fillReport(compileReport, map, connection);
         byte[] data =JasperExportManager.exportReportToPdf(report);
@@ -1328,6 +1374,7 @@ Set<String> moisTrimestre = Set.of(
             map.put("positionLogo", plogoPosi);
             map.put("setBg", psetBg);
             map.put("classe", classe.getLibelle());
+            map.put(JRParameter.REPORT_CLASS_LOADER, this.getClass().getClassLoader());
             JasperPrint report = JasperFillManager.fillReport(compileReport, map, connection);
             byte[] data =JasperExportManager.exportReportToPdf(report);
 

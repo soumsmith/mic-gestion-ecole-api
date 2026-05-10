@@ -26,7 +26,7 @@ public class JasperArabicFontRegistrar {
         try (InputStream in = JasperArabicFontRegistrar.class.getResourceAsStream(FONT_RESOURCE)) {
             if (in == null) {
                 LOG.warning("Missing Jasper font on classpath: " + FONT_RESOURCE
-                        + " — PDF may fail (Helvetica + Identity-H) for Arabic.");
+                        + " - PDF may fail (Helvetica + Identity-H) for Arabic.");
                 return;
             }
             Font base = Font.createFont(Font.TRUETYPE_FONT, in);
