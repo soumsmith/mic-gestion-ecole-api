@@ -77,14 +77,16 @@ public class LivretSpiderRessource {
 
      @GET
 
-    @Path("/spider-livret/{idEcole}/{libellePeriode}/{libelleAnnee}/{libelleClasse}/{positionLogo}/{filigranne}/{infoAmoirie}/{pivoter}/{distinct}")
+    @Path("/spider-livret/{idEcole}/{libellePeriode}/{libelleAnnee}/{libelleClasse}/{positionLogo}/{filigranne}/{infoAmoirie}/{pivoter}/{distinct}/{bulletinArabe}/{niveauEnseign}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public ResponseEntity<byte[]>  getDtoRapport(@PathParam("idEcole") Long idEcole ,@PathParam("libellePeriode") String libellePeriode ,
                                                  @PathParam("libelleAnnee") String libelleAnnee , @PathParam("libelleClasse") String libelleClasse,
                                                 @PathParam("positionLogo") boolean positionLogo ,
                                                  @PathParam("filigranne") boolean filigranne, @PathParam("infoAmoirie") boolean infoAmoiri,
                                                  @PathParam("pivoter") boolean pivoter ,
-                                                 @PathParam("distinct") boolean distinct ) throws Exception, JRException {
+                                                 @PathParam("distinct") boolean distinct 
+                                                 ,@PathParam("bulletinArabe") boolean bulletinArabe,
+                                                 @PathParam("niveauEnseign") Long niveauEnseign) throws Exception, JRException {
         InputStream myInpuStream ;
 
          myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/LivretScolaire/callLivretScolaire.jrxml");
@@ -144,7 +146,7 @@ public class LivretSpiderRessource {
     }
 
     @GET
-    @Path("/spider-livret-matricule/{idEcole}/{libellePeriode}/{libelleAnnee}/{libelleClasse}/{matricule}/{positionLogo}/{filigranne}/{infoAmoirie}/{pivoter}/{distinct}")
+    @Path("/spider-livret-matricule/{idEcole}/{libellePeriode}/{libelleAnnee}/{libelleClasse}/{matricule}/{positionLogo}/{filigranne}/{infoAmoirie}/{pivoter}/{distinct}/{bulletinArabe}/{niveauEnseign}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public ResponseEntity<byte[]>  getDtoRapport(@PathParam("idEcole") Long idEcole ,@PathParam("libellePeriode") String libellePeriode ,
                                                  @PathParam("libelleAnnee") String libelleAnnee , @PathParam("libelleClasse") String libelleClasse ,@PathParam("matricule") String matricule,
@@ -152,7 +154,8 @@ public class LivretSpiderRessource {
                                                  @PathParam("filigranne") boolean filigranne,
                                                  @PathParam("infoAmoirie") boolean infoAmoiri,
                                                  @PathParam("pivoter") boolean pivoter ,
-                                                 @PathParam("distinct") boolean distinct) throws Exception, JRException {
+                                                 @PathParam("distinct") boolean distinct,@PathParam("bulletinArabe") boolean bulletinArabe,
+                                                 @PathParam("niveauEnseign") Long niveauEnseign) throws Exception, JRException {
         InputStream myInpuStream ;
 
         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/LivretScolaire/Livret_scolaireSpider.jrxml");

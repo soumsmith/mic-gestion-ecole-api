@@ -1564,8 +1564,7 @@ where `ecoleviedbv2`.ve_bulletin_annuel_primaire.matricule =  $P{matricule} and
 									<textElement>
 										<font size="7"/>
 									</textElement>
-									<textFieldExpression><![CDATA[$F{is_class_2e_trim}.equals("N")? "NC":$F{rang_2eme_trim}.equals("1") ? $F{rang_2eme_trim}+"èr(e)": $F{rang_2eme_trim}+"e"
-]]></textFieldExpression>
+									<textFieldExpression><![CDATA[$F{is_class_2e_trim}.equals("N")? "NC":$F{rang_2eme_trim}.equals("1") ? $F{rang_2eme_trim}+"èr(e)": $F{rang_2eme_trim}+"e"]]></textFieldExpression>
 								</textField>
 								<textField isBlankWhenNull="true">
 									<reportElement x="152" y="15" width="24" height="15" uuid="6a19f914-8559-4b70-965e-117aa3b2045b"/>
@@ -1579,8 +1578,7 @@ where `ecoleviedbv2`.ve_bulletin_annuel_primaire.matricule =  $P{matricule} and
 									<textElement>
 										<font size="7"/>
 									</textElement>
-									<textFieldExpression><![CDATA[$F{is_class_1er_trim}.equals("N")? "NC":$F{rang_1er_trim}.equals("1") ? $F{rang_1er_trim}+"èr(e)": $F{rang_1er_trim}+"e"
-]]></textFieldExpression>
+									<textFieldExpression><![CDATA[$F{is_class_1er_trim}.equals("N")? "NC":$F{rang_1er_trim}.equals("1") ? $F{rang_1er_trim}+"èr(e)": $F{rang_1er_trim}+"e"]]></textFieldExpression>
 								</textField>
 								<textField>
 									<reportElement x="80" y="15" width="24" height="15" uuid="9c7bfab1-a98d-4be4-9ef5-1f3a23bafa9f"/>
@@ -1664,7 +1662,7 @@ where `ecoleviedbv2`.ve_bulletin_annuel_primaire.matricule =  $P{matricule} and
 										<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 									</box>
 									<textElement>
-										<font size="7"/>
+										<font size="7" isBold="true"/>
 									</textElement>
 									<textFieldExpression><![CDATA[($F{moy_annuelle} != null && $F{moy_annuelle} >= 10) ? "Admis(e)" : "Refusé(e)"]]></textFieldExpression>
 								</textField>
@@ -1678,7 +1676,7 @@ where `ecoleviedbv2`.ve_bulletin_annuel_primaire.matricule =  $P{matricule} and
 										<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 									</box>
 									<textElement>
-										<font size="7"/>
+										<font size="7" isBold="true"/>
 									</textElement>
 									<textFieldExpression><![CDATA["Décision de fin d'année"]]></textFieldExpression>
 								</textField>
@@ -1771,7 +1769,7 @@ where `ecoleviedbv2`.ve_bulletin_annuel_primaire.matricule =  $P{matricule} and
 											<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 										</box>
 										<textElement textAlignment="Center" verticalAlignment="Middle">
-											<font size="7"/>
+											<font size="7" isBold="true"/>
 										</textElement>
 										<textFieldExpression><![CDATA[$F{moy_annuelle}/2]]></textFieldExpression>
 										<patternExpression><![CDATA["##.##"]]></patternExpression>
@@ -1788,7 +1786,7 @@ where `ecoleviedbv2`.ve_bulletin_annuel_primaire.matricule =  $P{matricule} and
 										<textElement textAlignment="Center" verticalAlignment="Middle">
 											<font size="7"/>
 										</textElement>
-										<textFieldExpression><![CDATA[$F{rang_annuelle}.equals("1") ?  "RANG ANNUEL: "+$F{rang_annuelle}+" èr(e) / " + $V{TotalEleveClasse} : "RANG ANNUEL: "+$F{rang_annuelle}+"e/ "+$V{TotalEleveClasse} ]]></textFieldExpression>
+										<textFieldExpression><![CDATA[$F{rang_annuelle}.equals("1") ?  "RANG ANNUEL: "+$F{rang_annuelle}+" èr(e) / " + $V{TotalEleveClasse} : "RANG ANNUEL: "+$F{rang_annuelle}+"e/ "+$V{TotalEleveClasse}]]></textFieldExpression>
 									</textField>
 								</frame>
 							</frame>

@@ -1471,6 +1471,50 @@ Set<String> moisTrimestre = Set.of(
         g2d.drawImage(image, transform, null);
         g2d.dispose();
         return newImage;
+    } 
+
+    @GET
+    @Path("/spider-bilan-classe/{idEcole}/{classe}/{libellePeriode}/{libelleAnnee}/{bulletinArabe}")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public ResponseEntity<byte[]>  getDtoRapportBilanClasse(@PathParam("idEcole") Long idEcole ,
+                                                @PathParam("classe") String classe ,
+                                                @PathParam("libellePeriode") String libellePeriode ,
+                                                 @PathParam("libelleAnnee") String libelleAnnee,
+                                                 @PathParam("bulletinArabe") boolean bulletinArabe
+    ) throws Exception, JRException {
+        try {
+        InputStream myInpuStream ;
+
+ if(bulletinArabe){
+    myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BilanArabePrimaire.jrxml");
+ } else {
+    myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BilanArabePrimaireAutre.jrxml");
+ }
+        Connection connection = DriverManager.getConnection("jdbc:mysql://94.130.15.245:33061/ecoleviedbv2?useUnicode=true&characterEncoding=UTF-8", USER, PASS);
+        JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
+        String infos= null ;
+        String pdistinct= null ;
+        String plogoPosi= null ;
+        String psetBg= null ;
+        
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("idEcole", idEcole);
+        map.put("annee", libelleAnnee);
+        map.put("libellePeriode", libellePeriode);
+        map.put("classe", classe);
+        JasperPrint report = JasperFillManager.fillReport(compileReport, map, connection);
+        byte[] data =JasperExportManager.exportReportToPdf(report);
+
+        HttpHeaders headers= new HttpHeaders();
+        // headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Rapport"+myScole.getEcoleclibelle()+".docx");
+        headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Bilan-Annuel-"+".pdf");
+        return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.MULTIPART_FORM_DATA).body(data);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 
