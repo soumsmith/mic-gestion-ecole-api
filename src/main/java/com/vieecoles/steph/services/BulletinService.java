@@ -1202,8 +1202,8 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 						noteBulletin.setNoteSur(note.getEvaluation().getNoteSur());
 						noteBulletin.setDetailBulletin(detail);
 						noteBulletin.setReferenceId(String.valueOf(note.getId()));
-						System.out.println("EVALUATION BUGGER " + note.getEvaluation().getId());
-						System.out.println("NOTE BUGGER " + note.getId());
+//						System.out.println("EVALUATION BUGGER " + note.getEvaluation().getId());
+//						System.out.println("NOTE BUGGER " + note.getId());
 						noteBulletin.setType(note.getEvaluation().getType() != null ? note.getEvaluation().getType().getLibelle() : "N/A");
 						notesBatch.add(noteBulletin);
 					}

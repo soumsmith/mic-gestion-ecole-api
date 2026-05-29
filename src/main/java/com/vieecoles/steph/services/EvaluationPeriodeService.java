@@ -24,6 +24,8 @@ public class EvaluationPeriodeService implements PanacheRepositoryBase<Evaluatio
 			Long niveauId) {
 		EvaluationPeriode obj = null;
 		try {
+			System.out.println(String.format("Année = %s , ecole= %s , periode = %s , niveau = %s", anneeId, ecoleId,
+					periodeId, niveauId));
 			obj = EvaluationPeriode.find("annee.id = ?1 and ecole.id =?2 and periode.id = ?3 and niveau.id=?4 order by niveau.id, periode.niveau", anneeId,
 					ecoleId, periodeId, niveauId).singleResult();
 			logger.info(String.format("Année = %s , ecole= %s , periode = %s , niveau = %s", anneeId, ecoleId,
