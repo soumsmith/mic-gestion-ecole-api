@@ -19,6 +19,8 @@
 	<property name="net.sf.jasperreports.export.pdf.force.singlenbytechars" value="false"/>
 	<property name="net.sf.jasperreports.default.pdf.embedded.font" value="true"/>
 	<property name="net.sf.jasperreports.pdf.permissions.allowed" value="ALL"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="234"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="761"/>
 	<style name="champsLibelle" fontName="Noto Sans Arabic" fontSize="8">
 		<box leftPadding="5"/>
 	</style>
@@ -52,59 +54,59 @@ where
 `ecoleviedbv2`.ve_bulletin_annuel_primaire_francais.annee_libelle= $P{annee} and
 `ecoleviedbv2`.ve_bulletin_annuel_primaire_francais.libelle_periode= $P{libellePeriode} and
 `ecoleviedbv2`.ve_bulletin_annuel_primaire_francais.libelle_classe=  $P{classe} and `ecoleviedbv2`.ve_bulletin_annuel_primaire_francais.is_arabe is null
-   order by `ecoleviedbv2`.ve_bulletin_annuel_primaire_francais.nom , `ecoleviedbv2`.ve_bulletin_annuel_primaire_francais.prenoms]]>
+   order by  `ecoleviedbv2`.ve_bulletin_annuel_primaire_francais.rang_annuelle]]>
 	</queryString>
 	<field name="matricule" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="matricule"/>
 		<property name="com.jaspersoft.studio.field.label" value="matricule"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ve_bulletin_annuel_primaire"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_bulletin_annuel_primaire_francais"/>
 	</field>
 	<field name="nom" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="nom"/>
 		<property name="com.jaspersoft.studio.field.label" value="nom"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ve_bulletin_annuel_primaire"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_bulletin_annuel_primaire_francais"/>
 	</field>
 	<field name="prenoms" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="prenoms"/>
 		<property name="com.jaspersoft.studio.field.label" value="prenoms"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ve_bulletin_annuel_primaire"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_bulletin_annuel_primaire_francais"/>
 	</field>
 	<field name="sexe" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="sexe"/>
 		<property name="com.jaspersoft.studio.field.label" value="sexe"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ve_bulletin_annuel_primaire"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_bulletin_annuel_primaire_francais"/>
 	</field>
 	<field name="moy_annuelle" class="java.lang.Double">
 		<property name="com.jaspersoft.studio.field.name" value="moy_annuelle"/>
 		<property name="com.jaspersoft.studio.field.label" value="moy_annuelle"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ve_bulletin_annuel_primaire"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_bulletin_annuel_primaire_francais"/>
 	</field>
-	<field name="rang_annuelle" class="java.lang.String">
+	<field name="rang_annuelle" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.name" value="rang_annuelle"/>
 		<property name="com.jaspersoft.studio.field.label" value="rang_annuelle"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ve_bulletin_annuel_primaire"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_bulletin_annuel_primaire_francais"/>
 	</field>
 	<field name="appreciation_conseil" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="appreciation_conseil"/>
 		<property name="com.jaspersoft.studio.field.label" value="appreciation_conseil"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ve_bulletin_annuel_primaire"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_bulletin_annuel_primaire_francais"/>
 	</field>
 	<field name="bg" class="byte[]">
 		<property name="com.jaspersoft.studio.field.name" value="bg"/>
 		<property name="com.jaspersoft.studio.field.label" value="bg"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ve_bulletin_annuel_primaire"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_bulletin_annuel_primaire_francais"/>
 	</field>
 	<field name="libelle_classe" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="libelle_classe"/>
 		<property name="com.jaspersoft.studio.field.label" value="libelle_classe"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ve_bulletin_annuel_primaire"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_bulletin_annuel_primaire_francais"/>
 	</field>
 	<field name="annee_libelle" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="annee_libelle"/>
 		<property name="com.jaspersoft.studio.field.label" value="annee_libelle"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ve_bulletin_annuel_primaire"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ve_bulletin_annuel_primaire_francais"/>
 	</field>
-	<sortField name="matricule"/>
+	<sortField name="rang_annuelle"/>
 	<variable name="cpte" class="java.lang.Integer" incrementType="Report" calculation="Sum">
 		<variableExpression><![CDATA[$V{cpte}+1]]></variableExpression>
 		<initialValueExpression><![CDATA[0]]></initialValueExpression>

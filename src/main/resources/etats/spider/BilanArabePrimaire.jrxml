@@ -4,8 +4,8 @@
 	<property name="net.sf.jasperreports.awt.ignore.missing.font" value="true"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="PoulsAdapteur"/>
-	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="548"/>
-	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="440"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="543"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="447"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
@@ -19,6 +19,8 @@
 	<property name="net.sf.jasperreports.export.pdf.force.singlenbytechars" value="false"/>
 	<property name="net.sf.jasperreports.default.pdf.embedded.font" value="true"/>
 	<property name="net.sf.jasperreports.pdf.permissions.allowed" value="ALL"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="389"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="606"/>
 	<style name="champsLibelle" fontName="Noto Sans Arabic" fontSize="8">
 		<box leftPadding="5"/>
 	</style>
@@ -52,7 +54,7 @@ where
 `ecoleviedbv2`.ve_bulletin_annuel_primaire.annee_libelle= $P{annee} and
 `ecoleviedbv2`.ve_bulletin_annuel_primaire.libelle_periode= $P{libellePeriode} and
 `ecoleviedbv2`.ve_bulletin_annuel_primaire.libelle_classe=  $P{classe} and `ecoleviedbv2`.ve_bulletin_annuel_primaire.is_arabe=1
-   order by `ecoleviedbv2`.ve_bulletin_annuel_primaire.nom , `ecoleviedbv2`.ve_bulletin_annuel_primaire.prenoms]]>
+   order by  `ecoleviedbv2`.ve_bulletin_annuel_primaire.rang_annuelle]]>
 	</queryString>
 	<field name="matricule" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="matricule"/>
@@ -79,7 +81,7 @@ where
 		<property name="com.jaspersoft.studio.field.label" value="moy_annuelle"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="ve_bulletin_annuel_primaire"/>
 	</field>
-	<field name="rang_annuelle" class="java.lang.String">
+	<field name="rang_annuelle" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.name" value="rang_annuelle"/>
 		<property name="com.jaspersoft.studio.field.label" value="rang_annuelle"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="ve_bulletin_annuel_primaire"/>
@@ -104,7 +106,7 @@ where
 		<property name="com.jaspersoft.studio.field.label" value="annee_libelle"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="ve_bulletin_annuel_primaire"/>
 	</field>
-	<sortField name="matricule"/>
+	<sortField name="rang_annuelle"/>
 	<variable name="cpte" class="java.lang.Integer" incrementType="Report" calculation="Sum">
 		<variableExpression><![CDATA[$V{cpte}+1]]></variableExpression>
 		<initialValueExpression><![CDATA[0]]></initialValueExpression>

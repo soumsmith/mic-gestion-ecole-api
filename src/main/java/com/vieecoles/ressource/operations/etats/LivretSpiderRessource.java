@@ -4,6 +4,7 @@ package com.vieecoles.ressource.operations.etats;
 import com.vieecoles.InforPersonLivretScolaire;
 import com.vieecoles.dto.parametreDto;
 import com.vieecoles.dto.spiderBulletinDto;
+import com.vieecoles.entities.operations.ecole;
 import com.vieecoles.services.etats.BulletinRapportServices;
 import com.vieecoles.services.etats.BulletinSpiderServices;
 import com.vieecoles.services.etats.LivretSpiderServices;
@@ -88,8 +89,14 @@ public class LivretSpiderRessource {
                                                  ,@PathParam("bulletinArabe") boolean bulletinArabe,
                                                  @PathParam("niveauEnseign") Long niveauEnseign) throws Exception, JRException {
         InputStream myInpuStream ;
+        ecole myEcole = ecole.findById(idEcole);
+        if(myEcole.getNiveau_Enseignement_id()== 2){
+            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/LivretScolaire/callLivretScolaire.jrxml");
+        }else{
+            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/LivretScolaire/callLivretScolaireSup.jrxml");
+        }
 
-         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/LivretScolaire/callLivretScolaire.jrxml");
+         
 
         spiderBulletinDto detailsBull= new spiderBulletinDto() ;
         List<parametreDto>  dspsDto = new ArrayList<>() ;
@@ -101,11 +108,33 @@ public class LivretSpiderRessource {
         Connection connection = DriverManager.getConnection("jdbc:mysql://db:3306/ecoleviedbv2", USER, PASS);
         JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
         //   JasperReport compileReport = (JasperReport) JRLoader.loadObjectFromFile(UPLOAD_DIR+"BulletinBean.jasper");
+
+        
+
+
         Map<String, Object> map = new HashMap<>();
          String infos= null ;
          String pdistinct= null ;
          String plogoPosi= null ;
          String psetBg= null ;
+
+         if ( niveauEnseign != 2 && libellePeriode.equals("Deuxième Semestre")) {
+            try (java.io.InputStream subreportStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/LivretScolaire/Livret_scolaireSpiderSup.jrxml")) {
+                if (subreportStream != null) {
+                    JasperReport subreport = JasperCompileManager.compileReport(subreportStream);
+                    map.put("SUBREPORT_Livret_scolaireSpiderSup", subreport);
+                }
+            } catch (Exception e) {
+                System.err.println("Erreur lors de la compilation du sous-rapport Livret_scolaireSpiderSup: " + e.getMessage());
+                e.printStackTrace();
+            }
+            
+        }
+
+
+
+
+
          if(distinct){
              pdistinct="1";
          } else{
@@ -157,9 +186,12 @@ public class LivretSpiderRessource {
                                                  @PathParam("distinct") boolean distinct,@PathParam("bulletinArabe") boolean bulletinArabe,
                                                  @PathParam("niveauEnseign") Long niveauEnseign) throws Exception, JRException {
         InputStream myInpuStream ;
-
-        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/LivretScolaire/Livret_scolaireSpider.jrxml");
-
+ecole myEcole = ecole.findById(idEcole);
+if(myEcole.getNiveau_Enseignement_id()== 2){
+    myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/LivretScolaire/Livret_scolaireSpider.jrxml");
+}else{
+    myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/LivretScolaire/Livret_scolaireSpiderSup.jrxml");
+}
         spiderBulletinDto detailsBull= new spiderBulletinDto() ;
         List<parametreDto>  dspsDto = new ArrayList<>() ;
 

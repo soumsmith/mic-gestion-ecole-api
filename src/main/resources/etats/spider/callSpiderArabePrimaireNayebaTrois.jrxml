@@ -24,15 +24,15 @@
 	<parameter name="bg" class="java.lang.String"/>
 	<parameter name="positionLogo" class="java.lang.String"/>
 	<parameter name="setBg" class="java.lang.String"/>
-	<parameter name="SUBREPORT_BulletinPrimaireAutreTrois" class="net.sf.jasperreports.engine.JasperReport"/>
+	<parameter name="SUBREPORT_BulletinPrimaireNayebaTrois" class="net.sf.jasperreports.engine.JasperReport"/>
 	<queryString>
 		<![CDATA[select *
-from  `ecoleviedbv2`.ve_bulletin_annuel_primaire_francais
-where `ecoleviedbv2`.ve_bulletin_annuel_primaire_francais.libelle_classe =  $P{classe} and
-   `ecoleviedbv2`.ve_bulletin_annuel_primaire_francais.id_ecole  =  $P{idEcole}  and
-    `ecoleviedbv2`.ve_bulletin_annuel_primaire_francais.annee_libelle =  $P{libelleAnnee}
-    and  `ecoleviedbv2`.ve_bulletin_annuel_primaire_francais.libelle_periode like  $P{libellePeriode} and `ecoleviedbv2`.ve_bulletin_annuel_primaire_francais.is_arabe is null
-     order by `ecoleviedbv2`.ve_bulletin_annuel_primaire_francais.nom , `ecoleviedbv2`.ve_bulletin_annuel_primaire_francais.prenoms]]>
+from  `ecoleviedbv2`.ve_details_infos_bulletins_spider
+where `ecoleviedbv2`.ve_details_infos_bulletins_spider.libelle_classe =  $P{classe} and
+   `ecoleviedbv2`.ve_details_infos_bulletins_spider.id_ecole  =  $P{idEcole}  and
+    `ecoleviedbv2`.ve_details_infos_bulletins_spider.annee_libelle =  $P{libelleAnnee}
+    and  `ecoleviedbv2`.ve_details_infos_bulletins_spider.libelle_periode like  $P{libellePeriode} 
+     order by `ecoleviedbv2`.ve_details_infos_bulletins_spider.nom , `ecoleviedbv2`.ve_details_infos_bulletins_spider.prenoms]]>
 	</queryString>
 	<field name="id_ecole" class="java.lang.Long">
 		<property name="com.jaspersoft.studio.field.name" value="id_ecole"/>
@@ -371,7 +371,7 @@ where `ecoleviedbv2`.ve_bulletin_annuel_primaire_francais.libelle_classe =  $P{c
 						<subreportParameterExpression><![CDATA[$P{classe}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression><![CDATA[$P{SUBREPORT_BulletinPrimaireAutreTrois}]]></subreportExpression>
+					<subreportExpression><![CDATA[$P{SUBREPORT_BulletinPrimaireNayebaTrois}]]></subreportExpression>
 				</subreport>
 			</band>
 		</groupHeader>
