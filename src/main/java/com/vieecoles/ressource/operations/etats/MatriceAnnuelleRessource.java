@@ -2,6 +2,7 @@ package com.vieecoles.ressource.operations.etats;
 
 
 import com.vieecoles.dto.*;
+import com.vieecoles.entities.operations.ecole;
 import com.vieecoles.services.etats.BulletinRapportServices;
 import com.vieecoles.services.etats.BulletinSpiderServices;
 import com.vieecoles.services.etats.MatriceAnnuelleServices;
@@ -140,7 +141,13 @@ public class MatriceAnnuelleRessource {
 
         SpiderMatriceClasseDto detailsBull= new SpiderMatriceClasseDto() ;
 
-        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/MatriceAnnuelleGeneralDFA.jrxml");
+        ecole myEcole = ecole.findById(idEcole);
+        if(myEcole.getNiveau_Enseignement_id()== 2){
+            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/MatriceAnnuelleGeneralDFA.jrxml");
+        }else{
+            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/MatriceAnnuelleGeneralDFASup.jrxml");
+        }
+        
         List<matriceClasseDto> detailsBull1= new ArrayList<>() ;
         List<matiereMoyenneBilanDto> detailsBull2= new ArrayList<>() ;
         List<RecapResultatsElevesAffeEtNonAffDto> recapResultats= new ArrayList<>() ;
@@ -200,8 +207,14 @@ public class MatriceAnnuelleRessource {
                                                     @PathParam("periode") String periode , @PathParam("anneeId") Long anneeId ,@PathParam("classe") Long classe) throws Exception, JRException {
         InputStream myInpuStream ;
         /*myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/BulletinBean.jrxml");*/
-        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/MatriceAnnuelleGeneralDFA.jrxml");
 
+        ecole myEcole = ecole.findById(idEcole);
+        if(myEcole.getNiveau_Enseignement_id()== 2){
+            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/MatriceAnnuelleGeneralDFA.jrxml");
+        }else{
+            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/MatriceAnnuelleGeneralDFASup.jrxml");
+        }
+       
         List<matriceAnnuelleDto> detailsBull= new ArrayList<>() ;
         List<RecapResultatsElevesAffeEtNonAffDto> recapResultats= new ArrayList<>() ;
         Long  effeG,effeF,classF,classG,nonclassF,nonclassG,nbreMoySup10F,nbreMoySup10G,nbreMoyInf999F,nbreMoyInf999G,nbreMoyInf85G,nbreMoyInf85F;
@@ -338,8 +351,15 @@ public class MatriceAnnuelleRessource {
         /*myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/BulletinBean.jrxml");*/
 
         SpiderMatriceClasseDto detailsBull= new SpiderMatriceClasseDto() ;
+        ecole myEcole = ecole.findById(idEcole);
 
-        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/MatriceAnnuelleParDiscipline.jrxml");
+        if(myEcole.getNiveau_Enseignement_id()== 2){
+            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/MatriceAnnuelleParDiscipline.jrxml");
+        }else{
+            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/MatriceAnnuelleParDisciplineSup.jrxml");
+        }
+        
+        
         List<matriceClasseDto> detailsBull1= new ArrayList<>() ;
         List<matiereMoyenneBilanDto> detailsBull2= new ArrayList<>() ;
 
@@ -397,13 +417,19 @@ public class MatriceAnnuelleRessource {
         Double pourSupegal10F = 0d, pourInf8_5F = 0d, pourSup8_5F = 0d, pourSupegal10G = 0d , pourInf8_5G = 0d, pourSup8_5G = 0d ;
         Long clasFille =0L ,clasgarcon =0L ;
 
-
+ ecole myEcole = ecole.findById(idEcole);
         InputStream myInpuStream ;
         /*myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/BulletinBean.jrxml");*/
 
         SpiderMatriceClasseDto detailsBull= new SpiderMatriceClasseDto() ;
+        if(myEcole.getNiveau_Enseignement_id()== 2){
+            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/MatriceAnnuelleParDiscipline.jrxml");
+        }else{
+            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/MatriceAnnuelleParDisciplineSup.jrxml");
+        }
 
-        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/MatriceAnnuelleParDiscipline.jrxml");
+        
+       
         List<matriceClasseDto> detailsBull1= new ArrayList<>() ;
         List<matiereMoyenneBilanDto> detailsBull2= new ArrayList<>() ;
 
@@ -450,7 +476,14 @@ public class MatriceAnnuelleRessource {
 
         SpiderMatriceClasseDto detailsBull= new SpiderMatriceClasseDto() ;
 
-        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/MatriceAnnuelleEcoleDFA.jrxml");
+        ecole myEcole = ecole.findById(idEcole);
+        if(myEcole.getNiveau_Enseignement_id()== 2){
+            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/MatriceAnnuelleGeneralDFA.jrxml");
+        }else{
+            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/MatriceAnnuelleGeneralDFASup.jrxml");
+        }
+       
+       
         List<matriceClasseDto> detailsBull1= new ArrayList<>() ;
         List<matiereMoyenneBilanDto> detailsBull2= new ArrayList<>() ;
         List<RecapResultatsElevesAffeEtNonAffDto> recapResultats= new ArrayList<>() ;

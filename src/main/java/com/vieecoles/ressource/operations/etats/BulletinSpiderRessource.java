@@ -212,7 +212,7 @@ public class BulletinSpiderRessource {
         Classe classe= new Classe() ;
         classe = Classe.findById(libelleClasse) ;
  Set<String> moisTrimestre = Set.of(
-    "Novembre", "Décembre", "Janvier", "Février", "Mars", "Avril"
+    "Novembre", "Décembre", "Janvier", "Février", "Mars"
 );
         if(!compress) {
             if(niveauEnseign==2) {
@@ -230,7 +230,7 @@ public class BulletinSpiderRessource {
                 } 
                  else if (bulletinArabe){
                     if(libellePeriode.equals("Troisième Trimestre")) {
-                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderArabe.jrxml");
+                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/callSpiderArabeTrois.jrxml");
                     }
                    
                     else {
@@ -270,8 +270,10 @@ public class BulletinSpiderRessource {
                 else {
                     if(libellePeriode.equals("Troisième Trimestre")) {
                         System.out.println("callSpiderNobelTrois.jrxmlMouuuuu") ;
+
                         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/callSpiderNobelTrois.jrxml");
 
+                   
                     }
                     else {
                         System.out.println("callSpiderNobel.jrxml") ;
@@ -289,7 +291,7 @@ public class BulletinSpiderRessource {
                         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderArabePrimaire.jrxml");
                     }
                     else {
-                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderArabePrimaire.jrxml");
+                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderArabePrimaireTrois.jrxml");
 
                     }
                 } else 
@@ -298,7 +300,7 @@ public class BulletinSpiderRessource {
                             myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderAutrePrimaire.jrxml");
                         }
                         else {
-                            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderAutrePrimaire.jrxml");
+                            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderArabePrimaireAutreTrois.jrxml");
     
                         }
                     }
@@ -373,7 +375,7 @@ public class BulletinSpiderRessource {
                 }
                 else if (bulletinArabe){
                     if(libellePeriode.equals("Troisième Trimestre")) {
-                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderArabe");
+                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/callSpiderArabeTrois.jrxml");
                     }
                     else {
                         System.out.println("callSpiderArabeDecompress") ;
@@ -440,7 +442,7 @@ public class BulletinSpiderRessource {
                         myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderArabePrimaire.jrxml");
                     }
                     else {
-                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderArabePrimaire.jrxml");
+                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderArabePrimaireTrois.jrxml");
 
                     }
                 } else 
@@ -449,7 +451,7 @@ public class BulletinSpiderRessource {
                             myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderAutrePrimaire.jrxml");
                         }
                         else {
-                            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderAutrePrimaire.jrxml");
+                            myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderArabePrimaireAutreTrois.jrxml");
     
                         }
                     }
@@ -529,6 +531,40 @@ public class BulletinSpiderRessource {
                 e.printStackTrace();
             }
         }
+
+          // Compiler le sous-rapport BulletinArabePrimaire si nécessaire
+          if (niveauEnseign == 1 && bulletinArabe && !moisTrimestre.contains(libellePeriode)) {
+            //BulletinArabeMaternelleTrois
+            //BulletinArabePrimaireTrois
+            try (java.io.InputStream subreportStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinArabePrimaireTrois.jrxml")) {
+                if (subreportStream != null) {
+                    JasperReport subreport = JasperCompileManager.compileReport(subreportStream);
+                    map.put("SUBREPORT_BulletinArabePrimaireTrois", subreport);
+                }
+            } catch (Exception e) {
+                System.err.println("Erreur lors de la compilation du sous-rapport BulletinArabePrimaireTrois: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } 
+
+        // Compiler le sous-rapport BulletinArabePrimaire si nécessaire
+        if (niveauEnseign == 1 && !bulletinArabe && !moisTrimestre.contains(libellePeriode)) {
+            
+            //BulletinPrimaireAutreTrois
+            try (java.io.InputStream subreportStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinPrimaireAutreTrois.jrxml")) {
+                if (subreportStream != null) {
+                    JasperReport subreport = JasperCompileManager.compileReport(subreportStream);
+                    map.put("SUBREPORT_BulletinPrimaireAutreTrois", subreport);
+                }
+            } catch (Exception e) {
+                System.err.println("Erreur lors de la compilation du sous-rapport BulletinPrimaireAutreTrois: " + e.getMessage());
+                e.printStackTrace();
+            }
+        }
+
+
+              
+
         
         // Compiler le sous-rapport BulletinPrimaireAutre si nécessaire (pour callSpiderAutrePrimaire.jrxml)
         if (niveauEnseign == 1 && !bulletinArabe) {
@@ -570,7 +606,48 @@ public class BulletinSpiderRessource {
                 System.err.println("Erreur lors de la compilation des sous-rapports PiedPage: " + e.getMessage());
                 e.printStackTrace();
             }
+        } 
+
+        if (!compress && niveauEnseign == 2 && libellePeriode.equals("Troisième Trimestre")) {
+            try (java.io.InputStream subreportStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/BulletinNobelSpiderTroisV2.jrxml")) {
+                if (subreportStream != null) {
+                    JasperReport subreport = JasperCompileManager.compileReport(subreportStream);
+                    map.put("SUBREPORT_BulletinNobelSpiderTroisV2", subreport);
+                }
+            } catch (Exception e) {
+                System.err.println("Erreur lors de la compilation du sous-rapport BulletinNobelSpiderTroisV2: " + e.getMessage());
+                e.printStackTrace();
+            }
+            
+        } 
+
+        if (compress && niveauEnseign == 2 && libellePeriode.equals("Troisième Trimestre")) {
+            try (java.io.InputStream subreportStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/BulletinNobelSpiderEtanTroisV2.jrxml")) {
+                if (subreportStream != null) {
+                    JasperReport subreport = JasperCompileManager.compileReport(subreportStream);
+                    map.put("SUBREPORT_BulletinNobelSpiderEtanTroisV2", subreport);
+                }
+            } catch (Exception e) {
+                System.err.println("Erreur lors de la compilation du sous-rapport BulletinNobelSpiderEtanTroisV2: " + e.getMessage());
+                e.printStackTrace();
+            }
+            
         }
+        if (bulletinArabe &&niveauEnseign == 2 && libellePeriode.equals("Troisième Trimestre")) {
+            try (java.io.InputStream subreportStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/TroixiemeTrimestre/BulletinArabeSpiderEtanTrois.jrxml")) {
+                if (subreportStream != null) {
+                    JasperReport subreport = JasperCompileManager.compileReport(subreportStream);
+                    map.put("SUBREPORT_BulletinArabeSpiderEtanTrois", subreport);
+                }
+            } catch (Exception e) {
+                System.err.println("Erreur lors de la compilation du sous-rapport BulletinArabeSpiderEtanTrois: " + e.getMessage());
+                e.printStackTrace();
+            }
+            
+        }
+
+
+
         String infos= null ;
         String pdistinct= null ;
         String plogoPosi= null ;
@@ -610,6 +687,7 @@ public class BulletinSpiderRessource {
         map.put("positionLogo", plogoPosi);
         map.put("setBg", psetBg);
         map.put(JRParameter.REPORT_CONNECTION, connection);
+        map.put(JRParameter.REPORT_CLASS_LOADER, this.getClass().getClassLoader());
 
         JasperPrint report = JasperFillManager.fillReport(compileReport, map, connection);
         byte[] data =JasperExportManager.exportReportToPdf(report);
@@ -967,6 +1045,7 @@ Set<String> moisTrimestre = Set.of(
         map.put("offsetValue", debutImpression);
         map.put("limitValue", finImpression);
         map.put(JRParameter.REPORT_CONNECTION, connection);
+        map.put(JRParameter.REPORT_CLASS_LOADER, this.getClass().getClassLoader());
 
         JasperPrint report = JasperFillManager.fillReport(compileReport, map, connection);
         byte[] data =JasperExportManager.exportReportToPdf(report);
@@ -1000,7 +1079,7 @@ Set<String> moisTrimestre = Set.of(
             Classe classe= new Classe() ;
             classe = Classe.findById(libelleClasse) ;
             List<String> moisTrimestre = Arrays.asList(
-    "Novembre", "Décembre", "Janvier", "Février", "Mars", "Avril"
+    "Novembre", "Décembre", "Janvier", "Février", "Mars"
 );
             if (!compress){
                 if(niveauEnseign ==2) {
@@ -1070,7 +1149,7 @@ Set<String> moisTrimestre = Set.of(
                     }
                     else {
                        System.out.print("Imprimer etats/spider/BulletinArabePrimaire.jrxml");
-                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinArabePrimaire.jrxml");
+                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinArabePrimaireTrois.jrxml");
 
                     }
                 }
@@ -1190,7 +1269,7 @@ Set<String> moisTrimestre = Set.of(
                     }
                     else {
                        System.out.print("Imprimer etats/spider/BulletinArabePrimaire.jrxmlDecompresse");
-                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinArabePrimaire.jrxml");
+                        myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinArabePrimaireTrois.jrxml");
 
                     }
                 }
@@ -1313,6 +1392,7 @@ Set<String> moisTrimestre = Set.of(
             map.put("positionLogo", plogoPosi);
             map.put("setBg", psetBg);
             map.put("classe", classe.getLibelle());
+            map.put(JRParameter.REPORT_CLASS_LOADER, this.getClass().getClassLoader());
             JasperPrint report = JasperFillManager.fillReport(compileReport, map, connection);
             byte[] data =JasperExportManager.exportReportToPdf(report);
 
@@ -1409,6 +1489,157 @@ Set<String> moisTrimestre = Set.of(
         g2d.drawImage(image, transform, null);
         g2d.dispose();
         return newImage;
+    } 
+
+    @GET
+    @Path("/spider-bilan-classe/{idEcole}/{classe}/{libellePeriode}/{libelleAnnee}/{bulletinArabe}")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public ResponseEntity<byte[]>  getDtoRapportBilanClasse(@PathParam("idEcole") Long idEcole ,
+                                                @PathParam("classe") String classe ,
+                                                @PathParam("libellePeriode") String libellePeriode ,
+                                                 @PathParam("libelleAnnee") String libelleAnnee,
+                                                 @PathParam("bulletinArabe") boolean bulletinArabe
+    ) throws Exception, JRException {
+        try {
+        InputStream myInpuStream ;
+
+ if(bulletinArabe){
+    myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BilanArabePrimaire.jrxml");
+ } else {
+    myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BilanArabePrimaireAutre.jrxml");
+ }
+        Connection connection = DriverManager.getConnection("jdbc:mysql://94.130.15.245:33061/ecoleviedbv2?useUnicode=true&characterEncoding=UTF-8", USER, PASS);
+        JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
+        String infos= null ;
+        String pdistinct= null ;
+        String plogoPosi= null ;
+        String psetBg= null ;
+        
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("idEcole", idEcole);
+        map.put("annee", libelleAnnee);
+        map.put("libellePeriode", libellePeriode);
+        map.put("classe", classe);
+        JasperPrint report = JasperFillManager.fillReport(compileReport, map, connection);
+        byte[] data =JasperExportManager.exportReportToPdf(report);
+
+        HttpHeaders headers= new HttpHeaders();
+        // headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Rapport"+myScole.getEcoleclibelle()+".docx");
+        headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Bilan-Annuel-"+".pdf");
+        return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.MULTIPART_FORM_DATA).body(data);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    } 
+    
+    @GET
+    @Path("/spider-bulletin-nayeba/{idEcole}/{libellePeriode}/{libelleAnnee}/{idClasse}/{compress}/{niveauEnseign}/{positionLogo}/{filigranne}/{infoAmoirie}/{pivoter}/{modelePoincarre}/{distinct}/{modelelmd}/{testLourd}/{bulletinArabe}/{piedPage}")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public ResponseEntity<byte[]>  getDtoRapportNayeba(@PathParam("idEcole") Long idEcole ,@PathParam("libellePeriode") String libellePeriode ,
+                                                 @PathParam("libelleAnnee") String libelleAnnee , @PathParam("idClasse") Long libelleClasse ,@PathParam("compress") Boolean compress,
+                                                 @PathParam("niveauEnseign") Long niveauEnseign,@PathParam("positionLogo") boolean positionLogo
+        ,@PathParam("filigranne") boolean filigranne ,
+                                                 @PathParam("infoAmoirie") boolean infoAmoiri,
+                                                 @PathParam("pivoter") boolean pivoter ,
+                                                 @PathParam("modelePoincarre") boolean modelePoincarre,
+                                                 @PathParam("distinct") boolean distinct ,
+                                                 @PathParam("modelelmd") boolean modelelmd,
+                                                 @PathParam("testLourd") boolean testLourd,
+                                                 @PathParam("bulletinArabe") boolean bulletinArabe,
+                                                 @PathParam("piedPage") boolean piedPage
+    ) throws Exception, JRException {
+        try {
+
+
+            InputStream myInpuStream = null;
+            Classe classe= new Classe() ;
+            classe = Classe.findById(libelleClasse) ;
+            List<String> moisTrimestre = Arrays.asList(
+    "Novembre", "Décembre", "Janvier", "Février", "Mars"
+);
+
+myInpuStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/callSpiderArabePrimaireNayebaTrois.jrxml");
+          
+
+            spiderBulletinDto detailsBull= new spiderBulletinDto() ;
+            List<parametreDto>  dspsDto = new ArrayList<>() ;
+
+
+            //bulletinSpiderMatriculeServices.bulletinInfos(idEcole ,libelleAnnee ,libellePeriode ,matricule,positionLogo,filigranne) ;
+
+           // Connection connection = DriverManager.getConnection("jdbc:mysql://db:3306/ecoleviedbv2", USER, PASS);
+            
+        Connection connection = DriverManager.getConnection("jdbc:mysql://94.130.15.245:33061/ecoleviedbv2?useUnicode=true&characterEncoding=UTF-8", USER, PASS);
+            JasperReport compileReport = JasperCompileManager.compileReport(myInpuStream);
+            String infos= null ;
+            String pdistinct= null ;
+            String plogoPosi= null ;
+            String psetBg= null ;
+            if(distinct){
+                pdistinct="1";
+            } else{
+                pdistinct="0";
+            }
+
+            if(infoAmoiri){
+                infos="1";
+            } else{
+                infos="0";
+            }
+            if(positionLogo){
+                plogoPosi="1";
+            } else{
+                plogoPosi="0";
+            }
+            if(filigranne){
+                psetBg="1";
+            } else{
+                psetBg="0";
+            }
+
+            Map<String, Object> map = new HashMap<>();
+            try (java.io.InputStream subreportStream = this.getClass().getClassLoader().getResourceAsStream("etats/spider/BulletinPrimaireNayebaTrois.jrxml")) {
+                if (subreportStream != null) {
+                    JasperReport subreport = JasperCompileManager.compileReport(subreportStream);
+                    map.put("SUBREPORT_BulletinPrimaireNayebaTrois", subreport);
+                }
+            } catch (Exception e) {
+                System.err.println("Erreur lors de la compilation du sous-rapport BulletinArabeSpiders: " + e.getMessage());
+                e.printStackTrace();
+            }
+            ecole myEcole= new ecole() ;
+        myEcole=sousceecoleService.getInffosEcoleByID(idEcole);
+        map.put("classe", classe.getLibelle());
+        // map.put("classe", 	"6EME C");
+        map.put("idEcole", idEcole);
+        map.put("libelleAnnee", libelleAnnee);
+        map.put("libellePeriode", libellePeriode);
+        map.put("infosAmoirie", infos);
+        map.put("distinctin", pdistinct);
+        map.put("codeEcole", myEcole.getEcolecode());
+        // map.put("codeEcole", "myEcole.getEcolecode()");
+        map.put("positionLogo", plogoPosi);
+        map.put("setBg", psetBg);
+        map.put(JRParameter.REPORT_CONNECTION, connection);
+        map.put(JRParameter.REPORT_CLASS_LOADER, this.getClass().getClassLoader());
+
+        JasperPrint report = JasperFillManager.fillReport(compileReport, map, connection);
+        byte[] data =JasperExportManager.exportReportToPdf(report);
+
+        HttpHeaders headers= new HttpHeaders();
+        // headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Rapport"+myScole.getEcoleclibelle()+".docx");
+        headers.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=Bulletin-spider"+libelleClasse+".pdf");
+        return ResponseEntity.ok().headers(headers).contentType(org.springframework.http.MediaType.MULTIPART_FORM_DATA).body(data);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null ;
+        }
+
+
     }
 
 
