@@ -2070,10 +2070,10 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 							if (bul.getTypeEvaluation() != null && bul.getTypeEvaluation() == 7) {
 								// composition de passage
 								moyAnPassage.add(bul.getMoyGeneral());
-							} else if (bul.getTypeEvaluation() != null && bul.getTypeEvaluation() == 4) {
+							} else if (bul.getTypeEvaluation() != null && (bul.getTypeEvaluation() == 4 || bul.getTypeEvaluation() == 36)) {
 								// composition interne
 								moyAnInterne.add(bul.getMoyGeneral());
-							} else if (bul.getTypeEvaluation() != null && bul.getTypeEvaluation() == 31) {
+							} else if (bul.getTypeEvaluation() != null && (bul.getTypeEvaluation() == 31 || bul.getTypeEvaluation() == 37)) {
 								// composition IEPP
 								moyAnIEPP.add(bul.getMoyGeneral());
 							}
@@ -2086,10 +2086,10 @@ public class NoteService implements PanacheRepositoryBase<Notes, Long> {
 		if (me.getTypeEvaluation() != null && me.getTypeEvaluation() == 7) {
 			// composition de passage
 			moyAnPassage.add(me.getMoyenne());
-		} else if (me.getTypeEvaluation() != null && me.getTypeEvaluation() == 4) {
+		} else if (me.getTypeEvaluation() != null && (me.getTypeEvaluation() == 4 || me.getTypeEvaluation() == 36)) {
 			// composition interne
 			moyAnInterne.add(me.getMoyenne());
-		} else if (me.getTypeEvaluation() != null && me.getTypeEvaluation() == 31) {
+		} else if (me.getTypeEvaluation() != null && (me.getTypeEvaluation() == 31 || me.getTypeEvaluation() == 37)) {
 			// composition IEPP
 			moyAnIEPP.add(me.getMoyenne());
 		}
