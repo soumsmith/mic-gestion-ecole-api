@@ -246,6 +246,18 @@ public class NotesResource {
 		//bulletinService.getBulletinInfosParMatricule(matricule, classe, annee, periode);
 		return Response.ok(bulletinService.getBulletinInfosParMatricule(matricule, classe, annee, periode)).build();
 	}
+	
+	@GET
+	@Path("/list-matricule-notes-moyennes-all-bulletins/{matricule}/")
+	@Operation(description = "Obtenir les notes des eleves d une classe pour tous les bulletins ", summary = "")
+	@Tag(name = "Notes")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getNotesByMatriculeForAllBulletinGenerated(@PathParam("matricule") String matricule, @QueryParam("classe") Long classe,
+			@QueryParam("annee") Long annee) {
+		System.out.println("ok OK ok");
+		return Response.ok(bulletinService.getBulletinInfosParMatriculeForAllBulletinGenrated(matricule, classe, annee)).build();
+	}
 
 	@GET
 	@Path("/eleve/{matricule}")

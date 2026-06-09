@@ -1138,9 +1138,9 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 			for (Map.Entry<EcoleHasMatiere, List<Notes>> entry : me.getNotesMatiereMap().entrySet()) {
 				EcoleHasMatiere matiere = entry.getKey();
 				// Pour debug. A supprimer sans risque après debug ok.
-				if(me.getEleve().getMatricule().equals("23660665Y")) {
-				System.out
-						.println(" -> DETAIL MATIERE A SAUVEGARDER : " + matiere.getId() + " " + matiere.getLibelle());
+				if (me.getEleve().getMatricule().equals("23660665Y")) {
+					System.out.println(
+							" -> DETAIL MATIERE A SAUVEGARDER : " + matiere.getId() + " " + matiere.getLibelle());
 				}
 				// Création du détail bulletin
 				DetailBulletin detail = new DetailBulletin();
@@ -1204,7 +1204,9 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 						noteBulletin.setReferenceId(String.valueOf(note.getId()));
 //						System.out.println("EVALUATION BUGGER " + note.getEvaluation().getId());
 //						System.out.println("NOTE BUGGER " + note.getId());
-						noteBulletin.setType(note.getEvaluation().getType() != null ? note.getEvaluation().getType().getLibelle() : "N/A");
+						noteBulletin.setType(
+								note.getEvaluation().getType() != null ? note.getEvaluation().getType().getLibelle()
+										: "N/A");
 						notesBatch.add(noteBulletin);
 					}
 				}
@@ -1396,6 +1398,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 			bulletinDto.setLibelleClasse(bulletin.getLibelleClasse());
 			bulletinDto.setMatricule(matricule);
 			bulletinDto.setMoyGeneral(bulletin.getMoyGeneral());
+			bulletinDto.setMoyAn(bulletin.getMoyAn());
 			bulletinDto.setAppreciation(bulletin.getAppreciation());
 			bulletinDto.setNom(bulletin.getNom());
 			bulletinDto.setPrenoms(bulletin.getPrenoms());
@@ -1431,5 +1434,63 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 		}
 		return bulletinDto;
 
+	}
+
+	public List<BulletinDto> getBulletinInfosParMatriculeForAllBulletinGenrated(String matricule, Long classe,
+			Long annee) {
+
+		List<BulletinDto> bulletinsDto = new ArrayList<>();
+
+		List<Bulletin> bulletins = Bulletin
+				.find("matricule = ?1 and classeId = ?2 and anneeId = ?3", matricule, classe, annee)
+				.list();
+
+		for (Bulletin bulletin : bulletins) {
+			BulletinDto bulletinDto = new BulletinDto();
+
+			try {
+				bulletinDto.setAnneeLibelle(bulletin.getAnneeLibelle());
+				bulletinDto.setLibellePeriode(bulletin.getLibellePeriode());
+				bulletinDto.setNomEcole(bulletin.getNomEcole());
+				bulletinDto.setLibelleClasse(bulletin.getLibelleClasse());
+				bulletinDto.setMatricule(matricule);
+				bulletinDto.setMoyGeneral(bulletin.getMoyGeneral());
+				bulletinDto.setMoyAn(bulletin.getMoyAn());
+				bulletinDto.setAppreciation(bulletin.getAppreciation());
+				bulletinDto.setNom(bulletin.getNom());
+				bulletinDto.setPrenoms(bulletin.getPrenoms());
+				bulletinDto.setSexe(bulletin.getSexe());
+				bulletinDto.setNomPrenomProfPrincipal(bulletin.getNomPrenomProfPrincipal());
+				bulletinDto.setMoyFr(bulletin.getMoyFr());
+
+				List<DetailBulletin> details = DetailBulletin.find("bulletin.id = ?1", bulletin.getId()).list();
+				List<DetailBulletinDto> detailsDto = new ArrayList<DetailBulletinDto>();
+				for (DetailBulletin dtl : details) {
+					DetailBulletinDto detailDto = new DetailBulletinDto();
+					detailDto.setMatiereCode(dtl.getMatiereCode());
+					detailDto.setMatiereLibelle(dtl.getMatiereLibelle());
+					detailDto.setCoef(dtl.getCoef());
+					detailDto.setMoyenne(dtl.getMoyenne());
+					detailDto.setNomPrenomProfesseur(dtl.getNom_prenom_professeur());
+					detailDto.setAppreciation(dtl.getAppreciation());
+					List<NoteBulletin> notes = NoteBulletin.find("detailBulletin.id = ?1", dtl.getId()).list();
+					List<NoteDto> notesDto = new ArrayList<>();
+					for (NoteBulletin n : notes) {
+						NoteDto nt = new NoteDto();
+						nt.setNote(n.getNote());
+						nt.setNoteSur(Double.valueOf(n.getNoteSur()));
+						nt.setEvaluationType(n.getType());
+						notesDto.add(nt);
+					}
+					detailDto.setNotes(notesDto);
+					detailsDto.add(detailDto);
+				}
+				bulletinDto.setDetails(detailsDto);
+			} catch (RuntimeException r) {
+				r.printStackTrace();
+			}
+			bulletinsDto.add(bulletinDto);
+		}
+		return bulletinsDto;
 	}
 }
