@@ -17,6 +17,7 @@ import com.vieecoles.entities.InfosPersoBulletins;
 import com.vieecoles.steph.dto.BulletinDto;
 import com.vieecoles.steph.dto.DetailBulletinDto;
 import com.vieecoles.steph.dto.MoyenneEleveDto;
+import com.vieecoles.steph.dto.PeriodeMoyenneDto;
 import com.vieecoles.steph.dto.moyennes.NoteDto;
 import com.vieecoles.steph.entities.AbsenceEleve;
 import com.vieecoles.steph.entities.AnneeScolaire;
@@ -1387,26 +1388,46 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 
 	public BulletinDto getBulletinInfosParMatricule(String matricule, Long classe, Long annee, Long periode) {
 
-		Bulletin bulletin = Bulletin.find("matricule = ?1 and classeId = ?2 and anneeId = ?3 and periodeId = ?4",
-				matricule, classe, annee, periode).singleResult();
+		List<Bulletin> bulletins = Bulletin
+				.find("matricule = ?1 and classeId = ?2 and anneeId = ?3", matricule, classe, annee).list();
 		BulletinDto bulletinDto = new BulletinDto();
 
 		try {
-			bulletinDto.setAnneeLibelle(bulletin.getAnneeLibelle());
-			bulletinDto.setLibellePeriode(bulletin.getLibellePeriode());
-			bulletinDto.setNomEcole(bulletin.getNomEcole());
-			bulletinDto.setLibelleClasse(bulletin.getLibelleClasse());
-			bulletinDto.setMatricule(matricule);
-			bulletinDto.setMoyGeneral(bulletin.getMoyGeneral());
-			bulletinDto.setMoyAn(bulletin.getMoyAn());
-			bulletinDto.setAppreciation(bulletin.getAppreciation());
-			bulletinDto.setNom(bulletin.getNom());
-			bulletinDto.setPrenoms(bulletin.getPrenoms());
-			bulletinDto.setSexe(bulletin.getSexe());
-			bulletinDto.setNomPrenomProfPrincipal(bulletin.getNomPrenomProfPrincipal());
-			bulletinDto.setMoyFr(bulletin.getMoyFr());
+			Bulletin bulletinCourant = new Bulletin();
+			List<Bulletin> autresBulletins = new ArrayList<>();
+			List<PeriodeMoyenneDto> periodeMoyenneDtos = new ArrayList<>();
+			if (bulletins != null && bulletins.size() > 0) {
+				bulletinCourant = bulletins.stream().filter(x -> x.getPeriodeId().equals(periode)).findFirst()
+						.orElse(new Bulletin());
+				autresBulletins = bulletins.stream().filter(x -> !x.getPeriodeId().equals(periode))
+						.collect(Collectors.toList());
+			}
 
-			List<DetailBulletin> details = DetailBulletin.find("bulletin.id = ?1", bulletin.getId()).list();
+			bulletinDto.setAnneeLibelle(bulletinCourant.getAnneeLibelle());
+			bulletinDto.setLibellePeriode(bulletinCourant.getLibellePeriode());
+			bulletinDto.setNomEcole(bulletinCourant.getNomEcole());
+			bulletinDto.setLibelleClasse(bulletinCourant.getLibelleClasse());
+			bulletinDto.setMatricule(matricule);
+			bulletinDto.setMoyGeneral(bulletinCourant.getMoyGeneral());
+			bulletinDto.setMoyAn(bulletinCourant.getMoyAn());
+			bulletinDto.setAppreciation(bulletinCourant.getAppreciation());
+			bulletinDto.setNom(bulletinCourant.getNom());
+			bulletinDto.setPrenoms(bulletinCourant.getPrenoms());
+			bulletinDto.setSexe(bulletinCourant.getSexe());
+			bulletinDto.setNomPrenomProfPrincipal(bulletinCourant.getNomPrenomProfPrincipal());
+			bulletinDto.setMoyFr(bulletinCourant.getMoyFr());
+
+			for (Bulletin b : autresBulletins) {
+				PeriodeMoyenneDto pmDto = new PeriodeMoyenneDto();
+				pmDto.setPeriodeId(b.getPeriodeId());
+				pmDto.setPeriodeLibelle(b.getLibellePeriode());
+				pmDto.setMoyenne(b.getMoyGeneral());
+				periodeMoyenneDtos.add(pmDto);
+				
+			}
+			bulletinDto.setPeriodesMoyenne(periodeMoyenneDtos);
+
+			List<DetailBulletin> details = DetailBulletin.find("bulletin.id = ?1", bulletinCourant.getId()).list();
 			List<DetailBulletinDto> detailsDto = new ArrayList<DetailBulletinDto>();
 			for (DetailBulletin dtl : details) {
 				DetailBulletinDto detailDto = new DetailBulletinDto();
@@ -1442,8 +1463,7 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 		List<BulletinDto> bulletinsDto = new ArrayList<>();
 
 		List<Bulletin> bulletins = Bulletin
-				.find("matricule = ?1 and classeId = ?2 and anneeId = ?3", matricule, classe, annee)
-				.list();
+				.find("matricule = ?1 and classeId = ?2 and anneeId = ?3", matricule, classe, annee).list();
 
 		for (Bulletin bulletin : bulletins) {
 			BulletinDto bulletinDto = new BulletinDto();

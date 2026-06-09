@@ -91,4 +91,5 @@ public class BulletinDto {
 	private  Boolean ivoirien ;
 	private String urlLogo;
 	private List<DetailBulletinDto> details;
+	private List<PeriodeMoyenneDto> periodesMoyenne;
 }
