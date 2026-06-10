@@ -92,4 +92,5 @@ public class BulletinDto {
 	private String urlLogo;
 	private List<DetailBulletinDto> details;
 	private List<PeriodeMoyenneDto> periodesMoyenne;
+	private Double moyenneAnnuelleProjettee;
 }

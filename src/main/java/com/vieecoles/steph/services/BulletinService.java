@@ -1396,6 +1396,9 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 			Bulletin bulletinCourant = new Bulletin();
 			List<Bulletin> autresBulletins = new ArrayList<>();
 			List<PeriodeMoyenneDto> periodeMoyenneDtos = new ArrayList<>();
+			Double sommeProjette = 0.0;
+			Double coef = 0.0;
+			Double moyenneProjette = 0.0;
 			if (bulletins != null && bulletins.size() > 0) {
 				bulletinCourant = bulletins.stream().filter(x -> x.getPeriodeId().equals(periode)).findFirst()
 						.orElse(new Bulletin());
@@ -1417,15 +1420,43 @@ public class BulletinService implements PanacheRepositoryBase<Bulletin, String> 
 			bulletinDto.setNomPrenomProfPrincipal(bulletinCourant.getNomPrenomProfPrincipal());
 			bulletinDto.setMoyFr(bulletinCourant.getMoyFr());
 
+			// Pour le cas des écoles secondaires
+			// Calcul de la moyenne annuelle projettée
+			if (bulletinCourant.getNiveauEnseignementId() == 2) {
+				if (bulletinCourant.getId() != null) {
+					if (bulletinCourant.getPeriodeId() == 1) {
+						sommeProjette += bulletinCourant.getMoyGeneral();
+						coef += 1;
+					} else {
+						sommeProjette += bulletinCourant.getMoyGeneral() * 2;
+						coef += 2;
+					}
+				}
+			}
+
 			for (Bulletin b : autresBulletins) {
 				PeriodeMoyenneDto pmDto = new PeriodeMoyenneDto();
 				pmDto.setPeriodeId(b.getPeriodeId());
 				pmDto.setPeriodeLibelle(b.getLibellePeriode());
 				pmDto.setMoyenne(b.getMoyGeneral());
 				periodeMoyenneDtos.add(pmDto);
-				
+				// Pour le cas des écoles secondaires
+				if (b.getNiveauEnseignementId() == 2) {
+					if (b.getId() != null) {
+						if (b.getPeriodeId() == 1) {
+							sommeProjette += b.getMoyGeneral();
+							coef += 1;
+						} else {
+							sommeProjette += b.getMoyGeneral() * 2;
+							coef += 2;
+						}
+					}
+				}
+
 			}
 			bulletinDto.setPeriodesMoyenne(periodeMoyenneDtos);
+			moyenneProjette = sommeProjette / (coef == 0.0 ? 1 : coef);
+			bulletinDto.setMoyenneAnnuelleProjettee(CommonUtils.roundDouble(moyenneProjette, 2));
 
 			List<DetailBulletin> details = DetailBulletin.find("bulletin.id = ?1", bulletinCourant.getId()).list();
 			List<DetailBulletinDto> detailsDto = new ArrayList<DetailBulletinDto>();
